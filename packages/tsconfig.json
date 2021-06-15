@@ -1,0 +1,4 @@
+{
+    "files": [],
+    "references": [{ "path": "synchro-charts" }, { "path": "synchro-charts-react" }]
+}

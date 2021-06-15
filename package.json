@@ -1,0 +1,16 @@
+{
+  "name": "aws-synchro-charts",
+  "version": "1.0.0",
+  "description": "Time series charting library",
+  "main": "index.js",
+  "repository": "git@github.com:awslabs/aws-synchro-charts.git",
+  "author": "Ashika Kasiviswanathan Arumugakarthik <akasivis@amazon.com>",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "rimraf": "^3.0.2"
+  }
+}
