@@ -1,0 +1,3 @@
+{"direction":"consumed","namespace":"npm","repo":"Brazil","name":"@amzn/awsui-components-react","version":"2.1.0","derivedFrom":[{"namespace":"Brazil","name":"AWS-UI-Components-React","version":"2.1.58145.0","components":["brazil-npm-registry"]}]}
+{"direction":"consumed","namespace":"npm","repo":"Brazil","name":"@amzn/bp-components","version":"0.3.1","derivedFrom":[{"namespace":"Brazil","name":"IotBlackPearlComponents","version":"1.0.x.x","components":["brazil-npm-registry"]}]}
+{"direction":"consumed","namespace":"npm","repo":"Brazil","name":"@amzn/react-synchro-charts","version":"1.0.0","derivedFrom":[{"namespace":"Brazil","name":"ReactSynchroCharts","version":"1.0.x.x","components":["brazil-npm-registry"]}]}

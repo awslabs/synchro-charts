@@ -1,0 +1,2 @@
+(this["webpackJsonpmonitor-components-doc-site"]=this["webpackJsonpmonitor-components-doc-site"]||[]).push([[27],{46:function(n,t,o){"use strict";o.r(t),o.d(t,"monitor_lazily_loaded_box",(function(){return e}));var i=o(2),e=function(){function n(n){Object(i.i)(this,n),this.config={size:{width:0,height:0}}}return n.prototype.render=function(){var n=this;return Object(i.h)("monitor-lazily-load",{renderFunc:function(){return Object(i.h)("bp-box",{config:n.config})}})},n}()}}]);
+//# sourceMappingURL=stencil-monitor-lazily-loaded-box-entry-js.c886e5cc.chunk.js.map
