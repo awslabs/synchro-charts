@@ -11,7 +11,7 @@ import {
 import { Primitive, DataStream, AlarmsConfig } from '../../../utils/dataTypes';
 import statusVert from './status.vert';
 import statusFrag from './status.frag';
-import { WriteableBufferAttribute, WriteableInstancedBufferAttribute } from '../../monitor-webgl-context/types';
+import { WriteableBufferAttribute, WriteableInstancedBufferAttribute } from '../../sc-webgl-context/types';
 import { numDataPoints, vertices, getCSSColorByString } from '../sc-webgl-base-chart/utils';
 import { STATUS_MARGIN_TOP_PX, DEFAULT_STATUS_BAR_COLOR, HEIGHT } from './constants';
 import { getBreachedThreshold } from '../common/annotations/utils';

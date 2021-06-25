@@ -25,8 +25,8 @@ import {
   Tooltip,
 } from '../common/types';
 
-import { webGLRenderer } from '../../monitor-webgl-context/webglContext';
-import { ChartScene } from '../../monitor-webgl-context/types';
+import { webGLRenderer } from '../../sc-webgl-context/webglContext';
+import { ChartScene } from '../../sc-webgl-context/types';
 import { DEFAULT_CHART_CONFIG, DEFAULT_THRESHOLD_OPTIONS, DEFAULT_THRESHOLD_OPTIONS_OFF } from './chartDefaults';
 import { ChartSceneCreator, ChartSceneUpdater } from './types';
 import { LoadingStatus } from './LoadingStatus';
@@ -747,7 +747,7 @@ export class ScWebglBaseChart {
         </DataContainer>
         {this.legend && (
           <ChartLegendContainer config={this.legend} legendHeight={LEGEND_HEIGHT} size={chartSizeConfig}>
-            <monitor-legend
+            <sc-legend
               config={this.legend}
               dataStreams={this.dataStreams}
               visualizesAlarms={this.visualizesAlarms}

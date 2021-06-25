@@ -34,10 +34,10 @@ const tooltip = (props: Tooltip.Props) => (
 );
 
 @Component({
-  tag: 'monitor-scatter-chart',
+  tag: 'sc-scatter-chart',
   shadow: false,
 })
-export class MonitorScatterChart implements ChartConfig {
+export class ScScatterChart implements ChartConfig {
   /** Chart API */
   @Prop() viewPort: MinimalViewPortConfig;
   @Prop() movement?: MovementConfig;
@@ -63,7 +63,7 @@ export class MonitorScatterChart implements ChartConfig {
 
   render() {
     return (
-      <monitor-size-provider
+      <sc-size-provider
         size={this.size}
         renderFunc={(rect: RectScrollFixed) => (
           <sc-webgl-base-chart

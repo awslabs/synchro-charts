@@ -21,13 +21,13 @@ const TEST_DATA_POINT: DataPoint<number> = {
  */
 
 @Component({
-  tag: 'monitor-webgl-chart-large-viewport',
+  tag: 'sc-webgl-chart-large-viewport',
 })
-export class MonitorWebglChartLargeViewport {
+export class ScWebglChartLargeViewport {
   render() {
     return (
       <div>
-        <monitor-line-chart
+        <sc-line-chart
           dataStreams={[
             {
               id: 'test',
@@ -45,7 +45,7 @@ export class MonitorWebglChartLargeViewport {
           }}
           viewPort={VIEWPORT}
         />
-        <monitor-webgl-context />
+        <sc-webgl-context />
       </div>
     );
   }

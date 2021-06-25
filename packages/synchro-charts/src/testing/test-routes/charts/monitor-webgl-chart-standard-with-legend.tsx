@@ -16,13 +16,13 @@ const TEST_DATA_POINT: DataPoint<number> = {
 };
 
 @Component({
-  tag: 'monitor-webgl-chart-standard-with-legend',
+  tag: 'sc-webgl-chart-standard-with-legend',
 })
-export class MonitorWebglChartStandardWithLegend {
+export class ScWebglChartStandardWithLegend {
   render() {
     return (
       <div>
-        <monitor-line-chart
+        <sc-line-chart
           widgetId="widget-id"
           dataStreams={[
             {
@@ -44,7 +44,7 @@ export class MonitorWebglChartStandardWithLegend {
             width: 300,
           }}
         />
-        <monitor-webgl-context />
+        <sc-webgl-context />
       </div>
     );
   }

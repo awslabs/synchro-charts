@@ -1,4 +1,4 @@
-monitor-legend-row {
+sc-legend-row {
   --color-container-width: 18px;
 
   /* prevents the stream info from hijacking scroll when element is focused */
@@ -9,17 +9,17 @@ monitor-legend-row {
   padding-right: var(--margin-small);
 }
 
-monitor-legend-row .legend-row-container {
+sc-legend-row .legend-row-container {
   display: flex;
 }
 
-monitor-legend-row .legend-value {
+sc-legend-row .legend-value {
   position: relative;
   display: flex;
   align-items: center;
 }
 
-monitor-legend-row .color-container {
+sc-legend-row .color-container {
   display: flex;
   flex-direction: column-reverse;
   width: var(--color-container-width);
@@ -27,27 +27,27 @@ monitor-legend-row .color-container {
   padding-top: 11px;
 }
 
-monitor-data-stream-info .spinner-container {
+sc-data-stream-info .spinner-container {
   position: relative;
   top: 5px;
 }
 
-monitor-legend-row .bar {
+sc-legend-row .bar {
   width: var(--color-container-width);
 }
 
-monitor-legend-row .info {
+sc-legend-row .info {
   padding-left: var(--margin-small);
   display: flex;
   flex-direction: column;
 }
 
-monitor-legend-row .info h4 {
+sc-legend-row .info h4 {
   line-height: 0.2em;
   font-size: 14px;
 }
 
-monitor-legend-row .monitor-expandable-input {
+sc-legend-row .sc-expandable-input {
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;

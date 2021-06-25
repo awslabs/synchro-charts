@@ -5,7 +5,7 @@ import { CustomHTMLElement } from '../../utils/types';
 import { DATA_STREAMS } from '../charts/common/tests/chart/constants';
 import { DEFAULT_CHART_CONFIG } from '../charts/sc-webgl-base-chart/chartDefaults';
 import { update } from '../charts/common/tests/merge';
-import { MonitorWidgetGrid } from './monitor-widget-grid';
+import { ScWidgetGrid } from './sc-widget-grid';
 import { DataPoint, MinimalViewPortConfig } from '../../utils/dataTypes';
 import { DAY_IN_MS, MINUTE_IN_MS } from '../../utils/time';
 import { CellOptions, RenderCell } from './types';
@@ -27,22 +27,22 @@ const VIEW_PORT: MinimalViewPortConfig = {
   duration: MINUTE_IN_MS,
 };
 
-const widgetGridSpecPage = async (propOverrides: Partial<Components.MonitorWidgetGrid> = {}) => {
+const widgetGridSpecPage = async (propOverrides: Partial<Components.ScWidgetGrid> = {}) => {
   const page = await newSpecPage({
-    components: [MonitorWidgetGrid],
+    components: [ScWidgetGrid],
     html: '<div></div>',
     supportsShadowDom: false,
   });
 
   const renderCell: RenderCell = jest.fn();
 
-  const widgetGrid = page.doc.createElement('monitor-widget-grid') as CustomHTMLElement<Components.MonitorWidgetGrid>;
-  const props: Components.MonitorStatusGrid = {
+  const widgetGrid = page.doc.createElement('sc-widget-grid') as CustomHTMLElement<Components.ScWidgetGrid>;
+  const props: Components.ScStatusGrid = {
     annotations: {},
     messageOverrides: {},
     liveModeOnlyMessage: 'liveModeOnlyMessage',
     labelsConfig: {},
-    widgetId: 'monitor-status-grid-widget-id',
+    widgetId: 'sc-status-grid-widget-id',
     isEditing: false,
     dataStreams: DATA_STREAMS,
     viewPort: VIEW_PORT,
@@ -88,7 +88,7 @@ describe('when enabled', () => {
   it('does not render a help icon', async () => {
     const { widgetGrid } = await widgetGridSpecPage();
 
-    expect(widgetGrid.querySelector('monitor-help-tooltip')).toBeNull();
+    expect(widgetGrid.querySelector('sc-help-tooltip')).toBeNull();
   });
 });
 
@@ -402,6 +402,6 @@ describe('historical time frame', () => {
       viewPort: NON_LIVE_VIEW_PORT,
     });
 
-    expect(widgetGrid.querySelector('monitor-help-tooltip')).not.toBeNull();
+    expect(widgetGrid.querySelector('sc-help-tooltip')).not.toBeNull();
   });
 });

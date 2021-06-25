@@ -9,7 +9,7 @@ import {
   TREND_ICON_DASH_ARRAY,
 } from '../../../utils/dataTypes';
 import { Value } from '../../value/Value';
-import { getAggregationFrequency } from '../../monitor-data-stream-name/helper';
+import { getAggregationFrequency } from '../../sc-data-stream-name/helper';
 import { StatusIcon } from '../common/constants';
 
 const baseColor = '#000';

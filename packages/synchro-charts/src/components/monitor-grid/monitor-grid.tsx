@@ -1,11 +1,11 @@
 import { Component, h } from '@stencil/core';
 
 @Component({
-  tag: 'monitor-grid',
-  styleUrl: 'monitor-grid.css',
+  tag: 'sc-grid',
+  styleUrl: 'sc-grid.css',
   shadow: false,
 })
-export class MonitorGrid {
+export class ScGrid {
   render() {
     return (
       <div class="grid-wrapper">

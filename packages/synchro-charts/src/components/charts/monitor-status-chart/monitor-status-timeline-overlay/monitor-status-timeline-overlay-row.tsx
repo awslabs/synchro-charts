@@ -4,11 +4,11 @@ import { Value } from '../../../value/Value';
 import { StatusIcon } from '../../common/constants';
 
 @Component({
-  tag: 'monitor-status-timeline-overlay-row',
-  styleUrl: 'monitor-status-timeline-overlay-row.css',
+  tag: 'sc-status-timeline-overlay-row',
+  styleUrl: 'sc-status-timeline-overlay-row.css',
   shadow: false,
 })
-export class MonitorStatusTimelineOverlayRow {
+export class ScStatusTimelineOverlayRow {
   @Prop() label!: string;
   @Prop() isEditing!: boolean;
   @Prop() onNameChange!: (name: string) => void;
@@ -21,7 +21,7 @@ export class MonitorStatusTimelineOverlayRow {
   render() {
     return [
       <div class="stream-info">
-        <monitor-data-stream-name
+        <sc-data-stream-name
           label={this.label}
           detailedLabel={this.detailedLabel}
           onNameChange={this.onNameChange}

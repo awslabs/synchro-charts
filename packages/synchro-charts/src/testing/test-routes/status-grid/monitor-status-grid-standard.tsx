@@ -32,13 +32,13 @@ const data: DataStream[] = new Array(numDataStreams).fill(null).map((_, i) => ({
 }));
 
 @Component({
-  tag: 'monitor-status-grid-standard',
+  tag: 'sc-status-grid-standard',
 })
-export class MonitorStatusGridStandard {
+export class ScStatusGridStandard {
   render() {
     const annotations = threshold ? { y: [threshold] } : undefined;
     return (
-      <monitor-status-grid
+      <sc-status-grid
         widgetId="test-widget"
         labelsConfig={labelsConfig}
         annotations={annotations}

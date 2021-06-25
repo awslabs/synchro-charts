@@ -2,20 +2,20 @@ import { newSpecPage } from '@stencil/core/testing';
 import { Components } from '../../../../components.d';
 import { CustomHTMLElement } from '../../../../utils/types';
 import { update } from '../../common/tests/merge';
-import { MonitorStatusTimelineOverlayRow } from './monitor-status-timeline-overlay-row';
-import { MonitorDataStreamName } from '../../../monitor-data-stream-name/monitor-data-stream-name';
+import { ScStatusTimelineOverlayRow } from './sc-status-timeline-overlay-row';
+import { ScDataStreamName } from '../../../sc-data-stream-name/sc-data-stream-name';
 
-const rowSpecPage = async (propOverrides: Partial<Components.MonitorStatusTimelineOverlayRow> = {}) => {
+const rowSpecPage = async (propOverrides: Partial<Components.ScStatusTimelineOverlayRow> = {}) => {
   const page = await newSpecPage({
-    components: [MonitorStatusTimelineOverlayRow, MonitorDataStreamName],
+    components: [ScStatusTimelineOverlayRow, ScDataStreamName],
     html: '<div></div>',
     supportsShadowDom: false,
   });
-  const row = page.doc.createElement('monitor-status-timeline-overlay-row') as CustomHTMLElement<
-    Components.MonitorStatusTimelineOverlayRow
+  const row = page.doc.createElement('sc-status-timeline-overlay-row') as CustomHTMLElement<
+    Components.ScStatusTimelineOverlayRow
   >;
 
-  const props: Components.MonitorStatusTimelineOverlayRow = {
+  const props: Components.ScStatusTimelineOverlayRow = {
     label: 'some-label',
     onNameChange: () => {},
     isEditing: false,

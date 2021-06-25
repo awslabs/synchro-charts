@@ -27,13 +27,13 @@ const TEST_DATA_POINTS: DataPoint[] = [
 ];
 
 @Component({
-  tag: 'monitor-scatter-chart-trend-line-with-legend',
+  tag: 'sc-scatter-chart-trend-line-with-legend',
 })
-export class MonitorScatterChartTrendLineWithLegend {
+export class ScScatterChartTrendLineWithLegend {
   render() {
     return (
       <div>
-        <monitor-line-chart
+        <sc-line-chart
           widgetId="widget-id"
           dataStreams={[
             {
@@ -67,7 +67,7 @@ export class MonitorScatterChartTrendLineWithLegend {
             },
           ]}
         />
-        <monitor-webgl-context />
+        <sc-webgl-context />
       </div>
     );
   }

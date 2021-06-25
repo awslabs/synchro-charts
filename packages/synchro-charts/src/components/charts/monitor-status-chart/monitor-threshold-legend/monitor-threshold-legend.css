@@ -1,4 +1,4 @@
-monitor-threshold-legend {
+sc-threshold-legend {
   display: flex;
   flex-wrap: wrap;
   overflow-y: scroll;
@@ -8,11 +8,11 @@ monitor-threshold-legend {
   line-height: 22px;
 }
 
-monitor-threshold-legend-row {
+sc-threshold-legend-row {
   padding: 0.1em 1em;
 }
 
-monitor-threshold-legend-row .box {
+sc-threshold-legend-row .box {
   display: inline-block;
   border-radius: 2px;
   margin-right: 8px;

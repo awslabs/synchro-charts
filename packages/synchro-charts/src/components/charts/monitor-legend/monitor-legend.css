@@ -1,4 +1,4 @@
-monitor-legend .legend-container {
+sc-legend .legend-container {
   display: flex;
   flex-wrap: wrap;
   overflow-y: scroll;
@@ -12,6 +12,6 @@ monitor-legend .legend-container {
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
-monitor-legend .legend-container::-webkit-scrollbar {
+sc-legend .legend-container::-webkit-scrollbar {
   display: none;
 }

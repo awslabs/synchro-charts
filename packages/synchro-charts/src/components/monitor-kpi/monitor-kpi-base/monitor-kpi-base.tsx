@@ -17,11 +17,11 @@ const MINI_FONT_SIZE = 44;
 const ICON_SHRINK_FACTOR = 0.7;
 
 @Component({
-  tag: 'monitor-kpi-base',
-  styleUrl: 'monitor-kpi-base.css',
+  tag: 'sc-kpi-base',
+  styleUrl: 'sc-kpi-base.css',
   shadow: false,
 })
-export class MonitorKpiBase {
+export class ScKpiBase {
   @Prop() breachedThreshold?: Threshold;
 
   @Prop() alarmStream?: DataStream;
@@ -118,7 +118,7 @@ export class MonitorKpiBase {
     return (
       <div class={{ wrapper: true, large: !this.miniVersion }}>
         <div />
-        <monitor-data-stream-name
+        <sc-data-stream-name
           displayTooltip={false}
           label={stream.name}
           detailedLabel={stream.detailedName}

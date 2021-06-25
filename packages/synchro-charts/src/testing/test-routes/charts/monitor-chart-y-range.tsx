@@ -4,7 +4,7 @@ import { MONTH_IN_MS } from '../../../utils/time';
 import { DataType } from '../../../utils/dataConstants';
 
 const urlParams = new URLSearchParams(window.location.search);
-const componentTag = urlParams.get('componentTag') || 'monitor-line-chart';
+const componentTag = urlParams.get('componentTag') || 'sc-line-chart';
 
 // viewport boundaries
 const X_MIN = new Date(2000, 0, 0);
@@ -51,9 +51,9 @@ const data: DataStream<number>[] = [
 ];
 
 @Component({
-  tag: 'monitor-chart-y-range',
+  tag: 'sc-chart-y-range',
 })
-export class MonitorChartYRange {
+export class ScChartYRange {
   @Prop() component: string = componentTag;
 
   render() {
@@ -68,7 +68,7 @@ export class MonitorChartYRange {
           }}
           viewPort={{ start: X_MIN, end: X_MAX }}
         />
-        <monitor-webgl-context />
+        <sc-webgl-context />
       </div>
     );
   }

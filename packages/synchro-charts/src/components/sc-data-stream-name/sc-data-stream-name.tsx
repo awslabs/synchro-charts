@@ -5,11 +5,11 @@ import { POINT_TYPE } from '../charts/sc-webgl-base-chart/activePoints';
 import { TIPPY_SETTINGS } from '../common/toolTipSettings';
 
 @Component({
-  tag: 'monitor-data-stream-name',
-  styleUrl: 'monitor-data-stream-name.css',
+  tag: 'sc-data-stream-name',
+  styleUrl: 'sc-data-stream-name.css',
   shadow: false,
 })
-export class MonitorDataStreamName {
+export class ScDataStreamName {
   @Element() el: HTMLElement;
 
   @Prop() displayTooltip?: boolean = true;
@@ -30,7 +30,7 @@ export class MonitorDataStreamName {
 
   renderTooltip = () => {
     if (this.displayTooltip) {
-      const container = this.el.querySelector('monitor-expandable-input');
+      const container = this.el.querySelector('sc-expandable-input');
       const tooltip = this.el.querySelector('.data-stream-name-tooltip') as HTMLElement | undefined;
 
       if (tooltip != null && container != null) {
@@ -46,7 +46,7 @@ export class MonitorDataStreamName {
   render() {
     return (
       <div class="awsui">
-        <monitor-expandable-input
+        <sc-expandable-input
           isDisabled={!this.isEditing}
           onValueChange={(value: string) => {
             this.onNameChange(value);

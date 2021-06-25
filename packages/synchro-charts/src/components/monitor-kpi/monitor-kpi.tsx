@@ -7,14 +7,14 @@ import { Annotations, ChartConfig } from '../charts/common/types';
 const MSG =
   'This visualization displays only live data. Choose a live time frame to display data in this visualization.';
 
-const renderCell: RenderCell = props => <monitor-kpi-base {...props} />;
+const renderCell: RenderCell = props => <sc-kpi-base {...props} />;
 
 @Component({
-  tag: 'monitor-kpi',
-  styleUrl: 'monitor-kpi.css',
+  tag: 'sc-kpi',
+  styleUrl: 'sc-kpi.css',
   shadow: false,
 })
-export class MonitorKpi implements ChartConfig {
+export class ScKpi implements ChartConfig {
   @Prop() viewPort: MinimalViewPortConfig;
   @Prop() widgetId!: string;
   @Prop() dataStreams!: DataStream[];
@@ -26,7 +26,7 @@ export class MonitorKpi implements ChartConfig {
   render() {
     const { viewPort, widgetId, dataStreams, annotations, liveModeOnlyMessage, isEditing, messageOverrides } = this;
     return (
-      <monitor-widget-grid
+      <sc-widget-grid
         viewPort={viewPort}
         widgetId={widgetId}
         dataStreams={dataStreams}

@@ -2,12 +2,12 @@ import { newSpecPage } from '@stencil/core/testing';
 import { Components } from '../../../../components.d';
 import { CustomHTMLElement } from '../../../../utils/types';
 import { update } from '../../common/tests/merge';
-import { MonitorStatusTimelineOverlay } from './monitor-status-timeline-overlay';
+import { ScStatusTimelineOverlay } from './sc-status-timeline-overlay';
 import { DataStream } from '../../../../utils/dataTypes';
 import { Threshold } from '../../common/types';
 import { VIEW_PORT } from '../../common/testUtil';
 import { DAY_IN_MS } from '../../../../utils/time';
-import { MonitorStatusTimelineOverlayRow } from './monitor-status-timeline-overlay-row';
+import { ScStatusTimelineOverlayRow } from './sc-status-timeline-overlay-row';
 import { DATA_STREAM_2 } from '../../../../testing/__mocks__/mockWidgetProperties';
 import { DataType, StreamType } from '../../../../utils/dataConstants';
 import { COMPARISON_OPERATOR, StatusIcon } from '../../common/constants';
@@ -85,16 +85,16 @@ const DATA_STREAMS_WITH_ALARMS_ASSOCIATED: DataStream = {
   ],
 };
 
-const timelineOverlaySpecPage = async (propOverrides: Partial<Components.MonitorStatusTimelineOverlay> = {}) => {
+const timelineOverlaySpecPage = async (propOverrides: Partial<Components.ScStatusTimelineOverlay> = {}) => {
   const page = await newSpecPage({
-    components: [MonitorStatusTimelineOverlay, MonitorStatusTimelineOverlayRow],
+    components: [ScStatusTimelineOverlay, ScStatusTimelineOverlayRow],
     html: '<div></div>',
     supportsShadowDom: false,
   });
-  const timelineOverlay = page.doc.createElement('monitor-status-timeline-overlay') as CustomHTMLElement<
-    Components.MonitorStatusTimelineOverlay
+  const timelineOverlay = page.doc.createElement('sc-status-timeline-overlay') as CustomHTMLElement<
+    Components.ScStatusTimelineOverlay
   >;
-  const props: Components.MonitorStatusTimelineOverlay = {
+  const props: Components.ScStatusTimelineOverlay = {
     thresholds: [],
     dataStreams: [],
     date: VIEW_PORT.end,
@@ -122,13 +122,13 @@ const timelineOverlaySpecPage = async (propOverrides: Partial<Components.Monitor
 it('renders no rows when give no data streams', async () => {
   const { timelineOverlay } = await timelineOverlaySpecPage({ dataStreams: [] });
 
-  expect(timelineOverlay.querySelectorAll('monitor-status-timeline-overlay-row')).toBeEmpty();
+  expect(timelineOverlay.querySelectorAll('sc-status-timeline-overlay-row')).toBeEmpty();
 });
 
 it('renders multiple rows when given multiple infos', async () => {
   const { timelineOverlay } = await timelineOverlaySpecPage({ dataStreams: [DATA_STREAM, DATA_STREAM_2] });
 
-  expect(timelineOverlay.querySelectorAll('monitor-status-timeline-overlay-row')).toHaveLength(2);
+  expect(timelineOverlay.querySelectorAll('sc-status-timeline-overlay-row')).toHaveLength(2);
 });
 
 it('displays data point on the timeline-overlay when it falls before the viewport', async () => {
@@ -148,9 +148,7 @@ it('displays data point on the timeline-overlay when it falls before the viewpor
     ],
   });
 
-  const row = timelineOverlay.querySelector(
-    'monitor-status-timeline-overlay-row'
-  ) as HTMLMonitorStatusTimelineOverlayRowElement;
+  const row = timelineOverlay.querySelector('sc-status-timeline-overlay-row') as HTMLScStatusTimelineOverlayRowElement;
   expect(row).not.toBeNull();
   expect(row.value).toEqual(POINT.y);
 });
@@ -163,7 +161,7 @@ describe('indicates breaching of thresholds', () => {
         thresholds: [ALARM_THRESHOLD],
       });
 
-      const rows = timelineOverlay.querySelectorAll('monitor-status-timeline-overlay-row');
+      const rows = timelineOverlay.querySelectorAll('sc-status-timeline-overlay-row');
       expect(rows).toHaveLength(2);
 
       expect(rows[0].label).toBe(DATA_STREAM.name);
@@ -181,7 +179,7 @@ describe('indicates breaching of thresholds', () => {
         thresholds: [ALARM_THRESHOLD],
       });
 
-      const rows = timelineOverlay.querySelectorAll('monitor-status-timeline-overlay-row');
+      const rows = timelineOverlay.querySelectorAll('sc-status-timeline-overlay-row');
       expect(rows).toHaveLength(2);
 
       expect(rows[0].valueColor).not.toBe(ALARM_THRESHOLD.color);
@@ -199,7 +197,7 @@ describe('indicates breaching of thresholds', () => {
         thresholds: [ALARM_THRESHOLD],
       });
 
-      const rows = timelineOverlay.querySelectorAll('monitor-status-timeline-overlay-row');
+      const rows = timelineOverlay.querySelectorAll('sc-status-timeline-overlay-row');
       expect(rows).toHaveLength(3);
 
       expect(rows[0].label).toBe(DATA_STREAMS_WITH_ALARMS_ASSOCIATED.name);
@@ -224,8 +222,8 @@ describe('indicates breaching of thresholds', () => {
       });
 
       const row = timelineOverlay.querySelector(
-        'monitor-status-timeline-overlay-row'
-      ) as HTMLMonitorStatusTimelineOverlayRowElement;
+        'sc-status-timeline-overlay-row'
+      ) as HTMLScStatusTimelineOverlayRowElement;
       expect(row.valueColor).not.toBe(THRESHOLD.color);
     });
     it('does color the row to match a breached threshold', async () => {
@@ -244,8 +242,8 @@ describe('indicates breaching of thresholds', () => {
         thresholds: [{ ...THRESHOLD, dataStreamIds: ['some-fake-id-that-is-not-our-data-stream-id'] }],
       });
       const row = timelineOverlay.querySelector(
-        'monitor-status-timeline-overlay-row'
-      ) as HTMLMonitorStatusTimelineOverlayRowElement;
+        'sc-status-timeline-overlay-row'
+      ) as HTMLScStatusTimelineOverlayRowElement;
 
       expect(row.valueColor).not.toBe(THRESHOLD.color);
     });
@@ -267,8 +265,8 @@ describe('indicates breaching of thresholds', () => {
         thresholds: [THRESHOLD],
       });
       const row = timelineOverlay.querySelector(
-        'monitor-status-timeline-overlay-row'
-      ) as HTMLMonitorStatusTimelineOverlayRowElement;
+        'sc-status-timeline-overlay-row'
+      ) as HTMLScStatusTimelineOverlayRowElement;
 
       expect(row.valueColor).not.toBe(THRESHOLD.color);
     });
@@ -291,8 +289,8 @@ describe('indicates breaching of thresholds', () => {
       });
 
       const row = timelineOverlay.querySelector(
-        'monitor-status-timeline-overlay-row'
-      ) as HTMLMonitorStatusTimelineOverlayRowElement;
+        'sc-status-timeline-overlay-row'
+      ) as HTMLScStatusTimelineOverlayRowElement;
       expect(row.valueColor).toBe(THRESHOLD.color);
     });
 
@@ -312,8 +310,8 @@ describe('indicates breaching of thresholds', () => {
         thresholds: [],
       });
       const row = timelineOverlay.querySelector(
-        'monitor-status-timeline-overlay-row'
-      ) as HTMLMonitorStatusTimelineOverlayRowElement;
+        'sc-status-timeline-overlay-row'
+      ) as HTMLScStatusTimelineOverlayRowElement;
 
       expect(row.valueColor).toBeUndefined();
     });
@@ -333,8 +331,8 @@ describe('indicates breaching of thresholds', () => {
         thresholds: [THRESHOLD],
       });
       const row = timelineOverlay.querySelector(
-        'monitor-status-timeline-overlay-row'
-      ) as HTMLMonitorStatusTimelineOverlayRowElement;
+        'sc-status-timeline-overlay-row'
+      ) as HTMLScStatusTimelineOverlayRowElement;
 
       expect(row.valueColor).toBeUndefined();
     });
@@ -367,8 +365,8 @@ describe('indicates breaching of thresholds', () => {
         thresholds: upperLowerThresholds,
       });
       const row = timelineOverlay.querySelector(
-        'monitor-status-timeline-overlay-row'
-      ) as HTMLMonitorStatusTimelineOverlayRowElement;
+        'sc-status-timeline-overlay-row'
+      ) as HTMLScStatusTimelineOverlayRowElement;
 
       expect(row.valueColor).toBe(LOWER_THRESHOLD.color);
     });
@@ -403,8 +401,8 @@ describe('indicates breaching of thresholds', () => {
       });
 
       const row = timelineOverlay.querySelector(
-        'monitor-status-timeline-overlay-row'
-      ) as HTMLMonitorStatusTimelineOverlayRowElement;
+        'sc-status-timeline-overlay-row'
+      ) as HTMLScStatusTimelineOverlayRowElement;
       expect(row.valueColor).toBe(UPPER_THRESHOLD.color);
     });
   });
@@ -426,7 +424,7 @@ describe('is editing', () => {
       isEditing: true,
     });
 
-    const streamName = timelineOverlay.querySelector('monitor-data-stream-name') as HTMLMonitorDataStreamNameElement;
+    const streamName = timelineOverlay.querySelector('sc-data-stream-name') as HTMLScDataStreamNameElement;
     expect(streamName).toHaveAttribute('isEditing');
   });
 
@@ -445,7 +443,7 @@ describe('is editing', () => {
       isEditing: false,
     });
 
-    const streamName = timelineOverlay.querySelector('monitor-data-stream-name') as HTMLMonitorDataStreamNameElement;
+    const streamName = timelineOverlay.querySelector('sc-data-stream-name') as HTMLScDataStreamNameElement;
     expect(streamName).not.toHaveAttribute('isEditing');
   });
 
@@ -463,7 +461,7 @@ describe('is editing', () => {
       isEditing: undefined,
     });
 
-    const streamName = timelineOverlay.querySelector('monitor-data-stream-name') as HTMLMonitorDataStreamNameElement;
+    const streamName = timelineOverlay.querySelector('sc-data-stream-name') as HTMLScDataStreamNameElement;
     expect(streamName).not.toHaveAttribute('isEditing');
   });
 });
@@ -500,8 +498,8 @@ describe('active point passed into rows', () => {
     });
 
     const row = timelineOverlay.querySelector(
-      'monitor-status-timeline-overlay-row'
-    ) as HTMLMonitorStatusTimelineOverlayRowElement;
+      'sc-status-timeline-overlay-row'
+    ) as HTMLScStatusTimelineOverlayRowElement;
     expect(row.value).toEqual(POINT_2.y);
   });
 });

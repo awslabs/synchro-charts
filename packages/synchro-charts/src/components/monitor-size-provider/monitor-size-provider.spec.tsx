@@ -4,23 +4,21 @@ import { update } from '../charts/common/tests/merge';
 
 import { CustomHTMLElement, Size } from '../../utils/types';
 import { Components } from '../../components.d';
-import { MonitorSizeProvider } from './monitor-size-provider';
+import { ScSizeProvider } from './sc-size-provider';
 import { ScBox } from '../../testing/testing-ground/sc-box/sc-box';
 import { SECOND_IN_MS } from '../../utils/time';
 import { wait } from '../../testing/wait';
 
-const newWidgetSizerSpecPage = async (containerSize: Size, overrides: Partial<Components.MonitorSizeProvider> = {}) => {
+const newWidgetSizerSpecPage = async (containerSize: Size, overrides: Partial<Components.ScSizeProvider> = {}) => {
   const { width, height } = containerSize;
   const page = await newSpecPage({
-    components: [MonitorSizeProvider, ScBox],
+    components: [ScSizeProvider, ScBox],
     html: `<div id="container" style="width: ${width}px; height: ${height}px"></div>`,
     supportsShadowDom: false,
   });
-  const widgetSizer = page.doc.createElement('monitor-size-provider') as CustomHTMLElement<
-    Components.MonitorSizeProvider
-  >;
+  const widgetSizer = page.doc.createElement('sc-size-provider') as CustomHTMLElement<Components.ScSizeProvider>;
 
-  const defaultProps: Components.MonitorSizeProvider = {
+  const defaultProps: Components.ScSizeProvider = {
     renderFunc: jest.fn((size: Size) => <sc-box size={size} />),
   };
   update(widgetSizer, { ...defaultProps, ...overrides });

@@ -2,7 +2,7 @@ import { newSpecPage } from '@stencil/core/testing';
 
 import { Components } from '../../../components.d';
 import { CustomHTMLElement } from '../../../utils/types';
-import { MonitorTableBase } from './monitor-table-base';
+import { ScTableBase } from './sc-table-base';
 import { update } from '../../charts/common/tests/merge';
 import { Row } from '../constructTableData';
 import { DataType } from '../../../utils/dataConstants';
@@ -43,15 +43,15 @@ const mockRows: Row[] = [
   },
 ];
 
-const tableBaseSpecPage = async (propOverrides: Partial<Components.MonitorTableBase> = {}) => {
+const tableBaseSpecPage = async (propOverrides: Partial<Components.ScTableBase> = {}) => {
   const page = await newSpecPage({
-    components: [MonitorTableBase],
+    components: [ScTableBase],
     html: '<div></div>',
     supportsShadowDom: false,
   });
 
-  const tableBase = page.doc.createElement('monitor-table-base') as CustomHTMLElement<Components.MonitorTableBase>;
-  const props: Components.MonitorTableBase = {
+  const tableBase = page.doc.createElement('sc-table-base') as CustomHTMLElement<Components.ScTableBase>;
+  const props: Components.ScTableBase = {
     rows: mockRows,
     columns: [],
     isEnabled: true,

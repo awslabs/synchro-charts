@@ -34,10 +34,10 @@ const tooltip = (props: Tooltip.Props) => (
 );
 
 @Component({
-  tag: 'monitor-line-chart',
+  tag: 'sc-line-chart',
   shadow: false,
 })
-export class MonitorLineChart implements ChartConfig {
+export class ScLineChart implements ChartConfig {
   /** Chart API */
   @Prop() viewPort!: MinimalViewPortConfig;
   @Prop() movement?: MovementConfig;
@@ -63,7 +63,7 @@ export class MonitorLineChart implements ChartConfig {
 
   render() {
     return (
-      <monitor-size-provider
+      <sc-size-provider
         size={this.size}
         renderFunc={(rect: RectScrollFixed) => (
           <sc-webgl-base-chart

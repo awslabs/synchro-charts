@@ -1,5 +1,5 @@
 import { Component, Element, h } from '@stencil/core';
-import { webGLRenderer } from '../../../../../components/monitor-webgl-context/webglContext';
+import { webGLRenderer } from '../../../../../components/sc-webgl-context/webglContext';
 import { chartScene } from '../../../../../components/charts/sc-bar-chart/chartScene';
 import { CHART_SIZE } from '../chartSize';
 import { HOUR_IN_MS } from '../../../../../utils/time';
@@ -31,9 +31,9 @@ const TEST_DATA_POINT_2: DataPoint<number> = {
  */
 
 @Component({
-  tag: 'monitor-multiple-bars',
+  tag: 'sc-multiple-bars',
 })
-export class MonitorMultipleBars {
+export class ScMultipleBars {
   @Element() el!: HTMLElement;
 
   componentDidLoad() {
@@ -83,9 +83,9 @@ export class MonitorMultipleBars {
 
   render() {
     return (
-      <monitor-webgl-context>
+      <sc-webgl-context>
         <div id="test-container" style={{ width: `${CHART_SIZE.width}px`, height: `${CHART_SIZE.height}px` }} />
-      </monitor-webgl-context>
+      </sc-webgl-context>
     );
   }
 }

@@ -1,0 +1,7 @@
+sc-data-stream-name {
+  color: var(--polaris-gray-900);
+}
+
+sc-data-stream-name .awsui {
+  color: inherit;
+}

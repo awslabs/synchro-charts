@@ -11,9 +11,9 @@ import { COMPARISON_OPERATOR, DataType } from '../../../..';
  */
 
 @Component({
-  tag: 'monitor-webgl-bar-chart-threshold-no-coloration',
+  tag: 'sc-webgl-bar-chart-threshold-no-coloration',
 })
-export class MonitorWebglBarChartThresholdNoColoration {
+export class ScWebglBarChartThresholdNoColoration {
   render() {
     return (
       <div>
@@ -55,7 +55,7 @@ export class MonitorWebglBarChartThresholdNoColoration {
           }}
           viewPort={{ yMin: Y_MIN, yMax: Y_MAX, start: X_MIN, end: X_MAX }}
         />
-        <monitor-webgl-context />
+        <sc-webgl-context />
       </div>
     );
   }

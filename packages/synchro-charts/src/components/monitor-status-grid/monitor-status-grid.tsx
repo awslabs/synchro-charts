@@ -12,17 +12,17 @@ const DEFAULT_LABELS_CONFIG: Required<LabelsConfig> = {
 };
 
 const renderCell: RenderCell = ({ labelsConfig, ...rest }: CellOptions) => (
-  <monitor-status-cell labelsConfig={{ ...DEFAULT_LABELS_CONFIG, ...labelsConfig }} {...rest} />
+  <sc-status-cell labelsConfig={{ ...DEFAULT_LABELS_CONFIG, ...labelsConfig }} {...rest} />
 );
 
 const MSG =
   'This visualization displays only live data. Choose a live time frame to display data in this visualization.';
 
 @Component({
-  tag: 'monitor-status-grid',
+  tag: 'sc-status-grid',
   shadow: false,
 })
-export class MonitorStatusGrid implements ChartConfig {
+export class ScStatusGrid implements ChartConfig {
   /** Status Grid Specific configuration */
   @Prop() labelsConfig: LabelsConfig;
   @Prop() viewPort: MinimalViewPortConfig;
@@ -45,7 +45,7 @@ export class MonitorStatusGrid implements ChartConfig {
       labelsConfig,
     } = this;
     return (
-      <monitor-widget-grid
+      <sc-widget-grid
         labelsConfig={labelsConfig}
         viewPort={viewPort}
         widgetId={widgetId}

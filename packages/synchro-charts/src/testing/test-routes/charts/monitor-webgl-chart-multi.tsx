@@ -23,13 +23,13 @@ const TEST_DATA_POINT: DataPoint<number> = {
  */
 
 @Component({
-  tag: 'monitor-webgl-chart-multi',
+  tag: 'sc-webgl-chart-multi',
 })
-export class MonitorWebglChartMulti {
+export class ScWebglChartMulti {
   render() {
     return (
       <div id="chart-container" style={{ border: '1px solid lightgray', height: '500px', width: '500px' }}>
-        <monitor-line-chart
+        <sc-line-chart
           widgetId="widget-a"
           dataStreams={[
             {
@@ -44,7 +44,7 @@ export class MonitorWebglChartMulti {
           viewPort={{ start: X_MIN, end: X_MAX, yMin: Y_MIN, yMax: Y_MAX, group: VIEW_PORT_GROUP }}
         />
 
-        <monitor-line-chart
+        <sc-line-chart
           widgetId="widget-b"
           dataStreams={[
             {
@@ -63,7 +63,7 @@ export class MonitorWebglChartMulti {
           }}
           viewPort={{ start: X_MIN, end: X_MAX, yMin: Y_MIN, yMax: Y_MAX, group: VIEW_PORT_GROUP }}
         />
-        <monitor-webgl-context />
+        <sc-webgl-context />
       </div>
     );
   }

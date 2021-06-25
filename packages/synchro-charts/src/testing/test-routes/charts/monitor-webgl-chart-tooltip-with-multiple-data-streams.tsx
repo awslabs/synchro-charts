@@ -25,13 +25,13 @@ const TEST_DATA_POINT_2: DataPoint<number> = {
  */
 
 @Component({
-  tag: 'monitor-webgl-chart-tooltip-with-multiple-data-streams',
+  tag: 'sc-webgl-chart-tooltip-with-multiple-data-streams',
 })
-export class MonitorWebglChartTooltipWithMultipleDataStreams {
+export class ScWebglChartTooltipWithMultipleDataStreams {
   render() {
     return (
       <div>
-        <monitor-line-chart
+        <sc-line-chart
           dataStreams={[
             {
               id: 'test',
@@ -57,7 +57,7 @@ export class MonitorWebglChartTooltipWithMultipleDataStreams {
           }}
           viewPort={{ start: X_MIN, end: X_MAX, yMin: Y_MIN, yMax: Y_MAX }}
         />
-        <monitor-webgl-context />
+        <sc-webgl-context />
       </div>
     );
   }

@@ -44,13 +44,13 @@ const TEST_DATA_POINTS_2: DataPoint[] = [
  */
 
 @Component({
-  tag: 'monitor-scatter-chart-tooltip-with-multiple-data-streams-and-trends',
+  tag: 'sc-scatter-chart-tooltip-with-multiple-data-streams-and-trends',
 })
-export class MonitorScatterChartTooltipWithMultipleDataStreamsAndTrends {
+export class ScScatterChartTooltipWithMultipleDataStreamsAndTrends {
   render() {
     return (
       <div>
-        <monitor-scatter-chart
+        <sc-scatter-chart
           dataStreams={[
             {
               id: 'test',
@@ -86,7 +86,7 @@ export class MonitorScatterChartTooltipWithMultipleDataStreamsAndTrends {
             },
           ]}
         />
-        <monitor-webgl-context />
+        <sc-webgl-context />
       </div>
     );
   }

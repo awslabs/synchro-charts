@@ -4,10 +4,10 @@ import { TIPPY_SETTINGS } from '../common/toolTipSettings';
 import { QuestionMarkIcon } from './QuestionMarkIcon';
 
 @Component({
-  tag: 'monitor-help-tooltip',
+  tag: 'sc-help-tooltip',
   shadow: false,
 })
-export class MonitorHelpTooltip {
+export class ScHelpTooltip {
   @Element() el: HTMLElement;
   @Prop() message!: string;
 

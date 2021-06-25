@@ -12,20 +12,20 @@ import { Trend, TrendResult } from "./components/charts/common/trends/types";
 import { DATA_ALIGNMENT, StatusIcon } from "./components/charts/common/constants";
 import { RectScrollFixed } from "./utils/types";
 import { LabelsConfig } from "./components/common/types";
-import { Cell, Row } from "./components/monitor-table/constructTableData";
+import { Cell, Row } from "./components/sc-table/constructTableData";
 import { RenderCell } from "./components/sc-widget-grid/types";
 import { ChartSceneCreator, ChartSceneUpdater } from "./components/charts/sc-webgl-base-chart/types";
 export namespace Components {
     interface LineChartViewportChange {
     }
-    interface MonitorAngledLineSegment {
+    interface ScAngledLineSegment {
     }
-    interface MonitorChartYRange {
+    interface ScChartYRange {
         "component": string;
     }
-    interface MonitorCirclePointShaders {
+    interface ScCirclePointShaders {
     }
-    interface MonitorDataStreamName {
+    interface ScDataStreamName {
         "date"?: Date;
         "detailedLabel"?: string;
         "displayTooltip"?: boolean;
@@ -34,26 +34,26 @@ export namespace Components {
         "onNameChange": (name: string) => void;
         "pointType"?: POINT_TYPE;
     }
-    interface MonitorExpandableInput {
+    interface ScExpandableInput {
         "isDisabled"?: boolean;
         "onValueChange": (value: string) => void;
         "value": string;
     }
-    interface MonitorExpandableInputStandard {
+    interface ScExpandableInputStandard {
     }
-    interface MonitorGrid {
+    interface ScGrid {
     }
-    interface MonitorGridTooltip {
+    interface ScGridTooltip {
         "alarmPoint"?: DataPoint<Primitive>;
         "breachedThreshold"?: Threshold;
         "isEnabled": boolean;
         "propertyPoint"?: DataPoint<Primitive>;
         "title": string;
     }
-    interface MonitorHelpTooltip {
+    interface ScHelpTooltip {
         "message": string;
     }
-    interface MonitorKpi {
+    interface ScKpi {
         "annotations": Annotations;
         "dataStreams": DataStream[];
         "isEditing": boolean;
@@ -62,7 +62,7 @@ export namespace Components {
         "viewPort": MinimalViewPortConfig;
         "widgetId": string;
     }
-    interface MonitorKpiBase {
+    interface ScKpiBase {
         "alarmPoint"?: DataPoint<Primitive>;
         "alarmStream"?: DataStream;
         "breachedThreshold"?: Threshold;
@@ -79,9 +79,9 @@ export namespace Components {
         "valueColor"?: string;
         "viewPort": MinimalViewPortConfig;
     }
-    interface MonitorKpiStandard {
+    interface ScKpiStandard {
     }
-    interface MonitorLegend {
+    interface ScLegend {
         "config": LegendConfig;
         "dataStreams": DataStream[];
         "isEditing": boolean;
@@ -94,7 +94,7 @@ export namespace Components {
         "viewPort": ViewPort;
         "visualizesAlarms": boolean;
     }
-    interface MonitorLegendRow {
+    interface ScLegendRow {
         "color": string;
         "detailedLabel"?: string;
         "icon"?: StatusIcon;
@@ -109,7 +109,7 @@ export namespace Components {
         "updateDataStreamName": ({ streamId, name }: { streamId: string; name: string }) => void;
         "valueColor"?: string;
     }
-    interface MonitorLineChart {
+    interface ScLineChart {
         "alarms"?: AlarmsConfig;
         "annotations": Annotations;
         "axis"?: Axis.Options;
@@ -138,17 +138,17 @@ export namespace Components {
         "viewPort": MinimalViewPortConfig;
         "widgetId": string;
     }
-    interface MonitorLineChartColoredPoint {
+    interface ScLineChartColoredPoint {
     }
-    interface MonitorLineChartStreamData {
+    interface ScLineChartStreamData {
     }
-    interface MonitorMultipleBars {
+    interface ScMultipleBars {
     }
-    interface MonitorMultipleLines {
+    interface ScMultipleLines {
     }
-    interface MonitorMultipleLinesOverlapping {
+    interface ScMultipleLinesOverlapping {
     }
-    interface MonitorScatterChart {
+    interface ScScatterChart {
         "alarms"?: AlarmsConfig;
         "annotations": Annotations;
         "axis"?: Axis.Options;
@@ -177,40 +177,40 @@ export namespace Components {
         "viewPort": MinimalViewPortConfig;
         "widgetId": string;
     }
-    interface MonitorScatterChartDynamicData {
+    interface ScScatterChartDynamicData {
     }
-    interface MonitorScatterChartThreshold {
+    interface ScScatterChartThreshold {
     }
-    interface MonitorScatterChartThresholdColorationBand {
+    interface ScScatterChartThresholdColorationBand {
     }
-    interface MonitorScatterChartThresholdColorationExactPoint {
+    interface ScScatterChartThresholdColorationExactPoint {
     }
-    interface MonitorScatterChartThresholdColorationMultipleDataStream {
+    interface ScScatterChartThresholdColorationMultipleDataStream {
     }
-    interface MonitorScatterChartThresholdColorationMultipleThresholds {
+    interface ScScatterChartThresholdColorationMultipleThresholds {
     }
-    interface MonitorScatterChartThresholdNoColoration {
+    interface ScScatterChartThresholdNoColoration {
     }
-    interface MonitorScatterChartTooltipWithMultipleDataStreamsAndTrends {
+    interface ScScatterChartTooltipWithMultipleDataStreamsAndTrends {
     }
-    interface MonitorScatterChartTrendLineColorConfiguration {
+    interface ScScatterChartTrendLineColorConfiguration {
     }
-    interface MonitorScatterChartTrendLineWithLegend {
+    interface ScScatterChartTrendLineWithLegend {
     }
-    interface MonitorSingleBar {
+    interface ScSingleBar {
     }
-    interface MonitorSingleColoredBar {
+    interface ScSingleColoredBar {
     }
-    interface MonitorSizeProvider {
+    interface ScSizeProvider {
         "renderFunc": (rect: RectScrollFixed) => void;
         /**
           * Size overrides. these will take precident over any auto-calculated sizing
          */
         "size"?: Size;
     }
-    interface MonitorSizeProviderStandard {
+    interface ScSizeProviderStandard {
     }
-    interface MonitorStatusCell {
+    interface ScStatusCell {
         "alarmPoint"?: DataPoint;
         "alarmStream"?: DataStream;
         "breachedThreshold"?: Threshold;
@@ -224,7 +224,7 @@ export namespace Components {
         "propertyStream"?: DataStream;
         "valueColor"?: string;
     }
-    interface MonitorStatusChart {
+    interface ScStatusChart {
         "alarms"?: AlarmsConfig;
         "annotations"?: Annotations;
         "axis"?: Axis.Options;
@@ -251,7 +251,7 @@ export namespace Components {
         "viewPort": MinimalViewPortConfig;
         "widgetId": string;
     }
-    interface MonitorStatusGrid {
+    interface ScStatusGrid {
         "annotations": Annotations;
         "dataStreams": DataStream[];
         "isEditing": boolean;
@@ -264,9 +264,9 @@ export namespace Components {
         "viewPort": MinimalViewPortConfig;
         "widgetId": string;
     }
-    interface MonitorStatusGridStandard {
+    interface ScStatusGridStandard {
     }
-    interface MonitorStatusTimelineOverlay {
+    interface ScStatusTimelineOverlay {
         "dataStreams": DataStream[];
         "date": Date;
         "isEditing": boolean;
@@ -274,7 +274,7 @@ export namespace Components {
         "thresholds": Threshold[];
         "widgetId": string;
     }
-    interface MonitorStatusTimelineOverlayRow {
+    interface ScStatusTimelineOverlayRow {
         "detailedLabel"?: string;
         "icon"?: StatusIcon;
         "isEditing": boolean;
@@ -284,11 +284,11 @@ export namespace Components {
         "value"?: Primitive;
         "valueColor"?: string;
     }
-    interface MonitorStraightLineSegment {
+    interface ScStraightLineSegment {
     }
-    interface MonitorStraightLineSegmentColored {
+    interface ScStraightLineSegmentColored {
     }
-    interface MonitorTable {
+    interface ScTable {
         "annotations": Annotations;
         "dataStreams": DataStream[];
         "liveModeOnlyMessage": string;
@@ -301,94 +301,94 @@ export namespace Components {
         "viewPort": MinimalViewPortConfig;
         "widgetId": string;
     }
-    interface MonitorTableBase {
+    interface ScTableBase {
         "columns": TableColumn[];
         "isEnabled": boolean;
         "liveModeOnlyMessage": string;
         "messageOverrides": MessageOverrides;
         "rows": Row[];
     }
-    interface MonitorTableCell {
+    interface ScTableCell {
         "cell": Cell | undefined;
     }
-    interface MonitorThresholdLegend {
+    interface ScThresholdLegend {
         "thresholds": Threshold[];
     }
-    interface MonitorThresholdLegendRow {
+    interface ScThresholdLegendRow {
         "color": string;
         "label": string;
     }
-    interface MonitorWebglBarChartDynamicBuffer {
+    interface ScWebglBarChartDynamicBuffer {
     }
-    interface MonitorWebglBarChartDynamicData {
+    interface ScWebglBarChartDynamicData {
     }
-    interface MonitorWebglBarChartDynamicDataStreams {
+    interface ScWebglBarChartDynamicDataStreams {
     }
-    interface MonitorWebglBarChartFastViewport {
+    interface ScWebglBarChartFastViewport {
     }
-    interface MonitorWebglBarChartMargin {
+    interface ScWebglBarChartMargin {
     }
-    interface MonitorWebglBarChartNegative {
+    interface ScWebglBarChartNegative {
     }
-    interface MonitorWebglBarChartPositiveNegative {
+    interface ScWebglBarChartPositiveNegative {
     }
-    interface MonitorWebglBarChartStandard {
+    interface ScWebglBarChartStandard {
     }
-    interface MonitorWebglBarChartStartFromZero {
+    interface ScWebglBarChartStartFromZero {
     }
-    interface MonitorWebglBarChartThresholdColoration {
+    interface ScWebglBarChartThresholdColoration {
     }
-    interface MonitorWebglBarChartThresholdColorationBand {
+    interface ScWebglBarChartThresholdColorationBand {
     }
-    interface MonitorWebglBarChartThresholdColorationExactPoint {
+    interface ScWebglBarChartThresholdColorationExactPoint {
     }
-    interface MonitorWebglBarChartThresholdColorationMultipleDataStream {
+    interface ScWebglBarChartThresholdColorationMultipleDataStream {
     }
-    interface MonitorWebglBarChartThresholdColorationMultipleThresholds {
+    interface ScWebglBarChartThresholdColorationMultipleThresholds {
     }
-    interface MonitorWebglBarChartThresholdNoColoration {
+    interface ScWebglBarChartThresholdNoColoration {
     }
-    interface MonitorWebglChartAnnotations {
+    interface ScWebglChartAnnotations {
     }
-    interface MonitorWebglChartAnnotationsAlwaysInViewport {
+    interface ScWebglChartAnnotationsAlwaysInViewport {
     }
-    interface MonitorWebglChartAxis {
+    interface ScWebglChartAxis {
     }
-    interface MonitorWebglChartDynamicCharts {
+    interface ScWebglChartDynamicCharts {
     }
-    interface MonitorWebglChartLargeViewport {
+    interface ScWebglChartLargeViewport {
     }
-    interface MonitorWebglChartMulti {
+    interface ScWebglChartMulti {
     }
-    interface MonitorWebglChartNoAnnotations {
+    interface ScWebglChartNoAnnotations {
     }
-    interface MonitorWebglChartStandard {
+    interface ScWebglChartStandard {
     }
-    interface MonitorWebglChartStandardWithLegend {
+    interface ScWebglChartStandardWithLegend {
     }
-    interface MonitorWebglChartStandardWithLegendOnRight {
+    interface ScWebglChartStandardWithLegendOnRight {
     }
-    interface MonitorWebglChartThresholdColorationBand {
+    interface ScWebglChartThresholdColorationBand {
     }
-    interface MonitorWebglChartThresholdColorationExactPoint {
+    interface ScWebglChartThresholdColorationExactPoint {
     }
-    interface MonitorWebglChartThresholdColorationMultipleDataStream {
+    interface ScWebglChartThresholdColorationMultipleDataStream {
     }
-    interface MonitorWebglChartThresholdColorationMultipleThresholds {
+    interface ScWebglChartThresholdColorationMultipleThresholds {
     }
-    interface MonitorWebglChartThresholdColorationSplitHalf {
+    interface ScWebglChartThresholdColorationSplitHalf {
     }
-    interface MonitorWebglChartTooltipWithMultipleDataStreams {
+    interface ScWebglChartTooltipWithMultipleDataStreams {
     }
-    interface MonitorWebglContext {
+    interface ScWebglContext {
     }
-    interface MonitorWebglLineChartDynamicBuffer {
+    interface ScWebglLineChartDynamicBuffer {
     }
-    interface MonitorWebglLineChartDynamicData {
+    interface ScWebglLineChartDynamicData {
     }
-    interface MonitorWebglLineChartDynamicDataStreams {
+    interface ScWebglLineChartDynamicDataStreams {
     }
-    interface MonitorWidgetGrid {
+    interface ScWidgetGrid {
         "annotations": Annotations;
         "collapseVertically": boolean;
         "dataStreams": DataStream[];
@@ -592,509 +592,509 @@ declare global {
         prototype: HTMLLineChartViewportChangeElement;
         new (): HTMLLineChartViewportChangeElement;
     };
-    interface HTMLMonitorAngledLineSegmentElement extends Components.MonitorAngledLineSegment, HTMLStencilElement {
+    interface HTMLScAngledLineSegmentElement extends Components.ScAngledLineSegment, HTMLStencilElement {
     }
-    var HTMLMonitorAngledLineSegmentElement: {
-        prototype: HTMLMonitorAngledLineSegmentElement;
-        new (): HTMLMonitorAngledLineSegmentElement;
+    var HTMLScAngledLineSegmentElement: {
+        prototype: HTMLScAngledLineSegmentElement;
+        new (): HTMLScAngledLineSegmentElement;
     };
-    interface HTMLMonitorChartYRangeElement extends Components.MonitorChartYRange, HTMLStencilElement {
+    interface HTMLScChartYRangeElement extends Components.ScChartYRange, HTMLStencilElement {
     }
-    var HTMLMonitorChartYRangeElement: {
-        prototype: HTMLMonitorChartYRangeElement;
-        new (): HTMLMonitorChartYRangeElement;
+    var HTMLScChartYRangeElement: {
+        prototype: HTMLScChartYRangeElement;
+        new (): HTMLScChartYRangeElement;
     };
-    interface HTMLMonitorCirclePointShadersElement extends Components.MonitorCirclePointShaders, HTMLStencilElement {
+    interface HTMLScCirclePointShadersElement extends Components.ScCirclePointShaders, HTMLStencilElement {
     }
-    var HTMLMonitorCirclePointShadersElement: {
-        prototype: HTMLMonitorCirclePointShadersElement;
-        new (): HTMLMonitorCirclePointShadersElement;
+    var HTMLScCirclePointShadersElement: {
+        prototype: HTMLScCirclePointShadersElement;
+        new (): HTMLScCirclePointShadersElement;
     };
-    interface HTMLMonitorDataStreamNameElement extends Components.MonitorDataStreamName, HTMLStencilElement {
+    interface HTMLScDataStreamNameElement extends Components.ScDataStreamName, HTMLStencilElement {
     }
-    var HTMLMonitorDataStreamNameElement: {
-        prototype: HTMLMonitorDataStreamNameElement;
-        new (): HTMLMonitorDataStreamNameElement;
+    var HTMLScDataStreamNameElement: {
+        prototype: HTMLScDataStreamNameElement;
+        new (): HTMLScDataStreamNameElement;
     };
-    interface HTMLMonitorExpandableInputElement extends Components.MonitorExpandableInput, HTMLStencilElement {
+    interface HTMLScExpandableInputElement extends Components.ScExpandableInput, HTMLStencilElement {
     }
-    var HTMLMonitorExpandableInputElement: {
-        prototype: HTMLMonitorExpandableInputElement;
-        new (): HTMLMonitorExpandableInputElement;
+    var HTMLScExpandableInputElement: {
+        prototype: HTMLScExpandableInputElement;
+        new (): HTMLScExpandableInputElement;
     };
-    interface HTMLMonitorExpandableInputStandardElement extends Components.MonitorExpandableInputStandard, HTMLStencilElement {
+    interface HTMLScExpandableInputStandardElement extends Components.ScExpandableInputStandard, HTMLStencilElement {
     }
-    var HTMLMonitorExpandableInputStandardElement: {
-        prototype: HTMLMonitorExpandableInputStandardElement;
-        new (): HTMLMonitorExpandableInputStandardElement;
+    var HTMLScExpandableInputStandardElement: {
+        prototype: HTMLScExpandableInputStandardElement;
+        new (): HTMLScExpandableInputStandardElement;
     };
-    interface HTMLMonitorGridElement extends Components.MonitorGrid, HTMLStencilElement {
+    interface HTMLScGridElement extends Components.ScGrid, HTMLStencilElement {
     }
-    var HTMLMonitorGridElement: {
-        prototype: HTMLMonitorGridElement;
-        new (): HTMLMonitorGridElement;
+    var HTMLScGridElement: {
+        prototype: HTMLScGridElement;
+        new (): HTMLScGridElement;
     };
-    interface HTMLMonitorGridTooltipElement extends Components.MonitorGridTooltip, HTMLStencilElement {
+    interface HTMLScGridTooltipElement extends Components.ScGridTooltip, HTMLStencilElement {
     }
-    var HTMLMonitorGridTooltipElement: {
-        prototype: HTMLMonitorGridTooltipElement;
-        new (): HTMLMonitorGridTooltipElement;
+    var HTMLScGridTooltipElement: {
+        prototype: HTMLScGridTooltipElement;
+        new (): HTMLScGridTooltipElement;
     };
-    interface HTMLMonitorHelpTooltipElement extends Components.MonitorHelpTooltip, HTMLStencilElement {
+    interface HTMLScHelpTooltipElement extends Components.ScHelpTooltip, HTMLStencilElement {
     }
-    var HTMLMonitorHelpTooltipElement: {
-        prototype: HTMLMonitorHelpTooltipElement;
-        new (): HTMLMonitorHelpTooltipElement;
+    var HTMLScHelpTooltipElement: {
+        prototype: HTMLScHelpTooltipElement;
+        new (): HTMLScHelpTooltipElement;
     };
-    interface HTMLMonitorKpiElement extends Components.MonitorKpi, HTMLStencilElement {
+    interface HTMLScKpiElement extends Components.ScKpi, HTMLStencilElement {
     }
-    var HTMLMonitorKpiElement: {
-        prototype: HTMLMonitorKpiElement;
-        new (): HTMLMonitorKpiElement;
+    var HTMLScKpiElement: {
+        prototype: HTMLScKpiElement;
+        new (): HTMLScKpiElement;
     };
-    interface HTMLMonitorKpiBaseElement extends Components.MonitorKpiBase, HTMLStencilElement {
+    interface HTMLScKpiBaseElement extends Components.ScKpiBase, HTMLStencilElement {
     }
-    var HTMLMonitorKpiBaseElement: {
-        prototype: HTMLMonitorKpiBaseElement;
-        new (): HTMLMonitorKpiBaseElement;
+    var HTMLScKpiBaseElement: {
+        prototype: HTMLScKpiBaseElement;
+        new (): HTMLScKpiBaseElement;
     };
-    interface HTMLMonitorKpiStandardElement extends Components.MonitorKpiStandard, HTMLStencilElement {
+    interface HTMLScKpiStandardElement extends Components.ScKpiStandard, HTMLStencilElement {
     }
-    var HTMLMonitorKpiStandardElement: {
-        prototype: HTMLMonitorKpiStandardElement;
-        new (): HTMLMonitorKpiStandardElement;
+    var HTMLScKpiStandardElement: {
+        prototype: HTMLScKpiStandardElement;
+        new (): HTMLScKpiStandardElement;
     };
-    interface HTMLMonitorLegendElement extends Components.MonitorLegend, HTMLStencilElement {
+    interface HTMLScLegendElement extends Components.ScLegend, HTMLStencilElement {
     }
-    var HTMLMonitorLegendElement: {
-        prototype: HTMLMonitorLegendElement;
-        new (): HTMLMonitorLegendElement;
+    var HTMLScLegendElement: {
+        prototype: HTMLScLegendElement;
+        new (): HTMLScLegendElement;
     };
-    interface HTMLMonitorLegendRowElement extends Components.MonitorLegendRow, HTMLStencilElement {
+    interface HTMLScLegendRowElement extends Components.ScLegendRow, HTMLStencilElement {
     }
-    var HTMLMonitorLegendRowElement: {
-        prototype: HTMLMonitorLegendRowElement;
-        new (): HTMLMonitorLegendRowElement;
+    var HTMLScLegendRowElement: {
+        prototype: HTMLScLegendRowElement;
+        new (): HTMLScLegendRowElement;
     };
-    interface HTMLMonitorLineChartElement extends Components.MonitorLineChart, HTMLStencilElement {
+    interface HTMLScLineChartElement extends Components.ScLineChart, HTMLStencilElement {
     }
-    var HTMLMonitorLineChartElement: {
-        prototype: HTMLMonitorLineChartElement;
-        new (): HTMLMonitorLineChartElement;
+    var HTMLScLineChartElement: {
+        prototype: HTMLScLineChartElement;
+        new (): HTMLScLineChartElement;
     };
-    interface HTMLMonitorLineChartColoredPointElement extends Components.MonitorLineChartColoredPoint, HTMLStencilElement {
+    interface HTMLScLineChartColoredPointElement extends Components.ScLineChartColoredPoint, HTMLStencilElement {
     }
-    var HTMLMonitorLineChartColoredPointElement: {
-        prototype: HTMLMonitorLineChartColoredPointElement;
-        new (): HTMLMonitorLineChartColoredPointElement;
+    var HTMLScLineChartColoredPointElement: {
+        prototype: HTMLScLineChartColoredPointElement;
+        new (): HTMLScLineChartColoredPointElement;
     };
-    interface HTMLMonitorLineChartStreamDataElement extends Components.MonitorLineChartStreamData, HTMLStencilElement {
+    interface HTMLScLineChartStreamDataElement extends Components.ScLineChartStreamData, HTMLStencilElement {
     }
-    var HTMLMonitorLineChartStreamDataElement: {
-        prototype: HTMLMonitorLineChartStreamDataElement;
-        new (): HTMLMonitorLineChartStreamDataElement;
+    var HTMLScLineChartStreamDataElement: {
+        prototype: HTMLScLineChartStreamDataElement;
+        new (): HTMLScLineChartStreamDataElement;
     };
-    interface HTMLMonitorMultipleBarsElement extends Components.MonitorMultipleBars, HTMLStencilElement {
+    interface HTMLScMultipleBarsElement extends Components.ScMultipleBars, HTMLStencilElement {
     }
-    var HTMLMonitorMultipleBarsElement: {
-        prototype: HTMLMonitorMultipleBarsElement;
-        new (): HTMLMonitorMultipleBarsElement;
+    var HTMLScMultipleBarsElement: {
+        prototype: HTMLScMultipleBarsElement;
+        new (): HTMLScMultipleBarsElement;
     };
-    interface HTMLMonitorMultipleLinesElement extends Components.MonitorMultipleLines, HTMLStencilElement {
+    interface HTMLScMultipleLinesElement extends Components.ScMultipleLines, HTMLStencilElement {
     }
-    var HTMLMonitorMultipleLinesElement: {
-        prototype: HTMLMonitorMultipleLinesElement;
-        new (): HTMLMonitorMultipleLinesElement;
+    var HTMLScMultipleLinesElement: {
+        prototype: HTMLScMultipleLinesElement;
+        new (): HTMLScMultipleLinesElement;
     };
-    interface HTMLMonitorMultipleLinesOverlappingElement extends Components.MonitorMultipleLinesOverlapping, HTMLStencilElement {
+    interface HTMLScMultipleLinesOverlappingElement extends Components.ScMultipleLinesOverlapping, HTMLStencilElement {
     }
-    var HTMLMonitorMultipleLinesOverlappingElement: {
-        prototype: HTMLMonitorMultipleLinesOverlappingElement;
-        new (): HTMLMonitorMultipleLinesOverlappingElement;
+    var HTMLScMultipleLinesOverlappingElement: {
+        prototype: HTMLScMultipleLinesOverlappingElement;
+        new (): HTMLScMultipleLinesOverlappingElement;
     };
-    interface HTMLMonitorScatterChartElement extends Components.MonitorScatterChart, HTMLStencilElement {
+    interface HTMLScScatterChartElement extends Components.ScScatterChart, HTMLStencilElement {
     }
-    var HTMLMonitorScatterChartElement: {
-        prototype: HTMLMonitorScatterChartElement;
-        new (): HTMLMonitorScatterChartElement;
+    var HTMLScScatterChartElement: {
+        prototype: HTMLScScatterChartElement;
+        new (): HTMLScScatterChartElement;
     };
-    interface HTMLMonitorScatterChartDynamicDataElement extends Components.MonitorScatterChartDynamicData, HTMLStencilElement {
+    interface HTMLScScatterChartDynamicDataElement extends Components.ScScatterChartDynamicData, HTMLStencilElement {
     }
-    var HTMLMonitorScatterChartDynamicDataElement: {
-        prototype: HTMLMonitorScatterChartDynamicDataElement;
-        new (): HTMLMonitorScatterChartDynamicDataElement;
+    var HTMLScScatterChartDynamicDataElement: {
+        prototype: HTMLScScatterChartDynamicDataElement;
+        new (): HTMLScScatterChartDynamicDataElement;
     };
-    interface HTMLMonitorScatterChartThresholdElement extends Components.MonitorScatterChartThreshold, HTMLStencilElement {
+    interface HTMLScScatterChartThresholdElement extends Components.ScScatterChartThreshold, HTMLStencilElement {
     }
-    var HTMLMonitorScatterChartThresholdElement: {
-        prototype: HTMLMonitorScatterChartThresholdElement;
-        new (): HTMLMonitorScatterChartThresholdElement;
+    var HTMLScScatterChartThresholdElement: {
+        prototype: HTMLScScatterChartThresholdElement;
+        new (): HTMLScScatterChartThresholdElement;
     };
-    interface HTMLMonitorScatterChartThresholdColorationBandElement extends Components.MonitorScatterChartThresholdColorationBand, HTMLStencilElement {
+    interface HTMLScScatterChartThresholdColorationBandElement extends Components.ScScatterChartThresholdColorationBand, HTMLStencilElement {
     }
-    var HTMLMonitorScatterChartThresholdColorationBandElement: {
-        prototype: HTMLMonitorScatterChartThresholdColorationBandElement;
-        new (): HTMLMonitorScatterChartThresholdColorationBandElement;
+    var HTMLScScatterChartThresholdColorationBandElement: {
+        prototype: HTMLScScatterChartThresholdColorationBandElement;
+        new (): HTMLScScatterChartThresholdColorationBandElement;
     };
-    interface HTMLMonitorScatterChartThresholdColorationExactPointElement extends Components.MonitorScatterChartThresholdColorationExactPoint, HTMLStencilElement {
+    interface HTMLScScatterChartThresholdColorationExactPointElement extends Components.ScScatterChartThresholdColorationExactPoint, HTMLStencilElement {
     }
-    var HTMLMonitorScatterChartThresholdColorationExactPointElement: {
-        prototype: HTMLMonitorScatterChartThresholdColorationExactPointElement;
-        new (): HTMLMonitorScatterChartThresholdColorationExactPointElement;
+    var HTMLScScatterChartThresholdColorationExactPointElement: {
+        prototype: HTMLScScatterChartThresholdColorationExactPointElement;
+        new (): HTMLScScatterChartThresholdColorationExactPointElement;
     };
-    interface HTMLMonitorScatterChartThresholdColorationMultipleDataStreamElement extends Components.MonitorScatterChartThresholdColorationMultipleDataStream, HTMLStencilElement {
+    interface HTMLScScatterChartThresholdColorationMultipleDataStreamElement extends Components.ScScatterChartThresholdColorationMultipleDataStream, HTMLStencilElement {
     }
-    var HTMLMonitorScatterChartThresholdColorationMultipleDataStreamElement: {
-        prototype: HTMLMonitorScatterChartThresholdColorationMultipleDataStreamElement;
-        new (): HTMLMonitorScatterChartThresholdColorationMultipleDataStreamElement;
+    var HTMLScScatterChartThresholdColorationMultipleDataStreamElement: {
+        prototype: HTMLScScatterChartThresholdColorationMultipleDataStreamElement;
+        new (): HTMLScScatterChartThresholdColorationMultipleDataStreamElement;
     };
-    interface HTMLMonitorScatterChartThresholdColorationMultipleThresholdsElement extends Components.MonitorScatterChartThresholdColorationMultipleThresholds, HTMLStencilElement {
+    interface HTMLScScatterChartThresholdColorationMultipleThresholdsElement extends Components.ScScatterChartThresholdColorationMultipleThresholds, HTMLStencilElement {
     }
-    var HTMLMonitorScatterChartThresholdColorationMultipleThresholdsElement: {
-        prototype: HTMLMonitorScatterChartThresholdColorationMultipleThresholdsElement;
-        new (): HTMLMonitorScatterChartThresholdColorationMultipleThresholdsElement;
+    var HTMLScScatterChartThresholdColorationMultipleThresholdsElement: {
+        prototype: HTMLScScatterChartThresholdColorationMultipleThresholdsElement;
+        new (): HTMLScScatterChartThresholdColorationMultipleThresholdsElement;
     };
-    interface HTMLMonitorScatterChartThresholdNoColorationElement extends Components.MonitorScatterChartThresholdNoColoration, HTMLStencilElement {
+    interface HTMLScScatterChartThresholdNoColorationElement extends Components.ScScatterChartThresholdNoColoration, HTMLStencilElement {
     }
-    var HTMLMonitorScatterChartThresholdNoColorationElement: {
-        prototype: HTMLMonitorScatterChartThresholdNoColorationElement;
-        new (): HTMLMonitorScatterChartThresholdNoColorationElement;
+    var HTMLScScatterChartThresholdNoColorationElement: {
+        prototype: HTMLScScatterChartThresholdNoColorationElement;
+        new (): HTMLScScatterChartThresholdNoColorationElement;
     };
-    interface HTMLMonitorScatterChartTooltipWithMultipleDataStreamsAndTrendsElement extends Components.MonitorScatterChartTooltipWithMultipleDataStreamsAndTrends, HTMLStencilElement {
+    interface HTMLScScatterChartTooltipWithMultipleDataStreamsAndTrendsElement extends Components.ScScatterChartTooltipWithMultipleDataStreamsAndTrends, HTMLStencilElement {
     }
-    var HTMLMonitorScatterChartTooltipWithMultipleDataStreamsAndTrendsElement: {
-        prototype: HTMLMonitorScatterChartTooltipWithMultipleDataStreamsAndTrendsElement;
-        new (): HTMLMonitorScatterChartTooltipWithMultipleDataStreamsAndTrendsElement;
+    var HTMLScScatterChartTooltipWithMultipleDataStreamsAndTrendsElement: {
+        prototype: HTMLScScatterChartTooltipWithMultipleDataStreamsAndTrendsElement;
+        new (): HTMLScScatterChartTooltipWithMultipleDataStreamsAndTrendsElement;
     };
-    interface HTMLMonitorScatterChartTrendLineColorConfigurationElement extends Components.MonitorScatterChartTrendLineColorConfiguration, HTMLStencilElement {
+    interface HTMLScScatterChartTrendLineColorConfigurationElement extends Components.ScScatterChartTrendLineColorConfiguration, HTMLStencilElement {
     }
-    var HTMLMonitorScatterChartTrendLineColorConfigurationElement: {
-        prototype: HTMLMonitorScatterChartTrendLineColorConfigurationElement;
-        new (): HTMLMonitorScatterChartTrendLineColorConfigurationElement;
+    var HTMLScScatterChartTrendLineColorConfigurationElement: {
+        prototype: HTMLScScatterChartTrendLineColorConfigurationElement;
+        new (): HTMLScScatterChartTrendLineColorConfigurationElement;
     };
-    interface HTMLMonitorScatterChartTrendLineWithLegendElement extends Components.MonitorScatterChartTrendLineWithLegend, HTMLStencilElement {
+    interface HTMLScScatterChartTrendLineWithLegendElement extends Components.ScScatterChartTrendLineWithLegend, HTMLStencilElement {
     }
-    var HTMLMonitorScatterChartTrendLineWithLegendElement: {
-        prototype: HTMLMonitorScatterChartTrendLineWithLegendElement;
-        new (): HTMLMonitorScatterChartTrendLineWithLegendElement;
+    var HTMLScScatterChartTrendLineWithLegendElement: {
+        prototype: HTMLScScatterChartTrendLineWithLegendElement;
+        new (): HTMLScScatterChartTrendLineWithLegendElement;
     };
-    interface HTMLMonitorSingleBarElement extends Components.MonitorSingleBar, HTMLStencilElement {
+    interface HTMLScSingleBarElement extends Components.ScSingleBar, HTMLStencilElement {
     }
-    var HTMLMonitorSingleBarElement: {
-        prototype: HTMLMonitorSingleBarElement;
-        new (): HTMLMonitorSingleBarElement;
+    var HTMLScSingleBarElement: {
+        prototype: HTMLScSingleBarElement;
+        new (): HTMLScSingleBarElement;
     };
-    interface HTMLMonitorSingleColoredBarElement extends Components.MonitorSingleColoredBar, HTMLStencilElement {
+    interface HTMLScSingleColoredBarElement extends Components.ScSingleColoredBar, HTMLStencilElement {
     }
-    var HTMLMonitorSingleColoredBarElement: {
-        prototype: HTMLMonitorSingleColoredBarElement;
-        new (): HTMLMonitorSingleColoredBarElement;
+    var HTMLScSingleColoredBarElement: {
+        prototype: HTMLScSingleColoredBarElement;
+        new (): HTMLScSingleColoredBarElement;
     };
-    interface HTMLMonitorSizeProviderElement extends Components.MonitorSizeProvider, HTMLStencilElement {
+    interface HTMLScSizeProviderElement extends Components.ScSizeProvider, HTMLStencilElement {
     }
-    var HTMLMonitorSizeProviderElement: {
-        prototype: HTMLMonitorSizeProviderElement;
-        new (): HTMLMonitorSizeProviderElement;
+    var HTMLScSizeProviderElement: {
+        prototype: HTMLScSizeProviderElement;
+        new (): HTMLScSizeProviderElement;
     };
-    interface HTMLMonitorSizeProviderStandardElement extends Components.MonitorSizeProviderStandard, HTMLStencilElement {
+    interface HTMLScSizeProviderStandardElement extends Components.ScSizeProviderStandard, HTMLStencilElement {
     }
-    var HTMLMonitorSizeProviderStandardElement: {
-        prototype: HTMLMonitorSizeProviderStandardElement;
-        new (): HTMLMonitorSizeProviderStandardElement;
+    var HTMLScSizeProviderStandardElement: {
+        prototype: HTMLScSizeProviderStandardElement;
+        new (): HTMLScSizeProviderStandardElement;
     };
-    interface HTMLMonitorStatusCellElement extends Components.MonitorStatusCell, HTMLStencilElement {
+    interface HTMLScStatusCellElement extends Components.ScStatusCell, HTMLStencilElement {
     }
-    var HTMLMonitorStatusCellElement: {
-        prototype: HTMLMonitorStatusCellElement;
-        new (): HTMLMonitorStatusCellElement;
+    var HTMLScStatusCellElement: {
+        prototype: HTMLScStatusCellElement;
+        new (): HTMLScStatusCellElement;
     };
-    interface HTMLMonitorStatusChartElement extends Components.MonitorStatusChart, HTMLStencilElement {
+    interface HTMLScStatusChartElement extends Components.ScStatusChart, HTMLStencilElement {
     }
-    var HTMLMonitorStatusChartElement: {
-        prototype: HTMLMonitorStatusChartElement;
-        new (): HTMLMonitorStatusChartElement;
+    var HTMLScStatusChartElement: {
+        prototype: HTMLScStatusChartElement;
+        new (): HTMLScStatusChartElement;
     };
-    interface HTMLMonitorStatusGridElement extends Components.MonitorStatusGrid, HTMLStencilElement {
+    interface HTMLScStatusGridElement extends Components.ScStatusGrid, HTMLStencilElement {
     }
-    var HTMLMonitorStatusGridElement: {
-        prototype: HTMLMonitorStatusGridElement;
-        new (): HTMLMonitorStatusGridElement;
+    var HTMLScStatusGridElement: {
+        prototype: HTMLScStatusGridElement;
+        new (): HTMLScStatusGridElement;
     };
-    interface HTMLMonitorStatusGridStandardElement extends Components.MonitorStatusGridStandard, HTMLStencilElement {
+    interface HTMLScStatusGridStandardElement extends Components.ScStatusGridStandard, HTMLStencilElement {
     }
-    var HTMLMonitorStatusGridStandardElement: {
-        prototype: HTMLMonitorStatusGridStandardElement;
-        new (): HTMLMonitorStatusGridStandardElement;
+    var HTMLScStatusGridStandardElement: {
+        prototype: HTMLScStatusGridStandardElement;
+        new (): HTMLScStatusGridStandardElement;
     };
-    interface HTMLMonitorStatusTimelineOverlayElement extends Components.MonitorStatusTimelineOverlay, HTMLStencilElement {
+    interface HTMLScStatusTimelineOverlayElement extends Components.ScStatusTimelineOverlay, HTMLStencilElement {
     }
-    var HTMLMonitorStatusTimelineOverlayElement: {
-        prototype: HTMLMonitorStatusTimelineOverlayElement;
-        new (): HTMLMonitorStatusTimelineOverlayElement;
+    var HTMLScStatusTimelineOverlayElement: {
+        prototype: HTMLScStatusTimelineOverlayElement;
+        new (): HTMLScStatusTimelineOverlayElement;
     };
-    interface HTMLMonitorStatusTimelineOverlayRowElement extends Components.MonitorStatusTimelineOverlayRow, HTMLStencilElement {
+    interface HTMLScStatusTimelineOverlayRowElement extends Components.ScStatusTimelineOverlayRow, HTMLStencilElement {
     }
-    var HTMLMonitorStatusTimelineOverlayRowElement: {
-        prototype: HTMLMonitorStatusTimelineOverlayRowElement;
-        new (): HTMLMonitorStatusTimelineOverlayRowElement;
+    var HTMLScStatusTimelineOverlayRowElement: {
+        prototype: HTMLScStatusTimelineOverlayRowElement;
+        new (): HTMLScStatusTimelineOverlayRowElement;
     };
-    interface HTMLMonitorStraightLineSegmentElement extends Components.MonitorStraightLineSegment, HTMLStencilElement {
+    interface HTMLScStraightLineSegmentElement extends Components.ScStraightLineSegment, HTMLStencilElement {
     }
-    var HTMLMonitorStraightLineSegmentElement: {
-        prototype: HTMLMonitorStraightLineSegmentElement;
-        new (): HTMLMonitorStraightLineSegmentElement;
+    var HTMLScStraightLineSegmentElement: {
+        prototype: HTMLScStraightLineSegmentElement;
+        new (): HTMLScStraightLineSegmentElement;
     };
-    interface HTMLMonitorStraightLineSegmentColoredElement extends Components.MonitorStraightLineSegmentColored, HTMLStencilElement {
+    interface HTMLScStraightLineSegmentColoredElement extends Components.ScStraightLineSegmentColored, HTMLStencilElement {
     }
-    var HTMLMonitorStraightLineSegmentColoredElement: {
-        prototype: HTMLMonitorStraightLineSegmentColoredElement;
-        new (): HTMLMonitorStraightLineSegmentColoredElement;
+    var HTMLScStraightLineSegmentColoredElement: {
+        prototype: HTMLScStraightLineSegmentColoredElement;
+        new (): HTMLScStraightLineSegmentColoredElement;
     };
-    interface HTMLMonitorTableElement extends Components.MonitorTable, HTMLStencilElement {
+    interface HTMLScTableElement extends Components.ScTable, HTMLStencilElement {
     }
-    var HTMLMonitorTableElement: {
-        prototype: HTMLMonitorTableElement;
-        new (): HTMLMonitorTableElement;
+    var HTMLScTableElement: {
+        prototype: HTMLScTableElement;
+        new (): HTMLScTableElement;
     };
-    interface HTMLMonitorTableBaseElement extends Components.MonitorTableBase, HTMLStencilElement {
+    interface HTMLScTableBaseElement extends Components.ScTableBase, HTMLStencilElement {
     }
-    var HTMLMonitorTableBaseElement: {
-        prototype: HTMLMonitorTableBaseElement;
-        new (): HTMLMonitorTableBaseElement;
+    var HTMLScTableBaseElement: {
+        prototype: HTMLScTableBaseElement;
+        new (): HTMLScTableBaseElement;
     };
-    interface HTMLMonitorTableCellElement extends Components.MonitorTableCell, HTMLStencilElement {
+    interface HTMLScTableCellElement extends Components.ScTableCell, HTMLStencilElement {
     }
-    var HTMLMonitorTableCellElement: {
-        prototype: HTMLMonitorTableCellElement;
-        new (): HTMLMonitorTableCellElement;
+    var HTMLScTableCellElement: {
+        prototype: HTMLScTableCellElement;
+        new (): HTMLScTableCellElement;
     };
-    interface HTMLMonitorThresholdLegendElement extends Components.MonitorThresholdLegend, HTMLStencilElement {
+    interface HTMLScThresholdLegendElement extends Components.ScThresholdLegend, HTMLStencilElement {
     }
-    var HTMLMonitorThresholdLegendElement: {
-        prototype: HTMLMonitorThresholdLegendElement;
-        new (): HTMLMonitorThresholdLegendElement;
+    var HTMLScThresholdLegendElement: {
+        prototype: HTMLScThresholdLegendElement;
+        new (): HTMLScThresholdLegendElement;
     };
-    interface HTMLMonitorThresholdLegendRowElement extends Components.MonitorThresholdLegendRow, HTMLStencilElement {
+    interface HTMLScThresholdLegendRowElement extends Components.ScThresholdLegendRow, HTMLStencilElement {
     }
-    var HTMLMonitorThresholdLegendRowElement: {
-        prototype: HTMLMonitorThresholdLegendRowElement;
-        new (): HTMLMonitorThresholdLegendRowElement;
+    var HTMLScThresholdLegendRowElement: {
+        prototype: HTMLScThresholdLegendRowElement;
+        new (): HTMLScThresholdLegendRowElement;
     };
-    interface HTMLMonitorWebglBarChartDynamicBufferElement extends Components.MonitorWebglBarChartDynamicBuffer, HTMLStencilElement {
+    interface HTMLScWebglBarChartDynamicBufferElement extends Components.ScWebglBarChartDynamicBuffer, HTMLStencilElement {
     }
-    var HTMLMonitorWebglBarChartDynamicBufferElement: {
-        prototype: HTMLMonitorWebglBarChartDynamicBufferElement;
-        new (): HTMLMonitorWebglBarChartDynamicBufferElement;
+    var HTMLScWebglBarChartDynamicBufferElement: {
+        prototype: HTMLScWebglBarChartDynamicBufferElement;
+        new (): HTMLScWebglBarChartDynamicBufferElement;
     };
-    interface HTMLMonitorWebglBarChartDynamicDataElement extends Components.MonitorWebglBarChartDynamicData, HTMLStencilElement {
+    interface HTMLScWebglBarChartDynamicDataElement extends Components.ScWebglBarChartDynamicData, HTMLStencilElement {
     }
-    var HTMLMonitorWebglBarChartDynamicDataElement: {
-        prototype: HTMLMonitorWebglBarChartDynamicDataElement;
-        new (): HTMLMonitorWebglBarChartDynamicDataElement;
+    var HTMLScWebglBarChartDynamicDataElement: {
+        prototype: HTMLScWebglBarChartDynamicDataElement;
+        new (): HTMLScWebglBarChartDynamicDataElement;
     };
-    interface HTMLMonitorWebglBarChartDynamicDataStreamsElement extends Components.MonitorWebglBarChartDynamicDataStreams, HTMLStencilElement {
+    interface HTMLScWebglBarChartDynamicDataStreamsElement extends Components.ScWebglBarChartDynamicDataStreams, HTMLStencilElement {
     }
-    var HTMLMonitorWebglBarChartDynamicDataStreamsElement: {
-        prototype: HTMLMonitorWebglBarChartDynamicDataStreamsElement;
-        new (): HTMLMonitorWebglBarChartDynamicDataStreamsElement;
+    var HTMLScWebglBarChartDynamicDataStreamsElement: {
+        prototype: HTMLScWebglBarChartDynamicDataStreamsElement;
+        new (): HTMLScWebglBarChartDynamicDataStreamsElement;
     };
-    interface HTMLMonitorWebglBarChartFastViewportElement extends Components.MonitorWebglBarChartFastViewport, HTMLStencilElement {
+    interface HTMLScWebglBarChartFastViewportElement extends Components.ScWebglBarChartFastViewport, HTMLStencilElement {
     }
-    var HTMLMonitorWebglBarChartFastViewportElement: {
-        prototype: HTMLMonitorWebglBarChartFastViewportElement;
-        new (): HTMLMonitorWebglBarChartFastViewportElement;
+    var HTMLScWebglBarChartFastViewportElement: {
+        prototype: HTMLScWebglBarChartFastViewportElement;
+        new (): HTMLScWebglBarChartFastViewportElement;
     };
-    interface HTMLMonitorWebglBarChartMarginElement extends Components.MonitorWebglBarChartMargin, HTMLStencilElement {
+    interface HTMLScWebglBarChartMarginElement extends Components.ScWebglBarChartMargin, HTMLStencilElement {
     }
-    var HTMLMonitorWebglBarChartMarginElement: {
-        prototype: HTMLMonitorWebglBarChartMarginElement;
-        new (): HTMLMonitorWebglBarChartMarginElement;
+    var HTMLScWebglBarChartMarginElement: {
+        prototype: HTMLScWebglBarChartMarginElement;
+        new (): HTMLScWebglBarChartMarginElement;
     };
-    interface HTMLMonitorWebglBarChartNegativeElement extends Components.MonitorWebglBarChartNegative, HTMLStencilElement {
+    interface HTMLScWebglBarChartNegativeElement extends Components.ScWebglBarChartNegative, HTMLStencilElement {
     }
-    var HTMLMonitorWebglBarChartNegativeElement: {
-        prototype: HTMLMonitorWebglBarChartNegativeElement;
-        new (): HTMLMonitorWebglBarChartNegativeElement;
+    var HTMLScWebglBarChartNegativeElement: {
+        prototype: HTMLScWebglBarChartNegativeElement;
+        new (): HTMLScWebglBarChartNegativeElement;
     };
-    interface HTMLMonitorWebglBarChartPositiveNegativeElement extends Components.MonitorWebglBarChartPositiveNegative, HTMLStencilElement {
+    interface HTMLScWebglBarChartPositiveNegativeElement extends Components.ScWebglBarChartPositiveNegative, HTMLStencilElement {
     }
-    var HTMLMonitorWebglBarChartPositiveNegativeElement: {
-        prototype: HTMLMonitorWebglBarChartPositiveNegativeElement;
-        new (): HTMLMonitorWebglBarChartPositiveNegativeElement;
+    var HTMLScWebglBarChartPositiveNegativeElement: {
+        prototype: HTMLScWebglBarChartPositiveNegativeElement;
+        new (): HTMLScWebglBarChartPositiveNegativeElement;
     };
-    interface HTMLMonitorWebglBarChartStandardElement extends Components.MonitorWebglBarChartStandard, HTMLStencilElement {
+    interface HTMLScWebglBarChartStandardElement extends Components.ScWebglBarChartStandard, HTMLStencilElement {
     }
-    var HTMLMonitorWebglBarChartStandardElement: {
-        prototype: HTMLMonitorWebglBarChartStandardElement;
-        new (): HTMLMonitorWebglBarChartStandardElement;
+    var HTMLScWebglBarChartStandardElement: {
+        prototype: HTMLScWebglBarChartStandardElement;
+        new (): HTMLScWebglBarChartStandardElement;
     };
-    interface HTMLMonitorWebglBarChartStartFromZeroElement extends Components.MonitorWebglBarChartStartFromZero, HTMLStencilElement {
+    interface HTMLScWebglBarChartStartFromZeroElement extends Components.ScWebglBarChartStartFromZero, HTMLStencilElement {
     }
-    var HTMLMonitorWebglBarChartStartFromZeroElement: {
-        prototype: HTMLMonitorWebglBarChartStartFromZeroElement;
-        new (): HTMLMonitorWebglBarChartStartFromZeroElement;
+    var HTMLScWebglBarChartStartFromZeroElement: {
+        prototype: HTMLScWebglBarChartStartFromZeroElement;
+        new (): HTMLScWebglBarChartStartFromZeroElement;
     };
-    interface HTMLMonitorWebglBarChartThresholdColorationElement extends Components.MonitorWebglBarChartThresholdColoration, HTMLStencilElement {
+    interface HTMLScWebglBarChartThresholdColorationElement extends Components.ScWebglBarChartThresholdColoration, HTMLStencilElement {
     }
-    var HTMLMonitorWebglBarChartThresholdColorationElement: {
-        prototype: HTMLMonitorWebglBarChartThresholdColorationElement;
-        new (): HTMLMonitorWebglBarChartThresholdColorationElement;
+    var HTMLScWebglBarChartThresholdColorationElement: {
+        prototype: HTMLScWebglBarChartThresholdColorationElement;
+        new (): HTMLScWebglBarChartThresholdColorationElement;
     };
-    interface HTMLMonitorWebglBarChartThresholdColorationBandElement extends Components.MonitorWebglBarChartThresholdColorationBand, HTMLStencilElement {
+    interface HTMLScWebglBarChartThresholdColorationBandElement extends Components.ScWebglBarChartThresholdColorationBand, HTMLStencilElement {
     }
-    var HTMLMonitorWebglBarChartThresholdColorationBandElement: {
-        prototype: HTMLMonitorWebglBarChartThresholdColorationBandElement;
-        new (): HTMLMonitorWebglBarChartThresholdColorationBandElement;
+    var HTMLScWebglBarChartThresholdColorationBandElement: {
+        prototype: HTMLScWebglBarChartThresholdColorationBandElement;
+        new (): HTMLScWebglBarChartThresholdColorationBandElement;
     };
-    interface HTMLMonitorWebglBarChartThresholdColorationExactPointElement extends Components.MonitorWebglBarChartThresholdColorationExactPoint, HTMLStencilElement {
+    interface HTMLScWebglBarChartThresholdColorationExactPointElement extends Components.ScWebglBarChartThresholdColorationExactPoint, HTMLStencilElement {
     }
-    var HTMLMonitorWebglBarChartThresholdColorationExactPointElement: {
-        prototype: HTMLMonitorWebglBarChartThresholdColorationExactPointElement;
-        new (): HTMLMonitorWebglBarChartThresholdColorationExactPointElement;
+    var HTMLScWebglBarChartThresholdColorationExactPointElement: {
+        prototype: HTMLScWebglBarChartThresholdColorationExactPointElement;
+        new (): HTMLScWebglBarChartThresholdColorationExactPointElement;
     };
-    interface HTMLMonitorWebglBarChartThresholdColorationMultipleDataStreamElement extends Components.MonitorWebglBarChartThresholdColorationMultipleDataStream, HTMLStencilElement {
+    interface HTMLScWebglBarChartThresholdColorationMultipleDataStreamElement extends Components.ScWebglBarChartThresholdColorationMultipleDataStream, HTMLStencilElement {
     }
-    var HTMLMonitorWebglBarChartThresholdColorationMultipleDataStreamElement: {
-        prototype: HTMLMonitorWebglBarChartThresholdColorationMultipleDataStreamElement;
-        new (): HTMLMonitorWebglBarChartThresholdColorationMultipleDataStreamElement;
+    var HTMLScWebglBarChartThresholdColorationMultipleDataStreamElement: {
+        prototype: HTMLScWebglBarChartThresholdColorationMultipleDataStreamElement;
+        new (): HTMLScWebglBarChartThresholdColorationMultipleDataStreamElement;
     };
-    interface HTMLMonitorWebglBarChartThresholdColorationMultipleThresholdsElement extends Components.MonitorWebglBarChartThresholdColorationMultipleThresholds, HTMLStencilElement {
+    interface HTMLScWebglBarChartThresholdColorationMultipleThresholdsElement extends Components.ScWebglBarChartThresholdColorationMultipleThresholds, HTMLStencilElement {
     }
-    var HTMLMonitorWebglBarChartThresholdColorationMultipleThresholdsElement: {
-        prototype: HTMLMonitorWebglBarChartThresholdColorationMultipleThresholdsElement;
-        new (): HTMLMonitorWebglBarChartThresholdColorationMultipleThresholdsElement;
+    var HTMLScWebglBarChartThresholdColorationMultipleThresholdsElement: {
+        prototype: HTMLScWebglBarChartThresholdColorationMultipleThresholdsElement;
+        new (): HTMLScWebglBarChartThresholdColorationMultipleThresholdsElement;
     };
-    interface HTMLMonitorWebglBarChartThresholdNoColorationElement extends Components.MonitorWebglBarChartThresholdNoColoration, HTMLStencilElement {
+    interface HTMLScWebglBarChartThresholdNoColorationElement extends Components.ScWebglBarChartThresholdNoColoration, HTMLStencilElement {
     }
-    var HTMLMonitorWebglBarChartThresholdNoColorationElement: {
-        prototype: HTMLMonitorWebglBarChartThresholdNoColorationElement;
-        new (): HTMLMonitorWebglBarChartThresholdNoColorationElement;
+    var HTMLScWebglBarChartThresholdNoColorationElement: {
+        prototype: HTMLScWebglBarChartThresholdNoColorationElement;
+        new (): HTMLScWebglBarChartThresholdNoColorationElement;
     };
-    interface HTMLMonitorWebglChartAnnotationsElement extends Components.MonitorWebglChartAnnotations, HTMLStencilElement {
+    interface HTMLScWebglChartAnnotationsElement extends Components.ScWebglChartAnnotations, HTMLStencilElement {
     }
-    var HTMLMonitorWebglChartAnnotationsElement: {
-        prototype: HTMLMonitorWebglChartAnnotationsElement;
-        new (): HTMLMonitorWebglChartAnnotationsElement;
+    var HTMLScWebglChartAnnotationsElement: {
+        prototype: HTMLScWebglChartAnnotationsElement;
+        new (): HTMLScWebglChartAnnotationsElement;
     };
-    interface HTMLMonitorWebglChartAnnotationsAlwaysInViewportElement extends Components.MonitorWebglChartAnnotationsAlwaysInViewport, HTMLStencilElement {
+    interface HTMLScWebglChartAnnotationsAlwaysInViewportElement extends Components.ScWebglChartAnnotationsAlwaysInViewport, HTMLStencilElement {
     }
-    var HTMLMonitorWebglChartAnnotationsAlwaysInViewportElement: {
-        prototype: HTMLMonitorWebglChartAnnotationsAlwaysInViewportElement;
-        new (): HTMLMonitorWebglChartAnnotationsAlwaysInViewportElement;
+    var HTMLScWebglChartAnnotationsAlwaysInViewportElement: {
+        prototype: HTMLScWebglChartAnnotationsAlwaysInViewportElement;
+        new (): HTMLScWebglChartAnnotationsAlwaysInViewportElement;
     };
-    interface HTMLMonitorWebglChartAxisElement extends Components.MonitorWebglChartAxis, HTMLStencilElement {
+    interface HTMLScWebglChartAxisElement extends Components.ScWebglChartAxis, HTMLStencilElement {
     }
-    var HTMLMonitorWebglChartAxisElement: {
-        prototype: HTMLMonitorWebglChartAxisElement;
-        new (): HTMLMonitorWebglChartAxisElement;
+    var HTMLScWebglChartAxisElement: {
+        prototype: HTMLScWebglChartAxisElement;
+        new (): HTMLScWebglChartAxisElement;
     };
-    interface HTMLMonitorWebglChartDynamicChartsElement extends Components.MonitorWebglChartDynamicCharts, HTMLStencilElement {
+    interface HTMLScWebglChartDynamicChartsElement extends Components.ScWebglChartDynamicCharts, HTMLStencilElement {
     }
-    var HTMLMonitorWebglChartDynamicChartsElement: {
-        prototype: HTMLMonitorWebglChartDynamicChartsElement;
-        new (): HTMLMonitorWebglChartDynamicChartsElement;
+    var HTMLScWebglChartDynamicChartsElement: {
+        prototype: HTMLScWebglChartDynamicChartsElement;
+        new (): HTMLScWebglChartDynamicChartsElement;
     };
-    interface HTMLMonitorWebglChartLargeViewportElement extends Components.MonitorWebglChartLargeViewport, HTMLStencilElement {
+    interface HTMLScWebglChartLargeViewportElement extends Components.ScWebglChartLargeViewport, HTMLStencilElement {
     }
-    var HTMLMonitorWebglChartLargeViewportElement: {
-        prototype: HTMLMonitorWebglChartLargeViewportElement;
-        new (): HTMLMonitorWebglChartLargeViewportElement;
+    var HTMLScWebglChartLargeViewportElement: {
+        prototype: HTMLScWebglChartLargeViewportElement;
+        new (): HTMLScWebglChartLargeViewportElement;
     };
-    interface HTMLMonitorWebglChartMultiElement extends Components.MonitorWebglChartMulti, HTMLStencilElement {
+    interface HTMLScWebglChartMultiElement extends Components.ScWebglChartMulti, HTMLStencilElement {
     }
-    var HTMLMonitorWebglChartMultiElement: {
-        prototype: HTMLMonitorWebglChartMultiElement;
-        new (): HTMLMonitorWebglChartMultiElement;
+    var HTMLScWebglChartMultiElement: {
+        prototype: HTMLScWebglChartMultiElement;
+        new (): HTMLScWebglChartMultiElement;
     };
-    interface HTMLMonitorWebglChartNoAnnotationsElement extends Components.MonitorWebglChartNoAnnotations, HTMLStencilElement {
+    interface HTMLScWebglChartNoAnnotationsElement extends Components.ScWebglChartNoAnnotations, HTMLStencilElement {
     }
-    var HTMLMonitorWebglChartNoAnnotationsElement: {
-        prototype: HTMLMonitorWebglChartNoAnnotationsElement;
-        new (): HTMLMonitorWebglChartNoAnnotationsElement;
+    var HTMLScWebglChartNoAnnotationsElement: {
+        prototype: HTMLScWebglChartNoAnnotationsElement;
+        new (): HTMLScWebglChartNoAnnotationsElement;
     };
-    interface HTMLMonitorWebglChartStandardElement extends Components.MonitorWebglChartStandard, HTMLStencilElement {
+    interface HTMLScWebglChartStandardElement extends Components.ScWebglChartStandard, HTMLStencilElement {
     }
-    var HTMLMonitorWebglChartStandardElement: {
-        prototype: HTMLMonitorWebglChartStandardElement;
-        new (): HTMLMonitorWebglChartStandardElement;
+    var HTMLScWebglChartStandardElement: {
+        prototype: HTMLScWebglChartStandardElement;
+        new (): HTMLScWebglChartStandardElement;
     };
-    interface HTMLMonitorWebglChartStandardWithLegendElement extends Components.MonitorWebglChartStandardWithLegend, HTMLStencilElement {
+    interface HTMLScWebglChartStandardWithLegendElement extends Components.ScWebglChartStandardWithLegend, HTMLStencilElement {
     }
-    var HTMLMonitorWebglChartStandardWithLegendElement: {
-        prototype: HTMLMonitorWebglChartStandardWithLegendElement;
-        new (): HTMLMonitorWebglChartStandardWithLegendElement;
+    var HTMLScWebglChartStandardWithLegendElement: {
+        prototype: HTMLScWebglChartStandardWithLegendElement;
+        new (): HTMLScWebglChartStandardWithLegendElement;
     };
-    interface HTMLMonitorWebglChartStandardWithLegendOnRightElement extends Components.MonitorWebglChartStandardWithLegendOnRight, HTMLStencilElement {
+    interface HTMLScWebglChartStandardWithLegendOnRightElement extends Components.ScWebglChartStandardWithLegendOnRight, HTMLStencilElement {
     }
-    var HTMLMonitorWebglChartStandardWithLegendOnRightElement: {
-        prototype: HTMLMonitorWebglChartStandardWithLegendOnRightElement;
-        new (): HTMLMonitorWebglChartStandardWithLegendOnRightElement;
+    var HTMLScWebglChartStandardWithLegendOnRightElement: {
+        prototype: HTMLScWebglChartStandardWithLegendOnRightElement;
+        new (): HTMLScWebglChartStandardWithLegendOnRightElement;
     };
-    interface HTMLMonitorWebglChartThresholdColorationBandElement extends Components.MonitorWebglChartThresholdColorationBand, HTMLStencilElement {
+    interface HTMLScWebglChartThresholdColorationBandElement extends Components.ScWebglChartThresholdColorationBand, HTMLStencilElement {
     }
-    var HTMLMonitorWebglChartThresholdColorationBandElement: {
-        prototype: HTMLMonitorWebglChartThresholdColorationBandElement;
-        new (): HTMLMonitorWebglChartThresholdColorationBandElement;
+    var HTMLScWebglChartThresholdColorationBandElement: {
+        prototype: HTMLScWebglChartThresholdColorationBandElement;
+        new (): HTMLScWebglChartThresholdColorationBandElement;
     };
-    interface HTMLMonitorWebglChartThresholdColorationExactPointElement extends Components.MonitorWebglChartThresholdColorationExactPoint, HTMLStencilElement {
+    interface HTMLScWebglChartThresholdColorationExactPointElement extends Components.ScWebglChartThresholdColorationExactPoint, HTMLStencilElement {
     }
-    var HTMLMonitorWebglChartThresholdColorationExactPointElement: {
-        prototype: HTMLMonitorWebglChartThresholdColorationExactPointElement;
-        new (): HTMLMonitorWebglChartThresholdColorationExactPointElement;
+    var HTMLScWebglChartThresholdColorationExactPointElement: {
+        prototype: HTMLScWebglChartThresholdColorationExactPointElement;
+        new (): HTMLScWebglChartThresholdColorationExactPointElement;
     };
-    interface HTMLMonitorWebglChartThresholdColorationMultipleDataStreamElement extends Components.MonitorWebglChartThresholdColorationMultipleDataStream, HTMLStencilElement {
+    interface HTMLScWebglChartThresholdColorationMultipleDataStreamElement extends Components.ScWebglChartThresholdColorationMultipleDataStream, HTMLStencilElement {
     }
-    var HTMLMonitorWebglChartThresholdColorationMultipleDataStreamElement: {
-        prototype: HTMLMonitorWebglChartThresholdColorationMultipleDataStreamElement;
-        new (): HTMLMonitorWebglChartThresholdColorationMultipleDataStreamElement;
+    var HTMLScWebglChartThresholdColorationMultipleDataStreamElement: {
+        prototype: HTMLScWebglChartThresholdColorationMultipleDataStreamElement;
+        new (): HTMLScWebglChartThresholdColorationMultipleDataStreamElement;
     };
-    interface HTMLMonitorWebglChartThresholdColorationMultipleThresholdsElement extends Components.MonitorWebglChartThresholdColorationMultipleThresholds, HTMLStencilElement {
+    interface HTMLScWebglChartThresholdColorationMultipleThresholdsElement extends Components.ScWebglChartThresholdColorationMultipleThresholds, HTMLStencilElement {
     }
-    var HTMLMonitorWebglChartThresholdColorationMultipleThresholdsElement: {
-        prototype: HTMLMonitorWebglChartThresholdColorationMultipleThresholdsElement;
-        new (): HTMLMonitorWebglChartThresholdColorationMultipleThresholdsElement;
+    var HTMLScWebglChartThresholdColorationMultipleThresholdsElement: {
+        prototype: HTMLScWebglChartThresholdColorationMultipleThresholdsElement;
+        new (): HTMLScWebglChartThresholdColorationMultipleThresholdsElement;
     };
-    interface HTMLMonitorWebglChartThresholdColorationSplitHalfElement extends Components.MonitorWebglChartThresholdColorationSplitHalf, HTMLStencilElement {
+    interface HTMLScWebglChartThresholdColorationSplitHalfElement extends Components.ScWebglChartThresholdColorationSplitHalf, HTMLStencilElement {
     }
-    var HTMLMonitorWebglChartThresholdColorationSplitHalfElement: {
-        prototype: HTMLMonitorWebglChartThresholdColorationSplitHalfElement;
-        new (): HTMLMonitorWebglChartThresholdColorationSplitHalfElement;
+    var HTMLScWebglChartThresholdColorationSplitHalfElement: {
+        prototype: HTMLScWebglChartThresholdColorationSplitHalfElement;
+        new (): HTMLScWebglChartThresholdColorationSplitHalfElement;
     };
-    interface HTMLMonitorWebglChartTooltipWithMultipleDataStreamsElement extends Components.MonitorWebglChartTooltipWithMultipleDataStreams, HTMLStencilElement {
+    interface HTMLScWebglChartTooltipWithMultipleDataStreamsElement extends Components.ScWebglChartTooltipWithMultipleDataStreams, HTMLStencilElement {
     }
-    var HTMLMonitorWebglChartTooltipWithMultipleDataStreamsElement: {
-        prototype: HTMLMonitorWebglChartTooltipWithMultipleDataStreamsElement;
-        new (): HTMLMonitorWebglChartTooltipWithMultipleDataStreamsElement;
+    var HTMLScWebglChartTooltipWithMultipleDataStreamsElement: {
+        prototype: HTMLScWebglChartTooltipWithMultipleDataStreamsElement;
+        new (): HTMLScWebglChartTooltipWithMultipleDataStreamsElement;
     };
-    interface HTMLMonitorWebglContextElement extends Components.MonitorWebglContext, HTMLStencilElement {
+    interface HTMLScWebglContextElement extends Components.ScWebglContext, HTMLStencilElement {
     }
-    var HTMLMonitorWebglContextElement: {
-        prototype: HTMLMonitorWebglContextElement;
-        new (): HTMLMonitorWebglContextElement;
+    var HTMLScWebglContextElement: {
+        prototype: HTMLScWebglContextElement;
+        new (): HTMLScWebglContextElement;
     };
-    interface HTMLMonitorWebglLineChartDynamicBufferElement extends Components.MonitorWebglLineChartDynamicBuffer, HTMLStencilElement {
+    interface HTMLScWebglLineChartDynamicBufferElement extends Components.ScWebglLineChartDynamicBuffer, HTMLStencilElement {
     }
-    var HTMLMonitorWebglLineChartDynamicBufferElement: {
-        prototype: HTMLMonitorWebglLineChartDynamicBufferElement;
-        new (): HTMLMonitorWebglLineChartDynamicBufferElement;
+    var HTMLScWebglLineChartDynamicBufferElement: {
+        prototype: HTMLScWebglLineChartDynamicBufferElement;
+        new (): HTMLScWebglLineChartDynamicBufferElement;
     };
-    interface HTMLMonitorWebglLineChartDynamicDataElement extends Components.MonitorWebglLineChartDynamicData, HTMLStencilElement {
+    interface HTMLScWebglLineChartDynamicDataElement extends Components.ScWebglLineChartDynamicData, HTMLStencilElement {
     }
-    var HTMLMonitorWebglLineChartDynamicDataElement: {
-        prototype: HTMLMonitorWebglLineChartDynamicDataElement;
-        new (): HTMLMonitorWebglLineChartDynamicDataElement;
+    var HTMLScWebglLineChartDynamicDataElement: {
+        prototype: HTMLScWebglLineChartDynamicDataElement;
+        new (): HTMLScWebglLineChartDynamicDataElement;
     };
-    interface HTMLMonitorWebglLineChartDynamicDataStreamsElement extends Components.MonitorWebglLineChartDynamicDataStreams, HTMLStencilElement {
+    interface HTMLScWebglLineChartDynamicDataStreamsElement extends Components.ScWebglLineChartDynamicDataStreams, HTMLStencilElement {
     }
-    var HTMLMonitorWebglLineChartDynamicDataStreamsElement: {
-        prototype: HTMLMonitorWebglLineChartDynamicDataStreamsElement;
-        new (): HTMLMonitorWebglLineChartDynamicDataStreamsElement;
+    var HTMLScWebglLineChartDynamicDataStreamsElement: {
+        prototype: HTMLScWebglLineChartDynamicDataStreamsElement;
+        new (): HTMLScWebglLineChartDynamicDataStreamsElement;
     };
-    interface HTMLMonitorWidgetGridElement extends Components.MonitorWidgetGrid, HTMLStencilElement {
+    interface HTMLScWidgetGridElement extends Components.ScWidgetGrid, HTMLStencilElement {
     }
-    var HTMLMonitorWidgetGridElement: {
-        prototype: HTMLMonitorWidgetGridElement;
-        new (): HTMLMonitorWidgetGridElement;
+    var HTMLScWidgetGridElement: {
+        prototype: HTMLScWidgetGridElement;
+        new (): HTMLScWidgetGridElement;
     };
     interface HTMLMultipleStatusesElement extends Components.MultipleStatuses, HTMLStencilElement {
     }
@@ -1278,90 +1278,90 @@ declare global {
     };
     interface HTMLElementTagNameMap {
         "line-chart-viewport-change": HTMLLineChartViewportChangeElement;
-        "monitor-angled-line-segment": HTMLMonitorAngledLineSegmentElement;
-        "monitor-chart-y-range": HTMLMonitorChartYRangeElement;
-        "monitor-circle-point-shaders": HTMLMonitorCirclePointShadersElement;
-        "monitor-data-stream-name": HTMLMonitorDataStreamNameElement;
-        "monitor-expandable-input": HTMLMonitorExpandableInputElement;
-        "monitor-expandable-input-standard": HTMLMonitorExpandableInputStandardElement;
-        "monitor-grid": HTMLMonitorGridElement;
-        "monitor-grid-tooltip": HTMLMonitorGridTooltipElement;
-        "monitor-help-tooltip": HTMLMonitorHelpTooltipElement;
-        "monitor-kpi": HTMLMonitorKpiElement;
-        "monitor-kpi-base": HTMLMonitorKpiBaseElement;
-        "monitor-kpi-standard": HTMLMonitorKpiStandardElement;
-        "monitor-legend": HTMLMonitorLegendElement;
-        "monitor-legend-row": HTMLMonitorLegendRowElement;
-        "monitor-line-chart": HTMLMonitorLineChartElement;
-        "monitor-line-chart-colored-point": HTMLMonitorLineChartColoredPointElement;
-        "monitor-line-chart-stream-data": HTMLMonitorLineChartStreamDataElement;
-        "monitor-multiple-bars": HTMLMonitorMultipleBarsElement;
-        "monitor-multiple-lines": HTMLMonitorMultipleLinesElement;
-        "monitor-multiple-lines-overlapping": HTMLMonitorMultipleLinesOverlappingElement;
-        "monitor-scatter-chart": HTMLMonitorScatterChartElement;
-        "monitor-scatter-chart-dynamic-data": HTMLMonitorScatterChartDynamicDataElement;
-        "monitor-scatter-chart-threshold": HTMLMonitorScatterChartThresholdElement;
-        "monitor-scatter-chart-threshold-coloration-band": HTMLMonitorScatterChartThresholdColorationBandElement;
-        "monitor-scatter-chart-threshold-coloration-exact-point": HTMLMonitorScatterChartThresholdColorationExactPointElement;
-        "monitor-scatter-chart-threshold-coloration-multiple-data-stream": HTMLMonitorScatterChartThresholdColorationMultipleDataStreamElement;
-        "monitor-scatter-chart-threshold-coloration-multiple-thresholds": HTMLMonitorScatterChartThresholdColorationMultipleThresholdsElement;
-        "monitor-scatter-chart-threshold-no-coloration": HTMLMonitorScatterChartThresholdNoColorationElement;
-        "monitor-scatter-chart-tooltip-with-multiple-data-streams-and-trends": HTMLMonitorScatterChartTooltipWithMultipleDataStreamsAndTrendsElement;
-        "monitor-scatter-chart-trend-line-color-configuration": HTMLMonitorScatterChartTrendLineColorConfigurationElement;
-        "monitor-scatter-chart-trend-line-with-legend": HTMLMonitorScatterChartTrendLineWithLegendElement;
-        "monitor-single-bar": HTMLMonitorSingleBarElement;
-        "monitor-single-colored-bar": HTMLMonitorSingleColoredBarElement;
-        "monitor-size-provider": HTMLMonitorSizeProviderElement;
-        "monitor-size-provider-standard": HTMLMonitorSizeProviderStandardElement;
-        "monitor-status-cell": HTMLMonitorStatusCellElement;
-        "monitor-status-chart": HTMLMonitorStatusChartElement;
-        "monitor-status-grid": HTMLMonitorStatusGridElement;
-        "monitor-status-grid-standard": HTMLMonitorStatusGridStandardElement;
-        "monitor-status-timeline-overlay": HTMLMonitorStatusTimelineOverlayElement;
-        "monitor-status-timeline-overlay-row": HTMLMonitorStatusTimelineOverlayRowElement;
-        "monitor-straight-line-segment": HTMLMonitorStraightLineSegmentElement;
-        "monitor-straight-line-segment-colored": HTMLMonitorStraightLineSegmentColoredElement;
-        "monitor-table": HTMLMonitorTableElement;
-        "monitor-table-base": HTMLMonitorTableBaseElement;
-        "monitor-table-cell": HTMLMonitorTableCellElement;
-        "monitor-threshold-legend": HTMLMonitorThresholdLegendElement;
-        "monitor-threshold-legend-row": HTMLMonitorThresholdLegendRowElement;
-        "monitor-webgl-bar-chart-dynamic-buffer": HTMLMonitorWebglBarChartDynamicBufferElement;
-        "monitor-webgl-bar-chart-dynamic-data": HTMLMonitorWebglBarChartDynamicDataElement;
-        "monitor-webgl-bar-chart-dynamic-data-streams": HTMLMonitorWebglBarChartDynamicDataStreamsElement;
-        "monitor-webgl-bar-chart-fast-viewport": HTMLMonitorWebglBarChartFastViewportElement;
-        "monitor-webgl-bar-chart-margin": HTMLMonitorWebglBarChartMarginElement;
-        "monitor-webgl-bar-chart-negative": HTMLMonitorWebglBarChartNegativeElement;
-        "monitor-webgl-bar-chart-positive-negative": HTMLMonitorWebglBarChartPositiveNegativeElement;
-        "monitor-webgl-bar-chart-standard": HTMLMonitorWebglBarChartStandardElement;
-        "monitor-webgl-bar-chart-start-from-zero": HTMLMonitorWebglBarChartStartFromZeroElement;
-        "monitor-webgl-bar-chart-threshold-coloration": HTMLMonitorWebglBarChartThresholdColorationElement;
-        "monitor-webgl-bar-chart-threshold-coloration-band": HTMLMonitorWebglBarChartThresholdColorationBandElement;
-        "monitor-webgl-bar-chart-threshold-coloration-exact-point": HTMLMonitorWebglBarChartThresholdColorationExactPointElement;
-        "monitor-webgl-bar-chart-threshold-coloration-multiple-data-stream": HTMLMonitorWebglBarChartThresholdColorationMultipleDataStreamElement;
-        "monitor-webgl-bar-chart-threshold-coloration-multiple-thresholds": HTMLMonitorWebglBarChartThresholdColorationMultipleThresholdsElement;
-        "monitor-webgl-bar-chart-threshold-no-coloration": HTMLMonitorWebglBarChartThresholdNoColorationElement;
-        "monitor-webgl-chart-annotations": HTMLMonitorWebglChartAnnotationsElement;
-        "monitor-webgl-chart-annotations-always-in-viewport": HTMLMonitorWebglChartAnnotationsAlwaysInViewportElement;
-        "monitor-webgl-chart-axis": HTMLMonitorWebglChartAxisElement;
-        "monitor-webgl-chart-dynamic-charts": HTMLMonitorWebglChartDynamicChartsElement;
-        "monitor-webgl-chart-large-viewport": HTMLMonitorWebglChartLargeViewportElement;
-        "monitor-webgl-chart-multi": HTMLMonitorWebglChartMultiElement;
-        "monitor-webgl-chart-no-annotations": HTMLMonitorWebglChartNoAnnotationsElement;
-        "monitor-webgl-chart-standard": HTMLMonitorWebglChartStandardElement;
-        "monitor-webgl-chart-standard-with-legend": HTMLMonitorWebglChartStandardWithLegendElement;
-        "monitor-webgl-chart-standard-with-legend-on-right": HTMLMonitorWebglChartStandardWithLegendOnRightElement;
-        "monitor-webgl-chart-threshold-coloration-band": HTMLMonitorWebglChartThresholdColorationBandElement;
-        "monitor-webgl-chart-threshold-coloration-exact-point": HTMLMonitorWebglChartThresholdColorationExactPointElement;
-        "monitor-webgl-chart-threshold-coloration-multiple-data-stream": HTMLMonitorWebglChartThresholdColorationMultipleDataStreamElement;
-        "monitor-webgl-chart-threshold-coloration-multiple-thresholds": HTMLMonitorWebglChartThresholdColorationMultipleThresholdsElement;
-        "monitor-webgl-chart-threshold-coloration-split-half": HTMLMonitorWebglChartThresholdColorationSplitHalfElement;
-        "monitor-webgl-chart-tooltip-with-multiple-data-streams": HTMLMonitorWebglChartTooltipWithMultipleDataStreamsElement;
-        "monitor-webgl-context": HTMLMonitorWebglContextElement;
-        "monitor-webgl-line-chart-dynamic-buffer": HTMLMonitorWebglLineChartDynamicBufferElement;
-        "monitor-webgl-line-chart-dynamic-data": HTMLMonitorWebglLineChartDynamicDataElement;
-        "monitor-webgl-line-chart-dynamic-data-streams": HTMLMonitorWebglLineChartDynamicDataStreamsElement;
-        "monitor-widget-grid": HTMLMonitorWidgetGridElement;
+        "sc-angled-line-segment": HTMLScAngledLineSegmentElement;
+        "sc-chart-y-range": HTMLScChartYRangeElement;
+        "sc-circle-point-shaders": HTMLScCirclePointShadersElement;
+        "sc-data-stream-name": HTMLScDataStreamNameElement;
+        "sc-expandable-input": HTMLScExpandableInputElement;
+        "sc-expandable-input-standard": HTMLScExpandableInputStandardElement;
+        "sc-grid": HTMLScGridElement;
+        "sc-grid-tooltip": HTMLScGridTooltipElement;
+        "sc-help-tooltip": HTMLScHelpTooltipElement;
+        "sc-kpi": HTMLScKpiElement;
+        "sc-kpi-base": HTMLScKpiBaseElement;
+        "sc-kpi-standard": HTMLScKpiStandardElement;
+        "sc-legend": HTMLScLegendElement;
+        "sc-legend-row": HTMLScLegendRowElement;
+        "sc-line-chart": HTMLScLineChartElement;
+        "sc-line-chart-colored-point": HTMLScLineChartColoredPointElement;
+        "sc-line-chart-stream-data": HTMLScLineChartStreamDataElement;
+        "sc-multiple-bars": HTMLScMultipleBarsElement;
+        "sc-multiple-lines": HTMLScMultipleLinesElement;
+        "sc-multiple-lines-overlapping": HTMLScMultipleLinesOverlappingElement;
+        "sc-scatter-chart": HTMLScScatterChartElement;
+        "sc-scatter-chart-dynamic-data": HTMLScScatterChartDynamicDataElement;
+        "sc-scatter-chart-threshold": HTMLScScatterChartThresholdElement;
+        "sc-scatter-chart-threshold-coloration-band": HTMLScScatterChartThresholdColorationBandElement;
+        "sc-scatter-chart-threshold-coloration-exact-point": HTMLScScatterChartThresholdColorationExactPointElement;
+        "sc-scatter-chart-threshold-coloration-multiple-data-stream": HTMLScScatterChartThresholdColorationMultipleDataStreamElement;
+        "sc-scatter-chart-threshold-coloration-multiple-thresholds": HTMLScScatterChartThresholdColorationMultipleThresholdsElement;
+        "sc-scatter-chart-threshold-no-coloration": HTMLScScatterChartThresholdNoColorationElement;
+        "sc-scatter-chart-tooltip-with-multiple-data-streams-and-trends": HTMLScScatterChartTooltipWithMultipleDataStreamsAndTrendsElement;
+        "sc-scatter-chart-trend-line-color-configuration": HTMLScScatterChartTrendLineColorConfigurationElement;
+        "sc-scatter-chart-trend-line-with-legend": HTMLScScatterChartTrendLineWithLegendElement;
+        "sc-single-bar": HTMLScSingleBarElement;
+        "sc-single-colored-bar": HTMLScSingleColoredBarElement;
+        "sc-size-provider": HTMLScSizeProviderElement;
+        "sc-size-provider-standard": HTMLScSizeProviderStandardElement;
+        "sc-status-cell": HTMLScStatusCellElement;
+        "sc-status-chart": HTMLScStatusChartElement;
+        "sc-status-grid": HTMLScStatusGridElement;
+        "sc-status-grid-standard": HTMLScStatusGridStandardElement;
+        "sc-status-timeline-overlay": HTMLScStatusTimelineOverlayElement;
+        "sc-status-timeline-overlay-row": HTMLScStatusTimelineOverlayRowElement;
+        "sc-straight-line-segment": HTMLScStraightLineSegmentElement;
+        "sc-straight-line-segment-colored": HTMLScStraightLineSegmentColoredElement;
+        "sc-table": HTMLScTableElement;
+        "sc-table-base": HTMLScTableBaseElement;
+        "sc-table-cell": HTMLScTableCellElement;
+        "sc-threshold-legend": HTMLScThresholdLegendElement;
+        "sc-threshold-legend-row": HTMLScThresholdLegendRowElement;
+        "sc-webgl-bar-chart-dynamic-buffer": HTMLScWebglBarChartDynamicBufferElement;
+        "sc-webgl-bar-chart-dynamic-data": HTMLScWebglBarChartDynamicDataElement;
+        "sc-webgl-bar-chart-dynamic-data-streams": HTMLScWebglBarChartDynamicDataStreamsElement;
+        "sc-webgl-bar-chart-fast-viewport": HTMLScWebglBarChartFastViewportElement;
+        "sc-webgl-bar-chart-margin": HTMLScWebglBarChartMarginElement;
+        "sc-webgl-bar-chart-negative": HTMLScWebglBarChartNegativeElement;
+        "sc-webgl-bar-chart-positive-negative": HTMLScWebglBarChartPositiveNegativeElement;
+        "sc-webgl-bar-chart-standard": HTMLScWebglBarChartStandardElement;
+        "sc-webgl-bar-chart-start-from-zero": HTMLScWebglBarChartStartFromZeroElement;
+        "sc-webgl-bar-chart-threshold-coloration": HTMLScWebglBarChartThresholdColorationElement;
+        "sc-webgl-bar-chart-threshold-coloration-band": HTMLScWebglBarChartThresholdColorationBandElement;
+        "sc-webgl-bar-chart-threshold-coloration-exact-point": HTMLScWebglBarChartThresholdColorationExactPointElement;
+        "sc-webgl-bar-chart-threshold-coloration-multiple-data-stream": HTMLScWebglBarChartThresholdColorationMultipleDataStreamElement;
+        "sc-webgl-bar-chart-threshold-coloration-multiple-thresholds": HTMLScWebglBarChartThresholdColorationMultipleThresholdsElement;
+        "sc-webgl-bar-chart-threshold-no-coloration": HTMLScWebglBarChartThresholdNoColorationElement;
+        "sc-webgl-chart-annotations": HTMLScWebglChartAnnotationsElement;
+        "sc-webgl-chart-annotations-always-in-viewport": HTMLScWebglChartAnnotationsAlwaysInViewportElement;
+        "sc-webgl-chart-axis": HTMLScWebglChartAxisElement;
+        "sc-webgl-chart-dynamic-charts": HTMLScWebglChartDynamicChartsElement;
+        "sc-webgl-chart-large-viewport": HTMLScWebglChartLargeViewportElement;
+        "sc-webgl-chart-multi": HTMLScWebglChartMultiElement;
+        "sc-webgl-chart-no-annotations": HTMLScWebglChartNoAnnotationsElement;
+        "sc-webgl-chart-standard": HTMLScWebglChartStandardElement;
+        "sc-webgl-chart-standard-with-legend": HTMLScWebglChartStandardWithLegendElement;
+        "sc-webgl-chart-standard-with-legend-on-right": HTMLScWebglChartStandardWithLegendOnRightElement;
+        "sc-webgl-chart-threshold-coloration-band": HTMLScWebglChartThresholdColorationBandElement;
+        "sc-webgl-chart-threshold-coloration-exact-point": HTMLScWebglChartThresholdColorationExactPointElement;
+        "sc-webgl-chart-threshold-coloration-multiple-data-stream": HTMLScWebglChartThresholdColorationMultipleDataStreamElement;
+        "sc-webgl-chart-threshold-coloration-multiple-thresholds": HTMLScWebglChartThresholdColorationMultipleThresholdsElement;
+        "sc-webgl-chart-threshold-coloration-split-half": HTMLScWebglChartThresholdColorationSplitHalfElement;
+        "sc-webgl-chart-tooltip-with-multiple-data-streams": HTMLScWebglChartTooltipWithMultipleDataStreamsElement;
+        "sc-webgl-context": HTMLScWebglContextElement;
+        "sc-webgl-line-chart-dynamic-buffer": HTMLScWebglLineChartDynamicBufferElement;
+        "sc-webgl-line-chart-dynamic-data": HTMLScWebglLineChartDynamicDataElement;
+        "sc-webgl-line-chart-dynamic-data-streams": HTMLScWebglLineChartDynamicDataStreamsElement;
+        "sc-widget-grid": HTMLScWidgetGridElement;
         "multiple-statuses": HTMLMultipleStatusesElement;
         "sc-app": HTMLScAppElement;
         "sc-bar-chart": HTMLScBarChartElement;
@@ -1397,14 +1397,14 @@ declare global {
 declare namespace LocalJSX {
     interface LineChartViewportChange {
     }
-    interface MonitorAngledLineSegment {
+    interface ScAngledLineSegment {
     }
-    interface MonitorChartYRange {
+    interface ScChartYRange {
         "component"?: string;
     }
-    interface MonitorCirclePointShaders {
+    interface ScCirclePointShaders {
     }
-    interface MonitorDataStreamName {
+    interface ScDataStreamName {
         "date"?: Date;
         "detailedLabel"?: string;
         "displayTooltip"?: boolean;
@@ -1413,26 +1413,26 @@ declare namespace LocalJSX {
         "onNameChange": (name: string) => void;
         "pointType"?: POINT_TYPE;
     }
-    interface MonitorExpandableInput {
+    interface ScExpandableInput {
         "isDisabled"?: boolean;
         "onValueChange": (value: string) => void;
         "value": string;
     }
-    interface MonitorExpandableInputStandard {
+    interface ScExpandableInputStandard {
     }
-    interface MonitorGrid {
+    interface ScGrid {
     }
-    interface MonitorGridTooltip {
+    interface ScGridTooltip {
         "alarmPoint"?: DataPoint<Primitive>;
         "breachedThreshold"?: Threshold;
         "isEnabled"?: boolean;
         "propertyPoint"?: DataPoint<Primitive>;
         "title"?: string;
     }
-    interface MonitorHelpTooltip {
+    interface ScHelpTooltip {
         "message": string;
     }
-    interface MonitorKpi {
+    interface ScKpi {
         "annotations"?: Annotations;
         "dataStreams": DataStream[];
         "isEditing"?: boolean;
@@ -1441,7 +1441,7 @@ declare namespace LocalJSX {
         "viewPort"?: MinimalViewPortConfig;
         "widgetId": string;
     }
-    interface MonitorKpiBase {
+    interface ScKpiBase {
         "alarmPoint"?: DataPoint<Primitive>;
         "alarmStream"?: DataStream;
         "breachedThreshold"?: Threshold;
@@ -1458,9 +1458,9 @@ declare namespace LocalJSX {
         "valueColor"?: string;
         "viewPort": MinimalViewPortConfig;
     }
-    interface MonitorKpiStandard {
+    interface ScKpiStandard {
     }
-    interface MonitorLegend {
+    interface ScLegend {
         "config": LegendConfig;
         "dataStreams": DataStream[];
         "isEditing"?: boolean;
@@ -1473,7 +1473,7 @@ declare namespace LocalJSX {
         "viewPort": ViewPort;
         "visualizesAlarms": boolean;
     }
-    interface MonitorLegendRow {
+    interface ScLegendRow {
         "color": string;
         "detailedLabel"?: string;
         "icon"?: StatusIcon;
@@ -1488,7 +1488,7 @@ declare namespace LocalJSX {
         "updateDataStreamName": ({ streamId, name }: { streamId: string; name: string }) => void;
         "valueColor"?: string;
     }
-    interface MonitorLineChart {
+    interface ScLineChart {
         "alarms"?: AlarmsConfig;
         "annotations"?: Annotations;
         "axis"?: Axis.Options;
@@ -1517,17 +1517,17 @@ declare namespace LocalJSX {
         "viewPort": MinimalViewPortConfig;
         "widgetId": string;
     }
-    interface MonitorLineChartColoredPoint {
+    interface ScLineChartColoredPoint {
     }
-    interface MonitorLineChartStreamData {
+    interface ScLineChartStreamData {
     }
-    interface MonitorMultipleBars {
+    interface ScMultipleBars {
     }
-    interface MonitorMultipleLines {
+    interface ScMultipleLines {
     }
-    interface MonitorMultipleLinesOverlapping {
+    interface ScMultipleLinesOverlapping {
     }
-    interface MonitorScatterChart {
+    interface ScScatterChart {
         "alarms"?: AlarmsConfig;
         "annotations"?: Annotations;
         "axis"?: Axis.Options;
@@ -1556,40 +1556,40 @@ declare namespace LocalJSX {
         "viewPort"?: MinimalViewPortConfig;
         "widgetId": string;
     }
-    interface MonitorScatterChartDynamicData {
+    interface ScScatterChartDynamicData {
     }
-    interface MonitorScatterChartThreshold {
+    interface ScScatterChartThreshold {
     }
-    interface MonitorScatterChartThresholdColorationBand {
+    interface ScScatterChartThresholdColorationBand {
     }
-    interface MonitorScatterChartThresholdColorationExactPoint {
+    interface ScScatterChartThresholdColorationExactPoint {
     }
-    interface MonitorScatterChartThresholdColorationMultipleDataStream {
+    interface ScScatterChartThresholdColorationMultipleDataStream {
     }
-    interface MonitorScatterChartThresholdColorationMultipleThresholds {
+    interface ScScatterChartThresholdColorationMultipleThresholds {
     }
-    interface MonitorScatterChartThresholdNoColoration {
+    interface ScScatterChartThresholdNoColoration {
     }
-    interface MonitorScatterChartTooltipWithMultipleDataStreamsAndTrends {
+    interface ScScatterChartTooltipWithMultipleDataStreamsAndTrends {
     }
-    interface MonitorScatterChartTrendLineColorConfiguration {
+    interface ScScatterChartTrendLineColorConfiguration {
     }
-    interface MonitorScatterChartTrendLineWithLegend {
+    interface ScScatterChartTrendLineWithLegend {
     }
-    interface MonitorSingleBar {
+    interface ScSingleBar {
     }
-    interface MonitorSingleColoredBar {
+    interface ScSingleColoredBar {
     }
-    interface MonitorSizeProvider {
+    interface ScSizeProvider {
         "renderFunc": (rect: RectScrollFixed) => void;
         /**
           * Size overrides. these will take precident over any auto-calculated sizing
          */
         "size"?: Size;
     }
-    interface MonitorSizeProviderStandard {
+    interface ScSizeProviderStandard {
     }
-    interface MonitorStatusCell {
+    interface ScStatusCell {
         "alarmPoint"?: DataPoint;
         "alarmStream"?: DataStream;
         "breachedThreshold"?: Threshold;
@@ -1603,7 +1603,7 @@ declare namespace LocalJSX {
         "propertyStream"?: DataStream;
         "valueColor"?: string;
     }
-    interface MonitorStatusChart {
+    interface ScStatusChart {
         "alarms"?: AlarmsConfig;
         "annotations"?: Annotations;
         "axis"?: Axis.Options;
@@ -1630,7 +1630,7 @@ declare namespace LocalJSX {
         "viewPort"?: MinimalViewPortConfig;
         "widgetId": string;
     }
-    interface MonitorStatusGrid {
+    interface ScStatusGrid {
         "annotations"?: Annotations;
         "dataStreams": DataStream[];
         "isEditing"?: boolean;
@@ -1643,9 +1643,9 @@ declare namespace LocalJSX {
         "viewPort"?: MinimalViewPortConfig;
         "widgetId": string;
     }
-    interface MonitorStatusGridStandard {
+    interface ScStatusGridStandard {
     }
-    interface MonitorStatusTimelineOverlay {
+    interface ScStatusTimelineOverlay {
         "dataStreams": DataStream[];
         "date": Date;
         "isEditing": boolean;
@@ -1654,7 +1654,7 @@ declare namespace LocalJSX {
         "thresholds": Threshold[];
         "widgetId": string;
     }
-    interface MonitorStatusTimelineOverlayRow {
+    interface ScStatusTimelineOverlayRow {
         "detailedLabel"?: string;
         "icon"?: StatusIcon;
         "isEditing": boolean;
@@ -1664,11 +1664,11 @@ declare namespace LocalJSX {
         "value"?: Primitive;
         "valueColor"?: string;
     }
-    interface MonitorStraightLineSegment {
+    interface ScStraightLineSegment {
     }
-    interface MonitorStraightLineSegmentColored {
+    interface ScStraightLineSegmentColored {
     }
-    interface MonitorTable {
+    interface ScTable {
         "annotations"?: Annotations;
         "dataStreams": DataStream[];
         "liveModeOnlyMessage"?: string;
@@ -1681,94 +1681,94 @@ declare namespace LocalJSX {
         "viewPort"?: MinimalViewPortConfig;
         "widgetId": string;
     }
-    interface MonitorTableBase {
+    interface ScTableBase {
         "columns": TableColumn[];
         "isEnabled": boolean;
         "liveModeOnlyMessage"?: string;
         "messageOverrides": MessageOverrides;
         "rows": Row[];
     }
-    interface MonitorTableCell {
+    interface ScTableCell {
         "cell": Cell | undefined;
     }
-    interface MonitorThresholdLegend {
+    interface ScThresholdLegend {
         "thresholds": Threshold[];
     }
-    interface MonitorThresholdLegendRow {
+    interface ScThresholdLegendRow {
         "color": string;
         "label": string;
     }
-    interface MonitorWebglBarChartDynamicBuffer {
+    interface ScWebglBarChartDynamicBuffer {
     }
-    interface MonitorWebglBarChartDynamicData {
+    interface ScWebglBarChartDynamicData {
     }
-    interface MonitorWebglBarChartDynamicDataStreams {
+    interface ScWebglBarChartDynamicDataStreams {
     }
-    interface MonitorWebglBarChartFastViewport {
+    interface ScWebglBarChartFastViewport {
     }
-    interface MonitorWebglBarChartMargin {
+    interface ScWebglBarChartMargin {
     }
-    interface MonitorWebglBarChartNegative {
+    interface ScWebglBarChartNegative {
     }
-    interface MonitorWebglBarChartPositiveNegative {
+    interface ScWebglBarChartPositiveNegative {
     }
-    interface MonitorWebglBarChartStandard {
+    interface ScWebglBarChartStandard {
     }
-    interface MonitorWebglBarChartStartFromZero {
+    interface ScWebglBarChartStartFromZero {
     }
-    interface MonitorWebglBarChartThresholdColoration {
+    interface ScWebglBarChartThresholdColoration {
     }
-    interface MonitorWebglBarChartThresholdColorationBand {
+    interface ScWebglBarChartThresholdColorationBand {
     }
-    interface MonitorWebglBarChartThresholdColorationExactPoint {
+    interface ScWebglBarChartThresholdColorationExactPoint {
     }
-    interface MonitorWebglBarChartThresholdColorationMultipleDataStream {
+    interface ScWebglBarChartThresholdColorationMultipleDataStream {
     }
-    interface MonitorWebglBarChartThresholdColorationMultipleThresholds {
+    interface ScWebglBarChartThresholdColorationMultipleThresholds {
     }
-    interface MonitorWebglBarChartThresholdNoColoration {
+    interface ScWebglBarChartThresholdNoColoration {
     }
-    interface MonitorWebglChartAnnotations {
+    interface ScWebglChartAnnotations {
     }
-    interface MonitorWebglChartAnnotationsAlwaysInViewport {
+    interface ScWebglChartAnnotationsAlwaysInViewport {
     }
-    interface MonitorWebglChartAxis {
+    interface ScWebglChartAxis {
     }
-    interface MonitorWebglChartDynamicCharts {
+    interface ScWebglChartDynamicCharts {
     }
-    interface MonitorWebglChartLargeViewport {
+    interface ScWebglChartLargeViewport {
     }
-    interface MonitorWebglChartMulti {
+    interface ScWebglChartMulti {
     }
-    interface MonitorWebglChartNoAnnotations {
+    interface ScWebglChartNoAnnotations {
     }
-    interface MonitorWebglChartStandard {
+    interface ScWebglChartStandard {
     }
-    interface MonitorWebglChartStandardWithLegend {
+    interface ScWebglChartStandardWithLegend {
     }
-    interface MonitorWebglChartStandardWithLegendOnRight {
+    interface ScWebglChartStandardWithLegendOnRight {
     }
-    interface MonitorWebglChartThresholdColorationBand {
+    interface ScWebglChartThresholdColorationBand {
     }
-    interface MonitorWebglChartThresholdColorationExactPoint {
+    interface ScWebglChartThresholdColorationExactPoint {
     }
-    interface MonitorWebglChartThresholdColorationMultipleDataStream {
+    interface ScWebglChartThresholdColorationMultipleDataStream {
     }
-    interface MonitorWebglChartThresholdColorationMultipleThresholds {
+    interface ScWebglChartThresholdColorationMultipleThresholds {
     }
-    interface MonitorWebglChartThresholdColorationSplitHalf {
+    interface ScWebglChartThresholdColorationSplitHalf {
     }
-    interface MonitorWebglChartTooltipWithMultipleDataStreams {
+    interface ScWebglChartTooltipWithMultipleDataStreams {
     }
-    interface MonitorWebglContext {
+    interface ScWebglContext {
     }
-    interface MonitorWebglLineChartDynamicBuffer {
+    interface ScWebglLineChartDynamicBuffer {
     }
-    interface MonitorWebglLineChartDynamicData {
+    interface ScWebglLineChartDynamicData {
     }
-    interface MonitorWebglLineChartDynamicDataStreams {
+    interface ScWebglLineChartDynamicDataStreams {
     }
-    interface MonitorWidgetGrid {
+    interface ScWidgetGrid {
         "annotations"?: Annotations;
         "collapseVertically"?: boolean;
         "dataStreams": DataStream[];
@@ -1972,90 +1972,90 @@ declare namespace LocalJSX {
     }
     interface IntrinsicElements {
         "line-chart-viewport-change": LineChartViewportChange;
-        "monitor-angled-line-segment": MonitorAngledLineSegment;
-        "monitor-chart-y-range": MonitorChartYRange;
-        "monitor-circle-point-shaders": MonitorCirclePointShaders;
-        "monitor-data-stream-name": MonitorDataStreamName;
-        "monitor-expandable-input": MonitorExpandableInput;
-        "monitor-expandable-input-standard": MonitorExpandableInputStandard;
-        "monitor-grid": MonitorGrid;
-        "monitor-grid-tooltip": MonitorGridTooltip;
-        "monitor-help-tooltip": MonitorHelpTooltip;
-        "monitor-kpi": MonitorKpi;
-        "monitor-kpi-base": MonitorKpiBase;
-        "monitor-kpi-standard": MonitorKpiStandard;
-        "monitor-legend": MonitorLegend;
-        "monitor-legend-row": MonitorLegendRow;
-        "monitor-line-chart": MonitorLineChart;
-        "monitor-line-chart-colored-point": MonitorLineChartColoredPoint;
-        "monitor-line-chart-stream-data": MonitorLineChartStreamData;
-        "monitor-multiple-bars": MonitorMultipleBars;
-        "monitor-multiple-lines": MonitorMultipleLines;
-        "monitor-multiple-lines-overlapping": MonitorMultipleLinesOverlapping;
-        "monitor-scatter-chart": MonitorScatterChart;
-        "monitor-scatter-chart-dynamic-data": MonitorScatterChartDynamicData;
-        "monitor-scatter-chart-threshold": MonitorScatterChartThreshold;
-        "monitor-scatter-chart-threshold-coloration-band": MonitorScatterChartThresholdColorationBand;
-        "monitor-scatter-chart-threshold-coloration-exact-point": MonitorScatterChartThresholdColorationExactPoint;
-        "monitor-scatter-chart-threshold-coloration-multiple-data-stream": MonitorScatterChartThresholdColorationMultipleDataStream;
-        "monitor-scatter-chart-threshold-coloration-multiple-thresholds": MonitorScatterChartThresholdColorationMultipleThresholds;
-        "monitor-scatter-chart-threshold-no-coloration": MonitorScatterChartThresholdNoColoration;
-        "monitor-scatter-chart-tooltip-with-multiple-data-streams-and-trends": MonitorScatterChartTooltipWithMultipleDataStreamsAndTrends;
-        "monitor-scatter-chart-trend-line-color-configuration": MonitorScatterChartTrendLineColorConfiguration;
-        "monitor-scatter-chart-trend-line-with-legend": MonitorScatterChartTrendLineWithLegend;
-        "monitor-single-bar": MonitorSingleBar;
-        "monitor-single-colored-bar": MonitorSingleColoredBar;
-        "monitor-size-provider": MonitorSizeProvider;
-        "monitor-size-provider-standard": MonitorSizeProviderStandard;
-        "monitor-status-cell": MonitorStatusCell;
-        "monitor-status-chart": MonitorStatusChart;
-        "monitor-status-grid": MonitorStatusGrid;
-        "monitor-status-grid-standard": MonitorStatusGridStandard;
-        "monitor-status-timeline-overlay": MonitorStatusTimelineOverlay;
-        "monitor-status-timeline-overlay-row": MonitorStatusTimelineOverlayRow;
-        "monitor-straight-line-segment": MonitorStraightLineSegment;
-        "monitor-straight-line-segment-colored": MonitorStraightLineSegmentColored;
-        "monitor-table": MonitorTable;
-        "monitor-table-base": MonitorTableBase;
-        "monitor-table-cell": MonitorTableCell;
-        "monitor-threshold-legend": MonitorThresholdLegend;
-        "monitor-threshold-legend-row": MonitorThresholdLegendRow;
-        "monitor-webgl-bar-chart-dynamic-buffer": MonitorWebglBarChartDynamicBuffer;
-        "monitor-webgl-bar-chart-dynamic-data": MonitorWebglBarChartDynamicData;
-        "monitor-webgl-bar-chart-dynamic-data-streams": MonitorWebglBarChartDynamicDataStreams;
-        "monitor-webgl-bar-chart-fast-viewport": MonitorWebglBarChartFastViewport;
-        "monitor-webgl-bar-chart-margin": MonitorWebglBarChartMargin;
-        "monitor-webgl-bar-chart-negative": MonitorWebglBarChartNegative;
-        "monitor-webgl-bar-chart-positive-negative": MonitorWebglBarChartPositiveNegative;
-        "monitor-webgl-bar-chart-standard": MonitorWebglBarChartStandard;
-        "monitor-webgl-bar-chart-start-from-zero": MonitorWebglBarChartStartFromZero;
-        "monitor-webgl-bar-chart-threshold-coloration": MonitorWebglBarChartThresholdColoration;
-        "monitor-webgl-bar-chart-threshold-coloration-band": MonitorWebglBarChartThresholdColorationBand;
-        "monitor-webgl-bar-chart-threshold-coloration-exact-point": MonitorWebglBarChartThresholdColorationExactPoint;
-        "monitor-webgl-bar-chart-threshold-coloration-multiple-data-stream": MonitorWebglBarChartThresholdColorationMultipleDataStream;
-        "monitor-webgl-bar-chart-threshold-coloration-multiple-thresholds": MonitorWebglBarChartThresholdColorationMultipleThresholds;
-        "monitor-webgl-bar-chart-threshold-no-coloration": MonitorWebglBarChartThresholdNoColoration;
-        "monitor-webgl-chart-annotations": MonitorWebglChartAnnotations;
-        "monitor-webgl-chart-annotations-always-in-viewport": MonitorWebglChartAnnotationsAlwaysInViewport;
-        "monitor-webgl-chart-axis": MonitorWebglChartAxis;
-        "monitor-webgl-chart-dynamic-charts": MonitorWebglChartDynamicCharts;
-        "monitor-webgl-chart-large-viewport": MonitorWebglChartLargeViewport;
-        "monitor-webgl-chart-multi": MonitorWebglChartMulti;
-        "monitor-webgl-chart-no-annotations": MonitorWebglChartNoAnnotations;
-        "monitor-webgl-chart-standard": MonitorWebglChartStandard;
-        "monitor-webgl-chart-standard-with-legend": MonitorWebglChartStandardWithLegend;
-        "monitor-webgl-chart-standard-with-legend-on-right": MonitorWebglChartStandardWithLegendOnRight;
-        "monitor-webgl-chart-threshold-coloration-band": MonitorWebglChartThresholdColorationBand;
-        "monitor-webgl-chart-threshold-coloration-exact-point": MonitorWebglChartThresholdColorationExactPoint;
-        "monitor-webgl-chart-threshold-coloration-multiple-data-stream": MonitorWebglChartThresholdColorationMultipleDataStream;
-        "monitor-webgl-chart-threshold-coloration-multiple-thresholds": MonitorWebglChartThresholdColorationMultipleThresholds;
-        "monitor-webgl-chart-threshold-coloration-split-half": MonitorWebglChartThresholdColorationSplitHalf;
-        "monitor-webgl-chart-tooltip-with-multiple-data-streams": MonitorWebglChartTooltipWithMultipleDataStreams;
-        "monitor-webgl-context": MonitorWebglContext;
-        "monitor-webgl-line-chart-dynamic-buffer": MonitorWebglLineChartDynamicBuffer;
-        "monitor-webgl-line-chart-dynamic-data": MonitorWebglLineChartDynamicData;
-        "monitor-webgl-line-chart-dynamic-data-streams": MonitorWebglLineChartDynamicDataStreams;
-        "monitor-widget-grid": MonitorWidgetGrid;
+        "sc-angled-line-segment": ScAngledLineSegment;
+        "sc-chart-y-range": ScChartYRange;
+        "sc-circle-point-shaders": ScCirclePointShaders;
+        "sc-data-stream-name": ScDataStreamName;
+        "sc-expandable-input": ScExpandableInput;
+        "sc-expandable-input-standard": ScExpandableInputStandard;
+        "sc-grid": ScGrid;
+        "sc-grid-tooltip": ScGridTooltip;
+        "sc-help-tooltip": ScHelpTooltip;
+        "sc-kpi": ScKpi;
+        "sc-kpi-base": ScKpiBase;
+        "sc-kpi-standard": ScKpiStandard;
+        "sc-legend": ScLegend;
+        "sc-legend-row": ScLegendRow;
+        "sc-line-chart": ScLineChart;
+        "sc-line-chart-colored-point": ScLineChartColoredPoint;
+        "sc-line-chart-stream-data": ScLineChartStreamData;
+        "sc-multiple-bars": ScMultipleBars;
+        "sc-multiple-lines": ScMultipleLines;
+        "sc-multiple-lines-overlapping": ScMultipleLinesOverlapping;
+        "sc-scatter-chart": ScScatterChart;
+        "sc-scatter-chart-dynamic-data": ScScatterChartDynamicData;
+        "sc-scatter-chart-threshold": ScScatterChartThreshold;
+        "sc-scatter-chart-threshold-coloration-band": ScScatterChartThresholdColorationBand;
+        "sc-scatter-chart-threshold-coloration-exact-point": ScScatterChartThresholdColorationExactPoint;
+        "sc-scatter-chart-threshold-coloration-multiple-data-stream": ScScatterChartThresholdColorationMultipleDataStream;
+        "sc-scatter-chart-threshold-coloration-multiple-thresholds": ScScatterChartThresholdColorationMultipleThresholds;
+        "sc-scatter-chart-threshold-no-coloration": ScScatterChartThresholdNoColoration;
+        "sc-scatter-chart-tooltip-with-multiple-data-streams-and-trends": ScScatterChartTooltipWithMultipleDataStreamsAndTrends;
+        "sc-scatter-chart-trend-line-color-configuration": ScScatterChartTrendLineColorConfiguration;
+        "sc-scatter-chart-trend-line-with-legend": ScScatterChartTrendLineWithLegend;
+        "sc-single-bar": ScSingleBar;
+        "sc-single-colored-bar": ScSingleColoredBar;
+        "sc-size-provider": ScSizeProvider;
+        "sc-size-provider-standard": ScSizeProviderStandard;
+        "sc-status-cell": ScStatusCell;
+        "sc-status-chart": ScStatusChart;
+        "sc-status-grid": ScStatusGrid;
+        "sc-status-grid-standard": ScStatusGridStandard;
+        "sc-status-timeline-overlay": ScStatusTimelineOverlay;
+        "sc-status-timeline-overlay-row": ScStatusTimelineOverlayRow;
+        "sc-straight-line-segment": ScStraightLineSegment;
+        "sc-straight-line-segment-colored": ScStraightLineSegmentColored;
+        "sc-table": ScTable;
+        "sc-table-base": ScTableBase;
+        "sc-table-cell": ScTableCell;
+        "sc-threshold-legend": ScThresholdLegend;
+        "sc-threshold-legend-row": ScThresholdLegendRow;
+        "sc-webgl-bar-chart-dynamic-buffer": ScWebglBarChartDynamicBuffer;
+        "sc-webgl-bar-chart-dynamic-data": ScWebglBarChartDynamicData;
+        "sc-webgl-bar-chart-dynamic-data-streams": ScWebglBarChartDynamicDataStreams;
+        "sc-webgl-bar-chart-fast-viewport": ScWebglBarChartFastViewport;
+        "sc-webgl-bar-chart-margin": ScWebglBarChartMargin;
+        "sc-webgl-bar-chart-negative": ScWebglBarChartNegative;
+        "sc-webgl-bar-chart-positive-negative": ScWebglBarChartPositiveNegative;
+        "sc-webgl-bar-chart-standard": ScWebglBarChartStandard;
+        "sc-webgl-bar-chart-start-from-zero": ScWebglBarChartStartFromZero;
+        "sc-webgl-bar-chart-threshold-coloration": ScWebglBarChartThresholdColoration;
+        "sc-webgl-bar-chart-threshold-coloration-band": ScWebglBarChartThresholdColorationBand;
+        "sc-webgl-bar-chart-threshold-coloration-exact-point": ScWebglBarChartThresholdColorationExactPoint;
+        "sc-webgl-bar-chart-threshold-coloration-multiple-data-stream": ScWebglBarChartThresholdColorationMultipleDataStream;
+        "sc-webgl-bar-chart-threshold-coloration-multiple-thresholds": ScWebglBarChartThresholdColorationMultipleThresholds;
+        "sc-webgl-bar-chart-threshold-no-coloration": ScWebglBarChartThresholdNoColoration;
+        "sc-webgl-chart-annotations": ScWebglChartAnnotations;
+        "sc-webgl-chart-annotations-always-in-viewport": ScWebglChartAnnotationsAlwaysInViewport;
+        "sc-webgl-chart-axis": ScWebglChartAxis;
+        "sc-webgl-chart-dynamic-charts": ScWebglChartDynamicCharts;
+        "sc-webgl-chart-large-viewport": ScWebglChartLargeViewport;
+        "sc-webgl-chart-multi": ScWebglChartMulti;
+        "sc-webgl-chart-no-annotations": ScWebglChartNoAnnotations;
+        "sc-webgl-chart-standard": ScWebglChartStandard;
+        "sc-webgl-chart-standard-with-legend": ScWebglChartStandardWithLegend;
+        "sc-webgl-chart-standard-with-legend-on-right": ScWebglChartStandardWithLegendOnRight;
+        "sc-webgl-chart-threshold-coloration-band": ScWebglChartThresholdColorationBand;
+        "sc-webgl-chart-threshold-coloration-exact-point": ScWebglChartThresholdColorationExactPoint;
+        "sc-webgl-chart-threshold-coloration-multiple-data-stream": ScWebglChartThresholdColorationMultipleDataStream;
+        "sc-webgl-chart-threshold-coloration-multiple-thresholds": ScWebglChartThresholdColorationMultipleThresholds;
+        "sc-webgl-chart-threshold-coloration-split-half": ScWebglChartThresholdColorationSplitHalf;
+        "sc-webgl-chart-tooltip-with-multiple-data-streams": ScWebglChartTooltipWithMultipleDataStreams;
+        "sc-webgl-context": ScWebglContext;
+        "sc-webgl-line-chart-dynamic-buffer": ScWebglLineChartDynamicBuffer;
+        "sc-webgl-line-chart-dynamic-data": ScWebglLineChartDynamicData;
+        "sc-webgl-line-chart-dynamic-data-streams": ScWebglLineChartDynamicDataStreams;
+        "sc-widget-grid": ScWidgetGrid;
         "multiple-statuses": MultipleStatuses;
         "sc-app": ScApp;
         "sc-bar-chart": ScBarChart;
@@ -2093,90 +2093,90 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "line-chart-viewport-change": LocalJSX.LineChartViewportChange & JSXBase.HTMLAttributes<HTMLLineChartViewportChangeElement>;
-            "monitor-angled-line-segment": LocalJSX.MonitorAngledLineSegment & JSXBase.HTMLAttributes<HTMLMonitorAngledLineSegmentElement>;
-            "monitor-chart-y-range": LocalJSX.MonitorChartYRange & JSXBase.HTMLAttributes<HTMLMonitorChartYRangeElement>;
-            "monitor-circle-point-shaders": LocalJSX.MonitorCirclePointShaders & JSXBase.HTMLAttributes<HTMLMonitorCirclePointShadersElement>;
-            "monitor-data-stream-name": LocalJSX.MonitorDataStreamName & JSXBase.HTMLAttributes<HTMLMonitorDataStreamNameElement>;
-            "monitor-expandable-input": LocalJSX.MonitorExpandableInput & JSXBase.HTMLAttributes<HTMLMonitorExpandableInputElement>;
-            "monitor-expandable-input-standard": LocalJSX.MonitorExpandableInputStandard & JSXBase.HTMLAttributes<HTMLMonitorExpandableInputStandardElement>;
-            "monitor-grid": LocalJSX.MonitorGrid & JSXBase.HTMLAttributes<HTMLMonitorGridElement>;
-            "monitor-grid-tooltip": LocalJSX.MonitorGridTooltip & JSXBase.HTMLAttributes<HTMLMonitorGridTooltipElement>;
-            "monitor-help-tooltip": LocalJSX.MonitorHelpTooltip & JSXBase.HTMLAttributes<HTMLMonitorHelpTooltipElement>;
-            "monitor-kpi": LocalJSX.MonitorKpi & JSXBase.HTMLAttributes<HTMLMonitorKpiElement>;
-            "monitor-kpi-base": LocalJSX.MonitorKpiBase & JSXBase.HTMLAttributes<HTMLMonitorKpiBaseElement>;
-            "monitor-kpi-standard": LocalJSX.MonitorKpiStandard & JSXBase.HTMLAttributes<HTMLMonitorKpiStandardElement>;
-            "monitor-legend": LocalJSX.MonitorLegend & JSXBase.HTMLAttributes<HTMLMonitorLegendElement>;
-            "monitor-legend-row": LocalJSX.MonitorLegendRow & JSXBase.HTMLAttributes<HTMLMonitorLegendRowElement>;
-            "monitor-line-chart": LocalJSX.MonitorLineChart & JSXBase.HTMLAttributes<HTMLMonitorLineChartElement>;
-            "monitor-line-chart-colored-point": LocalJSX.MonitorLineChartColoredPoint & JSXBase.HTMLAttributes<HTMLMonitorLineChartColoredPointElement>;
-            "monitor-line-chart-stream-data": LocalJSX.MonitorLineChartStreamData & JSXBase.HTMLAttributes<HTMLMonitorLineChartStreamDataElement>;
-            "monitor-multiple-bars": LocalJSX.MonitorMultipleBars & JSXBase.HTMLAttributes<HTMLMonitorMultipleBarsElement>;
-            "monitor-multiple-lines": LocalJSX.MonitorMultipleLines & JSXBase.HTMLAttributes<HTMLMonitorMultipleLinesElement>;
-            "monitor-multiple-lines-overlapping": LocalJSX.MonitorMultipleLinesOverlapping & JSXBase.HTMLAttributes<HTMLMonitorMultipleLinesOverlappingElement>;
-            "monitor-scatter-chart": LocalJSX.MonitorScatterChart & JSXBase.HTMLAttributes<HTMLMonitorScatterChartElement>;
-            "monitor-scatter-chart-dynamic-data": LocalJSX.MonitorScatterChartDynamicData & JSXBase.HTMLAttributes<HTMLMonitorScatterChartDynamicDataElement>;
-            "monitor-scatter-chart-threshold": LocalJSX.MonitorScatterChartThreshold & JSXBase.HTMLAttributes<HTMLMonitorScatterChartThresholdElement>;
-            "monitor-scatter-chart-threshold-coloration-band": LocalJSX.MonitorScatterChartThresholdColorationBand & JSXBase.HTMLAttributes<HTMLMonitorScatterChartThresholdColorationBandElement>;
-            "monitor-scatter-chart-threshold-coloration-exact-point": LocalJSX.MonitorScatterChartThresholdColorationExactPoint & JSXBase.HTMLAttributes<HTMLMonitorScatterChartThresholdColorationExactPointElement>;
-            "monitor-scatter-chart-threshold-coloration-multiple-data-stream": LocalJSX.MonitorScatterChartThresholdColorationMultipleDataStream & JSXBase.HTMLAttributes<HTMLMonitorScatterChartThresholdColorationMultipleDataStreamElement>;
-            "monitor-scatter-chart-threshold-coloration-multiple-thresholds": LocalJSX.MonitorScatterChartThresholdColorationMultipleThresholds & JSXBase.HTMLAttributes<HTMLMonitorScatterChartThresholdColorationMultipleThresholdsElement>;
-            "monitor-scatter-chart-threshold-no-coloration": LocalJSX.MonitorScatterChartThresholdNoColoration & JSXBase.HTMLAttributes<HTMLMonitorScatterChartThresholdNoColorationElement>;
-            "monitor-scatter-chart-tooltip-with-multiple-data-streams-and-trends": LocalJSX.MonitorScatterChartTooltipWithMultipleDataStreamsAndTrends & JSXBase.HTMLAttributes<HTMLMonitorScatterChartTooltipWithMultipleDataStreamsAndTrendsElement>;
-            "monitor-scatter-chart-trend-line-color-configuration": LocalJSX.MonitorScatterChartTrendLineColorConfiguration & JSXBase.HTMLAttributes<HTMLMonitorScatterChartTrendLineColorConfigurationElement>;
-            "monitor-scatter-chart-trend-line-with-legend": LocalJSX.MonitorScatterChartTrendLineWithLegend & JSXBase.HTMLAttributes<HTMLMonitorScatterChartTrendLineWithLegendElement>;
-            "monitor-single-bar": LocalJSX.MonitorSingleBar & JSXBase.HTMLAttributes<HTMLMonitorSingleBarElement>;
-            "monitor-single-colored-bar": LocalJSX.MonitorSingleColoredBar & JSXBase.HTMLAttributes<HTMLMonitorSingleColoredBarElement>;
-            "monitor-size-provider": LocalJSX.MonitorSizeProvider & JSXBase.HTMLAttributes<HTMLMonitorSizeProviderElement>;
-            "monitor-size-provider-standard": LocalJSX.MonitorSizeProviderStandard & JSXBase.HTMLAttributes<HTMLMonitorSizeProviderStandardElement>;
-            "monitor-status-cell": LocalJSX.MonitorStatusCell & JSXBase.HTMLAttributes<HTMLMonitorStatusCellElement>;
-            "monitor-status-chart": LocalJSX.MonitorStatusChart & JSXBase.HTMLAttributes<HTMLMonitorStatusChartElement>;
-            "monitor-status-grid": LocalJSX.MonitorStatusGrid & JSXBase.HTMLAttributes<HTMLMonitorStatusGridElement>;
-            "monitor-status-grid-standard": LocalJSX.MonitorStatusGridStandard & JSXBase.HTMLAttributes<HTMLMonitorStatusGridStandardElement>;
-            "monitor-status-timeline-overlay": LocalJSX.MonitorStatusTimelineOverlay & JSXBase.HTMLAttributes<HTMLMonitorStatusTimelineOverlayElement>;
-            "monitor-status-timeline-overlay-row": LocalJSX.MonitorStatusTimelineOverlayRow & JSXBase.HTMLAttributes<HTMLMonitorStatusTimelineOverlayRowElement>;
-            "monitor-straight-line-segment": LocalJSX.MonitorStraightLineSegment & JSXBase.HTMLAttributes<HTMLMonitorStraightLineSegmentElement>;
-            "monitor-straight-line-segment-colored": LocalJSX.MonitorStraightLineSegmentColored & JSXBase.HTMLAttributes<HTMLMonitorStraightLineSegmentColoredElement>;
-            "monitor-table": LocalJSX.MonitorTable & JSXBase.HTMLAttributes<HTMLMonitorTableElement>;
-            "monitor-table-base": LocalJSX.MonitorTableBase & JSXBase.HTMLAttributes<HTMLMonitorTableBaseElement>;
-            "monitor-table-cell": LocalJSX.MonitorTableCell & JSXBase.HTMLAttributes<HTMLMonitorTableCellElement>;
-            "monitor-threshold-legend": LocalJSX.MonitorThresholdLegend & JSXBase.HTMLAttributes<HTMLMonitorThresholdLegendElement>;
-            "monitor-threshold-legend-row": LocalJSX.MonitorThresholdLegendRow & JSXBase.HTMLAttributes<HTMLMonitorThresholdLegendRowElement>;
-            "monitor-webgl-bar-chart-dynamic-buffer": LocalJSX.MonitorWebglBarChartDynamicBuffer & JSXBase.HTMLAttributes<HTMLMonitorWebglBarChartDynamicBufferElement>;
-            "monitor-webgl-bar-chart-dynamic-data": LocalJSX.MonitorWebglBarChartDynamicData & JSXBase.HTMLAttributes<HTMLMonitorWebglBarChartDynamicDataElement>;
-            "monitor-webgl-bar-chart-dynamic-data-streams": LocalJSX.MonitorWebglBarChartDynamicDataStreams & JSXBase.HTMLAttributes<HTMLMonitorWebglBarChartDynamicDataStreamsElement>;
-            "monitor-webgl-bar-chart-fast-viewport": LocalJSX.MonitorWebglBarChartFastViewport & JSXBase.HTMLAttributes<HTMLMonitorWebglBarChartFastViewportElement>;
-            "monitor-webgl-bar-chart-margin": LocalJSX.MonitorWebglBarChartMargin & JSXBase.HTMLAttributes<HTMLMonitorWebglBarChartMarginElement>;
-            "monitor-webgl-bar-chart-negative": LocalJSX.MonitorWebglBarChartNegative & JSXBase.HTMLAttributes<HTMLMonitorWebglBarChartNegativeElement>;
-            "monitor-webgl-bar-chart-positive-negative": LocalJSX.MonitorWebglBarChartPositiveNegative & JSXBase.HTMLAttributes<HTMLMonitorWebglBarChartPositiveNegativeElement>;
-            "monitor-webgl-bar-chart-standard": LocalJSX.MonitorWebglBarChartStandard & JSXBase.HTMLAttributes<HTMLMonitorWebglBarChartStandardElement>;
-            "monitor-webgl-bar-chart-start-from-zero": LocalJSX.MonitorWebglBarChartStartFromZero & JSXBase.HTMLAttributes<HTMLMonitorWebglBarChartStartFromZeroElement>;
-            "monitor-webgl-bar-chart-threshold-coloration": LocalJSX.MonitorWebglBarChartThresholdColoration & JSXBase.HTMLAttributes<HTMLMonitorWebglBarChartThresholdColorationElement>;
-            "monitor-webgl-bar-chart-threshold-coloration-band": LocalJSX.MonitorWebglBarChartThresholdColorationBand & JSXBase.HTMLAttributes<HTMLMonitorWebglBarChartThresholdColorationBandElement>;
-            "monitor-webgl-bar-chart-threshold-coloration-exact-point": LocalJSX.MonitorWebglBarChartThresholdColorationExactPoint & JSXBase.HTMLAttributes<HTMLMonitorWebglBarChartThresholdColorationExactPointElement>;
-            "monitor-webgl-bar-chart-threshold-coloration-multiple-data-stream": LocalJSX.MonitorWebglBarChartThresholdColorationMultipleDataStream & JSXBase.HTMLAttributes<HTMLMonitorWebglBarChartThresholdColorationMultipleDataStreamElement>;
-            "monitor-webgl-bar-chart-threshold-coloration-multiple-thresholds": LocalJSX.MonitorWebglBarChartThresholdColorationMultipleThresholds & JSXBase.HTMLAttributes<HTMLMonitorWebglBarChartThresholdColorationMultipleThresholdsElement>;
-            "monitor-webgl-bar-chart-threshold-no-coloration": LocalJSX.MonitorWebglBarChartThresholdNoColoration & JSXBase.HTMLAttributes<HTMLMonitorWebglBarChartThresholdNoColorationElement>;
-            "monitor-webgl-chart-annotations": LocalJSX.MonitorWebglChartAnnotations & JSXBase.HTMLAttributes<HTMLMonitorWebglChartAnnotationsElement>;
-            "monitor-webgl-chart-annotations-always-in-viewport": LocalJSX.MonitorWebglChartAnnotationsAlwaysInViewport & JSXBase.HTMLAttributes<HTMLMonitorWebglChartAnnotationsAlwaysInViewportElement>;
-            "monitor-webgl-chart-axis": LocalJSX.MonitorWebglChartAxis & JSXBase.HTMLAttributes<HTMLMonitorWebglChartAxisElement>;
-            "monitor-webgl-chart-dynamic-charts": LocalJSX.MonitorWebglChartDynamicCharts & JSXBase.HTMLAttributes<HTMLMonitorWebglChartDynamicChartsElement>;
-            "monitor-webgl-chart-large-viewport": LocalJSX.MonitorWebglChartLargeViewport & JSXBase.HTMLAttributes<HTMLMonitorWebglChartLargeViewportElement>;
-            "monitor-webgl-chart-multi": LocalJSX.MonitorWebglChartMulti & JSXBase.HTMLAttributes<HTMLMonitorWebglChartMultiElement>;
-            "monitor-webgl-chart-no-annotations": LocalJSX.MonitorWebglChartNoAnnotations & JSXBase.HTMLAttributes<HTMLMonitorWebglChartNoAnnotationsElement>;
-            "monitor-webgl-chart-standard": LocalJSX.MonitorWebglChartStandard & JSXBase.HTMLAttributes<HTMLMonitorWebglChartStandardElement>;
-            "monitor-webgl-chart-standard-with-legend": LocalJSX.MonitorWebglChartStandardWithLegend & JSXBase.HTMLAttributes<HTMLMonitorWebglChartStandardWithLegendElement>;
-            "monitor-webgl-chart-standard-with-legend-on-right": LocalJSX.MonitorWebglChartStandardWithLegendOnRight & JSXBase.HTMLAttributes<HTMLMonitorWebglChartStandardWithLegendOnRightElement>;
-            "monitor-webgl-chart-threshold-coloration-band": LocalJSX.MonitorWebglChartThresholdColorationBand & JSXBase.HTMLAttributes<HTMLMonitorWebglChartThresholdColorationBandElement>;
-            "monitor-webgl-chart-threshold-coloration-exact-point": LocalJSX.MonitorWebglChartThresholdColorationExactPoint & JSXBase.HTMLAttributes<HTMLMonitorWebglChartThresholdColorationExactPointElement>;
-            "monitor-webgl-chart-threshold-coloration-multiple-data-stream": LocalJSX.MonitorWebglChartThresholdColorationMultipleDataStream & JSXBase.HTMLAttributes<HTMLMonitorWebglChartThresholdColorationMultipleDataStreamElement>;
-            "monitor-webgl-chart-threshold-coloration-multiple-thresholds": LocalJSX.MonitorWebglChartThresholdColorationMultipleThresholds & JSXBase.HTMLAttributes<HTMLMonitorWebglChartThresholdColorationMultipleThresholdsElement>;
-            "monitor-webgl-chart-threshold-coloration-split-half": LocalJSX.MonitorWebglChartThresholdColorationSplitHalf & JSXBase.HTMLAttributes<HTMLMonitorWebglChartThresholdColorationSplitHalfElement>;
-            "monitor-webgl-chart-tooltip-with-multiple-data-streams": LocalJSX.MonitorWebglChartTooltipWithMultipleDataStreams & JSXBase.HTMLAttributes<HTMLMonitorWebglChartTooltipWithMultipleDataStreamsElement>;
-            "monitor-webgl-context": LocalJSX.MonitorWebglContext & JSXBase.HTMLAttributes<HTMLMonitorWebglContextElement>;
-            "monitor-webgl-line-chart-dynamic-buffer": LocalJSX.MonitorWebglLineChartDynamicBuffer & JSXBase.HTMLAttributes<HTMLMonitorWebglLineChartDynamicBufferElement>;
-            "monitor-webgl-line-chart-dynamic-data": LocalJSX.MonitorWebglLineChartDynamicData & JSXBase.HTMLAttributes<HTMLMonitorWebglLineChartDynamicDataElement>;
-            "monitor-webgl-line-chart-dynamic-data-streams": LocalJSX.MonitorWebglLineChartDynamicDataStreams & JSXBase.HTMLAttributes<HTMLMonitorWebglLineChartDynamicDataStreamsElement>;
-            "monitor-widget-grid": LocalJSX.MonitorWidgetGrid & JSXBase.HTMLAttributes<HTMLMonitorWidgetGridElement>;
+            "sc-angled-line-segment": LocalJSX.ScAngledLineSegment & JSXBase.HTMLAttributes<HTMLScAngledLineSegmentElement>;
+            "sc-chart-y-range": LocalJSX.ScChartYRange & JSXBase.HTMLAttributes<HTMLScChartYRangeElement>;
+            "sc-circle-point-shaders": LocalJSX.ScCirclePointShaders & JSXBase.HTMLAttributes<HTMLScCirclePointShadersElement>;
+            "sc-data-stream-name": LocalJSX.ScDataStreamName & JSXBase.HTMLAttributes<HTMLScDataStreamNameElement>;
+            "sc-expandable-input": LocalJSX.ScExpandableInput & JSXBase.HTMLAttributes<HTMLScExpandableInputElement>;
+            "sc-expandable-input-standard": LocalJSX.ScExpandableInputStandard & JSXBase.HTMLAttributes<HTMLScExpandableInputStandardElement>;
+            "sc-grid": LocalJSX.ScGrid & JSXBase.HTMLAttributes<HTMLScGridElement>;
+            "sc-grid-tooltip": LocalJSX.ScGridTooltip & JSXBase.HTMLAttributes<HTMLScGridTooltipElement>;
+            "sc-help-tooltip": LocalJSX.ScHelpTooltip & JSXBase.HTMLAttributes<HTMLScHelpTooltipElement>;
+            "sc-kpi": LocalJSX.ScKpi & JSXBase.HTMLAttributes<HTMLScKpiElement>;
+            "sc-kpi-base": LocalJSX.ScKpiBase & JSXBase.HTMLAttributes<HTMLScKpiBaseElement>;
+            "sc-kpi-standard": LocalJSX.ScKpiStandard & JSXBase.HTMLAttributes<HTMLScKpiStandardElement>;
+            "sc-legend": LocalJSX.ScLegend & JSXBase.HTMLAttributes<HTMLScLegendElement>;
+            "sc-legend-row": LocalJSX.ScLegendRow & JSXBase.HTMLAttributes<HTMLScLegendRowElement>;
+            "sc-line-chart": LocalJSX.ScLineChart & JSXBase.HTMLAttributes<HTMLScLineChartElement>;
+            "sc-line-chart-colored-point": LocalJSX.ScLineChartColoredPoint & JSXBase.HTMLAttributes<HTMLScLineChartColoredPointElement>;
+            "sc-line-chart-stream-data": LocalJSX.ScLineChartStreamData & JSXBase.HTMLAttributes<HTMLScLineChartStreamDataElement>;
+            "sc-multiple-bars": LocalJSX.ScMultipleBars & JSXBase.HTMLAttributes<HTMLScMultipleBarsElement>;
+            "sc-multiple-lines": LocalJSX.ScMultipleLines & JSXBase.HTMLAttributes<HTMLScMultipleLinesElement>;
+            "sc-multiple-lines-overlapping": LocalJSX.ScMultipleLinesOverlapping & JSXBase.HTMLAttributes<HTMLScMultipleLinesOverlappingElement>;
+            "sc-scatter-chart": LocalJSX.ScScatterChart & JSXBase.HTMLAttributes<HTMLScScatterChartElement>;
+            "sc-scatter-chart-dynamic-data": LocalJSX.ScScatterChartDynamicData & JSXBase.HTMLAttributes<HTMLScScatterChartDynamicDataElement>;
+            "sc-scatter-chart-threshold": LocalJSX.ScScatterChartThreshold & JSXBase.HTMLAttributes<HTMLScScatterChartThresholdElement>;
+            "sc-scatter-chart-threshold-coloration-band": LocalJSX.ScScatterChartThresholdColorationBand & JSXBase.HTMLAttributes<HTMLScScatterChartThresholdColorationBandElement>;
+            "sc-scatter-chart-threshold-coloration-exact-point": LocalJSX.ScScatterChartThresholdColorationExactPoint & JSXBase.HTMLAttributes<HTMLScScatterChartThresholdColorationExactPointElement>;
+            "sc-scatter-chart-threshold-coloration-multiple-data-stream": LocalJSX.ScScatterChartThresholdColorationMultipleDataStream & JSXBase.HTMLAttributes<HTMLScScatterChartThresholdColorationMultipleDataStreamElement>;
+            "sc-scatter-chart-threshold-coloration-multiple-thresholds": LocalJSX.ScScatterChartThresholdColorationMultipleThresholds & JSXBase.HTMLAttributes<HTMLScScatterChartThresholdColorationMultipleThresholdsElement>;
+            "sc-scatter-chart-threshold-no-coloration": LocalJSX.ScScatterChartThresholdNoColoration & JSXBase.HTMLAttributes<HTMLScScatterChartThresholdNoColorationElement>;
+            "sc-scatter-chart-tooltip-with-multiple-data-streams-and-trends": LocalJSX.ScScatterChartTooltipWithMultipleDataStreamsAndTrends & JSXBase.HTMLAttributes<HTMLScScatterChartTooltipWithMultipleDataStreamsAndTrendsElement>;
+            "sc-scatter-chart-trend-line-color-configuration": LocalJSX.ScScatterChartTrendLineColorConfiguration & JSXBase.HTMLAttributes<HTMLScScatterChartTrendLineColorConfigurationElement>;
+            "sc-scatter-chart-trend-line-with-legend": LocalJSX.ScScatterChartTrendLineWithLegend & JSXBase.HTMLAttributes<HTMLScScatterChartTrendLineWithLegendElement>;
+            "sc-single-bar": LocalJSX.ScSingleBar & JSXBase.HTMLAttributes<HTMLScSingleBarElement>;
+            "sc-single-colored-bar": LocalJSX.ScSingleColoredBar & JSXBase.HTMLAttributes<HTMLScSingleColoredBarElement>;
+            "sc-size-provider": LocalJSX.ScSizeProvider & JSXBase.HTMLAttributes<HTMLScSizeProviderElement>;
+            "sc-size-provider-standard": LocalJSX.ScSizeProviderStandard & JSXBase.HTMLAttributes<HTMLScSizeProviderStandardElement>;
+            "sc-status-cell": LocalJSX.ScStatusCell & JSXBase.HTMLAttributes<HTMLScStatusCellElement>;
+            "sc-status-chart": LocalJSX.ScStatusChart & JSXBase.HTMLAttributes<HTMLScStatusChartElement>;
+            "sc-status-grid": LocalJSX.ScStatusGrid & JSXBase.HTMLAttributes<HTMLScStatusGridElement>;
+            "sc-status-grid-standard": LocalJSX.ScStatusGridStandard & JSXBase.HTMLAttributes<HTMLScStatusGridStandardElement>;
+            "sc-status-timeline-overlay": LocalJSX.ScStatusTimelineOverlay & JSXBase.HTMLAttributes<HTMLScStatusTimelineOverlayElement>;
+            "sc-status-timeline-overlay-row": LocalJSX.ScStatusTimelineOverlayRow & JSXBase.HTMLAttributes<HTMLScStatusTimelineOverlayRowElement>;
+            "sc-straight-line-segment": LocalJSX.ScStraightLineSegment & JSXBase.HTMLAttributes<HTMLScStraightLineSegmentElement>;
+            "sc-straight-line-segment-colored": LocalJSX.ScStraightLineSegmentColored & JSXBase.HTMLAttributes<HTMLScStraightLineSegmentColoredElement>;
+            "sc-table": LocalJSX.ScTable & JSXBase.HTMLAttributes<HTMLScTableElement>;
+            "sc-table-base": LocalJSX.ScTableBase & JSXBase.HTMLAttributes<HTMLScTableBaseElement>;
+            "sc-table-cell": LocalJSX.ScTableCell & JSXBase.HTMLAttributes<HTMLScTableCellElement>;
+            "sc-threshold-legend": LocalJSX.ScThresholdLegend & JSXBase.HTMLAttributes<HTMLScThresholdLegendElement>;
+            "sc-threshold-legend-row": LocalJSX.ScThresholdLegendRow & JSXBase.HTMLAttributes<HTMLScThresholdLegendRowElement>;
+            "sc-webgl-bar-chart-dynamic-buffer": LocalJSX.ScWebglBarChartDynamicBuffer & JSXBase.HTMLAttributes<HTMLScWebglBarChartDynamicBufferElement>;
+            "sc-webgl-bar-chart-dynamic-data": LocalJSX.ScWebglBarChartDynamicData & JSXBase.HTMLAttributes<HTMLScWebglBarChartDynamicDataElement>;
+            "sc-webgl-bar-chart-dynamic-data-streams": LocalJSX.ScWebglBarChartDynamicDataStreams & JSXBase.HTMLAttributes<HTMLScWebglBarChartDynamicDataStreamsElement>;
+            "sc-webgl-bar-chart-fast-viewport": LocalJSX.ScWebglBarChartFastViewport & JSXBase.HTMLAttributes<HTMLScWebglBarChartFastViewportElement>;
+            "sc-webgl-bar-chart-margin": LocalJSX.ScWebglBarChartMargin & JSXBase.HTMLAttributes<HTMLScWebglBarChartMarginElement>;
+            "sc-webgl-bar-chart-negative": LocalJSX.ScWebglBarChartNegative & JSXBase.HTMLAttributes<HTMLScWebglBarChartNegativeElement>;
+            "sc-webgl-bar-chart-positive-negative": LocalJSX.ScWebglBarChartPositiveNegative & JSXBase.HTMLAttributes<HTMLScWebglBarChartPositiveNegativeElement>;
+            "sc-webgl-bar-chart-standard": LocalJSX.ScWebglBarChartStandard & JSXBase.HTMLAttributes<HTMLScWebglBarChartStandardElement>;
+            "sc-webgl-bar-chart-start-from-zero": LocalJSX.ScWebglBarChartStartFromZero & JSXBase.HTMLAttributes<HTMLScWebglBarChartStartFromZeroElement>;
+            "sc-webgl-bar-chart-threshold-coloration": LocalJSX.ScWebglBarChartThresholdColoration & JSXBase.HTMLAttributes<HTMLScWebglBarChartThresholdColorationElement>;
+            "sc-webgl-bar-chart-threshold-coloration-band": LocalJSX.ScWebglBarChartThresholdColorationBand & JSXBase.HTMLAttributes<HTMLScWebglBarChartThresholdColorationBandElement>;
+            "sc-webgl-bar-chart-threshold-coloration-exact-point": LocalJSX.ScWebglBarChartThresholdColorationExactPoint & JSXBase.HTMLAttributes<HTMLScWebglBarChartThresholdColorationExactPointElement>;
+            "sc-webgl-bar-chart-threshold-coloration-multiple-data-stream": LocalJSX.ScWebglBarChartThresholdColorationMultipleDataStream & JSXBase.HTMLAttributes<HTMLScWebglBarChartThresholdColorationMultipleDataStreamElement>;
+            "sc-webgl-bar-chart-threshold-coloration-multiple-thresholds": LocalJSX.ScWebglBarChartThresholdColorationMultipleThresholds & JSXBase.HTMLAttributes<HTMLScWebglBarChartThresholdColorationMultipleThresholdsElement>;
+            "sc-webgl-bar-chart-threshold-no-coloration": LocalJSX.ScWebglBarChartThresholdNoColoration & JSXBase.HTMLAttributes<HTMLScWebglBarChartThresholdNoColorationElement>;
+            "sc-webgl-chart-annotations": LocalJSX.ScWebglChartAnnotations & JSXBase.HTMLAttributes<HTMLScWebglChartAnnotationsElement>;
+            "sc-webgl-chart-annotations-always-in-viewport": LocalJSX.ScWebglChartAnnotationsAlwaysInViewport & JSXBase.HTMLAttributes<HTMLScWebglChartAnnotationsAlwaysInViewportElement>;
+            "sc-webgl-chart-axis": LocalJSX.ScWebglChartAxis & JSXBase.HTMLAttributes<HTMLScWebglChartAxisElement>;
+            "sc-webgl-chart-dynamic-charts": LocalJSX.ScWebglChartDynamicCharts & JSXBase.HTMLAttributes<HTMLScWebglChartDynamicChartsElement>;
+            "sc-webgl-chart-large-viewport": LocalJSX.ScWebglChartLargeViewport & JSXBase.HTMLAttributes<HTMLScWebglChartLargeViewportElement>;
+            "sc-webgl-chart-multi": LocalJSX.ScWebglChartMulti & JSXBase.HTMLAttributes<HTMLScWebglChartMultiElement>;
+            "sc-webgl-chart-no-annotations": LocalJSX.ScWebglChartNoAnnotations & JSXBase.HTMLAttributes<HTMLScWebglChartNoAnnotationsElement>;
+            "sc-webgl-chart-standard": LocalJSX.ScWebglChartStandard & JSXBase.HTMLAttributes<HTMLScWebglChartStandardElement>;
+            "sc-webgl-chart-standard-with-legend": LocalJSX.ScWebglChartStandardWithLegend & JSXBase.HTMLAttributes<HTMLScWebglChartStandardWithLegendElement>;
+            "sc-webgl-chart-standard-with-legend-on-right": LocalJSX.ScWebglChartStandardWithLegendOnRight & JSXBase.HTMLAttributes<HTMLScWebglChartStandardWithLegendOnRightElement>;
+            "sc-webgl-chart-threshold-coloration-band": LocalJSX.ScWebglChartThresholdColorationBand & JSXBase.HTMLAttributes<HTMLScWebglChartThresholdColorationBandElement>;
+            "sc-webgl-chart-threshold-coloration-exact-point": LocalJSX.ScWebglChartThresholdColorationExactPoint & JSXBase.HTMLAttributes<HTMLScWebglChartThresholdColorationExactPointElement>;
+            "sc-webgl-chart-threshold-coloration-multiple-data-stream": LocalJSX.ScWebglChartThresholdColorationMultipleDataStream & JSXBase.HTMLAttributes<HTMLScWebglChartThresholdColorationMultipleDataStreamElement>;
+            "sc-webgl-chart-threshold-coloration-multiple-thresholds": LocalJSX.ScWebglChartThresholdColorationMultipleThresholds & JSXBase.HTMLAttributes<HTMLScWebglChartThresholdColorationMultipleThresholdsElement>;
+            "sc-webgl-chart-threshold-coloration-split-half": LocalJSX.ScWebglChartThresholdColorationSplitHalf & JSXBase.HTMLAttributes<HTMLScWebglChartThresholdColorationSplitHalfElement>;
+            "sc-webgl-chart-tooltip-with-multiple-data-streams": LocalJSX.ScWebglChartTooltipWithMultipleDataStreams & JSXBase.HTMLAttributes<HTMLScWebglChartTooltipWithMultipleDataStreamsElement>;
+            "sc-webgl-context": LocalJSX.ScWebglContext & JSXBase.HTMLAttributes<HTMLScWebglContextElement>;
+            "sc-webgl-line-chart-dynamic-buffer": LocalJSX.ScWebglLineChartDynamicBuffer & JSXBase.HTMLAttributes<HTMLScWebglLineChartDynamicBufferElement>;
+            "sc-webgl-line-chart-dynamic-data": LocalJSX.ScWebglLineChartDynamicData & JSXBase.HTMLAttributes<HTMLScWebglLineChartDynamicDataElement>;
+            "sc-webgl-line-chart-dynamic-data-streams": LocalJSX.ScWebglLineChartDynamicDataStreams & JSXBase.HTMLAttributes<HTMLScWebglLineChartDynamicDataStreamsElement>;
+            "sc-widget-grid": LocalJSX.ScWidgetGrid & JSXBase.HTMLAttributes<HTMLScWidgetGridElement>;
             "multiple-statuses": LocalJSX.MultipleStatuses & JSXBase.HTMLAttributes<HTMLMultipleStatusesElement>;
             "sc-app": LocalJSX.ScApp & JSXBase.HTMLAttributes<HTMLScAppElement>;
             "sc-bar-chart": LocalJSX.ScBarChart & JSXBase.HTMLAttributes<HTMLScBarChartElement>;

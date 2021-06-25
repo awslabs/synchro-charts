@@ -1,6 +1,6 @@
 /* eslint-disable import/first */
-jest.mock('../../monitor-size-provider/renderChild');
-jest.mock('../../monitor-webgl-context/webglContext');
+jest.mock('../../sc-size-provider/renderChild');
+jest.mock('../../sc-webgl-context/webglContext');
 
 import 'webgl-mock-threejs';
 import { newChartSpecPage } from '../../../testing/chartDescriptions/newChartSpecPage';

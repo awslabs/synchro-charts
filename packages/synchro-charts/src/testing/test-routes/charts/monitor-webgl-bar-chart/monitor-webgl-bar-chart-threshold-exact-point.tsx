@@ -9,9 +9,9 @@ import { COMPARISON_OPERATOR, DataType } from '../../../..';
  */
 
 @Component({
-  tag: 'monitor-webgl-bar-chart-threshold-coloration-exact-point',
+  tag: 'sc-webgl-bar-chart-threshold-coloration-exact-point',
 })
-export class MonitorWebglBarChartThresholdExactPoint {
+export class ScWebglBarChartThresholdExactPoint {
   render() {
     return (
       <div>
@@ -51,7 +51,7 @@ export class MonitorWebglBarChartThresholdExactPoint {
           }}
           viewPort={{ yMin: Y_MIN, yMax: Y_MAX, start: X_MIN, end: X_MAX }}
         />
-        <monitor-webgl-context />
+        <sc-webgl-context />
       </div>
     );
   }

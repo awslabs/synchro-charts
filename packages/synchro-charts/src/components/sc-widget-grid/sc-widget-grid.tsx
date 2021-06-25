@@ -1,10 +1,10 @@
 import { Component, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
 
 import { DataPoint, DataStream, MessageOverrides, MinimalViewPortConfig, Primitive } from '../../utils/dataTypes';
-import { NameValue, updateName } from '../monitor-data-stream-name/helper';
+import { NameValue, updateName } from '../sc-data-stream-name/helper';
 import { ActivePoint, activePoints } from '../charts/sc-webgl-base-chart/activePoints';
 import { getThresholds } from '../charts/common/annotations/utils';
-import { webGLRenderer } from '../monitor-webgl-context/webglContext';
+import { webGLRenderer } from '../sc-webgl-context/webglContext';
 import { breachedThreshold } from '../charts/common/annotations/breachedThreshold';
 import { streamPairs } from '../../utils/streamPairs';
 import { RenderCell } from './types';
@@ -32,11 +32,11 @@ const title = ({ alarm, property }: { alarm?: DataStream; property?: DataStream 
  * This copmonent allows construction of widgets, by simply constructing the display cell via the `renderCell` method.gt
  */
 @Component({
-  tag: 'monitor-widget-grid',
-  styleUrl: 'monitor-widget-grid.css',
+  tag: 'sc-widget-grid',
+  styleUrl: 'sc-widget-grid.css',
   shadow: false,
 })
-export class MonitorWidgetGrid implements ChartConfig {
+export class ScWidgetGrid implements ChartConfig {
   @Prop() renderCell: RenderCell;
 
   @Prop() collapseVertically: boolean = true;
@@ -159,10 +159,10 @@ export class MonitorWidgetGrid implements ChartConfig {
       <div class={{ tall: !this.collapseVertically }}>
         {!isEnabled && (
           <div class="help-icon-container">
-            <monitor-help-tooltip message={this.liveModeOnlyMessage} />
+            <sc-help-tooltip message={this.liveModeOnlyMessage} />
           </div>
         )}
-        <monitor-grid>
+        <sc-grid>
           {pairs.map(({ alarm, property }) => {
             const stream = alarm || property;
             if (stream == null) {
@@ -183,7 +183,7 @@ export class MonitorWidgetGrid implements ChartConfig {
             const primaryStream = alarm ? alarmStream : property;
 
             return (
-              <monitor-grid-tooltip
+              <sc-grid-tooltip
                 title={title({ alarm, property })}
                 propertyPoint={propertyPoint}
                 alarmPoint={alarmPoint}
@@ -210,10 +210,10 @@ export class MonitorWidgetGrid implements ChartConfig {
                   isLoading: primaryStream ? primaryStream.isLoading || false : false,
                   isRefreshing: primaryStream ? primaryStream.isRefreshing || false : false,
                 })}
-              </monitor-grid-tooltip>
+              </sc-grid-tooltip>
             );
           })}
-        </monitor-grid>
+        </sc-grid>
       </div>
     );
   }

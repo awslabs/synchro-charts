@@ -1,10 +1,10 @@
 import { Component, h, Prop } from '@stencil/core';
 
 @Component({
-  tag: 'monitor-threshold-legend-row',
+  tag: 'sc-threshold-legend-row',
   shadow: false,
 })
-export class MonitorThresholdLegendRow {
+export class ScThresholdLegendRow {
   @Prop() color!: string; // CSS Color string
   @Prop() label!: string;
 

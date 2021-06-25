@@ -2,13 +2,13 @@ import { Component, h } from '@stencil/core';
 import { Y_MAX, Y_MIN, X_MIN, X_MAX } from './constants';
 
 @Component({
-  tag: 'monitor-webgl-chart-no-annotations',
+  tag: 'sc-webgl-chart-no-annotations',
 })
-export class MonitorWebglChartNoAnnotations {
+export class ScWebglChartNoAnnotations {
   render() {
     return (
       <div>
-        <monitor-line-chart
+        <sc-line-chart
           widgetId="widget-id"
           dataStreams={[]}
           annotations={{
@@ -42,7 +42,7 @@ export class MonitorWebglChartNoAnnotations {
           }}
           viewPort={{ start: X_MIN, end: X_MAX, yMin: Y_MIN, yMax: Y_MAX }}
         />
-        <monitor-webgl-context />
+        <sc-webgl-context />
       </div>
     );
   }

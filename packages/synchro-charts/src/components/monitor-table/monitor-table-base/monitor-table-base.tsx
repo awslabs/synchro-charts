@@ -1,14 +1,14 @@
 import { Component, h, Prop } from '@stencil/core';
 import { formatLiveModeOnlyMessage, Row } from '../constructTableData';
-import { MonitorTableRows } from '../monitor-table-row/monitor-table-row';
+import { ScTableRows } from '../sc-table-row/sc-table-row';
 import { MessageOverrides, TableColumn } from '../../../utils/dataTypes';
 
 @Component({
-  tag: 'monitor-table-base',
-  styleUrl: 'monitor-table-base.css',
+  tag: 'sc-table-base',
+  styleUrl: 'sc-table-base.css',
   shadow: false,
 })
-export class MonitorTableBase {
+export class ScTableBase {
   @Prop() columns!: TableColumn[];
   @Prop() rows!: Row[];
   @Prop() isEnabled!: boolean;
@@ -31,7 +31,7 @@ export class MonitorTableBase {
           </thead>
 
           {this.isEnabled ? (
-            <MonitorTableRows rows={this.rows} columns={this.columns} messageOverrides={this.messageOverrides} />
+            <ScTableRows rows={this.rows} columns={this.columns} messageOverrides={this.messageOverrides} />
           ) : (
             <div class="disable-status-container">
               <div class="disable-status">

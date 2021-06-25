@@ -14,9 +14,9 @@ const X_MAX = new Date(2000, 0, 0, 0, 10);
  */
 
 @Component({
-  tag: 'monitor-webgl-bar-chart-start-from-zero',
+  tag: 'sc-webgl-bar-chart-start-from-zero',
 })
-export class MonitorWebglBarChartStartFromZero {
+export class ScWebglBarChartStartFromZero {
   @State() testData: DataPoint<number>[] = [
     {
       x: new Date((X_MIN.getTime() + X_MAX.getTime()) / 2).getTime(),
@@ -63,7 +63,7 @@ export class MonitorWebglBarChartStartFromZero {
             }}
             viewPort={{ start: X_MIN, end: X_MAX }}
           />
-          <monitor-webgl-context />
+          <sc-webgl-context />
         </div>
       </div>
     );

@@ -1,8 +1,8 @@
-monitor-status-timeline-overlay .expando {
+sc-status-timeline-overlay .expando {
   flex-grow: 1;
 }
 
-monitor-status-timeline-overlay .overlay-container {
+sc-status-timeline-overlay .overlay-container {
   position: absolute;
   display: flex;
   flex-direction: column;

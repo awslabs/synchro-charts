@@ -3,7 +3,7 @@ import { DataStream, SizeConfig } from '../../../../utils/dataTypes';
 import { WidgetConfigurationUpdate, Threshold } from '../../common/types';
 import { breachedThreshold } from '../../common/annotations/breachedThreshold';
 import { closestPoint } from '../../sc-webgl-base-chart/activePoints';
-import { NameValue, updateName } from '../../../monitor-data-stream-name/helper';
+import { NameValue, updateName } from '../../../sc-data-stream-name/helper';
 import { getDataPoints } from '../../../../utils/getDataPoints';
 
 import { DATA_ALIGNMENT, StatusIcon } from '../../common/constants';
@@ -11,11 +11,11 @@ import { DATA_ALIGNMENT, StatusIcon } from '../../common/constants';
 const SMUDGE_WIDTH_PX = 1; // We slice off a tiny bit of width to prevent some pixels showing under antialiasing
 
 @Component({
-  tag: 'monitor-status-timeline-overlay',
-  styleUrl: 'monitor-status-timeline-overlay.css',
+  tag: 'sc-status-timeline-overlay',
+  styleUrl: 'sc-status-timeline-overlay.css',
   shadow: false,
 })
-export class MonitorStatusTimelineOverlay {
+export class ScStatusTimelineOverlay {
   @Prop() size!: SizeConfig;
   @Prop() dataStreams!: DataStream[];
   @Prop() thresholds!: Threshold[];
@@ -86,7 +86,7 @@ export class MonitorStatusTimelineOverlay {
           const displayedUnit = error == null ? dataStream.unit : undefined;
           const valueColor = error == null && threshold != null ? threshold.color : undefined;
           return (
-            <monitor-status-timeline-overlay-row
+            <sc-status-timeline-overlay-row
               key={dataStream.id}
               label={dataStream.name}
               detailedLabel={dataStream.detailedName}

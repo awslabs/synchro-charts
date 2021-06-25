@@ -19,7 +19,7 @@ import { ViewPort } from '../../../utils/dataTypes';
  *
  * While we need millisecond level precision, we do not need to be able to visually differentiate between milliseconds
  * while looking at even a weeks worth of data. Even if we did, you would not be able to discern a difference
- * due to resolution limitations. Even if you had a hypothetically perfect monitor that could discern a planks-constant
+ * due to resolution limitations. Even if you had a hypothetically perfect Sc that could discern a planks-constant
  * level of resolution, the eye would not be able to tell without advanced optical instrumentation!
  *
  * ## Solution

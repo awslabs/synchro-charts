@@ -54,12 +54,12 @@ const dataStreams: DataStream<Primitive>[] = new Array(numCharts).fill(null).map
 }));
 
 @Component({
-  tag: 'monitor-kpi-standard',
+  tag: 'sc-kpi-standard',
 })
-export class MonitorKpiStandard {
+export class ScKpiStandard {
   render() {
     return (
-      <monitor-kpi
+      <sc-kpi
         widgetId="test-widget"
         dataStreams={dataStreams}
         viewPort={{ start: X_MIN, end: X_MAX, yMin: Y_MIN, yMax: Y_MAX, duration: isEnabled ? YEAR_IN_MS : undefined }}

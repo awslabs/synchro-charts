@@ -3,7 +3,7 @@ import { Component, h, Prop } from '@stencil/core';
 import uniq from 'lodash.uniq';
 import { DataPoint, DataStream, DataStreamId, SizeConfig, ViewPort } from '../../../utils/dataTypes';
 import { activePoints, POINT_TYPE } from '../sc-webgl-base-chart/activePoints';
-import { getAggregationFrequency } from '../../monitor-data-stream-name/helper';
+import { getAggregationFrequency } from '../../sc-data-stream-name/helper';
 import { displayDate } from '../../../utils/time';
 import { tooltipPosition } from './tooltipPosition';
 import { trendLinePoints } from './trendLinePoints';

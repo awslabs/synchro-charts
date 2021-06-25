@@ -28,9 +28,9 @@ const TEST_DATA_POINT_2: DataPoint<number> = {
  */
 
 @Component({
-  tag: 'monitor-webgl-bar-chart-positive-negative',
+  tag: 'sc-webgl-bar-chart-positive-negative',
 })
-export class MonitorWebglBarChartPositiveNegative {
+export class ScWebglBarChartPositiveNegative {
   render() {
     return (
       <div id="chart-container" style={{ width: '500px', height: '500px' }}>
@@ -53,7 +53,7 @@ export class MonitorWebglBarChartPositiveNegative {
           }}
           viewPort={{ yMin: Y_MIN, yMax: Y_MAX, start: X_MIN, end: X_MAX }}
         />
-        <monitor-webgl-context />
+        <sc-webgl-context />
       </div>
     );
   }

@@ -15,9 +15,9 @@ const X_MAX = new Date(2000, 0, 1);
 const WIDTH = X_MAX.getTime() - X_MIN.getTime();
 
 @Component({
-  tag: 'monitor-webgl-line-chart-dynamic-buffer',
+  tag: 'sc-webgl-line-chart-dynamic-buffer',
 })
-export class MonitorWebglLineChartDynamicBuffer {
+export class ScWebglLineChartDynamicBuffer {
   @State() data: DataPoint<number>[] = [];
 
   addDataPoint = () => {
@@ -36,7 +36,7 @@ export class MonitorWebglLineChartDynamicBuffer {
         </button>
 
         <div id="chart-container" style={{ marginTop: '20px', width: '500px', height: '500px' }}>
-          <monitor-line-chart
+          <sc-line-chart
             widgetId="widget-id"
             dataStreams={[
               {
@@ -56,7 +56,7 @@ export class MonitorWebglLineChartDynamicBuffer {
             bufferFactor={1}
             minBufferSize={1}
           />
-          <monitor-webgl-context />
+          <sc-webgl-context />
         </div>
       </div>
     );

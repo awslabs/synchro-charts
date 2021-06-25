@@ -1,7 +1,7 @@
 import { Vector3 } from 'three';
 import { ChartScene } from './types';
 import { handleCameraEvent } from './handleCameraEvent';
-import { chartScene } from '../charts/monitor-line-chart/chartScene';
+import { chartScene } from '../charts/sc-line-chart/chartScene';
 
 // Default Camera Viewport
 const X_MIN = new Date(2000, 0, 0);

@@ -21,6 +21,7 @@ export const createTestWebglRenderer = (domRect: DOMRect) => {
   const webGLRenderer = createWebGLRenderer();
   // @ts-ignore
   const canvas = new HTMLCanvasElement(domRect.width, domRect.height);
+  // @ts-ignore
   canvas.style = {};
   canvas.getBoundingClientRect = () => domRect;
   webGLRenderer.initRendering(canvas);

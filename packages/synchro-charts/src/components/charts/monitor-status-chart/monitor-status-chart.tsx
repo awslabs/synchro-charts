@@ -62,11 +62,11 @@ const tooltip = (alarms?: AlarmsConfig) => (props: Tooltip.Props) => {
 };
 
 @Component({
-  tag: 'monitor-status-chart',
-  styleUrl: './monitor-status-chart.css',
+  tag: 'sc-status-chart',
+  styleUrl: './sc-status-chart.css',
   shadow: false,
 })
-export class MonitorStatusChart implements ChartConfig {
+export class ScStatusChart implements ChartConfig {
   /** Chart API */
   @Prop() viewPort: MinimalViewPortConfig;
   @Prop() gestures: boolean = true;
@@ -98,7 +98,7 @@ export class MonitorStatusChart implements ChartConfig {
 
   render() {
     return (
-      <monitor-size-provider
+      <sc-size-provider
         size={this.size}
         renderFunc={(size: RectScrollFixed) => {
           const totalSize = {
@@ -151,7 +151,7 @@ export class MonitorStatusChart implements ChartConfig {
                 displaysNoDataPresentMsg={false}
                 messageOverrides={this.messageOverrides}
               />
-              <monitor-status-timeline-overlay
+              <sc-status-timeline-overlay
                 isEditing={this.isEditing}
                 thresholds={this.thresholds()}
                 date={this.viewPort.end || new Date()}
@@ -161,7 +161,7 @@ export class MonitorStatusChart implements ChartConfig {
               />
             </div>,
             <div class="threshold-legend-container" style={{ maxHeight: `${THRESHOLD_LEGEND_HEIGHT_PX}px` }}>
-              <monitor-threshold-legend thresholds={this.thresholds()} />
+              <sc-threshold-legend thresholds={this.thresholds()} />
             </div>,
           ];
         }}

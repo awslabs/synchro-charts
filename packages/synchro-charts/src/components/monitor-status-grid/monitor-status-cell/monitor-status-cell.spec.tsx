@@ -1,12 +1,12 @@
 import { newSpecPage } from '@stencil/core/testing';
 import { Components } from '../../../components.d';
-import { MonitorGrid } from '../../monitor-grid/monitor-grid';
+import { ScGrid } from '../../sc-grid/sc-grid';
 import { DataPoint, DEFAULT_MESSAGE_OVERRIDES } from '../../../utils/dataTypes';
 import { CustomHTMLElement } from '../../../utils/types';
 import { update } from '../../charts/common/tests/merge';
-import { MonitorStatusCell } from './monitor-status-cell';
+import { ScStatusCell } from './sc-status-cell';
 import { NO_VALUE_PRESENT } from '../../common/terms';
-import { MonitorDataStreamName } from '../../monitor-data-stream-name/monitor-data-stream-name';
+import { ScDataStreamName } from '../../sc-data-stream-name/sc-data-stream-name';
 import { ALARM_STREAM, DATA_STREAM } from '../../../testing/__mocks__/mockWidgetProperties';
 import { StatusIcon } from '../../charts/common/constants';
 
@@ -20,15 +20,15 @@ const NUMBER_POINT: DataPoint<number> = {
   y: 123,
 };
 
-const cellSpecPage = async (propOverrides: Partial<Components.MonitorStatusCell> = {}) => {
+const cellSpecPage = async (propOverrides: Partial<Components.ScStatusCell> = {}) => {
   const page = await newSpecPage({
-    components: [MonitorGrid, MonitorStatusCell, MonitorDataStreamName],
+    components: [ScGrid, ScStatusCell, ScDataStreamName],
     html: '<div></div>',
     supportsShadowDom: false,
   });
 
-  const statusCell = page.doc.createElement('monitor-status-cell') as CustomHTMLElement<Components.MonitorStatusCell>;
-  const props: Components.MonitorStatusCell = {
+  const statusCell = page.doc.createElement('sc-status-cell') as CustomHTMLElement<Components.ScStatusCell>;
+  const props: Components.ScStatusCell = {
     isEnabled: true,
     isEditing: false,
     valueColor: undefined,
@@ -232,7 +232,7 @@ describe('icon', () => {
 it('should call updateName with correct props when label changed', async () => {
   const { page, statusCell, props } = await cellSpecPage({ propertyStream: DATA_STREAM });
 
-  const streamName = statusCell.querySelector('monitor-data-stream-name') as HTMLMonitorDataStreamNameElement;
+  const streamName = statusCell.querySelector('sc-data-stream-name') as HTMLScDataStreamNameElement;
 
   const newName = 'New Name';
 

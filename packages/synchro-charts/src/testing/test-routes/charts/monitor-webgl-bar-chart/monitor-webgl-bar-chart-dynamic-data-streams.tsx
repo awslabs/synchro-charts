@@ -20,9 +20,9 @@ const RIGHT_X = new Date(2000, 9).getTime();
  */
 
 @Component({
-  tag: 'monitor-webgl-bar-chart-dynamic-data-streams',
+  tag: 'sc-webgl-bar-chart-dynamic-data-streams',
 })
-export class MonitorWebglBarChartDynamicDataStreams {
+export class ScWebglBarChartDynamicDataStreams {
   @State() dataStreams: DataStream<number>[] = [];
   @State() colorIndex: number = 0;
 
@@ -101,7 +101,7 @@ export class MonitorWebglBarChartDynamicDataStreams {
             }}
           />
         </div>
-        <monitor-webgl-context />
+        <sc-webgl-context />
       </div>
     );
   }

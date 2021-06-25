@@ -2,7 +2,7 @@ import { newSpecPage } from '@stencil/core/testing';
 
 import { Components } from '../../../components.d';
 import { CustomHTMLElement } from '../../../utils/types';
-import { MonitorTableCell } from './monitor-table-cell';
+import { ScTableCell } from './sc-table-cell';
 import { update } from '../../charts/common/tests/merge';
 import { Cell } from '../constructTableData';
 import { ERROR_SYMBOL_SELECTOR, LOADING_SPINNER_SELECTOR } from '../../../testing/selectors';
@@ -11,7 +11,7 @@ import { ScErrorBadge } from '../../sc-error-badge/sc-error-badge';
 import { ScChartIcon } from '../../charts/chart-icon/sc-chart-icon';
 import { DataType } from '../../../utils/dataConstants';
 
-// this is mock output that passed down from `monitor-table-base`
+// this is mock output that passed down from `sc-table-base`
 const CELL: Cell = {
   dataStream: {
     id: 'rule-cell-id-1',
@@ -22,15 +22,15 @@ const CELL: Cell = {
   },
 };
 
-const cellSpecPage = async (propOverrides: Partial<Components.MonitorTableCell> = {}) => {
+const cellSpecPage = async (propOverrides: Partial<Components.ScTableCell> = {}) => {
   const page = await newSpecPage({
-    components: [MonitorTableCell, ScErrorBadge, ScChartIcon],
+    components: [ScTableCell, ScErrorBadge, ScChartIcon],
     html: '<div></div>',
     supportsShadowDom: false,
   });
 
-  const cell = page.doc.createElement('monitor-table-cell') as CustomHTMLElement<Components.MonitorTableCell>;
-  const props: Partial<Components.MonitorTableCell> = {
+  const cell = page.doc.createElement('sc-table-cell') as CustomHTMLElement<Components.ScTableCell>;
+  const props: Partial<Components.ScTableCell> = {
     cell: CELL,
     ...propOverrides,
   };

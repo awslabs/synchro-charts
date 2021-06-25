@@ -3,7 +3,7 @@ import { DataStream, MessageOverrides, MinimalViewPortConfig, TableColumn } from
 import { isThreshold } from '../charts/common/annotations/utils';
 import { Trend } from '../charts/common/trends/types';
 import { Annotations, ChartConfig, Threshold } from '../charts/common/types';
-import { webGLRenderer } from '../monitor-webgl-context/webglContext';
+import { webGLRenderer } from '../sc-webgl-context/webglContext';
 import { constructTableData, Row } from './constructTableData';
 import { viewPortEndDate, viewPortStartDate } from '../../utils/viewPort';
 
@@ -11,10 +11,10 @@ const MSG =
   'This visualization displays only live data. Choose a live time frame to display data in this visualization.';
 
 @Component({
-  tag: 'monitor-table',
+  tag: 'sc-table',
   shadow: false,
 })
-export class MonitorTable implements ChartConfig {
+export class ScTable implements ChartConfig {
   @Prop() viewPort: MinimalViewPortConfig;
   @Prop() widgetId!: string;
   @Prop() dataStreams!: DataStream[];
@@ -74,7 +74,7 @@ export class MonitorTable implements ChartConfig {
     const isEnabled = this.duration != null;
 
     return (
-      <monitor-table-base
+      <sc-table-base
         columns={this.tableColumns}
         rows={rows}
         isEnabled={isEnabled}

@@ -23,9 +23,9 @@ const TEST_DATA_POINTS: DataPoint<number>[] = Array.from({ length: 50 }, (_, ind
  */
 
 @Component({
-  tag: 'monitor-webgl-bar-chart-fast-viewport',
+  tag: 'sc-webgl-bar-chart-fast-viewport',
 })
-export class MonitorWebglBarChartFastViewport {
+export class ScWebglBarChartFastViewport {
   @State() dataStreams: DataStream<number>[] = [];
   @State() colorIndex: number = 0;
   @State() start: Date = X_MIN;
@@ -82,7 +82,7 @@ export class MonitorWebglBarChartFastViewport {
               end: this.end,
             }}
           />
-          <monitor-webgl-context />
+          <sc-webgl-context />
         </div>
       </div>
     );

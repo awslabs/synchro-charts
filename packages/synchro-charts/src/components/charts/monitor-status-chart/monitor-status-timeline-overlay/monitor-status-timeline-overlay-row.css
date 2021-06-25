@@ -3,7 +3,7 @@
   --timeline-row-margin-top: 34px;
 }
 
-monitor-status-timeline-overlay-row {
+sc-status-timeline-overlay-row {
   flex-grow: 1;
   width: 100%;
   display: flex;
@@ -11,12 +11,12 @@ monitor-status-timeline-overlay-row {
   justify-content: space-between;
 }
 
-monitor-status-timeline-overlay-row monitor-data-stream-name {
+sc-status-timeline-overlay-row sc-data-stream-name {
   max-height: var(--timeline-row-margin-top);
   overflow: hidden;
 }
 
-monitor-status-timeline-overlay-row .value {
+sc-status-timeline-overlay-row .value {
   max-width: 200px;
   white-space: nowrap;
   overflow: hidden;
@@ -26,11 +26,11 @@ monitor-status-timeline-overlay-row .value {
   padding-bottom: 2px;
 }
 
-monitor-status-timeline-overlay-row .unit {
+sc-status-timeline-overlay-row .unit {
   padding-left: 2px;
 }
 
-monitor-status-timeline-overlay-row .stream-info {
+sc-status-timeline-overlay-row .stream-info {
   text-overflow: ellipsis;
   overflow: hidden;
   height: var(--timeline-row-margin-top);
@@ -40,16 +40,9 @@ monitor-status-timeline-overlay-row .stream-info {
   align-items: flex-end;
 }
 
-monitor-status-timeline-overlay-row .no-data-visualization {
+sc-status-timeline-overlay-row .no-data-visualization {
   flex-grow: 1;
 
   /* striped gray background representing no-data to visualize */
-  background:
-    repeating-linear-gradient(
-      45deg,
-      #efefef,
-      #efefef 10px,
-      #acacac 10px,
-      #acacac 20px
-    );
+  background: repeating-linear-gradient(45deg, #efefef, #efefef 10px, #acacac 10px, #acacac 20px);
 }

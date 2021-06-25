@@ -23,7 +23,10 @@ const DATA_STREAM_1: DataStream = {
   name: 'test stream',
   resolution: MONTH_IN_MS,
   aggregates: {
-    [MONTH_IN_MS]: [{ x: new Date(1998, 3, 0, 0).getTime(), y: 1000 }, { x: new Date(1998, 4, 0, 0).getTime(), y: 3 }],
+    [MONTH_IN_MS]: [
+      { x: new Date(1998, 3, 0, 0).getTime(), y: 1000 },
+      { x: new Date(1998, 4, 0, 0).getTime(), y: 3 },
+    ],
   },
   data: [],
   dataType: DataType.NUMBER,
@@ -33,7 +36,10 @@ const DATA_STREAM_2: DataStream = {
   color: 'orange',
   name: 'test stream2',
   resolution: MONTH_IN_MS,
-  data: [{ x: new Date(1998, 3, 0, 0).getTime(), y: 2000 }, { x: new Date(1998, 4, 0, 0).getTime(), y: 4 }],
+  data: [
+    { x: new Date(1998, 3, 0, 0).getTime(), y: 2000 },
+    { x: new Date(1998, 4, 0, 0).getTime(), y: 4 },
+  ],
   dataType: DataType.NUMBER,
 };
 
@@ -46,13 +52,13 @@ export class StatusChartStatusMargin {
   render() {
     return (
       <div id="chart-container" style={{ height: '500px', width: '500px', marginTop: '20px' }}>
-        <monitor-status-chart
+        <sc-status-chart
           alarms={{ expires: MONTH_IN_MS }}
           widgetId="widget-id"
           dataStreams={[DATA_STREAM_1, DATA_STREAM_2]}
           viewPort={{ yMin: Y_MIN, yMax: Y_MAX, start: X_MIN, end: X_MAX }}
         />
-        <monitor-webgl-context />
+        <sc-webgl-context />
       </div>
     );
   }

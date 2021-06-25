@@ -6,11 +6,11 @@ import { Component, h, Prop } from '@stencil/core';
  * An stylized input which grows as you type into it.
  */
 @Component({
-  tag: 'monitor-expandable-input',
-  styleUrl: 'monitor-expandable-input.css',
+  tag: 'sc-expandable-input',
+  styleUrl: 'sc-expandable-input.css',
   shadow: false,
 })
-export class MonitorExpandableInput {
+export class ScExpandableInput {
   @Prop() value!: string;
   @Prop() onValueChange!: (value: string) => void;
   @Prop() isDisabled?: boolean;
@@ -26,7 +26,7 @@ export class MonitorExpandableInput {
       <span
         data-test-tag="expandable-input"
         contentEditable={!isDisabled}
-        class={`monitor-expandable-input aws-util-font-size-1 ${isDisabled ? 'disabled' : ''}`}
+        class={`sc-expandable-input aws-util-font-size-1 ${isDisabled ? 'disabled' : ''}`}
         // spellCheck={('false' as unknown) as boolean}
         onBlur={this.onChange}
       >

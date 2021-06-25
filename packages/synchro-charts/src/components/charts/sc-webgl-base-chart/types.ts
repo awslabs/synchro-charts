@@ -1,5 +1,5 @@
 import { AlarmsConfig, DataStream, ViewPort } from '../../../utils/dataTypes';
-import { ChartScene } from '../../monitor-webgl-context/types';
+import { ChartScene } from '../../sc-webgl-context/types';
 import { Threshold, ThresholdOptions } from '../common/types';
 
 /**

@@ -3,7 +3,7 @@ import { update } from '../../common/tests/merge';
 
 import { TREND_ICON_DASH_ARRAY } from '../../../../utils/dataTypes';
 import { CustomHTMLElement } from '../../../../utils/types';
-import { MonitorLegendRow } from './monitor-legend-row';
+import { ScLegendRow } from './sc-legend-row';
 import { POINT_TYPE } from '../../sc-webgl-base-chart/activePoints';
 import { DATA_STREAM_INFO } from '../../../../testing/__mocks__/mockWidgetProperties';
 import { Components } from '../../../../components.d';
@@ -14,14 +14,14 @@ const noop = () => {};
 const CURRENT_VALUE_SELECTOR = "[data-testid='current-value']";
 const COLOR_BAR_SELECTOR = '.bar';
 
-const newLegendRowSpecPage = async (props: Partial<Components.MonitorLegendRow>) => {
+const newLegendRowSpecPage = async (props: Partial<Components.ScLegendRow>) => {
   const page = await newSpecPage({
-    components: [MonitorLegendRow],
+    components: [ScLegendRow],
     html: '<div></div>',
     supportsShadowDom: false,
   });
-  const legendRow = page.doc.createElement('monitor-legend-row') as CustomHTMLElement<Components.MonitorLegendRow>;
-  const defaultProps: Components.MonitorLegendRow = {
+  const legendRow = page.doc.createElement('sc-legend-row') as CustomHTMLElement<Components.ScLegendRow>;
+  const defaultProps: Components.ScLegendRow = {
     isLoading: false,
     updateDataStreamName: noop,
     isEditing: false,

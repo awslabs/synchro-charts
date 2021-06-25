@@ -48,9 +48,9 @@ const DATA_STREAM_2: DataStream = {
 };
 
 @Component({
-  tag: 'monitor-webgl-bar-chart-margin',
+  tag: 'sc-webgl-bar-chart-margin',
 })
-export class MonitorWebglBarChartDynamicBuffer {
+export class ScWebglBarChartDynamicBuffer {
   @State() data: DataPoint<number>[] = [];
 
   render() {
@@ -63,7 +63,7 @@ export class MonitorWebglBarChartDynamicBuffer {
           bufferFactor={1}
           minBufferSize={1}
         />
-        <monitor-webgl-context />
+        <sc-webgl-context />
       </div>
     );
   }

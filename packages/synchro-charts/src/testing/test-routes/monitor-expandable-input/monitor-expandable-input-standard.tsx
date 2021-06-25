@@ -1,15 +1,15 @@
 import { Component, h, Host, State } from '@stencil/core';
 
 @Component({
-  tag: 'monitor-expandable-input-standard',
+  tag: 'sc-expandable-input-standard',
 })
-export class MonitorExpandableInputStandard {
+export class ScExpandableInputStandard {
   @State() value: string = '';
 
   render() {
     return (
       <Host>
-        <monitor-expandable-input
+        <sc-expandable-input
           onValueChange={(value: string) => {
             this.value = value;
           }}

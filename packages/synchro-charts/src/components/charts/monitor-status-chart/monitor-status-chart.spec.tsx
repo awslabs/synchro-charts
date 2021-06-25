@@ -1,16 +1,16 @@
 /* eslint-disable import/first */
 import { Annotations } from '../common/types';
 
-jest.mock('../../monitor-size-provider/renderChild');
-jest.mock('../../monitor-webgl-context/webglContext');
+jest.mock('../../sc-size-provider/renderChild');
+jest.mock('../../sc-webgl-context/webglContext');
 
 import 'webgl-mock-threejs';
 import { newChartSpecPage } from '../../../testing/chartDescriptions/newChartSpecPage';
 import { describeChart } from '../../../testing/chartDescriptions/describeChart';
 
-const statusChart = newChartSpecPage('monitor-status-chart');
+const statusChart = newChartSpecPage('sc-status-chart');
 
-describe('monitor-status-chart', () => {
+describe('sc-status-chart', () => {
   describeChart(statusChart, {
     yRange: true,
     viewport: true,

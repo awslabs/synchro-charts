@@ -22,9 +22,9 @@ const RIGHT_X = new Date(X_MIN.getTime() + VIEWPORT_WIDTH * (1 / 2)).getTime();
  */
 
 @Component({
-  tag: 'monitor-webgl-line-chart-dynamic-data-streams',
+  tag: 'sc-webgl-line-chart-dynamic-data-streams',
 })
-export class MonitorWebglLineChartDynamicDataStreams {
+export class ScWebglLineChartDynamicDataStreams {
   @State() dataStreams: DataStream<number>[] = [];
 
   addStream = () => {
@@ -73,7 +73,7 @@ export class MonitorWebglLineChartDynamicDataStreams {
         <br />
         <br />
         <div id="chart-container" style={{ marginTop: '20px', width: '500px', height: '500px' }}>
-          <monitor-line-chart
+          <sc-line-chart
             widgetId="widget-id"
             dataStreams={this.dataStreams}
             size={{
@@ -83,7 +83,7 @@ export class MonitorWebglLineChartDynamicDataStreams {
             viewPort={{ start: X_MIN, end: X_MAX, yMin: Y_MIN, yMax: Y_MAX }}
           />
         </div>
-        <monitor-webgl-context />
+        <sc-webgl-context />
       </div>
     );
   }

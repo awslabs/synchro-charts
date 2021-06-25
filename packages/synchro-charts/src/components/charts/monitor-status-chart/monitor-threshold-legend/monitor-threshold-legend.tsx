@@ -24,11 +24,11 @@ const label = (threshold: Threshold): string => {
 const key = ({ value, comparisonOperator, color }: Threshold): string => `${value}-${comparisonOperator}-${color}`;
 
 @Component({
-  tag: 'monitor-threshold-legend',
-  styleUrl: 'monitor-threshold-legend.css',
+  tag: 'sc-threshold-legend',
+  styleUrl: 'sc-threshold-legend.css',
   shadow: false,
 })
-export class MonitorThresholdLegend {
+export class ScThresholdLegend {
   @Prop() thresholds!: Threshold[];
 
   // We do not want to draw multiple 'legend rows' of identical color/label
@@ -39,7 +39,7 @@ export class MonitorThresholdLegend {
 
   render() {
     return this.uniqueThresholds().map(threshold => (
-      <monitor-threshold-legend-row key={key(threshold)} color={threshold.color} label={label(threshold)} />
+      <sc-threshold-legend-row key={key(threshold)} color={threshold.color} label={label(threshold)} />
     ));
   }
 }

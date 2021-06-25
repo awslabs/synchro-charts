@@ -2,9 +2,9 @@ import { Component, h, State } from '@stencil/core';
 import { DEFAULT_SIZE, SHIFT_X_DIFF } from './constants';
 
 @Component({
-  tag: 'monitor-size-provider-standard',
+  tag: 'sc-size-provider-standard',
 })
-export class MonitorSizeProviderStandard {
+export class ScSizeProviderStandard {
   @State() marginLeft: number = 0;
 
   onShiftRight = () => {
@@ -27,7 +27,7 @@ export class MonitorSizeProviderStandard {
             width: `${DEFAULT_SIZE.width}px`,
           }}
         >
-          <monitor-size-provider renderFunc={size => <sc-box someObject={size} size={size} />} />
+          <sc-size-provider renderFunc={size => <sc-box someObject={size} size={size} />} />
         </div>
       </div>
     );

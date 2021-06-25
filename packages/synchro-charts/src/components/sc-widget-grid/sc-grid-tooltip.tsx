@@ -7,10 +7,10 @@ import { Value } from '../value/Value';
 import { Threshold } from '../charts/common/types';
 
 @Component({
-  tag: 'monitor-grid-tooltip',
+  tag: 'sc-grid-tooltip',
   shadow: false,
 })
-export class MonitorGridTooltip {
+export class ScGridTooltip {
   @Element() el: HTMLElement;
 
   @Prop() isEnabled: boolean;

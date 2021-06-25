@@ -1,7 +1,7 @@
 import { Material, Mesh, Scene } from 'three';
 import { constructChartScene, vertices } from './utils';
-import { chartScene as lineChartScene } from '../monitor-line-chart/chartScene';
-import { LINE_MESH_INDEX, LineChartLineMesh } from '../monitor-line-chart/lineMesh';
+import { chartScene as lineChartScene } from '../sc-line-chart/chartScene';
+import { LINE_MESH_INDEX, LineChartLineMesh } from '../sc-line-chart/lineMesh';
 import { POINT_MESH_INDEX } from '../common/meshes/pointMesh';
 import { Timestamp } from '../../../utils/dataTypes';
 import { DataType } from '../../../utils/dataConstants';

@@ -1,5 +1,4 @@
-
-monitor-grid .grid {
+sc-grid .grid {
   --widget-min-width: 190px;
   --widget-min-height: 100px;
 
@@ -10,7 +9,7 @@ monitor-grid .grid {
   margin: 10px;
 }
 
-monitor-grid .grid-wrapper {
+sc-grid .grid-wrapper {
   display: flex;
   flex-direction: column;
   justify-content: center;

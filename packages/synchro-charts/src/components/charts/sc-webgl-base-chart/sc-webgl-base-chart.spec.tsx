@@ -1,5 +1,5 @@
 /* eslint-disable import/first */
-jest.mock('../../monitor-webgl-context/webglContext');
+jest.mock('../../sc-webgl-context/webglContext');
 
 import { newSpecPage } from '@stencil/core/testing';
 import { h } from '@stencil/core';
@@ -17,7 +17,7 @@ import { CustomHTMLElement } from '../../../utils/types';
 import { update } from '../common/tests/merge';
 import { ScWebglBaseChart } from './sc-webgl-base-chart';
 import { ScWebglAxis } from './sc-webgl-axis';
-import { chartScene, updateChartScene } from '../monitor-line-chart/chartScene';
+import { chartScene, updateChartScene } from '../sc-line-chart/chartScene';
 import { DATA_ALIGNMENT, LEGEND_POSITION } from '../common/constants';
 
 const VIEW_PORT: ViewPort = { start: new Date(2000), end: new Date(2001, 0, 0), yMin: 0, yMax: 100 };
@@ -104,7 +104,7 @@ describe('legend', () => {
       },
     });
 
-    const legend = chart.querySelector('monitor-legend');
+    const legend = chart.querySelector('sc-legend');
     expect(legend).toBeDefined();
   });
 
@@ -117,7 +117,7 @@ describe('legend', () => {
       isEditing: true,
     });
 
-    const legend = chart.querySelector('monitor-legend');
+    const legend = chart.querySelector('sc-legend');
     expect(legend).toHaveAttribute('isEditing');
   });
 
@@ -130,7 +130,7 @@ describe('legend', () => {
       viewPort: VIEW_PORT,
     });
 
-    const legend = chart.querySelector('monitor-legend') as HTMLMonitorLegendElement;
+    const legend = chart.querySelector('sc-legend') as HTMLScLegendElement;
 
     expect(legend.viewPort).toEqual(VIEW_PORT);
   });
@@ -387,7 +387,7 @@ describe('loading status', () => {
       });
 
       const loadingSpinner = chart.querySelector(LOADING_SPINNER_SELECTOR);
-      const legend = chart.querySelector('monitor-legend');
+      const legend = chart.querySelector('sc-legend');
 
       expect(legend).toHaveAttribute('isLoading');
       expect(loadingSpinner).not.toBeNull();
@@ -399,7 +399,7 @@ describe('loading status', () => {
       });
 
       const loadingSpinner = chart.querySelector(LOADING_SPINNER_SELECTOR);
-      const legend = chart.querySelector('monitor-legend') as HTMLMonitorLegendElement;
+      const legend = chart.querySelector('sc-legend') as HTMLScLegendElement;
 
       expect(legend).not.toHaveAttribute('isLoading');
       expect(loadingSpinner).toBeNull();
@@ -411,7 +411,7 @@ describe('loading status', () => {
       });
 
       const loadingSpinner = chart.querySelector(LOADING_SPINNER_SELECTOR);
-      const legend = chart.querySelector('monitor-legend') as HTMLMonitorLegendElement;
+      const legend = chart.querySelector('sc-legend') as HTMLScLegendElement;
 
       expect(legend).not.toHaveAttribute('isLoading');
       expect(loadingSpinner).toBeNull();
@@ -466,7 +466,7 @@ describe('with string data', () => {
         })
       );
 
-      expect(chart.querySelector('monitor-legend')).toHaveAttribute('supportString');
+      expect(chart.querySelector('sc-legend')).toHaveAttribute('supportString');
     });
   });
 });

@@ -1,6 +1,6 @@
 import { newSpecPage } from '@stencil/core/testing';
 
-import { MonitorLegend } from './monitor-legend';
+import { ScLegend } from './sc-legend';
 import { Components } from '../../../components.d';
 import { CustomHTMLElement } from '../../../utils/types';
 import { update } from '../common/tests/merge';
@@ -8,7 +8,7 @@ import { TrendResult } from '../common/trends/types';
 import { Threshold } from '../common/types';
 import { DataStream } from '../../../utils/dataTypes';
 import { COMPARISON_OPERATOR, LEGEND_POSITION, StatusIcon, TREND_TYPE } from '../../..';
-import { MonitorLegendRow } from './monitor-legend-row/monitor-legend-row';
+import { ScLegendRow } from './sc-legend-row/sc-legend-row';
 import { DEFAULT_LEGEND_TEXT_COLOR } from './constants';
 import { POINT_TYPE } from '../sc-webgl-base-chart/activePoints';
 import { VIEW_PORT } from '../common/testUtil';
@@ -115,15 +115,15 @@ const STRING_STREAM_2: DataStream<string> = {
   dataType: DataType.STRING,
 };
 
-const newChartLegendSpecPage = async (props: Partial<Components.MonitorLegend>) => {
+const newChartLegendSpecPage = async (props: Partial<Components.ScLegend>) => {
   const page = await newSpecPage({
-    components: [MonitorLegend, MonitorLegendRow],
+    components: [ScLegend, ScLegendRow],
     html: '<div></div>',
     supportsShadowDom: false,
   });
-  const legend = page.doc.createElement('monitor-legend') as CustomHTMLElement<Components.MonitorLegend>;
+  const legend = page.doc.createElement('sc-legend') as CustomHTMLElement<Components.ScLegend>;
 
-  const defaultProps: Components.MonitorLegend = {
+  const defaultProps: Components.ScLegend = {
     updateDataStreamName: noop,
     isLoading: false,
     isEditing: false,
@@ -157,7 +157,7 @@ it('creates empty legend if no data streams are passed in', async () => {
   const { legend } = await newChartLegendSpecPage({
     dataStreams: [],
   });
-  expect(legend.querySelectorAll('monitor-legend-row')).toBeEmpty();
+  expect(legend.querySelectorAll('sc-legend-row')).toBeEmpty();
 });
 
 it('displays data point on legend when it falls before the viewport', async () => {
@@ -174,7 +174,7 @@ it('displays data point on legend when it falls before the viewport', async () =
     ],
   });
 
-  const row = legend.querySelector('monitor-legend-row') as HTMLMonitorLegendRowElement;
+  const row = legend.querySelector('sc-legend-row') as HTMLScLegendRowElement;
   expect(row).not.toBeNull();
   expect(row.point).toEqual(POINT);
 });
@@ -218,8 +218,8 @@ describe('indicates breaching of thresholds', () => {
         thresholds: [ALARM_THRESHOLD],
       });
 
-      expect(legend.querySelectorAll('monitor-legend-row')).toHaveLength(1);
-      const row = legend.querySelector('monitor-legend-row') as HTMLMonitorLegendRowElement;
+      expect(legend.querySelectorAll('sc-legend-row')).toHaveLength(1);
+      const row = legend.querySelector('sc-legend-row') as HTMLScLegendRowElement;
 
       expect(row.valueColor).toBe(ALARM_THRESHOLD.color);
       expect(row.icon).toBe(ALARM_THRESHOLD.icon);
@@ -242,8 +242,8 @@ describe('indicates breaching of thresholds', () => {
         trendResults: [trendResult],
       });
 
-      expect(legend.querySelectorAll('monitor-legend-row')).toHaveLength(2);
-      const rows = legend.querySelectorAll('monitor-legend-row');
+      expect(legend.querySelectorAll('sc-legend-row')).toHaveLength(2);
+      const rows = legend.querySelectorAll('sc-legend-row');
       const trendRow = rows[1];
 
       // has a trend row which is shown as breaching
@@ -257,8 +257,8 @@ describe('indicates breaching of thresholds', () => {
         thresholds: [ALARM_THRESHOLD],
       });
 
-      expect(legend.querySelectorAll('monitor-legend-row')).toHaveLength(1);
-      const row = legend.querySelector('monitor-legend-row') as HTMLMonitorLegendRowElement;
+      expect(legend.querySelectorAll('sc-legend-row')).toHaveLength(1);
+      const row = legend.querySelector('sc-legend-row') as HTMLScLegendRowElement;
 
       expect(row.valueColor).not.toBe(ALARM_THRESHOLD.color);
       expect(row.icon).not.toBe(ALARM_THRESHOLD.icon);
@@ -280,8 +280,8 @@ describe('indicates breaching of thresholds', () => {
         thresholds: [ALARM_THRESHOLD],
       });
 
-      expect(legend.querySelectorAll('monitor-legend-row')).toHaveLength(1);
-      const row = legend.querySelector('monitor-legend-row') as HTMLMonitorLegendRowElement;
+      expect(legend.querySelectorAll('sc-legend-row')).toHaveLength(1);
+      const row = legend.querySelector('sc-legend-row') as HTMLScLegendRowElement;
 
       expect(row.valueColor).toBe(ALARM_THRESHOLD.color);
       expect(row.icon).toBe(ALARM_THRESHOLD.icon);
@@ -303,7 +303,7 @@ describe('indicates breaching of thresholds', () => {
       ],
       thresholds: [{ ...THRESHOLD, dataStreamIds: ['some-fake-id-that-is-not-our-data-stream-id'] }],
     });
-    const row = legend.querySelector('monitor-legend-row') as HTMLMonitorLegendRowElement;
+    const row = legend.querySelector('sc-legend-row') as HTMLScLegendRowElement;
 
     expect(row.valueColor).not.toBe(THRESHOLD.color);
   });
@@ -323,7 +323,7 @@ describe('indicates breaching of thresholds', () => {
       ],
       thresholds: [{ ...THRESHOLD, dataStreamIds: ['some-fake-id-that-is-not-our-data-stream-id'] }],
     });
-    const row = legend.querySelector('monitor-legend-row') as HTMLMonitorLegendRowElement;
+    const row = legend.querySelector('sc-legend-row') as HTMLScLegendRowElement;
 
     expect(row.valueColor).not.toBe(THRESHOLD.color);
   });
@@ -344,7 +344,7 @@ describe('indicates breaching of thresholds', () => {
       ],
       thresholds: [THRESHOLD],
     });
-    const row = legend.querySelector('monitor-legend-row') as HTMLMonitorLegendRowElement;
+    const row = legend.querySelector('sc-legend-row') as HTMLScLegendRowElement;
 
     expect(row.valueColor).not.toBe(THRESHOLD.color);
   });
@@ -365,7 +365,7 @@ describe('indicates breaching of thresholds', () => {
       ],
       thresholds: [THRESHOLD],
     });
-    const row = legend.querySelector('monitor-legend-row') as HTMLMonitorLegendRowElement;
+    const row = legend.querySelector('sc-legend-row') as HTMLScLegendRowElement;
 
     expect(row.valueColor).toBe(THRESHOLD.color);
   });
@@ -385,7 +385,7 @@ describe('indicates breaching of thresholds', () => {
       ],
       thresholds: [],
     });
-    const row = legend.querySelector('monitor-legend-row') as HTMLMonitorLegendRowElement;
+    const row = legend.querySelector('sc-legend-row') as HTMLScLegendRowElement;
 
     expect(row.valueColor).toBe(DEFAULT_LEGEND_TEXT_COLOR);
   });
@@ -405,7 +405,7 @@ describe('indicates breaching of thresholds', () => {
       ],
       thresholds: [THRESHOLD],
     });
-    const row = legend.querySelector('monitor-legend-row') as HTMLMonitorLegendRowElement;
+    const row = legend.querySelector('sc-legend-row') as HTMLScLegendRowElement;
 
     expect(row.valueColor).toBe(DEFAULT_LEGEND_TEXT_COLOR);
   });
@@ -437,7 +437,7 @@ describe('indicates breaching of thresholds', () => {
       ],
       thresholds: upperLowerThresholds,
     });
-    const row = legend.querySelector('monitor-legend-row') as HTMLMonitorLegendRowElement;
+    const row = legend.querySelector('sc-legend-row') as HTMLScLegendRowElement;
 
     expect(row.valueColor).toBe(LOWER_THRESHOLD.color);
   });
@@ -470,7 +470,7 @@ describe('indicates breaching of thresholds', () => {
       ],
       thresholds: upperLowerThresholds,
     });
-    const row = legend.querySelector('monitor-legend-row') as HTMLMonitorLegendRowElement;
+    const row = legend.querySelector('sc-legend-row') as HTMLScLegendRowElement;
 
     expect(row.valueColor).toBe(UPPER_THRESHOLD.color);
   });
@@ -483,7 +483,7 @@ describe('is editing', () => {
       isEditing: true,
     });
 
-    const streamName = legend.querySelector('monitor-data-stream-name') as HTMLMonitorDataStreamNameElement;
+    const streamName = legend.querySelector('sc-data-stream-name') as HTMLScDataStreamNameElement;
     expect(streamName).toHaveAttribute('isEditing');
   });
 
@@ -493,7 +493,7 @@ describe('is editing', () => {
       isEditing: false,
     });
 
-    const streamName = legend.querySelector('monitor-data-stream-name') as HTMLMonitorDataStreamNameElement;
+    const streamName = legend.querySelector('sc-data-stream-name') as HTMLScDataStreamNameElement;
     expect(streamName).not.toHaveAttribute('isEditing');
   });
 
@@ -503,7 +503,7 @@ describe('is editing', () => {
       isEditing: undefined,
     });
 
-    const streamName = legend.querySelector('monitor-data-stream-name') as HTMLMonitorDataStreamNameElement;
+    const streamName = legend.querySelector('sc-data-stream-name') as HTMLScDataStreamNameElement;
     expect(streamName).not.toHaveAttribute('isEditing');
   });
 });
@@ -514,7 +514,7 @@ describe('number of legend rows', () => {
       dataStreams: [DATA_STREAM],
     });
 
-    expect(legend.querySelectorAll('monitor-legend-row')).toHaveLength(1);
+    expect(legend.querySelectorAll('sc-legend-row')).toHaveLength(1);
   });
 
   it('does not create a legend row when passed one trend result without a corresponding data stream', async () => {
@@ -532,7 +532,7 @@ describe('number of legend rows', () => {
       ],
     });
 
-    expect(legend.querySelectorAll('monitor-legend-row')).toBeEmpty();
+    expect(legend.querySelectorAll('sc-legend-row')).toBeEmpty();
   });
 
   it('creates two legend rows when passed one trend result with a corresponding data stream', async () => {
@@ -551,7 +551,7 @@ describe('number of legend rows', () => {
       ],
     });
 
-    expect(legend.querySelectorAll('monitor-legend-row')).toHaveLength(2);
+    expect(legend.querySelectorAll('sc-legend-row')).toHaveLength(2);
   });
 
   it('creates multiple legend rows when passed multiple data streams with corresponding legend rows', async () => {
@@ -559,7 +559,7 @@ describe('number of legend rows', () => {
       dataStreams: [NUMBER_STREAM, { ...NUMBER_STREAM, id: 'some other id' }],
     });
 
-    expect(legend.querySelectorAll('monitor-legend-row')).toHaveLength(2);
+    expect(legend.querySelectorAll('sc-legend-row')).toHaveLength(2);
   });
 
   it('creates multiple legend rows when passed multiple data streams with corresponding legend rows and trend results', async () => {
@@ -602,7 +602,7 @@ describe('number of legend rows', () => {
       ],
     });
 
-    expect(legend.querySelectorAll('monitor-legend-row')).toHaveLength(4);
+    expect(legend.querySelectorAll('sc-legend-row')).toHaveLength(4);
   });
 });
 
@@ -641,7 +641,7 @@ describe('active point passed into legend rows', () => {
       ],
     });
 
-    const legendInfo = legend.querySelector('monitor-legend-row') as HTMLMonitorLegendRowElement;
+    const legendInfo = legend.querySelector('sc-legend-row') as HTMLScLegendRowElement;
     expect(legendInfo.point).toEqual(POINT_2);
   });
 
@@ -692,7 +692,7 @@ describe('active point passed into legend rows', () => {
       ],
     });
 
-    const legendInfo = legend.querySelectorAll('monitor-legend-row')[1] as HTMLMonitorLegendRowElement;
+    const legendInfo = legend.querySelectorAll('sc-legend-row')[1] as HTMLScLegendRowElement;
     expect(legendInfo.point).toEqual({
       x: POINT_2.x,
       y: 35.552,
@@ -707,7 +707,7 @@ describe('string data type behavior', () => {
       supportString: true,
     });
 
-    expect(legend.querySelectorAll('monitor-legend-row')).toHaveLength(2);
+    expect(legend.querySelectorAll('sc-legend-row')).toHaveLength(2);
   });
 
   it('does not render a stream info per string data stream when it does not supports strings', async () => {
@@ -716,7 +716,7 @@ describe('string data type behavior', () => {
       supportString: false,
     });
 
-    expect(legend.querySelectorAll('monitor-legend-row')).toBeEmpty();
+    expect(legend.querySelectorAll('sc-legend-row')).toBeEmpty();
   });
 
   it('filters out string data type when support string is false', async () => {
@@ -725,7 +725,7 @@ describe('string data type behavior', () => {
       supportString: false,
     });
 
-    expect(legend.querySelectorAll('monitor-legend-row')).toHaveLength(1);
+    expect(legend.querySelectorAll('sc-legend-row')).toHaveLength(1);
   });
 });
 
@@ -759,7 +759,7 @@ describe('visualizesAlarms', () => {
       supportString: true,
     });
 
-    const rows = legend.querySelectorAll('monitor-legend-row');
+    const rows = legend.querySelectorAll('sc-legend-row');
     expect(rows).toBeEmpty();
   });
 
@@ -770,7 +770,7 @@ describe('visualizesAlarms', () => {
       supportString: true, // our mock infos are strings, so this is also required
     });
 
-    const rows = legend.querySelectorAll('monitor-legend-row');
+    const rows = legend.querySelectorAll('sc-legend-row');
     expect(rows).toHaveLength(1);
 
     const row = rows[0];
@@ -789,7 +789,7 @@ describe('visualizesAlarms', () => {
       supportString: false, // our mock infos are strings
     });
 
-    const rows = legend.querySelectorAll('monitor-legend-row');
+    const rows = legend.querySelectorAll('sc-legend-row');
     expect(rows).toBeEmpty();
   });
 });

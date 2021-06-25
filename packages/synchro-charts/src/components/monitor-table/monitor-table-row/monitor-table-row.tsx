@@ -3,7 +3,7 @@ import { Row } from '../constructTableData';
 import { EmptyStatus } from '../../charts/sc-webgl-base-chart/EmptyStatus';
 import { MessageOverrides, TableColumn } from '../../../utils/dataTypes';
 
-export const MonitorTableRows = ({
+export const ScTableRows = ({
   columns,
   rows,
   messageOverrides,
@@ -21,7 +21,7 @@ export const MonitorTableRows = ({
             const key = cell && cell.dataStream ? `${cell.dataStream.id}-${i}` : `empty-${i}`;
             return (
               <td key={key} id={`cell-${column.header}`}>
-                <monitor-table-cell cell={cell} />
+                <sc-table-cell cell={cell} />
               </td>
             );
           })}

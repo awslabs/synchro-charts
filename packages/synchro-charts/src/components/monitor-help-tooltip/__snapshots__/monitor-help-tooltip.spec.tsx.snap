@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders correctly 1`] = `
-<monitor-help-tooltip>
+<sc-help-tooltip>
   <div class="help-icon" tabindex="-1">
     <svg height="25px" viewBox="0 0 30 30" width="25px">
       <defs>
@@ -26,5 +26,5 @@ exports[`renders correctly 1`] = `
       </div>
     </div>
   </div>
-</monitor-help-tooltip>
+</sc-help-tooltip>
 `;

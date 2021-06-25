@@ -19,9 +19,9 @@ const X_MAX = new Date(2000, 0, 1);
 const WIDTH = X_MAX.getTime() - X_MIN.getTime();
 
 @Component({
-  tag: 'monitor-webgl-line-chart-dynamic-data',
+  tag: 'sc-webgl-line-chart-dynamic-data',
 })
-export class MonitorWebglLineChartDynamicData {
+export class ScWebglLineChartDynamicData {
   @State() data: DataPoint<number>[] = [];
 
   addDataPoint = () => {
@@ -48,7 +48,7 @@ export class MonitorWebglLineChartDynamicData {
           Remove Data Point
         </button>
         <div id="chart-container" style={{ marginTop: '20px', width: '500px', height: '500px' }}>
-          <monitor-line-chart
+          <sc-line-chart
             widgetId="widget-id"
             dataStreams={[
               {
@@ -67,7 +67,7 @@ export class MonitorWebglLineChartDynamicData {
             viewPort={{ start: X_MIN, end: X_MAX, yMin: Y_MIN, yMax: Y_MAX }}
           />
 
-          <monitor-webgl-context />
+          <sc-webgl-context />
         </div>
       </div>
     );

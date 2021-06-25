@@ -10,7 +10,7 @@ import { DataType, StreamType } from '../../utils/dataConstants';
  * We want to construct a widget which displays a numerical data stream, with two alarm string data streams with
  * corresponding thresholds.
  *
- * We do this by monitoring the "oil change status" and "could get speeding ticket" alarm.
+ * We do this by Scing the "oil change status" and "could get speeding ticket" alarm.
  */
 
 // viewport boundaries

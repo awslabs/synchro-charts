@@ -5,10 +5,10 @@ import { StatusIcon } from '../../charts/common/constants';
 import { Primitive } from '../../../utils/dataTypes';
 
 @Component({
-  tag: 'monitor-table-cell',
+  tag: 'sc-table-cell',
   shadow: false,
 })
-export class MonitorTableCell {
+export class ScTableCell {
   @Prop() cell!: Cell | undefined;
 
   /**

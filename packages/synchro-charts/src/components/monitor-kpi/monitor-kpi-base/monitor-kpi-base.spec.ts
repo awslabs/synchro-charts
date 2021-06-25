@@ -4,7 +4,7 @@ import { update } from '../../charts/common/tests/merge';
 
 import { CustomHTMLElement } from '../../../utils/types';
 import { Components } from '../../../components.d';
-import { MonitorKpiBase } from './monitor-kpi-base';
+import { ScKpiBase } from './sc-kpi-base';
 import { DataStream, DataStreamInfo, DEFAULT_MESSAGE_OVERRIDES } from '../../../utils/dataTypes';
 
 import { VIEW_PORT } from '../../charts/common/testUtil';
@@ -28,15 +28,15 @@ const STRING_DATA_STREAM_INFOS: DataStreamInfo[] = [
   },
 ];
 
-const newValueSpecPage = async (propOverrides: Partial<Components.MonitorKpiBase> = {}) => {
+const newValueSpecPage = async (propOverrides: Partial<Components.ScKpiBase> = {}) => {
   const page = await newSpecPage({
-    components: [MonitorKpiBase],
+    components: [ScKpiBase],
     html: '<div></div>',
     supportsShadowDom: false,
   });
-  const chart = page.doc.createElement('monitor-kpi-base') as CustomHTMLElement<Components.MonitorKpiBase>;
+  const chart = page.doc.createElement('sc-kpi-base') as CustomHTMLElement<Components.ScKpiBase>;
 
-  const props: Partial<Components.MonitorKpiBase> = {
+  const props: Partial<Components.ScKpiBase> = {
     isEditing: false,
     isLoading: false,
     isRefreshing: false,
@@ -391,14 +391,14 @@ describe('icon', () => {
   it('renders no icon when `icon` not present', async () => {
     const { chart } = await newValueSpecPage({ breachedThreshold: { ...THRESHOLD, icon: undefined } });
 
-    const chartIcon = chart.querySelector('sc-chart-icon') as HTMLMonitorChartIconElement;
+    const chartIcon = chart.querySelector('sc-chart-icon') as HTMLScChartIconElement;
     expect(chartIcon).toBeNull();
   });
 
   it('renders icon when `provided`', async () => {
     const { chart } = await newValueSpecPage({ breachedThreshold: { ...THRESHOLD, icon: StatusIcon.DISABLED } });
 
-    const chartIcon = chart.querySelector('sc-chart-icon') as HTMLMonitorChartIconElement;
+    const chartIcon = chart.querySelector('sc-chart-icon') as HTMLScChartIconElement;
     expect(chartIcon).not.toBeNull();
   });
 

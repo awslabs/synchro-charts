@@ -18,9 +18,9 @@ const WIDTH = X_MAX.getTime() - X_MIN.getTime();
  * Used to test the behavior of a scatter chart when adding/removing data points
  */
 @Component({
-  tag: 'monitor-scatter-chart-dynamic-data',
+  tag: 'sc-scatter-chart-dynamic-data',
 })
-export class MonitorScatterChartDynamicData {
+export class ScScatterChartDynamicData {
   @State() data: DataPoint<number>[] = [];
 
   // test data point dead center of the viewport
@@ -48,7 +48,7 @@ export class MonitorScatterChartDynamicData {
           Remove Data Point
         </button>
         <div id="chart-container" style={{ marginTop: '20px', width: '500px', height: '500px' }}>
-          <monitor-scatter-chart
+          <sc-scatter-chart
             widgetId="widget-id"
             dataStreams={[
               {
@@ -70,7 +70,7 @@ export class MonitorScatterChartDynamicData {
             viewPort={{ start: X_MIN, end: X_MAX, yMin: Y_MIN, yMax: Y_MAX }}
           />
 
-          <monitor-webgl-context />
+          <sc-webgl-context />
         </div>
       </div>
     );

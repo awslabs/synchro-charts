@@ -5,23 +5,23 @@ import { SpecPage } from '@stencil/core/internal';
 import { Components } from '../../components.d';
 import { ScWebglBaseChart } from '../../components/charts/sc-webgl-base-chart/sc-webgl-base-chart';
 import { ScGestureHandler } from '../../components/charts/sc-webgl-base-chart/sc-gesture-handler';
-import { MonitorLineChart } from '../../components/charts/monitor-line-chart/monitor-line-chart';
-import { MonitorSizeProvider } from '../../components/monitor-size-provider/monitor-size-provider';
+import { ScLineChart } from '../../components/charts/sc-line-chart/sc-line-chart';
+import { ScSizeProvider } from '../../components/sc-size-provider/sc-size-provider';
 import { CustomHTMLElement } from '../../utils/types';
 import { LEGEND_POSITION } from '../..';
 import { update } from '../../components/charts/common/tests/merge';
 import { ScBarChart } from '../../components/charts/sc-bar-chart/sc-bar-chart';
-import { MonitorScatterChart } from '../../components/charts/monitor-scatter-chart/monitor-scatter-chart';
-import { MonitorStatusChart } from '../../components/charts/monitor-status-chart/monitor-status-chart';
+import { ScScatterChart } from '../../components/charts/sc-scatter-chart/sc-scatter-chart';
+import { ScStatusChart } from '../../components/charts/sc-status-chart/sc-status-chart';
 import { ScWebglAxis } from '../../components/charts/sc-webgl-base-chart/sc-webgl-axis';
 import { ScErrorBadge } from '../../components/sc-error-badge/sc-error-badge';
-import { MonitorStatusTimelineOverlayRow } from '../../components/charts/monitor-status-chart/monitor-status-timeline-overlay/monitor-status-timeline-overlay-row';
-import { MonitorStatusTimelineOverlay } from '../../components/charts/monitor-status-chart/monitor-status-timeline-overlay/monitor-status-timeline-overlay';
+import { ScStatusTimelineOverlayRow } from '../../components/charts/sc-status-chart/sc-status-timeline-overlay/sc-status-timeline-overlay-row';
+import { ScStatusTimelineOverlay } from '../../components/charts/sc-status-chart/sc-status-timeline-overlay/sc-status-timeline-overlay';
 import { ScChartIcon } from '../../components/charts/chart-icon/sc-chart-icon';
 
 const VIEW_PORT = { start: new Date(2000), end: new Date(2001, 0, 0), yMin: 0, yMax: 100 };
 
-export type ChartProps = Components.MonitorLineChart;
+export type ChartProps = Components.ScLineChart;
 
 export type ChartSpecPage = (props: Partial<ChartProps>) => Promise<{ page: SpecPage; chart: HTMLElement }>;
 
@@ -38,14 +38,14 @@ export const newChartSpecPage = (tagName: string): ChartSpecPage => async props 
     components: [
       ScWebglBaseChart,
       ScGestureHandler,
-      MonitorLineChart,
+      ScLineChart,
       ScBarChart,
-      MonitorScatterChart,
-      MonitorStatusChart,
-      MonitorSizeProvider,
+      ScScatterChart,
+      ScStatusChart,
+      ScSizeProvider,
       ScWebglAxis,
-      MonitorStatusTimelineOverlayRow,
-      MonitorStatusTimelineOverlay,
+      ScStatusTimelineOverlayRow,
+      ScStatusTimelineOverlay,
       ScChartIcon,
       ScErrorBadge,
     ],

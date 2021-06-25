@@ -5,8 +5,8 @@ import { CustomHTMLElement } from '../../utils/types';
 import { DATA_STREAMS } from '../charts/common/tests/chart/constants';
 import { DEFAULT_CHART_CONFIG } from '../charts/sc-webgl-base-chart/chartDefaults';
 import { update } from '../charts/common/tests/merge';
-import { MonitorKpi } from './monitor-kpi';
-import { MonitorSizeProvider } from '../monitor-size-provider/monitor-size-provider';
+import { ScKpi } from './sc-kpi';
+import { ScSizeProvider } from '../sc-size-provider/sc-size-provider';
 import { MINUTE_IN_MS } from '../../utils/time';
 import {
   ALARM_STREAM,
@@ -16,8 +16,8 @@ import {
   STRING_STREAM_1,
   STRING_STREAM_2,
 } from '../../testing/__mocks__/mockWidgetProperties';
-import { MonitorWidgetGrid } from '../sc-widget-grid/monitor-widget-grid';
-import { MonitorGridTooltip } from '../sc-widget-grid/monitor-grid-tooltip';
+import { ScWidgetGrid } from '../sc-widget-grid/sc-widget-grid';
+import { ScGridTooltip } from '../sc-widget-grid/sc-grid-tooltip';
 import { DataPoint } from '../../utils/dataTypes';
 
 const VIEW_PORT = {
@@ -25,14 +25,14 @@ const VIEW_PORT = {
   duration: MINUTE_IN_MS,
 };
 
-const newValueSpecPage = async (propOverrides: Partial<Components.MonitorKpi> = {}) => {
+const newValueSpecPage = async (propOverrides: Partial<Components.ScKpi> = {}) => {
   const page = await newSpecPage({
-    components: [MonitorKpi, MonitorSizeProvider, MonitorWidgetGrid, MonitorGridTooltip],
+    components: [ScKpi, ScSizeProvider, ScWidgetGrid, ScGridTooltip],
     html: '<div></div>',
     supportsShadowDom: false,
   });
-  const kpi = page.doc.createElement('monitor-kpi') as CustomHTMLElement<Components.MonitorKpi>;
-  const props: Partial<Components.MonitorKpi> = {
+  const kpi = page.doc.createElement('sc-kpi') as CustomHTMLElement<Components.ScKpi>;
+  const props: Partial<Components.ScKpi> = {
     widgetId: 'test-kpi-widget',
     isEditing: false,
     dataStreams: DATA_STREAMS,
@@ -50,7 +50,7 @@ describe('when enabled', () => {
   it('renders a base kpi', async () => {
     const { kpi } = await newValueSpecPage({ dataStreams: [DATA_STREAM] });
 
-    const kpiBases = kpi.querySelectorAll('monitor-kpi-base');
+    const kpiBases = kpi.querySelectorAll('sc-kpi-base');
     expect(kpiBases.length).toBe(1);
   });
 
@@ -59,21 +59,21 @@ describe('when enabled', () => {
 
     const { kpi } = await newValueSpecPage({ dataStreams });
 
-    const kpiBases = kpi.querySelectorAll('monitor-kpi-base');
+    const kpiBases = kpi.querySelectorAll('sc-kpi-base');
     expect(kpiBases.length).toBe(dataStreams.length);
   });
 
   it('does render string data streams', async () => {
     const { kpi } = await newValueSpecPage({ dataStreams: [STRING_STREAM_1] });
 
-    const kpiBases = kpi.querySelectorAll('monitor-kpi-base');
+    const kpiBases = kpi.querySelectorAll('sc-kpi-base');
     expect(kpiBases).toHaveLength(1);
   });
 
   it('does not render a help icon', async () => {
     const { kpi } = await newValueSpecPage();
 
-    expect(kpi.querySelector('monitor-help-tooltip')).toBeNull();
+    expect(kpi.querySelector('sc-help-tooltip')).toBeNull();
   });
 
   it('displays error from data stream', async () => {
@@ -88,7 +88,7 @@ describe('when enabled', () => {
       annotations: { y: [ALARM_THRESHOLD] },
     });
 
-    const cell = kpi.querySelector('monitor-kpi-base');
+    const cell = kpi.querySelector('sc-kpi-base');
     expect(cell).toEqualAttribute('error', error);
   });
 
@@ -106,7 +106,7 @@ describe('when enabled', () => {
         annotations: { y: [ALARM_THRESHOLD] },
       });
 
-      const cells = kpi.querySelectorAll('monitor-kpi-base');
+      const cells = kpi.querySelectorAll('sc-kpi-base');
       expect(cells).toHaveLength(1);
 
       const cell = cells[0];
@@ -127,7 +127,7 @@ describe('when enabled', () => {
         annotations: { y: [ALARM_THRESHOLD] },
       });
 
-      const cells = kpi.querySelectorAll('monitor-kpi-base');
+      const cells = kpi.querySelectorAll('sc-kpi-base');
       expect(cells).toHaveLength(2);
 
       const propertyCell = cells[0];
@@ -167,7 +167,7 @@ describe('when disabled', () => {
       dataStreams,
     });
 
-    const kpiBases = kpi.querySelectorAll('monitor-kpi-base');
+    const kpiBases = kpi.querySelectorAll('sc-kpi-base');
     expect(kpiBases.length).toBe(dataStreams.length);
   });
 
@@ -181,6 +181,6 @@ describe('when disabled', () => {
       viewPort: NON_LIVE_VIEW_PORT,
     });
 
-    expect(kpi.querySelector('monitor-help-tooltip')).not.toBeNull();
+    expect(kpi.querySelector('sc-help-tooltip')).not.toBeNull();
   });
 });

@@ -23,13 +23,13 @@ const TEST_DATA_POINT_2: DataPoint<number> = {
 };
 
 @Component({
-  tag: 'monitor-webgl-chart-threshold-coloration-exact-point',
+  tag: 'sc-webgl-chart-threshold-coloration-exact-point',
 })
-export class MonitorWebglChartThresholdColorationExactPoint {
+export class ScWebglChartThresholdColorationExactPoint {
   render() {
     return (
       <div>
-        <monitor-line-chart
+        <sc-line-chart
           widgetId="widget-id"
           dataStreams={[
             {
@@ -63,7 +63,7 @@ export class MonitorWebglChartThresholdColorationExactPoint {
           }}
           viewPort={{ start: X_MIN, end: X_MAX, yMin: Y_MIN, yMax: Y_MAX }}
         />
-        <monitor-webgl-context />
+        <sc-webgl-context />
       </div>
     );
   }

@@ -18,9 +18,9 @@ const X_MAX = new Date(2001, 12);
  */
 
 @Component({
-  tag: 'monitor-webgl-bar-chart-dynamic-data',
+  tag: 'sc-webgl-bar-chart-dynamic-data',
 })
-export class MonitorWebglBarChartDynamicData {
+export class ScWebglBarChartDynamicData {
   @State() data: DataPoint<number>[] = [];
   @State() monthIndex: number = 1;
 
@@ -77,7 +77,7 @@ export class MonitorWebglBarChartDynamicData {
               end: X_MAX,
             }}
           />
-          <monitor-webgl-context />
+          <sc-webgl-context />
         </div>
       </div>
     );

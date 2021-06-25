@@ -36,9 +36,9 @@ const TEST_2_DATA_POINT_2: DataPoint<number> = {
  *
  */
 @Component({
-  tag: 'monitor-webgl-bar-chart-threshold-coloration-multiple-data-stream',
+  tag: 'sc-webgl-bar-chart-threshold-coloration-multiple-data-stream',
 })
-export class MonitorWebglBarChartThresholdMultipleDataStream {
+export class ScWebglBarChartThresholdMultipleDataStream {
   render() {
     return (
       <div>
@@ -89,7 +89,7 @@ export class MonitorWebglBarChartThresholdMultipleDataStream {
           }}
           viewPort={{ yMin: Y_MIN, yMax: Y_MAX, start: X_MIN, end: X_MAX }}
         />
-        <monitor-webgl-context />
+        <sc-webgl-context />
       </div>
     );
   }

@@ -18,9 +18,9 @@ const X_MAX = new Date(2000, 0, 1);
 const WIDTH = X_MAX.getTime() - X_MIN.getTime();
 
 @Component({
-  tag: 'monitor-webgl-bar-chart-dynamic-buffer',
+  tag: 'sc-webgl-bar-chart-dynamic-buffer',
 })
-export class MonitorWebglBarChartDynamicBuffer {
+export class ScWebglBarChartDynamicBuffer {
   @State() data: DataPoint<number>[] = [];
 
   addDataPoint = () => {
@@ -63,7 +63,7 @@ export class MonitorWebglBarChartDynamicBuffer {
             bufferFactor={1}
             minBufferSize={1}
           />
-          <monitor-webgl-context />
+          <sc-webgl-context />
         </div>
       </div>
     );

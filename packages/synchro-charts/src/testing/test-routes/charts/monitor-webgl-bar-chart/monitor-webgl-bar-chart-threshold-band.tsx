@@ -10,9 +10,9 @@ import { COMPARISON_OPERATOR, DataType } from '../../../..';
  */
 
 @Component({
-  tag: 'monitor-webgl-bar-chart-threshold-coloration-band',
+  tag: 'sc-webgl-bar-chart-threshold-coloration-band',
 })
-export class MonitorWebglBarChartThresholdBand {
+export class ScWebglBarChartThresholdBand {
   render() {
     return (
       <div>
@@ -64,7 +64,7 @@ export class MonitorWebglBarChartThresholdBand {
           }}
           viewPort={{ yMin: Y_MIN, yMax: Y_MAX, start: X_MIN, end: X_MAX }}
         />
-        <monitor-webgl-context />
+        <sc-webgl-context />
       </div>
     );
   }

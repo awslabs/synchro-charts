@@ -64,7 +64,7 @@ export class ScBarChart implements ChartConfig {
 
   render() {
     return (
-      <monitor-size-provider
+      <sc-size-provider
         size={this.size}
         renderFunc={(size: RectScrollFixed) => (
           <sc-webgl-base-chart

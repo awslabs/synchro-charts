@@ -28,9 +28,9 @@ const createData = (point: DataPoint<number>, numPoints: number): DataPoint<numb
 let numPointCounter = 1;
 
 @Component({
-  tag: 'monitor-webgl-chart-dynamic-charts',
+  tag: 'sc-webgl-chart-dynamic-charts',
 })
-export class MonitorWebglChartStandard {
+export class ScWebglChartStandard {
   @State() chartKeys: { key: string; data: DataStream[] }[] = [];
   @State() width: number = 500;
   @State() xOffset: number = 0;
@@ -139,14 +139,14 @@ export class MonitorWebglChartStandard {
 
         {this.chartKeys.map(({ key, data }) => (
           <div key={key} style={{ marginLeft: `${this.xOffset}px`, width: `${this.width}px`, height: '500px' }}>
-            <monitor-line-chart
+            <sc-line-chart
               dataStreams={data}
               widgetId={key}
               viewPort={{ start: X_MIN, end: X_MAX, yMin: Y_MIN, yMax: Y_MAX }}
             />
           </div>
         ))}
-        <monitor-webgl-context />
+        <sc-webgl-context />
       </div>
     );
   }

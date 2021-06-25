@@ -11,9 +11,9 @@ import { DataType } from '../../../..';
  */
 
 @Component({
-  tag: 'monitor-webgl-bar-chart-standard',
+  tag: 'sc-webgl-bar-chart-standard',
 })
-export class MonitorWebglBarChartStandard {
+export class ScWebglBarChartStandard {
   render() {
     return (
       <div>
@@ -38,7 +38,7 @@ export class MonitorWebglBarChartStandard {
           }}
           viewPort={{ yMin: Y_MIN, yMax: Y_MAX, start: X_MIN, end: X_MAX }}
         />
-        <monitor-webgl-context />
+        <sc-webgl-context />
       </div>
     );
   }

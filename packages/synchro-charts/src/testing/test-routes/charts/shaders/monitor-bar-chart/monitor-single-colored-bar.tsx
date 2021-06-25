@@ -1,5 +1,5 @@
 import { Component, Element, h } from '@stencil/core';
-import { webGLRenderer } from '../../../../../components/monitor-webgl-context/webglContext';
+import { webGLRenderer } from '../../../../../components/sc-webgl-context/webglContext';
 import { chartScene } from '../../../../../components/charts/sc-bar-chart/chartScene';
 import { CHART_SIZE } from '../chartSize';
 import { DAY_IN_MS } from '../../../../../utils/time';
@@ -27,9 +27,9 @@ const TEST_DATA_POINT_1: DataPoint<number> = {
  */
 
 @Component({
-  tag: 'monitor-single-colored-bar',
+  tag: 'sc-single-colored-bar',
 })
-export class MonitorSingleColoredBar {
+export class ScSingleColoredBar {
   @Element() el!: HTMLElement;
 
   componentDidLoad() {
@@ -72,9 +72,9 @@ export class MonitorSingleColoredBar {
 
   render() {
     return (
-      <monitor-webgl-context>
+      <sc-webgl-context>
         <div id="test-container" style={{ width: `${CHART_SIZE.width}px`, height: `${CHART_SIZE.height}px` }} />
-      </monitor-webgl-context>
+      </sc-webgl-context>
     );
   }
 }

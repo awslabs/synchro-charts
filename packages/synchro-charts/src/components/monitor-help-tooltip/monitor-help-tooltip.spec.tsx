@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 import { Components } from '../../components.d';
 import { CustomHTMLElement } from '../../utils/types';
 import { update } from '../charts/common/tests/merge';
-import { MonitorHelpTooltip } from './monitor-help-tooltip';
+import { ScHelpTooltip } from './sc-help-tooltip';
 
 const TOOLTIP_SELECTOR = '[role="tooltip"]';
 
@@ -17,14 +17,14 @@ const isTooltipOpen = (el: HTMLElement) => {
   return styles.get('display') !== 'none';
 };
 
-const newHelpIconSpecPage = async (props: Components.MonitorHelpTooltip) => {
+const newHelpIconSpecPage = async (props: Components.ScHelpTooltip) => {
   const page = await newSpecPage({
-    components: [MonitorHelpTooltip],
+    components: [ScHelpTooltip],
     html: '<div></div>',
     supportsShadowDom: false,
   });
 
-  const helpIcon = page.doc.createElement('monitor-help-tooltip') as CustomHTMLElement<Components.MonitorHelpTooltip>;
+  const helpIcon = page.doc.createElement('sc-help-tooltip') as CustomHTMLElement<Components.ScHelpTooltip>;
 
   update(helpIcon, props);
 

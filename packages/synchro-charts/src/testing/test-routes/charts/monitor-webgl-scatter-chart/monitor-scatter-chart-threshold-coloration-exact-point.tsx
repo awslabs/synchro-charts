@@ -23,13 +23,13 @@ const TEST_DATA_POINT_2: DataPoint<number> = {
 };
 
 @Component({
-  tag: 'monitor-scatter-chart-threshold-coloration-exact-point',
+  tag: 'sc-scatter-chart-threshold-coloration-exact-point',
 })
-export class MonitorScatterChartThresholdColorationExactPoint {
+export class ScScatterChartThresholdColorationExactPoint {
   render() {
     return (
       <div>
-        <monitor-scatter-chart
+        <sc-scatter-chart
           widgetId="widget-id"
           dataStreams={[
             {
@@ -63,7 +63,7 @@ export class MonitorScatterChartThresholdColorationExactPoint {
           }}
           viewPort={{ start: X_MIN, end: X_MAX, yMin: Y_MIN, yMax: Y_MAX }}
         />
-        <monitor-webgl-context />
+        <sc-webgl-context />
       </div>
     );
   }

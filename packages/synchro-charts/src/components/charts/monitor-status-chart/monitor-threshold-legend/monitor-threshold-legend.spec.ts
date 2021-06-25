@@ -2,21 +2,21 @@ import { newSpecPage } from '@stencil/core/testing';
 import { Components } from '../../../../components.d';
 import { CustomHTMLElement } from '../../../../utils/types';
 import { update } from '../../common/tests/merge';
-import { MonitorThresholdLegend } from './monitor-threshold-legend';
-import { MonitorThresholdLegendRow } from './monitor-threshold-legend-row';
+import { ScThresholdLegend } from './sc-threshold-legend';
+import { ScThresholdLegendRow } from './sc-threshold-legend-row';
 import { Threshold } from '../../common/types';
 import { COMPARISON_OPERATOR } from '../../common/constants';
 
-const thresholdLegendSpecPage = async (propOverrides: Partial<Components.MonitorThresholdLegend> = {}) => {
+const thresholdLegendSpecPage = async (propOverrides: Partial<Components.ScThresholdLegend> = {}) => {
   const page = await newSpecPage({
-    components: [MonitorThresholdLegend, MonitorThresholdLegendRow],
+    components: [ScThresholdLegend, ScThresholdLegendRow],
     html: '<div></div>',
     supportsShadowDom: false,
   });
-  const thresholdLegend = page.doc.createElement('monitor-threshold-legend') as CustomHTMLElement<
-    Components.MonitorThresholdLegend
+  const thresholdLegend = page.doc.createElement('sc-threshold-legend') as CustomHTMLElement<
+    Components.ScThresholdLegend
   >;
-  const props: Partial<Components.MonitorThresholdLegend> = {
+  const props: Partial<Components.ScThresholdLegend> = {
     thresholds: [],
     ...propOverrides,
   };
@@ -44,13 +44,13 @@ const NUMBER_THRESHOLD: Threshold<number> = {
 it('renders one row per threshold when one threshold present', async () => {
   const { thresholdLegend } = await thresholdLegendSpecPage({ thresholds: [THRESHOLD] });
 
-  expect(thresholdLegend.querySelectorAll('monitor-threshold-legend-row')).toHaveLength(1);
+  expect(thresholdLegend.querySelectorAll('sc-threshold-legend-row')).toHaveLength(1);
 });
 
 it('renders the threshold legend row correctly', async () => {
   const { thresholdLegend } = await thresholdLegendSpecPage({ thresholds: [THRESHOLD] });
 
-  const row = thresholdLegend.querySelector('monitor-threshold-legend-row') as HTMLMonitorThresholdLegendRowElement;
+  const row = thresholdLegend.querySelector('sc-threshold-legend-row') as HTMLScThresholdLegendRowElement;
   expect(row.label).toEqual(THRESHOLD.value);
   expect(row.color).toBe(THRESHOLD.color);
   expect(row.innerText).toContain(THRESHOLD.value);
@@ -61,7 +61,7 @@ describe('order', () => {
     const THRESHOLDS = [NUMBER_THRESHOLD, THRESHOLD];
     const { thresholdLegend } = await thresholdLegendSpecPage({ thresholds: THRESHOLDS });
 
-    const rows = thresholdLegend.querySelectorAll('monitor-threshold-legend-row');
+    const rows = thresholdLegend.querySelectorAll('sc-threshold-legend-row');
 
     expect(rows[0].label).toBe(`y < ${THRESHOLDS[0].value}`);
     expect(rows[1].label).toBe(THRESHOLDS[1].value);
@@ -71,7 +71,7 @@ describe('order', () => {
     const THRESHOLDS = [THRESHOLD, NUMBER_THRESHOLD];
     const { thresholdLegend } = await thresholdLegendSpecPage({ thresholds: THRESHOLDS });
 
-    const rows = thresholdLegend.querySelectorAll('monitor-threshold-legend-row');
+    const rows = thresholdLegend.querySelectorAll('sc-threshold-legend-row');
 
     expect(rows[0].label).toBe(THRESHOLDS[0].value);
     expect(rows[1].label).toBe(`y < ${THRESHOLDS[1].value}`);
@@ -84,7 +84,7 @@ describe('renders operators correctly', () => {
       thresholds: [{ ...THRESHOLD, comparisonOperator: COMPARISON_OPERATOR.GREATER_THAN_EQUAL }],
     });
 
-    const row = thresholdLegend.querySelector('monitor-threshold-legend-row') as HTMLMonitorThresholdLegendRowElement;
+    const row = thresholdLegend.querySelector('sc-threshold-legend-row') as HTMLScThresholdLegendRowElement;
     expect(row.label).toEqual(`y >= ${THRESHOLD.value}`);
   });
 
@@ -93,7 +93,7 @@ describe('renders operators correctly', () => {
       thresholds: [{ ...THRESHOLD, comparisonOperator: COMPARISON_OPERATOR.GREATER_THAN }],
     });
 
-    const row = thresholdLegend.querySelector('monitor-threshold-legend-row') as HTMLMonitorThresholdLegendRowElement;
+    const row = thresholdLegend.querySelector('sc-threshold-legend-row') as HTMLScThresholdLegendRowElement;
     expect(row.label).toEqual(`y > ${THRESHOLD.value}`);
   });
 
@@ -102,7 +102,7 @@ describe('renders operators correctly', () => {
       thresholds: [{ ...THRESHOLD, comparisonOperator: COMPARISON_OPERATOR.LESS_THAN_EQUAL }],
     });
 
-    const row = thresholdLegend.querySelector('monitor-threshold-legend-row') as HTMLMonitorThresholdLegendRowElement;
+    const row = thresholdLegend.querySelector('sc-threshold-legend-row') as HTMLScThresholdLegendRowElement;
     expect(row.label).toEqual(`y <= ${THRESHOLD.value}`);
   });
 
@@ -111,7 +111,7 @@ describe('renders operators correctly', () => {
       thresholds: [{ ...THRESHOLD, comparisonOperator: COMPARISON_OPERATOR.LESS_THAN }],
     });
 
-    const row = thresholdLegend.querySelector('monitor-threshold-legend-row') as HTMLMonitorThresholdLegendRowElement;
+    const row = thresholdLegend.querySelector('sc-threshold-legend-row') as HTMLScThresholdLegendRowElement;
     expect(row.label).toEqual(`y < ${THRESHOLD.value}`);
   });
 });
@@ -119,7 +119,7 @@ describe('renders operators correctly', () => {
 it('renders the threshold legend row color box as the thresholds color', async () => {
   const { thresholdLegend } = await thresholdLegendSpecPage({ thresholds: [THRESHOLD] });
 
-  const box = thresholdLegend.querySelector('monitor-threshold-legend-row .box') as HTMLDivElement;
+  const box = thresholdLegend.querySelector('sc-threshold-legend-row .box') as HTMLDivElement;
 
   expect(box).not.toBeNull();
   expect(box.style.backgroundColor).toEqual(THRESHOLD.color);
@@ -128,20 +128,20 @@ it('renders the threshold legend row color box as the thresholds color', async (
 it('renders one row per threshold when two thresholds present', async () => {
   const { thresholdLegend } = await thresholdLegendSpecPage({ thresholds: [THRESHOLD, NUMBER_THRESHOLD] });
 
-  expect(thresholdLegend.querySelectorAll('monitor-threshold-legend-row').length).toBe(2);
+  expect(thresholdLegend.querySelectorAll('sc-threshold-legend-row').length).toBe(2);
 });
 
 describe('de-duplication behavior for legend rows', () => {
   it('renders one row for multiple thresholds that would render identical rows', async () => {
     const { thresholdLegend } = await thresholdLegendSpecPage({ thresholds: [THRESHOLD, THRESHOLD] });
 
-    expect(thresholdLegend.querySelectorAll('monitor-threshold-legend-row').length).toBe(1);
+    expect(thresholdLegend.querySelectorAll('sc-threshold-legend-row').length).toBe(1);
   });
 
   it('renders two rows for two unique thresholds out of three', async () => {
     const { thresholdLegend } = await thresholdLegendSpecPage({ thresholds: [THRESHOLD, THRESHOLD, NUMBER_THRESHOLD] });
 
-    expect(thresholdLegend.querySelectorAll('monitor-threshold-legend-row').length).toBe(2);
+    expect(thresholdLegend.querySelectorAll('sc-threshold-legend-row').length).toBe(2);
   });
 
   it('renders two rows for two unique thresholds that only differ in color', async () => {
@@ -149,7 +149,7 @@ describe('de-duplication behavior for legend rows', () => {
       thresholds: [{ ...THRESHOLD, color: 'red' }, { ...THRESHOLD, color: 'blue' }],
     });
 
-    expect(thresholdLegend.querySelectorAll('monitor-threshold-legend-row').length).toBe(2);
+    expect(thresholdLegend.querySelectorAll('sc-threshold-legend-row').length).toBe(2);
   });
 
   it('renders two rows for two unique thresholds that only differ in value', async () => {
@@ -157,6 +157,6 @@ describe('de-duplication behavior for legend rows', () => {
       thresholds: [{ ...THRESHOLD, value: 'A' }, { ...THRESHOLD, value: 'B' }],
     });
 
-    expect(thresholdLegend.querySelectorAll('monitor-threshold-legend-row').length).toBe(2);
+    expect(thresholdLegend.querySelectorAll('sc-threshold-legend-row').length).toBe(2);
   });
 });

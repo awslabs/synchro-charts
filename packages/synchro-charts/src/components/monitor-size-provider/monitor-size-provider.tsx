@@ -4,7 +4,7 @@ import isEqual from 'lodash.isequal';
 import { rectScrollFixed } from '../common/webGLPositioning';
 import { RectScrollFixed } from '../../utils/types';
 import { renderChild } from './renderChild';
-import { webGLRenderer } from '../monitor-webgl-context/webglContext';
+import { webGLRenderer } from '../sc-webgl-context/webglContext';
 
 type Size = {
   width: number;
@@ -22,11 +22,11 @@ const MS_PER_RECT_POLL = 650;
  * Widget Sizer
  */
 @Component({
-  tag: 'monitor-size-provider',
-  styleUrl: 'monitor-size-provider.css',
+  tag: 'sc-size-provider',
+  styleUrl: 'sc-size-provider.css',
   shadow: false,
 })
-export class MonitorSizeProvider {
+export class ScSizeProvider {
   @Element() el!: HTMLElement;
   @Prop() renderFunc!: (rect: RectScrollFixed) => void;
 
@@ -75,7 +75,7 @@ export class MonitorSizeProvider {
       if (rectHasUpdated) {
         if (this.rect && this.rect.density !== newRect.density) {
           // When the density has changed, we need to trigger a resolution change. This will occur in scenarios
-          // such as attaching or detaching a monitor.
+          // such as attaching or detaching a Sc.
           webGLRenderer.onResolutionChange();
         }
 
@@ -95,6 +95,6 @@ export class MonitorSizeProvider {
             ...this.size,
           }
         : undefined;
-    return <div class="monitor-size-provider-container">{renderChild(this.renderFunc, rect)}</div>;
+    return <div class="sc-size-provider-container">{renderChild(this.renderFunc, rect)}</div>;
   }
 }

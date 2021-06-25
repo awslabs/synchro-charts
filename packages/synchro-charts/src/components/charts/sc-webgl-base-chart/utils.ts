@@ -1,7 +1,7 @@
 import colorString from 'color-string';
 import { Mesh, OrthographicCamera, Scene } from 'three';
 import uuid from 'uuid/v4';
-import { ChartScene } from '../../monitor-webgl-context/types';
+import { ChartScene } from '../../sc-webgl-context/types';
 import { getDataPoints } from '../../../utils/getDataPoints';
 import { DataStream, Primitive, Resolution, ViewPort } from '../../../utils/dataTypes';
 

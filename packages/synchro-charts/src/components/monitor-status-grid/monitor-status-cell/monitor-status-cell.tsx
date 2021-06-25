@@ -11,11 +11,11 @@ const DEFAULT_COLOR = '#f1f1f1';
 const ICON_SIZE_PX = 14;
 
 @Component({
-  tag: 'monitor-status-cell',
-  styleUrl: 'monitor-status-cell.css',
+  tag: 'sc-status-cell',
+  styleUrl: 'sc-status-cell.css',
   shadow: false,
 })
-export class MonitorStatusCell {
+export class ScStatusCell {
   @Prop() messageOverrides: MessageOverrides;
 
   @Prop() breachedThreshold?: Threshold;
@@ -79,7 +79,7 @@ export class MonitorStatusCell {
         }}
       >
         {showName && (
-          <monitor-data-stream-name
+          <sc-data-stream-name
             displayTooltip={false}
             class={{ name: true, large: emphasizeValue, center: emphasizeValue }}
             style={{ color: foregroundColor }}

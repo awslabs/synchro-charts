@@ -1,6 +1,6 @@
 import { Component, Element, h } from '@stencil/core';
-import { webGLRenderer } from '../../../../components/monitor-webgl-context/webglContext';
-import { chartScene } from '../../../../components/charts/monitor-line-chart/chartScene';
+import { webGLRenderer } from '../../../../components/sc-webgl-context/webglContext';
+import { chartScene } from '../../../../components/charts/sc-line-chart/chartScene';
 import { CHART_SIZE } from './chartSize';
 import { DataPoint } from '../../../../utils/dataTypes';
 import { DataType } from '../../../../utils/dataConstants';
@@ -24,9 +24,9 @@ const TEST_DATA_POINT: DataPoint<number> = {
  */
 
 @Component({
-  tag: 'monitor-line-chart-colored-point',
+  tag: 'sc-line-chart-colored-point',
 })
-export class MonitorLineChartColoredPoint {
+export class ScLineChartColoredPoint {
   @Element() el!: HTMLElement;
 
   componentDidLoad() {
@@ -66,9 +66,9 @@ export class MonitorLineChartColoredPoint {
 
   render() {
     return (
-      <monitor-webgl-context>
+      <sc-webgl-context>
         <div id="test-container" style={{ width: `${CHART_SIZE.width}px`, height: `${CHART_SIZE.height}px` }} />
-      </monitor-webgl-context>
+      </sc-webgl-context>
     );
   }
 }

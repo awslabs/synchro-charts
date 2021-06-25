@@ -28,7 +28,7 @@ export const describeLoadingStatus = (newChartSpecPage: ChartSpecPage) => {
       });
 
       const loadingSpinner = chart.querySelector(LOADING_SPINNER_SELECTOR);
-      const legend = chart.querySelector('monitor-legend');
+      const legend = chart.querySelector('sc-legend');
 
       if (legend) {
         // not all widgets have legends!
@@ -43,7 +43,7 @@ export const describeLoadingStatus = (newChartSpecPage: ChartSpecPage) => {
       });
 
       const loadingSpinner = chart.querySelector(LOADING_SPINNER_SELECTOR);
-      const legend = chart.querySelector('monitor-legend');
+      const legend = chart.querySelector('sc-legend');
 
       if (legend) {
         // not all widgets have legends!
@@ -59,7 +59,7 @@ export const describeLoadingStatus = (newChartSpecPage: ChartSpecPage) => {
 
       const loadingSpinner = chart.querySelector(LOADING_SPINNER_SELECTOR);
 
-      const legend = chart.querySelector('monitor-legend');
+      const legend = chart.querySelector('sc-legend');
 
       if (legend) {
         // not all widgets have legends!

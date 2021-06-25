@@ -22,11 +22,11 @@ const VIEW_MODE_STYLE: StencilCSSProperty = {
 };
 
 @Component({
-  tag: 'monitor-legend-row',
-  styleUrl: 'monitor-legend-row.css',
+  tag: 'sc-legend-row',
+  styleUrl: 'sc-legend-row.css',
   shadow: false,
 })
-export class MonitorLegendRow {
+export class ScLegendRow {
   @Prop() streamId!: string;
   @Prop() label!: string;
   @Prop() updateDataStreamName!: ({ streamId, name }: { streamId: string; name: string }) => void;
@@ -75,7 +75,7 @@ export class MonitorLegendRow {
           )}
 
           <div class="info">
-            <monitor-data-stream-name
+            <sc-data-stream-name
               onNameChange={this.updateName}
               isEditing={this.isEditing}
               label={this.label}

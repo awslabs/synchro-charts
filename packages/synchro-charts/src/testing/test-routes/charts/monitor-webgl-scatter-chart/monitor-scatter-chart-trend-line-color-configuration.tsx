@@ -27,13 +27,13 @@ const TEST_DATA_POINTS: DataPoint[] = [
 ];
 
 @Component({
-  tag: 'monitor-scatter-chart-trend-line-color-configuration',
+  tag: 'sc-scatter-chart-trend-line-color-configuration',
 })
-export class MonitorScatterChartTrendLineColorConfiguration {
+export class ScScatterChartTrendLineColorConfiguration {
   render() {
     return (
       <div>
-        <monitor-line-chart
+        <sc-line-chart
           widgetId="widget-id"
           dataStreams={[
             {
@@ -68,7 +68,7 @@ export class MonitorScatterChartTrendLineColorConfiguration {
             },
           ]}
         />
-        <monitor-webgl-context />
+        <sc-webgl-context />
       </div>
     );
   }

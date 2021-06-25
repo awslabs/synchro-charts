@@ -2,21 +2,21 @@ import { newSpecPage } from '@stencil/core/testing';
 import { update } from '../charts/common/tests/merge';
 
 import { CustomHTMLElement } from '../../utils/types';
-import { MonitorDataStreamName } from './monitor-data-stream-name';
-import { Components } from '../../components.d';
+import { ScDataStreamName } from './sc-data-stream-name';
+import { Components } from '../../components';
 
 const noop = () => {};
 
-const newDataStreamNameSpecPage = async (props: Partial<Components.MonitorDataStreamName>) => {
+const newDataStreamNameSpecPage = async (props: Partial<Components.ScDataStreamName>) => {
   const page = await newSpecPage({
-    components: [MonitorDataStreamName],
+    components: [ScDataStreamName],
     html: '<div></div>',
     supportsShadowDom: false,
   });
-  const dataStreamName = page.doc.createElement('monitor-data-stream-name') as CustomHTMLElement<
-    Components.MonitorDataStreamName
+  const dataStreamName = page.doc.createElement('sc-data-stream-name') as CustomHTMLElement<
+    Components.ScDataStreamName
   >;
-  const defaultProps: Components.MonitorDataStreamName = {
+  const defaultProps: Components.ScDataStreamName = {
     onNameChange: noop,
     isEditing: false,
     label: 'some-label',

@@ -15,13 +15,13 @@ const TEST_DATA_POINT: DataPoint<number> = {
 };
 
 @Component({
-  tag: 'monitor-webgl-chart-annotations',
+  tag: 'sc-webgl-chart-annotations',
 })
-export class MonitorWebglChartAnnotations {
+export class ScWebglChartAnnotations {
   render() {
     return (
       <div>
-        <monitor-line-chart
+        <sc-line-chart
           widgetId="widget-id"
           dataStreams={[
             {
@@ -64,7 +64,7 @@ export class MonitorWebglChartAnnotations {
           }}
           viewPort={{ start: X_MIN, end: X_MAX, yMin: Y_MIN, yMax: Y_MAX }}
         />
-        <monitor-webgl-context />
+        <sc-webgl-context />
       </div>
     );
   }

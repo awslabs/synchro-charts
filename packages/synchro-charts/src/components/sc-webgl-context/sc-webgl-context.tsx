@@ -2,11 +2,11 @@ import { h, Element, Component } from '@stencil/core';
 import { webGLRenderer } from './webglContext';
 
 @Component({
-  tag: 'monitor-webgl-context',
-  styleUrl: 'monitor-webgl-context.css',
+  tag: 'sc-webgl-context',
+  styleUrl: 'sc-webgl-context.css',
   shadow: false,
 })
-export class MonitorWebglContext {
+export class ScWebglContext {
   @Element() el!: HTMLElement;
 
   componentDidLoad() {

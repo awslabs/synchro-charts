@@ -2,20 +2,18 @@ import { newSpecPage } from '@stencil/core/testing';
 import { update } from '../charts/common/tests/merge';
 
 import { CustomHTMLElement } from '../../utils/types';
-import { MonitorExpandableInput } from './monitor-expandable-input';
+import { ScExpandableInput } from './sc-expandable-input';
 import { Components } from '../../components.d';
 
 const noop = () => {};
 
-const newInputSpecPage = async (props: Components.MonitorExpandableInput) => {
+const newInputSpecPage = async (props: Components.ScExpandableInput) => {
   const page = await newSpecPage({
-    components: [MonitorExpandableInput],
+    components: [ScExpandableInput],
     html: '<div></div>',
     supportsShadowDom: false,
   });
-  const input = page.doc.createElement('monitor-expandable-input') as CustomHTMLElement<
-    Components.MonitorExpandableInput
-  >;
+  const input = page.doc.createElement('sc-expandable-input') as CustomHTMLElement<Components.ScExpandableInput>;
   update(input, props);
   page.body.appendChild(input);
   await page.waitForChanges();

@@ -11,16 +11,16 @@ import { DATA_ALIGNMENT, LEGEND_POSITION } from '../common/constants';
 import { StreamType } from '../../../utils/dataConstants';
 import { Components } from '../../../components.d';
 
-import MonitorLegendRow = Components.MonitorLegendRow;
+import ScLegendRow = Components.ScLegendRow;
 
 const noop = () => {};
 
 @Component({
-  tag: 'monitor-legend',
-  styleUrl: './monitor-legend.css',
+  tag: 'sc-legend',
+  styleUrl: './sc-legend.css',
   shadow: false,
 })
-export class MonitorLegend {
+export class ScLegend {
   @Prop() config!: LegendConfig;
   @Prop() viewPort!: ViewPort;
   @Prop() dataStreams!: DataStream[];
@@ -85,7 +85,7 @@ export class MonitorLegend {
           const { color: valueColor = undefined, icon = undefined } =
             this.breachedThresholdColor(point, dataStream) || {};
           return [
-            <monitor-legend-row
+            <sc-legend-row
               streamId={dataStream.id}
               label={dataStream.name}
               detailedLabel={dataStream.detailedName}
@@ -100,10 +100,10 @@ export class MonitorLegend {
               showDataStreamColor={this.showDataStreamColor}
               icon={icon}
             />,
-            ...this.trendResults.reduce((rows: MonitorLegendRow[], trendResult: TrendResult) => {
+            ...this.trendResults.reduce((rows: ScLegendRow[], trendResult: TrendResult) => {
               if (trendResult.dataStreamId === dataStream.id) {
                 rows.push(
-                  <monitor-legend-row
+                  <sc-legend-row
                     streamId={dataStream.id}
                     label={getTrendLabel(dataStream.name, trendResult.type)}
                     detailedLabel={dataStream.detailedName && getTrendLabel(dataStream.detailedName, trendResult.type)}

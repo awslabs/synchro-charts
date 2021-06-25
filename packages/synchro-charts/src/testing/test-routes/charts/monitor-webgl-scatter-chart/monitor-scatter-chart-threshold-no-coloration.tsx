@@ -23,13 +23,13 @@ const TEST_DATA_POINT_2: DataPoint<number> = {
 };
 
 @Component({
-  tag: 'monitor-scatter-chart-threshold-no-coloration',
+  tag: 'sc-scatter-chart-threshold-no-coloration',
 })
-export class MonitorScatterChartThresholdNoColoration {
+export class ScScatterChartThresholdNoColoration {
   render() {
     return (
       <div>
-        <monitor-scatter-chart
+        <sc-scatter-chart
           widgetId="widget-id"
           dataStreams={[
             {
@@ -63,7 +63,7 @@ export class MonitorScatterChartThresholdNoColoration {
           }}
           viewPort={{ start: X_MIN, end: X_MAX, yMin: Y_MIN, yMax: Y_MAX }}
         />
-        <monitor-webgl-context />
+        <sc-webgl-context />
       </div>
     );
   }

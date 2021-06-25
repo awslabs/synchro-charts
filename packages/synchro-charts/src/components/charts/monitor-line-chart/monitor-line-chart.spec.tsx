@@ -1,13 +1,13 @@
 /* eslint-disable import/first */
-jest.mock('../../monitor-size-provider/renderChild');
-jest.mock('../../monitor-webgl-context/webglContext');
+jest.mock('../../sc-size-provider/renderChild');
+jest.mock('../../sc-webgl-context/webglContext');
 
 import 'webgl-mock-threejs';
 import { newChartSpecPage } from '../../../testing/chartDescriptions/newChartSpecPage';
 import { describeChart } from '../../../testing/chartDescriptions/describeChart';
 
-const lineChart = newChartSpecPage('monitor-line-chart');
+const lineChart = newChartSpecPage('sc-line-chart');
 
-describe('monitor-line-chart', () => {
+describe('sc-line-chart', () => {
   describeChart(lineChart);
 });

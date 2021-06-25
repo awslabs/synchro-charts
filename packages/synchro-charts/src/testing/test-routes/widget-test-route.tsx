@@ -75,7 +75,7 @@ export class WidgetTestRoute {
             liveModeOnlyMessage="invalidWidgetForHistoricalData.content"
           />
         </div>
-        <monitor-webgl-context />
+        <sc-webgl-context />
       </div>
     );
   }

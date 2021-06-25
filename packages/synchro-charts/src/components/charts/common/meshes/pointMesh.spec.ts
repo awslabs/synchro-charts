@@ -39,7 +39,7 @@ describe('sets point mesh uniforms', () => {
 
   it('sets devicePixelRatio based on browsers window.devicePixelRatio', () => {
     // NOTE: It's important to take into account device pixel ratio, since otherwise
-    // rendered assets for different monitors will have different perceived sizes.
+    // rendered assets for different Scs will have different perceived sizes.
     const MOCKED_DEVICE_PIXEL_RATIO = 3;
 
     // @ts-ignore

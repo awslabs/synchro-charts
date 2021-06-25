@@ -31,9 +31,9 @@ const createData = (point: DataPoint<number>): DataPoint<number>[] =>
   }));
 
 @Component({
-  tag: 'monitor-line-chart-stream-data',
+  tag: 'sc-line-chart-stream-data',
 })
-export class MonitorLineChartStreamData {
+export class ScLineChartStreamData {
   @State() dataPoints: DataPoint<number>[] = [TEST_DATA_POINT];
   @State() viewPort: ViewPort = { start: X_MIN, end: X_MAX, yMin: Y_MIN, yMax: Y_MAX };
   private dataLoop: number;
@@ -75,7 +75,7 @@ export class MonitorLineChartStreamData {
   render() {
     return (
       <div id="chart-container" style={{ border: '1px solid lightgray', height: '500px', width: '500px' }}>
-        <monitor-line-chart
+        <sc-line-chart
           widgetId="widget-id"
           dataStreams={[
             {
@@ -93,7 +93,7 @@ export class MonitorLineChartStreamData {
           }}
           viewPort={this.viewPort}
         />
-        <monitor-webgl-context />
+        <sc-webgl-context />
       </div>
     );
   }

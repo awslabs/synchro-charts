@@ -6,10 +6,10 @@ import { MINUTE_IN_MS } from '../../utils/time';
 import { CustomHTMLElement } from '../../utils/types';
 import { DEFAULT_CHART_CONFIG } from '../charts/sc-webgl-base-chart/chartDefaults';
 import { update } from '../charts/common/tests/merge';
-import { MonitorTable } from './monitor-table';
-import { MonitorTableCell } from './monitor-table-cell/monitor-table-cell';
+import { ScTable } from './sc-table';
+import { ScTableCell } from './sc-table-cell/sc-table-cell';
 import { ERROR_SYMBOL_SELECTOR, LOADING_SPINNER_SELECTOR } from '../../testing/selectors';
-import { MonitorTableBase } from './monitor-table-base/monitor-table-base';
+import { ScTableBase } from './sc-table-base/sc-table-base';
 import { ScChartIcon } from '../charts/chart-icon/sc-chart-icon';
 import { NO_VALUE_PRESENT } from '../common/terms';
 import { DataType } from '../../utils/dataConstants';
@@ -51,15 +51,15 @@ const VIEW_PORT = {
 };
 const WIDGET_ID = 'test-widget-it';
 
-const tableSpecPage = async (propOverrides: Partial<Components.MonitorTable> = {}) => {
+const tableSpecPage = async (propOverrides: Partial<Components.ScTable> = {}) => {
   const page = await newSpecPage({
-    components: [MonitorTable, MonitorTableBase, MonitorTableCell, ScChartIcon],
+    components: [ScTable, ScTableBase, ScTableCell, ScChartIcon],
     html: '<div></div>',
     supportsShadowDom: false,
   });
 
-  const table = page.doc.createElement('monitor-table') as CustomHTMLElement<Components.MonitorTable>;
-  const props: Partial<Components.MonitorTable> = {
+  const table = page.doc.createElement('sc-table') as CustomHTMLElement<Components.ScTable>;
+  const props: Partial<Components.ScTable> = {
     dataStreams: [],
     tableColumns: [],
     widgetId: WIDGET_ID,
@@ -81,10 +81,10 @@ describe('rendering', () => {
   it('renders empty table', async () => {
     const { table } = await tableSpecPage();
 
-    const tableBase = table.querySelectorAll('monitor-table-base');
+    const tableBase = table.querySelectorAll('sc-table-base');
     expect(tableBase).toHaveLength(1);
 
-    const cells = table.querySelectorAll('monitor-table-cell');
+    const cells = table.querySelectorAll('sc-table-cell');
     expect(cells).toBeEmpty();
   });
 
@@ -122,7 +122,7 @@ describe('rendering', () => {
       dataStreams: [STREAM],
     });
 
-    const cells = table.querySelectorAll('monitor-table-cell');
+    const cells = table.querySelectorAll('sc-table-cell');
     expect(cells).toHaveLength(1);
 
     const cell = cells[0];
@@ -259,7 +259,7 @@ describe('rendering', () => {
       tableColumns: TABLE_COLUMNS,
     });
 
-    const cells = table.querySelectorAll('monitor-table-cell');
+    const cells = table.querySelectorAll('sc-table-cell');
     expect(cells).toHaveLength(3);
 
     expect(cells[0].innerHTML).not.toContain(NO_VALUE_PRESENT);
