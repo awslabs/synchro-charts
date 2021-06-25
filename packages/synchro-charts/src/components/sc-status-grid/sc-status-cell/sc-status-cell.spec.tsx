@@ -1,5 +1,5 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { Components } from '../../../components.d';
+import { Components } from '../../../components';
 import { ScGrid } from '../../sc-grid/sc-grid';
 import { DataPoint, DEFAULT_MESSAGE_OVERRIDES } from '../../../utils/dataTypes';
 import { CustomHTMLElement } from '../../../utils/types';

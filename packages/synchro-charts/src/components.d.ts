@@ -5,20 +5,62 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { POINT_TYPE } from "./components/charts/sc-webgl-base-chart/activePoints";
 import { AlarmsConfig, DataPoint, DataStream, DataStreamInfo, MessageOverrides, MinimalSizeConfig, MinimalViewPortConfig, Primitive, RequestDataFn, SizeConfig, SizePositionConfig, TableColumn, ViewPort, ViewPortConfig } from "./utils/dataTypes";
 import { Annotations, Axis, LayoutConfig, LegendConfig, MovementConfig, ScaleConfig, Threshold, Tooltip, WidgetConfigurationUpdate } from "./components/charts/common/types";
 import { Trend, TrendResult } from "./components/charts/common/trends/types";
 import { DATA_ALIGNMENT, StatusIcon } from "./components/charts/common/constants";
+import { POINT_TYPE } from "./components/charts/sc-webgl-base-chart/activePoints";
 import { RectScrollFixed } from "./utils/types";
 import { LabelsConfig } from "./components/common/types";
 import { Cell, Row } from "./components/sc-table/constructTableData";
-import { RenderCell } from "./components/sc-widget-grid/types";
 import { ChartSceneCreator, ChartSceneUpdater } from "./components/charts/sc-webgl-base-chart/types";
+import { RenderCell } from "./components/sc-widget-grid/types";
 export namespace Components {
     interface LineChartViewportChange {
     }
+    interface MultipleStatuses {
+    }
     interface ScAngledLineSegment {
+    }
+    interface ScApp {
+    }
+    interface ScBarChart {
+        "alarms"?: AlarmsConfig;
+        "annotations": Annotations;
+        "axis"?: Axis.Options;
+        /**
+          * Memory Management
+         */
+        "bufferFactor": number;
+        "dataStreams": DataStream[];
+        "gestures": boolean;
+        /**
+          * Status
+         */
+        "isEditing": boolean;
+        "layout"?: LayoutConfig;
+        "legend"?: LegendConfig;
+        "messageOverrides"?: MessageOverrides;
+        "minBufferSize": number;
+        "movement"?: MovementConfig;
+        "requestData"?: RequestDataFn;
+        "scale"?: ScaleConfig;
+        "size"?: MinimalSizeConfig;
+        "trends": Trend[];
+        /**
+          * Chart API
+         */
+        "viewPort": MinimalViewPortConfig;
+        "widgetId": string;
+    }
+    interface ScBox {
+        "size": MinimalSizeConfig;
+        "someObject"?: Object;
+    }
+    interface ScChartIcon {
+        "color"?: string;
+        "name": StatusIcon;
+        "size"?: number;
     }
     interface ScChartYRange {
         "component": string;
@@ -34,12 +76,19 @@ export namespace Components {
         "onNameChange": (name: string) => void;
         "pointType"?: POINT_TYPE;
     }
+    interface ScErrorBadge {
+    }
     interface ScExpandableInput {
         "isDisabled"?: boolean;
         "onValueChange": (value: string) => void;
         "value": string;
     }
     interface ScExpandableInputStandard {
+    }
+    interface ScGestureHandler {
+        "onDateRangeChange": ({ end, start }: { start: Date; end: Date }) => void;
+        "size": SizeConfig;
+        "viewPort": ViewPort;
     }
     interface ScGrid {
     }
@@ -141,6 +190,10 @@ export namespace Components {
     interface ScLineChartColoredPoint {
     }
     interface ScLineChartStreamData {
+    }
+    interface ScLoadingSpinner {
+        "dark"?: boolean;
+        "size"?: number;
     }
     interface ScMultipleBars {
     }
@@ -318,144 +371,6 @@ export namespace Components {
         "color": string;
         "label": string;
     }
-    interface ScWebglBarChartDynamicBuffer {
-    }
-    interface ScWebglBarChartDynamicData {
-    }
-    interface ScWebglBarChartDynamicDataStreams {
-    }
-    interface ScWebglBarChartFastViewport {
-    }
-    interface ScWebglBarChartMargin {
-    }
-    interface ScWebglBarChartNegative {
-    }
-    interface ScWebglBarChartPositiveNegative {
-    }
-    interface ScWebglBarChartStandard {
-    }
-    interface ScWebglBarChartStartFromZero {
-    }
-    interface ScWebglBarChartThresholdColoration {
-    }
-    interface ScWebglBarChartThresholdColorationBand {
-    }
-    interface ScWebglBarChartThresholdColorationExactPoint {
-    }
-    interface ScWebglBarChartThresholdColorationMultipleDataStream {
-    }
-    interface ScWebglBarChartThresholdColorationMultipleThresholds {
-    }
-    interface ScWebglBarChartThresholdNoColoration {
-    }
-    interface ScWebglChartAnnotations {
-    }
-    interface ScWebglChartAnnotationsAlwaysInViewport {
-    }
-    interface ScWebglChartAxis {
-    }
-    interface ScWebglChartDynamicCharts {
-    }
-    interface ScWebglChartLargeViewport {
-    }
-    interface ScWebglChartMulti {
-    }
-    interface ScWebglChartNoAnnotations {
-    }
-    interface ScWebglChartStandard {
-    }
-    interface ScWebglChartStandardWithLegend {
-    }
-    interface ScWebglChartStandardWithLegendOnRight {
-    }
-    interface ScWebglChartThresholdColorationBand {
-    }
-    interface ScWebglChartThresholdColorationExactPoint {
-    }
-    interface ScWebglChartThresholdColorationMultipleDataStream {
-    }
-    interface ScWebglChartThresholdColorationMultipleThresholds {
-    }
-    interface ScWebglChartThresholdColorationSplitHalf {
-    }
-    interface ScWebglChartTooltipWithMultipleDataStreams {
-    }
-    interface ScWebglContext {
-    }
-    interface ScWebglLineChartDynamicBuffer {
-    }
-    interface ScWebglLineChartDynamicData {
-    }
-    interface ScWebglLineChartDynamicDataStreams {
-    }
-    interface ScWidgetGrid {
-        "annotations": Annotations;
-        "collapseVertically": boolean;
-        "dataStreams": DataStream[];
-        "isEditing": boolean;
-        /**
-          * Chart API
-         */
-        "labelsConfig"?: LabelsConfig;
-        "liveModeOnlyMessage": string;
-        "messageOverrides": MessageOverrides;
-        "renderCell": RenderCell;
-        "viewPort": MinimalViewPortConfig;
-        "widgetId": string;
-    }
-    interface MultipleStatuses {
-    }
-    interface ScApp {
-    }
-    interface ScBarChart {
-        "alarms"?: AlarmsConfig;
-        "annotations": Annotations;
-        "axis"?: Axis.Options;
-        /**
-          * Memory Management
-         */
-        "bufferFactor": number;
-        "dataStreams": DataStream[];
-        "gestures": boolean;
-        /**
-          * Status
-         */
-        "isEditing": boolean;
-        "layout"?: LayoutConfig;
-        "legend"?: LegendConfig;
-        "messageOverrides"?: MessageOverrides;
-        "minBufferSize": number;
-        "movement"?: MovementConfig;
-        "requestData"?: RequestDataFn;
-        "scale"?: ScaleConfig;
-        "size"?: MinimalSizeConfig;
-        "trends": Trend[];
-        /**
-          * Chart API
-         */
-        "viewPort": MinimalViewPortConfig;
-        "widgetId": string;
-    }
-    interface ScBox {
-        "size": MinimalSizeConfig;
-        "someObject"?: Object;
-    }
-    interface ScChartIcon {
-        "color"?: string;
-        "name": StatusIcon;
-        "size"?: number;
-    }
-    interface ScErrorBadge {
-    }
-    interface ScGestureHandler {
-        "onDateRangeChange": ({ end, start }: { start: Date; end: Date }) => void;
-        "size": SizeConfig;
-        "viewPort": ViewPort;
-    }
-    interface ScLoadingSpinner {
-        "dark"?: boolean;
-        "size"?: number;
-    }
     interface ScTooltip {
         /**
           * If we are drawing data from the data timestamp to timestamp + resolution we want the tooltip to align on the left side  Otherwise we are drawing the data from timestamp - resolution to timestamp then we want the tooltip to align on the right side
@@ -513,6 +428,36 @@ export namespace Components {
     interface ScWebglAxis {
         "size": SizeConfig;
     }
+    interface ScWebglBarChartDynamicBuffer {
+    }
+    interface ScWebglBarChartDynamicData {
+    }
+    interface ScWebglBarChartDynamicDataStreams {
+    }
+    interface ScWebglBarChartFastViewport {
+    }
+    interface ScWebglBarChartMargin {
+    }
+    interface ScWebglBarChartNegative {
+    }
+    interface ScWebglBarChartPositiveNegative {
+    }
+    interface ScWebglBarChartStandard {
+    }
+    interface ScWebglBarChartStartFromZero {
+    }
+    interface ScWebglBarChartThresholdColoration {
+    }
+    interface ScWebglBarChartThresholdColorationBand {
+    }
+    interface ScWebglBarChartThresholdColorationExactPoint {
+    }
+    interface ScWebglBarChartThresholdColorationMultipleDataStream {
+    }
+    interface ScWebglBarChartThresholdColorationMultipleThresholds {
+    }
+    interface ScWebglBarChartThresholdNoColoration {
+    }
     interface ScWebglBaseChart {
         "alarms"?: AlarmsConfig;
         "annotations": Annotations;
@@ -547,6 +492,61 @@ export namespace Components {
         "viewPort": MinimalViewPortConfig;
         "visualizesAlarms": boolean;
         "yRangeStartFromZero": boolean;
+    }
+    interface ScWebglChartAnnotations {
+    }
+    interface ScWebglChartAnnotationsAlwaysInViewport {
+    }
+    interface ScWebglChartAxis {
+    }
+    interface ScWebglChartDynamicCharts {
+    }
+    interface ScWebglChartLargeViewport {
+    }
+    interface ScWebglChartMulti {
+    }
+    interface ScWebglChartNoAnnotations {
+    }
+    interface ScWebglChartStandard {
+    }
+    interface ScWebglChartStandardWithLegend {
+    }
+    interface ScWebglChartStandardWithLegendOnRight {
+    }
+    interface ScWebglChartThresholdColorationBand {
+    }
+    interface ScWebglChartThresholdColorationExactPoint {
+    }
+    interface ScWebglChartThresholdColorationMultipleDataStream {
+    }
+    interface ScWebglChartThresholdColorationMultipleThresholds {
+    }
+    interface ScWebglChartThresholdColorationSplitHalf {
+    }
+    interface ScWebglChartTooltipWithMultipleDataStreams {
+    }
+    interface ScWebglContext {
+    }
+    interface ScWebglLineChartDynamicBuffer {
+    }
+    interface ScWebglLineChartDynamicData {
+    }
+    interface ScWebglLineChartDynamicDataStreams {
+    }
+    interface ScWidgetGrid {
+        "annotations": Annotations;
+        "collapseVertically": boolean;
+        "dataStreams": DataStream[];
+        "isEditing": boolean;
+        /**
+          * Chart API
+         */
+        "labelsConfig"?: LabelsConfig;
+        "liveModeOnlyMessage": string;
+        "messageOverrides": MessageOverrides;
+        "renderCell": RenderCell;
+        "viewPort": MinimalViewPortConfig;
+        "widgetId": string;
     }
     interface SingleColoredStatus {
     }
@@ -592,11 +592,41 @@ declare global {
         prototype: HTMLLineChartViewportChangeElement;
         new (): HTMLLineChartViewportChangeElement;
     };
+    interface HTMLMultipleStatusesElement extends Components.MultipleStatuses, HTMLStencilElement {
+    }
+    var HTMLMultipleStatusesElement: {
+        prototype: HTMLMultipleStatusesElement;
+        new (): HTMLMultipleStatusesElement;
+    };
     interface HTMLScAngledLineSegmentElement extends Components.ScAngledLineSegment, HTMLStencilElement {
     }
     var HTMLScAngledLineSegmentElement: {
         prototype: HTMLScAngledLineSegmentElement;
         new (): HTMLScAngledLineSegmentElement;
+    };
+    interface HTMLScAppElement extends Components.ScApp, HTMLStencilElement {
+    }
+    var HTMLScAppElement: {
+        prototype: HTMLScAppElement;
+        new (): HTMLScAppElement;
+    };
+    interface HTMLScBarChartElement extends Components.ScBarChart, HTMLStencilElement {
+    }
+    var HTMLScBarChartElement: {
+        prototype: HTMLScBarChartElement;
+        new (): HTMLScBarChartElement;
+    };
+    interface HTMLScBoxElement extends Components.ScBox, HTMLStencilElement {
+    }
+    var HTMLScBoxElement: {
+        prototype: HTMLScBoxElement;
+        new (): HTMLScBoxElement;
+    };
+    interface HTMLScChartIconElement extends Components.ScChartIcon, HTMLStencilElement {
+    }
+    var HTMLScChartIconElement: {
+        prototype: HTMLScChartIconElement;
+        new (): HTMLScChartIconElement;
     };
     interface HTMLScChartYRangeElement extends Components.ScChartYRange, HTMLStencilElement {
     }
@@ -616,6 +646,12 @@ declare global {
         prototype: HTMLScDataStreamNameElement;
         new (): HTMLScDataStreamNameElement;
     };
+    interface HTMLScErrorBadgeElement extends Components.ScErrorBadge, HTMLStencilElement {
+    }
+    var HTMLScErrorBadgeElement: {
+        prototype: HTMLScErrorBadgeElement;
+        new (): HTMLScErrorBadgeElement;
+    };
     interface HTMLScExpandableInputElement extends Components.ScExpandableInput, HTMLStencilElement {
     }
     var HTMLScExpandableInputElement: {
@@ -627,6 +663,12 @@ declare global {
     var HTMLScExpandableInputStandardElement: {
         prototype: HTMLScExpandableInputStandardElement;
         new (): HTMLScExpandableInputStandardElement;
+    };
+    interface HTMLScGestureHandlerElement extends Components.ScGestureHandler, HTMLStencilElement {
+    }
+    var HTMLScGestureHandlerElement: {
+        prototype: HTMLScGestureHandlerElement;
+        new (): HTMLScGestureHandlerElement;
     };
     interface HTMLScGridElement extends Components.ScGrid, HTMLStencilElement {
     }
@@ -693,6 +735,12 @@ declare global {
     var HTMLScLineChartStreamDataElement: {
         prototype: HTMLScLineChartStreamDataElement;
         new (): HTMLScLineChartStreamDataElement;
+    };
+    interface HTMLScLoadingSpinnerElement extends Components.ScLoadingSpinner, HTMLStencilElement {
+    }
+    var HTMLScLoadingSpinnerElement: {
+        prototype: HTMLScLoadingSpinnerElement;
+        new (): HTMLScLoadingSpinnerElement;
     };
     interface HTMLScMultipleBarsElement extends Components.ScMultipleBars, HTMLStencilElement {
     }
@@ -880,6 +928,30 @@ declare global {
         prototype: HTMLScThresholdLegendRowElement;
         new (): HTMLScThresholdLegendRowElement;
     };
+    interface HTMLScTooltipElement extends Components.ScTooltip, HTMLStencilElement {
+    }
+    var HTMLScTooltipElement: {
+        prototype: HTMLScTooltipElement;
+        new (): HTMLScTooltipElement;
+    };
+    interface HTMLScTooltipRowElement extends Components.ScTooltipRow, HTMLStencilElement {
+    }
+    var HTMLScTooltipRowElement: {
+        prototype: HTMLScTooltipRowElement;
+        new (): HTMLScTooltipRowElement;
+    };
+    interface HTMLScTooltipRowsElement extends Components.ScTooltipRows, HTMLStencilElement {
+    }
+    var HTMLScTooltipRowsElement: {
+        prototype: HTMLScTooltipRowsElement;
+        new (): HTMLScTooltipRowsElement;
+    };
+    interface HTMLScWebglAxisElement extends Components.ScWebglAxis, HTMLStencilElement {
+    }
+    var HTMLScWebglAxisElement: {
+        prototype: HTMLScWebglAxisElement;
+        new (): HTMLScWebglAxisElement;
+    };
     interface HTMLScWebglBarChartDynamicBufferElement extends Components.ScWebglBarChartDynamicBuffer, HTMLStencilElement {
     }
     var HTMLScWebglBarChartDynamicBufferElement: {
@@ -969,6 +1041,12 @@ declare global {
     var HTMLScWebglBarChartThresholdNoColorationElement: {
         prototype: HTMLScWebglBarChartThresholdNoColorationElement;
         new (): HTMLScWebglBarChartThresholdNoColorationElement;
+    };
+    interface HTMLScWebglBaseChartElement extends Components.ScWebglBaseChart, HTMLStencilElement {
+    }
+    var HTMLScWebglBaseChartElement: {
+        prototype: HTMLScWebglBaseChartElement;
+        new (): HTMLScWebglBaseChartElement;
     };
     interface HTMLScWebglChartAnnotationsElement extends Components.ScWebglChartAnnotations, HTMLStencilElement {
     }
@@ -1096,84 +1174,6 @@ declare global {
         prototype: HTMLScWidgetGridElement;
         new (): HTMLScWidgetGridElement;
     };
-    interface HTMLMultipleStatusesElement extends Components.MultipleStatuses, HTMLStencilElement {
-    }
-    var HTMLMultipleStatusesElement: {
-        prototype: HTMLMultipleStatusesElement;
-        new (): HTMLMultipleStatusesElement;
-    };
-    interface HTMLScAppElement extends Components.ScApp, HTMLStencilElement {
-    }
-    var HTMLScAppElement: {
-        prototype: HTMLScAppElement;
-        new (): HTMLScAppElement;
-    };
-    interface HTMLScBarChartElement extends Components.ScBarChart, HTMLStencilElement {
-    }
-    var HTMLScBarChartElement: {
-        prototype: HTMLScBarChartElement;
-        new (): HTMLScBarChartElement;
-    };
-    interface HTMLScBoxElement extends Components.ScBox, HTMLStencilElement {
-    }
-    var HTMLScBoxElement: {
-        prototype: HTMLScBoxElement;
-        new (): HTMLScBoxElement;
-    };
-    interface HTMLScChartIconElement extends Components.ScChartIcon, HTMLStencilElement {
-    }
-    var HTMLScChartIconElement: {
-        prototype: HTMLScChartIconElement;
-        new (): HTMLScChartIconElement;
-    };
-    interface HTMLScErrorBadgeElement extends Components.ScErrorBadge, HTMLStencilElement {
-    }
-    var HTMLScErrorBadgeElement: {
-        prototype: HTMLScErrorBadgeElement;
-        new (): HTMLScErrorBadgeElement;
-    };
-    interface HTMLScGestureHandlerElement extends Components.ScGestureHandler, HTMLStencilElement {
-    }
-    var HTMLScGestureHandlerElement: {
-        prototype: HTMLScGestureHandlerElement;
-        new (): HTMLScGestureHandlerElement;
-    };
-    interface HTMLScLoadingSpinnerElement extends Components.ScLoadingSpinner, HTMLStencilElement {
-    }
-    var HTMLScLoadingSpinnerElement: {
-        prototype: HTMLScLoadingSpinnerElement;
-        new (): HTMLScLoadingSpinnerElement;
-    };
-    interface HTMLScTooltipElement extends Components.ScTooltip, HTMLStencilElement {
-    }
-    var HTMLScTooltipElement: {
-        prototype: HTMLScTooltipElement;
-        new (): HTMLScTooltipElement;
-    };
-    interface HTMLScTooltipRowElement extends Components.ScTooltipRow, HTMLStencilElement {
-    }
-    var HTMLScTooltipRowElement: {
-        prototype: HTMLScTooltipRowElement;
-        new (): HTMLScTooltipRowElement;
-    };
-    interface HTMLScTooltipRowsElement extends Components.ScTooltipRows, HTMLStencilElement {
-    }
-    var HTMLScTooltipRowsElement: {
-        prototype: HTMLScTooltipRowsElement;
-        new (): HTMLScTooltipRowsElement;
-    };
-    interface HTMLScWebglAxisElement extends Components.ScWebglAxis, HTMLStencilElement {
-    }
-    var HTMLScWebglAxisElement: {
-        prototype: HTMLScWebglAxisElement;
-        new (): HTMLScWebglAxisElement;
-    };
-    interface HTMLScWebglBaseChartElement extends Components.ScWebglBaseChart, HTMLStencilElement {
-    }
-    var HTMLScWebglBaseChartElement: {
-        prototype: HTMLScWebglBaseChartElement;
-        new (): HTMLScWebglBaseChartElement;
-    };
     interface HTMLSingleColoredStatusElement extends Components.SingleColoredStatus, HTMLStencilElement {
     }
     var HTMLSingleColoredStatusElement: {
@@ -1278,12 +1278,19 @@ declare global {
     };
     interface HTMLElementTagNameMap {
         "line-chart-viewport-change": HTMLLineChartViewportChangeElement;
+        "multiple-statuses": HTMLMultipleStatusesElement;
         "sc-angled-line-segment": HTMLScAngledLineSegmentElement;
+        "sc-app": HTMLScAppElement;
+        "sc-bar-chart": HTMLScBarChartElement;
+        "sc-box": HTMLScBoxElement;
+        "sc-chart-icon": HTMLScChartIconElement;
         "sc-chart-y-range": HTMLScChartYRangeElement;
         "sc-circle-point-shaders": HTMLScCirclePointShadersElement;
         "sc-data-stream-name": HTMLScDataStreamNameElement;
+        "sc-error-badge": HTMLScErrorBadgeElement;
         "sc-expandable-input": HTMLScExpandableInputElement;
         "sc-expandable-input-standard": HTMLScExpandableInputStandardElement;
+        "sc-gesture-handler": HTMLScGestureHandlerElement;
         "sc-grid": HTMLScGridElement;
         "sc-grid-tooltip": HTMLScGridTooltipElement;
         "sc-help-tooltip": HTMLScHelpTooltipElement;
@@ -1295,6 +1302,7 @@ declare global {
         "sc-line-chart": HTMLScLineChartElement;
         "sc-line-chart-colored-point": HTMLScLineChartColoredPointElement;
         "sc-line-chart-stream-data": HTMLScLineChartStreamDataElement;
+        "sc-loading-spinner": HTMLScLoadingSpinnerElement;
         "sc-multiple-bars": HTMLScMultipleBarsElement;
         "sc-multiple-lines": HTMLScMultipleLinesElement;
         "sc-multiple-lines-overlapping": HTMLScMultipleLinesOverlappingElement;
@@ -1326,6 +1334,10 @@ declare global {
         "sc-table-cell": HTMLScTableCellElement;
         "sc-threshold-legend": HTMLScThresholdLegendElement;
         "sc-threshold-legend-row": HTMLScThresholdLegendRowElement;
+        "sc-tooltip": HTMLScTooltipElement;
+        "sc-tooltip-row": HTMLScTooltipRowElement;
+        "sc-tooltip-rows": HTMLScTooltipRowsElement;
+        "sc-webgl-axis": HTMLScWebglAxisElement;
         "sc-webgl-bar-chart-dynamic-buffer": HTMLScWebglBarChartDynamicBufferElement;
         "sc-webgl-bar-chart-dynamic-data": HTMLScWebglBarChartDynamicDataElement;
         "sc-webgl-bar-chart-dynamic-data-streams": HTMLScWebglBarChartDynamicDataStreamsElement;
@@ -1341,6 +1353,7 @@ declare global {
         "sc-webgl-bar-chart-threshold-coloration-multiple-data-stream": HTMLScWebglBarChartThresholdColorationMultipleDataStreamElement;
         "sc-webgl-bar-chart-threshold-coloration-multiple-thresholds": HTMLScWebglBarChartThresholdColorationMultipleThresholdsElement;
         "sc-webgl-bar-chart-threshold-no-coloration": HTMLScWebglBarChartThresholdNoColorationElement;
+        "sc-webgl-base-chart": HTMLScWebglBaseChartElement;
         "sc-webgl-chart-annotations": HTMLScWebglChartAnnotationsElement;
         "sc-webgl-chart-annotations-always-in-viewport": HTMLScWebglChartAnnotationsAlwaysInViewportElement;
         "sc-webgl-chart-axis": HTMLScWebglChartAxisElement;
@@ -1362,19 +1375,6 @@ declare global {
         "sc-webgl-line-chart-dynamic-data": HTMLScWebglLineChartDynamicDataElement;
         "sc-webgl-line-chart-dynamic-data-streams": HTMLScWebglLineChartDynamicDataStreamsElement;
         "sc-widget-grid": HTMLScWidgetGridElement;
-        "multiple-statuses": HTMLMultipleStatusesElement;
-        "sc-app": HTMLScAppElement;
-        "sc-bar-chart": HTMLScBarChartElement;
-        "sc-box": HTMLScBoxElement;
-        "sc-chart-icon": HTMLScChartIconElement;
-        "sc-error-badge": HTMLScErrorBadgeElement;
-        "sc-gesture-handler": HTMLScGestureHandlerElement;
-        "sc-loading-spinner": HTMLScLoadingSpinnerElement;
-        "sc-tooltip": HTMLScTooltipElement;
-        "sc-tooltip-row": HTMLScTooltipRowElement;
-        "sc-tooltip-rows": HTMLScTooltipRowsElement;
-        "sc-webgl-axis": HTMLScWebglAxisElement;
-        "sc-webgl-base-chart": HTMLScWebglBaseChartElement;
         "single-colored-status": HTMLSingleColoredStatusElement;
         "single-status": HTMLSingleStatusElement;
         "status-chart-dynamic-buffer": HTMLStatusChartDynamicBufferElement;
@@ -1397,7 +1397,49 @@ declare global {
 declare namespace LocalJSX {
     interface LineChartViewportChange {
     }
+    interface MultipleStatuses {
+    }
     interface ScAngledLineSegment {
+    }
+    interface ScApp {
+    }
+    interface ScBarChart {
+        "alarms"?: AlarmsConfig;
+        "annotations"?: Annotations;
+        "axis"?: Axis.Options;
+        /**
+          * Memory Management
+         */
+        "bufferFactor"?: number;
+        "dataStreams": DataStream[];
+        "gestures"?: boolean;
+        /**
+          * Status
+         */
+        "isEditing"?: boolean;
+        "layout"?: LayoutConfig;
+        "legend"?: LegendConfig;
+        "messageOverrides"?: MessageOverrides;
+        "minBufferSize"?: number;
+        "movement"?: MovementConfig;
+        "requestData"?: RequestDataFn;
+        "scale"?: ScaleConfig;
+        "size"?: MinimalSizeConfig;
+        "trends"?: Trend[];
+        /**
+          * Chart API
+         */
+        "viewPort"?: MinimalViewPortConfig;
+        "widgetId": string;
+    }
+    interface ScBox {
+        "size"?: MinimalSizeConfig;
+        "someObject"?: Object;
+    }
+    interface ScChartIcon {
+        "color"?: string;
+        "name"?: StatusIcon;
+        "size"?: number;
     }
     interface ScChartYRange {
         "component"?: string;
@@ -1413,12 +1455,19 @@ declare namespace LocalJSX {
         "onNameChange": (name: string) => void;
         "pointType"?: POINT_TYPE;
     }
+    interface ScErrorBadge {
+    }
     interface ScExpandableInput {
         "isDisabled"?: boolean;
         "onValueChange": (value: string) => void;
         "value": string;
     }
     interface ScExpandableInputStandard {
+    }
+    interface ScGestureHandler {
+        "onDateRangeChange": ({ end, start }: { start: Date; end: Date }) => void;
+        "size": SizeConfig;
+        "viewPort": ViewPort;
     }
     interface ScGrid {
     }
@@ -1520,6 +1569,10 @@ declare namespace LocalJSX {
     interface ScLineChartColoredPoint {
     }
     interface ScLineChartStreamData {
+    }
+    interface ScLoadingSpinner {
+        "dark"?: boolean;
+        "size"?: number;
     }
     interface ScMultipleBars {
     }
@@ -1698,145 +1751,6 @@ declare namespace LocalJSX {
         "color": string;
         "label": string;
     }
-    interface ScWebglBarChartDynamicBuffer {
-    }
-    interface ScWebglBarChartDynamicData {
-    }
-    interface ScWebglBarChartDynamicDataStreams {
-    }
-    interface ScWebglBarChartFastViewport {
-    }
-    interface ScWebglBarChartMargin {
-    }
-    interface ScWebglBarChartNegative {
-    }
-    interface ScWebglBarChartPositiveNegative {
-    }
-    interface ScWebglBarChartStandard {
-    }
-    interface ScWebglBarChartStartFromZero {
-    }
-    interface ScWebglBarChartThresholdColoration {
-    }
-    interface ScWebglBarChartThresholdColorationBand {
-    }
-    interface ScWebglBarChartThresholdColorationExactPoint {
-    }
-    interface ScWebglBarChartThresholdColorationMultipleDataStream {
-    }
-    interface ScWebglBarChartThresholdColorationMultipleThresholds {
-    }
-    interface ScWebglBarChartThresholdNoColoration {
-    }
-    interface ScWebglChartAnnotations {
-    }
-    interface ScWebglChartAnnotationsAlwaysInViewport {
-    }
-    interface ScWebglChartAxis {
-    }
-    interface ScWebglChartDynamicCharts {
-    }
-    interface ScWebglChartLargeViewport {
-    }
-    interface ScWebglChartMulti {
-    }
-    interface ScWebglChartNoAnnotations {
-    }
-    interface ScWebglChartStandard {
-    }
-    interface ScWebglChartStandardWithLegend {
-    }
-    interface ScWebglChartStandardWithLegendOnRight {
-    }
-    interface ScWebglChartThresholdColorationBand {
-    }
-    interface ScWebglChartThresholdColorationExactPoint {
-    }
-    interface ScWebglChartThresholdColorationMultipleDataStream {
-    }
-    interface ScWebglChartThresholdColorationMultipleThresholds {
-    }
-    interface ScWebglChartThresholdColorationSplitHalf {
-    }
-    interface ScWebglChartTooltipWithMultipleDataStreams {
-    }
-    interface ScWebglContext {
-    }
-    interface ScWebglLineChartDynamicBuffer {
-    }
-    interface ScWebglLineChartDynamicData {
-    }
-    interface ScWebglLineChartDynamicDataStreams {
-    }
-    interface ScWidgetGrid {
-        "annotations"?: Annotations;
-        "collapseVertically"?: boolean;
-        "dataStreams": DataStream[];
-        "isEditing"?: boolean;
-        /**
-          * Chart API
-         */
-        "labelsConfig"?: LabelsConfig;
-        "liveModeOnlyMessage"?: string;
-        "messageOverrides"?: MessageOverrides;
-        "onWidgetUpdated"?: (event: CustomEvent<WidgetConfigurationUpdate>) => void;
-        "renderCell"?: RenderCell;
-        "viewPort"?: MinimalViewPortConfig;
-        "widgetId": string;
-    }
-    interface MultipleStatuses {
-    }
-    interface ScApp {
-    }
-    interface ScBarChart {
-        "alarms"?: AlarmsConfig;
-        "annotations"?: Annotations;
-        "axis"?: Axis.Options;
-        /**
-          * Memory Management
-         */
-        "bufferFactor"?: number;
-        "dataStreams": DataStream[];
-        "gestures"?: boolean;
-        /**
-          * Status
-         */
-        "isEditing"?: boolean;
-        "layout"?: LayoutConfig;
-        "legend"?: LegendConfig;
-        "messageOverrides"?: MessageOverrides;
-        "minBufferSize"?: number;
-        "movement"?: MovementConfig;
-        "requestData"?: RequestDataFn;
-        "scale"?: ScaleConfig;
-        "size"?: MinimalSizeConfig;
-        "trends"?: Trend[];
-        /**
-          * Chart API
-         */
-        "viewPort"?: MinimalViewPortConfig;
-        "widgetId": string;
-    }
-    interface ScBox {
-        "size"?: MinimalSizeConfig;
-        "someObject"?: Object;
-    }
-    interface ScChartIcon {
-        "color"?: string;
-        "name"?: StatusIcon;
-        "size"?: number;
-    }
-    interface ScErrorBadge {
-    }
-    interface ScGestureHandler {
-        "onDateRangeChange": ({ end, start }: { start: Date; end: Date }) => void;
-        "size": SizeConfig;
-        "viewPort": ViewPort;
-    }
-    interface ScLoadingSpinner {
-        "dark"?: boolean;
-        "size"?: number;
-    }
     interface ScTooltip {
         /**
           * If we are drawing data from the data timestamp to timestamp + resolution we want the tooltip to align on the left side  Otherwise we are drawing the data from timestamp - resolution to timestamp then we want the tooltip to align on the right side
@@ -1894,6 +1808,36 @@ declare namespace LocalJSX {
     interface ScWebglAxis {
         "size": SizeConfig;
     }
+    interface ScWebglBarChartDynamicBuffer {
+    }
+    interface ScWebglBarChartDynamicData {
+    }
+    interface ScWebglBarChartDynamicDataStreams {
+    }
+    interface ScWebglBarChartFastViewport {
+    }
+    interface ScWebglBarChartMargin {
+    }
+    interface ScWebglBarChartNegative {
+    }
+    interface ScWebglBarChartPositiveNegative {
+    }
+    interface ScWebglBarChartStandard {
+    }
+    interface ScWebglBarChartStartFromZero {
+    }
+    interface ScWebglBarChartThresholdColoration {
+    }
+    interface ScWebglBarChartThresholdColorationBand {
+    }
+    interface ScWebglBarChartThresholdColorationExactPoint {
+    }
+    interface ScWebglBarChartThresholdColorationMultipleDataStream {
+    }
+    interface ScWebglBarChartThresholdColorationMultipleThresholds {
+    }
+    interface ScWebglBarChartThresholdNoColoration {
+    }
     interface ScWebglBaseChart {
         "alarms"?: AlarmsConfig;
         "annotations"?: Annotations;
@@ -1934,6 +1878,62 @@ declare namespace LocalJSX {
         "visualizesAlarms"?: boolean;
         "yRangeStartFromZero"?: boolean;
     }
+    interface ScWebglChartAnnotations {
+    }
+    interface ScWebglChartAnnotationsAlwaysInViewport {
+    }
+    interface ScWebglChartAxis {
+    }
+    interface ScWebglChartDynamicCharts {
+    }
+    interface ScWebglChartLargeViewport {
+    }
+    interface ScWebglChartMulti {
+    }
+    interface ScWebglChartNoAnnotations {
+    }
+    interface ScWebglChartStandard {
+    }
+    interface ScWebglChartStandardWithLegend {
+    }
+    interface ScWebglChartStandardWithLegendOnRight {
+    }
+    interface ScWebglChartThresholdColorationBand {
+    }
+    interface ScWebglChartThresholdColorationExactPoint {
+    }
+    interface ScWebglChartThresholdColorationMultipleDataStream {
+    }
+    interface ScWebglChartThresholdColorationMultipleThresholds {
+    }
+    interface ScWebglChartThresholdColorationSplitHalf {
+    }
+    interface ScWebglChartTooltipWithMultipleDataStreams {
+    }
+    interface ScWebglContext {
+    }
+    interface ScWebglLineChartDynamicBuffer {
+    }
+    interface ScWebglLineChartDynamicData {
+    }
+    interface ScWebglLineChartDynamicDataStreams {
+    }
+    interface ScWidgetGrid {
+        "annotations"?: Annotations;
+        "collapseVertically"?: boolean;
+        "dataStreams": DataStream[];
+        "isEditing"?: boolean;
+        /**
+          * Chart API
+         */
+        "labelsConfig"?: LabelsConfig;
+        "liveModeOnlyMessage"?: string;
+        "messageOverrides"?: MessageOverrides;
+        "onWidgetUpdated"?: (event: CustomEvent<WidgetConfigurationUpdate>) => void;
+        "renderCell"?: RenderCell;
+        "viewPort"?: MinimalViewPortConfig;
+        "widgetId": string;
+    }
     interface SingleColoredStatus {
     }
     interface SingleStatus {
@@ -1972,12 +1972,19 @@ declare namespace LocalJSX {
     }
     interface IntrinsicElements {
         "line-chart-viewport-change": LineChartViewportChange;
+        "multiple-statuses": MultipleStatuses;
         "sc-angled-line-segment": ScAngledLineSegment;
+        "sc-app": ScApp;
+        "sc-bar-chart": ScBarChart;
+        "sc-box": ScBox;
+        "sc-chart-icon": ScChartIcon;
         "sc-chart-y-range": ScChartYRange;
         "sc-circle-point-shaders": ScCirclePointShaders;
         "sc-data-stream-name": ScDataStreamName;
+        "sc-error-badge": ScErrorBadge;
         "sc-expandable-input": ScExpandableInput;
         "sc-expandable-input-standard": ScExpandableInputStandard;
+        "sc-gesture-handler": ScGestureHandler;
         "sc-grid": ScGrid;
         "sc-grid-tooltip": ScGridTooltip;
         "sc-help-tooltip": ScHelpTooltip;
@@ -1989,6 +1996,7 @@ declare namespace LocalJSX {
         "sc-line-chart": ScLineChart;
         "sc-line-chart-colored-point": ScLineChartColoredPoint;
         "sc-line-chart-stream-data": ScLineChartStreamData;
+        "sc-loading-spinner": ScLoadingSpinner;
         "sc-multiple-bars": ScMultipleBars;
         "sc-multiple-lines": ScMultipleLines;
         "sc-multiple-lines-overlapping": ScMultipleLinesOverlapping;
@@ -2020,6 +2028,10 @@ declare namespace LocalJSX {
         "sc-table-cell": ScTableCell;
         "sc-threshold-legend": ScThresholdLegend;
         "sc-threshold-legend-row": ScThresholdLegendRow;
+        "sc-tooltip": ScTooltip;
+        "sc-tooltip-row": ScTooltipRow;
+        "sc-tooltip-rows": ScTooltipRows;
+        "sc-webgl-axis": ScWebglAxis;
         "sc-webgl-bar-chart-dynamic-buffer": ScWebglBarChartDynamicBuffer;
         "sc-webgl-bar-chart-dynamic-data": ScWebglBarChartDynamicData;
         "sc-webgl-bar-chart-dynamic-data-streams": ScWebglBarChartDynamicDataStreams;
@@ -2035,6 +2047,7 @@ declare namespace LocalJSX {
         "sc-webgl-bar-chart-threshold-coloration-multiple-data-stream": ScWebglBarChartThresholdColorationMultipleDataStream;
         "sc-webgl-bar-chart-threshold-coloration-multiple-thresholds": ScWebglBarChartThresholdColorationMultipleThresholds;
         "sc-webgl-bar-chart-threshold-no-coloration": ScWebglBarChartThresholdNoColoration;
+        "sc-webgl-base-chart": ScWebglBaseChart;
         "sc-webgl-chart-annotations": ScWebglChartAnnotations;
         "sc-webgl-chart-annotations-always-in-viewport": ScWebglChartAnnotationsAlwaysInViewport;
         "sc-webgl-chart-axis": ScWebglChartAxis;
@@ -2056,19 +2069,6 @@ declare namespace LocalJSX {
         "sc-webgl-line-chart-dynamic-data": ScWebglLineChartDynamicData;
         "sc-webgl-line-chart-dynamic-data-streams": ScWebglLineChartDynamicDataStreams;
         "sc-widget-grid": ScWidgetGrid;
-        "multiple-statuses": MultipleStatuses;
-        "sc-app": ScApp;
-        "sc-bar-chart": ScBarChart;
-        "sc-box": ScBox;
-        "sc-chart-icon": ScChartIcon;
-        "sc-error-badge": ScErrorBadge;
-        "sc-gesture-handler": ScGestureHandler;
-        "sc-loading-spinner": ScLoadingSpinner;
-        "sc-tooltip": ScTooltip;
-        "sc-tooltip-row": ScTooltipRow;
-        "sc-tooltip-rows": ScTooltipRows;
-        "sc-webgl-axis": ScWebglAxis;
-        "sc-webgl-base-chart": ScWebglBaseChart;
         "single-colored-status": SingleColoredStatus;
         "single-status": SingleStatus;
         "status-chart-dynamic-buffer": StatusChartDynamicBuffer;
@@ -2093,12 +2093,19 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "line-chart-viewport-change": LocalJSX.LineChartViewportChange & JSXBase.HTMLAttributes<HTMLLineChartViewportChangeElement>;
+            "multiple-statuses": LocalJSX.MultipleStatuses & JSXBase.HTMLAttributes<HTMLMultipleStatusesElement>;
             "sc-angled-line-segment": LocalJSX.ScAngledLineSegment & JSXBase.HTMLAttributes<HTMLScAngledLineSegmentElement>;
+            "sc-app": LocalJSX.ScApp & JSXBase.HTMLAttributes<HTMLScAppElement>;
+            "sc-bar-chart": LocalJSX.ScBarChart & JSXBase.HTMLAttributes<HTMLScBarChartElement>;
+            "sc-box": LocalJSX.ScBox & JSXBase.HTMLAttributes<HTMLScBoxElement>;
+            "sc-chart-icon": LocalJSX.ScChartIcon & JSXBase.HTMLAttributes<HTMLScChartIconElement>;
             "sc-chart-y-range": LocalJSX.ScChartYRange & JSXBase.HTMLAttributes<HTMLScChartYRangeElement>;
             "sc-circle-point-shaders": LocalJSX.ScCirclePointShaders & JSXBase.HTMLAttributes<HTMLScCirclePointShadersElement>;
             "sc-data-stream-name": LocalJSX.ScDataStreamName & JSXBase.HTMLAttributes<HTMLScDataStreamNameElement>;
+            "sc-error-badge": LocalJSX.ScErrorBadge & JSXBase.HTMLAttributes<HTMLScErrorBadgeElement>;
             "sc-expandable-input": LocalJSX.ScExpandableInput & JSXBase.HTMLAttributes<HTMLScExpandableInputElement>;
             "sc-expandable-input-standard": LocalJSX.ScExpandableInputStandard & JSXBase.HTMLAttributes<HTMLScExpandableInputStandardElement>;
+            "sc-gesture-handler": LocalJSX.ScGestureHandler & JSXBase.HTMLAttributes<HTMLScGestureHandlerElement>;
             "sc-grid": LocalJSX.ScGrid & JSXBase.HTMLAttributes<HTMLScGridElement>;
             "sc-grid-tooltip": LocalJSX.ScGridTooltip & JSXBase.HTMLAttributes<HTMLScGridTooltipElement>;
             "sc-help-tooltip": LocalJSX.ScHelpTooltip & JSXBase.HTMLAttributes<HTMLScHelpTooltipElement>;
@@ -2110,6 +2117,7 @@ declare module "@stencil/core" {
             "sc-line-chart": LocalJSX.ScLineChart & JSXBase.HTMLAttributes<HTMLScLineChartElement>;
             "sc-line-chart-colored-point": LocalJSX.ScLineChartColoredPoint & JSXBase.HTMLAttributes<HTMLScLineChartColoredPointElement>;
             "sc-line-chart-stream-data": LocalJSX.ScLineChartStreamData & JSXBase.HTMLAttributes<HTMLScLineChartStreamDataElement>;
+            "sc-loading-spinner": LocalJSX.ScLoadingSpinner & JSXBase.HTMLAttributes<HTMLScLoadingSpinnerElement>;
             "sc-multiple-bars": LocalJSX.ScMultipleBars & JSXBase.HTMLAttributes<HTMLScMultipleBarsElement>;
             "sc-multiple-lines": LocalJSX.ScMultipleLines & JSXBase.HTMLAttributes<HTMLScMultipleLinesElement>;
             "sc-multiple-lines-overlapping": LocalJSX.ScMultipleLinesOverlapping & JSXBase.HTMLAttributes<HTMLScMultipleLinesOverlappingElement>;
@@ -2141,6 +2149,10 @@ declare module "@stencil/core" {
             "sc-table-cell": LocalJSX.ScTableCell & JSXBase.HTMLAttributes<HTMLScTableCellElement>;
             "sc-threshold-legend": LocalJSX.ScThresholdLegend & JSXBase.HTMLAttributes<HTMLScThresholdLegendElement>;
             "sc-threshold-legend-row": LocalJSX.ScThresholdLegendRow & JSXBase.HTMLAttributes<HTMLScThresholdLegendRowElement>;
+            "sc-tooltip": LocalJSX.ScTooltip & JSXBase.HTMLAttributes<HTMLScTooltipElement>;
+            "sc-tooltip-row": LocalJSX.ScTooltipRow & JSXBase.HTMLAttributes<HTMLScTooltipRowElement>;
+            "sc-tooltip-rows": LocalJSX.ScTooltipRows & JSXBase.HTMLAttributes<HTMLScTooltipRowsElement>;
+            "sc-webgl-axis": LocalJSX.ScWebglAxis & JSXBase.HTMLAttributes<HTMLScWebglAxisElement>;
             "sc-webgl-bar-chart-dynamic-buffer": LocalJSX.ScWebglBarChartDynamicBuffer & JSXBase.HTMLAttributes<HTMLScWebglBarChartDynamicBufferElement>;
             "sc-webgl-bar-chart-dynamic-data": LocalJSX.ScWebglBarChartDynamicData & JSXBase.HTMLAttributes<HTMLScWebglBarChartDynamicDataElement>;
             "sc-webgl-bar-chart-dynamic-data-streams": LocalJSX.ScWebglBarChartDynamicDataStreams & JSXBase.HTMLAttributes<HTMLScWebglBarChartDynamicDataStreamsElement>;
@@ -2156,6 +2168,7 @@ declare module "@stencil/core" {
             "sc-webgl-bar-chart-threshold-coloration-multiple-data-stream": LocalJSX.ScWebglBarChartThresholdColorationMultipleDataStream & JSXBase.HTMLAttributes<HTMLScWebglBarChartThresholdColorationMultipleDataStreamElement>;
             "sc-webgl-bar-chart-threshold-coloration-multiple-thresholds": LocalJSX.ScWebglBarChartThresholdColorationMultipleThresholds & JSXBase.HTMLAttributes<HTMLScWebglBarChartThresholdColorationMultipleThresholdsElement>;
             "sc-webgl-bar-chart-threshold-no-coloration": LocalJSX.ScWebglBarChartThresholdNoColoration & JSXBase.HTMLAttributes<HTMLScWebglBarChartThresholdNoColorationElement>;
+            "sc-webgl-base-chart": LocalJSX.ScWebglBaseChart & JSXBase.HTMLAttributes<HTMLScWebglBaseChartElement>;
             "sc-webgl-chart-annotations": LocalJSX.ScWebglChartAnnotations & JSXBase.HTMLAttributes<HTMLScWebglChartAnnotationsElement>;
             "sc-webgl-chart-annotations-always-in-viewport": LocalJSX.ScWebglChartAnnotationsAlwaysInViewport & JSXBase.HTMLAttributes<HTMLScWebglChartAnnotationsAlwaysInViewportElement>;
             "sc-webgl-chart-axis": LocalJSX.ScWebglChartAxis & JSXBase.HTMLAttributes<HTMLScWebglChartAxisElement>;
@@ -2177,19 +2190,6 @@ declare module "@stencil/core" {
             "sc-webgl-line-chart-dynamic-data": LocalJSX.ScWebglLineChartDynamicData & JSXBase.HTMLAttributes<HTMLScWebglLineChartDynamicDataElement>;
             "sc-webgl-line-chart-dynamic-data-streams": LocalJSX.ScWebglLineChartDynamicDataStreams & JSXBase.HTMLAttributes<HTMLScWebglLineChartDynamicDataStreamsElement>;
             "sc-widget-grid": LocalJSX.ScWidgetGrid & JSXBase.HTMLAttributes<HTMLScWidgetGridElement>;
-            "multiple-statuses": LocalJSX.MultipleStatuses & JSXBase.HTMLAttributes<HTMLMultipleStatusesElement>;
-            "sc-app": LocalJSX.ScApp & JSXBase.HTMLAttributes<HTMLScAppElement>;
-            "sc-bar-chart": LocalJSX.ScBarChart & JSXBase.HTMLAttributes<HTMLScBarChartElement>;
-            "sc-box": LocalJSX.ScBox & JSXBase.HTMLAttributes<HTMLScBoxElement>;
-            "sc-chart-icon": LocalJSX.ScChartIcon & JSXBase.HTMLAttributes<HTMLScChartIconElement>;
-            "sc-error-badge": LocalJSX.ScErrorBadge & JSXBase.HTMLAttributes<HTMLScErrorBadgeElement>;
-            "sc-gesture-handler": LocalJSX.ScGestureHandler & JSXBase.HTMLAttributes<HTMLScGestureHandlerElement>;
-            "sc-loading-spinner": LocalJSX.ScLoadingSpinner & JSXBase.HTMLAttributes<HTMLScLoadingSpinnerElement>;
-            "sc-tooltip": LocalJSX.ScTooltip & JSXBase.HTMLAttributes<HTMLScTooltipElement>;
-            "sc-tooltip-row": LocalJSX.ScTooltipRow & JSXBase.HTMLAttributes<HTMLScTooltipRowElement>;
-            "sc-tooltip-rows": LocalJSX.ScTooltipRows & JSXBase.HTMLAttributes<HTMLScTooltipRowsElement>;
-            "sc-webgl-axis": LocalJSX.ScWebglAxis & JSXBase.HTMLAttributes<HTMLScWebglAxisElement>;
-            "sc-webgl-base-chart": LocalJSX.ScWebglBaseChart & JSXBase.HTMLAttributes<HTMLScWebglBaseChartElement>;
             "single-colored-status": LocalJSX.SingleColoredStatus & JSXBase.HTMLAttributes<HTMLSingleColoredStatusElement>;
             "single-status": LocalJSX.SingleStatus & JSXBase.HTMLAttributes<HTMLSingleStatusElement>;
             "status-chart-dynamic-buffer": LocalJSX.StatusChartDynamicBuffer & JSXBase.HTMLAttributes<HTMLStatusChartDynamicBufferElement>;

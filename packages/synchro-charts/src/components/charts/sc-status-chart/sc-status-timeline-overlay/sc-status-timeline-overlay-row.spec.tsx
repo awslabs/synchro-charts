@@ -1,5 +1,5 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { Components } from '../../../../components.d';
+import { Components } from '../../../../components';
 import { CustomHTMLElement } from '../../../../utils/types';
 import { update } from '../../common/tests/merge';
 import { ScStatusTimelineOverlayRow } from './sc-status-timeline-overlay-row';
