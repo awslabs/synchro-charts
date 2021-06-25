@@ -1,0 +1,39 @@
+monitor-kpi .align {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+}
+
+monitor-kpi .container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: auto;
+  position: relative;
+
+  /* Hide scrollbar for IE and Edge */
+  -ms-overflow-style: none;
+
+  /* Hide scrollbar for FF */
+  scrollbar-width: none;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+monitor-kpi .container::-webkit-scrollbar {
+  display: none;
+}
+
+monitor-kpi monitor-chart-icon .monitor-chart-icon {
+  top: -3px;
+}
+
+monitor-kpi .large monitor-chart-icon {
+  position: relative;
+}
+
+monitor-kpi .help-icon-container {
+  z-index: 100;
+  position: absolute;
+  right: 0;
+  top: 0;
+}

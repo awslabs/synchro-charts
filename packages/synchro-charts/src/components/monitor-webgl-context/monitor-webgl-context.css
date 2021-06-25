@@ -1,0 +1,24 @@
+monitor-webgl-context {
+  --scroll-bar-size: 16px;
+
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.webgl-context-canvas {
+  position: absolute;
+  left: 0;
+  top: 0;
+
+  /* Prevent the canvas from stretching beyond the window causing infinite scrolling bugs */
+  width: calc(100vw - var(--scroll-bar-size));
+  height: calc(100vh - var(--scroll-bar-size));
+  display: block;
+  pointer-events: none;
+  z-index: 10;
+}

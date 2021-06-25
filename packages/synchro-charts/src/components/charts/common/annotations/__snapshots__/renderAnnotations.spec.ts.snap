@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`x annotation renders correctly 1`] = `
+<svg viewBox="0 0 100 50">
+  <text class="x" font-size="10" x="0" y="-50" style="pointer-events: none; user-select: none; transform: rotate(90deg) translateY(-5px); fill: red;">
+    some text
+  </text>
+  <line class="x" font-size="10" x1="50" x2="50" y1="0" y2="50" style="stroke: red; stroke-width: 1.5;"></line>
+</svg>
+`;
+
+exports[`y annotation renders correctly 1`] = `
+<svg viewBox="0 0 100 50">
+  <text class="y" font-size="10" text-anchor="end" x="95" y="20" style="user-select: none; pointer-events: none; fill: red;">
+    some text
+  </text>
+  <line class="y" x1="0" x2="100" y1="25" y2="25" style="stroke: red; stroke-width: 1.5;"></line>
+</svg>
+`;

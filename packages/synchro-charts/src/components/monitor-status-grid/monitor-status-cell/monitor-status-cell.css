@@ -1,0 +1,70 @@
+
+monitor-status-cell .status-cell {
+  min-height: 150px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  padding: var(--margin-medium);
+  font-size: var(--font-size-3);
+  line-height: var(--line-height-3);
+}
+
+monitor-status-cell .description {
+  font-size: var(--font-size-1);
+  line-height: var(--line-height-1);
+  font-weight: var(--font-weight-light);
+}
+
+monitor-status-cell .secondary {
+  font-size: var(--font-size-1);
+  line-height: var(--line-height-1);
+  font-weight: var(--font-weight-light);
+}
+
+monitor-status-cell .value {
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-3);
+  line-height: var(--line-height-3);
+}
+
+monitor-status-cell .spacer {
+  width: 4px;
+  display: inline-block;
+}
+
+monitor-status-cell .unit {
+  font-size: var(--font-size-0);
+  line-height: var(--line-height-0);
+  padding-left: 2px;
+}
+
+monitor-status-cell .large {
+  font-size: var(--font-size-4);
+  line-height: var(--line-height-4);
+}
+
+monitor-status-cell monitor-chart-icon {
+  display: inline-block;
+  position: relative;
+  top: -1px;
+}
+
+monitor-status-cell .monitor-expandable-input {
+  margin: 0;
+  font-size: var(--font-size-3);
+  line-height: var(--line-height-3);
+}
+
+monitor-status-cell .large .monitor-expandable-input {
+  font-size: var(--font-size-4);
+  line-height: var(--line-height-4);
+}
+
+monitor-status-cell .center {
+  align-self: center;
+}
+
+monitor-status-cell .divider {
+  flex-grow: 1;
+}

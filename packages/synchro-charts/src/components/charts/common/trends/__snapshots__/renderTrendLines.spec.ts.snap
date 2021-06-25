@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`one linear regression renders correctly 1`] = `
+<svg viewBox="0 0 200 150">
+  <path class="linear-regression" d="M 0 67 L 300 48" stroke="#244668" stroke-dasharray="4, 7" stroke-linecap="round" stroke-width="2"></path>
+</svg>
+`;

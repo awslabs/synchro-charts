@@ -1,0 +1,19 @@
+monitor-status-chart .status-timeline {
+  position: relative;
+}
+
+monitor-threahold-legend {
+  overflow-y: scroll;
+  overflow-x: hidden;
+
+  /* Hide scrollbar for IE and Edge */
+  -ms-overflow-style: none;
+
+  /* Hide scrollbar for FF */
+  scrollbar-width: none;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+monitor-threshold-legend::-webkit-scrollbar {
+  display: none;
+}

@@ -1,0 +1,10 @@
+monitor-status-timeline-overlay .expando {
+  flex-grow: 1;
+}
+
+monitor-status-timeline-overlay .overlay-container {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}

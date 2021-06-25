@@ -1,13 +1,28 @@
 {
-    "extends": "../tsconfig.settings.json",
-    "compilerOptions": {
-        "composite": true
-    },
-    "include": [
-      "src",
-      "types/jsx.d.ts"
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "allowUnreachableCode": false,
+    "declaration": false,
+    "experimentalDecorators": true,
+    "lib": [
+      "dom",
+      "es2019"
     ],
-    "exclude": [
-      "node_modules"
-    ]
+    "moduleResolution": "node",
+    "module": "esnext",
+    "target": "es2017",
+    "jsx": "react",
+    "jsxFactory": "h",
+    "strict": true,
+    "strictPropertyInitialization": false,
+    "skipLibCheck": true,
+    "noImplicitAny": false
+  },
+  "include": [
+    "src",
+    "types/jsx.d.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }
