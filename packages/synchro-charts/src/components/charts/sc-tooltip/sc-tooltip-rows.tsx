@@ -27,10 +27,10 @@ const X_OFFSET = 8;
  * Renders the tooltip, tooltip container, the tooltip line and the tool tip rows
  */
 @Component({
-  tag: 'monitor-tooltip-rows',
+  tag: 'sc-tooltip-rows',
   shadow: false,
 })
-export class MonitorTooltipRows {
+export class ScTooltipRows {
   @Prop() selectedDate!: Date;
   @Prop() size!: SizeConfig;
   @Prop() dataStreams!: DataStream[];
@@ -227,7 +227,7 @@ export class MonitorTooltipRows {
                 (tooltipPoint.point && this.rowsValueColorAndIcon(streamId, tooltipPoint.point, displayedDate)) || {};
 
               return (
-                <monitor-tooltip-row
+                <sc-tooltip-row
                   key={`${tooltipPoint.streamId}-${tooltipPoint.type}`}
                   showDataStreamColor={this.showDataStreamColor}
                   label={tooltipPoint.label || dataStream.name}

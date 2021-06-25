@@ -10,7 +10,7 @@ import { messageOverrides } from '../../../testing/__mocks__/mockMessgeOverrides
 import { ScErrorBadge } from '../../sc-error-badge/sc-error-badge';
 import { ERROR_SYMBOL_SELECTOR, LOADING_SPINNER_SELECTOR } from '../../../testing/selectors';
 import 'webgl-mock-threejs';
-import { MonitorGestureHandler } from './monitor-gesture-handler';
+import { ScGestureHandler } from './sc-gesture-handler';
 import { CHART_CONFIG } from '../common/testUtil';
 import { Components } from '../../../components';
 import { CustomHTMLElement } from '../../../utils/types';
@@ -41,7 +41,7 @@ const LOADING_STREAM: DataStream<number> = {
 
 const newChartSpecPage = async (props: Partial<Components.ScWebglBaseChart>) => {
   const page = await newSpecPage({
-    components: [ScWebglBaseChart, MonitorGestureHandler, ScWebglAxis, ScErrorBadge],
+    components: [ScWebglBaseChart, ScGestureHandler, ScWebglAxis, ScErrorBadge],
     html: '<div></div>',
     supportsShadowDom: false,
   });
@@ -86,12 +86,7 @@ const newChartSpecPage = async (props: Partial<Components.ScWebglBaseChart>) => 
     messageOverrides: undefined,
     trends: [],
     tooltip: ({ visualizesAlarms = defaultProps.visualizesAlarms, ...rest }) => (
-      <monitor-tooltip
-        {...rest}
-        dataAlignment={DATA_ALIGNMENT.RIGHT}
-        visualizesAlarms={visualizesAlarms}
-        supportString
-      />
+      <sc-tooltip {...rest} dataAlignment={DATA_ALIGNMENT.RIGHT} visualizesAlarms={visualizesAlarms} supportString />
     ),
   };
   update(chart, { ...defaultProps, ...props });

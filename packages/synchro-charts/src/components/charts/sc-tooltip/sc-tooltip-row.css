@@ -1,19 +1,19 @@
-monitor-tooltip-row {
+sc-tooltip-row {
   --bar-size: 18px;
 }
 
-monitor-tooltip-rows .left-offset {
+sc-tooltip-rows .left-offset {
   padding-left: 4px;
 }
 
 /* modern clearfix hack */
-monitor-tooltip-row .clearfix::after {
-  content: "";
+sc-tooltip-row .clearfix::after {
+  content: '';
   clear: both;
   display: table;
 }
 
-monitor-tooltip-row .bar {
+sc-tooltip-row .bar {
   display: inline-block;
   float: left;
   width: var(--bar-size);
@@ -21,13 +21,13 @@ monitor-tooltip-row .bar {
   padding-top: 8px;
 }
 
-monitor-tooltip-row .label {
+sc-tooltip-row .label {
   padding-left: var(--margin-small);
   color: var(--light-text);
   float: left;
 }
 
-monitor-tooltip-row .value {
+sc-tooltip-row .value {
   font-weight: bold;
   float: right;
   margin-left: 15px;

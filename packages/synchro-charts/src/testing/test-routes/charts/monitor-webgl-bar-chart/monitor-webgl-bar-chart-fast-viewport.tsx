@@ -56,7 +56,7 @@ export class MonitorWebglBarChartFastViewport {
         <br />
         <br />
         <div id="chart-container" style={{ border: '1px solid lightgray', height: '500px', width: '500px' }}>
-          <monitor-bar-chart
+          <sc-bar-chart
             dataStreams={[
               {
                 id: 'test',

@@ -86,7 +86,7 @@ export class MonitorWebglBarChartDynamicDataStreams {
         <br />
         <br />
         <div id="chart-container" style={{ marginTop: '20px', width: '500px', height: '500px' }}>
-          <monitor-bar-chart
+          <sc-bar-chart
             dataStreams={this.dataStreams}
             size={{
               width: 500,

@@ -30,7 +30,7 @@ const DEFAULT_MIN_BUFFER_SIZE = 1000;
 const DEFAULT_BUFFER_FACTOR = 2;
 
 const tooltip = (props: Tooltip.Props) => (
-  <monitor-tooltip {...props} visualizesAlarms={false} supportString={false} dataAlignment={DATA_ALIGNMENT.EITHER} />
+  <sc-tooltip {...props} visualizesAlarms={false} supportString={false} dataAlignment={DATA_ALIGNMENT.EITHER} />
 );
 
 @Component({

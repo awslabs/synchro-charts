@@ -1,6 +1,6 @@
 import { pointBisector, getDataBeforeDate } from '../common/dataFilters';
 import { DataPoint, DataStream, Primitive } from '../../../utils/dataTypes';
-import { sortTooltipPoints } from '../monitor-tooltip/sort';
+import { sortTooltipPoints } from '../sc-tooltip/sort';
 import { getDataPoints } from '../../../utils/getDataPoints';
 import { DATA_ALIGNMENT } from '../common/constants';
 

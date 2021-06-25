@@ -1,7 +1,7 @@
 import { Component, h, Prop } from '@stencil/core';
 
 import { DataStream, MessageOverrides, MinimalViewPortConfig } from '../../utils/dataTypes';
-import { RenderCell } from '../monitor-widget-grid/types';
+import { RenderCell } from '../sc-widget-grid/types';
 import { Annotations, ChartConfig } from '../charts/common/types';
 
 const MSG =

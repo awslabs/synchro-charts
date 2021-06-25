@@ -19,11 +19,11 @@ const MOVEMENT_CONFIG: MovementConfig = {
 };
 
 @Component({
-  tag: 'monitor-gesture-handler',
-  styleUrl: 'monitor-gesture-handler.css',
+  tag: 'sc-gesture-handler',
+  styleUrl: 'sc-gesture-handler.css',
   shadow: false,
 })
-export class MonitorGestureHandler {
+export class ScGestureHandler {
   @Element() el: HTMLElement;
 
   @Prop() size!: SizeConfig;

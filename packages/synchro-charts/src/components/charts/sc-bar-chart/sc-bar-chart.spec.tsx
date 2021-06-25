@@ -6,8 +6,8 @@ import 'webgl-mock-threejs';
 import { newChartSpecPage } from '../../../testing/chartDescriptions/newChartSpecPage';
 import { describeChart } from '../../../testing/chartDescriptions/describeChart';
 
-const barChart = newChartSpecPage('monitor-bar-chart');
+const barChart = newChartSpecPage('sc-bar-chart');
 
-describe('monitor-bar-chart', () => {
+describe('sc-bar-chart', () => {
   describeChart(barChart);
 });

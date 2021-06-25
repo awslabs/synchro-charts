@@ -17,7 +17,7 @@ export class MonitorWebglBarChartThresholdNoColoration {
   render() {
     return (
       <div>
-        <monitor-bar-chart
+        <sc-bar-chart
           dataStreams={[
             {
               id: 'test',

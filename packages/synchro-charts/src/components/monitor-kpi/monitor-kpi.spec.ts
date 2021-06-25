@@ -16,8 +16,8 @@ import {
   STRING_STREAM_1,
   STRING_STREAM_2,
 } from '../../testing/__mocks__/mockWidgetProperties';
-import { MonitorWidgetGrid } from '../monitor-widget-grid/monitor-widget-grid';
-import { MonitorGridTooltip } from '../monitor-widget-grid/monitor-grid-tooltip';
+import { MonitorWidgetGrid } from '../sc-widget-grid/monitor-widget-grid';
+import { MonitorGridTooltip } from '../sc-widget-grid/monitor-grid-tooltip';
 import { DataPoint } from '../../utils/dataTypes';
 
 const VIEW_PORT = {

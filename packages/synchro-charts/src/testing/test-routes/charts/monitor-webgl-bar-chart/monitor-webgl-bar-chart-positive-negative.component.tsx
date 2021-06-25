@@ -34,7 +34,7 @@ export class MonitorWebglBarChartPositiveNegative {
   render() {
     return (
       <div id="chart-container" style={{ width: '500px', height: '500px' }}>
-        <monitor-bar-chart
+        <sc-bar-chart
           dataStreams={[
             {
               id: 'test',

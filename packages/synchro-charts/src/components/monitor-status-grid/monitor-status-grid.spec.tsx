@@ -10,8 +10,8 @@ import { MINUTE_IN_MS } from '../../utils/time';
 import { MonitorGrid } from '../monitor-grid/monitor-grid';
 import { MonitorStatusGrid } from './monitor-status-grid';
 import { ALARM_STREAM, ALARM_THRESHOLD, DATA_STREAM } from '../../testing/__mocks__/mockWidgetProperties';
-import { MonitorWidgetGrid } from '../monitor-widget-grid/monitor-widget-grid';
-import { MonitorGridTooltip } from '../monitor-widget-grid/monitor-grid-tooltip';
+import { MonitorWidgetGrid } from '../sc-widget-grid/monitor-widget-grid';
+import { MonitorGridTooltip } from '../sc-widget-grid/monitor-grid-tooltip';
 import { DataType, StreamType } from '../../utils/dataConstants';
 
 const VIEW_PORT = {

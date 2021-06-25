@@ -56,7 +56,7 @@ export class MonitorWebglBarChartDynamicBuffer {
   render() {
     return (
       <div id="chart-container" style={{ height: '500px', width: '500px', marginTop: '20px' }}>
-        <monitor-bar-chart
+        <sc-bar-chart
           widgetId="widget-id"
           dataStreams={[DATA_STREAM_1, DATA_STREAM_2]}
           viewPort={{ yMin: Y_MIN, yMax: Y_MAX, start: X_MIN, end: X_MAX }}

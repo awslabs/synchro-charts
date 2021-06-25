@@ -1,8 +1,8 @@
 import { newSpecPage } from '@stencil/core/testing';
 import { CustomHTMLElement } from '../../../utils/types';
-import { Components } from '../../../components.d';
+import { Components } from '../../../components';
 import { update } from '../common/tests/merge';
-import { MonitorTooltipRow } from './monitor-tooltip-row';
+import { ScTooltipRow } from './sc-tooltip-row';
 import { DataPoint, DataStreamInfo, TREND_ICON_DASH_ARRAY } from '../../../utils/dataTypes';
 import { POINT_TYPE } from '../sc-webgl-base-chart/activePoints';
 import { DEFAULT_TOOLTIP_VALUE_COLOR } from './constants';
@@ -26,14 +26,14 @@ const DEFAULT_POINT: DataPoint = {
   y: 100,
 };
 
-const newTooltipRowPage = async (propOverrides: Partial<Components.MonitorTooltipRow> = {}) => {
+const newTooltipRowPage = async (propOverrides: Partial<Components.ScTooltipRow> = {}) => {
   const page = await newSpecPage({
-    components: [MonitorTooltipRow],
+    components: [ScTooltipRow],
     html: '<div></div>',
     supportsShadowDom: false,
   });
-  const tooltipRow = page.doc.createElement('monitor-tooltip-row') as CustomHTMLElement<Components.MonitorTooltipRow>;
-  const props: Components.MonitorTooltipRow = {
+  const tooltipRow = page.doc.createElement('sc-tooltip-row') as CustomHTMLElement<Components.ScTooltipRow>;
+  const props: Components.ScTooltipRow = {
     label: DATA_STREAM_INFO.name,
     color: DATA_STREAM_INFO.color as string,
     point: DEFAULT_POINT,

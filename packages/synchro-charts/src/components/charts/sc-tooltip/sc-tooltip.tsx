@@ -9,11 +9,11 @@ import { DATA_ALIGNMENT } from '../common/constants';
  * The parent tooltip container, listens for events to ensure tooltip renders at the correct position at the correct time.
  */
 @Component({
-  tag: 'monitor-tooltip',
-  styleUrl: 'monitor-tooltip.css',
+  tag: 'sc-tooltip',
+  styleUrl: 'sc-tooltip.css',
   shadow: false,
 })
-export class MonitorTooltip {
+export class ScTooltip {
   @Prop() size!: SizeConfig;
   @Prop() dataContainer!: HTMLElement;
   @Prop() dataStreams!: DataStream[];
@@ -84,7 +84,7 @@ export class MonitorTooltip {
     }
 
     return (
-      <monitor-tooltip-rows
+      <sc-tooltip-rows
         trendResults={this.trendResults}
         size={this.size}
         dataStreams={this.dataStreams}

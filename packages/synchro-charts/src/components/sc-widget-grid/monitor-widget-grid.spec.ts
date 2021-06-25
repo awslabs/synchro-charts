@@ -1,6 +1,6 @@
 import { newSpecPage } from '@stencil/core/testing';
 
-import { Components } from '../../components.d';
+import { Components } from '../../components';
 import { CustomHTMLElement } from '../../utils/types';
 import { DATA_STREAMS } from '../charts/common/tests/chart/constants';
 import { DEFAULT_CHART_CONFIG } from '../charts/sc-webgl-base-chart/chartDefaults';

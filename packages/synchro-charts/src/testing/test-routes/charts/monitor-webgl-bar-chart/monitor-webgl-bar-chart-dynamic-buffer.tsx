@@ -39,7 +39,7 @@ export class MonitorWebglBarChartDynamicBuffer {
           Add Data Point
         </button>
         <div id="chart-container" style={{ height: '500px', width: '500px', marginTop: '20px' }}>
-          <monitor-bar-chart
+          <sc-bar-chart
             widgetId="widget-id"
             dataStreams={[
               {

@@ -16,7 +16,7 @@ export const ERROR_SYMBOL_SELECTOR = '[data-test-tag="error"]';
 export const LOADING_SPINNER_SELECTOR = 'sc-loading-spinner';
 export const CHART_VIZ_CONTAINER_SELECTOR = 'sc-webgl-base-chart .data-container';
 export const CHART_TOOLTIP_SELECTOR = 'sc-webgl-base-chart .tooltip-container';
-export const CHART_TOOLTIP_ROW_SELECTOR = 'monitor-tooltip-row';
+export const CHART_TOOLTIP_ROW_SELECTOR = 'sc-tooltip-row';
 export const LEGEND_SELECTOR = 'monitor-legend';
 
 // corresponds to the 'no data visualization', and the 'data stream name and value' panel directly above it.

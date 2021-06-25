@@ -47,7 +47,7 @@ const TOP_TOOLTIP_MARGIN_PX = 4;
 const tooltip = (alarms?: AlarmsConfig) => (props: Tooltip.Props) => {
   const { size } = props;
   return (
-    <monitor-tooltip
+    <sc-tooltip
       {...props}
       dataAlignment={DATA_ALIGNMENT.LEFT}
       top={-size.height + STATUS_MARGIN_TOP_PX + TOP_TOOLTIP_MARGIN_PX}

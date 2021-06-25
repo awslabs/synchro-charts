@@ -1,5 +1,4 @@
-
-monitor-tooltip {
+sc-tooltip {
   --tooltip-size: 8px;
   --tooltip-line-width: 2px;
 
@@ -7,17 +6,17 @@ monitor-tooltip {
   position: absolute;
 }
 
-monitor-tooltip small {
+sc-tooltip small {
   white-space: nowrap;
 }
 
-monitor-tooltip .awsui {
+sc-tooltip .awsui {
   position: absolute;
   z-index: 20;
   min-width: 90px;
 }
 
-monitor-tooltip .tooltip-container {
+sc-tooltip .tooltip-container {
   background: var(--awsui-color-white);
   position: relative;
   display: inline-block;
@@ -27,7 +26,7 @@ monitor-tooltip .tooltip-container {
   transition-duration: 120ms;
 }
 
-monitor-tooltip .tooltip-line {
+sc-tooltip .tooltip-line {
   position: relative;
 
   /* This is to offset the tooltip line base on its width. We have a negative here because we want to center the line but DOM renders element from the left to right instead of starting from center. */

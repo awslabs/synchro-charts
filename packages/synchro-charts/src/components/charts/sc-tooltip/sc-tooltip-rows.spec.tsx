@@ -1,12 +1,12 @@
 import { newSpecPage } from '@stencil/core/testing';
 import { CustomHTMLElement } from '../../../utils/types';
-import { Components } from '../../../components.d';
+import { Components } from '../../../components';
 import { update } from '../common/tests/merge';
-import { MonitorTooltipRow } from './monitor-tooltip-row';
+import { ScTooltipRow } from './sc-tooltip-row';
 import { Threshold } from '../common/types';
 import { TrendResult } from '../common/trends/types';
 import { DataPoint, DataStream, DataStreamInfo } from '../../../utils/dataTypes';
-import { MonitorTooltipRows } from './monitor-tooltip-rows';
+import { ScTooltipRows } from './sc-tooltip-rows';
 import { DEFAULT_CHART_CONFIG } from '../sc-webgl-base-chart/chartDefaults';
 
 import { DEFAULT_TOOLTIP_VALUE_COLOR } from './constants';
@@ -83,17 +83,15 @@ const TREND: TrendResult = {
   startDate: VIEW_PORT.start,
 };
 
-const newTooltipRowsSpecPage = async (propOverrides: Partial<Components.MonitorTooltipRows> = {}) => {
+const newTooltipRowsSpecPage = async (propOverrides: Partial<Components.ScTooltipRows> = {}) => {
   const page = await newSpecPage({
-    components: [MonitorTooltipRow, MonitorTooltipRows],
+    components: [ScTooltipRow, ScTooltipRows],
     html: '<div></div>',
     supportsShadowDom: false,
   });
 
-  const tooltipRows = page.doc.createElement('monitor-tooltip-rows') as CustomHTMLElement<
-    Components.MonitorTooltipRows
-  >;
-  const props: Components.MonitorTooltipRows = {
+  const tooltipRows = page.doc.createElement('sc-tooltip-rows') as CustomHTMLElement<Components.ScTooltipRows>;
+  const props: Components.ScTooltipRows = {
     dataAlignment: DATA_ALIGNMENT.EITHER,
     dataStreams: [],
     selectedDate: VIEW_PORT.end,
@@ -118,7 +116,7 @@ const newTooltipRowsSpecPage = async (propOverrides: Partial<Components.MonitorT
 it('renders no tool tip rows when given no data', async () => {
   const { tooltipRows } = await newTooltipRowsSpecPage({});
 
-  const rows = tooltipRows.querySelectorAll('monitor-tooltip-row');
+  const rows = tooltipRows.querySelectorAll('sc-tooltip-row');
   expect(rows).toBeEmpty();
   expect(tooltipRows.querySelector(TOOLTIP_LINE_SELECTOR)).toBeNull();
 });
@@ -128,7 +126,7 @@ it('renders one tooltip row with the streams point passed in', async () => {
     dataStreams: [DATA_STREAM],
   });
 
-  const toolTipRow = tooltipRows.querySelector('monitor-tooltip-row') as HTMLMonitorTooltipRowElement;
+  const toolTipRow = tooltipRows.querySelector('sc-tooltip-row') as HTMLScTooltipRowElement;
   expect(toolTipRow).toBeDefined();
   expect(toolTipRow.point).toBe(DEFAULT_POINT);
   expect(toolTipRow.pointType).toBe(POINT_TYPE.DATA);
@@ -144,7 +142,7 @@ describe('showsBlankTooltipRows is true', () => {
       showBlankTooltipRows: true,
     });
 
-    const toolTipRow = tooltipRows.querySelector('monitor-tooltip-row') as HTMLMonitorTooltipRowElement;
+    const toolTipRow = tooltipRows.querySelector('sc-tooltip-row') as HTMLScTooltipRowElement;
     expect(toolTipRow).not.toBeNull();
     expect(toolTipRow.point).toBeUndefined();
     expect(toolTipRow.label).toBe(DATA_STREAM.name);
@@ -157,7 +155,7 @@ describe('showsBlankTooltipRows is true', () => {
       showBlankTooltipRows: true,
     });
 
-    const toolTipRow = tooltipRows.querySelector('monitor-tooltip-row') as HTMLMonitorTooltipRowElement;
+    const toolTipRow = tooltipRows.querySelector('sc-tooltip-row') as HTMLScTooltipRowElement;
     expect(toolTipRow).not.toBeNull();
     expect(toolTipRow.point).toBeUndefined();
     expect(toolTipRow.label).toBe(DATA_STREAM.name);
@@ -171,7 +169,7 @@ describe('showsBlankTooltipRows is false', () => {
       showBlankTooltipRows: false,
     });
 
-    expect(tooltipRows.querySelectorAll('monitor-tooltip-row').length).toBe(0);
+    expect(tooltipRows.querySelectorAll('sc-tooltip-row').length).toBe(0);
   });
 
   it('renders no tooltip rows when no data present in data stream and is sorting with non raw data', async () => {
@@ -181,7 +179,7 @@ describe('showsBlankTooltipRows is false', () => {
       showBlankTooltipRows: false,
     });
 
-    expect(tooltipRows.querySelectorAll('monitor-tooltip-row').length).toBe(0);
+    expect(tooltipRows.querySelectorAll('sc-tooltip-row').length).toBe(0);
   });
 });
 
@@ -190,7 +188,7 @@ it('renders no tooltip rows when no data stream provided', async () => {
     dataStreams: [],
   });
 
-  expect(tooltipRows.querySelectorAll('monitor-tooltip-row')).toBeEmpty();
+  expect(tooltipRows.querySelectorAll('sc-tooltip-row')).toBeEmpty();
 });
 
 describe('visualizesAlarms', () => {
@@ -214,7 +212,7 @@ describe('visualizesAlarms', () => {
       dataStreams: [NUMERICAL_ALARM_STREAM],
       visualizesAlarms: false,
     });
-    expect(tooltipRows.querySelectorAll('monitor-tooltip-row')).toBeEmpty();
+    expect(tooltipRows.querySelectorAll('sc-tooltip-row')).toBeEmpty();
   });
 
   it('does render tooltip rows for alarms if `visualizesAlarms` is true', async () => {
@@ -223,9 +221,9 @@ describe('visualizesAlarms', () => {
       visualizesAlarms: true,
     });
 
-    expect(tooltipRows.querySelectorAll('monitor-tooltip-row')).not.toBeEmpty();
+    expect(tooltipRows.querySelectorAll('sc-tooltip-row')).not.toBeEmpty();
 
-    const row = tooltipRows.querySelector('monitor-tooltip-row') as HTMLMonitorTooltipRowElement;
+    const row = tooltipRows.querySelector('sc-tooltip-row') as HTMLScTooltipRowElement;
     expect(row.point).toEqual(NUMERICAL_ALARM_STREAM.data[0]);
     expect(row.label).toEqual(NUMERICAL_ALARM_STREAM.name);
     expect(row.valueColor).toEqual(DEFAULT_TOOLTIP_VALUE_COLOR);
@@ -240,10 +238,10 @@ describe('supportsString', () => {
         supportString: true,
       });
 
-      const rows = tooltipRows.querySelectorAll('monitor-tooltip-row');
+      const rows = tooltipRows.querySelectorAll('sc-tooltip-row');
       expect(rows).toHaveLength(1);
 
-      const row = tooltipRows.querySelector('monitor-tooltip-row') as HTMLMonitorTooltipRowElement;
+      const row = tooltipRows.querySelector('sc-tooltip-row') as HTMLScTooltipRowElement;
       expect(row.label).toBe(STRING_STREAM_INFO.name);
       expect(row.point).toBe(DEFAULT_STRING_POINT);
     });
@@ -254,7 +252,7 @@ describe('supportsString', () => {
         supportString: true,
       });
 
-      const rows = tooltipRows.querySelectorAll('monitor-tooltip-row');
+      const rows = tooltipRows.querySelectorAll('sc-tooltip-row');
       expect(rows).toHaveLength(2);
     });
   });
@@ -266,7 +264,7 @@ describe('supportsString', () => {
         supportString: false,
       });
 
-      const rows = tooltipRows.querySelectorAll('monitor-tooltip-row');
+      const rows = tooltipRows.querySelectorAll('sc-tooltip-row');
       expect(rows).toBeEmpty();
     });
 
@@ -276,10 +274,10 @@ describe('supportsString', () => {
         supportString: false,
       });
 
-      const rows = tooltipRows.querySelectorAll('monitor-tooltip-row');
+      const rows = tooltipRows.querySelectorAll('sc-tooltip-row');
       expect(rows).toHaveLength(1);
 
-      const row = tooltipRows.querySelector('monitor-tooltip-row') as HTMLMonitorTooltipRowElement;
+      const row = tooltipRows.querySelector('sc-tooltip-row') as HTMLScTooltipRowElement;
       expect(row.label).toBe(DATA_STREAM.name);
       expect(row.point).toBe(DEFAULT_POINT);
     });
@@ -293,7 +291,7 @@ it('passes down showStreamColor to tooltip-row', async () => {
     showDataStreamColor: SHOW_STREAM_COLOR,
   });
 
-  const toolTipRow = tooltipRows.querySelector('monitor-tooltip-row') as HTMLMonitorTooltipRowElement;
+  const toolTipRow = tooltipRows.querySelector('sc-tooltip-row') as HTMLScTooltipRowElement;
   expect(toolTipRow.showDataStreamColor).toBe(SHOW_STREAM_COLOR);
 });
 
@@ -303,7 +301,7 @@ it('renders one trend result', async () => {
     trendResults: [TREND],
   });
 
-  const rows = tooltipRows.querySelectorAll('monitor-tooltip-row');
+  const rows = tooltipRows.querySelectorAll('sc-tooltip-row');
 
   expect(rows).toHaveLength(2);
 
@@ -320,7 +318,7 @@ it('renders no trend line row when trend does not associate with any streams', a
     trendResults: [{ ...TREND, dataStreamId: 'some-random-id' }],
   });
 
-  const rows = tooltipRows.querySelectorAll('monitor-tooltip-row');
+  const rows = tooltipRows.querySelectorAll('sc-tooltip-row');
   expect(rows).toBeEmpty();
 });
 
@@ -343,7 +341,7 @@ describe('threshold breaching logic', () => {
       thresholds: [],
     });
 
-    const toolTipRow = tooltipRows.querySelector('monitor-tooltip-row') as HTMLMonitorTooltipRowElement;
+    const toolTipRow = tooltipRows.querySelector('sc-tooltip-row') as HTMLScTooltipRowElement;
     expect(toolTipRow.valueColor).toBe(DEFAULT_TOOLTIP_VALUE_COLOR);
   });
 
@@ -355,7 +353,7 @@ describe('threshold breaching logic', () => {
       thresholds: [THRESHOLD],
     });
 
-    const toolTipRow = tooltipRows.querySelector('monitor-tooltip-row') as HTMLMonitorTooltipRowElement;
+    const toolTipRow = tooltipRows.querySelector('sc-tooltip-row') as HTMLScTooltipRowElement;
     expect(toolTipRow.valueColor).toBe(THRESHOLD.color);
     expect(toolTipRow.icon).toBe(THRESHOLD.icon);
   });
@@ -366,7 +364,7 @@ describe('threshold breaching logic', () => {
       thresholds: [{ ...THRESHOLD, dataStreamIds: ['some-fake-data-stream-id'] }],
     });
 
-    const toolTipRow = tooltipRows.querySelector('monitor-tooltip-row') as HTMLMonitorTooltipRowElement;
+    const toolTipRow = tooltipRows.querySelector('sc-tooltip-row') as HTMLScTooltipRowElement;
     expect(toolTipRow.valueColor).not.toBe(THRESHOLD.color);
     expect(toolTipRow.icon).not.toBe(THRESHOLD.icon);
   });
@@ -385,7 +383,7 @@ describe('threshold breaching logic', () => {
       thresholds: [THRESHOLD],
     });
 
-    const toolTipRow = tooltipRows.querySelector('monitor-tooltip-row') as HTMLMonitorTooltipRowElement;
+    const toolTipRow = tooltipRows.querySelector('sc-tooltip-row') as HTMLScTooltipRowElement;
     expect(toolTipRow.valueColor).not.toBe(THRESHOLD.color);
     expect(toolTipRow.icon).not.toBe(THRESHOLD.icon);
   });
@@ -403,7 +401,7 @@ describe('threshold breaching logic', () => {
       thresholds: [THRESHOLD],
     });
 
-    const rows = tooltipRows.querySelectorAll('monitor-tooltip-row');
+    const rows = tooltipRows.querySelectorAll('sc-tooltip-row');
     expect(rows).toHaveLength(1);
 
     const row = rows[0];
@@ -425,7 +423,7 @@ describe('threshold breaching logic', () => {
       thresholds: [THRESHOLD],
     });
 
-    const rows = tooltipRows.querySelectorAll('monitor-tooltip-row');
+    const rows = tooltipRows.querySelectorAll('sc-tooltip-row');
     expect(rows).toHaveLength(1);
 
     const row = rows[0];
@@ -440,7 +438,7 @@ describe('threshold breaching logic', () => {
       thresholds: [THRESHOLD],
     });
 
-    const toolTipRow = tooltipRows.querySelector('monitor-tooltip-row') as HTMLMonitorTooltipRowElement;
+    const toolTipRow = tooltipRows.querySelector('sc-tooltip-row') as HTMLScTooltipRowElement;
     expect(toolTipRow.valueColor).not.toBe(THRESHOLD.color);
     expect(toolTipRow.icon).not.toBe(THRESHOLD.icon);
   });
@@ -475,7 +473,7 @@ describe('threshold breaching logic', () => {
         ],
         thresholds: upperLowerThresholds,
       });
-      const row = tooltipRows.querySelector('monitor-tooltip-row') as HTMLMonitorTooltipRowElement;
+      const row = tooltipRows.querySelector('sc-tooltip-row') as HTMLScTooltipRowElement;
 
       expect(row.valueColor).toBe(UPPER_THRESHOLD.color);
     });
@@ -508,7 +506,7 @@ describe('threshold breaching logic', () => {
         ],
         thresholds: upperLowerThresholds,
       });
-      const row = tooltipRows.querySelector('monitor-tooltip-row') as HTMLMonitorTooltipRowElement;
+      const row = tooltipRows.querySelector('sc-tooltip-row') as HTMLScTooltipRowElement;
 
       expect(row.valueColor).toBe(LOWER_THRESHOLD.color);
     });
@@ -522,7 +520,7 @@ describe('order of rows', () => {
       showBlankTooltipRows: true,
       sortPoints: true,
     });
-    const rows = tooltipRows.querySelectorAll('monitor-tooltip-row');
+    const rows = tooltipRows.querySelectorAll('sc-tooltip-row');
     expect(rows.length).toBe(3);
 
     // undefined point re-positioned to the start of the tooltip
@@ -551,7 +549,7 @@ describe('order of rows', () => {
       sortPoints: true,
     });
 
-    const rows = tooltipRows.querySelectorAll('monitor-tooltip-row');
+    const rows = tooltipRows.querySelectorAll('sc-tooltip-row');
     expect(rows.length).toBe(dataStreams.length);
 
     expect(rows[0].label).toBe(NUMBER_EMPTY_STREAM.name);
@@ -573,7 +571,7 @@ describe('order of rows', () => {
       dataStreams,
       sortPoints: false,
     });
-    const rows = tooltipRows.querySelectorAll('monitor-tooltip-row');
+    const rows = tooltipRows.querySelectorAll('sc-tooltip-row');
     expect(rows).toHaveLength(dataStreams.length);
 
     // First row is the first data
@@ -592,7 +590,7 @@ describe('order of rows', () => {
       showBlankTooltipRows: true,
       sortPoints: false,
     });
-    const rows = tooltipRows.querySelectorAll('monitor-tooltip-row');
+    const rows = tooltipRows.querySelectorAll('sc-tooltip-row');
     expect(rows.length).toBe(dataStreams.length);
 
     expect(rows[0].label).toBe(dataStreams[0].name);
@@ -616,7 +614,7 @@ describe('order of rows', () => {
       sortPoints: true,
     });
 
-    const rows = tooltipRows.querySelectorAll('monitor-tooltip-row');
+    const rows = tooltipRows.querySelectorAll('sc-tooltip-row');
     expect(rows).toHaveLength(2);
 
     const r1 = rows[0];
@@ -638,7 +636,7 @@ describe('does not utilize alarms', () => {
       visualizesAlarms: true,
       thresholds: [ALARM_THRESHOLD],
     });
-    const rows = tooltipRows.querySelectorAll('monitor-tooltip-row');
+    const rows = tooltipRows.querySelectorAll('sc-tooltip-row');
 
     /** Alarm Row */
     const alarmRow = rows[0];

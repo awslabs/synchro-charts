@@ -5,49 +5,20 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
+import { POINT_TYPE } from "./components/charts/sc-webgl-base-chart/activePoints";
 import { AlarmsConfig, DataPoint, DataStream, DataStreamInfo, MessageOverrides, MinimalSizeConfig, MinimalViewPortConfig, Primitive, RequestDataFn, SizeConfig, SizePositionConfig, TableColumn, ViewPort, ViewPortConfig } from "./utils/dataTypes";
 import { Annotations, Axis, LayoutConfig, LegendConfig, MovementConfig, ScaleConfig, Threshold, Tooltip, WidgetConfigurationUpdate } from "./components/charts/common/types";
 import { Trend, TrendResult } from "./components/charts/common/trends/types";
-import { POINT_TYPE } from "./components/charts/sc-webgl-base-chart/activePoints";
 import { DATA_ALIGNMENT, StatusIcon } from "./components/charts/common/constants";
 import { RectScrollFixed } from "./utils/types";
 import { LabelsConfig } from "./components/common/types";
 import { Cell, Row } from "./components/monitor-table/constructTableData";
-import { RenderCell } from "./components/monitor-widget-grid/types";
+import { RenderCell } from "./components/sc-widget-grid/types";
 import { ChartSceneCreator, ChartSceneUpdater } from "./components/charts/sc-webgl-base-chart/types";
 export namespace Components {
     interface LineChartViewportChange {
     }
     interface MonitorAngledLineSegment {
-    }
-    interface MonitorBarChart {
-        "alarms"?: AlarmsConfig;
-        "annotations": Annotations;
-        "axis"?: Axis.Options;
-        /**
-          * Memory Management
-         */
-        "bufferFactor": number;
-        "dataStreams": DataStream[];
-        "gestures": boolean;
-        /**
-          * Status
-         */
-        "isEditing": boolean;
-        "layout"?: LayoutConfig;
-        "legend"?: LegendConfig;
-        "messageOverrides"?: MessageOverrides;
-        "minBufferSize": number;
-        "movement"?: MovementConfig;
-        "requestData"?: RequestDataFn;
-        "scale"?: ScaleConfig;
-        "size"?: MinimalSizeConfig;
-        "trends": Trend[];
-        /**
-          * Chart API
-         */
-        "viewPort": MinimalViewPortConfig;
-        "widgetId": string;
     }
     interface MonitorChartYRange {
         "component": string;
@@ -69,11 +40,6 @@ export namespace Components {
         "value": string;
     }
     interface MonitorExpandableInputStandard {
-    }
-    interface MonitorGestureHandler {
-        "onDateRangeChange": ({ end, start }: { start: Date; end: Date }) => void;
-        "size": SizeConfig;
-        "viewPort": ViewPort;
     }
     interface MonitorGrid {
     }
@@ -352,60 +318,6 @@ export namespace Components {
         "color": string;
         "label": string;
     }
-    interface MonitorTooltip {
-        /**
-          * If we are drawing data from the data timestamp to timestamp + resolution we want the tooltip to align on the left side  Otherwise we are drawing the data from timestamp - resolution to timestamp then we want the tooltip to align on the right side
-         */
-        "dataAlignment": DATA_ALIGNMENT;
-        "dataContainer": HTMLElement;
-        "dataStreams": DataStream[];
-        "maxDurationFromDate"?: number;
-        "showBlankTooltipRows": boolean;
-        "showDataStreamColor": boolean;
-        "size": SizeConfig;
-        "sortPoints": boolean;
-        "supportString": boolean;
-        "thresholds": Threshold[];
-        /**
-          * CSS Top property for the tooltip container
-         */
-        "top": number;
-        "trendResults": TrendResult[];
-        "viewPort": ViewPort;
-        "visualizesAlarms": boolean;
-    }
-    interface MonitorTooltipRow {
-        "color": string;
-        "icon"?: StatusIcon;
-        "label": string;
-        "point": DataPoint | undefined;
-        "pointType": POINT_TYPE;
-        "resolution": number | undefined;
-        "showDataStreamColor": boolean;
-        "valueColor"?: string;
-    }
-    interface MonitorTooltipRows {
-        /**
-          * If we are drawing data from the data timestamp to timestamp + resolution we want the tooltip to align on the left side  Otherwise we are drawing the data from timestamp - resolution to timestamp then we want the tooltip to align on the right side
-         */
-        "dataAlignment": DATA_ALIGNMENT;
-        "dataStreams": DataStream[];
-        "maxDurationFromDate"?: number;
-        "selectedDate": Date;
-        "showBlankTooltipRows": boolean;
-        "showDataStreamColor": boolean;
-        "size": SizeConfig;
-        "sortPoints"?: boolean;
-        "supportString": boolean;
-        "thresholds": Threshold[];
-        /**
-          * CSS Top property for the tooltip container
-         */
-        "top"?: number;
-        "trendResults": TrendResult[];
-        "viewPort": ViewPort;
-        "visualizesAlarms": boolean;
-    }
     interface MonitorWebglBarChartDynamicBuffer {
     }
     interface MonitorWebglBarChartDynamicData {
@@ -495,6 +407,35 @@ export namespace Components {
     }
     interface ScApp {
     }
+    interface ScBarChart {
+        "alarms"?: AlarmsConfig;
+        "annotations": Annotations;
+        "axis"?: Axis.Options;
+        /**
+          * Memory Management
+         */
+        "bufferFactor": number;
+        "dataStreams": DataStream[];
+        "gestures": boolean;
+        /**
+          * Status
+         */
+        "isEditing": boolean;
+        "layout"?: LayoutConfig;
+        "legend"?: LegendConfig;
+        "messageOverrides"?: MessageOverrides;
+        "minBufferSize": number;
+        "movement"?: MovementConfig;
+        "requestData"?: RequestDataFn;
+        "scale"?: ScaleConfig;
+        "size"?: MinimalSizeConfig;
+        "trends": Trend[];
+        /**
+          * Chart API
+         */
+        "viewPort": MinimalViewPortConfig;
+        "widgetId": string;
+    }
     interface ScBox {
         "size": MinimalSizeConfig;
         "someObject"?: Object;
@@ -506,9 +447,68 @@ export namespace Components {
     }
     interface ScErrorBadge {
     }
+    interface ScGestureHandler {
+        "onDateRangeChange": ({ end, start }: { start: Date; end: Date }) => void;
+        "size": SizeConfig;
+        "viewPort": ViewPort;
+    }
     interface ScLoadingSpinner {
         "dark"?: boolean;
         "size"?: number;
+    }
+    interface ScTooltip {
+        /**
+          * If we are drawing data from the data timestamp to timestamp + resolution we want the tooltip to align on the left side  Otherwise we are drawing the data from timestamp - resolution to timestamp then we want the tooltip to align on the right side
+         */
+        "dataAlignment": DATA_ALIGNMENT;
+        "dataContainer": HTMLElement;
+        "dataStreams": DataStream[];
+        "maxDurationFromDate"?: number;
+        "showBlankTooltipRows": boolean;
+        "showDataStreamColor": boolean;
+        "size": SizeConfig;
+        "sortPoints": boolean;
+        "supportString": boolean;
+        "thresholds": Threshold[];
+        /**
+          * CSS Top property for the tooltip container
+         */
+        "top": number;
+        "trendResults": TrendResult[];
+        "viewPort": ViewPort;
+        "visualizesAlarms": boolean;
+    }
+    interface ScTooltipRow {
+        "color": string;
+        "icon"?: StatusIcon;
+        "label": string;
+        "point": DataPoint | undefined;
+        "pointType": POINT_TYPE;
+        "resolution": number | undefined;
+        "showDataStreamColor": boolean;
+        "valueColor"?: string;
+    }
+    interface ScTooltipRows {
+        /**
+          * If we are drawing data from the data timestamp to timestamp + resolution we want the tooltip to align on the left side  Otherwise we are drawing the data from timestamp - resolution to timestamp then we want the tooltip to align on the right side
+         */
+        "dataAlignment": DATA_ALIGNMENT;
+        "dataStreams": DataStream[];
+        "maxDurationFromDate"?: number;
+        "selectedDate": Date;
+        "showBlankTooltipRows": boolean;
+        "showDataStreamColor": boolean;
+        "size": SizeConfig;
+        "sortPoints"?: boolean;
+        "supportString": boolean;
+        "thresholds": Threshold[];
+        /**
+          * CSS Top property for the tooltip container
+         */
+        "top"?: number;
+        "trendResults": TrendResult[];
+        "viewPort": ViewPort;
+        "visualizesAlarms": boolean;
     }
     interface ScWebglAxis {
         "size": SizeConfig;
@@ -598,12 +598,6 @@ declare global {
         prototype: HTMLMonitorAngledLineSegmentElement;
         new (): HTMLMonitorAngledLineSegmentElement;
     };
-    interface HTMLMonitorBarChartElement extends Components.MonitorBarChart, HTMLStencilElement {
-    }
-    var HTMLMonitorBarChartElement: {
-        prototype: HTMLMonitorBarChartElement;
-        new (): HTMLMonitorBarChartElement;
-    };
     interface HTMLMonitorChartYRangeElement extends Components.MonitorChartYRange, HTMLStencilElement {
     }
     var HTMLMonitorChartYRangeElement: {
@@ -633,12 +627,6 @@ declare global {
     var HTMLMonitorExpandableInputStandardElement: {
         prototype: HTMLMonitorExpandableInputStandardElement;
         new (): HTMLMonitorExpandableInputStandardElement;
-    };
-    interface HTMLMonitorGestureHandlerElement extends Components.MonitorGestureHandler, HTMLStencilElement {
-    }
-    var HTMLMonitorGestureHandlerElement: {
-        prototype: HTMLMonitorGestureHandlerElement;
-        new (): HTMLMonitorGestureHandlerElement;
     };
     interface HTMLMonitorGridElement extends Components.MonitorGrid, HTMLStencilElement {
     }
@@ -892,24 +880,6 @@ declare global {
         prototype: HTMLMonitorThresholdLegendRowElement;
         new (): HTMLMonitorThresholdLegendRowElement;
     };
-    interface HTMLMonitorTooltipElement extends Components.MonitorTooltip, HTMLStencilElement {
-    }
-    var HTMLMonitorTooltipElement: {
-        prototype: HTMLMonitorTooltipElement;
-        new (): HTMLMonitorTooltipElement;
-    };
-    interface HTMLMonitorTooltipRowElement extends Components.MonitorTooltipRow, HTMLStencilElement {
-    }
-    var HTMLMonitorTooltipRowElement: {
-        prototype: HTMLMonitorTooltipRowElement;
-        new (): HTMLMonitorTooltipRowElement;
-    };
-    interface HTMLMonitorTooltipRowsElement extends Components.MonitorTooltipRows, HTMLStencilElement {
-    }
-    var HTMLMonitorTooltipRowsElement: {
-        prototype: HTMLMonitorTooltipRowsElement;
-        new (): HTMLMonitorTooltipRowsElement;
-    };
     interface HTMLMonitorWebglBarChartDynamicBufferElement extends Components.MonitorWebglBarChartDynamicBuffer, HTMLStencilElement {
     }
     var HTMLMonitorWebglBarChartDynamicBufferElement: {
@@ -1138,6 +1108,12 @@ declare global {
         prototype: HTMLScAppElement;
         new (): HTMLScAppElement;
     };
+    interface HTMLScBarChartElement extends Components.ScBarChart, HTMLStencilElement {
+    }
+    var HTMLScBarChartElement: {
+        prototype: HTMLScBarChartElement;
+        new (): HTMLScBarChartElement;
+    };
     interface HTMLScBoxElement extends Components.ScBox, HTMLStencilElement {
     }
     var HTMLScBoxElement: {
@@ -1156,11 +1132,35 @@ declare global {
         prototype: HTMLScErrorBadgeElement;
         new (): HTMLScErrorBadgeElement;
     };
+    interface HTMLScGestureHandlerElement extends Components.ScGestureHandler, HTMLStencilElement {
+    }
+    var HTMLScGestureHandlerElement: {
+        prototype: HTMLScGestureHandlerElement;
+        new (): HTMLScGestureHandlerElement;
+    };
     interface HTMLScLoadingSpinnerElement extends Components.ScLoadingSpinner, HTMLStencilElement {
     }
     var HTMLScLoadingSpinnerElement: {
         prototype: HTMLScLoadingSpinnerElement;
         new (): HTMLScLoadingSpinnerElement;
+    };
+    interface HTMLScTooltipElement extends Components.ScTooltip, HTMLStencilElement {
+    }
+    var HTMLScTooltipElement: {
+        prototype: HTMLScTooltipElement;
+        new (): HTMLScTooltipElement;
+    };
+    interface HTMLScTooltipRowElement extends Components.ScTooltipRow, HTMLStencilElement {
+    }
+    var HTMLScTooltipRowElement: {
+        prototype: HTMLScTooltipRowElement;
+        new (): HTMLScTooltipRowElement;
+    };
+    interface HTMLScTooltipRowsElement extends Components.ScTooltipRows, HTMLStencilElement {
+    }
+    var HTMLScTooltipRowsElement: {
+        prototype: HTMLScTooltipRowsElement;
+        new (): HTMLScTooltipRowsElement;
     };
     interface HTMLScWebglAxisElement extends Components.ScWebglAxis, HTMLStencilElement {
     }
@@ -1279,13 +1279,11 @@ declare global {
     interface HTMLElementTagNameMap {
         "line-chart-viewport-change": HTMLLineChartViewportChangeElement;
         "monitor-angled-line-segment": HTMLMonitorAngledLineSegmentElement;
-        "monitor-bar-chart": HTMLMonitorBarChartElement;
         "monitor-chart-y-range": HTMLMonitorChartYRangeElement;
         "monitor-circle-point-shaders": HTMLMonitorCirclePointShadersElement;
         "monitor-data-stream-name": HTMLMonitorDataStreamNameElement;
         "monitor-expandable-input": HTMLMonitorExpandableInputElement;
         "monitor-expandable-input-standard": HTMLMonitorExpandableInputStandardElement;
-        "monitor-gesture-handler": HTMLMonitorGestureHandlerElement;
         "monitor-grid": HTMLMonitorGridElement;
         "monitor-grid-tooltip": HTMLMonitorGridTooltipElement;
         "monitor-help-tooltip": HTMLMonitorHelpTooltipElement;
@@ -1328,9 +1326,6 @@ declare global {
         "monitor-table-cell": HTMLMonitorTableCellElement;
         "monitor-threshold-legend": HTMLMonitorThresholdLegendElement;
         "monitor-threshold-legend-row": HTMLMonitorThresholdLegendRowElement;
-        "monitor-tooltip": HTMLMonitorTooltipElement;
-        "monitor-tooltip-row": HTMLMonitorTooltipRowElement;
-        "monitor-tooltip-rows": HTMLMonitorTooltipRowsElement;
         "monitor-webgl-bar-chart-dynamic-buffer": HTMLMonitorWebglBarChartDynamicBufferElement;
         "monitor-webgl-bar-chart-dynamic-data": HTMLMonitorWebglBarChartDynamicDataElement;
         "monitor-webgl-bar-chart-dynamic-data-streams": HTMLMonitorWebglBarChartDynamicDataStreamsElement;
@@ -1369,10 +1364,15 @@ declare global {
         "monitor-widget-grid": HTMLMonitorWidgetGridElement;
         "multiple-statuses": HTMLMultipleStatusesElement;
         "sc-app": HTMLScAppElement;
+        "sc-bar-chart": HTMLScBarChartElement;
         "sc-box": HTMLScBoxElement;
         "sc-chart-icon": HTMLScChartIconElement;
         "sc-error-badge": HTMLScErrorBadgeElement;
+        "sc-gesture-handler": HTMLScGestureHandlerElement;
         "sc-loading-spinner": HTMLScLoadingSpinnerElement;
+        "sc-tooltip": HTMLScTooltipElement;
+        "sc-tooltip-row": HTMLScTooltipRowElement;
+        "sc-tooltip-rows": HTMLScTooltipRowsElement;
         "sc-webgl-axis": HTMLScWebglAxisElement;
         "sc-webgl-base-chart": HTMLScWebglBaseChartElement;
         "single-colored-status": HTMLSingleColoredStatusElement;
@@ -1399,35 +1399,6 @@ declare namespace LocalJSX {
     }
     interface MonitorAngledLineSegment {
     }
-    interface MonitorBarChart {
-        "alarms"?: AlarmsConfig;
-        "annotations"?: Annotations;
-        "axis"?: Axis.Options;
-        /**
-          * Memory Management
-         */
-        "bufferFactor"?: number;
-        "dataStreams": DataStream[];
-        "gestures"?: boolean;
-        /**
-          * Status
-         */
-        "isEditing"?: boolean;
-        "layout"?: LayoutConfig;
-        "legend"?: LegendConfig;
-        "messageOverrides"?: MessageOverrides;
-        "minBufferSize"?: number;
-        "movement"?: MovementConfig;
-        "requestData"?: RequestDataFn;
-        "scale"?: ScaleConfig;
-        "size"?: MinimalSizeConfig;
-        "trends"?: Trend[];
-        /**
-          * Chart API
-         */
-        "viewPort"?: MinimalViewPortConfig;
-        "widgetId": string;
-    }
     interface MonitorChartYRange {
         "component"?: string;
     }
@@ -1448,11 +1419,6 @@ declare namespace LocalJSX {
         "value": string;
     }
     interface MonitorExpandableInputStandard {
-    }
-    interface MonitorGestureHandler {
-        "onDateRangeChange": ({ end, start }: { start: Date; end: Date }) => void;
-        "size": SizeConfig;
-        "viewPort": ViewPort;
     }
     interface MonitorGrid {
     }
@@ -1732,60 +1698,6 @@ declare namespace LocalJSX {
         "color": string;
         "label": string;
     }
-    interface MonitorTooltip {
-        /**
-          * If we are drawing data from the data timestamp to timestamp + resolution we want the tooltip to align on the left side  Otherwise we are drawing the data from timestamp - resolution to timestamp then we want the tooltip to align on the right side
-         */
-        "dataAlignment": DATA_ALIGNMENT;
-        "dataContainer": HTMLElement;
-        "dataStreams": DataStream[];
-        "maxDurationFromDate"?: number;
-        "showBlankTooltipRows"?: boolean;
-        "showDataStreamColor"?: boolean;
-        "size": SizeConfig;
-        "sortPoints"?: boolean;
-        "supportString": boolean;
-        "thresholds": Threshold[];
-        /**
-          * CSS Top property for the tooltip container
-         */
-        "top"?: number;
-        "trendResults"?: TrendResult[];
-        "viewPort": ViewPort;
-        "visualizesAlarms": boolean;
-    }
-    interface MonitorTooltipRow {
-        "color": string;
-        "icon"?: StatusIcon;
-        "label": string;
-        "point": DataPoint | undefined;
-        "pointType": POINT_TYPE;
-        "resolution": number | undefined;
-        "showDataStreamColor": boolean;
-        "valueColor"?: string;
-    }
-    interface MonitorTooltipRows {
-        /**
-          * If we are drawing data from the data timestamp to timestamp + resolution we want the tooltip to align on the left side  Otherwise we are drawing the data from timestamp - resolution to timestamp then we want the tooltip to align on the right side
-         */
-        "dataAlignment": DATA_ALIGNMENT;
-        "dataStreams": DataStream[];
-        "maxDurationFromDate"?: number;
-        "selectedDate": Date;
-        "showBlankTooltipRows": boolean;
-        "showDataStreamColor"?: boolean;
-        "size": SizeConfig;
-        "sortPoints"?: boolean;
-        "supportString": boolean;
-        "thresholds": Threshold[];
-        /**
-          * CSS Top property for the tooltip container
-         */
-        "top"?: number;
-        "trendResults"?: TrendResult[];
-        "viewPort": ViewPort;
-        "visualizesAlarms": boolean;
-    }
     interface MonitorWebglBarChartDynamicBuffer {
     }
     interface MonitorWebglBarChartDynamicData {
@@ -1876,6 +1788,35 @@ declare namespace LocalJSX {
     }
     interface ScApp {
     }
+    interface ScBarChart {
+        "alarms"?: AlarmsConfig;
+        "annotations"?: Annotations;
+        "axis"?: Axis.Options;
+        /**
+          * Memory Management
+         */
+        "bufferFactor"?: number;
+        "dataStreams": DataStream[];
+        "gestures"?: boolean;
+        /**
+          * Status
+         */
+        "isEditing"?: boolean;
+        "layout"?: LayoutConfig;
+        "legend"?: LegendConfig;
+        "messageOverrides"?: MessageOverrides;
+        "minBufferSize"?: number;
+        "movement"?: MovementConfig;
+        "requestData"?: RequestDataFn;
+        "scale"?: ScaleConfig;
+        "size"?: MinimalSizeConfig;
+        "trends"?: Trend[];
+        /**
+          * Chart API
+         */
+        "viewPort"?: MinimalViewPortConfig;
+        "widgetId": string;
+    }
     interface ScBox {
         "size"?: MinimalSizeConfig;
         "someObject"?: Object;
@@ -1887,9 +1828,68 @@ declare namespace LocalJSX {
     }
     interface ScErrorBadge {
     }
+    interface ScGestureHandler {
+        "onDateRangeChange": ({ end, start }: { start: Date; end: Date }) => void;
+        "size": SizeConfig;
+        "viewPort": ViewPort;
+    }
     interface ScLoadingSpinner {
         "dark"?: boolean;
         "size"?: number;
+    }
+    interface ScTooltip {
+        /**
+          * If we are drawing data from the data timestamp to timestamp + resolution we want the tooltip to align on the left side  Otherwise we are drawing the data from timestamp - resolution to timestamp then we want the tooltip to align on the right side
+         */
+        "dataAlignment": DATA_ALIGNMENT;
+        "dataContainer": HTMLElement;
+        "dataStreams": DataStream[];
+        "maxDurationFromDate"?: number;
+        "showBlankTooltipRows"?: boolean;
+        "showDataStreamColor"?: boolean;
+        "size": SizeConfig;
+        "sortPoints"?: boolean;
+        "supportString": boolean;
+        "thresholds": Threshold[];
+        /**
+          * CSS Top property for the tooltip container
+         */
+        "top"?: number;
+        "trendResults"?: TrendResult[];
+        "viewPort": ViewPort;
+        "visualizesAlarms": boolean;
+    }
+    interface ScTooltipRow {
+        "color": string;
+        "icon"?: StatusIcon;
+        "label": string;
+        "point": DataPoint | undefined;
+        "pointType": POINT_TYPE;
+        "resolution": number | undefined;
+        "showDataStreamColor": boolean;
+        "valueColor"?: string;
+    }
+    interface ScTooltipRows {
+        /**
+          * If we are drawing data from the data timestamp to timestamp + resolution we want the tooltip to align on the left side  Otherwise we are drawing the data from timestamp - resolution to timestamp then we want the tooltip to align on the right side
+         */
+        "dataAlignment": DATA_ALIGNMENT;
+        "dataStreams": DataStream[];
+        "maxDurationFromDate"?: number;
+        "selectedDate": Date;
+        "showBlankTooltipRows": boolean;
+        "showDataStreamColor"?: boolean;
+        "size": SizeConfig;
+        "sortPoints"?: boolean;
+        "supportString": boolean;
+        "thresholds": Threshold[];
+        /**
+          * CSS Top property for the tooltip container
+         */
+        "top"?: number;
+        "trendResults"?: TrendResult[];
+        "viewPort": ViewPort;
+        "visualizesAlarms": boolean;
     }
     interface ScWebglAxis {
         "size": SizeConfig;
@@ -1973,13 +1973,11 @@ declare namespace LocalJSX {
     interface IntrinsicElements {
         "line-chart-viewport-change": LineChartViewportChange;
         "monitor-angled-line-segment": MonitorAngledLineSegment;
-        "monitor-bar-chart": MonitorBarChart;
         "monitor-chart-y-range": MonitorChartYRange;
         "monitor-circle-point-shaders": MonitorCirclePointShaders;
         "monitor-data-stream-name": MonitorDataStreamName;
         "monitor-expandable-input": MonitorExpandableInput;
         "monitor-expandable-input-standard": MonitorExpandableInputStandard;
-        "monitor-gesture-handler": MonitorGestureHandler;
         "monitor-grid": MonitorGrid;
         "monitor-grid-tooltip": MonitorGridTooltip;
         "monitor-help-tooltip": MonitorHelpTooltip;
@@ -2022,9 +2020,6 @@ declare namespace LocalJSX {
         "monitor-table-cell": MonitorTableCell;
         "monitor-threshold-legend": MonitorThresholdLegend;
         "monitor-threshold-legend-row": MonitorThresholdLegendRow;
-        "monitor-tooltip": MonitorTooltip;
-        "monitor-tooltip-row": MonitorTooltipRow;
-        "monitor-tooltip-rows": MonitorTooltipRows;
         "monitor-webgl-bar-chart-dynamic-buffer": MonitorWebglBarChartDynamicBuffer;
         "monitor-webgl-bar-chart-dynamic-data": MonitorWebglBarChartDynamicData;
         "monitor-webgl-bar-chart-dynamic-data-streams": MonitorWebglBarChartDynamicDataStreams;
@@ -2063,10 +2058,15 @@ declare namespace LocalJSX {
         "monitor-widget-grid": MonitorWidgetGrid;
         "multiple-statuses": MultipleStatuses;
         "sc-app": ScApp;
+        "sc-bar-chart": ScBarChart;
         "sc-box": ScBox;
         "sc-chart-icon": ScChartIcon;
         "sc-error-badge": ScErrorBadge;
+        "sc-gesture-handler": ScGestureHandler;
         "sc-loading-spinner": ScLoadingSpinner;
+        "sc-tooltip": ScTooltip;
+        "sc-tooltip-row": ScTooltipRow;
+        "sc-tooltip-rows": ScTooltipRows;
         "sc-webgl-axis": ScWebglAxis;
         "sc-webgl-base-chart": ScWebglBaseChart;
         "single-colored-status": SingleColoredStatus;
@@ -2094,13 +2094,11 @@ declare module "@stencil/core" {
         interface IntrinsicElements {
             "line-chart-viewport-change": LocalJSX.LineChartViewportChange & JSXBase.HTMLAttributes<HTMLLineChartViewportChangeElement>;
             "monitor-angled-line-segment": LocalJSX.MonitorAngledLineSegment & JSXBase.HTMLAttributes<HTMLMonitorAngledLineSegmentElement>;
-            "monitor-bar-chart": LocalJSX.MonitorBarChart & JSXBase.HTMLAttributes<HTMLMonitorBarChartElement>;
             "monitor-chart-y-range": LocalJSX.MonitorChartYRange & JSXBase.HTMLAttributes<HTMLMonitorChartYRangeElement>;
             "monitor-circle-point-shaders": LocalJSX.MonitorCirclePointShaders & JSXBase.HTMLAttributes<HTMLMonitorCirclePointShadersElement>;
             "monitor-data-stream-name": LocalJSX.MonitorDataStreamName & JSXBase.HTMLAttributes<HTMLMonitorDataStreamNameElement>;
             "monitor-expandable-input": LocalJSX.MonitorExpandableInput & JSXBase.HTMLAttributes<HTMLMonitorExpandableInputElement>;
             "monitor-expandable-input-standard": LocalJSX.MonitorExpandableInputStandard & JSXBase.HTMLAttributes<HTMLMonitorExpandableInputStandardElement>;
-            "monitor-gesture-handler": LocalJSX.MonitorGestureHandler & JSXBase.HTMLAttributes<HTMLMonitorGestureHandlerElement>;
             "monitor-grid": LocalJSX.MonitorGrid & JSXBase.HTMLAttributes<HTMLMonitorGridElement>;
             "monitor-grid-tooltip": LocalJSX.MonitorGridTooltip & JSXBase.HTMLAttributes<HTMLMonitorGridTooltipElement>;
             "monitor-help-tooltip": LocalJSX.MonitorHelpTooltip & JSXBase.HTMLAttributes<HTMLMonitorHelpTooltipElement>;
@@ -2143,9 +2141,6 @@ declare module "@stencil/core" {
             "monitor-table-cell": LocalJSX.MonitorTableCell & JSXBase.HTMLAttributes<HTMLMonitorTableCellElement>;
             "monitor-threshold-legend": LocalJSX.MonitorThresholdLegend & JSXBase.HTMLAttributes<HTMLMonitorThresholdLegendElement>;
             "monitor-threshold-legend-row": LocalJSX.MonitorThresholdLegendRow & JSXBase.HTMLAttributes<HTMLMonitorThresholdLegendRowElement>;
-            "monitor-tooltip": LocalJSX.MonitorTooltip & JSXBase.HTMLAttributes<HTMLMonitorTooltipElement>;
-            "monitor-tooltip-row": LocalJSX.MonitorTooltipRow & JSXBase.HTMLAttributes<HTMLMonitorTooltipRowElement>;
-            "monitor-tooltip-rows": LocalJSX.MonitorTooltipRows & JSXBase.HTMLAttributes<HTMLMonitorTooltipRowsElement>;
             "monitor-webgl-bar-chart-dynamic-buffer": LocalJSX.MonitorWebglBarChartDynamicBuffer & JSXBase.HTMLAttributes<HTMLMonitorWebglBarChartDynamicBufferElement>;
             "monitor-webgl-bar-chart-dynamic-data": LocalJSX.MonitorWebglBarChartDynamicData & JSXBase.HTMLAttributes<HTMLMonitorWebglBarChartDynamicDataElement>;
             "monitor-webgl-bar-chart-dynamic-data-streams": LocalJSX.MonitorWebglBarChartDynamicDataStreams & JSXBase.HTMLAttributes<HTMLMonitorWebglBarChartDynamicDataStreamsElement>;
@@ -2184,10 +2179,15 @@ declare module "@stencil/core" {
             "monitor-widget-grid": LocalJSX.MonitorWidgetGrid & JSXBase.HTMLAttributes<HTMLMonitorWidgetGridElement>;
             "multiple-statuses": LocalJSX.MultipleStatuses & JSXBase.HTMLAttributes<HTMLMultipleStatusesElement>;
             "sc-app": LocalJSX.ScApp & JSXBase.HTMLAttributes<HTMLScAppElement>;
+            "sc-bar-chart": LocalJSX.ScBarChart & JSXBase.HTMLAttributes<HTMLScBarChartElement>;
             "sc-box": LocalJSX.ScBox & JSXBase.HTMLAttributes<HTMLScBoxElement>;
             "sc-chart-icon": LocalJSX.ScChartIcon & JSXBase.HTMLAttributes<HTMLScChartIconElement>;
             "sc-error-badge": LocalJSX.ScErrorBadge & JSXBase.HTMLAttributes<HTMLScErrorBadgeElement>;
+            "sc-gesture-handler": LocalJSX.ScGestureHandler & JSXBase.HTMLAttributes<HTMLScGestureHandlerElement>;
             "sc-loading-spinner": LocalJSX.ScLoadingSpinner & JSXBase.HTMLAttributes<HTMLScLoadingSpinnerElement>;
+            "sc-tooltip": LocalJSX.ScTooltip & JSXBase.HTMLAttributes<HTMLScTooltipElement>;
+            "sc-tooltip-row": LocalJSX.ScTooltipRow & JSXBase.HTMLAttributes<HTMLScTooltipRowElement>;
+            "sc-tooltip-rows": LocalJSX.ScTooltipRows & JSXBase.HTMLAttributes<HTMLScTooltipRowsElement>;
             "sc-webgl-axis": LocalJSX.ScWebglAxis & JSXBase.HTMLAttributes<HTMLScWebglAxisElement>;
             "sc-webgl-base-chart": LocalJSX.ScWebglBaseChart & JSXBase.HTMLAttributes<HTMLScWebglBaseChartElement>;
             "single-colored-status": LocalJSX.SingleColoredStatus & JSXBase.HTMLAttributes<HTMLSingleColoredStatusElement>;

@@ -738,7 +738,7 @@ export class ScWebglBaseChart {
           />
           <LoadingStatus isLoading={shouldDisplayAsLoading} />
           {this.gestures && (
-            <monitor-gesture-handler
+            <sc-gesture-handler
               onDateRangeChange={this.handleCameraEvent}
               size={chartSizeConfig}
               viewPort={this.activeViewPort()}

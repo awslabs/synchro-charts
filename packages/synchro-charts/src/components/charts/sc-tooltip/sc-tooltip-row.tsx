@@ -16,11 +16,11 @@ const baseColor = '#000';
 const AGGREGATED_LEVEL = 'average';
 
 @Component({
-  tag: 'monitor-tooltip-row',
-  styleUrl: 'monitor-tooltip-row.css',
+  tag: 'sc-tooltip-row',
+  styleUrl: 'sc-tooltip-row.css',
   shadow: false,
 })
-export class MonitorTooltipRow {
+export class ScTooltipRow {
   @Prop() label!: string;
   @Prop() resolution!: number | undefined;
   @Prop() color!: string;

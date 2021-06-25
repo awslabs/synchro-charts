@@ -1,6 +1,6 @@
 import { Component, Element, h } from '@stencil/core';
 import { webGLRenderer } from '../../../../../components/monitor-webgl-context/webglContext';
-import { chartScene } from '../../../../../components/charts/monitor-bar-chart/chartScene';
+import { chartScene } from '../../../../../components/charts/sc-bar-chart/chartScene';
 import { CHART_SIZE } from '../chartSize';
 import { DAY_IN_MS } from '../../../../../utils/time';
 import { DataType } from '../../../../../utils/dataConstants';

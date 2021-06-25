@@ -4,13 +4,13 @@ import { newSpecPage } from '@stencil/core/testing';
 import { SpecPage } from '@stencil/core/internal';
 import { Components } from '../../components.d';
 import { ScWebglBaseChart } from '../../components/charts/sc-webgl-base-chart/sc-webgl-base-chart';
-import { MonitorGestureHandler } from '../../components/charts/sc-webgl-base-chart/monitor-gesture-handler';
+import { ScGestureHandler } from '../../components/charts/sc-webgl-base-chart/sc-gesture-handler';
 import { MonitorLineChart } from '../../components/charts/monitor-line-chart/monitor-line-chart';
 import { MonitorSizeProvider } from '../../components/monitor-size-provider/monitor-size-provider';
 import { CustomHTMLElement } from '../../utils/types';
 import { LEGEND_POSITION } from '../..';
 import { update } from '../../components/charts/common/tests/merge';
-import { MonitorBarChart } from '../../components/charts/monitor-bar-chart/monitor-bar-chart';
+import { ScBarChart } from '../../components/charts/sc-bar-chart/sc-bar-chart';
 import { MonitorScatterChart } from '../../components/charts/monitor-scatter-chart/monitor-scatter-chart';
 import { MonitorStatusChart } from '../../components/charts/monitor-status-chart/monitor-status-chart';
 import { ScWebglAxis } from '../../components/charts/sc-webgl-base-chart/sc-webgl-axis';
@@ -37,9 +37,9 @@ export const newChartSpecPage = (tagName: string): ChartSpecPage => async props 
   const page = await newSpecPage({
     components: [
       ScWebglBaseChart,
-      MonitorGestureHandler,
+      ScGestureHandler,
       MonitorLineChart,
-      MonitorBarChart,
+      ScBarChart,
       MonitorScatterChart,
       MonitorStatusChart,
       MonitorSizeProvider,

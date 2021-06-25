@@ -3,7 +3,7 @@ import { Component, h, Prop } from '@stencil/core';
 import { DataStream, MessageOverrides, MinimalViewPortConfig } from '../../utils/dataTypes';
 import { Annotations, ChartConfig } from '../charts/common/types';
 import { LabelsConfig } from '../common/types';
-import { CellOptions, RenderCell } from '../monitor-widget-grid/types';
+import { CellOptions, RenderCell } from '../sc-widget-grid/types';
 
 const DEFAULT_LABELS_CONFIG: Required<LabelsConfig> = {
   showUnit: true,
