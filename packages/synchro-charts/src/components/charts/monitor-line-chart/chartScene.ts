@@ -7,9 +7,9 @@ import {
   updatePointMesh,
 } from '../common/meshes/pointMesh';
 import { LINE_MESH_INDEX, LineChartLineMesh, lineMesh, updateLineMesh } from './lineMesh';
-import { ChartSceneCreator, ChartSceneUpdater } from '../monitor-webgl-base-chart/types';
-import { constructChartScene, numDataPoints } from '../monitor-webgl-base-chart/utils';
-import { needsNewClipSpace, clipSpaceConversion } from '../monitor-webgl-base-chart/clipSpaceConversion';
+import { ChartSceneCreator, ChartSceneUpdater } from '../sc-webgl-base-chart/types';
+import { constructChartScene, numDataPoints } from '../sc-webgl-base-chart/utils';
+import { needsNewClipSpace, clipSpaceConversion } from '../sc-webgl-base-chart/clipSpaceConversion';
 import { getNumberThresholds } from '../common/annotations/utils';
 
 export const chartScene: ChartSceneCreator = ({

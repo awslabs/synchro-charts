@@ -1,4 +1,3 @@
-
 monitor-status-cell .status-cell {
   min-height: 150px;
   display: flex;
@@ -44,7 +43,7 @@ monitor-status-cell .large {
   line-height: var(--line-height-4);
 }
 
-monitor-status-cell monitor-chart-icon {
+monitor-status-cell sc-chart-icon {
   display: inline-block;
   position: relative;
   top: -1px;

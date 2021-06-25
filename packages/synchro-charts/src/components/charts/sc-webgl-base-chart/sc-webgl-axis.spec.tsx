@@ -1,7 +1,7 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { Components } from '../../../components.d';
+import { Components } from '../../../components';
 import { update } from '../common/tests/merge';
-import { MonitorWebglAxis } from './monitor-webgl-axis';
+import { ScWebglAxis } from './sc-webgl-axis';
 import { CustomHTMLElement } from '../../../utils/types';
 import { renderAxis, AxisRendererProps } from './renderAxis';
 import { ViewPort } from '../../../utils/dataTypes';
@@ -27,14 +27,14 @@ const VIEWPORT: ViewPort = {
 
 const axisSpecPage = async (axisRendererProps?: Partial<AxisRendererProps>) => {
   const page = await newSpecPage({
-    components: [MonitorWebglAxis],
+    components: [ScWebglAxis],
     html: '<div></div>',
     supportsShadowDom: false,
   });
 
-  const axis = page.doc.createElement('monitor-webgl-axis') as CustomHTMLElement<Components.MonitorWebglAxis>;
+  const axis = page.doc.createElement('sc-webgl-axis') as CustomHTMLElement<Components.ScWebglAxis>;
 
-  const props: Components.MonitorWebglAxis = {
+  const props: Components.ScWebglAxis = {
     size: SIZE_CONFIG,
   };
   update(axis, props);
@@ -151,7 +151,7 @@ describe('updated correctly', () => {
     const { axis, page } = await axisSpecPage();
     const NEW_HEIGHT = 500;
     const NEW_WIDTH = 550;
-    const updatedProps: Partial<Components.MonitorWebglAxis> = {
+    const updatedProps: Partial<Components.ScWebglAxis> = {
       size: {
         ...SIZE_CONFIG,
         width: NEW_WIDTH,

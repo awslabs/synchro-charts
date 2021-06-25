@@ -2,7 +2,7 @@ import { DataStream, DataStreamId, Primitive } from '../../../../utils/dataTypes
 import { getBreachedThreshold } from './utils';
 import { isDefined } from '../../../../utils/predicates';
 import { Threshold } from '../types';
-import { closestPoint } from '../../monitor-webgl-base-chart/activePoints';
+import { closestPoint } from '../../sc-webgl-base-chart/activePoints';
 import { StreamType } from '../../../../utils/dataConstants';
 import { DATA_ALIGNMENT } from '../constants';
 

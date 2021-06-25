@@ -2,7 +2,7 @@ import { Component, Event, EventEmitter, h, Prop, State } from '@stencil/core';
 import { DataStream, SizeConfig } from '../../../../utils/dataTypes';
 import { WidgetConfigurationUpdate, Threshold } from '../../common/types';
 import { breachedThreshold } from '../../common/annotations/breachedThreshold';
-import { closestPoint } from '../../monitor-webgl-base-chart/activePoints';
+import { closestPoint } from '../../sc-webgl-base-chart/activePoints';
 import { NameValue, updateName } from '../../../monitor-data-stream-name/helper';
 import { getDataPoints } from '../../../../utils/getDataPoints';
 

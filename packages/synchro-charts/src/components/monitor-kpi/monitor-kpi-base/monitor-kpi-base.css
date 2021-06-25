@@ -13,7 +13,7 @@ monitor-kpi-base {
   color: var(--polaris-gray-900);
 }
 
-monitor-kpi-base monitor-chart-icon {
+monitor-kpi-base sc-chart-icon {
   position: relative;
   top: -2px;
 }

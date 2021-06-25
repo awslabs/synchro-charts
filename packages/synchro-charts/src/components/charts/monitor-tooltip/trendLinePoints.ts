@@ -1,6 +1,6 @@
 import { getTrendLabel } from '../common/trends/trendConfig';
 import { getTrendValue } from '../common/trends/trendAnalysis';
-import { POINT_TYPE } from '../monitor-webgl-base-chart/activePoints';
+import { POINT_TYPE } from '../sc-webgl-base-chart/activePoints';
 import { isDefined } from '../../../utils/predicates';
 import { TooltipPoint } from './types';
 import { TrendResult } from '../common/trends/types';

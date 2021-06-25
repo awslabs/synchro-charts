@@ -1,7 +1,7 @@
 import { Component, h, Prop } from '@stencil/core';
 import { Threshold } from '../../charts/common/types';
 import { DataPoint, DataStream, Primitive, MessageOverrides, MinimalViewPortConfig } from '../../../utils/dataTypes';
-import { POINT_TYPE } from '../../charts/monitor-webgl-base-chart/activePoints';
+import { POINT_TYPE } from '../../charts/sc-webgl-base-chart/activePoints';
 import { Trend } from './Trend';
 import { Value } from '../../value/Value';
 import { DataType } from '../../../utils/dataConstants';
@@ -128,7 +128,7 @@ export class MonitorKpiBase {
           isEditing={this.isEditing}
         />
         <div class="icon-container">
-          {this.isEnabled && icon && <monitor-chart-icon name={icon} size={this.iconSize()} color={this.valueColor} />}
+          {this.isEnabled && icon && <sc-chart-icon name={icon} size={this.iconSize()} color={this.valueColor} />}
         </div>
         <div class={{ main: true, large: !this.miniVersion }}>
           {error != null && <sc-error-badge data-testid="warning">{error}</sc-error-badge>}

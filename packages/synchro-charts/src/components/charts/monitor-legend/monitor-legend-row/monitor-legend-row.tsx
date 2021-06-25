@@ -7,7 +7,7 @@ import {
   STREAM_ICON_STROKE_WIDTH,
   TREND_ICON_DASH_ARRAY,
 } from '../../../../utils/dataTypes';
-import { POINT_TYPE } from '../../monitor-webgl-base-chart/activePoints';
+import { POINT_TYPE } from '../../sc-webgl-base-chart/activePoints';
 import { StencilCSSProperty } from '../../../../utils/types';
 import { Value } from '../../../value/Value';
 import { DEFAULT_LEGEND_TEXT_COLOR } from '../constants';
@@ -84,7 +84,7 @@ export class MonitorLegendRow {
               date={this.point && new Date(this.point.x)}
             />
             <div class="legend-value" style={this.isEditing ? EDIT_MODE_STYLE : VIEW_MODE_STYLE}>
-              {this.icon && <monitor-chart-icon name={this.icon} />}
+              {this.icon && <sc-chart-icon name={this.icon} />}
               <h4 class="awsui-util-d-i" data-testid="current-value" style={{ color: this.valueColor }}>
                 <Value value={this.point ? this.point.y : undefined} />
               </h4>

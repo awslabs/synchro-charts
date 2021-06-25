@@ -8,7 +8,7 @@ import { Cell } from '../constructTableData';
 import { ERROR_SYMBOL_SELECTOR, LOADING_SPINNER_SELECTOR } from '../../../testing/selectors';
 import { NO_VALUE_PRESENT } from '../../common/terms';
 import { ScErrorBadge } from '../../sc-error-badge/sc-error-badge';
-import { MonitorChartIcon } from '../../charts/chart-icon/monitor-chart-icon';
+import { ScChartIcon } from '../../charts/chart-icon/sc-chart-icon';
 import { DataType } from '../../../utils/dataConstants';
 
 // this is mock output that passed down from `monitor-table-base`
@@ -24,7 +24,7 @@ const CELL: Cell = {
 
 const cellSpecPage = async (propOverrides: Partial<Components.MonitorTableCell> = {}) => {
   const page = await newSpecPage({
-    components: [MonitorTableCell, ScErrorBadge, MonitorChartIcon],
+    components: [MonitorTableCell, ScErrorBadge, ScChartIcon],
     html: '<div></div>',
     supportsShadowDom: false,
   });

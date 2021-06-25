@@ -12,11 +12,11 @@ import { ERROR_SYMBOL_SELECTOR, LOADING_SPINNER_SELECTOR } from '../../../testin
 import 'webgl-mock-threejs';
 import { MonitorGestureHandler } from './monitor-gesture-handler';
 import { CHART_CONFIG } from '../common/testUtil';
-import { Components } from '../../../components.d';
+import { Components } from '../../../components';
 import { CustomHTMLElement } from '../../../utils/types';
 import { update } from '../common/tests/merge';
-import { MonitorWebglBaseChart } from './monitor-webgl-base-chart';
-import { MonitorWebglAxis } from './monitor-webgl-axis';
+import { ScWebglBaseChart } from './sc-webgl-base-chart';
+import { ScWebglAxis } from './sc-webgl-axis';
 import { chartScene, updateChartScene } from '../monitor-line-chart/chartScene';
 import { DATA_ALIGNMENT, LEGEND_POSITION } from '../common/constants';
 
@@ -39,17 +39,15 @@ const LOADING_STREAM: DataStream<number> = {
   isLoading: true,
 };
 
-const newChartSpecPage = async (props: Partial<Components.MonitorWebglBaseChart>) => {
+const newChartSpecPage = async (props: Partial<Components.ScWebglBaseChart>) => {
   const page = await newSpecPage({
-    components: [MonitorWebglBaseChart, MonitorGestureHandler, MonitorWebglAxis, ScErrorBadge],
+    components: [ScWebglBaseChart, MonitorGestureHandler, ScWebglAxis, ScErrorBadge],
     html: '<div></div>',
     supportsShadowDom: false,
   });
-  const chart = page.doc.createElement('monitor-webgl-base-chart') as CustomHTMLElement<
-    Components.MonitorWebglBaseChart
-  >;
+  const chart = page.doc.createElement('sc-webgl-base-chart') as CustomHTMLElement<Components.ScWebglBaseChart>;
 
-  const defaultProps: Components.MonitorWebglBaseChart = {
+  const defaultProps: Components.ScWebglBaseChart = {
     updateChartScene,
     visualizesAlarms: false,
     yRangeStartFromZero: false,

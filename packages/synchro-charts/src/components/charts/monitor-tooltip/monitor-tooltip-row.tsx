@@ -1,6 +1,6 @@
 import { Component, h, Prop } from '@stencil/core';
 
-import { POINT_TYPE } from '../monitor-webgl-base-chart/activePoints';
+import { POINT_TYPE } from '../sc-webgl-base-chart/activePoints';
 import {
   DataPoint,
   STREAM_ICON_PATH_COMMAND,
@@ -52,7 +52,7 @@ export class MonitorTooltipRow {
           {this.label}
         </span>
         <span class="value awsui-util-d-i" data-testid="current-value" style={{ color: this.valueColor }}>
-          {this.icon && <monitor-chart-icon name={this.icon} />}
+          {this.icon && <sc-chart-icon name={this.icon} />}
           <Value value={this.point && this.point.y} />
         </span>
         {this.resolution != null && (

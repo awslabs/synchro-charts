@@ -2,8 +2,8 @@ import { Component, Element, h, Prop, State, Watch } from '@stencil/core';
 import { scaleLinear, scaleTime } from 'd3-scale';
 
 import { select } from 'd3-selection';
-import Zoom from '../monitor-webgl-base-chart/Zoom/Zoom';
-import { createBrushTransform } from '../monitor-webgl-base-chart/ChartBrush/brushTransform';
+import Zoom from './Zoom/Zoom';
+import { createBrushTransform } from './ChartBrush/brushTransform';
 import { SizeConfig, ViewPort } from '../../../utils/dataTypes';
 import { MovementConfig } from '../common/types';
 

@@ -19,7 +19,7 @@ import {
   Tooltip,
 } from '../common/types';
 import { chartScene, updateChartScene } from './chartScene';
-import { DEFAULT_CHART_CONFIG } from '../monitor-webgl-base-chart/chartDefaults';
+import { DEFAULT_CHART_CONFIG } from '../sc-webgl-base-chart/chartDefaults';
 import { RectScrollFixed } from '../../../utils/types';
 import { Trend } from '../common/trends/types';
 import { DATA_ALIGNMENT } from '../common/constants';
@@ -67,7 +67,7 @@ export class MonitorBarChart implements ChartConfig {
       <monitor-size-provider
         size={this.size}
         renderFunc={(size: RectScrollFixed) => (
-          <monitor-webgl-base-chart
+          <sc-webgl-base-chart
             axis={this.axis}
             gestures={this.gestures}
             configId={this.widgetId}

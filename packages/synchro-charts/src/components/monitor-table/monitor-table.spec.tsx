@@ -4,13 +4,13 @@ import { Components } from '../../components.d';
 import { DataPoint, DataStream, DataStreamInfo, TableColumn } from '../../utils/dataTypes';
 import { MINUTE_IN_MS } from '../../utils/time';
 import { CustomHTMLElement } from '../../utils/types';
-import { DEFAULT_CHART_CONFIG } from '../charts/monitor-webgl-base-chart/chartDefaults';
+import { DEFAULT_CHART_CONFIG } from '../charts/sc-webgl-base-chart/chartDefaults';
 import { update } from '../charts/common/tests/merge';
 import { MonitorTable } from './monitor-table';
 import { MonitorTableCell } from './monitor-table-cell/monitor-table-cell';
 import { ERROR_SYMBOL_SELECTOR, LOADING_SPINNER_SELECTOR } from '../../testing/selectors';
 import { MonitorTableBase } from './monitor-table-base/monitor-table-base';
-import { MonitorChartIcon } from '../charts/chart-icon/monitor-chart-icon';
+import { ScChartIcon } from '../charts/chart-icon/sc-chart-icon';
 import { NO_VALUE_PRESENT } from '../common/terms';
 import { DataType } from '../../utils/dataConstants';
 
@@ -53,7 +53,7 @@ const WIDGET_ID = 'test-widget-it';
 
 const tableSpecPage = async (propOverrides: Partial<Components.MonitorTable> = {}) => {
   const page = await newSpecPage({
-    components: [MonitorTable, MonitorTableBase, MonitorTableCell, MonitorChartIcon],
+    components: [MonitorTable, MonitorTableBase, MonitorTableCell, ScChartIcon],
     html: '<div></div>',
     supportsShadowDom: false,
   });

@@ -114,7 +114,7 @@ export class MonitorStatusCell {
             <div class={{ value: true, large: emphasizeNameAndUnit }} style={{ color: foregroundColor }}>
               {this.isEnabled &&
                 icon && [
-                  <monitor-chart-icon name={icon} size={ICON_SIZE_PX} color={highContrastColor(backgroundColor)} />,
+                  <sc-chart-icon name={icon} size={ICON_SIZE_PX} color={highContrastColor(backgroundColor)} />,
                   <div class="spacer" />,
                 ]}
               <Value unit={stream.unit} value={point ? point.y : undefined} isEnabled={this.isEnabled} />

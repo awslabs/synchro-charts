@@ -1,6 +1,6 @@
 import { Component, h, Prop } from '@stencil/core';
 import { DataPoint, DataStream, ViewPort } from '../../../utils/dataTypes';
-import { activePoints, POINT_TYPE } from '../monitor-webgl-base-chart/activePoints';
+import { activePoints, POINT_TYPE } from '../sc-webgl-base-chart/activePoints';
 import { LegendConfig, Threshold, ThresholdColorAndIcon } from '../common/types';
 import { TrendResult } from '../common/trends/types';
 import { getTrendValue } from '../common/trends/trendAnalysis';

@@ -3,7 +3,7 @@ import { BufferAttribute, BufferGeometry, Points, ShaderMaterial } from 'three';
 import { pointVert } from './point.vert';
 import shaderFrag from './point.frag';
 import colorationShaderFrag from './point-coloration.frag';
-import { numDataPoints, vertices } from '../../monitor-webgl-base-chart/utils';
+import { numDataPoints, vertices } from '../../sc-webgl-base-chart/utils';
 import { WriteableBufferAttribute } from '../../../monitor-webgl-context/types';
 import { thresholdBands } from '../annotations/thresholdBands';
 import { isNumberDataStream } from '../../../../utils/predicates';

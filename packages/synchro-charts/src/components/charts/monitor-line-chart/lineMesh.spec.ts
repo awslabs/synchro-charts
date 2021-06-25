@@ -1,6 +1,6 @@
 import { lineMesh, updateLineMesh } from './lineMesh';
 import { DataPoint } from '../../../utils/dataTypes';
-import { clipSpaceConversion } from '../monitor-webgl-base-chart/clipSpaceConversion';
+import { clipSpaceConversion } from '../sc-webgl-base-chart/clipSpaceConversion';
 import { DataType } from '../../../utils/dataConstants';
 
 const VIEW_PORT = { start: new Date(2000), end: new Date(2001, 0, 0), yMin: 0, yMax: 100 };

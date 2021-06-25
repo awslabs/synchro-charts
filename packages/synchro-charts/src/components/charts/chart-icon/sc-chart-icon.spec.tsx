@@ -1,20 +1,20 @@
 import { newSpecPage } from '@stencil/core/testing';
 
-import { MonitorChartIcon } from './monitor-chart-icon';
-import { Components } from '../../../components.d';
+import { ScChartIcon } from './sc-chart-icon';
+import { Components } from '../../../components';
 import { CustomHTMLElement } from '../../../utils/types';
 import { update } from '../common/tests/merge';
 import { StatusIcon } from '../common/constants';
 
-const newChartIconSpecPage = async (props: Partial<Components.MonitorChartIcon>) => {
+const newChartIconSpecPage = async (props: Partial<Components.ScChartIcon>) => {
   const page = await newSpecPage({
-    components: [MonitorChartIcon],
+    components: [ScChartIcon],
     html: '<div></div>',
     supportsShadowDom: false,
   });
 
-  const chartIcon = page.doc.createElement('monitor-chart-icon') as CustomHTMLElement<Components.MonitorChartIcon>;
-  const defaultProps: Components.MonitorChartIcon = {
+  const chartIcon = page.doc.createElement('sc-chart-icon') as CustomHTMLElement<Components.ScChartIcon>;
+  const defaultProps: Components.ScChartIcon = {
     name: StatusIcon.NORMAL,
   };
 
@@ -29,7 +29,7 @@ const newChartIconSpecPage = async (props: Partial<Components.MonitorChartIcon>)
 
 it('creates empty icon if no name is provided', async () => {
   const { chartIcon } = await newChartIconSpecPage({});
-  expect(chartIcon.querySelectorAll('.monitor-chart-icon')).not.toBeEmpty();
+  expect(chartIcon.querySelectorAll('.sc-chart-icon')).not.toBeEmpty();
   const icon = chartIcon.querySelector('svg');
   expect(icon).not.toBeEmpty;
 });

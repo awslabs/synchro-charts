@@ -210,20 +210,20 @@ describe('icon', () => {
     const icon = StatusIcon.ERROR;
     const { statusCell } = await cellSpecPage({ icon });
 
-    const chartIcon = statusCell.querySelector('monitor-chart-icon');
+    const chartIcon = statusCell.querySelector('sc-chart-icon');
     expect(chartIcon).toEqualAttribute('name', icon);
   });
 
   it('does not render icon when not enabled', async () => {
     const { statusCell } = await cellSpecPage({ icon: StatusIcon.ERROR, isEnabled: false });
 
-    const chartIcon = statusCell.querySelector('monitor-chart-icon');
+    const chartIcon = statusCell.querySelector('sc-chart-icon');
     expect(chartIcon).toBeNull();
   });
 
   it('does not render icon when `icon` is not defined', async () => {
     const { statusCell } = await cellSpecPage({ icon: undefined });
-    const chartIcon = statusCell.querySelector('monitor-chart-icon');
+    const chartIcon = statusCell.querySelector('sc-chart-icon');
 
     expect(chartIcon).toBeNull();
   });

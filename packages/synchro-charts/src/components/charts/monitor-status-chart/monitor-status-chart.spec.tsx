@@ -33,7 +33,7 @@ describe('annotations', () => {
     };
 
     const { chart } = await statusChart({ annotations: ANNOTATIONS });
-    const baseChart = chart.querySelector('monitor-webgl-base-chart') as HTMLMonitorWebglBaseChartElement;
+    const baseChart = chart.querySelector('sc-webgl-base-chart') as HTMLScWebglBaseChartElement;
 
     expect(baseChart.annotations).toMatchObject({
       ...ANNOTATIONS,

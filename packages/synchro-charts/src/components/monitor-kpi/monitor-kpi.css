@@ -23,11 +23,11 @@ monitor-kpi .container::-webkit-scrollbar {
   display: none;
 }
 
-monitor-kpi monitor-chart-icon .monitor-chart-icon {
+monitor-kpi sc-chart-icon .sc-chart-icon {
   top: -3px;
 }
 
-monitor-kpi .large monitor-chart-icon {
+monitor-kpi .large sc-chart-icon {
   position: relative;
 }
 

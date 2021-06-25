@@ -20,7 +20,7 @@ import {
   Tooltip,
 } from '../common/types';
 import { chartScene, updateChartScene } from './chartScene';
-import { DEFAULT_CHART_CONFIG } from '../monitor-webgl-base-chart/chartDefaults';
+import { DEFAULT_CHART_CONFIG } from '../sc-webgl-base-chart/chartDefaults';
 import { RectScrollFixed } from '../../../utils/types';
 import { HEIGHT, STATUS_MARGIN_TOP_PX } from './constants';
 import { isThreshold } from '../common/annotations/utils';
@@ -116,7 +116,7 @@ export class MonitorStatusChart implements ChartConfig {
 
           return [
             <div class="status-timeline" style={{ height: `${chartSize.height}px` }}>
-              <monitor-webgl-base-chart
+              <sc-webgl-base-chart
                 axis={{
                   ...this.axis,
                   showY: false,

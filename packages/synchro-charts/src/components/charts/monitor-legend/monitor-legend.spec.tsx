@@ -10,7 +10,7 @@ import { DataStream } from '../../../utils/dataTypes';
 import { COMPARISON_OPERATOR, LEGEND_POSITION, StatusIcon, TREND_TYPE } from '../../..';
 import { MonitorLegendRow } from './monitor-legend-row/monitor-legend-row';
 import { DEFAULT_LEGEND_TEXT_COLOR } from './constants';
-import { POINT_TYPE } from '../monitor-webgl-base-chart/activePoints';
+import { POINT_TYPE } from '../sc-webgl-base-chart/activePoints';
 import { VIEW_PORT } from '../common/testUtil';
 import { DAY_IN_MS } from '../../../utils/time';
 import { NON_BREACHED_ALARM_INFO } from '../../../testing/__mocks__/mockWidgetProperties';

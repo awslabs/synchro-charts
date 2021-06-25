@@ -8,13 +8,13 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { AlarmsConfig, DataPoint, DataStream, DataStreamInfo, MessageOverrides, MinimalSizeConfig, MinimalViewPortConfig, Primitive, RequestDataFn, SizeConfig, SizePositionConfig, TableColumn, ViewPort, ViewPortConfig } from "./utils/dataTypes";
 import { Annotations, Axis, LayoutConfig, LegendConfig, MovementConfig, ScaleConfig, Threshold, Tooltip, WidgetConfigurationUpdate } from "./components/charts/common/types";
 import { Trend, TrendResult } from "./components/charts/common/trends/types";
+import { POINT_TYPE } from "./components/charts/sc-webgl-base-chart/activePoints";
 import { DATA_ALIGNMENT, StatusIcon } from "./components/charts/common/constants";
-import { POINT_TYPE } from "./components/charts/monitor-webgl-base-chart/activePoints";
 import { RectScrollFixed } from "./utils/types";
 import { LabelsConfig } from "./components/common/types";
 import { Cell, Row } from "./components/monitor-table/constructTableData";
-import { ChartSceneCreator, ChartSceneUpdater } from "./components/charts/monitor-webgl-base-chart/types";
 import { RenderCell } from "./components/monitor-widget-grid/types";
+import { ChartSceneCreator, ChartSceneUpdater } from "./components/charts/sc-webgl-base-chart/types";
 export namespace Components {
     interface LineChartViewportChange {
     }
@@ -48,11 +48,6 @@ export namespace Components {
          */
         "viewPort": MinimalViewPortConfig;
         "widgetId": string;
-    }
-    interface MonitorChartIcon {
-        "color"?: string;
-        "name": StatusIcon;
-        "size"?: number;
     }
     interface MonitorChartYRange {
         "component": string;
@@ -411,9 +406,6 @@ export namespace Components {
         "viewPort": ViewPort;
         "visualizesAlarms": boolean;
     }
-    interface MonitorWebglAxis {
-        "size": SizeConfig;
-    }
     interface MonitorWebglBarChartDynamicBuffer {
     }
     interface MonitorWebglBarChartDynamicData {
@@ -443,41 +435,6 @@ export namespace Components {
     interface MonitorWebglBarChartThresholdColorationMultipleThresholds {
     }
     interface MonitorWebglBarChartThresholdNoColoration {
-    }
-    interface MonitorWebglBaseChart {
-        "alarms"?: AlarmsConfig;
-        "annotations": Annotations;
-        "axis"?: Axis.Options;
-        "bufferFactor": number;
-        "configId": string;
-        "createChartScene": ChartSceneCreator;
-        "dataStreams": DataStream[];
-        "displaysError": boolean;
-        /**
-          * if false, base chart will not display an empty state message when there is no data present.
-         */
-        "displaysNoDataPresentMsg"?: boolean;
-        "gestures": boolean;
-        "isEditing": boolean;
-        "legend": LegendConfig;
-        "messageOverrides"?: MessageOverrides;
-        "minBufferSize": number;
-        /**
-          * Optionally hooks to integrate custom logic into the base chart
-         */
-        "onUpdateLifeCycle"?: (viewPort: ViewPortConfig) => void;
-        /**
-          * Optionally provided callback to initiate a request for data. Used to ensure gestures emit events for request data.
-         */
-        "requestData"?: RequestDataFn;
-        "size": SizePositionConfig;
-        "supportString": boolean;
-        "tooltip": (props: Tooltip.Props) => HTMLElement;
-        "trends": Trend[];
-        "updateChartScene": ChartSceneUpdater;
-        "viewPort": MinimalViewPortConfig;
-        "visualizesAlarms": boolean;
-        "yRangeStartFromZero": boolean;
     }
     interface MonitorWebglChartAnnotations {
     }
@@ -542,11 +499,54 @@ export namespace Components {
         "size": MinimalSizeConfig;
         "someObject"?: Object;
     }
+    interface ScChartIcon {
+        "color"?: string;
+        "name": StatusIcon;
+        "size"?: number;
+    }
     interface ScErrorBadge {
     }
     interface ScLoadingSpinner {
         "dark"?: boolean;
         "size"?: number;
+    }
+    interface ScWebglAxis {
+        "size": SizeConfig;
+    }
+    interface ScWebglBaseChart {
+        "alarms"?: AlarmsConfig;
+        "annotations": Annotations;
+        "axis"?: Axis.Options;
+        "bufferFactor": number;
+        "configId": string;
+        "createChartScene": ChartSceneCreator;
+        "dataStreams": DataStream[];
+        "displaysError": boolean;
+        /**
+          * if false, base chart will not display an empty state message when there is no data present.
+         */
+        "displaysNoDataPresentMsg"?: boolean;
+        "gestures": boolean;
+        "isEditing": boolean;
+        "legend": LegendConfig;
+        "messageOverrides"?: MessageOverrides;
+        "minBufferSize": number;
+        /**
+          * Optionally hooks to integrate custom logic into the base chart
+         */
+        "onUpdateLifeCycle"?: (viewPort: ViewPortConfig) => void;
+        /**
+          * Optionally provided callback to initiate a request for data. Used to ensure gestures emit events for request data.
+         */
+        "requestData"?: RequestDataFn;
+        "size": SizePositionConfig;
+        "supportString": boolean;
+        "tooltip": (props: Tooltip.Props) => HTMLElement;
+        "trends": Trend[];
+        "updateChartScene": ChartSceneUpdater;
+        "viewPort": MinimalViewPortConfig;
+        "visualizesAlarms": boolean;
+        "yRangeStartFromZero": boolean;
     }
     interface SingleColoredStatus {
     }
@@ -603,12 +603,6 @@ declare global {
     var HTMLMonitorBarChartElement: {
         prototype: HTMLMonitorBarChartElement;
         new (): HTMLMonitorBarChartElement;
-    };
-    interface HTMLMonitorChartIconElement extends Components.MonitorChartIcon, HTMLStencilElement {
-    }
-    var HTMLMonitorChartIconElement: {
-        prototype: HTMLMonitorChartIconElement;
-        new (): HTMLMonitorChartIconElement;
     };
     interface HTMLMonitorChartYRangeElement extends Components.MonitorChartYRange, HTMLStencilElement {
     }
@@ -916,12 +910,6 @@ declare global {
         prototype: HTMLMonitorTooltipRowsElement;
         new (): HTMLMonitorTooltipRowsElement;
     };
-    interface HTMLMonitorWebglAxisElement extends Components.MonitorWebglAxis, HTMLStencilElement {
-    }
-    var HTMLMonitorWebglAxisElement: {
-        prototype: HTMLMonitorWebglAxisElement;
-        new (): HTMLMonitorWebglAxisElement;
-    };
     interface HTMLMonitorWebglBarChartDynamicBufferElement extends Components.MonitorWebglBarChartDynamicBuffer, HTMLStencilElement {
     }
     var HTMLMonitorWebglBarChartDynamicBufferElement: {
@@ -1011,12 +999,6 @@ declare global {
     var HTMLMonitorWebglBarChartThresholdNoColorationElement: {
         prototype: HTMLMonitorWebglBarChartThresholdNoColorationElement;
         new (): HTMLMonitorWebglBarChartThresholdNoColorationElement;
-    };
-    interface HTMLMonitorWebglBaseChartElement extends Components.MonitorWebglBaseChart, HTMLStencilElement {
-    }
-    var HTMLMonitorWebglBaseChartElement: {
-        prototype: HTMLMonitorWebglBaseChartElement;
-        new (): HTMLMonitorWebglBaseChartElement;
     };
     interface HTMLMonitorWebglChartAnnotationsElement extends Components.MonitorWebglChartAnnotations, HTMLStencilElement {
     }
@@ -1162,6 +1144,12 @@ declare global {
         prototype: HTMLScBoxElement;
         new (): HTMLScBoxElement;
     };
+    interface HTMLScChartIconElement extends Components.ScChartIcon, HTMLStencilElement {
+    }
+    var HTMLScChartIconElement: {
+        prototype: HTMLScChartIconElement;
+        new (): HTMLScChartIconElement;
+    };
     interface HTMLScErrorBadgeElement extends Components.ScErrorBadge, HTMLStencilElement {
     }
     var HTMLScErrorBadgeElement: {
@@ -1173,6 +1161,18 @@ declare global {
     var HTMLScLoadingSpinnerElement: {
         prototype: HTMLScLoadingSpinnerElement;
         new (): HTMLScLoadingSpinnerElement;
+    };
+    interface HTMLScWebglAxisElement extends Components.ScWebglAxis, HTMLStencilElement {
+    }
+    var HTMLScWebglAxisElement: {
+        prototype: HTMLScWebglAxisElement;
+        new (): HTMLScWebglAxisElement;
+    };
+    interface HTMLScWebglBaseChartElement extends Components.ScWebglBaseChart, HTMLStencilElement {
+    }
+    var HTMLScWebglBaseChartElement: {
+        prototype: HTMLScWebglBaseChartElement;
+        new (): HTMLScWebglBaseChartElement;
     };
     interface HTMLSingleColoredStatusElement extends Components.SingleColoredStatus, HTMLStencilElement {
     }
@@ -1280,7 +1280,6 @@ declare global {
         "line-chart-viewport-change": HTMLLineChartViewportChangeElement;
         "monitor-angled-line-segment": HTMLMonitorAngledLineSegmentElement;
         "monitor-bar-chart": HTMLMonitorBarChartElement;
-        "monitor-chart-icon": HTMLMonitorChartIconElement;
         "monitor-chart-y-range": HTMLMonitorChartYRangeElement;
         "monitor-circle-point-shaders": HTMLMonitorCirclePointShadersElement;
         "monitor-data-stream-name": HTMLMonitorDataStreamNameElement;
@@ -1332,7 +1331,6 @@ declare global {
         "monitor-tooltip": HTMLMonitorTooltipElement;
         "monitor-tooltip-row": HTMLMonitorTooltipRowElement;
         "monitor-tooltip-rows": HTMLMonitorTooltipRowsElement;
-        "monitor-webgl-axis": HTMLMonitorWebglAxisElement;
         "monitor-webgl-bar-chart-dynamic-buffer": HTMLMonitorWebglBarChartDynamicBufferElement;
         "monitor-webgl-bar-chart-dynamic-data": HTMLMonitorWebglBarChartDynamicDataElement;
         "monitor-webgl-bar-chart-dynamic-data-streams": HTMLMonitorWebglBarChartDynamicDataStreamsElement;
@@ -1348,7 +1346,6 @@ declare global {
         "monitor-webgl-bar-chart-threshold-coloration-multiple-data-stream": HTMLMonitorWebglBarChartThresholdColorationMultipleDataStreamElement;
         "monitor-webgl-bar-chart-threshold-coloration-multiple-thresholds": HTMLMonitorWebglBarChartThresholdColorationMultipleThresholdsElement;
         "monitor-webgl-bar-chart-threshold-no-coloration": HTMLMonitorWebglBarChartThresholdNoColorationElement;
-        "monitor-webgl-base-chart": HTMLMonitorWebglBaseChartElement;
         "monitor-webgl-chart-annotations": HTMLMonitorWebglChartAnnotationsElement;
         "monitor-webgl-chart-annotations-always-in-viewport": HTMLMonitorWebglChartAnnotationsAlwaysInViewportElement;
         "monitor-webgl-chart-axis": HTMLMonitorWebglChartAxisElement;
@@ -1373,8 +1370,11 @@ declare global {
         "multiple-statuses": HTMLMultipleStatusesElement;
         "sc-app": HTMLScAppElement;
         "sc-box": HTMLScBoxElement;
+        "sc-chart-icon": HTMLScChartIconElement;
         "sc-error-badge": HTMLScErrorBadgeElement;
         "sc-loading-spinner": HTMLScLoadingSpinnerElement;
+        "sc-webgl-axis": HTMLScWebglAxisElement;
+        "sc-webgl-base-chart": HTMLScWebglBaseChartElement;
         "single-colored-status": HTMLSingleColoredStatusElement;
         "single-status": HTMLSingleStatusElement;
         "status-chart-dynamic-buffer": HTMLStatusChartDynamicBufferElement;
@@ -1427,11 +1427,6 @@ declare namespace LocalJSX {
          */
         "viewPort"?: MinimalViewPortConfig;
         "widgetId": string;
-    }
-    interface MonitorChartIcon {
-        "color"?: string;
-        "name"?: StatusIcon;
-        "size"?: number;
     }
     interface MonitorChartYRange {
         "component"?: string;
@@ -1791,9 +1786,6 @@ declare namespace LocalJSX {
         "viewPort": ViewPort;
         "visualizesAlarms": boolean;
     }
-    interface MonitorWebglAxis {
-        "size": SizeConfig;
-    }
     interface MonitorWebglBarChartDynamicBuffer {
     }
     interface MonitorWebglBarChartDynamicData {
@@ -1823,46 +1815,6 @@ declare namespace LocalJSX {
     interface MonitorWebglBarChartThresholdColorationMultipleThresholds {
     }
     interface MonitorWebglBarChartThresholdNoColoration {
-    }
-    interface MonitorWebglBaseChart {
-        "alarms"?: AlarmsConfig;
-        "annotations"?: Annotations;
-        "axis"?: Axis.Options;
-        "bufferFactor": number;
-        "configId": string;
-        "createChartScene": ChartSceneCreator;
-        "dataStreams": DataStream[];
-        "displaysError"?: boolean;
-        /**
-          * if false, base chart will not display an empty state message when there is no data present.
-         */
-        "displaysNoDataPresentMsg"?: boolean;
-        "gestures": boolean;
-        "isEditing"?: boolean;
-        "legend"?: LegendConfig;
-        "messageOverrides"?: MessageOverrides;
-        "minBufferSize": number;
-        /**
-          * On view port date range change, this component emits a `dateRangeChange` event. This allows other data visualization components to sync to the same date range.
-         */
-        "onDateRangeChange"?: (event: CustomEvent<[Date, Date, string | undefined]>) => void;
-        /**
-          * Optionally hooks to integrate custom logic into the base chart
-         */
-        "onUpdateLifeCycle"?: (viewPort: ViewPortConfig) => void;
-        "onWidgetUpdated"?: (event: CustomEvent<WidgetConfigurationUpdate>) => void;
-        /**
-          * Optionally provided callback to initiate a request for data. Used to ensure gestures emit events for request data.
-         */
-        "requestData"?: RequestDataFn;
-        "size": SizePositionConfig;
-        "supportString"?: boolean;
-        "tooltip"?: (props: Tooltip.Props) => HTMLElement;
-        "trends"?: Trend[];
-        "updateChartScene": ChartSceneUpdater;
-        "viewPort": MinimalViewPortConfig;
-        "visualizesAlarms"?: boolean;
-        "yRangeStartFromZero"?: boolean;
     }
     interface MonitorWebglChartAnnotations {
     }
@@ -1928,11 +1880,59 @@ declare namespace LocalJSX {
         "size"?: MinimalSizeConfig;
         "someObject"?: Object;
     }
+    interface ScChartIcon {
+        "color"?: string;
+        "name"?: StatusIcon;
+        "size"?: number;
+    }
     interface ScErrorBadge {
     }
     interface ScLoadingSpinner {
         "dark"?: boolean;
         "size"?: number;
+    }
+    interface ScWebglAxis {
+        "size": SizeConfig;
+    }
+    interface ScWebglBaseChart {
+        "alarms"?: AlarmsConfig;
+        "annotations"?: Annotations;
+        "axis"?: Axis.Options;
+        "bufferFactor": number;
+        "configId": string;
+        "createChartScene": ChartSceneCreator;
+        "dataStreams": DataStream[];
+        "displaysError"?: boolean;
+        /**
+          * if false, base chart will not display an empty state message when there is no data present.
+         */
+        "displaysNoDataPresentMsg"?: boolean;
+        "gestures": boolean;
+        "isEditing"?: boolean;
+        "legend"?: LegendConfig;
+        "messageOverrides"?: MessageOverrides;
+        "minBufferSize": number;
+        /**
+          * On view port date range change, this component emits a `dateRangeChange` event. This allows other data visualization components to sync to the same date range.
+         */
+        "onDateRangeChange"?: (event: CustomEvent<[Date, Date, string | undefined]>) => void;
+        /**
+          * Optionally hooks to integrate custom logic into the base chart
+         */
+        "onUpdateLifeCycle"?: (viewPort: ViewPortConfig) => void;
+        "onWidgetUpdated"?: (event: CustomEvent<WidgetConfigurationUpdate>) => void;
+        /**
+          * Optionally provided callback to initiate a request for data. Used to ensure gestures emit events for request data.
+         */
+        "requestData"?: RequestDataFn;
+        "size": SizePositionConfig;
+        "supportString"?: boolean;
+        "tooltip"?: (props: Tooltip.Props) => HTMLElement;
+        "trends"?: Trend[];
+        "updateChartScene": ChartSceneUpdater;
+        "viewPort": MinimalViewPortConfig;
+        "visualizesAlarms"?: boolean;
+        "yRangeStartFromZero"?: boolean;
     }
     interface SingleColoredStatus {
     }
@@ -1974,7 +1974,6 @@ declare namespace LocalJSX {
         "line-chart-viewport-change": LineChartViewportChange;
         "monitor-angled-line-segment": MonitorAngledLineSegment;
         "monitor-bar-chart": MonitorBarChart;
-        "monitor-chart-icon": MonitorChartIcon;
         "monitor-chart-y-range": MonitorChartYRange;
         "monitor-circle-point-shaders": MonitorCirclePointShaders;
         "monitor-data-stream-name": MonitorDataStreamName;
@@ -2026,7 +2025,6 @@ declare namespace LocalJSX {
         "monitor-tooltip": MonitorTooltip;
         "monitor-tooltip-row": MonitorTooltipRow;
         "monitor-tooltip-rows": MonitorTooltipRows;
-        "monitor-webgl-axis": MonitorWebglAxis;
         "monitor-webgl-bar-chart-dynamic-buffer": MonitorWebglBarChartDynamicBuffer;
         "monitor-webgl-bar-chart-dynamic-data": MonitorWebglBarChartDynamicData;
         "monitor-webgl-bar-chart-dynamic-data-streams": MonitorWebglBarChartDynamicDataStreams;
@@ -2042,7 +2040,6 @@ declare namespace LocalJSX {
         "monitor-webgl-bar-chart-threshold-coloration-multiple-data-stream": MonitorWebglBarChartThresholdColorationMultipleDataStream;
         "monitor-webgl-bar-chart-threshold-coloration-multiple-thresholds": MonitorWebglBarChartThresholdColorationMultipleThresholds;
         "monitor-webgl-bar-chart-threshold-no-coloration": MonitorWebglBarChartThresholdNoColoration;
-        "monitor-webgl-base-chart": MonitorWebglBaseChart;
         "monitor-webgl-chart-annotations": MonitorWebglChartAnnotations;
         "monitor-webgl-chart-annotations-always-in-viewport": MonitorWebglChartAnnotationsAlwaysInViewport;
         "monitor-webgl-chart-axis": MonitorWebglChartAxis;
@@ -2067,8 +2064,11 @@ declare namespace LocalJSX {
         "multiple-statuses": MultipleStatuses;
         "sc-app": ScApp;
         "sc-box": ScBox;
+        "sc-chart-icon": ScChartIcon;
         "sc-error-badge": ScErrorBadge;
         "sc-loading-spinner": ScLoadingSpinner;
+        "sc-webgl-axis": ScWebglAxis;
+        "sc-webgl-base-chart": ScWebglBaseChart;
         "single-colored-status": SingleColoredStatus;
         "single-status": SingleStatus;
         "status-chart-dynamic-buffer": StatusChartDynamicBuffer;
@@ -2095,7 +2095,6 @@ declare module "@stencil/core" {
             "line-chart-viewport-change": LocalJSX.LineChartViewportChange & JSXBase.HTMLAttributes<HTMLLineChartViewportChangeElement>;
             "monitor-angled-line-segment": LocalJSX.MonitorAngledLineSegment & JSXBase.HTMLAttributes<HTMLMonitorAngledLineSegmentElement>;
             "monitor-bar-chart": LocalJSX.MonitorBarChart & JSXBase.HTMLAttributes<HTMLMonitorBarChartElement>;
-            "monitor-chart-icon": LocalJSX.MonitorChartIcon & JSXBase.HTMLAttributes<HTMLMonitorChartIconElement>;
             "monitor-chart-y-range": LocalJSX.MonitorChartYRange & JSXBase.HTMLAttributes<HTMLMonitorChartYRangeElement>;
             "monitor-circle-point-shaders": LocalJSX.MonitorCirclePointShaders & JSXBase.HTMLAttributes<HTMLMonitorCirclePointShadersElement>;
             "monitor-data-stream-name": LocalJSX.MonitorDataStreamName & JSXBase.HTMLAttributes<HTMLMonitorDataStreamNameElement>;
@@ -2147,7 +2146,6 @@ declare module "@stencil/core" {
             "monitor-tooltip": LocalJSX.MonitorTooltip & JSXBase.HTMLAttributes<HTMLMonitorTooltipElement>;
             "monitor-tooltip-row": LocalJSX.MonitorTooltipRow & JSXBase.HTMLAttributes<HTMLMonitorTooltipRowElement>;
             "monitor-tooltip-rows": LocalJSX.MonitorTooltipRows & JSXBase.HTMLAttributes<HTMLMonitorTooltipRowsElement>;
-            "monitor-webgl-axis": LocalJSX.MonitorWebglAxis & JSXBase.HTMLAttributes<HTMLMonitorWebglAxisElement>;
             "monitor-webgl-bar-chart-dynamic-buffer": LocalJSX.MonitorWebglBarChartDynamicBuffer & JSXBase.HTMLAttributes<HTMLMonitorWebglBarChartDynamicBufferElement>;
             "monitor-webgl-bar-chart-dynamic-data": LocalJSX.MonitorWebglBarChartDynamicData & JSXBase.HTMLAttributes<HTMLMonitorWebglBarChartDynamicDataElement>;
             "monitor-webgl-bar-chart-dynamic-data-streams": LocalJSX.MonitorWebglBarChartDynamicDataStreams & JSXBase.HTMLAttributes<HTMLMonitorWebglBarChartDynamicDataStreamsElement>;
@@ -2163,7 +2161,6 @@ declare module "@stencil/core" {
             "monitor-webgl-bar-chart-threshold-coloration-multiple-data-stream": LocalJSX.MonitorWebglBarChartThresholdColorationMultipleDataStream & JSXBase.HTMLAttributes<HTMLMonitorWebglBarChartThresholdColorationMultipleDataStreamElement>;
             "monitor-webgl-bar-chart-threshold-coloration-multiple-thresholds": LocalJSX.MonitorWebglBarChartThresholdColorationMultipleThresholds & JSXBase.HTMLAttributes<HTMLMonitorWebglBarChartThresholdColorationMultipleThresholdsElement>;
             "monitor-webgl-bar-chart-threshold-no-coloration": LocalJSX.MonitorWebglBarChartThresholdNoColoration & JSXBase.HTMLAttributes<HTMLMonitorWebglBarChartThresholdNoColorationElement>;
-            "monitor-webgl-base-chart": LocalJSX.MonitorWebglBaseChart & JSXBase.HTMLAttributes<HTMLMonitorWebglBaseChartElement>;
             "monitor-webgl-chart-annotations": LocalJSX.MonitorWebglChartAnnotations & JSXBase.HTMLAttributes<HTMLMonitorWebglChartAnnotationsElement>;
             "monitor-webgl-chart-annotations-always-in-viewport": LocalJSX.MonitorWebglChartAnnotationsAlwaysInViewport & JSXBase.HTMLAttributes<HTMLMonitorWebglChartAnnotationsAlwaysInViewportElement>;
             "monitor-webgl-chart-axis": LocalJSX.MonitorWebglChartAxis & JSXBase.HTMLAttributes<HTMLMonitorWebglChartAxisElement>;
@@ -2188,8 +2185,11 @@ declare module "@stencil/core" {
             "multiple-statuses": LocalJSX.MultipleStatuses & JSXBase.HTMLAttributes<HTMLMultipleStatusesElement>;
             "sc-app": LocalJSX.ScApp & JSXBase.HTMLAttributes<HTMLScAppElement>;
             "sc-box": LocalJSX.ScBox & JSXBase.HTMLAttributes<HTMLScBoxElement>;
+            "sc-chart-icon": LocalJSX.ScChartIcon & JSXBase.HTMLAttributes<HTMLScChartIconElement>;
             "sc-error-badge": LocalJSX.ScErrorBadge & JSXBase.HTMLAttributes<HTMLScErrorBadgeElement>;
             "sc-loading-spinner": LocalJSX.ScLoadingSpinner & JSXBase.HTMLAttributes<HTMLScLoadingSpinnerElement>;
+            "sc-webgl-axis": LocalJSX.ScWebglAxis & JSXBase.HTMLAttributes<HTMLScWebglAxisElement>;
+            "sc-webgl-base-chart": LocalJSX.ScWebglBaseChart & JSXBase.HTMLAttributes<HTMLScWebglBaseChartElement>;
             "single-colored-status": LocalJSX.SingleColoredStatus & JSXBase.HTMLAttributes<HTMLSingleColoredStatusElement>;
             "single-status": LocalJSX.SingleStatus & JSXBase.HTMLAttributes<HTMLSingleStatusElement>;
             "status-chart-dynamic-buffer": LocalJSX.StatusChartDynamicBuffer & JSXBase.HTMLAttributes<HTMLStatusChartDynamicBufferElement>;

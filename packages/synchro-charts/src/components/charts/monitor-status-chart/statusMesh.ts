@@ -12,7 +12,7 @@ import { Primitive, DataStream, AlarmsConfig } from '../../../utils/dataTypes';
 import statusVert from './status.vert';
 import statusFrag from './status.frag';
 import { WriteableBufferAttribute, WriteableInstancedBufferAttribute } from '../../monitor-webgl-context/types';
-import { numDataPoints, vertices, getCSSColorByString } from '../monitor-webgl-base-chart/utils';
+import { numDataPoints, vertices, getCSSColorByString } from '../sc-webgl-base-chart/utils';
 import { STATUS_MARGIN_TOP_PX, DEFAULT_STATUS_BAR_COLOR, HEIGHT } from './constants';
 import { getBreachedThreshold } from '../common/annotations/utils';
 import { getDistanceFromDuration } from '../common/getDistanceFromDuration';

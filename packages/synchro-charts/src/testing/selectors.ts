@@ -14,8 +14,8 @@ import { DataStreamId } from '../utils/dataTypes';
 // NOTE: the values of the selectors will change over time.
 export const ERROR_SYMBOL_SELECTOR = '[data-test-tag="error"]';
 export const LOADING_SPINNER_SELECTOR = 'sc-loading-spinner';
-export const CHART_VIZ_CONTAINER_SELECTOR = 'monitor-webgl-base-chart .data-container';
-export const CHART_TOOLTIP_SELECTOR = 'monitor-webgl-base-chart .tooltip-container';
+export const CHART_VIZ_CONTAINER_SELECTOR = 'sc-webgl-base-chart .data-container';
+export const CHART_TOOLTIP_SELECTOR = 'sc-webgl-base-chart .tooltip-container';
 export const CHART_TOOLTIP_ROW_SELECTOR = 'monitor-tooltip-row';
 export const LEGEND_SELECTOR = 'monitor-legend';
 

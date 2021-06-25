@@ -4,7 +4,7 @@ import { update } from '../../common/tests/merge';
 import { TREND_ICON_DASH_ARRAY } from '../../../../utils/dataTypes';
 import { CustomHTMLElement } from '../../../../utils/types';
 import { MonitorLegendRow } from './monitor-legend-row';
-import { POINT_TYPE } from '../../monitor-webgl-base-chart/activePoints';
+import { POINT_TYPE } from '../../sc-webgl-base-chart/activePoints';
 import { DATA_STREAM_INFO } from '../../../../testing/__mocks__/mockWidgetProperties';
 import { Components } from '../../../../components.d';
 import { StatusIcon } from '../../common/constants';
@@ -61,7 +61,7 @@ it('displays icon when passed in', async () => {
     icon: StatusIcon.NORMAL,
   });
 
-  expect(dataStreamInfo.innerHTML).toInclude('monitor-chart-icon');
+  expect(dataStreamInfo.innerHTML).toInclude('sc-chart-icon');
 });
 
 it('displays unit when provided', async () => {

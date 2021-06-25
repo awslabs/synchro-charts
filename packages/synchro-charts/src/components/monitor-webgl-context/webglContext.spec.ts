@@ -1,7 +1,7 @@
 import 'webgl-mock-threejs';
 import { Scene } from 'three';
 import { createWebGLRenderer } from './webglContext';
-import { constructChartScene } from '../charts/monitor-webgl-base-chart/utils';
+import { constructChartScene } from '../charts/sc-webgl-base-chart/utils';
 import { VIEW_PORT } from '../charts/common/testUtil';
 import { rectScrollFixed } from '../common/webGLPositioning';
 

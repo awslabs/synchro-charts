@@ -1,7 +1,7 @@
 import { Component, Element, h, Prop } from '@stencil/core';
 import tippy, { Instance } from 'tippy.js';
 
-import { POINT_TYPE } from '../charts/monitor-webgl-base-chart/activePoints';
+import { POINT_TYPE } from '../charts/sc-webgl-base-chart/activePoints';
 import { TIPPY_SETTINGS } from '../common/toolTipSettings';
 
 @Component({

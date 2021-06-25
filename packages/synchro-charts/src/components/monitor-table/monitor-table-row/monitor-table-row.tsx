@@ -1,6 +1,6 @@
 import { h } from '@stencil/core';
 import { Row } from '../constructTableData';
-import { EmptyStatus } from '../../charts/monitor-webgl-base-chart/EmptyStatus';
+import { EmptyStatus } from '../../charts/sc-webgl-base-chart/EmptyStatus';
 import { MessageOverrides, TableColumn } from '../../../utils/dataTypes';
 
 export const MonitorTableRows = ({

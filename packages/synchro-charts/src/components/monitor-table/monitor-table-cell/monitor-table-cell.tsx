@@ -39,7 +39,7 @@ export class MonitorTableCell {
       // existing data, error UX takes precedence.
       return (
         <div class="error">
-          <monitor-chart-icon name={StatusIcon.ERROR} />
+          <sc-chart-icon name={StatusIcon.ERROR} />
           {error}
         </div>
       );
@@ -60,7 +60,7 @@ export class MonitorTableCell {
       this.cell &&
       this.cell.dataStream && (
         <span style={{ color: color || 'unset', display: 'flex' }}>
-          {icon && <monitor-chart-icon name={icon} />}
+          {icon && <sc-chart-icon name={icon} />}
           <Value value={this.value()} />
         </span>
       )

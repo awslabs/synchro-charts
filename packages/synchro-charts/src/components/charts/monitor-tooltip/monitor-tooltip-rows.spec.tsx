@@ -7,10 +7,10 @@ import { Threshold } from '../common/types';
 import { TrendResult } from '../common/trends/types';
 import { DataPoint, DataStream, DataStreamInfo } from '../../../utils/dataTypes';
 import { MonitorTooltipRows } from './monitor-tooltip-rows';
-import { DEFAULT_CHART_CONFIG } from '../monitor-webgl-base-chart/chartDefaults';
+import { DEFAULT_CHART_CONFIG } from '../sc-webgl-base-chart/chartDefaults';
 
 import { DEFAULT_TOOLTIP_VALUE_COLOR } from './constants';
-import { POINT_TYPE } from '../monitor-webgl-base-chart/activePoints';
+import { POINT_TYPE } from '../sc-webgl-base-chart/activePoints';
 import { MINUTE_IN_MS } from '../../../utils/time';
 import {
   ALARM_STREAM,

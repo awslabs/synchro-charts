@@ -3,8 +3,8 @@ import { newSpecPage } from '@stencil/core/testing';
 
 import { SpecPage } from '@stencil/core/internal';
 import { Components } from '../../components.d';
-import { MonitorWebglBaseChart } from '../../components/charts/monitor-webgl-base-chart/monitor-webgl-base-chart';
-import { MonitorGestureHandler } from '../../components/charts/monitor-webgl-base-chart/monitor-gesture-handler';
+import { ScWebglBaseChart } from '../../components/charts/sc-webgl-base-chart/sc-webgl-base-chart';
+import { MonitorGestureHandler } from '../../components/charts/sc-webgl-base-chart/monitor-gesture-handler';
 import { MonitorLineChart } from '../../components/charts/monitor-line-chart/monitor-line-chart';
 import { MonitorSizeProvider } from '../../components/monitor-size-provider/monitor-size-provider';
 import { CustomHTMLElement } from '../../utils/types';
@@ -13,11 +13,11 @@ import { update } from '../../components/charts/common/tests/merge';
 import { MonitorBarChart } from '../../components/charts/monitor-bar-chart/monitor-bar-chart';
 import { MonitorScatterChart } from '../../components/charts/monitor-scatter-chart/monitor-scatter-chart';
 import { MonitorStatusChart } from '../../components/charts/monitor-status-chart/monitor-status-chart';
-import { MonitorWebglAxis } from '../../components/charts/monitor-webgl-base-chart/monitor-webgl-axis';
+import { ScWebglAxis } from '../../components/charts/sc-webgl-base-chart/sc-webgl-axis';
 import { ScErrorBadge } from '../../components/sc-error-badge/sc-error-badge';
 import { MonitorStatusTimelineOverlayRow } from '../../components/charts/monitor-status-chart/monitor-status-timeline-overlay/monitor-status-timeline-overlay-row';
 import { MonitorStatusTimelineOverlay } from '../../components/charts/monitor-status-chart/monitor-status-timeline-overlay/monitor-status-timeline-overlay';
-import { MonitorChartIcon } from '../../components/charts/chart-icon/monitor-chart-icon';
+import { ScChartIcon } from '../../components/charts/chart-icon/sc-chart-icon';
 
 const VIEW_PORT = { start: new Date(2000), end: new Date(2001, 0, 0), yMin: 0, yMax: 100 };
 
@@ -36,17 +36,17 @@ export interface DisableList {
 export const newChartSpecPage = (tagName: string): ChartSpecPage => async props => {
   const page = await newSpecPage({
     components: [
-      MonitorWebglBaseChart,
+      ScWebglBaseChart,
       MonitorGestureHandler,
       MonitorLineChart,
       MonitorBarChart,
       MonitorScatterChart,
       MonitorStatusChart,
       MonitorSizeProvider,
-      MonitorWebglAxis,
+      ScWebglAxis,
       MonitorStatusTimelineOverlayRow,
       MonitorStatusTimelineOverlay,
-      MonitorChartIcon,
+      ScChartIcon,
       ScErrorBadge,
     ],
     html: '<div></div>',

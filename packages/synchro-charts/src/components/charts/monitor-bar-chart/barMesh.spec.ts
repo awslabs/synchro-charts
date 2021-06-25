@@ -1,4 +1,4 @@
-import { clipSpaceConversion } from '../monitor-webgl-base-chart/clipSpaceConversion';
+import { clipSpaceConversion } from '../sc-webgl-base-chart/clipSpaceConversion';
 import { barMesh, updateBarMesh } from './barMesh';
 import { MONTH_IN_MS, DAY_IN_MS } from '../../../utils/time';
 import { getBarMargin, getBarWidth } from './displayLogic';

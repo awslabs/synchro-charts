@@ -2,11 +2,11 @@ import { Component, h, Prop } from '@stencil/core';
 import { SizeConfig } from '../../../utils/dataTypes';
 
 @Component({
-  tag: 'monitor-webgl-axis',
-  styleUrl: 'monitor-webgl-axis.css',
+  tag: 'sc-webgl-axis',
+  styleUrl: 'sc-webgl-axis.css',
   shadow: false,
 })
-export class MonitorWebglAxis {
+export class ScWebglAxis {
   @Prop() size!: SizeConfig;
 
   render() {

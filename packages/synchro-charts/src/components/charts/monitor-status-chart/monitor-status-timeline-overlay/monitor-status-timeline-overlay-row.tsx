@@ -29,7 +29,7 @@ export class MonitorStatusTimelineOverlayRow {
         />
         <div class="expando" />
         <span class="value" style={{ color: this.valueColor || 'unset', display: 'flex', alignItems: 'center' }}>
-          {this.icon && <monitor-chart-icon name={this.icon} />}
+          {this.icon && <sc-chart-icon name={this.icon} />}
           <Value value={this.value} unit={this.unit} />
         </span>
       </div>,

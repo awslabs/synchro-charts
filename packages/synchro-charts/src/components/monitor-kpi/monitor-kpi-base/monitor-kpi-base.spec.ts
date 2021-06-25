@@ -391,14 +391,14 @@ describe('icon', () => {
   it('renders no icon when `icon` not present', async () => {
     const { chart } = await newValueSpecPage({ breachedThreshold: { ...THRESHOLD, icon: undefined } });
 
-    const chartIcon = chart.querySelector('monitor-chart-icon') as HTMLMonitorChartIconElement;
+    const chartIcon = chart.querySelector('sc-chart-icon') as HTMLMonitorChartIconElement;
     expect(chartIcon).toBeNull();
   });
 
   it('renders icon when `provided`', async () => {
     const { chart } = await newValueSpecPage({ breachedThreshold: { ...THRESHOLD, icon: StatusIcon.DISABLED } });
 
-    const chartIcon = chart.querySelector('monitor-chart-icon') as HTMLMonitorChartIconElement;
+    const chartIcon = chart.querySelector('sc-chart-icon') as HTMLMonitorChartIconElement;
     expect(chartIcon).not.toBeNull();
   });
 
@@ -408,7 +408,7 @@ describe('icon', () => {
       isEnabled: false,
     });
 
-    const chartIcon = chart.querySelector('monitor-chart-icon');
+    const chartIcon = chart.querySelector('sc-chart-icon');
     expect(chartIcon).toBeNull();
   });
 });

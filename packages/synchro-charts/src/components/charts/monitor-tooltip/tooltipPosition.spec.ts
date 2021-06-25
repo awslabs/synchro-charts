@@ -1,6 +1,6 @@
 import { tooltipPosition } from './tooltipPosition';
 import { TooltipPoint } from './types';
-import { POINT_TYPE } from '../monitor-webgl-base-chart/activePoints';
+import { POINT_TYPE } from '../sc-webgl-base-chart/activePoints';
 import { MINUTE_IN_MS } from '../../../utils/time';
 import { DataPoint } from '../../../utils/dataTypes';
 

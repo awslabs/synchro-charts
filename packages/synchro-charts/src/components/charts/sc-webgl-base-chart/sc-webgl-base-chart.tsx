@@ -27,11 +27,7 @@ import {
 
 import { webGLRenderer } from '../../monitor-webgl-context/webglContext';
 import { ChartScene } from '../../monitor-webgl-context/types';
-import {
-  DEFAULT_CHART_CONFIG,
-  DEFAULT_THRESHOLD_OPTIONS,
-  DEFAULT_THRESHOLD_OPTIONS_OFF,
-} from '../monitor-webgl-base-chart/chartDefaults';
+import { DEFAULT_CHART_CONFIG, DEFAULT_THRESHOLD_OPTIONS, DEFAULT_THRESHOLD_OPTIONS_OFF } from './chartDefaults';
 import { ChartSceneCreator, ChartSceneUpdater } from './types';
 import { LoadingStatus } from './LoadingStatus';
 import { ErrorStatus } from './ErrorStatus';
@@ -62,11 +58,11 @@ const DATE_RANGE_EMIT_EVENT_MS = 0.5 * SECOND_IN_MS;
 const DEFAULT_SHOW_DATA_STREAM_COLOR = true;
 
 @Component({
-  tag: 'monitor-webgl-base-chart',
-  styleUrl: './monitor-webgl-base-chart.css',
+  tag: 'sc-webgl-base-chart',
+  styleUrl: './sc-webgl-base-chart.css',
   shadow: false,
 })
-export class MonitorWebglBaseChart {
+export class ScWebglBaseChart {
   @Element() el: HTMLElement;
   @Event()
   widgetUpdated: EventEmitter<WidgetConfigurationUpdate>;
@@ -139,7 +135,7 @@ export class MonitorWebglBaseChart {
 
   getAxisContainer = (): SVGElement => {
     if (!this.axisContainer) {
-      // Grab the svg within `<monitor-webgl-axis />` component
+      // Grab the svg within `<sc-webgl-axis />` component
       this.axisContainer = this.el.querySelector('svg.axis') as SVGElement;
     }
 
@@ -729,9 +725,9 @@ export class MonitorWebglBaseChart {
         : DEFAULT_SHOW_DATA_STREAM_COLOR;
 
     return [
-      <div class="awsui monitor-webgl-base-chart">
+      <div class="awsui sc-webgl-base-chart">
         {this.displaysError && <ErrorStatus hasError={hasError} size={chartSizeConfig} />}
-        <monitor-webgl-axis size={chartSizeConfig} />
+        <sc-webgl-axis size={chartSizeConfig} />
         <DataContainer size={chartSizeConfig}>
           <EmptyStatus
             displaysNoDataPresentMsg={this.displaysNoDataPresentMsg != null ? this.displaysNoDataPresentMsg : true}

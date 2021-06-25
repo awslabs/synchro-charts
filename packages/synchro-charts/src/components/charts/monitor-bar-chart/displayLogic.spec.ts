@@ -1,4 +1,4 @@
-import { clipSpaceConversion } from '../monitor-webgl-base-chart/clipSpaceConversion';
+import { clipSpaceConversion } from '../sc-webgl-base-chart/clipSpaceConversion';
 import { getBarWidth } from './displayLogic';
 import { DataStream } from '../../../utils/dataTypes';
 import { MONTH_IN_MS } from '../../../utils/time';

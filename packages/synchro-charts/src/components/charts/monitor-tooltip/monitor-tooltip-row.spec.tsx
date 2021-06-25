@@ -4,7 +4,7 @@ import { Components } from '../../../components.d';
 import { update } from '../common/tests/merge';
 import { MonitorTooltipRow } from './monitor-tooltip-row';
 import { DataPoint, DataStreamInfo, TREND_ICON_DASH_ARRAY } from '../../../utils/dataTypes';
-import { POINT_TYPE } from '../monitor-webgl-base-chart/activePoints';
+import { POINT_TYPE } from '../sc-webgl-base-chart/activePoints';
 import { DEFAULT_TOOLTIP_VALUE_COLOR } from './constants';
 import { NO_VALUE_PRESENT } from '../../common/terms';
 import { DataType } from '../../../utils/dataConstants';
@@ -69,13 +69,13 @@ describe('valueColor property', () => {
 describe('icon property', () => {
   it('renders the icon to be that of the value provided', async () => {
     const { tooltipRow } = await newTooltipRowPage({ icon: StatusIcon.SNOOZED });
-    const value = tooltipRow.querySelector('monitor-chart-icon') as HTMLElement;
+    const value = tooltipRow.querySelector('sc-chart-icon') as HTMLElement;
 
     expect(value).not.toBeEmpty;
   });
   it('renders the icon to be empty when no value provided', async () => {
     const { tooltipRow } = await newTooltipRowPage({});
-    const value = tooltipRow.querySelector('monitor-chart-icon') as HTMLElement;
+    const value = tooltipRow.querySelector('sc-chart-icon') as HTMLElement;
 
     expect(value).toBeEmpty;
   });

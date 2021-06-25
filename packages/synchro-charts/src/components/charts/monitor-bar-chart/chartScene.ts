@@ -1,9 +1,9 @@
 import { Scene } from 'three';
 
 import { BarChartBarMesh, barMesh, updateBarMesh, NUM_POSITION_COMPONENTS } from './barMesh';
-import { ChartSceneCreator, ChartSceneUpdater } from '../monitor-webgl-base-chart/types';
-import { constructChartScene, numDataPoints } from '../monitor-webgl-base-chart/utils';
-import { clipSpaceConversion, needsNewClipSpace } from '../monitor-webgl-base-chart/clipSpaceConversion';
+import { ChartSceneCreator, ChartSceneUpdater } from '../sc-webgl-base-chart/types';
+import { constructChartScene, numDataPoints } from '../sc-webgl-base-chart/utils';
+import { clipSpaceConversion, needsNewClipSpace } from '../sc-webgl-base-chart/clipSpaceConversion';
 
 const maxDataPointsRendered = (bars: BarChartBarMesh): number =>
   bars.geometry.attributes.bar.array.length / NUM_POSITION_COMPONENTS;

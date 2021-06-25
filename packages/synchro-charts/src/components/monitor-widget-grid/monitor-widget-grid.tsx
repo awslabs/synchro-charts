@@ -2,7 +2,7 @@ import { Component, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/
 
 import { DataPoint, DataStream, MessageOverrides, MinimalViewPortConfig, Primitive } from '../../utils/dataTypes';
 import { NameValue, updateName } from '../monitor-data-stream-name/helper';
-import { ActivePoint, activePoints } from '../charts/monitor-webgl-base-chart/activePoints';
+import { ActivePoint, activePoints } from '../charts/sc-webgl-base-chart/activePoints';
 import { getThresholds } from '../charts/common/annotations/utils';
 import { webGLRenderer } from '../monitor-webgl-context/webglContext';
 import { breachedThreshold } from '../charts/common/annotations/breachedThreshold';

@@ -14,7 +14,7 @@ import {
 import { lineVert } from './line.vert';
 import lineFrag from './line.frag';
 import lineColorationFrag from './line-coloration.frag';
-import { numDataPoints, vertices } from '../monitor-webgl-base-chart/utils';
+import { numDataPoints, vertices } from '../sc-webgl-base-chart/utils';
 import { WriteableBufferAttribute, WriteableInstancedBufferAttribute } from '../../monitor-webgl-context/types';
 import { STROKE_WIDTH } from '../common';
 import { pixelDensity } from '../common/pixelDensity';

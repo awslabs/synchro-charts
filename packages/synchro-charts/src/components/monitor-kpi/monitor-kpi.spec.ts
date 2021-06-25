@@ -3,7 +3,7 @@ import { newSpecPage } from '@stencil/core/testing';
 import { Components } from '../../components.d';
 import { CustomHTMLElement } from '../../utils/types';
 import { DATA_STREAMS } from '../charts/common/tests/chart/constants';
-import { DEFAULT_CHART_CONFIG } from '../charts/monitor-webgl-base-chart/chartDefaults';
+import { DEFAULT_CHART_CONFIG } from '../charts/sc-webgl-base-chart/chartDefaults';
 import { update } from '../charts/common/tests/merge';
 import { MonitorKpi } from './monitor-kpi';
 import { MonitorSizeProvider } from '../monitor-size-provider/monitor-size-provider';
