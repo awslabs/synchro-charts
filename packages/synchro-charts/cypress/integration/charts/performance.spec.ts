@@ -3,7 +3,7 @@ import { initFPSMetering } from '../../../src/utils/fps';
 import { DAY_IN_MS, SECOND_IN_MS } from '../../../src/utils/time';
 import { avg, standardDeviation } from '../../utils';
 
-const root = 'localhost:3333/tests/monitor-webgl-chart/performance';
+const root = 'localhost:3333/tests/sc-webgl-chart/performance';
 
 type PerfTestCase = {
   // The minimum frames per second which will be considered a passing test
@@ -91,9 +91,9 @@ describe.skip('line chart', () => {
       new Array(RUN_EACH_TEST_NUM_TIMES).fill(0).forEach((_, runNum) => {
         it(`RUN ${runNum + 1}: ${testName}`, () => {
           cy.visit(
-            `${root}/monitor-line-chart-stream-data?viewPortSpeed=${viewPortSpeed || 0}&roundFrequency=${roundFrequency}&dataPerRound=${dataPerRound}`
+            `${root}/sc-line-chart-stream-data?viewPortSpeed=${viewPortSpeed || 0}&roundFrequency=${roundFrequency}&dataPerRound=${dataPerRound}`
           );
-          cy.get('monitor-line-chart').should('exist');
+          cy.get('sc-line-chart').should('exist');
 
           const { fps, stop } = initFPSMetering();
 
@@ -121,7 +121,7 @@ describe.skip('line chart', () => {
         stdDevAverage: Math.floor( standardDeviation(testResults.average) ),
       }
     });
-    cy.writeFile(`performance_reports/perf.monitor-chart-perf-${new Date().toISOString()}.json`, translatedResults);
+    cy.writeFile(`performance_reports/perf.sc-chart-perf-${new Date().toISOString()}.json`, translatedResults);
   });
 })
 

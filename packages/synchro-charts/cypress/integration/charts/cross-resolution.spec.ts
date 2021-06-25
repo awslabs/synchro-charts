@@ -4,7 +4,7 @@ import {
   CHART_TOOLTIP_ROW_SELECTOR,
   CHART_TOOLTIP_SELECTOR,
   CHART_VIZ_CONTAINER_SELECTOR,
-  visitDynamicSitewiseWidget,
+  visitDynamicWidget,
 } from '../../../src/testing/selectors';
 import { DATA_STREAM, DATA_STREAM_2 } from '../../../src/testing/__mocks__/mockWidgetProperties';
 
@@ -40,8 +40,8 @@ const AGGREGATED_DATA_STREAM = {
 };
 
 it('displays each aggregation description within tooltip', () => {
-  visitDynamicSitewiseWidget(cy, {
-    componentTag: 'monitor-line-chart',
+  visitDynamicWidget(cy, {
+    componentTag: 'sc-line-chart',
     viewPortStart: START,
     viewPortEnd: END,
     dataStreams: [RAW_DATA_STREAM, AGGREGATED_DATA_STREAM],

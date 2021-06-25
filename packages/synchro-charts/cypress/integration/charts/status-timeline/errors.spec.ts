@@ -1,13 +1,13 @@
 import {
   ERROR_SYMBOL_SELECTOR,
   STATUS_TIMELINE_OVERLAY_ROW_SELECTOR,
-  visitDynamicSitewiseWidget,
+  visitDynamicWidget,
 } from '../../../../src/testing/selectors';
 import { DATA_STREAM } from '../../../../src/testing/__mocks__/mockWidgetProperties';
 
 it('displays error when there is an error', () => {
-  visitDynamicSitewiseWidget(cy, {
-    componentTag: 'monitor-status-chart',
+  visitDynamicWidget(cy, {
+    componentTag: 'sc-status-chart',
     dataStreams: [{ ...DATA_STREAM, error: 'beep beep SEV-2' }],
   });
 
@@ -19,8 +19,8 @@ it('displays error when there is an error', () => {
 });
 
 it('truncates long error message', () => {
-  visitDynamicSitewiseWidget(cy, {
-    componentTag: 'monitor-status-chart',
+  visitDynamicWidget(cy, {
+    componentTag: 'sc-status-chart',
     dataStreams: [
       { ...DATA_STREAM, error: 'a really really really really really long and not very useful error message.' },
     ],

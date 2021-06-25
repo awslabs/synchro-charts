@@ -3,7 +3,7 @@ import {
   CHART_VIZ_CONTAINER_SELECTOR,
   STATUS_TIMELINE_OVERLAY_ROW_SELECTOR,
   STATUS_TIMELINE_OVERLAY_SELECTOR,
-  visitDynamicSitewiseWidget,
+  visitDynamicWidget,
 } from '../../../../src/testing/selectors';
 import { DataPoint, DataStreamInfo, DataStream } from '../../../../src/utils/dataTypes';
 import { CHART_SIZE } from '../../../../src/testing/test-routes/charts/shaders/chartSize';
@@ -30,7 +30,7 @@ describe('status timeline', () => {
     const viewPortStart = new Date(2000, 0, 0);
     const viewPortEnd = new Date(2000, 0, 1);
     const timelineParams: Partial<SearchQueryParams> = {
-      componentTag: 'monitor-status-chart',
+      componentTag: 'sc-status-chart',
       viewPortStart,
       viewPortEnd,
       dataStreams: [
@@ -42,7 +42,7 @@ describe('status timeline', () => {
     };
 
     it('extends timeline point when no expiration provided', () => {
-      visitDynamicSitewiseWidget(cy, {
+      visitDynamicWidget(cy, {
         ...timelineParams,
         alarms: { expires: undefined },
       });
@@ -68,8 +68,8 @@ describe('status timeline', () => {
       ...createInfos(1)[0],
       unit: 'mph',
     };
-    visitDynamicSitewiseWidget(cy, {
-      componentTag: 'monitor-status-chart',
+    visitDynamicWidget(cy, {
+      componentTag: 'sc-status-chart',
       alarms: { expires: MINUTE_IN_MS },
       dataStreams: [
         {
@@ -87,8 +87,8 @@ describe('status timeline', () => {
 
   describe('isEditing', () => {
     it('edits a info name while `isEditing` is true', () => {
-      visitDynamicSitewiseWidget(cy, {
-        componentTag: 'monitor-status-chart',
+      visitDynamicWidget(cy, {
+        componentTag: 'sc-status-chart',
         alarms: { expires: MINUTE_IN_MS },
         isEditing: true,
         dataStreams: [DATA_STREAM],
@@ -122,8 +122,8 @@ describe('status timeline', () => {
       name: `name-${i}-with-a really-really really-long-name-which-likes-to-overflow-containers really-long-name-which-likes-to-overflow-containers really-long-name-which-likes-to-overflow-containers`,
     }));
 
-    visitDynamicSitewiseWidget(cy, {
-      componentTag: 'monitor-status-chart',
+    visitDynamicWidget(cy, {
+      componentTag: 'sc-status-chart',
       alarms: { expires: MINUTE_IN_MS },
       dataStreams,
     });
@@ -149,8 +149,8 @@ describe('status timeline', () => {
   it('renders legend rows evenly spaced', () => {
     const dataStreamInfos = createInfos(3); // Maximum that can fit within a chart the given size
 
-    visitDynamicSitewiseWidget(cy, {
-      componentTag: 'monitor-status-chart',
+    visitDynamicWidget(cy, {
+      componentTag: 'sc-status-chart',
       alarms: { expires: MINUTE_IN_MS },
       dataStreams: dataStreamInfos.map(info => ({ ...info, data: [] })),
     });
@@ -171,8 +171,8 @@ describe('status timeline', () => {
       name: `asset ${i} with a really really long name that does not fit, even if you have a really really large area to display the information. there's no way this could fit`,
     })); // Maximum that can fit within a chart the given size
 
-    visitDynamicSitewiseWidget(cy, {
-      componentTag: 'monitor-status-chart',
+    visitDynamicWidget(cy, {
+      componentTag: 'sc-status-chart',
       alarms: { expires: MINUTE_IN_MS },
       dataStreams: dataStreamInfos.map(info => ({ ...info, data: [] })),
     });
@@ -327,14 +327,14 @@ describe('mesh', () => {
   const root = 'localhost:3333';
 
   it('renders a single status', () => {
-    cy.visit(`${root}/tests/monitor-webgl-chart/single-status`);
+    cy.visit(`${root}/tests/sc-webgl-chart/single-status`);
     cy.viewport(CHART_SIZE.width, CHART_SIZE.height);
     cy.wait(WAIT_MS);
     cy.get('#test-container').matchImageSnapshotOnCI();
   });
 
   it('renders multiple data streams as parallel status timelines', () => {
-    cy.visit(`${root}/tests/monitor-webgl-chart/multiple-statuses`);
+    cy.visit(`${root}/tests/sc-webgl-chart/multiple-statuses`);
     cy.viewport(200, 200);
     cy.wait(WAIT_MS);
     cy.get('#test-container').matchImageSnapshotOnCI();

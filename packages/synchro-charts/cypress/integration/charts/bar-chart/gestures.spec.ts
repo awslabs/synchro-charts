@@ -1,5 +1,5 @@
 /* eslint-disable cypress/no-unnecessary-waiting */
-import { CHART_VIZ_CONTAINER_SELECTOR, visitDynamicSitewiseWidget } from '../../../../src/testing/selectors';
+import { CHART_VIZ_CONTAINER_SELECTOR, visitDynamicWidget } from '../../../../src/testing/selectors';
 import { SECOND_IN_MS } from '../../../../src/utils/time';
 
 const root = 'localhost:3333/tests';
@@ -14,8 +14,8 @@ it('moves viewport when gestures are applied', () => {
   const END = new Date(2000, 0, 2);
   const OLD_X_AXIS_TICK = 'Fri 31';
 
-  visitDynamicSitewiseWidget(cy, {
-    componentTag: 'monitor-bar-chart',
+  visitDynamicWidget(cy, {
+    componentTag: 'sc-bar-chart',
     viewPortStart: START,
     viewPortEnd: END,
     gestures: true,
@@ -39,8 +39,8 @@ it('does not move viewport when gestures are not applied', () => {
   const END = new Date(2000, 0, 2);
   const OLD_X_AXIS_TICK = 'Fri 31';
 
-  visitDynamicSitewiseWidget(cy, {
-    componentTag: 'monitor-bar-chart',
+  visitDynamicWidget(cy, {
+    componentTag: 'sc-bar-chart',
     viewPortStart: START,
     viewPortEnd: END,
     gestures: false,
@@ -59,7 +59,7 @@ it('does not move viewport when gestures are not applied', () => {
 
 it('adjusts y range as data in the view changes', () => {
   cy.viewport(VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
-  cy.visit(`${root}/chart/y-range?componentTag=monitor-bar-chart`);
+  cy.visit(`${root}/chart/y-range?componentTag=sc-bar-chart`);
 
   const EXISTING_Y_VALUE = '18,000';
 

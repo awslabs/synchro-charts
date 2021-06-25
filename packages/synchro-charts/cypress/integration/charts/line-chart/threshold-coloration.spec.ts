@@ -1,4 +1,4 @@
-const root = 'localhost:3333/tests/monitor-webgl-chart';
+const root = 'localhost:3333/tests/sc-webgl-chart';
 
 const VIEWPORT_HEIGHT = 500;
 const VIEWPORT_WIDTH = 500;

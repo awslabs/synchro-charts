@@ -2,7 +2,7 @@ import {
   CHART_TOOLTIP_ROW_SELECTOR,
   CHART_TOOLTIP_SELECTOR,
   CHART_VIZ_CONTAINER_SELECTOR,
-  visitDynamicSitewiseWidget,
+  visitDynamicWidget,
 } from '../../../../src/testing/selectors';
 import { SCREEN_SIZE } from '../../../../src/testing/dynamicWidgetUtils/testCaseParameters';
 import { SECOND_IN_MS } from '../../../../src/utils/time';
@@ -16,8 +16,8 @@ import {
 } from '../../../../src/testing/__mocks__/mockWidgetProperties';
 
 it('renders no tooltip when only info is empty or string', () => {
-  visitDynamicSitewiseWidget(cy, {
-    componentTag: 'monitor-scatter-chart',
+  visitDynamicWidget(cy, {
+    componentTag: 'sc-scatter-chart',
     viewPortStart: new Date(2000, 0, 0),
     viewPortEnd: new Date(2000, 0, 0, 0, 5),
     dataStreams: [NUMBER_EMPTY_STREAM, STRING_STREAM_1],
@@ -36,8 +36,8 @@ it('renders no tooltip when only info is empty or string', () => {
 });
 
 it('renders tooltip rows in order of values magnitude', () => {
-  visitDynamicSitewiseWidget(cy, {
-    componentTag: 'monitor-scatter-chart',
+  visitDynamicWidget(cy, {
+    componentTag: 'sc-scatter-chart',
     viewPortStart: new Date(2000, 0, 0),
     viewPortEnd: new Date(2000, 0, 0, 0, 5),
     dataStreams: [NUMBER_STREAM_1, NUMBER_EMPTY_STREAM, NUMBER_STREAM_2],

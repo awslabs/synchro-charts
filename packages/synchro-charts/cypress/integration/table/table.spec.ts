@@ -1,9 +1,9 @@
 import { MINUTE_IN_MS, SECOND_IN_MS } from '../../../src/utils/time';
-import { tableMockData } from '../../../src/testing/test-routes/monitor-table/tableDataMock';
+import { tableMockData } from '../../../src/testing/test-routes/sc-table/tableDataMock';
 import {
   ERROR_SYMBOL_SELECTOR,
   LOADING_SPINNER_SELECTOR,
-  visitDynamicSitewiseWidget,
+  visitDynamicWidget,
 } from '../../../src/testing/selectors';
 
 const COLUMN_SELECTOR = 'th';
@@ -18,8 +18,8 @@ const viewPortEnd = new Date(DATE_OF_POINT.getTime() + 5 * MINUTE_IN_MS);
 
 it('renders table column values', () => {
   const { tableColumns, dataStreams, annotations } = tableMockData({});
-  visitDynamicSitewiseWidget(cy, {
-    componentTag: 'monitor-table',
+  visitDynamicWidget(cy, {
+    componentTag: 'sc-table',
     duration: MINUTE_IN_MS,
     dataStreams,
     tableColumns,
@@ -45,8 +45,8 @@ it('renders table column values', () => {
 
 it('renders table row values', () => {
   const { tableColumns, dataStreams, annotations } = tableMockData({});
-  visitDynamicSitewiseWidget(cy, {
-    componentTag: 'monitor-table',
+  visitDynamicWidget(cy, {
+    componentTag: 'sc-table',
     duration: MINUTE_IN_MS,
     dataStreams,
     tableColumns,
@@ -69,7 +69,7 @@ it('renders table row values', () => {
     .invoke('text')
     .should('equal', 'NORMAL');
 
-  cy.get('monitor-table-cell div')
+  cy.get('sc-table-cell div')
     .should('be.visible')
     .then($el => {
       // Expected to be green, which matches the breached threshold on the last value
@@ -82,8 +82,8 @@ it('renders table row values', () => {
 it('renders loading spinner for cells in a table', () => {
   const { tableColumns, dataStreams, annotations } = tableMockData({ showLoading: true });
 
-  visitDynamicSitewiseWidget(cy, {
-    componentTag: 'monitor-table',
+  visitDynamicWidget(cy, {
+    componentTag: 'sc-table',
     dataStreams,
     delayBeforeDataLoads: 5 * SECOND_IN_MS,
     duration: MINUTE_IN_MS,
@@ -102,8 +102,8 @@ it('renders loading spinner for cells in a table', () => {
 it('renders error string and icon in a table', () => {
   const { tableColumns, dataStreams, annotations, errorMsg } = tableMockData({ showError: true });
 
-  visitDynamicSitewiseWidget(cy, {
-    componentTag: 'monitor-table',
+  visitDynamicWidget(cy, {
+    componentTag: 'sc-table',
     dataStreams,
     duration: MINUTE_IN_MS,
     delayBeforeDataLoads: 5 * SECOND_IN_MS,
@@ -125,8 +125,8 @@ it('renders error string and icon in a table', () => {
 describe('layout edge cases', () => {
   it('hides rows that cannot fit on the widget', () => {
     const { tableColumns, dataStreams } = tableMockData({ tableDataLength: 4 });
-    visitDynamicSitewiseWidget(cy, {
-      componentTag: 'monitor-table',
+    visitDynamicWidget(cy, {
+      componentTag: 'sc-table',
       dataStreams,
       duration: MINUTE_IN_MS,
       tableColumns,
@@ -148,8 +148,8 @@ describe('layout edge cases', () => {
 
   it('wraps text when cell text is very long', () => {
     const { tableColumns, dataStreams } = tableMockData({ tableDataLength: 1 });
-    visitDynamicSitewiseWidget(cy, {
-      componentTag: 'monitor-table',
+    visitDynamicWidget(cy, {
+      componentTag: 'sc-table',
       duration: MINUTE_IN_MS,
       dataStreams: [
         {
@@ -180,8 +180,8 @@ describe('layout edge cases', () => {
 
   it('displays many columns by hiding those that cannot fit behind a scroll area', () => {
     const NUM_COLUMNS = 10;
-    visitDynamicSitewiseWidget(cy, {
-      componentTag: 'monitor-table',
+    visitDynamicWidget(cy, {
+      componentTag: 'sc-table',
       tableColumns: new Array(NUM_COLUMNS).fill(0).map((_, i) => ({
         header: `column-${i + 1}`,
         rows: [undefined],
@@ -202,8 +202,8 @@ describe('layout edge cases', () => {
 
 it('empty state', () => {
   const { tableColumns, annotations } = tableMockData({ tableDataLength: 0 });
-  visitDynamicSitewiseWidget(cy, {
-    componentTag: 'monitor-table',
+  visitDynamicWidget(cy, {
+    componentTag: 'sc-table',
     duration: MINUTE_IN_MS,
     dataStreams: [],
     tableColumns,
@@ -211,15 +211,15 @@ it('empty state', () => {
     viewPortStart,
     viewPortEnd,
   });
-  cy.get('monitor-table')
+  cy.get('sc-table')
     .get(EMPTY_STATUS_SELECTOR)
     .should('be.visible');
 });
 
 it('disable state', () => {
   const { tableColumns, annotations } = tableMockData({ tableDataLength: 0 });
-  visitDynamicSitewiseWidget(cy, {
-    componentTag: 'monitor-table',
+  visitDynamicWidget(cy, {
+    componentTag: 'sc-table',
     duration: undefined,
     dataStreams: [],
     tableColumns,
@@ -227,7 +227,7 @@ it('disable state', () => {
     viewPortStart,
     viewPortEnd,
   });
-  cy.get('monitor-table')
+  cy.get('sc-table')
     .get(DISABLE_STATUS_SELECTOR)
     .should('be.visible');
 });

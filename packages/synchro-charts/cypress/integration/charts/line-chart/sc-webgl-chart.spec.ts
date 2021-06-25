@@ -11,9 +11,9 @@ import {
   TEXT_VALUE_SELECTOR as Y_TEXT_VALUE_SELECTOR,
 } from '../../../../src/components/charts/common/annotations/YAnnotations/YAnnotationTexts';
 import { clickAndDrag } from '../../../utils';
-import { CHART_VIZ_CONTAINER_SELECTOR, visitDynamicSitewiseWidget } from '../../../../src/testing/selectors';
+import { CHART_VIZ_CONTAINER_SELECTOR, visitDynamicWidget } from '../../../../src/testing/selectors';
 
-const root = 'localhost:3333/tests/monitor-webgl-chart';
+const root = 'localhost:3333/tests/sc-webgl-chart';
 
 const VIEWPORT_HEIGHT = 500;
 const VIEWPORT_WIDTH = 500;
@@ -37,7 +37,7 @@ describe('line chart', () => {
   });
 
   it('renders chart with a large viewport', () => {
-    cy.visit(`${root}/monitor-webgl-chart-large-viewport`);
+    cy.visit(`${root}/sc-webgl-chart-large-viewport`);
 
     cy.waitForChart();
 
@@ -208,8 +208,8 @@ describe('line chart', () => {
   });
 
   it('renders the y-axis label if passed in', () => {
-    visitDynamicSitewiseWidget(cy, {
-      componentTag: 'monitor-line-chart',
+    visitDynamicWidget(cy, {
+      componentTag: 'sc-line-chart',
       axis: {
         labels: {
           yAxis: {

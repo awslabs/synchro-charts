@@ -1,11 +1,11 @@
-import { CHART_VIZ_CONTAINER_SELECTOR, visitDynamicSitewiseWidget } from '../../../../src/testing/selectors';
+import { CHART_VIZ_CONTAINER_SELECTOR, visitDynamicWidget } from '../../../../src/testing/selectors';
 import { DATA_STREAM } from '../../../../src/testing/__mocks__/mockWidgetProperties';
 import { messageOverrides } from '../../../../src/testing/__mocks__/mockMessgeOverrides';
 
-const componentTag = 'monitor-status-chart';
+const componentTag = 'sc-status-chart';
 
 it('renders the "no streams present" messaging when no streams preset', () => {
-  visitDynamicSitewiseWidget(cy, {
+  visitDynamicWidget(cy, {
     componentTag,
     dataStreams: [],
     messageOverrides,
@@ -18,7 +18,7 @@ it('renders the "no streams present" messaging when no streams preset', () => {
 });
 
 it('does not render the "no data present" messaging when no data preset', () => {
-  visitDynamicSitewiseWidget(cy, {
+  visitDynamicWidget(cy, {
     componentTag,
     dataStreams: [{ ...DATA_STREAM, data: [] }],
     messageOverrides,

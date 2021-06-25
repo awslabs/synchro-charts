@@ -1,5 +1,5 @@
 /* eslint-disable cypress/no-unnecessary-waiting */
-import { CHART_VIZ_CONTAINER_SELECTOR, visitDynamicSitewiseWidget } from '../../../../src/testing/selectors';
+import { CHART_VIZ_CONTAINER_SELECTOR, visitDynamicWidget } from '../../../../src/testing/selectors';
 import { SECOND_IN_MS } from '../../../../src/utils/time';
 
 const root = 'localhost:3333/tests';
@@ -14,8 +14,8 @@ it('moves viewport when gestures are applied', () => {
   const END = new Date(2000, 0, 2);
   const OLD_Y_TICK_LABEL = 'Fri 31';
 
-  visitDynamicSitewiseWidget(cy, {
-    componentTag: 'monitor-line-chart',
+  visitDynamicWidget(cy, {
+    componentTag: 'sc-line-chart',
     viewPortStart: START,
     viewPortEnd: END,
     gestures: true,
@@ -37,8 +37,8 @@ it('does not move viewport when gestures are not applied', () => {
   const END = new Date(2000, 0, 2);
   const OLD_Y_TICK_LABEL = 'Fri 31';
 
-  visitDynamicSitewiseWidget(cy, {
-    componentTag: 'monitor-scatter-chart',
+  visitDynamicWidget(cy, {
+    componentTag: 'sc-scatter-chart',
     viewPortStart: START,
     viewPortEnd: END,
     gestures: false,
@@ -57,7 +57,7 @@ it('does not move viewport when gestures are not applied', () => {
 
 it('adjusts y range as data in the view changes', () => {
   cy.viewport(VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
-  cy.visit(`${root}/chart/y-range?componentTag=monitor-line-chart`);
+  cy.visit(`${root}/chart/y-range?componentTag=sc-line-chart`);
 
   cy.waitForChart();
 
@@ -78,7 +78,7 @@ it('adjusts y range as data in the view changes', () => {
 
 describe('gestures while charts are synchronized', () => {
   it('zooms into both charts', () => {
-    cy.visit(`${root}/monitor-webgl-chart/multi`);
+    cy.visit(`${root}/sc-webgl-chart/multi`);
     cy.viewport(VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
 
     cy.waitForChart();

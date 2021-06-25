@@ -2,7 +2,7 @@ import {
   CHART_TOOLTIP_ROW_SELECTOR,
   CHART_TOOLTIP_SELECTOR,
   CHART_VIZ_CONTAINER_SELECTOR,
-  visitDynamicSitewiseWidget,
+  visitDynamicWidget,
 } from '../../../../src/testing/selectors';
 import { SCREEN_SIZE } from '../../../../src/testing/dynamicWidgetUtils/testCaseParameters';
 import { MINUTE_IN_MS, SECOND_IN_MS } from '../../../../src/utils/time';
@@ -17,8 +17,8 @@ import {
 } from '../../../../src/testing/__mocks__/mockWidgetProperties';
 
 it('renders no tooltip when only info is empty or string', () => {
-  visitDynamicSitewiseWidget(cy, {
-    componentTag: 'monitor-bar-chart',
+  visitDynamicWidget(cy, {
+    componentTag: 'sc-bar-chart',
     viewPortStart: new Date(START_DATE.getTime() - MINUTE_IN_MS),
     viewPortEnd: new Date(START_DATE.getTime() + 10 * MINUTE_IN_MS),
     dataStreams: [
@@ -40,8 +40,8 @@ it('renders no tooltip when only info is empty or string', () => {
 });
 
 it('renders no tooltip when there is no data for the requested resolution', () => {
-  visitDynamicSitewiseWidget(cy, {
-    componentTag: 'monitor-bar-chart',
+  visitDynamicWidget(cy, {
+    componentTag: 'sc-bar-chart',
     viewPortStart: new Date(START_DATE.getTime() - MINUTE_IN_MS),
     viewPortEnd: new Date(START_DATE.getTime() + 10 * MINUTE_IN_MS),
     dataStreams: [{ ...NUMBER_STREAM_1, resolution: SECOND_IN_MS }],
@@ -61,8 +61,8 @@ it('renders no tooltip when there is no data for the requested resolution', () =
 
 it('renders tooltip rows in order of values magnitude', () => {
   const resolution = MINUTE_IN_MS;
-  visitDynamicSitewiseWidget(cy, {
-    componentTag: 'monitor-bar-chart',
+  visitDynamicWidget(cy, {
+    componentTag: 'sc-bar-chart',
     viewPortStart: new Date(START_DATE.getTime() - MINUTE_IN_MS),
     viewPortEnd: new Date(START_DATE.getTime() + 10 * MINUTE_IN_MS),
     dataStreams: [

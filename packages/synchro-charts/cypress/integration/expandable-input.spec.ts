@@ -1,4 +1,4 @@
-const root = 'http://localhost:3333/tests/monitor-expandable-input/standard';
+const root = 'http://localhost:3333/tests/sc-expandable-input/standard';
 it('onValueChange is invoked only after blur', () => {
   cy.visit(root);
   const SOME_TEXT = 'some text';
