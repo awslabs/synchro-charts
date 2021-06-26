@@ -9,6 +9,10 @@
   "workspaces": [
     "packages/*"
   ],
+  "scripts": {
+    "build": "lerna run build --stream",
+    "clean": "lerna run clean --concurrency 4"
+  },
   "license": "Apache-2.0",
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^2.6.0",
