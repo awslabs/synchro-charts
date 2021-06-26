@@ -75,7 +75,7 @@ export class ScSizeProvider {
       if (rectHasUpdated) {
         if (this.rect && this.rect.density !== newRect.density) {
           // When the density has changed, we need to trigger a resolution change. This will occur in scenarios
-          // such as attaching or detaching a Sc.
+          // such as attaching or detaching a monitor.
           webGLRenderer.onResolutionChange();
         }
 
