@@ -58,7 +58,9 @@ export class ScSizeProvider {
   componentDidLoad() {
     this.setRect();
     this.rectPollingHandler = window.setInterval(this.setRect, MS_PER_RECT_POLL);
-    this.resizer.observe(this.el.firstElementChild as Element);
+    if (this.el.firstElementChild?.nodeType !== Node.ELEMENT_NODE) {
+      this.resizer.observe(this.el.firstElementChild as Element);
+    }
   }
 
   disconnectedCallback() {
