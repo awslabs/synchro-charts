@@ -1,6 +1,6 @@
 import { SCREEN_SIZE } from '../../../../src/testing/dynamicWidgetUtils/testCaseParameters';
 import { Annotation, Threshold } from '../../../../src/components/charts/common/types';
-import { visitDynamicSitewiseWidget } from '../../../../src/testing/selectors';
+import { visitDynamicWidget } from '../../../../src/testing/selectors';
 import { COMPARISON_OPERATOR } from '../../../../src';
 
 const createUniqueThresholds = (num: number): Threshold[] =>
@@ -21,28 +21,28 @@ it('renders threshold legend', () => {
     color: 'red',
   };
 
-  visitDynamicSitewiseWidget(cy, {
-    componentTag: 'monitor-status-chart',
+  visitDynamicWidget(cy, {
+    componentTag: 'sc-status-chart',
     annotations: {
       y: [eqThreshold],
     },
   });
 
-  cy.get('monitor-threshold-legend').should('be.visible');
-  cy.get('monitor-threshold-legend-row').should('be.visible');
-  cy.get('monitor-threshold-legend-row').should('have.length', 1);
+  cy.get('sc-threshold-legend').should('be.visible');
+  cy.get('sc-threshold-legend-row').should('be.visible');
+  cy.get('sc-threshold-legend-row').should('have.length', 1);
 
-  cy.contains('monitor-threshold-legend-row', eqThreshold.value).should('be.visible');
+  cy.contains('sc-threshold-legend-row', eqThreshold.value).should('be.visible');
 
-  cy.get('monitor-threshold-legend').matchImageSnapshotOnCI();
+  cy.get('sc-threshold-legend').matchImageSnapshotOnCI();
 });
 
 it('renders many thresholds at once', () => {
   const NUM_THRESHOLDS = 20;
   const thresholds = createUniqueThresholds(NUM_THRESHOLDS);
 
-  visitDynamicSitewiseWidget(cy, {
-    componentTag: 'monitor-status-chart',
+  visitDynamicWidget(cy, {
+    componentTag: 'sc-status-chart',
     annotations: {
       y: thresholds,
     },
@@ -59,8 +59,8 @@ it('does not render annotations (that are not thresholds)', () => {
     color: 'red',
   };
 
-  visitDynamicSitewiseWidget(cy, {
-    componentTag: 'monitor-status-chart',
+  visitDynamicWidget(cy, {
+    componentTag: 'sc-status-chart',
     annotations: {
       y: [annotation],
     },
@@ -68,5 +68,5 @@ it('does not render annotations (that are not thresholds)', () => {
 
   cy.waitForStatusTimeline();
 
-  cy.contains('monitor-threshold-legend-row').should('have.length', 0);
+  cy.contains('sc-threshold-legend-row').should('have.length', 0);
 });

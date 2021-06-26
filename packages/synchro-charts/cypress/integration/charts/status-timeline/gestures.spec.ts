@@ -1,12 +1,12 @@
-import { CHART_VIZ_CONTAINER_SELECTOR, visitDynamicSitewiseWidget } from '../../../../src/testing/selectors';
+import { CHART_VIZ_CONTAINER_SELECTOR, visitDynamicWidget } from '../../../../src/testing/selectors';
 
 it('moves viewport when gestures are applied', () => {
   const START = new Date(2000, 0, 0);
   const END = new Date(2000, 0, 2);
   const OLD_Y_TICK_LABEL = 'Fri 31';
 
-  visitDynamicSitewiseWidget(cy, {
-    componentTag: 'monitor-status-chart',
+  visitDynamicWidget(cy, {
+    componentTag: 'sc-status-chart',
     viewPortStart: START,
     viewPortEnd: END,
     gestures: true,
@@ -28,8 +28,8 @@ it('does not move viewport when gestures are not applied', () => {
   const END = new Date(2000, 0, 2);
   const OLD_Y_TICK_LABEL = 'Fri 31';
 
-  visitDynamicSitewiseWidget(cy, {
-    componentTag: 'monitor-status-chart',
+  visitDynamicWidget(cy, {
+    componentTag: 'sc-status-chart',
     viewPortStart: START,
     viewPortEnd: END,
     gestures: false,

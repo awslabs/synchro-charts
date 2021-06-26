@@ -153,7 +153,7 @@ it('show colored background and icon when threshold breached', () => {
 
   cy.contains(STREAM_NAME).should('be.visible');
   cy.get('.status-cell')
-    .get('.monitor-chart-icon')
+    .get('.sc-chart-icon')
     .should('be.visible');
 });
 

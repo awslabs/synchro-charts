@@ -1,9 +1,9 @@
 import { Component, Element, h } from '@stencil/core';
-import { webGLRenderer } from '../../../../../components/monitor-webgl-context/webglContext';
-import { chartScene } from '../../../../../components/charts/monitor-status-chart/chartScene';
+import { webGLRenderer } from '../../../../../components/sc-webgl-context/webglContext';
+import { chartScene } from '../../../../../components/charts/sc-status-chart/chartScene';
 import { CHART_SIZE } from '../chartSize';
 import { DAY_IN_MS } from '../../../../../utils/time';
-import { HEIGHT } from '../../../../../components/charts/monitor-status-chart/constants';
+import { HEIGHT } from '../../../../../components/charts/sc-status-chart/constants';
 import { DataType } from '../../../../../utils/dataConstants';
 import { DataPoint } from '../../../../../utils/dataTypes';
 
@@ -27,7 +27,7 @@ const TEST_DATA_POINT_1: DataPoint<number> = {
 @Component({
   tag: 'single-status',
 })
-export class MonitorSingleStatus {
+export class ScSingleStatus {
   @Element() el!: HTMLElement;
 
   componentDidLoad() {
@@ -71,9 +71,9 @@ export class MonitorSingleStatus {
 
   render() {
     return (
-      <monitor-webgl-context>
+      <sc-webgl-context>
         <div id="test-container" style={{ width: `${CHART_SIZE.width}px`, height: `${CHART_SIZE.height}px` }} />
-      </monitor-webgl-context>
+      </sc-webgl-context>
     );
   }
 }

@@ -1,6 +1,6 @@
 import { ChartConfig } from '../../components/charts/common/types';
 import { getPalette, PalletScheme } from '../../components/charts/common/palettes';
-import { DEFAULT_CHART_CONFIG } from '../../components/charts/monitor-webgl-base-chart/chartDefaults';
+import { DEFAULT_CHART_CONFIG } from '../../components/charts/sc-webgl-base-chart/chartDefaults';
 import { DataStreamInfo } from '../../utils/dataTypes';
 import { DataType } from '../../utils/dataConstants';
 

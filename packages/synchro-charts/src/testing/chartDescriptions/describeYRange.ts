@@ -7,7 +7,7 @@ export const describeYRange = (newChartSpecPage: ChartSpecPage) => {
     it('sets the provided viewport', async () => {
       const { chart } = await newChartSpecPage({ viewPort: VIEW_PORT });
 
-      const baseChart = chart.querySelector('monitor-webgl-base-chart') as HTMLMonitorWebglBaseChartElement;
+      const baseChart = chart.querySelector('sc-webgl-base-chart') as HTMLScWebglBaseChartElement;
 
       expect(baseChart.viewPort.yMin).toBe(VIEW_PORT.yMin);
       expect(baseChart.viewPort.yMax).toBe(VIEW_PORT.yMax);
@@ -28,7 +28,7 @@ export const describeYRange = (newChartSpecPage: ChartSpecPage) => {
         },
       });
 
-      const baseChart = chart.querySelector('monitor-webgl-base-chart') as HTMLMonitorWebglBaseChartElement;
+      const baseChart = chart.querySelector('sc-webgl-base-chart') as HTMLScWebglBaseChartElement;
 
       expect(baseChart.viewPort.yMin).toBeLessThanOrEqual(SMALL_Y);
       expect(baseChart.viewPort.yMax).toBeGreaterThanOrEqual(LARGE_Y);
@@ -45,7 +45,7 @@ export const describeYRange = (newChartSpecPage: ChartSpecPage) => {
         },
       });
 
-      const baseChart = chart.querySelector('monitor-webgl-base-chart') as HTMLMonitorWebglBaseChartElement;
+      const baseChart = chart.querySelector('sc-webgl-base-chart') as HTMLScWebglBaseChartElement;
 
       expect(baseChart.viewPort.yMin).toBe(VIEW_PORT.yMin);
       expect(baseChart.viewPort.yMax).toBe(VIEW_PORT.yMax);

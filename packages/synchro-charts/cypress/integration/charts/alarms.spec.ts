@@ -7,7 +7,7 @@ import {
   CHART_VIZ_CONTAINER_SELECTOR,
   LATEST_VALUE_SELECTOR,
   STATUS_TIMELINE_OVERLAY_ROW_SELECTOR,
-  visitDynamicSitewiseWidget,
+  visitDynamicWidget,
 } from '../../../src/testing/selectors';
 import { ANNOTATIONS, DATA } from '../../../src/testing/dynamicWidgetUtils/constants';
 import { SCREEN_SIZE } from '../../../src/testing/dynamicWidgetUtils/testCaseParameters';
@@ -17,14 +17,14 @@ import { COMPARISON_OPERATOR, StatusIcon } from '../../../src';
 const SMALL_WAIT = 0.05 * SECOND_IN_MS;
 
 const LEGEND_VALUE_SELECTOR = '[data-testid=current-value]';
-const STATUS_ICON_SELECTOR = 'monitor-chart-icon';
+const STATUS_ICON_SELECTOR = 'sc-chart-icon';
 
 const ALARM_COLOR = 'rgb(255, 0, 0)'; // also known as 'red'
 const LATEST_VALUE = 120;
 
 const LEGEND_NAME_SELECTOR = '[data-test-tag="expandable-input"]';
 
-describe('when provided alarm data through a `sitewise-dynamic-widget`', () => {
+describe('when provided alarm data through a `dynamic-widget`', () => {
   const NUMERICAL_ALARM_INFO: DataStreamInfo = {
     id: 'alarm-id',
     color: 'red',
@@ -82,8 +82,8 @@ describe('when provided alarm data through a `sitewise-dynamic-widget`', () => {
   describe('widgets determine whether to visualize alarm data or not', () => {
     describe('kpi', () => {
       it('visualizes that an associated alarm stream is in alarm', () => {
-        visitDynamicSitewiseWidget(cy, {
-          componentTag: 'monitor-kpi',
+        visitDynamicWidget(cy, {
+          componentTag: 'sc-kpi',
           dataStreams: [NUMERICAL_ALARM_STREAM, PROPERTY_STREAM],
           annotations: { y: [ALARM_THRESHOLD] },
           duration: MINUTE_IN_MS,
@@ -91,8 +91,8 @@ describe('when provided alarm data through a `sitewise-dynamic-widget`', () => {
           viewPortEnd,
         });
 
-        cy.get('monitor-chart-icon').should('be.visible');
-        cy.get('monitor-chart-icon').should('have.length', 1);
+        cy.get('sc-chart-icon').should('be.visible');
+        cy.get('sc-chart-icon').should('have.length', 1);
 
         // Expect to see both cells to convey an alarmed status
         cy.matchImageSnapshotOnCI();
@@ -101,8 +101,8 @@ describe('when provided alarm data through a `sitewise-dynamic-widget`', () => {
 
     describe('status-grid', () => {
       it('visualizes that an associated alarm stream is in alarm', () => {
-        visitDynamicSitewiseWidget(cy, {
-          componentTag: 'monitor-status-grid',
+        visitDynamicWidget(cy, {
+          componentTag: 'sc-status-grid',
           dataStreams: [NUMERICAL_ALARM_STREAM, PROPERTY_STREAM],
           annotations: { y: [ALARM_THRESHOLD] },
           duration: MINUTE_IN_MS,
@@ -110,10 +110,10 @@ describe('when provided alarm data through a `sitewise-dynamic-widget`', () => {
           viewPortEnd,
         });
 
-        cy.get('monitor-chart-icon').should('be.visible');
-        cy.get('monitor-chart-icon').should('have.length', 1);
+        cy.get('sc-chart-icon').should('be.visible');
+        cy.get('sc-chart-icon').should('have.length', 1);
 
-        cy.get('monitor-status-grid')
+        cy.get('sc-status-grid')
           .contains(ALARM_THRESHOLD.description as string)
           .should('be.visible');
 
@@ -124,8 +124,8 @@ describe('when provided alarm data through a `sitewise-dynamic-widget`', () => {
 
     describe('latest-value', () => {
       it('visualizes that an associated alarm stream is in alarm', () => {
-        visitDynamicSitewiseWidget(cy, {
-          componentTag: 'monitor-latest-value',
+        visitDynamicWidget(cy, {
+          componentTag: 'sc-latest-value',
           dataStreams: [NUMERICAL_ALARM_STREAM, PROPERTY_STREAM],
           annotations: { y: [ALARM_THRESHOLD] },
           duration: MINUTE_IN_MS,
@@ -144,8 +144,8 @@ describe('when provided alarm data through a `sitewise-dynamic-widget`', () => {
       });
 
       it('does not visualize alarm data', () => {
-        visitDynamicSitewiseWidget(cy, {
-          componentTag: 'monitor-latest-value',
+        visitDynamicWidget(cy, {
+          componentTag: 'sc-latest-value',
           dataStreams: [NUMERICAL_ALARM_STREAM],
           duration: MINUTE_IN_MS,
           viewPortStart,
@@ -158,8 +158,8 @@ describe('when provided alarm data through a `sitewise-dynamic-widget`', () => {
 
     describe('line-chart', () => {
       it('does not visualize numerical alarm data', () => {
-        visitDynamicSitewiseWidget(cy, {
-          componentTag: 'monitor-line-chart',
+        visitDynamicWidget(cy, {
+          componentTag: 'sc-line-chart',
           dataStreams: [NUMERICAL_ALARM_STREAM],
           viewPortStart,
           viewPortEnd,
@@ -172,8 +172,8 @@ describe('when provided alarm data through a `sitewise-dynamic-widget`', () => {
       });
 
       it('does not render alarms on tooltip', () => {
-        visitDynamicSitewiseWidget(cy, {
-          componentTag: 'monitor-line-chart',
+        visitDynamicWidget(cy, {
+          componentTag: 'sc-line-chart',
           dataStreams: [NUMERICAL_ALARM_STREAM],
           viewPortStart,
           viewPortEnd,
@@ -194,8 +194,8 @@ describe('when provided alarm data through a `sitewise-dynamic-widget`', () => {
 
     describe('scatter-chart', () => {
       it('does not visualize numerical alarm data', () => {
-        visitDynamicSitewiseWidget(cy, {
-          componentTag: 'monitor-scatter-chart',
+        visitDynamicWidget(cy, {
+          componentTag: 'sc-scatter-chart',
           dataStreams: [NUMERICAL_ALARM_STREAM],
           viewPortStart,
           viewPortEnd,
@@ -208,8 +208,8 @@ describe('when provided alarm data through a `sitewise-dynamic-widget`', () => {
       });
 
       it('does not render alarms on tooltip', () => {
-        visitDynamicSitewiseWidget(cy, {
-          componentTag: 'monitor-scatter-chart',
+        visitDynamicWidget(cy, {
+          componentTag: 'sc-scatter-chart',
           dataStreams: [NUMERICAL_ALARM_STREAM],
           viewPortStart,
           viewPortEnd,
@@ -230,8 +230,8 @@ describe('when provided alarm data through a `sitewise-dynamic-widget`', () => {
 
     describe('bar-chart', () => {
       it('does not visualize numerical alarm data', () => {
-        visitDynamicSitewiseWidget(cy, {
-          componentTag: 'monitor-bar-chart',
+        visitDynamicWidget(cy, {
+          componentTag: 'sc-bar-chart',
           dataStreams: [NUMERICAL_ALARM_STREAM],
           viewPortStart,
           viewPortEnd,
@@ -244,8 +244,8 @@ describe('when provided alarm data through a `sitewise-dynamic-widget`', () => {
       });
 
       it('does not render alarms on tooltip', () => {
-        visitDynamicSitewiseWidget(cy, {
-          componentTag: 'monitor-bar-chart',
+        visitDynamicWidget(cy, {
+          componentTag: 'sc-bar-chart',
           dataStreams: [NUMERICAL_ALARM_STREAM],
           viewPortStart,
           viewPortEnd,
@@ -266,8 +266,8 @@ describe('when provided alarm data through a `sitewise-dynamic-widget`', () => {
 
     describe('status-timeline', () => {
       it('does visualize numerical alarm data', () => {
-        visitDynamicSitewiseWidget(cy, {
-          componentTag: 'monitor-status-chart',
+        visitDynamicWidget(cy, {
+          componentTag: 'sc-status-chart',
           alarms: { expires: MINUTE_IN_MS },
           dataStreams: [NUMERICAL_ALARM_STREAM],
           viewPortStart,
@@ -281,8 +281,8 @@ describe('when provided alarm data through a `sitewise-dynamic-widget`', () => {
       });
 
       it('does render alarms on tooltip', () => {
-        visitDynamicSitewiseWidget(cy, {
-          componentTag: 'monitor-status-chart',
+        visitDynamicWidget(cy, {
+          componentTag: 'sc-status-chart',
           dataStreams: [NUMERICAL_ALARM_STREAM],
           annotations: { y: [ALARM_THRESHOLD] },
           viewPortStart,
@@ -307,8 +307,8 @@ describe('when provided alarm data through a `sitewise-dynamic-widget`', () => {
 
   describe('widgets determine whether to display alarms within the legend or not', () => {
     it('does not display a legend entry for numerical alarm data when rendering a line-chart', () => {
-      visitDynamicSitewiseWidget(cy, {
-        componentTag: 'monitor-line-chart',
+      visitDynamicWidget(cy, {
+        componentTag: 'sc-line-chart',
         dataStreams: [NUMERICAL_ALARM_STREAM, PROPERTY_STREAM],
         annotations: { y: [ALARM_THRESHOLD] },
       });
@@ -320,8 +320,8 @@ describe('when provided alarm data through a `sitewise-dynamic-widget`', () => {
     });
 
     it('does not display a legend entry for numerical alarm data when rendering a scatter-chart', () => {
-      visitDynamicSitewiseWidget(cy, {
-        componentTag: 'monitor-scatter-chart',
+      visitDynamicWidget(cy, {
+        componentTag: 'sc-scatter-chart',
         dataStreams: [NUMERICAL_ALARM_STREAM, PROPERTY_STREAM],
         annotations: { y: [ALARM_THRESHOLD] },
       });
@@ -333,8 +333,8 @@ describe('when provided alarm data through a `sitewise-dynamic-widget`', () => {
     });
 
     it('does not display a legend entry for numerical alarm data when rendering a bar-chart', () => {
-      visitDynamicSitewiseWidget(cy, {
-        componentTag: 'monitor-bar-chart',
+      visitDynamicWidget(cy, {
+        componentTag: 'sc-bar-chart',
         dataStreams: [NUMERICAL_ALARM_STREAM, PROPERTY_STREAM],
         annotations: { y: [ALARM_THRESHOLD] },
       });
@@ -346,8 +346,8 @@ describe('when provided alarm data through a `sitewise-dynamic-widget`', () => {
     });
 
     it('does display a legend entry for numerical alarm data when rendering a status-timeline', () => {
-      visitDynamicSitewiseWidget(cy, {
-        componentTag: 'monitor-status-chart',
+      visitDynamicWidget(cy, {
+        componentTag: 'sc-status-chart',
         dataStreams: [NUMERICAL_ALARM_STREAM, PROPERTY_STREAM],
         annotations: { y: [ALARM_THRESHOLD] },
       });
@@ -366,8 +366,8 @@ describe('when provided alarm data through a `sitewise-dynamic-widget`', () => {
   });
 
   it('shows the data property on the legend as in alarm, from the associated alarm data which is being breached', () => {
-    visitDynamicSitewiseWidget(cy, {
-      componentTag: 'monitor-line-chart',
+    visitDynamicWidget(cy, {
+      componentTag: 'sc-line-chart',
       dataStreams: DATA,
       annotations: ANNOTATIONS,
     });
@@ -384,8 +384,8 @@ describe('when provided alarm data through a `sitewise-dynamic-widget`', () => {
 
   it('shows the data property on the legend in alarm, when the most recent point is breaching a threshold', () => {
     // This viewport is offset such that a new data becomes the latest.
-    visitDynamicSitewiseWidget(cy, {
-      componentTag: 'monitor-line-chart',
+    visitDynamicWidget(cy, {
+      componentTag: 'sc-line-chart',
       dataStreams: DATA,
       annotations: ANNOTATIONS,
       viewPortStart: new Date(2000, 0, 0, 6),
@@ -404,8 +404,8 @@ describe('when provided alarm data through a `sitewise-dynamic-widget`', () => {
 
   it('shows the data property on the legend in alarm, when the most recent point is breaching a threshold, but is before the viewport', () => {
     // This viewport is offset such that none of the data presented is in view.
-    visitDynamicSitewiseWidget(cy, {
-      componentTag: 'monitor-line-chart',
+    visitDynamicWidget(cy, {
+      componentTag: 'sc-line-chart',
       dataStreams: DATA,
       annotations: ANNOTATIONS,
       viewPortStart: new Date(2000, 0, 3),
@@ -424,8 +424,8 @@ describe('when provided alarm data through a `sitewise-dynamic-widget`', () => {
 
   it('does not show any value or alarmed status when there is no values before the viewport', () => {
     // This viewport is offset such that all of the data is after the viewport
-    visitDynamicSitewiseWidget(cy, {
-      componentTag: 'monitor-line-chart',
+    visitDynamicWidget(cy, {
+      componentTag: 'sc-line-chart',
       annotations: ANNOTATIONS,
       dataStreams: DATA,
       viewPortStart: new Date(1990, 0, 0),

@@ -1,5 +1,5 @@
 import { pointMesh, updatePointMesh } from './pointMesh';
-import { clipSpaceConversion } from '../../monitor-webgl-base-chart/clipSpaceConversion';
+import { clipSpaceConversion } from '../../sc-webgl-base-chart/clipSpaceConversion';
 import { DataType } from '../../../../utils/dataConstants';
 
 describe('sets point mesh uniforms', () => {

@@ -34,9 +34,9 @@ export class LineChartViewportChange {
         <br />
         <br />
         <div id="chart-container" style={{ marginTop: '20px', width: '500px', height: '500px' }}>
-          <monitor-line-chart widgetId="widget-id" dataStreams={[]} viewPort={this.viewPort} />
+          <sc-line-chart widgetId="widget-id" dataStreams={[]} viewPort={this.viewPort} />
         </div>
-        <monitor-webgl-context />
+        <sc-webgl-context />
       </div>
     );
   }

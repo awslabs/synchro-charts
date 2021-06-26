@@ -108,7 +108,7 @@ export const testCaseParameters = (): SearchQueryParams => {
     tableColumns: query.tableColumns != null ? JSON.parse(query.tableColumns) : [],
     legend: query.legend != null ? JSON.parse(query.legend) : LEGEND, // set this to undefined
     messageOverrides: query.messageOverrides != null ? JSON.parse(query.messageOverrides) : undefined,
-    componentTag: query.componentTag != null ? query.componentTag : 'monitor-line-chart',
+    componentTag: query.componentTag != null ? query.componentTag : 'sc-line-chart',
     // deserialize fields that require it.
     displayInfoNames: query.displayInfoNames ? parseBool(query.displayInfoNames) : false,
     annotations: query.annotations != null ? deserializeAnnotations(query.annotations) : undefined,

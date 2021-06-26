@@ -1,0 +1,17 @@
+sc-grid .grid {
+  --widget-min-width: 190px;
+  --widget-min-height: 100px;
+
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(var(--widget-min-width), 1fr));
+  grid-auto-rows: minmax(var(--widget-min-height), 1fr);
+  grid-gap: 10px;
+  margin: 10px;
+}
+
+sc-grid .grid-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+}

@@ -39,7 +39,7 @@ export class StatusChartDynamicBuffer {
           Add Data Point
         </button>
         <div id="chart-container" style={{ height: '500px', width: '500px', marginTop: '20px' }}>
-          <monitor-status-chart
+          <sc-status-chart
             widgetId="widget-id"
             alarms={{ expires: MONTH_IN_MS }}
             dataStreams={[
@@ -62,7 +62,7 @@ export class StatusChartDynamicBuffer {
             bufferFactor={1}
             minBufferSize={1}
           />
-          <monitor-webgl-context />
+          <sc-webgl-context />
         </div>
       </div>
     );

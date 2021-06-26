@@ -1,9 +1,9 @@
-import { LOADING_SPINNER_SELECTOR, visitDynamicSitewiseWidget } from '../../../../src/testing/selectors';
+import { LOADING_SPINNER_SELECTOR, visitDynamicWidget } from '../../../../src/testing/selectors';
 import { DATA_STREAM } from '../../../../src/testing/__mocks__/mockWidgetProperties';
 
 it('renders spinner', () => {
-  visitDynamicSitewiseWidget(cy, {
-    componentTag: 'monitor-bar-chart',
+  visitDynamicWidget(cy, {
+    componentTag: 'sc-bar-chart',
     dataStreams: [{ ...DATA_STREAM, isLoading: true }],
   });
 

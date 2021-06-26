@@ -1,0 +1,24 @@
+sc-threshold-legend {
+  display: flex;
+  flex-wrap: wrap;
+  overflow-y: scroll;
+
+  /* Polaris Typography for paragraph */
+  font-size: 14px;
+  line-height: 22px;
+}
+
+sc-threshold-legend-row {
+  padding: 0.1em 1em;
+}
+
+sc-threshold-legend-row .box {
+  display: inline-block;
+  border-radius: 2px;
+  margin-right: 8px;
+
+  --box-size: 12px;
+
+  width: var(--box-size);
+  height: var(--box-size);
+}

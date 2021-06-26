@@ -1,4 +1,4 @@
-import { DEFAULT_CHART_CONFIG } from '../monitor-webgl-base-chart/chartDefaults';
+import { DEFAULT_CHART_CONFIG } from '../sc-webgl-base-chart/chartDefaults';
 
 import { BaseChartConfig } from './types';
 import { ScaleType } from './constants';

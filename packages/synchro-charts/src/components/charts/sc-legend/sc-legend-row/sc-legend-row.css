@@ -1,0 +1,54 @@
+sc-legend-row {
+  --color-container-width: 18px;
+
+  /* prevents the stream info from hijacking scroll when element is focused */
+  overflow: hidden;
+  display: inline-block;
+  margin-right: var(--margin-small);
+  color: var(--secondary-font-color);
+  padding-right: var(--margin-small);
+}
+
+sc-legend-row .legend-row-container {
+  display: flex;
+}
+
+sc-legend-row .legend-value {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+sc-legend-row .color-container {
+  display: flex;
+  flex-direction: column-reverse;
+  width: var(--color-container-width);
+  height: 20px;
+  padding-top: 11px;
+}
+
+sc-data-stream-info .spinner-container {
+  position: relative;
+  top: 5px;
+}
+
+sc-legend-row .bar {
+  width: var(--color-container-width);
+}
+
+sc-legend-row .info {
+  padding-left: var(--margin-small);
+  display: flex;
+  flex-direction: column;
+}
+
+sc-legend-row .info h4 {
+  line-height: 0.2em;
+  font-size: 14px;
+}
+
+sc-legend-row .sc-expandable-input {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}

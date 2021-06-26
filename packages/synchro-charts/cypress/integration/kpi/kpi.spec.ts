@@ -1,6 +1,6 @@
 import { Primitive } from '../../../src/utils/dataTypes';
 import { NO_VALUE_PRESENT } from '../../../src/components/common/terms';
-import { visitDynamicSitewiseWidget } from '../../../src/testing/selectors';
+import { visitDynamicWidget } from '../../../src/testing/selectors';
 import {
   ALARM_STREAM,
   ALARM_STREAM_INFO,
@@ -92,8 +92,8 @@ it('renders disabled when disabled', () => {
 });
 
 it('renders only title and no-value-present indicator when viewport is not live', () => {
-  visitDynamicSitewiseWidget(cy, {
-    componentTag: 'monitor-kpi',
+  visitDynamicWidget(cy, {
+    componentTag: 'sc-kpi',
     dataStreamInfos: [ALARM_STREAM_INFO, DATA_WITH_ALARM_INFO],
     dataStreams: [ALARM_STREAM, DATA_WITH_ALARM_ASSOCIATION],
     annotations: { y: [ALARM_THRESHOLD] },
@@ -103,7 +103,7 @@ it('renders only title and no-value-present indicator when viewport is not live'
   cy.contains('.value-wrapper', NO_VALUE_PRESENT).should('be.visible');
 
   // Should not display as breached when disabled
-  cy.get('monitor-chart-icon').should('not.exist');
+  cy.get('sc-chart-icon').should('not.exist');
 
   cy.matchImageSnapshotOnCI();
 });

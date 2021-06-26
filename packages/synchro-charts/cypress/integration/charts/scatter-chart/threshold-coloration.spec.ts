@@ -1,4 +1,4 @@
-const root = 'localhost:3333/tests/monitor-scatter-chart';
+const root = 'localhost:3333/tests/sc-scatter-chart';
 
 const VIEWPORT_HEIGHT = 500;
 const VIEWPORT_WIDTH = 500;

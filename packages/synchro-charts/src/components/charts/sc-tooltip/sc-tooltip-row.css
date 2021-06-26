@@ -1,0 +1,34 @@
+sc-tooltip-row {
+  --bar-size: 18px;
+}
+
+sc-tooltip-rows .left-offset {
+  padding-left: 4px;
+}
+
+/* modern clearfix hack */
+sc-tooltip-row .clearfix::after {
+  content: '';
+  clear: both;
+  display: table;
+}
+
+sc-tooltip-row .bar {
+  display: inline-block;
+  float: left;
+  width: var(--bar-size);
+  height: 20px;
+  padding-top: 8px;
+}
+
+sc-tooltip-row .label {
+  padding-left: var(--margin-small);
+  color: var(--light-text);
+  float: left;
+}
+
+sc-tooltip-row .value {
+  font-weight: bold;
+  float: right;
+  margin-left: 15px;
+}

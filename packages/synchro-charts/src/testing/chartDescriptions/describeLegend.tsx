@@ -14,7 +14,7 @@ export const describeLegend = (newChartSpecPage: ChartSpecPage) => {
         },
       });
 
-      const legend = chart.querySelector('monitor-legend');
+      const legend = chart.querySelector('sc-legend');
       expect(legend).toBeDefined();
     });
 
@@ -27,7 +27,7 @@ export const describeLegend = (newChartSpecPage: ChartSpecPage) => {
         isEditing: true,
       });
 
-      const legend = chart.querySelector('monitor-legend');
+      const legend = chart.querySelector('sc-legend');
       expect(legend).toHaveAttribute('isEditing');
     });
 
@@ -40,7 +40,7 @@ export const describeLegend = (newChartSpecPage: ChartSpecPage) => {
         viewPort: VIEW_PORT,
       });
 
-      const legend = chart.querySelector('monitor-legend') as HTMLMonitorLegendElement;
+      const legend = chart.querySelector('sc-legend') as HTMLScLegendElement;
 
       expect(legend.viewPort).toMatchObject({ start: VIEW_PORT.start, end: VIEW_PORT.end });
     });
@@ -70,7 +70,7 @@ export const describeLegend = (newChartSpecPage: ChartSpecPage) => {
         },
       });
 
-      const legend = chart.querySelector('monitor-legend') as HTMLMonitorLegendElement;
+      const legend = chart.querySelector('sc-legend') as HTMLScLegendElement;
 
       expect(legend.thresholds).toEqual(THRESHOLDS);
     });

@@ -1,11 +1,11 @@
-import { DEFAULT_SIZE, SHIFT_X_DIFF } from '../../src/testing/test-routes/monitor-size-provider/constants';
+import { DEFAULT_SIZE, SHIFT_X_DIFF } from '../../src/testing/test-routes/sc-size-provider/constants';
 import { SECOND_IN_MS } from '../../src/utils/time';
 
-const root = 'http://localhost:3333/tests/monitor-sizer-provider/monitor-size-provider-standard';
+const root = 'http://localhost:3333/tests/sc-sizer-provider/sc-size-provider-standard';
 
 it('child of widget sizer inherits size-providers parent size', () => {
   cy.visit(root);
-  cy.get('bp-box > .box-container')
+  cy.get('sc-box > .box-container')
     .should('be.visible')
     .should($el => {
       expect($el).to.have.css('width', `${DEFAULT_SIZE.width}px`);
@@ -18,14 +18,14 @@ it('on update of the size-providers parent size, the child of widget sizer has i
   const UPDATED_HEIGHT = 8000;
 
   cy.visit(root);
-  cy.get('bp-box > .box-container').should('be.visible');
+  cy.get('sc-box > .box-container').should('be.visible');
 
   cy.get('#container').then(div => {
     div.css('width', `${UPDATED_WIDTH}px`);
     div.css('height', `${UPDATED_HEIGHT}px`);
   });
 
-  cy.get('bp-box > .box-container').should($el => {
+  cy.get('sc-box > .box-container').should($el => {
     expect($el).to.have.css('width', `${UPDATED_WIDTH}px`);
     expect($el).to.have.css('height', `${UPDATED_HEIGHT}px`);
   });
@@ -33,17 +33,17 @@ it('on update of the size-providers parent size, the child of widget sizer has i
 
 it('the position of the component is accurately set on initial render', () => {
   cy.visit(root);
-  cy.get('bp-box > .box-container').should('be.visible');
+  cy.get('sc-box > .box-container').should('be.visible');
 
   let INITIAL_RECT: DOMRect;
-  cy.get('bp-box > .box-container')
+  cy.get('sc-box > .box-container')
     .should('be.visible')
-    .get('bp-box')
+    .get('sc-box')
     .then(el => {
       INITIAL_RECT = el[0].getBoundingClientRect();
     });
 
-  cy.get('bp-box > .box-container').should($el => {
+  cy.get('sc-box > .box-container').should($el => {
     expect($el).to.have.attr('data-x', INITIAL_RECT.x.toString());
     expect($el).to.have.attr('data-y', INITIAL_RECT.y.toString());
     expect($el).to.have.attr('data-left', INITIAL_RECT.left.toString());
@@ -61,9 +61,9 @@ it('the position of the component is unchanged by scrolling vertically', () => {
   cy.viewport(700, 700);
 
   let INITIAL_RECT: DOMRect;
-  cy.get('bp-box > .box-container')
+  cy.get('sc-box > .box-container')
     .should('be.visible')
-    .get('bp-box')
+    .get('sc-box')
     .then(el => {
       INITIAL_RECT = el[0].getBoundingClientRect();
     });
@@ -71,7 +71,7 @@ it('the position of the component is unchanged by scrolling vertically', () => {
   cy.scrollTo('bottom');
 
   cy.wait(0.5 * SECOND_IN_MS)
-    .get('bp-box > .box-container')
+    .get('sc-box > .box-container')
     .should($el => {
       expect($el).to.have.attr('data-x', INITIAL_RECT.x.toString());
       expect($el).to.have.attr('data-y', INITIAL_RECT.y.toString());
@@ -88,9 +88,9 @@ it('the position of the component is unchanged by scrolling horizontally', () =>
   cy.viewport(700, 700);
 
   let INITIAL_RECT: DOMRect;
-  cy.get('bp-box > .box-container')
+  cy.get('sc-box > .box-container')
     .should('be.visible')
-    .get('bp-box')
+    .get('sc-box')
     .then(el => {
       INITIAL_RECT = el[0].getBoundingClientRect();
     });
@@ -98,7 +98,7 @@ it('the position of the component is unchanged by scrolling horizontally', () =>
   cy.scrollTo('right');
 
   cy.wait(0.5 * SECOND_IN_MS)
-    .get('bp-box > .box-container')
+    .get('sc-box > .box-container')
     .should($el => {
       expect($el).to.have.attr('data-x', INITIAL_RECT.x.toString());
       expect($el).to.have.attr('data-y', INITIAL_RECT.y.toString());
@@ -114,9 +114,9 @@ it('the position of the component is updated after being shifted', () => {
   cy.visit(root);
 
   let INITIAL_RECT: DOMRect;
-  cy.get('bp-box > .box-container')
+  cy.get('sc-box > .box-container')
     .should('be.visible')
-    .get('bp-box')
+    .get('sc-box')
     .then(el => {
       INITIAL_RECT = el[0].getBoundingClientRect();
     });
@@ -124,7 +124,7 @@ it('the position of the component is updated after being shifted', () => {
   cy.get('#shift-right').click();
 
   cy.wait(0.5 * SECOND_IN_MS)
-    .get('bp-box > .box-container')
+    .get('sc-box > .box-container')
     .should($el => {
       expect($el).to.have.attr('data-x', (INITIAL_RECT.x + SHIFT_X_DIFF).toString());
       expect($el).to.have.attr('data-y', INITIAL_RECT.y.toString());

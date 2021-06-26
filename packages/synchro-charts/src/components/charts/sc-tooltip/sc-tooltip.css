@@ -1,0 +1,37 @@
+sc-tooltip {
+  --tooltip-size: 8px;
+  --tooltip-line-width: 2px;
+
+  pointer-events: none;
+  position: absolute;
+}
+
+sc-tooltip small {
+  white-space: nowrap;
+}
+
+sc-tooltip .awsui {
+  position: absolute;
+  z-index: 20;
+  min-width: 90px;
+}
+
+sc-tooltip .tooltip-container {
+  background: var(--awsui-color-white);
+  position: relative;
+  display: inline-block;
+  min-width: 90px;
+  width: max-content;
+  transition-property: left, top;
+  transition-duration: 120ms;
+}
+
+sc-tooltip .tooltip-line {
+  position: relative;
+
+  /* This is to offset the tooltip line base on its width. We have a negative here because we want to center the line but DOM renders element from the left to right instead of starting from center. */
+  margin-left: calc(-1 * calc(var(--tooltip-line-width) / 2));
+  width: var(--selection-width);
+  background-color: var(--selection-color);
+  opacity: var(--selection-opacity);
+}

@@ -2,7 +2,7 @@ import {
   CHART_TOOLTIP_ROW_SELECTOR,
   CHART_TOOLTIP_SELECTOR,
   CHART_VIZ_CONTAINER_SELECTOR,
-  visitDynamicSitewiseWidget,
+  visitDynamicWidget,
 } from '../../../../src/testing/selectors';
 import { SCREEN_SIZE } from '../../../../src/testing/dynamicWidgetUtils/testCaseParameters';
 import { NO_VALUE_PRESENT } from '../../../../src/components/common/terms';
@@ -19,8 +19,8 @@ import { ANNOTATIONS } from '../../../../src/testing/dynamicWidgetUtils/constant
 
 it('renders with tooltip for multiple data streams with order in which they were added', () => {
   // tooltip position is based on info order, *not* data order.
-  visitDynamicSitewiseWidget(cy, {
-    componentTag: 'monitor-status-chart',
+  visitDynamicWidget(cy, {
+    componentTag: 'sc-status-chart',
     viewPortStart: new Date(2000, 0, 0),
     viewPortEnd: new Date(2000, 0, 0, 0, 5),
     dataStreams: [STRING_STREAM_1, NUMBER_EMPTY_STREAM, STRING_STREAM_2],

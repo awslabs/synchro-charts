@@ -85,7 +85,7 @@ export class StatusChartDynamicDataStreams {
         <br />
         <br />
         <div id="chart-container" style={{ marginTop: '20px', width: '500px', height: '500px' }}>
-          <monitor-status-chart
+          <sc-status-chart
             alarms={{ expires: MONTH_IN_MS }}
             dataStreams={this.dataStreams}
             size={{
@@ -101,7 +101,7 @@ export class StatusChartDynamicDataStreams {
             }}
           />
         </div>
-        <monitor-webgl-context />
+        <sc-webgl-context />
       </div>
     );
   }

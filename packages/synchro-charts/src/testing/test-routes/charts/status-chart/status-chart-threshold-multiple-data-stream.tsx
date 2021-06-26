@@ -42,7 +42,7 @@ export class StatusChartThresholdMultipleDataStream {
   render() {
     return (
       <div>
-        <monitor-status-chart
+        <sc-status-chart
           alarms={{ expires: YEAR_IN_MS }}
           dataStreams={[
             {
@@ -86,7 +86,7 @@ export class StatusChartThresholdMultipleDataStream {
           }}
           viewPort={{ yMin: Y_MIN, yMax: Y_MAX, start: X_MIN, end: X_MAX }}
         />
-        <monitor-webgl-context />
+        <sc-webgl-context />
       </div>
     );
   }

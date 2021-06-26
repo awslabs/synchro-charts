@@ -56,7 +56,7 @@ export class StatusChartFastViewport {
         <br />
         <br />
         <div id="chart-container" style={{ border: '1px solid lightgray', height: '500px', width: '500px' }}>
-          <monitor-status-chart
+          <sc-status-chart
             alarms={{ expires: HOUR_IN_MS }}
             dataStreams={[
               {
@@ -81,7 +81,7 @@ export class StatusChartFastViewport {
               end: this.end,
             }}
           />
-          <monitor-webgl-context />
+          <sc-webgl-context />
         </div>
       </div>
     );

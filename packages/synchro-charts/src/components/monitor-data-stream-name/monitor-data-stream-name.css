@@ -1,7 +1,0 @@
-monitor-data-stream-name {
-  color: var(--polaris-gray-900);
-}
-
-monitor-data-stream-name .awsui {
-  color: inherit;
-}
