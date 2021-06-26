@@ -1,1 +1,0 @@
-{"version":3,"sources":["Sections.css"],"names":[],"mappings":"AAAA,SACI,gBACJ,CAEA,sBACI,gBACJ","file":"main.d0b18776.chunk.css","sourcesContent":[".section {\n    font-size: 1.8rem;\n}\n\n.section monitor-demo {\n    font-size: 1.1rem;\n}\n"]}

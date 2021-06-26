@@ -1,1 +1,0 @@
-/*! For license information please see stencil-monitor-toggle-entry-js.6368f67e.js.LICENSE.txt */
