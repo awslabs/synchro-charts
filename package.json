@@ -11,7 +11,10 @@
   ],
   "scripts": {
     "build": "lerna run build --stream",
-    "clean": "lerna run clean --concurrency 4"
+    "clean": "lerna run clean --concurrency 4",
+    "lint": "lerna run lint --stream --concurrency 4",
+    "lint:fix": "lerna run fix --stream --concurrency 4",
+    "test": "lerna run test --stream --concurrency 1"
   },
   "license": "Apache-2.0",
   "devDependencies": {

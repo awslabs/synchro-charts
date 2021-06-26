@@ -33,8 +33,7 @@
     "lint:stylelint": "stylelint 'src/**/*.css' --max-warnings 0",
     "script:generate-perf-report": "node ./src/scripts/formatPerformanceReports.js",
     "release": "yarn clean && npm-run-all -p build test lint",
-    "prepublishOnly": "yarn release",
-    "posttest": "generate-coverage-data"
+    "prepublishOnly": "yarn release"
   },
   "devDependencies": {
 		"rollup-plugin-node-polyfills": "^0.2.1",
