@@ -33,7 +33,10 @@ export const describeErrorStatus = (newChartSpecPage: ChartSpecPage) => {
 
     it('displays error when multiple errors are present', async () => {
       const { chart } = await newChartSpecPage({
-        dataStreams: [{ ...DATA_STREAM, error: 'my error!' }, { ...DATA_STREAM_2, error: 'my other error' }],
+        dataStreams: [
+          { ...DATA_STREAM, error: 'my error!' },
+          { ...DATA_STREAM_2, error: 'my other error' },
+        ],
       });
 
       const error = chart.querySelector(ERROR_SYMBOL_SELECTOR);

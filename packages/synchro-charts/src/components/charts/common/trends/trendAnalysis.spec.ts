@@ -35,7 +35,10 @@ describe('linear regression computation', () => {
     const stream: DataStream<number> = {
       id: 'two points',
       name: 'some-stream',
-      data: [{ x: new Date(2020, 1, 1).getTime(), y: 100 }, { x: new Date(2020, 2, 1).getTime(), y: 100 }],
+      data: [
+        { x: new Date(2020, 1, 1).getTime(), y: 100 },
+        { x: new Date(2020, 2, 1).getTime(), y: 100 },
+      ],
       resolution: 0,
       dataType: DataType.NUMBER,
     };

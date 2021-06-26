@@ -88,7 +88,10 @@ it('construct Table data', () => {
 
 it('construct Table data with mismatching rows', () => {
   const rows = constructTableData({
-    tableColumns: [{ header: 'Rule', rows: [] }, { header: 'Severity', rows: [undefined, undefined] }],
+    tableColumns: [
+      { header: 'Rule', rows: [] },
+      { header: 'Severity', rows: [undefined, undefined] },
+    ],
     dataStreams: [],
     thresholds: [],
     date: new Date(),
@@ -103,7 +106,11 @@ it('construct Table data with mismatching rows', () => {
 
 it('construct Table data with no rows', () => {
   const rows = constructTableData({
-    tableColumns: [{ header: 'Rule', rows: [] }, { header: 'Severity', rows: [] }, { header: 'Alarm', rows: [] }],
+    tableColumns: [
+      { header: 'Rule', rows: [] },
+      { header: 'Severity', rows: [] },
+      { header: 'Alarm', rows: [] },
+    ],
     dataStreams: [],
     thresholds: [],
     date: new Date(),

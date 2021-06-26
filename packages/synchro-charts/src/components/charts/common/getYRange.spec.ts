@@ -243,7 +243,14 @@ describe('currentYRange', () => {
   it('returns y range when points provided', () => {
     const yRange = currentYRange();
     expect(
-      yRange({ points: [{ y: 10, x: Date.now() }, { y: 3000, x: Date.now() }], yAnnotations: [], startFromZero: true })
+      yRange({
+        points: [
+          { y: 10, x: Date.now() },
+          { y: 3000, x: Date.now() },
+        ],
+        yAnnotations: [],
+        startFromZero: true,
+      })
     ).toEqual({
       yMin: 0,
       yMax: 3600,
@@ -277,7 +284,14 @@ describe('currentYRange', () => {
 
   it('returns last y range if called for a second time with no points without start from zero', () => {
     const yRange = currentYRange();
-    yRange({ points: [{ y: 10, x: Date.now() }, { y: 3000, x: Date.now() }], yAnnotations: [], startFromZero: false });
+    yRange({
+      points: [
+        { y: 10, x: Date.now() },
+        { y: 3000, x: Date.now() },
+      ],
+      yAnnotations: [],
+      startFromZero: false,
+    });
     // Check it is not default values
     expect(yRange({ points: [], yAnnotations: [], startFromZero: false })).not.toEqual({ yMin: 1, yMax: 1000 });
     expect(yRange({ points: [], yAnnotations: [], startFromZero: false })).toEqual({ yMin: -440, yMax: 3600 });
@@ -285,7 +299,14 @@ describe('currentYRange', () => {
 
   it('returns last y range if called for a second time with no points and start from zero', () => {
     const yRange = currentYRange();
-    yRange({ points: [{ y: 10, x: Date.now() }, { y: 3000, x: Date.now() }], yAnnotations: [], startFromZero: true });
+    yRange({
+      points: [
+        { y: 10, x: Date.now() },
+        { y: 3000, x: Date.now() },
+      ],
+      yAnnotations: [],
+      startFromZero: true,
+    });
     // Check it is not default values
     expect(yRange({ points: [], yAnnotations: [], startFromZero: true })).not.toEqual({ yMin: 1, yMax: 1000 });
     expect(yRange({ points: [], yAnnotations: [], startFromZero: true })).toEqual({ yMin: 0, yMax: 3600 });

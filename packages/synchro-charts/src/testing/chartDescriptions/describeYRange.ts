@@ -24,7 +24,10 @@ export const describeYRange = (newChartSpecPage: ChartSpecPage) => {
           yMax: undefined,
         },
         annotations: {
-          y: [{ value: LARGE_Y, color: 'red' }, { value: SMALL_Y, color: 'red' }],
+          y: [
+            { value: LARGE_Y, color: 'red' },
+            { value: SMALL_Y, color: 'red' },
+          ],
         },
       });
 
@@ -41,7 +44,10 @@ export const describeYRange = (newChartSpecPage: ChartSpecPage) => {
       const { chart } = await newChartSpecPage({
         viewPort: VIEW_PORT,
         annotations: {
-          y: [{ value: LARGE_Y, color: 'red' }, { value: SMALL_Y, color: 'red' }],
+          y: [
+            { value: LARGE_Y, color: 'red' },
+            { value: SMALL_Y, color: 'red' },
+          ],
         },
       });
 

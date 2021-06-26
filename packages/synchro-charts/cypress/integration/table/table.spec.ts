@@ -1,10 +1,6 @@
 import { MINUTE_IN_MS, SECOND_IN_MS } from '../../../src/utils/time';
 import { tableMockData } from '../../../src/testing/test-routes/sc-table/tableDataMock';
-import {
-  ERROR_SYMBOL_SELECTOR,
-  LOADING_SPINNER_SELECTOR,
-  visitDynamicWidget,
-} from '../../../src/testing/selectors';
+import { ERROR_SYMBOL_SELECTOR, LOADING_SPINNER_SELECTOR, visitDynamicWidget } from '../../../src/testing/selectors';
 
 const COLUMN_SELECTOR = 'th';
 const CELL_SELECTOR = 'td';

@@ -71,13 +71,13 @@ describe('icon property', () => {
     const { tooltipRow } = await newTooltipRowPage({ icon: StatusIcon.SNOOZED });
     const value = tooltipRow.querySelector('sc-chart-icon') as HTMLElement;
 
-    expect(value).not.toBeEmpty;
+    expect(value).not.toBeEmpty();
   });
   it('renders the icon to be empty when no value provided', async () => {
     const { tooltipRow } = await newTooltipRowPage({});
     const value = tooltipRow.querySelector('sc-chart-icon') as HTMLElement;
 
-    expect(value).toBeEmpty;
+    expect(value).toBeEmpty();
   });
 });
 

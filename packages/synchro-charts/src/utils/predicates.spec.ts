@@ -106,7 +106,7 @@ describe('isNumberDataStream', () => {
   const EMPTY_NUMBER_STREAM: DataStream<number> = { ...NUMBER_DATA_STREAM, data: [] };
 
   it('returns true when given empty number stream', () => {
-    expect(isNumberDataStream(EMPTY_NUMBER_STREAM)).toBeTrue;
+    expect(isNumberDataStream(EMPTY_NUMBER_STREAM)).toBeTrue();
   });
 
   it('returns false when given empty string stream', () => {

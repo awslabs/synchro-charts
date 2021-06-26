@@ -20,19 +20,28 @@ describe('getDataBeforeDate', () => {
   it('returns empty list when all dates are after the given date', () => {
     expect(
       getDataBeforeDate(
-        [{ x: new Date(2001, 0, 0).getTime(), y: 100 }, { x: new Date(2002, 0, 0).getTime(), y: 100 }],
+        [
+          { x: new Date(2001, 0, 0).getTime(), y: 100 },
+          { x: new Date(2002, 0, 0).getTime(), y: 100 },
+        ],
         new Date(DATE)
       )
     ).toBeEmpty();
   });
 
   it('returns all data points when all are at or before given date', () => {
-    const DATA = [{ x: new Date(1999, 0, 0).getTime(), y: 100 }, { x: DATE, y: 100 }];
+    const DATA = [
+      { x: new Date(1999, 0, 0).getTime(), y: 100 },
+      { x: DATE, y: 100 },
+    ];
     expect(getDataBeforeDate(DATA, new Date(DATE))).toEqual(DATA);
   });
 
   it('filters out data that is after the date', () => {
-    const DATA = [{ x: new Date(1999, 0, 0).getTime(), y: 100 }, { x: new Date(2001, 0, 0).getTime(), y: 100 }];
+    const DATA = [
+      { x: new Date(1999, 0, 0).getTime(), y: 100 },
+      { x: new Date(2001, 0, 0).getTime(), y: 100 },
+    ];
     expect(getDataBeforeDate(DATA, new Date(DATE))).toEqual([DATA[0]]);
   });
 });
@@ -107,7 +116,10 @@ describe('getVisibleData', () => {
     });
 
     it('returns data within the viewport date range', () => {
-      const data = [{ x: new Date(2000, 1, 0).getTime(), y: 1 }, { x: new Date(2000, 2, 0).getTime(), y: 1 }];
+      const data = [
+        { x: new Date(2000, 1, 0).getTime(), y: 1 },
+        { x: new Date(2000, 2, 0).getTime(), y: 1 },
+      ];
       const viewPort = {
         yMin: 0,
         yMax: 100,

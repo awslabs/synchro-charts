@@ -8,7 +8,7 @@
  * Used internally, also to help stabilize integration tests and reduce refactoring work.
  */
 import { SECOND_IN_MS } from '../utils/time';
-import { constructSearchQuery, SCREEN_SIZE, SearchQueryParams } from './dynamicWidgetUtils/testCaseParameters';
+import { constructSearchQuery, SearchQueryParams } from './dynamicWidgetUtils/testCaseParameters';
 import { DataStreamId } from '../utils/dataTypes';
 
 // NOTE: the values of the selectors will change over time.
@@ -33,12 +33,12 @@ export const waitForChart = (cy: any) =>
     .wait(SMALL_WAIT)
     .click({ multiple: true });
 
-const route = (params: Partial<SearchQueryParams>): string =>
+export const route = (params: Partial<SearchQueryParams>): string =>
   `localhost:3333/tests/widget-test-route?${constructSearchQuery(params)}`;
 
 export const infoNameTestSelector = (id: DataStreamId): string => `#info-${id}`;
 
-const DEFAULT_PARAMS: Partial<SearchQueryParams> = {
+export const DEFAULT_PARAMS: Partial<SearchQueryParams> = {
   dataStreams: [],
   dataStreamInfos: [],
 };

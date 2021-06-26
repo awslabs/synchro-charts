@@ -218,7 +218,10 @@ describe('trend', () => {
         name: 'some-name',
         resolution: 0,
         dataType: DataType.NUMBER,
-        data: [{ x: Date.now() - 2 * YEAR_IN_MS, y: 0 }, { x: Date.now() - YEAR_IN_MS, y: 0 }],
+        data: [
+          { x: Date.now() - 2 * YEAR_IN_MS, y: 0 },
+          { x: Date.now() - YEAR_IN_MS, y: 0 },
+        ],
       },
     });
 
@@ -236,7 +239,10 @@ describe('trend', () => {
         name: 'some-name',
         resolution: 0,
         dataType: DataType.NUMBER,
-        data: [{ x: Date.now() - 2 * YEAR_IN_MS, y: 0 }, { x: Date.now() - YEAR_IN_MS, y: 100 }],
+        data: [
+          { x: Date.now() - 2 * YEAR_IN_MS, y: 0 },
+          { x: Date.now() - YEAR_IN_MS, y: 100 },
+        ],
       },
     });
 
@@ -254,7 +260,10 @@ describe('trend', () => {
         name: 'some-name',
         resolution: 0,
         dataType: DataType.NUMBER,
-        data: [{ x: Date.now() - 2 * YEAR_IN_MS, y: 0 }, { x: Date.now() - YEAR_IN_MS, y: -100 }],
+        data: [
+          { x: Date.now() - 2 * YEAR_IN_MS, y: 0 },
+          { x: Date.now() - YEAR_IN_MS, y: -100 },
+        ],
       },
     });
 
@@ -421,7 +430,10 @@ describe('string data type behavior', () => {
     color: INFO.color,
     resolution: 0,
     dataType: DataType.STRING,
-    data: [{ x: new Date(2000, 0, 0).getTime(), y: 'RED' }, { x: new Date(2000, 0, 1).getTime(), y: 'BLUE' }],
+    data: [
+      { x: new Date(2000, 0, 0).getTime(), y: 'RED' },
+      { x: new Date(2000, 0, 1).getTime(), y: 'BLUE' },
+    ],
   };
 
   it('does not show trends when the current data type is string', async () => {

@@ -122,7 +122,14 @@ const updateMesh = (dataStreams: DataStream[], mesh: LineChartLineMesh, toClipSp
  *    |         \  |
  * (0, -0.5)---(1, -0.5)
  */
-const segmentInstanceGeometry = [[0, -0.5], [1, -0.5], [1, 0.5], [0, -0.5], [1, 0.5], [0, 0.5]];
+const segmentInstanceGeometry = [
+  [0, -0.5],
+  [1, -0.5],
+  [1, 0.5],
+  [0, -0.5],
+  [1, 0.5],
+  [0, 0.5],
+];
 
 const initializeGeometry = (geometry: LineBufferGeometry, bufferSize: number) => {
   /**
