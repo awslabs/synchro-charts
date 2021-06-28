@@ -69,15 +69,13 @@ describe('valueColor property', () => {
 describe('icon property', () => {
   it('renders the icon to be that of the value provided', async () => {
     const { tooltipRow } = await newTooltipRowPage({ icon: StatusIcon.SNOOZED });
-    const value = tooltipRow.querySelector('sc-chart-icon') as HTMLElement;
-
-    expect(value).not.toBeEmpty;
+    const value = tooltipRow.querySelector('sc-chart-icon') as any;
+    expect(value).not.toBeNull();
   });
   it('renders the icon to be empty when no value provided', async () => {
     const { tooltipRow } = await newTooltipRowPage({});
     const value = tooltipRow.querySelector('sc-chart-icon') as HTMLElement;
-
-    expect(value).toBeEmpty;
+    expect(value).toBeNull();
   });
 });
 

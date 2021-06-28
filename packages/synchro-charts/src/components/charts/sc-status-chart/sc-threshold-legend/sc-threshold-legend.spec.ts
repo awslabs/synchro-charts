@@ -146,7 +146,10 @@ describe('de-duplication behavior for legend rows', () => {
 
   it('renders two rows for two unique thresholds that only differ in color', async () => {
     const { thresholdLegend } = await thresholdLegendSpecPage({
-      thresholds: [{ ...THRESHOLD, color: 'red' }, { ...THRESHOLD, color: 'blue' }],
+      thresholds: [
+        { ...THRESHOLD, color: 'red' },
+        { ...THRESHOLD, color: 'blue' },
+      ],
     });
 
     expect(thresholdLegend.querySelectorAll('sc-threshold-legend-row').length).toBe(2);
@@ -154,7 +157,10 @@ describe('de-duplication behavior for legend rows', () => {
 
   it('renders two rows for two unique thresholds that only differ in value', async () => {
     const { thresholdLegend } = await thresholdLegendSpecPage({
-      thresholds: [{ ...THRESHOLD, value: 'A' }, { ...THRESHOLD, value: 'B' }],
+      thresholds: [
+        { ...THRESHOLD, value: 'A' },
+        { ...THRESHOLD, value: 'B' },
+      ],
     });
 
     expect(thresholdLegend.querySelectorAll('sc-threshold-legend-row').length).toBe(2);

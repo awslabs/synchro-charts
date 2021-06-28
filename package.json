@@ -9,10 +9,28 @@
   "workspaces": [
     "packages/*"
   ],
+  "scripts": {
+    "postinstall": "husky install",
+    "build": "lerna run build --stream",
+    "clean": "lerna run clean --concurrency 4",
+    "lint:fix": "lerna run fix --stream --concurrency 4",
+    "lint": "lerna run lint --stream --concurrency 4",
+    "test": "lerna run test --stream --concurrency 1"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-push": "yarn test && yarn lint-fix"
+    }
+  },
   "license": "Apache-2.0",
   "devDependencies": {
+    "@commitlint/cli": "^12.1.4",
+    "@commitlint/config-conventional": "^12.1.4",
+    "@commitlint/config-lerna-scopes": "^12.1.4",
     "@typescript-eslint/eslint-plugin": "^2.6.0",
     "@typescript-eslint/parser": "^2.6.0",
+    "commitlint": "^12.1.4",
     "eslint": "^6.6.0",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-config-airbnb-typescript": "^6.0.0",
@@ -23,7 +41,9 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-prettier": "^3.1.1",
     "eslint-plugin-react": "^7.16.0",
+    "husky": "^6.0.0",
     "lerna": "^4.0.0",
+    "lerna-changelog": "^1.0.1",
     "rimraf": "^3.0.2"
   }
 }

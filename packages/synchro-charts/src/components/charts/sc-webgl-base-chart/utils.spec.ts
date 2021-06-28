@@ -190,11 +190,19 @@ describe('create vertices from data streams', () => {
           resolution: 0,
           dataType: DataType.NUMBER,
           color: 'red',
-          data: [{ x: x1, y: y1 }, { x: x2, y: y2 }, { x: x3, y: y3 }],
+          data: [
+            { x: x1, y: y1 },
+            { x: x2, y: y2 },
+            { x: x3, y: y3 },
+          ],
         },
         0
       )
-    ).toStrictEqual([[x1, y1, 255, 0, 0], [x2, y2, 255, 0, 0], [x3, y3, 255, 0, 0]]);
+    ).toStrictEqual([
+      [x1, y1, 255, 0, 0],
+      [x2, y2, 255, 0, 0],
+      [x3, y3, 255, 0, 0],
+    ]);
   });
 
   it('handles hex colors properly', () => {

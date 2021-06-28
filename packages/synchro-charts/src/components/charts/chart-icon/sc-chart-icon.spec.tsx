@@ -31,7 +31,7 @@ it('creates empty icon if no name is provided', async () => {
   const { chartIcon } = await newChartIconSpecPage({});
   expect(chartIcon.querySelectorAll('.sc-chart-icon')).not.toBeEmpty();
   const icon = chartIcon.querySelector('svg');
-  expect(icon).not.toBeEmpty;
+  expect(icon).not.toBeEmpty();
 });
 
 it('creates normal status icon if NORMAL is provided', async () => {
@@ -39,7 +39,7 @@ it('creates normal status icon if NORMAL is provided', async () => {
     name: StatusIcon.NORMAL,
   });
   const icon = chartIcon.querySelector('svg');
-  expect(icon).not.toBeEmpty;
+  expect(icon).not.toBeEmpty();
   expect(icon).toEqualAttribute('fill', '#1d8102');
 });
 
@@ -49,6 +49,6 @@ it('creates normal status icon with color provided', async () => {
     color: 'white',
   });
   const icon = chartIcon.querySelector('svg');
-  expect(icon).not.toBeEmpty;
+  expect(icon).not.toBeEmpty();
   expect(icon).toEqualAttribute('fill', 'white');
 });

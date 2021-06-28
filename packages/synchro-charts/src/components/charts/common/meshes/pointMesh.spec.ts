@@ -197,7 +197,10 @@ describe('create point mesh', () => {
           color: 'blue',
           resolution: 0,
           dataType: DataType.NUMBER,
-          data: [{ x: Date.now(), y: 100 }, { x: Date.now(), y: 100 }],
+          data: [
+            { x: Date.now(), y: 100 },
+            { x: Date.now(), y: 100 },
+          ],
         },
       ],
       minBufferSize: 100,
@@ -338,7 +341,10 @@ describe('create point mesh', () => {
           name: 'some-name',
           dataType: DataType.NUMBER,
           resolution: 0,
-          data: [{ x: Date.now(), y: 100 }, { x: Date.now(), y: 100 }],
+          data: [
+            { x: Date.now(), y: 100 },
+            { x: Date.now(), y: 100 },
+          ],
         },
       ],
       minBufferSize: 1,

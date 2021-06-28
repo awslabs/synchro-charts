@@ -6,4 +6,3 @@ www
 build
 .storybook
 coverage
-node_modules/

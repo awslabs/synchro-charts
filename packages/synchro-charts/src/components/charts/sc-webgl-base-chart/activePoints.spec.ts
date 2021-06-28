@@ -363,7 +363,10 @@ describe('data alignment set to either side', () => {
           selectedDate: SOME_DATE,
           allowMultipleDates: false,
         })
-      ).toEqual([{ point: POINT_1, streamId: STREAM_ID }, { point: POINT_2, streamId: STREAM_ID_2 }]);
+      ).toEqual([
+        { point: POINT_1, streamId: STREAM_ID },
+        { point: POINT_2, streamId: STREAM_ID_2 },
+      ]);
     });
 
     it('with multiple points with the same dates, and some without the same date, only return the points that have the same date', () => {
@@ -403,7 +406,10 @@ describe('data alignment set to either side', () => {
           selectedDate: new Date(2000, 1, 1),
           allowMultipleDates: false,
         })
-      ).toEqual([{ point: POINT_1, streamId: STREAM_ID }, { point: POINT_2, streamId: STREAM_ID_2 }]);
+      ).toEqual([
+        { point: POINT_1, streamId: STREAM_ID },
+        { point: POINT_2, streamId: STREAM_ID_2 },
+      ]);
     });
   });
 

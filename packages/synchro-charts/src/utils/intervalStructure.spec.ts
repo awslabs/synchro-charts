@@ -17,11 +17,27 @@ const numericalCompare = (a: number, b: number): number => a - b;
 
 describe('intersect intervals', () => {
   it('empty left interval always results in empty interval', () => {
-    expect(intersect([], [[1, 2], [3, 5]])).toBeEmpty();
+    expect(
+      intersect(
+        [],
+        [
+          [1, 2],
+          [3, 5],
+        ]
+      )
+    ).toBeEmpty();
   });
 
   it('empty right interval always results in empty interval', () => {
-    expect(intersect([[1, 2], [3, 5]], [])).toBeEmpty();
+    expect(
+      intersect(
+        [
+          [1, 2],
+          [3, 5],
+        ],
+        []
+      )
+    ).toBeEmpty();
   });
 
   it('single interval on left and right result in only overlapping interval returned', () => {
@@ -29,11 +45,33 @@ describe('intersect intervals', () => {
   });
 
   it('multiple intervals on left and right', () => {
-    expect(intersect([[1, 3], [5, 7]], [[2, 4], [6, 8]])).toEqual([[2, 3], [6, 7]]);
+    expect(
+      intersect(
+        [
+          [1, 3],
+          [5, 7],
+        ],
+        [
+          [2, 4],
+          [6, 8],
+        ]
+      )
+    ).toEqual([
+      [2, 3],
+      [6, 7],
+    ]);
   });
 
   it('simplifies resulting intersection', () => {
-    expect(intersect([[1, 3], [3, 7]], [[2, 6]])).toEqual([[2, 6]]);
+    expect(
+      intersect(
+        [
+          [1, 3],
+          [3, 7],
+        ],
+        [[2, 6]]
+      )
+    ).toEqual([[2, 6]]);
   });
 });
 
@@ -55,11 +93,22 @@ describe('subtract intervals', () => {
   });
 
   it('subtracts left and right interval leaving middle segment', () => {
-    expect(subtractIntervals([0, 1], [[0, 0.25], [0.75, 1]])).toEqual([[0.25, 0.75]]);
+    expect(
+      subtractIntervals(
+        [0, 1],
+        [
+          [0, 0.25],
+          [0.75, 1],
+        ]
+      )
+    ).toEqual([[0.25, 0.75]]);
   });
 
   it('subtracting a middle segment returns two intervals on the sides', () => {
-    expect(subtractIntervals([0, 1], [[0.25, 0.75]])).toEqual([[0, 0.25], [0.75, 1]]);
+    expect(subtractIntervals([0, 1], [[0.25, 0.75]])).toEqual([
+      [0, 0.25],
+      [0.75, 1],
+    ]);
   });
 
   describe('returns empty array', () => {
@@ -72,12 +121,30 @@ describe('subtract intervals', () => {
     });
 
     it('subtracting multiple intervals which over the interval returns empty array', () => {
-      expect(subtractIntervals([0, 1], [[0, 0.5], [0.5, 1]])).toEqual([]);
+      expect(
+        subtractIntervals(
+          [0, 1],
+          [
+            [0, 0.5],
+            [0.5, 1],
+          ]
+        )
+      ).toEqual([]);
     });
 
     it('subtracting a mess of intervals which cover the interval', () => {
       expect(
-        subtractIntervals([-100, 100], [[-200, -100], [-102, -40], [-60, 20], [0, 10], [90, 200], [20, 90]])
+        subtractIntervals(
+          [-100, 100],
+          [
+            [-200, -100],
+            [-102, -40],
+            [-60, 20],
+            [0, 10],
+            [90, 200],
+            [20, 90],
+          ]
+        )
       ).toEqual([]);
     });
   });
@@ -141,7 +208,10 @@ describe('is contained', () => {
     expect(
       isContained(
         {
-          intervals: [[-100, -50], [0, 1000]],
+          intervals: [
+            [-100, -50],
+            [0, 1000],
+          ],
           items: [[]],
         },
         [100, 400]
@@ -233,7 +303,10 @@ describe('adds item to interval structure', () => {
           numericalCompare
         )
       ).toEqual({
-        intervals: [[10, 100], [1000, 9999]],
+        intervals: [
+          [10, 100],
+          [1000, 9999],
+        ],
         items: [[10], [999]],
       });
     });
@@ -282,8 +355,14 @@ describe('adds item to interval structure', () => {
 
       it('merges interval with more data than present in multiple intervals, takes the additional data and merges the intervals', () => {
         const structure: IntervalStructure<number> = {
-          intervals: [[0, 10], [10, 20]],
-          items: [[0, 5, 10], [11, 15, 20]],
+          intervals: [
+            [0, 10],
+            [10, 20],
+          ],
+          items: [
+            [0, 5, 10],
+            [11, 15, 20],
+          ],
         };
         expect(addInterval(structure, [5, 15], [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], numericalCompare)).toEqual({
           intervals: [[0, 20]],
@@ -302,7 +381,10 @@ describe('adds item to interval structure', () => {
 
     it('merges three intervals into one', () => {
       const structure: IntervalStructure<number> = {
-        intervals: [[0, 20], [40, 100]],
+        intervals: [
+          [0, 20],
+          [40, 100],
+        ],
         items: [[15], [55]],
       };
       expect(addInterval(structure, [20, 50], [33], numericalCompare)).toEqual({
@@ -313,8 +395,16 @@ describe('adds item to interval structure', () => {
 
     it('replaces a series of smaller intervals with one large interval', () => {
       const structure: IntervalStructure<number> = {
-        intervals: [[0, 10], [20, 30], [40, 50]],
-        items: [[5, 6], [25, 26], [45, 46]],
+        intervals: [
+          [0, 10],
+          [20, 30],
+          [40, 50],
+        ],
+        items: [
+          [5, 6],
+          [25, 26],
+          [45, 46],
+        ],
       };
       expect(addInterval(structure, [0, 50], [5, 6, 25, 26, 35, 45, 46], numericalCompare)).toEqual({
         intervals: [[0, 50]],
@@ -324,8 +414,14 @@ describe('adds item to interval structure', () => {
 
     it('replaces a series of smaller intervals with one large interval, merging in the last interval', () => {
       const structure: IntervalStructure<number> = {
-        intervals: [[20, 30], [40, 60]],
-        items: [[25, 26], [45, 60]],
+        intervals: [
+          [20, 30],
+          [40, 60],
+        ],
+        items: [
+          [25, 26],
+          [45, 60],
+        ],
       };
       expect(addInterval(structure, [0, 50], [5, 6, 25, 26, 35, 45], numericalCompare)).toEqual({
         intervals: [[0, 60]],
@@ -335,8 +431,14 @@ describe('adds item to interval structure', () => {
 
     it('merges three intervals into one, where each interval contains overlap and unique elemetns', () => {
       const structure: IntervalStructure<number> = {
-        intervals: [[20, 30], [40, 60]],
-        items: [[20, 30], [40, 60]],
+        intervals: [
+          [20, 30],
+          [40, 60],
+        ],
+        items: [
+          [20, 30],
+          [40, 60],
+        ],
       };
       expect(addInterval(structure, [25, 45], [30, 35, 40], numericalCompare)).toEqual({
         intervals: [[20, 60]],
