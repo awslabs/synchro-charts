@@ -1,3 +1,4 @@
+jest.mock('resize-observer-polyfill');
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 import { update } from '../charts/common/tests/merge';
@@ -38,13 +39,13 @@ const CONTAINER_SIZE = { width: 200, height: 300 };
  * Warning: Observer will not fire or work as expected in jest test. This makes certain unit tests impossible to write.
  */
 
-it.skip('does not render on initial load when size is not set', async () => {
+it('does not render on initial load when size is not set', async () => {
   // container size is the size of the container holder our widget
   const { widgetSizer } = await newWidgetSizerSpecPage(CONTAINER_SIZE, { size: undefined });
   expect(widgetSizer.renderFunc).not.toBeCalled();
 });
 
-describe.skip('when size is set', () => {
+describe('when size is set', () => {
   const size = { width: 120, height: 300 };
 
   it('renders on initial load when size is set', async () => {
