@@ -10,16 +10,17 @@
     "packages/*"
   ],
   "scripts": {
+    "postinstall": "husky install",
     "build": "lerna run build --stream",
     "clean": "lerna run clean --concurrency 4",
-    "lint": "lerna run lint --stream --concurrency 4",
     "lint:fix": "lerna run fix --stream --concurrency 4",
-    "test": "lerna run test --stream --concurrency 1",
-    "greet": ""
+    "lint": "lerna run lint --stream --concurrency 4",
+    "test": "lerna run test --stream --concurrency 1"
   },
   "husky": {
     "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-push": "yarn test && yarn lint-fix"
     }
   },
   "license": "Apache-2.0",
