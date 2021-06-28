@@ -8,7 +8,7 @@
  * Used internally, also to help stabilize integration tests and reduce refactoring work.
  */
 import { SECOND_IN_MS } from '../utils/time';
-import { constructSearchQuery, SearchQueryParams } from './dynamicWidgetUtils/testCaseParameters';
+import { constructSearchQuery, SCREEN_SIZE, SearchQueryParams } from './dynamicWidgetUtils/testCaseParameters';
 import { DataStreamId } from '../utils/dataTypes';
 
 // NOTE: the values of the selectors will change over time.
@@ -18,6 +18,7 @@ export const CHART_VIZ_CONTAINER_SELECTOR = 'sc-webgl-base-chart .data-container
 export const CHART_TOOLTIP_SELECTOR = 'sc-webgl-base-chart .tooltip-container';
 export const CHART_TOOLTIP_ROW_SELECTOR = 'sc-tooltip-row';
 export const LEGEND_SELECTOR = 'sc-legend';
+export const LATEST_VALUE_SELECTOR = 'sc-latest-value [data-testid="latest-value"]';
 
 // corresponds to the 'no data visualization', and the 'data stream name and value' panel directly above it.
 export const STATUS_TIMELINE_OVERLAY_SELECTOR = 'sc-status-timeline-overlay';
@@ -47,4 +48,9 @@ export const DEFAULT_PARAMS: Partial<SearchQueryParams> = {
 type CypressLike = {
   viewport: Function;
   visit: Function;
+};
+
+export const visitDynamicWidget = (cy: CypressLike, params: Partial<SearchQueryParams> = {}) => {
+  cy.viewport(SCREEN_SIZE.width, SCREEN_SIZE.height);
+  cy.visit(route({ ...DEFAULT_PARAMS, ...params }));
 };
