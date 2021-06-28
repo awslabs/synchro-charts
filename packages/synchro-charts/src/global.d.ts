@@ -1,7 +1,7 @@
 declare module '*.frag';
 declare module '*.vert';
 
-// TODO(btd): make this live with the matchers. Currently copying over jest-extended matcher
+// TODO: make this live with the matchers. Currently copying over jest-extended matcher
 //            type declarations as I had issues getting the name space declarations to merge correctly.
 
 declare namespace jest {
