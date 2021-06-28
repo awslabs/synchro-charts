@@ -1,8 +1,7 @@
 import { Annotation, Annotations, AnnotationValue, XAnnotation, YAnnotation } from '../types';
 import { renderXAnnotationTexts, removeXAnnotationTexts } from './XAnnotations/XAnnotationTexts';
-import { renderYAnnotationTexts, removeYAnnotationTexts } from './YAnnotations/YAnnotationTexts';
+import { renderYAnnotations, removeYAnnotations } from './YAnnotations/YAnnotations';
 import { renderXAnnotationLines, removeXAnnotationLines } from './XAnnotations/XAnnotationLines';
-import { renderYAnnotationLines, removeYAnnotationLines } from './YAnnotations/YAnnotationLines';
 import { ViewPort } from '../../../../utils/dataTypes';
 
 export type RenderAnnotationsOptions = {
@@ -28,8 +27,7 @@ export const renderAnnotations = ({ container, resolution, annotations, viewPort
   if (typeof annotations === 'object' && typeof annotations.show === 'boolean' && !annotations.show) {
     removeXAnnotationLines({ container });
     removeXAnnotationTexts({ container });
-    removeYAnnotationLines({ container });
-    removeYAnnotationTexts({ container });
+    removeYAnnotations({ container });
     return;
   }
 
@@ -49,9 +47,9 @@ export const renderAnnotations = ({ container, resolution, annotations, viewPort
   });
 
   /**
-   * Y Annotations Text
+   * Y Annotations
    */
-  renderYAnnotationTexts({
+  renderYAnnotations({
     container,
     yAnnotations,
     viewPort,
@@ -65,16 +63,6 @@ export const renderAnnotations = ({ container, resolution, annotations, viewPort
   renderXAnnotationLines({
     container,
     xAnnotations,
-    viewPort,
-    size,
-  });
-
-  /**
-   * Y Annotations Lines
-   */
-  renderYAnnotationLines({
-    container,
-    yAnnotations,
     viewPort,
     size,
   });
