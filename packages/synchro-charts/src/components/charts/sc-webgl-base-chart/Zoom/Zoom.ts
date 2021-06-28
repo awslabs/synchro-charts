@@ -81,7 +81,7 @@ export default class Zoom {
    *
    * Returns the x and y scale with the date range transformed to the specified view port
    * Maintains the internal state of the zoom behavior.
-   * TODO(btd): Support gestures on the y axis
+   * TODO: Support gestures on the y axis
    */
   public updateViewPort({ start, end, yMin, yMax }: ViewPort): { xScale: Scale; yScale: Scale } {
     const [prevStart, prevEnd] = this.xScale.domain() as [Date, Date];

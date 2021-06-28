@@ -35,7 +35,7 @@ const pointDiameter = <T extends Primitive>(dataStreams: DataStream<T>[]): numbe
 export const NUM_POSITION_COMPONENTS = 2; // (x, y)
 const NUM_COLOR_COMPONENTS = 3; // (r, g, b)
 
-// TODO(btd): Need to account for other visualization types, such as bar chart and line chart.
+// TODO: Need to account for other visualization types, such as bar chart and line chart.
 export type PointBufferGeometry = BufferGeometry & {
   attributes: { position: WriteableBufferAttribute; pointColor: WriteableBufferAttribute };
 };

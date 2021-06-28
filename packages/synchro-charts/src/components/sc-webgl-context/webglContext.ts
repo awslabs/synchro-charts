@@ -190,6 +190,6 @@ export const createWebGLRenderer = () => {
   };
 };
 
-// TODO(btd): Rather than exposing this as a singleton, it would be preferred to expose it as
+// TODO: Rather than exposing this as a singleton, it would be preferred to expose it as
 //  a shared context within a component sub-tree.
 export const webGLRenderer = createWebGLRenderer();

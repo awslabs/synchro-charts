@@ -40,7 +40,7 @@ export interface ChartScene extends ViewPortManager {
  * Represents a camera event. Emitted to alter the view port of
  * one or more camera such as panning.
  *
- * TODO(btd): Expand on the camera event system - most
+ * TODO: Expand on the camera event system - most
  *  likely we will want to move to a higher level abstraction,
  *  i.e. have a 'pan', 'brush', 'scale', event
  */

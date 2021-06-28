@@ -155,8 +155,7 @@ describe('Zoom behavior', () => {
       expect(xScale.range()).toEqual([MIN_X, MAX_X]);
     });
 
-    // Correct test
-    it.skip('returns scaled and translated x scale', async () => {
+    it('returns scaled and translated x scale', async () => {
       const zoom = await createZoom();
       const ALTERED_START_DATE = new Date(2002, 0, 0);
       const ALTERED_END_DATE = new Date(2008, 0, 0);
@@ -167,8 +166,11 @@ describe('Zoom behavior', () => {
         yMax: MAX_Y_DOMAIN,
       });
       const [newStartDate, newEndDate] = xScale.domain() as [Date, Date];
-      expect(newStartDate.toISOString()).toBe(ALTERED_START_DATE.toISOString());
-      expect(newEndDate.toISOString()).toBe(ALTERED_END_DATE.toISOString());
+
+      // Dates can be off by a millisecond due to floating point rounding errors
+      expect(newStartDate).toBeNearDate(ALTERED_START_DATE, 2);
+      expect(newEndDate).toBeNearDate(ALTERED_END_DATE, 2);
+
       expect(xScale.range()).toEqual([MIN_X, MAX_X]);
     });
 
