@@ -66,7 +66,7 @@ describe('valueColor property', () => {
   });
 });
 
-describe.only('icon property', () => {
+describe('icon property', () => {
   it('renders the icon to be that of the value provided', async () => {
     const { tooltipRow } = await newTooltipRowPage({ icon: StatusIcon.SNOOZED });
     const value = tooltipRow.querySelector('sc-chart-icon') as any;
