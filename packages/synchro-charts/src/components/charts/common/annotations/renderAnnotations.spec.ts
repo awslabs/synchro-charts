@@ -3,12 +3,13 @@ import { renderAnnotations, RenderAnnotationsOptions } from './renderAnnotations
 import { YAnnotation } from '../types';
 import { SECOND_IN_MS } from '../../../../utils/time';
 import { LINE_SELECTOR as X_LINE_SELECTOR } from './XAnnotations/XAnnotationLines';
-import { LINE_SELECTOR as Y_LINE_SELECTOR } from './YAnnotations/YAnnotationLines';
 import { TEXT_SELECTOR as X_TEXT_SELECTOR } from './XAnnotations/XAnnotationTexts';
 import {
+  LINE_SELECTOR as Y_LINE_SELECTOR,
   TEXT_SELECTOR as Y_TEXT_SELECTOR,
   TEXT_VALUE_SELECTOR as Y_TEXT_VALUE_SELECTOR,
-} from './YAnnotations/YAnnotationTexts';
+  THRESHOLD_GROUP_SELECTOR as Y_THRESHOLD_SELECTOR,
+} from './YAnnotations/YAnnotations';
 
 const VIEWPORT = {
   start: new Date(2000, 0, 0),
@@ -64,6 +65,7 @@ describe('no annotations', () => {
 
     expect(page.body.querySelectorAll('line')).toBeEmpty();
     expect(page.body.querySelectorAll('text')).toBeEmpty();
+    expect(page.body.querySelectorAll('g')).toBeEmpty();
   });
 
   it('renders no annotations when no annotations provided implicitly', async () => {
@@ -71,6 +73,7 @@ describe('no annotations', () => {
 
     expect(page.body.querySelectorAll('line')).toBeEmpty();
     expect(page.body.querySelectorAll('text')).toBeEmpty();
+    expect(page.body.querySelectorAll('g')).toBeEmpty();
   });
 
   it('renders no annotations when show changes to false', async () => {
@@ -105,12 +108,14 @@ describe('no annotations', () => {
     let yLine = page.body.querySelector(Y_LINE_SELECTOR);
     let yText = page.body.querySelector(Y_TEXT_SELECTOR);
     let yTextValue = page.body.querySelector(Y_TEXT_VALUE_SELECTOR);
+    let yThresholdGroup = page.body.querySelector(Y_THRESHOLD_SELECTOR);
 
     expect(xLine).not.toBeNull();
     expect(xText).not.toBeNull();
     expect(yLine).not.toBeNull();
     expect(yText).not.toBeNull();
     expect(yTextValue).not.toBeNull();
+    expect(yThresholdGroup).not.toBeNull();
 
     render(
       {
@@ -128,12 +133,14 @@ describe('no annotations', () => {
     yLine = page.body.querySelector(Y_LINE_SELECTOR);
     yText = page.body.querySelector(Y_TEXT_SELECTOR);
     yTextValue = page.body.querySelector(Y_TEXT_VALUE_SELECTOR);
+    yThresholdGroup = page.body.querySelector(Y_THRESHOLD_SELECTOR);
 
     expect(xLine).toBeNull();
     expect(xText).toBeNull();
     expect(yLine).toBeNull();
     expect(yText).toBeNull();
     expect(yTextValue).toBeNull();
+    expect(yThresholdGroup).toBeNull();
   });
 });
 
@@ -308,7 +315,7 @@ describe('x annotation', () => {
 
     // Has expected lines
     expect(page.body.querySelectorAll('line.x')).toHaveLength(1);
-    expect(page.body.querySelectorAll('line.y')).toBeEmpty();
+    expect(page.body.querySelectorAll(Y_LINE_SELECTOR)).toBeEmpty();
 
     // Line bisects the viewport vertically
     expect(lineX.getAttribute('x1')).toEqual((SIZE.width / 2).toString());
@@ -435,7 +442,7 @@ describe('y annotation', () => {
         ],
       },
     });
-
+    expect(page.body.querySelectorAll('g')).toBeEmpty();
     expect(page.body.querySelectorAll('line')).toBeEmpty();
     expect(page.body.querySelectorAll('text')).toBeEmpty();
   });
@@ -451,7 +458,7 @@ describe('y annotation', () => {
         ],
       },
     });
-
+    expect(page.body.querySelectorAll('g')).toBeEmpty();
     expect(page.body.querySelectorAll('line')).toBeEmpty();
     expect(page.body.querySelectorAll('text')).toBeEmpty();
   });
@@ -463,10 +470,13 @@ describe('y annotation', () => {
       },
     });
 
-    const lineY = page.body.querySelector('line.y') as SVGLineElement;
+    // Has group structure
+    expect(page.body.querySelectorAll(Y_THRESHOLD_SELECTOR)).toHaveLength(1);
+
+    const lineY = page.body.querySelector(Y_LINE_SELECTOR) as SVGLineElement;
 
     // Has expected lines
-    expect(page.body.querySelectorAll('line.y')).toHaveLength(1);
+    expect(page.body.querySelectorAll(Y_LINE_SELECTOR)).toHaveLength(1);
     expect(page.body.querySelectorAll('line.x')).toBeEmpty();
 
     // Line bisects the viewport vertically
@@ -476,6 +486,77 @@ describe('y annotation', () => {
     expect(lineY.getAttribute('y2')).toEqual((SIZE.height / 2).toString());
   });
 
+  it('has proper threshold grouping structure', async () => {
+    const { page } = await newAnnotationsPage({
+      annotations: {
+        y: [Y_ANNOTATION],
+      },
+    });
+
+    // Has group structure
+    expect(page.body.querySelectorAll(Y_THRESHOLD_SELECTOR)).toHaveLength(1);
+    let groupY = page.body.querySelector(Y_THRESHOLD_SELECTOR) as SVGElement;
+    expect(groupY.childElementCount).toEqual(3);
+    expect(groupY.querySelectorAll(Y_TEXT_SELECTOR)).toHaveLength(1);
+    expect(groupY.querySelectorAll(Y_LINE_SELECTOR)).toHaveLength(1);
+    expect(groupY.querySelectorAll(Y_TEXT_VALUE_SELECTOR)).toHaveLength(1);
+
+    let innerElement = page.body.querySelector(Y_TEXT_SELECTOR);
+    expect(innerElement!.parentElement).not.toBeNull();
+    expect(innerElement!.parentElement!.getAttribute('class')).toEqual('yThreshold');
+
+    innerElement = page.body.querySelector(Y_LINE_SELECTOR);
+    expect(innerElement!.parentElement).not.toBeNull();
+    expect(innerElement!.parentElement!.getAttribute('class')).toEqual('yThreshold');
+
+    innerElement = page.body.querySelector(Y_TEXT_VALUE_SELECTOR);
+    expect(innerElement!.parentElement).not.toBeNull();
+    expect(innerElement!.parentElement!.getAttribute('class')).toEqual('yThreshold');
+
+    render(
+      {
+        annotations: {
+          y: [
+            Y_ANNOTATION,
+            {
+              ...Y_ANNOTATION,
+              value: VIEWPORT.yMax - 4,
+              showValue: false,
+            },
+          ],
+        },
+      },
+      page
+    );
+
+    await page.waitForChanges();
+    expect(page.body.querySelectorAll(Y_TEXT_SELECTOR)).toHaveLength(2);
+
+    groupY = page.body.querySelectorAll(Y_THRESHOLD_SELECTOR)[1] as SVGElement;
+    expect(groupY.childElementCount).toEqual(3);
+    expect(groupY.querySelectorAll(Y_TEXT_SELECTOR)).toHaveLength(1);
+    expect(groupY.querySelectorAll(Y_LINE_SELECTOR)).toHaveLength(1);
+    expect(groupY.querySelectorAll(Y_TEXT_VALUE_SELECTOR)).toHaveLength(1);
+
+    innerElement = groupY.querySelector(Y_TEXT_SELECTOR);
+    expect(innerElement!.parentElement).not.toBeNull();
+    expect(innerElement!.parentElement!.getAttribute('class')).toEqual('yThreshold');
+
+    innerElement = groupY.querySelector(Y_LINE_SELECTOR);
+    expect(innerElement!.parentElement).not.toBeNull();
+    expect(innerElement!.parentElement!.getAttribute('class')).toEqual('yThreshold');
+
+    innerElement = groupY.querySelector(Y_TEXT_VALUE_SELECTOR);
+    expect(innerElement!.parentElement).not.toBeNull();
+    expect(innerElement!.parentElement!.getAttribute('class')).toEqual('yThreshold');
+
+    groupY = page.body.querySelectorAll(Y_THRESHOLD_SELECTOR)[0] as SVGElement;
+    expect(groupY.childElementCount).toEqual(3);
+    expect(groupY.querySelectorAll(Y_TEXT_SELECTOR)).toHaveLength(1);
+    expect(groupY.querySelectorAll(Y_LINE_SELECTOR)).toHaveLength(1);
+    expect(groupY.querySelectorAll(Y_TEXT_VALUE_SELECTOR)).toHaveLength(1);
+  });
+
   it('renders initial color', async () => {
     const { page } = await newAnnotationsPage({
       annotations: {
@@ -483,7 +564,7 @@ describe('y annotation', () => {
       },
     });
 
-    const lineY = page.body.querySelector('line.y') as SVGLineElement;
+    const lineY = page.body.querySelector(Y_LINE_SELECTOR) as SVGLineElement;
     expect(lineY.style.stroke).toBe(Y_ANNOTATION.color);
   });
 
@@ -511,11 +592,11 @@ describe('y annotation', () => {
     );
     await page.waitForChanges();
 
-    const lineY = page.body.querySelector('line.y') as SVGLineElement;
+    const lineY = page.body.querySelector(Y_LINE_SELECTOR) as SVGLineElement;
     expect(lineY.style.stroke).toBe(UPDATED_COLOR);
   });
 
-  it('updates position when value is updated', async () => {
+  it('updates position and text value when value is updated', async () => {
     const { page } = await newAnnotationsPage({
       annotations: {
         y: [Y_ANNOTATION],
@@ -529,6 +610,7 @@ describe('y annotation', () => {
             {
               ...Y_ANNOTATION,
               value: VIEWPORT.yMax,
+              showValue: true,
             },
           ],
         },
@@ -538,11 +620,15 @@ describe('y annotation', () => {
 
     await page.waitForChanges();
 
-    const lineY = page.body.querySelector('line.y') as SVGLineElement;
+    const lineY = page.body.querySelector(Y_LINE_SELECTOR) as SVGLineElement;
 
     const updatedY = 0;
     expect(lineY.getAttribute('y1')).toEqual(updatedY.toString());
     expect(lineY.getAttribute('y2')).toEqual(updatedY.toString());
+
+    const valueText = page.body.querySelector(Y_TEXT_VALUE_SELECTOR) as SVGTextElement;
+    expect(valueText.getAttribute('display')).toEqual('inline');
+    expect(valueText.toString()).toBe(`${VIEWPORT.yMax.toString()}`);
   });
 
   it('renders label with annotations color when annotation is set to show text', async () => {
@@ -562,10 +648,263 @@ describe('y annotation', () => {
       },
     });
 
-    expect(page.body.querySelectorAll('text.y')).toHaveLength(1);
-    const text = page.body.querySelector('text.y') as SVGTextElement;
+    expect(page.body.querySelectorAll(Y_TEXT_SELECTOR)).toHaveLength(1);
+    const text = page.body.querySelector(Y_TEXT_SELECTOR) as SVGTextElement;
     expect(text.textContent).toBe(SOME_LABEL);
     expect(text.style.fill).toBe(Y_ANNOTATION.color);
+  });
+
+  it('updates annotation text value properly', async () => {
+    const SOME_LABEL = 'some-label!';
+    const { page } = await newAnnotationsPage({
+      annotations: {
+        y: [
+          {
+            ...Y_ANNOTATION,
+            label: {
+              text: SOME_LABEL,
+              show: true,
+            },
+            showValue: false,
+          },
+        ],
+      },
+    });
+
+    expect(page.body.querySelectorAll(Y_TEXT_SELECTOR).length).toBe(1);
+    expect(page.body.querySelectorAll(Y_TEXT_VALUE_SELECTOR).length).toBe(1);
+    expect(page.body.querySelectorAll(Y_LINE_SELECTOR).length).toBe(1);
+
+    let text = page.body.querySelector(Y_TEXT_SELECTOR) as SVGTextElement;
+    expect(text.getAttribute('display')).toEqual('inline');
+    expect(text.textContent!.toString()).toBe(`${SOME_LABEL}`);
+
+    let valueText = page.body.querySelector(Y_TEXT_VALUE_SELECTOR) as SVGTextElement;
+    expect(valueText.getAttribute('display')).toEqual('none');
+
+    render(
+      {
+        annotations: {
+          y: [
+            {
+              ...Y_ANNOTATION,
+              label: {
+                text: SOME_LABEL,
+                show: true,
+              },
+              showValue: true,
+            },
+          ],
+        },
+      },
+      page
+    );
+
+    expect(page.body.querySelectorAll(Y_TEXT_SELECTOR).length).toBe(1);
+    expect(page.body.querySelectorAll(Y_TEXT_VALUE_SELECTOR).length).toBe(1);
+    expect(page.body.querySelectorAll(Y_LINE_SELECTOR).length).toBe(1);
+
+    text = page.body.querySelector(Y_TEXT_SELECTOR) as SVGTextElement;
+    expect(text.getAttribute('display')).toEqual('inline');
+    expect(text.textContent!.toString()).toBe(`${SOME_LABEL}`);
+
+    valueText = page.body.querySelector(Y_TEXT_VALUE_SELECTOR) as SVGTextElement;
+    expect(valueText.getAttribute('display')).toEqual('inline');
+    expect(valueText.toString()).toBe(`${Y_ANNOTATION.value.toString()}`);
+
+    render(
+      {
+        annotations: {
+          y: [
+            {
+              ...Y_ANNOTATION,
+              label: {
+                text: SOME_LABEL,
+                show: true,
+              },
+              showValue: false,
+            },
+          ],
+        },
+      },
+      page
+    );
+
+    expect(page.body.querySelectorAll(Y_TEXT_SELECTOR).length).toBe(1);
+    expect(page.body.querySelectorAll(Y_TEXT_VALUE_SELECTOR).length).toBe(1);
+    expect(page.body.querySelectorAll(Y_LINE_SELECTOR).length).toBe(1);
+
+    text = page.body.querySelector(Y_TEXT_SELECTOR) as SVGTextElement;
+    expect(text.getAttribute('display')).toEqual('inline');
+    expect(text.textContent!.toString()).toBe(`${SOME_LABEL}`);
+
+    valueText = page.body.querySelector(Y_TEXT_VALUE_SELECTOR) as SVGTextElement;
+    expect(valueText.getAttribute('display')).toEqual('none');
+  });
+
+  it('updates annotation label show properly', async () => {
+    const SOME_LABEL = 'some-label!';
+    const { page } = await newAnnotationsPage({
+      annotations: {
+        y: [
+          {
+            ...Y_ANNOTATION,
+            label: {
+              text: SOME_LABEL,
+              show: false,
+            },
+            showValue: false,
+          },
+        ],
+      },
+    });
+
+    expect(page.body.querySelectorAll(Y_TEXT_SELECTOR).length).toBe(1);
+    expect(page.body.querySelectorAll(Y_TEXT_VALUE_SELECTOR).length).toBe(1);
+    expect(page.body.querySelectorAll(Y_LINE_SELECTOR).length).toBe(1);
+
+    let text = page.body.querySelector(Y_TEXT_SELECTOR) as SVGTextElement;
+    expect(text.getAttribute('display')).toEqual('none');
+
+    let valueText = page.body.querySelector(Y_TEXT_VALUE_SELECTOR) as SVGTextElement;
+    expect(valueText.getAttribute('display')).toEqual('none');
+
+    render(
+      {
+        annotations: {
+          y: [
+            {
+              ...Y_ANNOTATION,
+              label: {
+                text: SOME_LABEL,
+                show: true,
+              },
+              showValue: false,
+            },
+          ],
+        },
+      },
+      page
+    );
+
+    expect(page.body.querySelectorAll(Y_TEXT_SELECTOR).length).toBe(1);
+    expect(page.body.querySelectorAll(Y_TEXT_VALUE_SELECTOR).length).toBe(1);
+    expect(page.body.querySelectorAll(Y_LINE_SELECTOR).length).toBe(1);
+
+    text = page.body.querySelector(Y_TEXT_SELECTOR) as SVGTextElement;
+    expect(text.getAttribute('display')).toEqual('inline');
+    expect(text.textContent!.toString()).toBe(`${SOME_LABEL}`);
+
+    valueText = page.body.querySelector(Y_TEXT_VALUE_SELECTOR) as SVGTextElement;
+    expect(valueText.getAttribute('display')).toEqual('none');
+
+    render(
+      {
+        annotations: {
+          y: [
+            {
+              ...Y_ANNOTATION,
+              label: {
+                text: SOME_LABEL,
+                show: false,
+              },
+              showValue: true,
+            },
+          ],
+        },
+      },
+      page
+    );
+
+    expect(page.body.querySelectorAll(Y_TEXT_SELECTOR).length).toBe(1);
+    expect(page.body.querySelectorAll(Y_TEXT_VALUE_SELECTOR).length).toBe(1);
+    expect(page.body.querySelectorAll(Y_LINE_SELECTOR).length).toBe(1);
+
+    text = page.body.querySelector(Y_TEXT_SELECTOR) as SVGTextElement;
+    expect(text.getAttribute('display')).toEqual('none');
+
+    valueText = page.body.querySelector(Y_TEXT_VALUE_SELECTOR) as SVGTextElement;
+    expect(valueText.getAttribute('display')).toEqual('inline');
+    expect(valueText.toString()).toBe(`${Y_ANNOTATION.value.toString()}`);
+  });
+
+  it('updates annotation label if added/removed properly', async () => {
+    const SOME_LABEL = 'some-label!';
+    const { page } = await newAnnotationsPage({
+      annotations: {
+        y: [
+          {
+            ...Y_ANNOTATION,
+            label: undefined,
+            showValue: true,
+          },
+        ],
+      },
+    });
+
+    expect(page.body.querySelectorAll(Y_TEXT_SELECTOR).length).toBe(1);
+    expect(page.body.querySelectorAll(Y_TEXT_VALUE_SELECTOR).length).toBe(1);
+    expect(page.body.querySelectorAll(Y_LINE_SELECTOR).length).toBe(1);
+
+    let text = page.body.querySelector(Y_TEXT_SELECTOR) as SVGTextElement;
+    expect(text.getAttribute('display')).toEqual('none');
+
+    let valueText = page.body.querySelector(Y_TEXT_VALUE_SELECTOR) as SVGTextElement;
+    expect(valueText.getAttribute('display')).toEqual('inline');
+
+    render(
+      {
+        annotations: {
+          y: [
+            {
+              ...Y_ANNOTATION,
+              label: {
+                text: SOME_LABEL,
+                show: true,
+              },
+              showValue: false,
+            },
+          ],
+        },
+      },
+      page
+    );
+
+    expect(page.body.querySelectorAll(Y_TEXT_SELECTOR).length).toBe(1);
+    expect(page.body.querySelectorAll(Y_TEXT_VALUE_SELECTOR).length).toBe(1);
+    expect(page.body.querySelectorAll(Y_LINE_SELECTOR).length).toBe(1);
+
+    text = page.body.querySelector(Y_TEXT_SELECTOR) as SVGTextElement;
+    expect(text.getAttribute('display')).toEqual('inline');
+    expect(text.textContent!.toString()).toBe(`${SOME_LABEL}`);
+
+    valueText = page.body.querySelector(Y_TEXT_VALUE_SELECTOR) as SVGTextElement;
+    expect(valueText.getAttribute('display')).toEqual('none');
+
+    render(
+      {
+        annotations: {
+          y: [
+            {
+              ...Y_ANNOTATION,
+              label: undefined,
+              showValue: false,
+            },
+          ],
+        },
+      },
+      page
+    );
+
+    expect(page.body.querySelectorAll(Y_TEXT_SELECTOR).length).toBe(1);
+    expect(page.body.querySelectorAll(Y_TEXT_VALUE_SELECTOR).length).toBe(1);
+    expect(page.body.querySelectorAll(Y_LINE_SELECTOR).length).toBe(1);
+
+    text = page.body.querySelector(Y_TEXT_SELECTOR) as SVGTextElement;
+    expect(text.getAttribute('display')).toEqual('none');
+
+    valueText = page.body.querySelector(Y_TEXT_VALUE_SELECTOR) as SVGTextElement;
+    expect(valueText.getAttribute('display')).toEqual('none');
   });
 
   it('renders value and label when annotation is set to show text and value displayed', async () => {
@@ -584,13 +923,15 @@ describe('y annotation', () => {
         ],
       },
     });
-
-    expect(page.body.querySelectorAll('text.y').length).toBe(1);
-    expect(page.body.querySelectorAll('text.yValueText').length).toBe(1);
-    const text = page.body.querySelector('text.y') as SVGTextElement;
-    const valueText = page.body.querySelector('text.yValueText') as SVGTextElement;
+    expect(page.body.querySelectorAll(Y_THRESHOLD_SELECTOR).length).toBe(1);
+    expect(page.body.querySelectorAll(Y_TEXT_SELECTOR).length).toBe(1);
+    expect(page.body.querySelectorAll(Y_TEXT_VALUE_SELECTOR).length).toBe(1);
+    const text = page.body.querySelector(Y_TEXT_SELECTOR) as SVGTextElement;
+    const valueText = page.body.querySelector(Y_TEXT_VALUE_SELECTOR) as SVGTextElement;
     expect(text.textContent!.toString()).toBe(`${SOME_LABEL}`);
     expect(valueText.toString()).toBe(`${Y_ANNOTATION.value.toString()}`);
+    expect(text.getAttribute('display')).toEqual('inline');
+    expect(valueText.getAttribute('display')).toEqual('inline');
   });
 
   it('updates annotations text and color correctly', async () => {
@@ -630,7 +971,8 @@ describe('y annotation', () => {
       page
     );
 
-    const text = page.body.querySelector('text.y') as SVGTextElement;
+    const text = page.body.querySelector(Y_TEXT_SELECTOR) as SVGTextElement;
+    expect(text.getAttribute('display')).toEqual('inline');
     expect(text.textContent).toBe(SOME_NEW_LABEL);
     expect(text.style.fill).toBe(NEW_COLOR);
   });
@@ -648,5 +990,109 @@ describe('y annotation', () => {
 
     expect(page.body.querySelectorAll('line')).toBeEmpty();
     expect(page.body.querySelectorAll('text')).toBeEmpty();
+    expect(page.body.querySelectorAll('g')).toBeEmpty();
+  });
+
+  it('handles multiple annotations', async () => {
+    const { page } = await newAnnotationsPage({
+      annotations: {
+        y: [
+          Y_ANNOTATION,
+          {
+            ...Y_ANNOTATION,
+            value: VIEWPORT.yMin + 3,
+            showValue: false,
+          },
+        ],
+      },
+    });
+    expect(page.body.querySelectorAll(Y_THRESHOLD_SELECTOR).length).toBe(2);
+    expect(page.body.querySelectorAll(Y_TEXT_SELECTOR).length).toBe(2);
+    expect(page.body.querySelectorAll(Y_TEXT_VALUE_SELECTOR).length).toBe(2);
+
+    render(
+      {
+        annotations: {
+          y: [
+            Y_ANNOTATION,
+            {
+              ...Y_ANNOTATION,
+              value: VIEWPORT.yMin + 5,
+              showValue: false,
+            },
+            {
+              ...Y_ANNOTATION,
+              value: VIEWPORT.yMax - 4,
+              showValue: false,
+            },
+          ],
+        },
+      },
+      page
+    );
+    await page.waitForChanges();
+    expect(page.body.querySelectorAll(Y_THRESHOLD_SELECTOR).length).toBe(3);
+    expect(page.body.querySelectorAll(Y_TEXT_SELECTOR).length).toBe(3);
+    expect(page.body.querySelectorAll(Y_TEXT_VALUE_SELECTOR).length).toBe(3);
+
+    render(
+      {
+        annotations: {
+          y: [
+            Y_ANNOTATION,
+            {
+              ...Y_ANNOTATION,
+              value: VIEWPORT.yMin + 5,
+              showValue: false,
+            },
+            {
+              ...Y_ANNOTATION,
+              value: VIEWPORT.yMin + 4,
+              showValue: false,
+            },
+            {
+              ...Y_ANNOTATION,
+              value: VIEWPORT.yMin + 3,
+              showValue: false,
+            },
+            {
+              ...Y_ANNOTATION,
+              value: VIEWPORT.yMin + 2,
+              showValue: false,
+            },
+            {
+              ...Y_ANNOTATION,
+              value: VIEWPORT.yMin + 1,
+              showValue: false,
+            },
+            {
+              ...Y_ANNOTATION,
+              value: VIEWPORT.yMax - 4,
+              showValue: false,
+            },
+            {
+              ...Y_ANNOTATION,
+              value: VIEWPORT.yMax - 3,
+              showValue: false,
+            },
+            {
+              ...Y_ANNOTATION,
+              value: VIEWPORT.yMax - 2,
+              showValue: false,
+            },
+            {
+              ...Y_ANNOTATION,
+              value: VIEWPORT.yMax - 1,
+              showValue: false,
+            },
+          ],
+        },
+      },
+      page
+    );
+    await page.waitForChanges();
+    expect(page.body.querySelectorAll(Y_THRESHOLD_SELECTOR).length).toBe(10);
+    expect(page.body.querySelectorAll(Y_TEXT_SELECTOR).length).toBe(10);
+    expect(page.body.querySelectorAll(Y_TEXT_VALUE_SELECTOR).length).toBe(10);
   });
 });

@@ -11,9 +11,12 @@ exports[`x annotation renders correctly 1`] = `
 
 exports[`y annotation renders correctly 1`] = `
 <svg viewBox="0 0 100 50">
-  <text class="y" font-size="10" text-anchor="end" x="95" y="20" style="user-select: none; pointer-events: none; fill: red;">
-    some text
-  </text>
-  <line class="y" x1="0" x2="100" y1="25" y2="25" style="stroke: red; stroke-width: 1.5;"></line>
+  <g class="yThreshold" transform="translate(0,0)">
+    <line class="y" x1="0" x2="100" y1="25" y2="25" style="stroke: red; stroke-width: 1.5;"></line>
+    <text class="yValueText" display="none" font-size="10" text-anchor="start" x="108" y="28" style="user-select: none; pointer-events: none; fill: red;"></text>
+    <text class="y" display="inline" font-size="10" text-anchor="end" x="95" y="20" style="user-select: none; pointer-events: none; fill: red;">
+      some text
+    </text>
+  </g>
 </svg>
 `;

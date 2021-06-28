@@ -4,12 +4,12 @@ import { SECOND_IN_MS } from '../../../../src/utils/time';
 import { Y_VALUE } from '../../../../src/testing/test-routes/charts/constants';
 
 import { LINE_SELECTOR as X_LINE_SELECTOR } from '../../../../src/components/charts/common/annotations/XAnnotations/XAnnotationLines';
-import { LINE_SELECTOR as Y_LINE_SELECTOR } from '../../../../src/components/charts/common/annotations/YAnnotations/YAnnotationLines';
 import { TEXT_SELECTOR as X_TEXT_SELECTOR } from '../../../../src/components/charts/common/annotations/XAnnotations/XAnnotationTexts';
 import {
   TEXT_SELECTOR as Y_TEXT_SELECTOR,
   TEXT_VALUE_SELECTOR as Y_TEXT_VALUE_SELECTOR,
-} from '../../../../src/components/charts/common/annotations/YAnnotations/YAnnotationTexts';
+  LINE_SELECTOR as Y_LINE_SELECTOR,
+} from '../../../../src/components/charts/common/annotations/YAnnotations/YAnnotations';
 import { clickAndDrag } from '../../../utils';
 import { CHART_VIZ_CONTAINER_SELECTOR, visitDynamicWidget } from '../../../../src/testing/selectors';
 
