@@ -20,7 +20,7 @@
   "husky": {
     "hooks": {
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
-      "pre-push": "yarn test && yarn lint-fix"
+      "pre-push": "yarn build && yarn test && yarn lint-fix"
     }
   },
   "license": "Apache-2.0",
