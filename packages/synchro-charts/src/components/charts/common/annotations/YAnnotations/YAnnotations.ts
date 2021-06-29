@@ -45,9 +45,7 @@ export const renderYAnnotations = ({
   const annotationGroup = annotationSelection
     .enter()
     .append('g')
-    .attr('transform', function translateGroup() {
-      return 'translate(0,0)';
-    })
+    .attr('transform', 'translate(0,0)')
     .attr('class', 'yThreshold');
 
   /** Create Line */
