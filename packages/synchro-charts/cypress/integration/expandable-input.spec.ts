@@ -1,6 +1,6 @@
-const root = 'http://localhost:3333/tests/sc-expandable-input/standard';
+const subRoot = 'http://localhost:3333/tests/sc-expandable-input/standard';
 it('onValueChange is invoked only after blur', () => {
-  cy.visit(root);
+  cy.visit(subRoot);
   const SOME_TEXT = 'some text';
   cy.get('[data-test-tag="expandable-input"').type(SOME_TEXT);
   // Blur event hasn't occur yet, do not fire event
