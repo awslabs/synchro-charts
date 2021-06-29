@@ -1,11 +1,67 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`no annotations renders no annotations when show changes to false 1`] = `<svg viewBox="0 0 100 50"></svg>`;
+
+exports[`x annotation handles rendering updating multiple annotations
+
+ 1`] = `
+<svg viewBox="0 0 100 50">
+  <g class="xAnnotation" transform="translate(0,0)">
+    <line class="x" font-size="10" stroke="red" x1="50" x2="50" y1="0" y2="50" style="stroke: red; stroke-width: 1.5;"></line>
+    <text class="x" display="inline" font-size="10" x="0" y="-50" style="pointer-events: none; user-select: none; transform: rotate(90deg) translateY(-5px); fill: red;">
+      some text
+    </text>
+  </g>
+  <g class="xAnnotation" transform="translate(0,0)">
+    <line class="x" font-size="10" stroke="red" x1="0" x2="0" y1="0" y2="50" style="stroke: red; stroke-width: 1.5;"></line>
+    <text class="x" display="inline" font-size="10" x="0" y="0" style="pointer-events: none; user-select: none; transform: rotate(90deg) translateY(-5px); fill: red;">
+      some text (12/31/1999)
+    </text>
+  </g>
+  <g class="xAnnotation" transform="translate(0,0)">
+    <line class="x" font-size="10" x1="0" x2="0" y1="0" y2="50" style="stroke: red; stroke-width: 1.5;"></line>
+    <text class="x" display="none" font-size="10" x="0" y="0" style="pointer-events: none; user-select: none; transform: rotate(90deg) translateY(-5px); fill: red;"></text>
+  </g>
+  <g class="xAnnotation" transform="translate(0,0)">
+    <line class="x" font-size="10" x1="99" x2="99" y1="0" y2="50" style="stroke: red; stroke-width: 1.5;"></line>
+    <text class="x" display="inline" font-size="10" x="0" y="-99" style="pointer-events: none; user-select: none; transform: rotate(90deg) translateY(-5px); fill: red;">
+      some text (12/30/2000)
+    </text>
+  </g>
+  <g class="xAnnotation" transform="translate(0,0)">
+    <line class="x" font-size="10" x1="99" x2="99" y1="0" y2="50" style="stroke: red; stroke-width: 1.5;"></line>
+    <text class="x" display="inline" font-size="10" x="0" y="-99" style="pointer-events: none; user-select: none; transform: rotate(90deg) translateY(-5px); fill: red;">
+      some text
+    </text>
+  </g>
+</svg>
+`;
+
+exports[`x annotation has proper threshold grouping structure 1`] = `
+<svg viewBox="0 0 100 50">
+  <g class="xAnnotation" transform="translate(0,0)">
+    <line class="x" font-size="10" stroke="red" x1="50" x2="50" y1="0" y2="50" style="stroke: red; stroke-width: 1.5;"></line>
+    <text class="x" display="inline" font-size="10" x="0" y="-50" style="pointer-events: none; user-select: none; transform: rotate(90deg) translateY(-5px); fill: red;">
+      some text
+    </text>
+  </g>
+  <g class="xAnnotation" transform="translate(0,0)">
+    <line class="x" font-size="10" x1="99" x2="99" y1="0" y2="50" style="stroke: red; stroke-width: 1.5;"></line>
+    <text class="x" display="inline" font-size="10" x="0" y="-99" style="pointer-events: none; user-select: none; transform: rotate(90deg) translateY(-5px); fill: red;">
+      some text
+    </text>
+  </g>
+</svg>
+`;
+
 exports[`x annotation renders correctly 1`] = `
 <svg viewBox="0 0 100 50">
-  <text class="x" font-size="10" x="0" y="-50" style="pointer-events: none; user-select: none; transform: rotate(90deg) translateY(-5px); fill: red;">
-    some text
-  </text>
-  <line class="x" font-size="10" x1="50" x2="50" y1="0" y2="50" style="stroke: red; stroke-width: 1.5;"></line>
+  <g class="xAnnotation" transform="translate(0,0)">
+    <line class="x" font-size="10" x1="50" x2="50" y1="0" y2="50" style="stroke: red; stroke-width: 1.5;"></line>
+    <text class="x" display="inline" font-size="10" x="0" y="-50" style="pointer-events: none; user-select: none; transform: rotate(90deg) translateY(-5px); fill: red;">
+      some text
+    </text>
+  </g>
 </svg>
 `;
 

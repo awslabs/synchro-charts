@@ -2,8 +2,11 @@ import { newSpecPage, SpecPage } from '@stencil/core/testing';
 import { renderAnnotations, RenderAnnotationsOptions } from './renderAnnotations';
 import { YAnnotation } from '../types';
 import { SECOND_IN_MS } from '../../../../utils/time';
-import { LINE_SELECTOR as X_LINE_SELECTOR } from './XAnnotations/XAnnotationLines';
-import { TEXT_SELECTOR as X_TEXT_SELECTOR } from './XAnnotations/XAnnotationTexts';
+import {
+  LINE_SELECTOR as X_LINE_SELECTOR,
+  TEXT_SELECTOR as X_TEXT_SELECTOR,
+  THRESHOLD_GROUP_SELECTOR as X_ANNOTATION_GROUP_SELECTOR,
+} from './XAnnotations/XAnnotations';
 import {
   LINE_SELECTOR as Y_LINE_SELECTOR,
   TEXT_SELECTOR as Y_TEXT_SELECTOR,
@@ -109,6 +112,7 @@ describe('no annotations', () => {
     let yText = page.body.querySelector(Y_TEXT_SELECTOR);
     let yTextValue = page.body.querySelector(Y_TEXT_VALUE_SELECTOR);
     let yThresholdGroup = page.body.querySelector(Y_THRESHOLD_SELECTOR);
+    let xAnnotationGroup = page.body.querySelector(X_ANNOTATION_GROUP_SELECTOR);
 
     expect(xLine).not.toBeNull();
     expect(xText).not.toBeNull();
@@ -116,6 +120,7 @@ describe('no annotations', () => {
     expect(yText).not.toBeNull();
     expect(yTextValue).not.toBeNull();
     expect(yThresholdGroup).not.toBeNull();
+    expect(xAnnotationGroup).not.toBeNull();
 
     render(
       {
@@ -134,6 +139,7 @@ describe('no annotations', () => {
     yText = page.body.querySelector(Y_TEXT_SELECTOR);
     yTextValue = page.body.querySelector(Y_TEXT_VALUE_SELECTOR);
     yThresholdGroup = page.body.querySelector(Y_THRESHOLD_SELECTOR);
+    xAnnotationGroup = page.body.querySelector(X_ANNOTATION_GROUP_SELECTOR);
 
     expect(xLine).toBeNull();
     expect(xText).toBeNull();
@@ -141,6 +147,9 @@ describe('no annotations', () => {
     expect(yText).toBeNull();
     expect(yTextValue).toBeNull();
     expect(yThresholdGroup).toBeNull();
+    expect(xAnnotationGroup).toBeNull();
+
+    expect(page.body.querySelector('svg')).toMatchSnapshot();
   });
 });
 
@@ -179,6 +188,7 @@ describe('x annotation', () => {
 
     expect(page.body.querySelectorAll('line')).toBeEmpty();
     expect(page.body.querySelectorAll('text')).toBeEmpty();
+    expect(page.body.querySelectorAll('g')).toBeEmpty();
   });
 
   it('does not render annotation after the end of the viewport', async () => {
@@ -195,6 +205,7 @@ describe('x annotation', () => {
 
     expect(page.body.querySelectorAll('line')).toBeEmpty();
     expect(page.body.querySelectorAll('text')).toBeEmpty();
+    expect(page.body.querySelectorAll('g')).toBeEmpty();
   });
 
   it('renders label when annotation is set to show text with correct color', async () => {
@@ -214,13 +225,13 @@ describe('x annotation', () => {
       },
     });
 
-    expect(page.body.querySelectorAll('text.x')).toHaveLength(1);
-    const text = page.body.querySelector('text.x') as SVGTextElement;
+    expect(page.body.querySelectorAll(X_TEXT_SELECTOR)).toHaveLength(1);
+    const text = page.body.querySelector(X_TEXT_SELECTOR) as SVGTextElement;
     expect(text.textContent).toBe(SOME_LABEL);
     expect(text.style.fill).toBe(X_ANNOTATION.color);
   });
 
-  it('updates annotations text and color correctly', async () => {
+  it('updates annotations text and color', async () => {
     const SOME_NEW_LABEL = 'some-label!';
     const NEW_COLOR = 'green';
     const { page } = await newAnnotationsPage({
@@ -257,7 +268,7 @@ describe('x annotation', () => {
       page
     );
 
-    const text = page.body.querySelector('text.x') as SVGTextElement;
+    const text = page.body.querySelector(X_TEXT_SELECTOR) as SVGTextElement;
     expect(text.textContent).toBe(SOME_NEW_LABEL);
     expect(text.style.fill).toBe(NEW_COLOR);
   });
@@ -279,8 +290,8 @@ describe('x annotation', () => {
       },
     });
 
-    expect(page.body.querySelectorAll('text.x')).toHaveLength(1);
-    const text = page.body.querySelector('text.x') as SVGTextElement;
+    expect(page.body.querySelectorAll(X_TEXT_SELECTOR)).toHaveLength(1);
+    const text = page.body.querySelector(X_TEXT_SELECTOR) as SVGTextElement;
     expect(text.textContent).toBe(`${SOME_LABEL} (7/1/2000)`);
   });
 
@@ -301,7 +312,10 @@ describe('x annotation', () => {
       },
     });
 
-    expect(page.body.querySelectorAll('text.x')).toBeEmpty();
+    expect(page.body.querySelectorAll(X_TEXT_SELECTOR)).toHaveLength(1);
+    expect(page.body.querySelectorAll(X_ANNOTATION_GROUP_SELECTOR)).toHaveLength(1);
+    const text = page.body.querySelector(X_TEXT_SELECTOR) as SVGTextElement;
+    expect(text.getAttribute('display')).toEqual('none');
   });
 
   it('renders single annotation which is within middle of the viewport vertically', async () => {
@@ -311,10 +325,11 @@ describe('x annotation', () => {
       },
     });
 
-    const lineX = page.body.querySelector('line.x') as SVGLineElement;
+    const lineX = page.body.querySelector(X_LINE_SELECTOR) as SVGLineElement;
+    expect(page.body.querySelectorAll(X_ANNOTATION_GROUP_SELECTOR)).toHaveLength(1);
 
     // Has expected lines
-    expect(page.body.querySelectorAll('line.x')).toHaveLength(1);
+    expect(page.body.querySelectorAll(X_LINE_SELECTOR)).toHaveLength(1);
     expect(page.body.querySelectorAll(Y_LINE_SELECTOR)).toBeEmpty();
 
     // Line bisects the viewport vertically
@@ -324,6 +339,39 @@ describe('x annotation', () => {
     expect(lineX.getAttribute('y2')).toEqual(SIZE.height.toString());
   });
 
+  it('has proper threshold grouping structure', async () => {
+    const { page } = await newAnnotationsPage({
+      annotations: {
+        x: [X_ANNOTATION],
+      },
+    });
+
+    render(
+      {
+        annotations: {
+          x: [
+            X_ANNOTATION,
+            {
+              ...X_ANNOTATION,
+              value: new Date(VIEWPORT.end.getTime() - 1000),
+            },
+          ],
+        },
+      },
+      page
+    );
+
+    await page.waitForChanges();
+    expect(page.body.querySelectorAll(X_ANNOTATION_GROUP_SELECTOR)).toHaveLength(2);
+
+    const groupY = page.body.querySelectorAll(X_ANNOTATION_GROUP_SELECTOR)[1] as SVGElement;
+    expect(groupY.childElementCount).toEqual(2);
+    expect(groupY.querySelectorAll(X_TEXT_SELECTOR)).toHaveLength(1);
+    expect(groupY.querySelectorAll(X_LINE_SELECTOR)).toHaveLength(1);
+
+    expect(page.body.querySelector('svg')).toMatchSnapshot();
+  });
+
   it('renders initial color', async () => {
     const { page } = await newAnnotationsPage({
       annotations: {
@@ -331,7 +379,7 @@ describe('x annotation', () => {
       },
     });
 
-    const lineX = page.body.querySelector('line.x') as SVGLineElement;
+    const lineX = page.body.querySelector(X_LINE_SELECTOR) as SVGLineElement;
     expect(lineX.style.stroke).toBe(X_ANNOTATION.color);
   });
 
@@ -360,7 +408,7 @@ describe('x annotation', () => {
 
     await page.waitForChanges();
 
-    const lineX = page.body.querySelector('line.x') as SVGLineElement;
+    const lineX = page.body.querySelector(X_LINE_SELECTOR) as SVGLineElement;
     expect(lineX.style.stroke).toBe(X_ANNOTATION.color);
   });
 
@@ -393,6 +441,7 @@ describe('x annotation', () => {
             {
               ...X_ANNOTATION,
               value: VIEWPORT.start,
+              showValue: true,
             },
           ],
         },
@@ -402,11 +451,289 @@ describe('x annotation', () => {
 
     await page.waitForChanges();
 
-    const lineX = page.body.querySelector('line.x') as SVGLineElement;
+    const lineX = page.body.querySelector(X_LINE_SELECTOR) as SVGLineElement;
 
     const updatedX = 0;
     expect(lineX.getAttribute('x1')).toEqual(updatedX.toString());
     expect(lineX.getAttribute('x2')).toEqual(updatedX.toString());
+
+    const valueText = page.body.querySelector(X_TEXT_SELECTOR) as SVGTextElement;
+    expect(valueText.getAttribute('display')).toEqual('inline');
+    expect(valueText.toString()).toBe('some text (12/31/1999)');
+  });
+
+  it('updates annotation text value visibility', async () => {
+    const SOME_LABEL = 'some-label!';
+    const { page } = await newAnnotationsPage({
+      annotations: {
+        x: [X_ANNOTATION],
+      },
+    });
+
+    render(
+      {
+        annotations: {
+          x: [
+            {
+              ...X_ANNOTATION,
+              showValue: false,
+            },
+            {
+              ...X_ANNOTATION,
+              label: {
+                text: SOME_LABEL,
+                show: false,
+              },
+              value: VIEWPORT.start,
+              showValue: false,
+            },
+          ],
+        },
+      },
+      page
+    );
+
+    await page.waitForChanges();
+    expect(page.body.querySelectorAll(X_ANNOTATION_GROUP_SELECTOR)).toHaveLength(2);
+
+    const stableTextOne = page.body.querySelectorAll(X_TEXT_SELECTOR)[0] as SVGTextElement;
+    expect(stableTextOne.getAttribute('display')).toEqual('inline');
+    expect(stableTextOne.textContent!.toString()).toBe('some text');
+
+    const textOne = page.body.querySelectorAll(X_TEXT_SELECTOR)[1] as SVGTextElement;
+    expect(textOne.getAttribute('display')).toEqual('none');
+
+    render(
+      {
+        annotations: {
+          x: [
+            {
+              ...X_ANNOTATION,
+              label: {
+                text: SOME_LABEL,
+                show: true,
+              },
+              value: VIEWPORT.start,
+              showValue: true,
+            },
+            {
+              ...X_ANNOTATION,
+              showValue: false,
+            },
+          ],
+        },
+      },
+      page
+    );
+
+    await page.waitForChanges();
+
+    const textTwo = page.body.querySelectorAll(X_TEXT_SELECTOR)[0] as SVGTextElement;
+    expect(textTwo.getAttribute('display')).toEqual('inline');
+    expect(textTwo.toString()).toBe('some-label! (12/31/1999)');
+
+    const stableTextTwo = page.body.querySelectorAll(X_TEXT_SELECTOR)[1] as SVGTextElement;
+    expect(stableTextTwo.getAttribute('display')).toEqual('inline');
+    expect(stableTextTwo.textContent!.toString()).toBe('some text');
+
+    render(
+      {
+        annotations: {
+          x: [
+            {
+              ...X_ANNOTATION,
+              label: {
+                text: SOME_LABEL,
+                show: false,
+              },
+              value: VIEWPORT.start,
+              showValue: true,
+            },
+          ],
+        },
+      },
+      page
+    );
+
+    await page.waitForChanges();
+
+    expect(page.body.querySelectorAll(X_ANNOTATION_GROUP_SELECTOR)).toHaveLength(1);
+    expect(page.body.querySelectorAll(X_TEXT_SELECTOR)).toHaveLength(1);
+
+    const textThree = page.body.querySelector(X_TEXT_SELECTOR) as SVGTextElement;
+    expect(textThree.getAttribute('display')).toEqual('inline');
+    expect(textThree.toString()).toBe('(12/31/1999)');
+
+    render(
+      {
+        annotations: {
+          x: [
+            {
+              ...X_ANNOTATION,
+              label: {
+                text: SOME_LABEL,
+                show: true,
+              },
+              value: VIEWPORT.start,
+              showValue: false,
+            },
+          ],
+        },
+      },
+      page
+    );
+
+    await page.waitForChanges();
+
+    const textFour = page.body.querySelector(X_TEXT_SELECTOR) as SVGTextElement;
+    expect(textFour.getAttribute('display')).toEqual('inline');
+    expect(textFour.toString()).toBe('some-label!');
+
+    render(
+      {
+        annotations: {
+          x: [
+            {
+              ...X_ANNOTATION,
+              label: {
+                text: SOME_LABEL,
+                show: false,
+              },
+              value: VIEWPORT.start,
+              showValue: false,
+            },
+          ],
+        },
+      },
+      page
+    );
+
+    await page.waitForChanges();
+
+    expect(page.body.querySelectorAll(X_ANNOTATION_GROUP_SELECTOR)).toHaveLength(1);
+    expect(page.body.querySelectorAll(X_TEXT_SELECTOR)).toHaveLength(1);
+
+    const textFive = page.body.querySelector(X_TEXT_SELECTOR) as SVGTextElement;
+    expect(textFive.getAttribute('display')).toEqual('none');
+  });
+
+  it('handles rendering updating multiple annotations', async () => {
+    const { page } = await newAnnotationsPage({
+      annotations: {
+        x: [
+          X_ANNOTATION,
+          {
+            ...X_ANNOTATION,
+            value: new Date(VIEWPORT.end.getTime() - 100),
+            showValue: false,
+          },
+        ],
+      },
+    });
+    expect(page.body.querySelectorAll(X_ANNOTATION_GROUP_SELECTOR)).toHaveLength(2);
+    expect(page.body.querySelectorAll(X_TEXT_SELECTOR)).toHaveLength(2);
+
+    render(
+      {
+        annotations: {
+          x: [
+            X_ANNOTATION,
+            {
+              ...X_ANNOTATION,
+              value: new Date(VIEWPORT.start.getTime() + 200),
+              showValue: true,
+            },
+            {
+              ...X_ANNOTATION,
+              value: new Date(VIEWPORT.start.getTime() + 100),
+              showValue: false,
+              label: undefined,
+            },
+            {
+              ...X_ANNOTATION,
+              value: new Date(VIEWPORT.end.getTime() - 100),
+              showValue: true,
+            },
+            {
+              ...X_ANNOTATION,
+              value: new Date(VIEWPORT.end.getTime() - 200),
+              showValue: false,
+            },
+          ],
+        },
+      },
+      page
+    );
+    await page.waitForChanges();
+    expect(page.body.querySelectorAll(X_ANNOTATION_GROUP_SELECTOR)).toHaveLength(5);
+    expect(page.body.querySelectorAll(X_TEXT_SELECTOR)).toHaveLength(5);
+    expect(page.body.querySelector('svg')).toMatchSnapshot();
+  });
+
+  it('updates annotation label if added/removed', async () => {
+    const SOME_LABEL = 'some-label!';
+    const { page } = await newAnnotationsPage({
+      annotations: {
+        x: [
+          {
+            ...X_ANNOTATION,
+            label: undefined,
+            showValue: true,
+            value: VIEWPORT.start,
+          },
+        ],
+      },
+    });
+
+    const textOne = page.body.querySelector(X_TEXT_SELECTOR) as SVGTextElement;
+    expect(textOne.getAttribute('display')).toEqual('inline');
+    expect(textOne.toString()).toBe('(12/31/1999)');
+
+    render(
+      {
+        annotations: {
+          x: [
+            {
+              ...X_ANNOTATION,
+              label: {
+                text: SOME_LABEL,
+                show: true,
+              },
+              showValue: false,
+            },
+          ],
+        },
+      },
+      page
+    );
+
+    expect(page.body.querySelectorAll(X_TEXT_SELECTOR)).toHaveLength(1);
+    expect(page.body.querySelectorAll(X_LINE_SELECTOR)).toHaveLength(1);
+
+    const textTwo = page.body.querySelector(X_TEXT_SELECTOR) as SVGTextElement;
+    expect(textTwo.getAttribute('display')).toEqual('inline');
+    expect(textTwo.textContent!.toString()).toBe(SOME_LABEL);
+
+    render(
+      {
+        annotations: {
+          x: [
+            {
+              ...X_ANNOTATION,
+              label: undefined,
+              showValue: false,
+            },
+          ],
+        },
+      },
+      page
+    );
+
+    expect(page.body.querySelectorAll(X_TEXT_SELECTOR)).toHaveLength(1);
+    expect(page.body.querySelectorAll(X_LINE_SELECTOR)).toHaveLength(1);
+
+    const textThree = page.body.querySelector(X_TEXT_SELECTOR) as SVGTextElement;
+    expect(textThree.getAttribute('display')).toEqual('none');
   });
 });
 
@@ -477,7 +804,7 @@ describe('y annotation', () => {
 
     // Has expected lines
     expect(page.body.querySelectorAll(Y_LINE_SELECTOR)).toHaveLength(1);
-    expect(page.body.querySelectorAll('line.x')).toBeEmpty();
+    expect(page.body.querySelectorAll(X_LINE_SELECTOR)).toBeEmpty();
 
     // Line bisects the viewport vertically
     expect(lineY.getAttribute('x1')).toEqual('0');
@@ -620,10 +947,11 @@ describe('y annotation', () => {
 
   it('updates annotation label and value text visibility', async () => {
     const SOME_LABEL = 'some-label!';
-    const newValue = (VIEWPORT.yMax + VIEWPORT.yMin) / 3
+    const newValue = (VIEWPORT.yMax + VIEWPORT.yMin) / 3;
     const { page } = await newAnnotationsPage({
       annotations: {
-        y: [Y_ANNOTATION,
+        y: [
+          Y_ANNOTATION,
           {
             ...Y_ANNOTATION,
             label: {
@@ -663,7 +991,8 @@ describe('y annotation', () => {
               },
               value: newValue,
               showValue: true,
-            }, Y_ANNOTATION
+            },
+            Y_ANNOTATION,
           ],
         },
       },
@@ -674,7 +1003,7 @@ describe('y annotation', () => {
 
     const labelTextTwo = page.body.querySelectorAll(Y_TEXT_SELECTOR)[0] as SVGTextElement;
     expect(labelTextTwo.getAttribute('display')).toEqual('inline');
-    expect(labelTextTwo.textContent!.toString()).toBe(`${SOME_LABEL}`);
+    expect(labelTextTwo.textContent!.toString()).toBe(SOME_LABEL);
 
     const valueTextTwo = page.body.querySelectorAll(Y_TEXT_VALUE_SELECTOR)[0] as SVGTextElement;
     expect(valueTextTwo.getAttribute('display')).toEqual('inline');
@@ -687,7 +1016,8 @@ describe('y annotation', () => {
     const stableValueTextTwo = page.body.querySelectorAll(Y_TEXT_VALUE_SELECTOR)[1] as SVGTextElement;
     expect(stableValueTextTwo.getAttribute('display')).toEqual('none');
 
-    render({
+    render(
+      {
         annotations: {
           y: [
             {
@@ -711,8 +1041,8 @@ describe('y annotation', () => {
     const valueTextThree = page.body.querySelector(Y_TEXT_VALUE_SELECTOR) as SVGTextElement;
     expect(valueTextThree.getAttribute('display')).toEqual('none');
 
-
-    render({
+    render(
+      {
         annotations: {
           y: [
             {
@@ -736,9 +1066,9 @@ describe('y annotation', () => {
     const valueTextFour = page.body.querySelector(Y_TEXT_VALUE_SELECTOR) as SVGTextElement;
     expect(valueTextFour.getAttribute('display')).toEqual('inline');
     expect(valueTextFour.toString()).toBe(newValue.toString());
-
   });
 
+  // TODO CLEAN UP!
   it('updates annotation label if added/removed', async () => {
     const SOME_LABEL = 'some-label!';
     const { page } = await newAnnotationsPage({
@@ -783,7 +1113,7 @@ describe('y annotation', () => {
 
     const textTwo = page.body.querySelector(Y_TEXT_SELECTOR) as SVGTextElement;
     expect(textTwo.getAttribute('display')).toEqual('inline');
-    expect(textTwo.textContent!.toString()).toBe(`${SOME_LABEL}`);
+    expect(textTwo.textContent!.toString()).toBe(SOME_LABEL);
 
     const valueTextTwo = page.body.querySelector(Y_TEXT_VALUE_SELECTOR) as SVGTextElement;
     expect(valueTextTwo.getAttribute('display')).toEqual('none');
@@ -832,7 +1162,7 @@ describe('y annotation', () => {
     });
     const text = page.body.querySelector(Y_TEXT_SELECTOR) as SVGTextElement;
     const valueText = page.body.querySelector(Y_TEXT_VALUE_SELECTOR) as SVGTextElement;
-    expect(text.textContent!.toString()).toBe(`${SOME_LABEL}`);
+    expect(text.textContent!.toString()).toBe(SOME_LABEL);
     expect(valueText.toString()).toBe(`${Y_ANNOTATION.value.toString()}`);
     expect(text.getAttribute('display')).toEqual('inline');
     expect(valueText.getAttribute('display')).toEqual('inline');
@@ -897,8 +1227,7 @@ describe('y annotation', () => {
     expect(page.body.querySelectorAll('g')).toBeEmpty();
   });
 
-  it('handles rendering updating multiple annotations\n' +
-    '\n', async () => {
+  it('handles rendering updating multiple annotations', async () => {
     const { page } = await newAnnotationsPage({
       annotations: {
         y: [
@@ -950,7 +1279,5 @@ describe('y annotation', () => {
     expect(page.body.querySelectorAll(Y_TEXT_SELECTOR)).toHaveLength(5);
     expect(page.body.querySelectorAll(Y_TEXT_VALUE_SELECTOR)).toHaveLength(5);
     expect(page.body.querySelector('svg')).toMatchSnapshot();
-
-
   });
 });

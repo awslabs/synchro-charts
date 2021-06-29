@@ -97,7 +97,7 @@ export const getText = (annotation: Annotation<AnnotationValue>): string => {
   return '';
 };
 
-export const getLabelTextVisibility = (annotation: YAnnotation): string => {
+export const getLabelTextVisibility = (annotation: Annotation<AnnotationValue>): string => {
   if (annotation.label && annotation.label.show) {
     return 'inline';
   }
@@ -106,6 +106,15 @@ export const getLabelTextVisibility = (annotation: YAnnotation): string => {
 
 export const getValueTextVisibility = (annotation: YAnnotation): string => {
   if (annotation.showValue) {
+    return 'inline';
+  }
+  return 'none';
+};
+
+export const getValueAndTextVisibility = (annotation: Annotation<AnnotationValue>): string => {
+  const valueText = annotation.showValue;
+  const labelText = annotation.label && annotation.label.show;
+  if (valueText || labelText) {
     return 'inline';
   }
   return 'none';
