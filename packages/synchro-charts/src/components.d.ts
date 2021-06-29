@@ -5,16 +5,16 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { AlarmsConfig, DataPoint, DataStream, DataStreamInfo, MessageOverrides, MinimalSizeConfig, MinimalViewPortConfig, Primitive, RequestDataFn, SizeConfig, SizePositionConfig, TableColumn, ViewPort, ViewPortConfig } from "./utils/dataTypes";
-import { Annotations, Axis, LayoutConfig, LegendConfig, MovementConfig, ScaleConfig, Threshold, Tooltip, WidgetConfigurationUpdate } from "./components/charts/common/types";
-import { Trend, TrendResult } from "./components/charts/common/trends/types";
-import { DATA_ALIGNMENT, StatusIcon } from "./components/charts/common/constants";
-import { POINT_TYPE } from "./components/charts/sc-webgl-base-chart/activePoints";
-import { RectScrollFixed } from "./utils/types";
-import { LabelsConfig } from "./components/common/types";
-import { Cell, Row } from "./components/sc-table/constructTableData";
-import { ChartSceneCreator, ChartSceneUpdater } from "./components/charts/sc-webgl-base-chart/types";
-import { RenderCell } from "./components/sc-widget-grid/types";
+import { AlarmsConfig, DataPoint, DataStream, DataStreamInfo, MessageOverrides, MinimalSizeConfig, MinimalViewPortConfig, Primitive, RequestDataFn, SizeConfig, SizePositionConfig, TableColumn, ViewPort, ViewPortConfig, } from "./utils/dataTypes";
+import { Annotations, Axis, LayoutConfig, LegendConfig, MovementConfig, ScaleConfig, Threshold, Tooltip, WidgetConfigurationUpdate, } from "./components/charts/common/types";
+import { Trend, TrendResult, } from "./components/charts/common/trends/types";
+import { DATA_ALIGNMENT, StatusIcon, } from "./components/charts/common/constants";
+import { POINT_TYPE, } from "./components/charts/sc-webgl-base-chart/activePoints";
+import { RectScrollFixed, } from "./utils/types";
+import { LabelsConfig, } from "./components/common/types";
+import { Cell, Row, } from "./components/sc-table/constructTableData";
+import { ChartSceneCreator, ChartSceneUpdater, } from "./components/charts/sc-webgl-base-chart/types";
+import { RenderCell, } from "./components/sc-widget-grid/types";
 export namespace Components {
     interface LineChartViewportChange {
     }
@@ -86,7 +86,10 @@ export namespace Components {
     interface ScExpandableInputStandard {
     }
     interface ScGestureHandler {
-        "onDateRangeChange": ({ end, start }: { start: Date; end: Date }) => void;
+        "onDateRangeChange": ({ end, start }: {
+            start: Date;
+            end: Date;
+        }) => void;
         "size": SizeConfig;
         "viewPort": ViewPort;
     }
@@ -121,7 +124,10 @@ export namespace Components {
         "isRefreshing"?: boolean;
         "messageOverrides": MessageOverrides;
         "miniVersion": boolean;
-        "onChangeLabel": ({ streamId, name }: { streamId: string; name: string }) => void;
+        "onChangeLabel": ({ streamId, name }: {
+            streamId: string;
+            name: string;
+        }) => void;
         "propertyPoint"?: DataPoint<Primitive>;
         "propertyStream"?: DataStream;
         "trendStream": DataStream | undefined;
@@ -139,7 +145,10 @@ export namespace Components {
         "supportString": boolean;
         "thresholds": Threshold[];
         "trendResults": TrendResult[];
-        "updateDataStreamName": ({ streamId, name }: { streamId: string; name: string }) => void;
+        "updateDataStreamName": ({ streamId, name }: {
+            streamId: string;
+            name: string;
+        }) => void;
         "viewPort": ViewPort;
         "visualizesAlarms": boolean;
     }
@@ -155,7 +164,10 @@ export namespace Components {
         "showDataStreamColor": boolean;
         "streamId": string;
         "unit"?: string;
-        "updateDataStreamName": ({ streamId, name }: { streamId: string; name: string }) => void;
+        "updateDataStreamName": ({ streamId, name }: {
+            streamId: string;
+            name: string;
+        }) => void;
         "valueColor"?: string;
     }
     interface ScLineChart {
@@ -272,7 +284,10 @@ export namespace Components {
         "isEnabled": boolean;
         "labelsConfig": Required<LabelsConfig>;
         "messageOverrides": MessageOverrides;
-        "onChangeLabel": ({ streamId, name }: { streamId: string; name: string }) => void;
+        "onChangeLabel": ({ streamId, name }: {
+            streamId: string;
+            name: string;
+        }) => void;
         "propertyPoint"?: DataPoint;
         "propertyStream"?: DataStream;
         "valueColor"?: string;
@@ -1465,7 +1480,10 @@ declare namespace LocalJSX {
     interface ScExpandableInputStandard {
     }
     interface ScGestureHandler {
-        "onDateRangeChange": ({ end, start }: { start: Date; end: Date }) => void;
+        "onDateRangeChange": ({ end, start }: {
+            start: Date;
+            end: Date;
+        }) => void;
         "size": SizeConfig;
         "viewPort": ViewPort;
     }
@@ -1500,7 +1518,10 @@ declare namespace LocalJSX {
         "isRefreshing"?: boolean;
         "messageOverrides": MessageOverrides;
         "miniVersion": boolean;
-        "onChangeLabel": ({ streamId, name }: { streamId: string; name: string }) => void;
+        "onChangeLabel": ({ streamId, name }: {
+            streamId: string;
+            name: string;
+        }) => void;
         "propertyPoint"?: DataPoint<Primitive>;
         "propertyStream"?: DataStream;
         "trendStream": DataStream | undefined;
@@ -1518,7 +1539,10 @@ declare namespace LocalJSX {
         "supportString"?: boolean;
         "thresholds": Threshold[];
         "trendResults"?: TrendResult[];
-        "updateDataStreamName": ({ streamId, name }: { streamId: string; name: string }) => void;
+        "updateDataStreamName": ({ streamId, name }: {
+            streamId: string;
+            name: string;
+        }) => void;
         "viewPort": ViewPort;
         "visualizesAlarms": boolean;
     }
@@ -1534,7 +1558,10 @@ declare namespace LocalJSX {
         "showDataStreamColor": boolean;
         "streamId": string;
         "unit"?: string;
-        "updateDataStreamName": ({ streamId, name }: { streamId: string; name: string }) => void;
+        "updateDataStreamName": ({ streamId, name }: {
+            streamId: string;
+            name: string;
+        }) => void;
         "valueColor"?: string;
     }
     interface ScLineChart {
@@ -1651,7 +1678,10 @@ declare namespace LocalJSX {
         "isEnabled"?: boolean;
         "labelsConfig"?: Required<LabelsConfig>;
         "messageOverrides"?: MessageOverrides;
-        "onChangeLabel": ({ streamId, name }: { streamId: string; name: string }) => void;
+        "onChangeLabel": ({ streamId, name }: {
+            streamId: string;
+            name: string;
+        }) => void;
         "propertyPoint"?: DataPoint;
         "propertyStream"?: DataStream;
         "valueColor"?: string;
