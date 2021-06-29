@@ -1,6 +1,8 @@
 const webglRoot = 'localhost:3333/tests/sc-webgl-chart';
 
+// @ts-ignore
 const VIEWPORT_HEIGHT = 500;
+// @ts-ignore
 const VIEWPORT_WIDTH = 500;
 
 beforeEach(() => {

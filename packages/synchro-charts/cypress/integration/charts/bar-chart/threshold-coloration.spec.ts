@@ -1,5 +1,10 @@
 const bcRoot = 'localhost:3333/tests/sc-webgl-bar-chart';
 
+// @ts-ignore
+const VIEWPORT_HEIGHT = 600;
+// @ts-ignore
+const VIEWPORT_WIDTH = 500;
+
 beforeEach(() => {
   cy.viewport(VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
 });

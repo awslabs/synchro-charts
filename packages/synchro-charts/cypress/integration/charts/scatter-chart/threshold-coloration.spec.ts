@@ -1,5 +1,10 @@
 const scRoot = 'localhost:3333/tests/sc-scatter-chart';
 
+// @ts-ignore
+const VIEWPORT_HEIGHT = 500;
+// @ts-ignore
+const VIEWPORT_WIDTH = 500;
+
 beforeEach(() => {
   cy.viewport(VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
 });
