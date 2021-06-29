@@ -5,7 +5,6 @@ import { MINUTE_IN_MS, SECOND_IN_MS } from '../../../src/utils/time';
 import {
   CHART_TOOLTIP_SELECTOR,
   CHART_VIZ_CONTAINER_SELECTOR,
-  LATEST_VALUE_SELECTOR,
   STATUS_TIMELINE_OVERLAY_ROW_SELECTOR,
   visitDynamicWidget,
 } from '../../../src/testing/selectors';
@@ -119,40 +118,6 @@ describe('when provided alarm data through a `dynamic-widget`', () => {
 
         // Expect to see both cells to convey an alarmed status
         cy.matchImageSnapshotOnCI();
-      });
-    });
-
-    describe('latest-value', () => {
-      it('visualizes that an associated alarm stream is in alarm', () => {
-        visitDynamicWidget(cy, {
-          componentTag: 'sc-latest-value',
-          dataStreams: [NUMERICAL_ALARM_STREAM, PROPERTY_STREAM],
-          annotations: { y: [ALARM_THRESHOLD] },
-          duration: MINUTE_IN_MS,
-          viewPortStart,
-          viewPortEnd,
-        });
-
-        cy.get(LATEST_VALUE_SELECTOR).should('be.visible');
-
-        cy.get(LATEST_VALUE_SELECTOR)
-          .invoke('text')
-          .should('equal', PROPERTY_STREAM.data[0].y.toString());
-        cy.get(STATUS_ICON_SELECTOR).should('be.visible');
-
-        cy.matchImageSnapshotOnCI();
-      });
-
-      it('does not visualize alarm data', () => {
-        visitDynamicWidget(cy, {
-          componentTag: 'sc-latest-value',
-          dataStreams: [NUMERICAL_ALARM_STREAM],
-          duration: MINUTE_IN_MS,
-          viewPortStart,
-          viewPortEnd,
-        });
-
-        cy.get(LATEST_VALUE_SELECTOR).should('not.exist');
       });
     });
 

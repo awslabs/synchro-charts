@@ -1,4 +1,3 @@
-jest.mock('resize-observer-polyfill');
 import { h } from '@stencil/core';
 import { newSpecPage } from '@stencil/core/testing';
 import { update } from '../charts/common/tests/merge';
@@ -9,6 +8,8 @@ import { ScSizeProvider } from './sc-size-provider';
 import { ScBox } from '../../testing/testing-ground/sc-box/sc-box';
 import { SECOND_IN_MS } from '../../utils/time';
 import { wait } from '../../testing/wait';
+
+jest.mock('resize-observer-polyfill');
 
 const newWidgetSizerSpecPage = async (containerSize: Size, overrides: Partial<Components.ScSizeProvider> = {}) => {
   const { width, height } = containerSize;
