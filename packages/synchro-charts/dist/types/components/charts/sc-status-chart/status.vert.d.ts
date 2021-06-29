@@ -1,0 +1,2 @@
+declare const _default: "\nprecision highp float;\nuniform mat4 modelViewMatrix;\nuniform mat4 projectionMatrix;\nattribute vec4 status;\nattribute vec2 position;\nattribute vec3 color;\nvarying vec3 vColor;\n\nvoid main() {\n  float width = status.z;\n  float height = status.w;\n\n  gl_Position = projectionMatrix * modelViewMatrix * vec4(position.x * width + status.x, position.y * height + status.y, 0.0, 1.0);\n  vColor = color;\n}\n";
+export default _default;

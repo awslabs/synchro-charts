@@ -1,0 +1,3 @@
+@import '~@awsui/global-styles';
+@import 'variables.css';
+@import 'tippy-overrides.css';

@@ -1,0 +1,31 @@
+import { AlarmsConfig, DataStream, DataStreamInfo, MessageOverrides, TableColumn } from '../../utils/dataTypes';
+import { Annotations, Axis, LegendConfig } from '../../components/charts/common/types';
+export declare type SearchQueryParams = {
+    alarms?: AlarmsConfig;
+    messageOverrides?: MessageOverrides;
+    width?: number;
+    axis?: Axis.Options;
+    height?: number;
+    duration?: number;
+    errMsg: string;
+    viewPortStart: Date;
+    viewPortEnd: Date;
+    componentTag: string;
+    legend: LegendConfig;
+    isEditing: boolean;
+    gestures: boolean;
+    dataStreamInfos: DataStreamInfo[];
+    annotations?: Annotations;
+    tableColumns: TableColumn[];
+    dataStreams: DataStream[];
+    asyncDataStreams: DataStream[];
+    delayBeforeDataLoads: number;
+    hasError: boolean;
+    displayInfoNames: boolean;
+};
+export declare const SCREEN_SIZE: {
+    width: number;
+    height: number;
+};
+export declare const constructSearchQuery: ({ viewPortStart, viewPortEnd, dataStreams, asyncDataStreams, alarms, dataStreamInfos, legend, tableColumns, annotations, messageOverrides, axis, ...serializableProps }: Partial<SearchQueryParams>) => string;
+export declare const testCaseParameters: () => SearchQueryParams;

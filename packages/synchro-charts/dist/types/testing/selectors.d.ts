@@ -1,0 +1,20 @@
+import { SearchQueryParams } from './dynamicWidgetUtils/testCaseParameters';
+import { DataStreamId } from '../utils/dataTypes';
+export declare const ERROR_SYMBOL_SELECTOR = "[data-test-tag=\"error\"]";
+export declare const LOADING_SPINNER_SELECTOR = "sc-loading-spinner";
+export declare const CHART_VIZ_CONTAINER_SELECTOR = "sc-webgl-base-chart .data-container";
+export declare const CHART_TOOLTIP_SELECTOR = "sc-webgl-base-chart .tooltip-container";
+export declare const CHART_TOOLTIP_ROW_SELECTOR = "sc-tooltip-row";
+export declare const LEGEND_SELECTOR = "sc-legend";
+export declare const STATUS_TIMELINE_OVERLAY_SELECTOR = "sc-status-timeline-overlay";
+export declare const STATUS_TIMELINE_OVERLAY_ROW_SELECTOR = "sc-status-timeline-overlay-row";
+export declare const waitForChart: (cy: any) => any;
+export declare const route: (params: Partial<SearchQueryParams>) => string;
+export declare const infoNameTestSelector: (id: DataStreamId) => string;
+export declare const DEFAULT_PARAMS: Partial<SearchQueryParams>;
+declare type CypressLike = {
+    viewport: Function;
+    visit: Function;
+};
+export declare const visitDynamicWidget: (cy: CypressLike, params?: Partial<SearchQueryParams>) => void;
+export {};

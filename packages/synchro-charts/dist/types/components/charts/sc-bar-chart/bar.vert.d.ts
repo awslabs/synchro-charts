@@ -1,0 +1,2 @@
+declare const _default: "\nprecision highp float;\nuniform mat4 modelViewMatrix;\nuniform mat4 projectionMatrix;\nuniform float width;\nattribute vec2 bar;\nattribute vec2 position;\nattribute vec3 color;\nvarying vec3 vColor;\n\nvoid main() {\n  // Negative width here because we want to render the bars' width to the left side starting from its x position.\n  gl_Position = projectionMatrix * modelViewMatrix * vec4(position.x * -width + bar.x, position.y * bar.y, 0.0, 1.0);\n  vColor = color;\n}\n";
+export default _default;

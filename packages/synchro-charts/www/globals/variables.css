@@ -1,0 +1,70 @@
+:root {
+  /* Sizes */
+  --border-width: 1px;
+  --margin-small: 5px;
+  --margin-medium: 10px;
+  --margin-large: 15px;
+
+  /* Shadows */
+  --drop-shadow-base: drop-shadow(1px 1px 4px rgba(68, 68, 68, 0.25));
+  --box-shadow-base: 1px 1px 4px rgba(68, 68, 68, 0.25);
+
+  /* Borders */
+  --border-color-base: rgba(68, 68, 68, 0.15);
+  --border-base: 1px solid var(--border-color-base);
+  --editable-label-bottom-border: 1px dashed #505050;
+
+  /* Fonts */
+  --primary-font-family: 'Amazon Ember', Helvetica, Arial, sans-serif;
+  --font-weight-light: 300;
+  --font-weight-regular: 400;
+  --font-weight-normal: 500;
+  --font-weight-bold: 700;
+  --font-size-6: 44px;
+  --font-size-5: 28px;
+  --font-size-4: 24px;
+  --font-size-3: 18px;
+  --font-size-2: 16px;
+  --font-size-1: 14px;
+  --font-size-0: 12px;
+  --line-height-6: 50px;
+  --line-height-5: 40px;
+  --line-height-4: 20px;
+  --line-height-3: 20px;
+  --line-height-2: 18px;
+  --line-height-1: 16px;
+  --line-height-0: 14px;
+
+  /** DO NOT USE **/
+  --font-size-base: 1.4rem;
+  --font-size-small: calc(var(--font-size-base) * 0.875);
+  --font-size-large: calc(var(--font-size-base) * 1.25);
+
+  /* Colors */
+  --polaris-light-gray: #687078;
+  --polaris-gray-400: #aab7b8;
+  --polaris-gray-900: #16191f;
+  --primary-font-color: #545b64;
+  --primary-main: #567483;
+  --primary-light: #d5dbdb;
+  --light-text: var(--polaris-light-gray);
+  --primary-dark: #2a4956;
+  --secondary-font-color: #000;
+  --secondary-main: #ffee58;
+  --secondary-light: #ffff8b;
+  --secondary-dark: #c9bc1f;
+  --error-badge-font-color: var(--polaris-gray-900);
+  --error-badge-warning-color: #fa3232;
+  --visualization-sequential-blues-normal-1-0: #4a76b6;
+  --loading-spinner-color: #30b2ff;
+  --loading-spinner-color-dark: var(--primary-dark);
+  --value-component-font-color-primary: #232f3e;
+  --value-component-font-color-secondary: #16191f;
+  --value-component-font-color-tertiary: #879196;
+  --selection-color: #29a8dd;
+  --selection-opacity: 0.2;
+  --selection-width: 2px;
+
+  box-sizing: border-box;
+  font-family: var(--primary-font-family);
+}

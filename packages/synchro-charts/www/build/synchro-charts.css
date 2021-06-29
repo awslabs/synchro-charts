@@ -1,0 +1,182 @@
+export var Mode;
+(function (Mode) {
+    Mode["Light"] = "light";
+    Mode["Dark"] = "dark";
+})(Mode || (Mode = {}));
+export var Density;
+(function (Density) {
+    Density["Comfortable"] = "comfortable";
+    Density["Compact"] = "compact";
+})(Density || (Density = {}));
+function hasValue(allValues, mode) {
+    return Object.keys(allValues).some(function (key) { return allValues[key] === mode; });
+}
+function toggleClass(target, className, enabled) {
+    // NB: classList.toggle does not support second argument in IE
+    if (enabled) {
+        target.classList.add(className);
+    }
+    else {
+        target.classList.remove(className);
+    }
+}
+export function applyMode(mode, target) {
+    if (target === void 0) { target = document.body; }
+    if (mode && !hasValue(Mode, mode)) {
+        console.warn("Mode \"" + mode + "\" is not supported");
+        return;
+    }
+    toggleClass(target, 'awsui-dark-mode', mode === Mode.Dark);
+}
+export function applyDensity(density, target) {
+    if (target === void 0) { target = document.body; }
+    if (density && !hasValue(Density, density)) {
+        console.warn("Density \"" + density + "\" is not supported");
+        return;
+    }
+    toggleClass(target, 'awsui-compact-mode', density === Density.Compact);
+}
+export function disableMotion(disabled, target) {
+    if (target === void 0) { target = document.body; }
+    toggleClass(target, 'awsui-motion-disabled', disabled);
+}
+
+:root {
+  /* Sizes */
+  --border-width: 1px;
+  --margin-small: 5px;
+  --margin-medium: 10px;
+  --margin-large: 15px;
+
+  /* Shadows */
+  --drop-shadow-base: drop-shadow(1px 1px 4px rgba(68, 68, 68, 0.25));
+  --box-shadow-base: 1px 1px 4px rgba(68, 68, 68, 0.25);
+
+  /* Borders */
+  --border-color-base: rgba(68, 68, 68, 0.15);
+  --border-base: 1px solid var(--border-color-base);
+  --editable-label-bottom-border: 1px dashed #505050;
+
+  /* Fonts */
+  --primary-font-family: 'Amazon Ember', Helvetica, Arial, sans-serif;
+  --font-weight-light: 300;
+  --font-weight-regular: 400;
+  --font-weight-normal: 500;
+  --font-weight-bold: 700;
+  --font-size-6: 44px;
+  --font-size-5: 28px;
+  --font-size-4: 24px;
+  --font-size-3: 18px;
+  --font-size-2: 16px;
+  --font-size-1: 14px;
+  --font-size-0: 12px;
+  --line-height-6: 50px;
+  --line-height-5: 40px;
+  --line-height-4: 20px;
+  --line-height-3: 20px;
+  --line-height-2: 18px;
+  --line-height-1: 16px;
+  --line-height-0: 14px;
+
+  /** DO NOT USE **/
+  --font-size-base: 1.4rem;
+  --font-size-small: calc(var(--font-size-base) * 0.875);
+  --font-size-large: calc(var(--font-size-base) * 1.25);
+
+  /* Colors */
+  --polaris-light-gray: #687078;
+  --polaris-gray-400: #aab7b8;
+  --polaris-gray-900: #16191f;
+  --primary-font-color: #545b64;
+  --primary-main: #567483;
+  --primary-light: #d5dbdb;
+  --light-text: var(--polaris-light-gray);
+  --primary-dark: #2a4956;
+  --secondary-font-color: #000;
+  --secondary-main: #ffee58;
+  --secondary-light: #ffff8b;
+  --secondary-dark: #c9bc1f;
+  --error-badge-font-color: var(--polaris-gray-900);
+  --error-badge-warning-color: #fa3232;
+  --visualization-sequential-blues-normal-1-0: #4a76b6;
+  --loading-spinner-color: #30b2ff;
+  --loading-spinner-color-dark: var(--primary-dark);
+  --value-component-font-color-primary: #232f3e;
+  --value-component-font-color-secondary: #16191f;
+  --value-component-font-color-tertiary: #879196;
+  --selection-color: #29a8dd;
+  --selection-opacity: 0.2;
+  --selection-width: 2px;
+
+  box-sizing: border-box;
+  font-family: var(--primary-font-family);
+}
+
+/* CSS Overides for https://atomiks.github.io/tippyjs/ */
+
+.tippy-tooltip.title-theme {
+  font-family: var(--primary-font-family);
+  background-color: #fff !important;
+  color: #6a7070 !important;
+  font-size: 1.125rem !important;
+  border-radius: 2px !important;
+  padding: 10px 10px 10px 10px !important;
+  width: 100% !important;
+  word-wrap: break-word !important;
+  display: flex !important;
+  box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.33) !important;
+}
+
+.tippy-arrow,
+.tippy-arrow::before {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+}
+
+.tippy-arrow::before {
+  content: '';
+  transform: rotate(45deg);
+  background: #fff;
+}
+
+/** Top Arrow */
+
+.tippy-tooltip.title-theme[data-placement^='top'] > .tippy-arrow {
+  bottom: -5px;
+}
+
+.tippy-tooltip.title-theme[data-placement^='top'] > .tippy-arrow::before {
+  box-shadow: 1px 1px 2px 0 rgba(0, 0, 0, 0.33);
+}
+
+/** Bottom Arrow */
+
+.tippy-tooltip.title-theme[data-placement^='bottom'] > .tippy-arrow {
+  top: -5px;
+}
+
+.tippy-tooltip.title-theme[data-placement^='bottom'] > .tippy-arrow::before {
+  box-shadow: -1px -1px 2px 0 rgba(0, 0, 0, 0.33);
+}
+
+/** Left Arrow */
+
+.tippy-tooltip.title-theme[data-placement^='left'] > .tippy-arrow {
+  right: -5px;
+}
+
+.tippy-tooltip.title-theme[data-placement^='left'] > .tippy-arrow::before {
+  box-shadow: 1px -1px 2px 0 rgba(0, 0, 0, 0.33);
+}
+
+/** Right Arrow */
+
+.tippy-tooltip.title-theme[data-placement^='right'] > .tippy-arrow {
+  left: -5px;
+}
+
+.tippy-tooltip.title-theme[data-placement^='right'] > .tippy-arrow::before {
+  box-shadow: -1px 1px 2px 0 rgba(0, 0, 0, 0.33);
+}
+
