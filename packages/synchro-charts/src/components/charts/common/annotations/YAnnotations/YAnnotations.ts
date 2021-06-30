@@ -107,6 +107,7 @@ export const renderYAnnotations = ({
   /** Update Threshold Line */
   annotationSelection
     .select(LINE_SELECTOR)
+    .attr('x2', width)
     .attr('y1', getYPosition)
     .attr('y2', getYPosition)
     .style('stroke', getColor);
