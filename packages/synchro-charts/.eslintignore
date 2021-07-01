@@ -6,3 +6,4 @@ www
 build
 .storybook
 coverage
+src/globals/awsui.css

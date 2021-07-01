@@ -11,7 +11,7 @@ import {
 import { ANNOTATIONS, DATA } from '../../../src/testing/dynamicWidgetUtils/constants';
 import { SCREEN_SIZE } from '../../../src/testing/dynamicWidgetUtils/testCaseParameters';
 import { DataType, StreamType } from '../../../src/utils/dataConstants';
-import { COMPARISON_OPERATOR, StatusIcon } from '../../../src';
+import { COMPARISON_OPERATOR, StatusIcon } from '../../../src/constants';
 
 const SMALL_WAIT = 0.05 * SECOND_IN_MS;
 

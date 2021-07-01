@@ -1,7 +1,7 @@
 import { SCREEN_SIZE } from '../../../../src/testing/dynamicWidgetUtils/testCaseParameters';
 import { Annotation, Threshold } from '../../../../src/components/charts/common/types';
 import { visitDynamicWidget } from '../../../../src/testing/selectors';
-import { COMPARISON_OPERATOR } from '../../../../src';
+import { COMPARISON_OPERATOR } from '../../../../src/constants';
 
 const createUniqueThresholds = (num: number): Threshold[] =>
   new Array(num).fill(0).map((_: unknown, i) => ({
