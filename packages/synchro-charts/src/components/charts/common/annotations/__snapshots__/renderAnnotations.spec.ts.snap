@@ -2,9 +2,7 @@
 
 exports[`no annotations renders no annotations when show changes to false 1`] = `<svg viewBox="0 0 100 50"></svg>`;
 
-exports[`x annotation handles rendering updating multiple annotations
-
- 1`] = `
+exports[`x annotation handles rendering updating multiple annotations 1`] = `
 <svg viewBox="0 0 100 50">
   <g class="xAnnotation" transform="translate(0,0)">
     <line class="x" font-size="10" stroke="red" x1="50" x2="50" y1="0" y2="50" style="stroke: red; stroke-width: 1.5;"></line>
@@ -65,9 +63,7 @@ exports[`x annotation renders correctly 1`] = `
 </svg>
 `;
 
-exports[`y annotation handles rendering updating multiple annotations
-
- 1`] = `
+exports[`y annotation handles rendering updating multiple annotations 1`] = `
 <svg viewBox="0 0 100 50">
   <g class="yThreshold" transform="translate(0,0)">
     <line class="y" x1="0" x2="100" y1="25" y2="25" style="stroke: red; stroke-width: 1.5;"></line>
