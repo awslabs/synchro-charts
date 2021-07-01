@@ -115,9 +115,9 @@ export interface Annotation<T extends AnnotationValue> {
   // Utilized to provide context where annotation/thresholds are utilized/breached
   description?: string;
 
-  // Whether the annotation is draggable (set by application layer)
+  // configures whether the annotation is editable
   // false or undefined = annotation is not draggable
-  draggable?: boolean;
+  isEditable?: boolean;
 }
 
 /**
