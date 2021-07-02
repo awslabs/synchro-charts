@@ -1,5 +1,11 @@
 const path = require('path');
 
+function kebabize(string) {
+  // uppercase after a non-uppercase or uppercase before non-uppercase
+  const upper = /(?<!\p{Uppercase_Letter})\p{Uppercase_Letter}|\p{Uppercase_Letter}(?!\p{Uppercase_Letter})/gu;
+  return string.replace(upper, "-$&").replace(/^-/, "").toLowerCase();
+}
+
 module.exports = {
     title: 'Synchro Charts',
     theme: {
@@ -13,6 +19,10 @@ module.exports = {
         {
             name: 'Introduction',
             content: 'docs/introduction.md',
+        },
+        {
+            name: 'Demo',
+            content: 'docs/demo.md',
         },
         {
             name: 'Setup',
@@ -63,7 +73,7 @@ module.exports = {
                     content: 'docs/trendLine.md',
                 },
                 {
-                    name: 'Widget Configuration Updates',
+                    name: 'Configuration updates',
                     content: 'docs/widgetConfigurationUpdates.md',
                 }
             ]
@@ -83,7 +93,7 @@ module.exports = {
     ],
     getComponentPathLine(componentPath) {
         const name = path.basename(componentPath, '.js');
-        return `import { ${name} } from '@synchro-charts/react';`;
+        return `import { ${name} } from '@synchro-charts/react'; // <sc-${kebabize(name)}>`;
     },
     styleguideComponents: {
         SectionsRenderer: path.join(__dirname, 'src/styleguide/Sections'),

@@ -14,8 +14,9 @@
     },
     "scripts": {
         "start": "styleguidist server",
-        "build": "styleguidist build",
-        "clean": "rm -rf node_modules && rm -rf build",
+        "build": "styleguidist build && yarn run build:create-docs",
+        "build:create-docs": "mkdir ../../docs && cp -R app ../../docs",
+        "clean": "rm -rf node_modules && rm -rf build && rm -rf ../../docs",
         "test": "echo \"INFO: no test specified\"",
         "release": "echo \"INFO: do nothing for release\"",
         "prepublishOnly": "npm run release",

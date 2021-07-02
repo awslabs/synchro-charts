@@ -96,10 +96,10 @@ If a data point has a given value associated with no expiration, then the data p
 However, if we want to have a data point to be considered active for a set period of a time, we can provide the alarm's `expires` in milliseconds.
 In this case, the data is considered expired, when either the point in time is further away from the expired time, or a new data point occurs.
 
-Below is an example of one month expiration.
+Below is an example of one month expiration,
 
 ```jsx static
-alarms={{expires: 1000 * 60 * 60 * 24 * 30 }}
+alarms={{ expires: 1000 * 60 * 60 * 24 * 30 }}
 ```
 
 ```jsx

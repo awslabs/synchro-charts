@@ -4,6 +4,10 @@ yarn.lock
 package-lock.json
 dist
 
+## Documentation site build artifacts
+docs
+
 ./packages/*/dist
 .husky
 .idea/*
+
