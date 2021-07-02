@@ -121,7 +121,7 @@ it('hides value when showStatus is false', () => {
 
 it('show placeholder when no value present', () => {
   cy.visit(route({ latestValue: undefined }));
-  cy.contains(NO_VALUE_PRESENT).should('be.visible');
+  cy.contains(STREAM_NAME).should('be.visible');
 
   cy.matchImageSnapshotOnCI();
 });
