@@ -258,7 +258,12 @@
         - `show`: boolean
         
           A setting to display the label of the annotation on the graph. Defaults to false. 
+    
+    - `isEditable`: boolean
   
+      (Optional) A setting to make an annotation editable or not. X Annotations are not editable by default (undefined or false).
+
+
   - `y`: Object[]
   
     (Optional) collection of y-annotations. A y-annotation provides a mechanism to annotate a value along the y-axis.
@@ -303,7 +308,12 @@
           - `show`: boolean
           
             A setting to display the label of the annotation on the graph.
-            
+
+    - `isEditable`: boolean
+
+      (Optional) A setting to make an annotation editable or not. Y Annotations are not editable by default (undefined or false).
+  
+
  - `thresholdOptions`: Object or Boolean
  
    (Optional) An threshold objects object to configure the thresholds. This setting will applie to all the thresholds.
