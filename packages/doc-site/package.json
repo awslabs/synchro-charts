@@ -1,0 +1,36 @@
+{
+    "name": "synchro-charts",
+    "homepage": ".",
+    "version": "0.1.0",
+    "dependencies": {
+        "@synchro-charts/core": "*",
+        "@synchro-charts/react": "*",
+        "react": "^16.13.1",
+        "react-dom": "^16.13.1",
+        "react-scripts": "^3.4.4"
+    },
+    "devDependencies": {
+        "react-styleguidist": "^11.1.6"
+    },
+    "scripts": {
+        "start": "styleguidist server",
+        "build": "styleguidist build",
+        "clean": "rm -rf node_modules && rm -rf build",
+        "test": "echo \"INFO: no test specified\"",
+        "release": "echo \"INFO: do nothing for release\"",
+        "prepublishOnly": "npm run release",
+        "publish": "echo \"INFO: do nothing for publish\""
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    }
+}

@@ -1,0 +1,7 @@
+.section {
+    font-size: 1.8rem;
+}
+
+.section monitor-status-grid .status-cell {
+  width: unset;
+}
