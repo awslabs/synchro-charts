@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "main": "dist/components.js",
   "scripts": {
-    "clean": "rm -rf dist *.tsbuildinfo",
     "build": "tsc --outDir dist",
-    "release": "npm run build",
-    "prepublishOnly": "cp node_modules/@synchro-charts/core/dist/synchro-charts/synchro-charts.css src/styles.css && npm run release"
+    "clean": "rm -rf dist *.tsbuildinfo",
+    "release": "yarn build",
+    "prepublish": "yarn run build && yarn run copy-styles"
   },
   "devDependencies": {
     "@stencil/core": "^1.12.2",

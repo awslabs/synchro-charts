@@ -1,5 +1,5 @@
 {
-  "name": "aws-synchro-charts",
+  "name": "synchro-charts",
   "version": "0.1.0",
   "description": "Time series charting library",
   "main": "index.js",
