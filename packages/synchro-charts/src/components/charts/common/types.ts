@@ -114,6 +114,10 @@ export interface Annotation<T extends AnnotationValue> {
   // Description of the annotation, i.e. temperature < 30
   // Utilized to provide context where annotation/thresholds are utilized/breached
   description?: string;
+
+  // configures whether the annotation is editable
+  // false or undefined = annotation is not draggable
+  isEditable?: boolean;
 }
 
 /**
