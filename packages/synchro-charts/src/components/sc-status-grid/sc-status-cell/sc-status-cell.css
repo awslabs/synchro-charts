@@ -1,6 +1,7 @@
 sc-status-cell .status-cell {
   min-height: 150px;
   display: flex;
+  box-sizing: border-box;
   flex-direction: column;
   width: 100%;
   height: 100%;

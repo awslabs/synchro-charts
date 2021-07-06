@@ -5,7 +5,7 @@ package-lock.json
 dist
 
 ## Documentation site build artifacts
-./docs
+/docs/*
 
 ./packages/*/dist
 .husky
