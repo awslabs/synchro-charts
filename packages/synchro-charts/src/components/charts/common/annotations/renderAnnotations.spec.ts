@@ -5,13 +5,13 @@ import { SECOND_IN_MS } from '../../../../utils/time';
 import {
   LINE_SELECTOR as X_LINE_SELECTOR,
   TEXT_SELECTOR as X_TEXT_SELECTOR,
-  THRESHOLD_GROUP_SELECTOR as X_ANNOTATION_GROUP_SELECTOR,
+  ANNOTATION_GROUP_SELECTOR as X_ANNOTATION_GROUP_SELECTOR,
 } from './XAnnotations/XAnnotations';
 import {
   LINE_SELECTOR as Y_LINE_SELECTOR,
   TEXT_SELECTOR as Y_TEXT_SELECTOR,
   TEXT_VALUE_SELECTOR as Y_TEXT_VALUE_SELECTOR,
-  THRESHOLD_GROUP_SELECTOR as Y_THRESHOLD_SELECTOR,
+  ANNOTATION_GROUP_SELECTOR as Y_THRESHOLD_SELECTOR,
 } from './YAnnotations/YAnnotations';
 
 const VIEWPORT = {
@@ -148,8 +148,6 @@ describe('no annotations', () => {
     expect(yTextValue).toBeNull();
     expect(yThresholdGroup).toBeNull();
     expect(xAnnotationGroup).toBeNull();
-
-    expect(page.body.querySelector('svg')).toMatchSnapshot();
   });
 });
 

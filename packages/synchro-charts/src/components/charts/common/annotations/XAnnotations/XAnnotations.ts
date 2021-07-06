@@ -5,9 +5,9 @@ import { ANNOTATION_FONT_SIZE, ANNOTATION_STROKE_WIDTH } from '../constants';
 import { getX } from './utils';
 import { ViewPort } from '../../../../../utils/dataTypes';
 
-export const TEXT_SELECTOR = 'text.x';
-export const THRESHOLD_GROUP_SELECTOR = 'g.xAnnotation';
-export const LINE_SELECTOR = 'line.x';
+export const TEXT_SELECTOR = 'text.x-text';
+export const ANNOTATION_GROUP_SELECTOR = 'g.x-annotation';
+export const LINE_SELECTOR = 'line.x-line';
 
 export const renderXAnnotations = ({
   container,
@@ -23,7 +23,7 @@ export const renderXAnnotations = ({
   size: { width: number; height: number };
 }) => {
   const annotationSelection = select(container)
-    .selectAll(THRESHOLD_GROUP_SELECTOR)
+    .selectAll(ANNOTATION_GROUP_SELECTOR)
     .data(xAnnotations);
 
   const getXAnnotationTextX = (a: XAnnotation): number => -getX({ annotation: a, width, viewPort });
@@ -35,12 +35,12 @@ export const renderXAnnotations = ({
     .enter()
     .append('g')
     .attr('transform', 'translate(0,0)')
-    .attr('class', 'xAnnotation');
+    .attr('class', 'x-annotation');
 
   /** Create Line */
   annotationGroup
     .append('line')
-    .attr('class', 'x')
+    .attr('class', 'x-line')
     .attr('font-size', ANNOTATION_FONT_SIZE)
     .attr('x1', annotation => getX({ annotation, width, viewPort }))
     .attr('x2', annotation => getX({ annotation, width, viewPort }))
@@ -49,18 +49,13 @@ export const renderXAnnotations = ({
     .style('stroke', getColor)
     .style('stroke-width', ANNOTATION_STROKE_WIDTH);
 
-  // const xTextSelection = select(container)
-  //   .selectAll(TEXT_SELECTOR)
-  //   // x annotations with text to display
-  //   .data(xAnnotations.filter(annotation => getValueAndText({ annotation, resolution, viewPort }) !== ''));
-
   /** Create X Text */
   annotationGroup
     .append('text')
     .text(annotation => getValueAndText({ annotation, resolution, viewPort }))
     .attr('display', getValueAndTextVisibility)
     .attr('font-size', ANNOTATION_FONT_SIZE)
-    .attr('class', 'x')
+    .attr('class', 'x-text')
     .attr('y', getXAnnotationTextX)
     .attr('x', 0)
     .style('pointer-events', 'none')
@@ -90,6 +85,6 @@ export const renderXAnnotations = ({
 
 export const removeXAnnotations = ({ container }: { container: SVGElement }) => {
   select(container)
-    .selectAll(THRESHOLD_GROUP_SELECTOR)
+    .selectAll(ANNOTATION_GROUP_SELECTOR)
     .remove();
 };

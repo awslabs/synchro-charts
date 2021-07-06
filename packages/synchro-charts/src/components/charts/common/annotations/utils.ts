@@ -112,9 +112,9 @@ export const getValueTextVisibility = (annotation: YAnnotation): string => {
 };
 
 export const getValueAndTextVisibility = (annotation: Annotation<AnnotationValue>): string => {
-  const valueText = annotation.showValue;
-  const labelText = annotation.label && annotation.label.show;
-  if (valueText || labelText) {
+  const showValueText = annotation.showValue;
+  const showLabelText = annotation.label && annotation.label.show;
+  if (showValueText || showLabelText) {
     return 'inline';
   }
   return 'none';

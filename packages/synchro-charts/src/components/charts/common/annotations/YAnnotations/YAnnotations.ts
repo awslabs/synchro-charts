@@ -6,10 +6,10 @@ import { getText, getColor, getValueText, getLabelTextVisibility, getValueTextVi
 import { ViewPort } from '../../../../../utils/dataTypes';
 
 const PADDING = 5;
-export const TEXT_SELECTOR = 'text.y';
-export const TEXT_VALUE_SELECTOR = 'text.yValueText';
-export const THRESHOLD_GROUP_SELECTOR = 'g.yThreshold';
-export const LINE_SELECTOR = 'line.y';
+export const TEXT_SELECTOR = 'text.y-text';
+export const TEXT_VALUE_SELECTOR = 'text.y-value-text';
+export const ANNOTATION_GROUP_SELECTOR = 'g.y-annotation';
+export const LINE_SELECTOR = 'line.y-line';
 
 export const renderYAnnotations = ({
   container,
@@ -38,7 +38,7 @@ export const renderYAnnotations = ({
   const getYAnnotationTextY = (a: YAnnotation): number => getYPosition(a) - PADDING;
 
   const annotationSelection = select(container)
-    .selectAll(THRESHOLD_GROUP_SELECTOR)
+    .selectAll(ANNOTATION_GROUP_SELECTOR)
     .data(yAnnotations);
 
   /** Add group for all elements */
@@ -46,12 +46,12 @@ export const renderYAnnotations = ({
     .enter()
     .append('g')
     .attr('transform', 'translate(0,0)')
-    .attr('class', 'yThreshold');
+    .attr('class', 'y-annotation');
 
   /** Create Line */
   annotationGroup
     .append('line')
-    .attr('class', 'y')
+    .attr('class', 'y-line')
     .attr('x1', 0)
     .attr('x2', width)
     .attr('y1', getYPosition)
@@ -64,7 +64,7 @@ export const renderYAnnotations = ({
     .append('text')
     .attr('display', getValueTextVisibility)
     .attr('font-size', ANNOTATION_FONT_SIZE)
-    .attr('class', 'yValueText')
+    .attr('class', 'y-value-text')
     .attr('x', width + yAnnotationValueTextLeftPadding)
     .attr('text-anchor', 'start')
     .attr('y', getYAnnotationValueTextY)
@@ -78,7 +78,7 @@ export const renderYAnnotations = ({
     .append('text')
     .attr('display', getLabelTextVisibility)
     .attr('font-size', ANNOTATION_FONT_SIZE)
-    .attr('class', 'y')
+    .attr('class', 'y-text')
     .attr('x', width - PADDING)
     .attr('text-anchor', 'end')
     .attr('y', getYAnnotationTextY)
@@ -100,6 +100,7 @@ export const renderYAnnotations = ({
   annotationSelection
     .select(TEXT_SELECTOR)
     .attr('display', getLabelTextVisibility)
+    .attr('x', width - PADDING)
     .attr('y', getYAnnotationTextY)
     .text(getText)
     .style('fill', getColor);
@@ -121,6 +122,6 @@ export const removeYAnnotations = ({ container }: { container: SVGElement }) => 
    * Y Annotation Threshold Groups
    */
   select(container)
-    .selectAll(THRESHOLD_GROUP_SELECTOR)
+    .selectAll(ANNOTATION_GROUP_SELECTOR)
     .remove();
 };
