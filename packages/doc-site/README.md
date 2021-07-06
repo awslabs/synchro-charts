@@ -1,28 +1,23 @@
-# Monitor Components Documentation Site
+# Synchro Charts documentation
 
-## Available Scripts
+The website which makes up the Synchro Charts documentation, as seen in https://synchrocharts.com. 
+
+## Available scripts
 
 In the project directory, you can run:
 
-### `brazil-build deploy`
-This will build and deploy the documentation to `https://{stage}.console.harmony.a2z.com/monitor-components-doc-site/`. Deployment takes a couple minutes.
+- `yarn start`
 
-Make sure to have first ran `npm install -g git+ssh://git.amazon.com/pkg/HarmonyCLI#master` at some point in time. Must have permissions to the posix group [AWS-IoT-VoT-Team](https://bindles.amazon.com/software_app/AWS-IoT-VoT-Team).
+  will start up a server at `localhost:6060` where you can interact with the documentation site.
 
-### `brazil-build run-script start`
+- `yarn build`
 
-Runs the app in the development mode.<br />
-Open [http://localhost:6060](http://localhost:6060) to view it in the browser.
+  Builds documentation site, and copies over the build site to the root directory `docs` for usage by GitHub pages
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+- `yarn clean`
 
-### `brazil-build run-script build`
+  Cleans up artifacts as well as the generated `docs` in the root directory.
 
-Builds the app for production to the `app` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Deployment
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+create a pull request to https://github.com/awslabs/aws-synchro-charts, which will cause an update to the website https://synchrocharts.com/.

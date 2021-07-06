@@ -20,11 +20,3 @@ Synchro Charts widget controls:
 - **Restrict Time Span**: Click and drag through the interval of time you wish to restrict the viewport to.
 
 
-
-### Demo
-
-```jsx
-import {Demo} from '../src/components/chart-demo/Demo';
-
-<Demo />
-```
