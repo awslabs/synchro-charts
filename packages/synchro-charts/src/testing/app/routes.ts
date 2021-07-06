@@ -258,6 +258,10 @@ export const routes = [
     component: 'sc-webgl-chart-no-annotations',
   },
   {
+    url: '/tests/sc-webgl-chart/annotations/annotation-rescaling',
+    component: 'sc-webgl-chart-annotation-rescaling',
+  },
+  {
     url: '/tests/sc-scatter-chart/threshold/no-coloration',
     component: 'sc-scatter-chart-threshold-no-coloration',
   },
