@@ -1,5 +1,5 @@
 
-Performance is a key goal of Synchro charts - we wish to allow people to visualize lots of data across many charts, while retaining a smooth user experience.
+Performance is a key goal of Synchro Charts - we wish to allow people to visualize lots of data across many charts, while retaining a smooth user experience.
 
 Interact with the charts below using the following gestures:
  - **Pan**: hold **shift**, click and drag on any chart

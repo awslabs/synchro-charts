@@ -10,4 +10,3 @@ docs
 ./packages/*/dist
 .husky
 .idea/*
-

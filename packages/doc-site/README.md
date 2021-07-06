@@ -1,6 +1,6 @@
 # Synchro Charts documentation
 
-The website which makes up the Synchro Charts documentation, as seen in https://synchrocharts.com/. 
+The website which makes up the Synchro Charts documentation, as seen in https://synchrocharts.com. 
 
 ## Available scripts
 
