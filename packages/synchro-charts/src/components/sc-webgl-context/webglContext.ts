@@ -154,7 +154,8 @@ export const createWebGLRenderer = () => {
   const mustBeInitialized = () => {
     if (rectMap == null) {
       throw new Error(
-        'webgl context must be initialized before it can be utilized. Please refer to https://synchrocharts.com/#/Setup to learn more about how to setup Synchro Charts.'
+        'webgl context must be initialized before it can be utilized. ' +
+          'Please refer to https://synchrocharts.com/#/Setup to learn more about how to setup Synchro Charts.'
       );
     }
   };
