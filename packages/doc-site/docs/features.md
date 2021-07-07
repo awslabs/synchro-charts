@@ -1,0 +1,6 @@
+> - [Synchronization](#/Features/Synchronization)
+> - [Performance](#/Features/Performance)
+> - [Annotation](#/Features/Annotation)
+> - [Threshold](#/Features/Threshold)
+> - [Trends](#/Features/Trends)
+> - [Configuration updates](#/Features/Configuration%20updates)

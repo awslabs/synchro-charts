@@ -1,6 +1,11 @@
 # Synchro Charts documentation
 
-The website which makes up the Synchro Charts documentation, as seen in https://synchrocharts.com. 
+The website which makes up the Synchro Charts documentation, as seen in https://synchrocharts.com.
+
+## Pre-requisite
+In the root project directory, make sure you already ran:
+
+- `yarn install && yarn build`
 
 ## Available scripts
 
