@@ -19,28 +19,33 @@ module.exports = {
         {
             name: 'Introduction',
             content: 'docs/introduction.md',
+            exampleMode: 'hide',
         },
         {
             name: 'Demo',
             content: 'docs/demo.md',
+            exampleMode: 'hide',
         },
         {
             name: 'Setup',
             content: 'docs/setup.md',
+            exampleMode: 'hide',
         },
         {
             name: 'Components',
             sectionDepth: 2,
+            content: 'docs/components.md',
             components: 'src/components/**/*.js',
             ignore: 'src/components/chart-demo/**',
         },
         {
             name: 'API',
+            content: 'docs/api.md',
             sectionDepth: 2,
             sections: [
                 {
                   name: 'Properties',
-                  content: 'docs/api.md',
+                  content: 'docs/properties.md',
                 },
                 {
                   name: 'Events',
@@ -51,14 +56,17 @@ module.exports = {
         {
             name: 'Features',
             sectionDepth: 2,
+            content: 'docs/features.md',
             sections: [
                 {
                     name: 'Synchronization',
                     content: 'docs/synchronization.md',
+                    exampleMode: 'hide',
                 },
                 {
                     name: 'Performance',
                     content: 'docs/performance.md',
+                    exampleMode: 'hide',
                 },
                 {
                     name: 'Annotation',

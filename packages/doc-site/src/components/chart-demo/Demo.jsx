@@ -183,6 +183,14 @@ export class Demo extends React.Component {
     }
   };
 
+  changeAnnotationComparator = (event) => {
+    if (event != null && event.target != null) {
+      this.setState({
+        annotationComp: event.target.value,
+      })
+    }
+  };
+
   removeThreshold = (index) => {
     const { annotations } = this.state;
 
