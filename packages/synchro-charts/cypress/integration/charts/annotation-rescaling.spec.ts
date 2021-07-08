@@ -1,9 +1,7 @@
-import { SECOND_IN_MS } from '../../../src/utils/time';
 import { visitDynamicWidget } from '../../../src/testing/selectors';
 import { SearchQueryParams } from '../../../src/testing/dynamicWidgetUtils/testCaseParameters';
 import { X_MAX, X_MIN, Y_MAX, Y_MIN } from '../../../src/testing/test-routes/charts/constants';
 
-const WAIT_MS = SECOND_IN_MS * 2;
 const baseChartHeight = 500;
 const baseChartWidth = 700;
 
@@ -61,9 +59,9 @@ describe('annotations', () => {
       annotations: testAnnotations,
     });
     cy.viewport(baseChartWidth, baseChartHeight);
-    // cy.waitForChart();
-    cy.viewport(baseChartWidth, baseChartHeight + 400);
-    cy.wait(WAIT_MS);
+    cy.waitForChart();
+    cy.viewport(baseChartWidth, baseChartHeight + 550);
+    cy.waitForChart();
     cy.matchImageSnapshotOnCI();
   });
 
@@ -73,9 +71,9 @@ describe('annotations', () => {
       annotations: testAnnotations,
     });
     cy.viewport(baseChartWidth, baseChartHeight);
-    cy.wait(WAIT_MS);
-    cy.viewport(baseChartWidth + 300, baseChartHeight);
-    cy.wait(WAIT_MS);
+    cy.waitForChart();
+    cy.viewport(baseChartWidth + 525, baseChartHeight);
+    cy.waitForChart();
     cy.matchImageSnapshotOnCI();
   });
 
@@ -85,9 +83,9 @@ describe('annotations', () => {
       annotations: testAnnotations,
     });
     cy.viewport(baseChartWidth, baseChartHeight);
-    cy.wait(WAIT_MS);
-    cy.viewport(baseChartWidth + 300, baseChartHeight + 300);
-    cy.wait(WAIT_MS);
+    cy.waitForChart();
+    cy.viewport(baseChartWidth + 700, baseChartHeight + 700);
+    cy.waitForChart();
     cy.matchImageSnapshotOnCI();
   });
 });
