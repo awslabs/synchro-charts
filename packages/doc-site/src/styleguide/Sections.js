@@ -4,12 +4,17 @@ import DefaultSectionsRenderer from 'react-styleguidist/lib/client/rsg-component
 import { WebglContext } from '@synchro-charts/react';
 import './Sections.css';
 
-const Sections = ({ children }) => (
+const Sections = ({ children }) => {
+  // Styleguidist will render multiple sections per a single screen - we want to ensure that were only
+  // rendering a single `<WebglContext />`.
+  const mountWebglContext = children.length > 0;
+  return (
     <div className="section">
-        <DefaultSectionsRenderer>{children}</DefaultSectionsRenderer>
-        <WebglContext />
+      <DefaultSectionsRenderer>{children}</DefaultSectionsRenderer>
+      {mountWebglContext && <WebglContext />}
     </div>
-);
+  );
+}
 
 export default Sections;
 
