@@ -6,6 +6,9 @@ import { getText, getColor, getValueText, getLabelTextVisibility, getValueTextVi
 import { ViewPort } from '../../../../../utils/dataTypes';
 
 const PADDING = 5;
+const Y_ANNOTATION_TEXT_PADDING = 3;
+const Y_ANNOTATION_TEXT_LEFT_PADDING = 8;
+
 export const TEXT_SELECTOR = 'text.y-text';
 export const TEXT_VALUE_SELECTOR = 'text.y-value-text';
 export const ANNOTATION_GROUP_SELECTOR = 'g.y-annotation';
@@ -31,10 +34,7 @@ export const renderYAnnotations = ({
       viewPort,
     });
 
-  const yAnnotationValueTextPadding = 3;
-  const yAnnotationValueTextLeftPadding = 8;
-
-  const getYAnnotationValueTextY = (a: YAnnotation): number => getYPosition(a) + yAnnotationValueTextPadding;
+  const getYAnnotationValueTextY = (a: YAnnotation): number => getYPosition(a) + Y_ANNOTATION_TEXT_PADDING;
   const getYAnnotationTextY = (a: YAnnotation): number => getYPosition(a) - PADDING;
 
   const annotationSelection = select(container)
@@ -65,7 +65,7 @@ export const renderYAnnotations = ({
     .attr('display', getValueTextVisibility)
     .attr('font-size', ANNOTATION_FONT_SIZE)
     .attr('class', 'y-value-text')
-    .attr('x', width + yAnnotationValueTextLeftPadding)
+    .attr('x', width + Y_ANNOTATION_TEXT_LEFT_PADDING)
     .attr('text-anchor', 'start')
     .attr('y', getYAnnotationValueTextY)
     .text(annotation => getValueText({ annotation, resolution, viewPort }))
@@ -92,7 +92,7 @@ export const renderYAnnotations = ({
     .select(TEXT_VALUE_SELECTOR)
     .attr('display', getValueTextVisibility)
     .attr('y', getYAnnotationValueTextY)
-    .attr('x', width + yAnnotationValueTextLeftPadding)
+    .attr('x', width + Y_ANNOTATION_TEXT_LEFT_PADDING)
     .text(annotation => getValueText({ annotation, resolution, viewPort }))
     .style('fill', getColor);
 
