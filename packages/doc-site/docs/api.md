@@ -261,7 +261,8 @@
     
     - `isEditable`: boolean
   
-      (Optional) A setting to make an annotation editable or not. X Annotations are not editable by default (undefined or false).
+      (Optional) Controls whether the annotation is configurable from within the widget. X Annotations are not editable 
+      by default (undefined or false). 
 
 
   - `y`: Object[]
@@ -311,7 +312,9 @@
 
     - `isEditable`: boolean
 
-      (Optional) A setting to make an annotation editable or not. Y Annotations are not editable by default (undefined or false).
+      (Optional) Controls whether the annotation is configurable from within the widget. For example when `isEditable` 
+      is true for a Y annotation on a line chart, you are able to drag the Y annotation handle to change the annotation value which emits 
+      WidgetConfigurationUpdate events with the updated value. Y Annotations are not editable by default (undefined or false).
   
 
  - `thresholdOptions`: Object or Boolean
