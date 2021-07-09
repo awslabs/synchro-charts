@@ -32,17 +32,16 @@ const viewPort = {
   duration,
   group: 'some-viewport-group',
 };
-const size = {
-  ...SIZE,
-  width,
-  height,
-};
 
-const getSize = (value: number | string): typeof size | undefined => {
+const getSize = (value: number | string): { height: number | string; width: number | string } | undefined => {
   if (typeof value === 'string') {
     return undefined;
   }
-  return size;
+  return {
+    ...SIZE,
+    width,
+    height,
+  };
 };
 
 const styleSize = (value: number | string): string => {

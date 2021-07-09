@@ -39,21 +39,17 @@ export type SearchQueryParams = {
 const parseBool = (str: string): boolean => str === 'true';
 
 const deserializeAnnotations = (str: string): Annotations => {
-  const a = JSON.parse(str) as Annotations;
-  const { x } = a;
+  const annotations = JSON.parse(str) as Annotations;
+  const { x } = annotations;
 
-  let newX = [] as XAnnotation[];
-  if (x) {
-    newX = x.map(element => {
-      return {
-        ...element,
-        value: new Date(element.value),
-      };
-    });
-  }
+  const deserializeXAnnotation = (xAnnotation: XAnnotation): XAnnotation => ({
+    ...xAnnotation,
+    value: new Date(xAnnotation.value),
+  });
+
   return {
-    ...a,
-    x: newX,
+    ...annotations,
+    x: x != null ? x.map(deserializeXAnnotation) : undefined,
   };
 };
 

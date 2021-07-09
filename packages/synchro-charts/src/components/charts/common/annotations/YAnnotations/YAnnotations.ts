@@ -34,8 +34,9 @@ export const renderYAnnotations = ({
       viewPort,
     });
 
-  const getYAnnotationValueTextY = (a: YAnnotation): number => getYPosition(a) + Y_ANNOTATION_TEXT_PADDING;
-  const getYAnnotationTextY = (a: YAnnotation): number => getYPosition(a) - PADDING;
+  const getYAnnotationValueTextY = (yAnnotation: YAnnotation): number =>
+    getYPosition(yAnnotation) + Y_ANNOTATION_TEXT_PADDING;
+  const getYAnnotationTextY = (yAnnotation: YAnnotation): number => getYPosition(yAnnotation) - PADDING;
 
   const annotationSelection = select(container)
     .selectAll(ANNOTATION_GROUP_SELECTOR)
