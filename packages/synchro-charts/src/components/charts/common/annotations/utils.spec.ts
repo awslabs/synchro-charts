@@ -18,6 +18,8 @@ import { VIEW_PORT } from '../testUtil';
 import { highestPriorityThreshold, thresholdAppliesToDataStream } from './breachedThreshold';
 import { COMPARISON_OPERATOR } from '../constants';
 
+// TODO ADD UNIT TESTS HERE TO TEST THE NEW FUNCTIONS!
+
 describe('getValueAndText and getValueAndTextVisibility', () => {
   it('returns a text from annotation', () => {
     const annotationLabelText = 'new label';

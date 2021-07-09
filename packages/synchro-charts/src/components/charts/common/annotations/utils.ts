@@ -38,16 +38,43 @@ export const getNumberAnnotations = (annotations: Annotations): Annotations => {
   };
 };
 
+const makeNiceValueString = (thresholdValue: number): string => {
+  const upperLimit = 99999;
+  const lowerBound = 0.0001;
+  const digits = 5;
+  const limit = 4;
+
+  // Handle large numbers greater than 5 digits --> exponential
+  if (thresholdValue > upperLimit || thresholdValue < -upperLimit) {
+    return thresholdValue.toExponential(digits - limit).toString();
+  }
+
+  // Handle small numbers with a large number of decimal places --> exponential
+  if ((thresholdValue < lowerBound && thresholdValue > 0) || (thresholdValue > -lowerBound && thresholdValue < 0)) {
+    return thresholdValue.toExponential(digits - limit).toString();
+  }
+
+  // All other numbers
+  return thresholdValue.toString().length > digits
+    ? thresholdValue.toString().substr(0, digits)
+    : thresholdValue.toString();
+};
+
 const valueDisplayText = ({
   value,
   resolution,
   viewPort,
+  niceDisplayText,
 }: {
   value: AnnotationValue;
   resolution: number;
   viewPort: ViewPort;
+  niceDisplayText: boolean;
 }): string => {
   if (typeof value === 'number') {
+    if (niceDisplayText) {
+      return makeNiceValueString(value);
+    }
     return value.toString();
   }
   if (typeof value === 'string') {
@@ -71,7 +98,9 @@ export const getValueAndText = ({
   resolution: number;
   viewPort: ViewPort;
 }): string => {
-  const valueText = annotation.showValue ? valueDisplayText({ value: annotation.value, resolution, viewPort }) : null;
+  const valueText = annotation.showValue
+    ? valueDisplayText({ value: annotation.value, resolution, viewPort, niceDisplayText: false })
+    : null;
   const labelText = annotation.label && annotation.label.show ? annotation.label.text : null;
 
   if (labelText && valueText) {
@@ -124,17 +153,20 @@ export const getValueText = ({
   annotation,
   resolution,
   viewPort,
+  niceDisplayValueText,
 }: {
   annotation: Annotation<AnnotationValue>;
   resolution: number;
   viewPort: ViewPort;
+  niceDisplayValueText: boolean;
 }): string => {
-  const valueText = annotation.showValue ? valueDisplayText({ value: annotation.value, resolution, viewPort }) : null;
+  const valueText = annotation.showValue
+    ? valueDisplayText({ value: annotation.value, resolution, viewPort, niceDisplayText: niceDisplayValueText })
+    : null;
 
   if (valueText) {
     return `${valueText}`;
   }
-
   return '';
 };
 
