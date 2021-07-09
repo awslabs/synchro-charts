@@ -1,640 +1,288 @@
 import { DataType } from '../../../utils/dataConstants';
 import { DataPoint, DataStream, ViewPort } from '../../../utils/dataTypes';
-import { HeatValueMap, addCount, calcHeatValues } from './heatmapUtil';
-import { MONTH_IN_MS, DAY_IN_MS } from '../../../utils/time';
+import { calculateBucketIndex, HeatValueMap, addCount, calcHeatValues } from './heatmapUtil';
+import { MONTH_IN_MS} from '../../../utils/time';
 
-const ADDCOUNT_HEATVALUE: HeatValueMap = {};
-const ADDCOUNT_INPUT_1 = {oldHeatValue: ADDCOUNT_HEATVALUE, xBucketRangeStart: 123, bucketIndex: 1, dataStreamName: 'Asset 1'};
+type HeatValueMapLayer = {
+  number: {
+    number: {
+      totalCount: number;
+      [streamId: string]: number;
+    }
+  }
+}
+
+const VIEW_PORT: ViewPort = {
+  start: new Date('June 30, 2021 10:00:00'),
+  end: new Date('June 30, 2022 21:00:00'),
+  yMin: 0,
+  yMax: 100,
+};
+
+const RESOLUTION: number = MONTH_IN_MS;
+const START_TIME = VIEW_PORT.start.getTime(); //1625047200000
+
+const STREAM_1_DATA_POINT_1: DataPoint = { x: START_TIME, y: Math.random() * 100 };
+const STREAM_1_DATA_POINT_2: DataPoint = { x: START_TIME + MONTH_IN_MS / 2, y: Math.random() * 100 };
+const STREAM_1_DATA_POINT_3: DataPoint = { x: START_TIME + (MONTH_IN_MS / 2) * 3, y: Math.random() * 100 };
+const STREAM_1_DATA_POINT_4: DataPoint = { x: START_TIME + (MONTH_IN_MS / 2) * 4, y: Math.random() * 100 };
+const STREAM_1_DATA_POINT_5: DataPoint = { x: START_TIME + (MONTH_IN_MS / 2) * 5, y: Math.random() * 100 };
+
+const STREAM_2_DATA_POINT_1: DataPoint = { x: START_TIME, y: Math.random() * 10 };
+const STREAM_2_DATA_POINT_2: DataPoint = { x: START_TIME + MONTH_IN_MS / 2, y: Math.random() * 100 };
+const STREAM_2_DATA_POINT_3: DataPoint = { x: START_TIME + (MONTH_IN_MS / 2) * 3, y: Math.random() * 100 };
+const STREAM_2_DATA_POINT_4: DataPoint = { x: START_TIME + (MONTH_IN_MS / 2) * 4, y: Math.random() * 100 };
+const STREAM_2_DATA_POINT_5: DataPoint = { x: START_TIME + (MONTH_IN_MS / 2) * 5, y: Math.random() * 100 };
+
+const DATA_SET_1 = [
+  STREAM_1_DATA_POINT_1,
+  STREAM_1_DATA_POINT_2,
+  STREAM_1_DATA_POINT_3,
+  STREAM_1_DATA_POINT_4,
+  STREAM_1_DATA_POINT_5,
+];
+
+const DATA_SET_2 = [
+  STREAM_2_DATA_POINT_1,
+  STREAM_2_DATA_POINT_2,
+  STREAM_2_DATA_POINT_3,
+  STREAM_2_DATA_POINT_4,
+  STREAM_2_DATA_POINT_5,
+];
+
+describe('calculateBucketIndex', () => {
+  it('returns the bucket index for each y-value', () => {
+    expect(calculateBucketIndex({yValue: 100, yMax: 100, yMin: 0, bucketCount: 10})).toEqual(10);
+    expect(calculateBucketIndex({yValue: 92, yMax: 100, yMin: 0, bucketCount: 10})).toEqual(10);
+    expect(calculateBucketIndex({yValue: 10, yMax: 100, yMin: 0, bucketCount: 10})).toEqual(1);
+    expect(calculateBucketIndex({yValue: 1, yMax: 100, yMin: 0, bucketCount: 10})).toEqual(1);
+    expect(calculateBucketIndex({yValue: 55, yMax: 100, yMin: 0, bucketCount: 10})).toEqual(6);
+    expect(calculateBucketIndex({yValue: 49, yMax: 100, yMin: 0, bucketCount: 10})).toEqual(5);
+    expect(calculateBucketIndex({yValue: 30, yMax: 100, yMin: 0, bucketCount: 10})).toEqual(3);
+  });
+
+  it('returns the bucket index for each y-value given a positive nonzero yMin', () => {
+    expect(calculateBucketIndex({yValue: 10, yMax: 15, yMin: 5, bucketCount: 10})).toEqual(5);
+    expect(calculateBucketIndex({yValue: 12, yMax: 15, yMin: 5, bucketCount: 10})).toEqual(7);
+    expect(calculateBucketIndex({yValue: 9, yMax: 15, yMin: 5, bucketCount: 10})).toEqual(4);
+    expect(calculateBucketIndex({yValue: 8, yMax: 15, yMin: 5, bucketCount: 10})).toEqual(3);
+    expect(calculateBucketIndex({yValue: 13, yMax: 15, yMin: 5, bucketCount: 10})).toEqual(8);
+  });
+
+  it('returns the bucket index for each y-value given a negative yMin works', () => {
+    expect(calculateBucketIndex({yValue: -4, yMax: 5, yMin: -5, bucketCount: 10})).toEqual(1);
+    expect(calculateBucketIndex({yValue: 4, yMax: 5, yMin: -5, bucketCount: 10})).toEqual(9);
+    expect(calculateBucketIndex({yValue: 0, yMax: 5, yMin: -5, bucketCount: 10})).toEqual(5);
+    expect(calculateBucketIndex({yValue: 2, yMax: 5, yMin: -5, bucketCount: 10})).toEqual(7);
+    expect(calculateBucketIndex({yValue: -1, yMax: 5, yMin: -5, bucketCount: 10})).toEqual(4);
+  });
+});
 
 describe('addCount', () => {
-  it('addCount has proper structure', () => {
-    let heatValue: HeatValueMap = {};
-    heatValue = addCount(ADDCOUNT_INPUT_1);
+  it('returns aggregated data for one data point', () => {
+    const oldHeatValue: HeatValueMap = {};
+    const newHeatValue = addCount({oldHeatValue, xBucketRangeStart: 123, bucketIndex: 1, dataStreamId: 'data-stream-1'});
 
-    expect(heatValue).toEqual({
-      '123': {
-        '1': { totalCount: 1, 'Asset 1': 1 },
+    expect(newHeatValue).toEqual({
+      123 : {
+        1: { totalCount: 1, 'data-stream-1': 1 },
       },
     });
   });
 
-  it("addCount isn't destructive", () => {
-    let testHeatValue: HeatValueMap = {};
+  it('returns aggregated data for multiple calls with the same heatValueMap object passed in', () => {
     let heatValue: HeatValueMap = {};
-    heatValue = addCount(ADDCOUNT_INPUT_1);
-
-    expect(testHeatValue).toEqual({
-      '123': {
-        '1': { totalCount: 1, 'Asset 1': 1 },
-      },
-    });
-    expect(heatValue).toEqual({});
-  });
-
-  it('multiple addCount calls add on top of each other', () => {
-    let heatValue: HeatValueMap = {};
-    heatValue = addCount(ADDCOUNT_INPUT_1);
-    heatValue = addCount({oldHeatValue: heatValue, xBucketRangeStart: 123, bucketIndex: 2, dataStreamName: 'Asset 1'});
-    heatValue = addCount({oldHeatValue: heatValue, xBucketRangeStart: 124, bucketIndex: 5, dataStreamName: 'Asset 1'});
-    heatValue = addCount({oldHeatValue: heatValue, xBucketRangeStart: 123, bucketIndex: 1, dataStreamName: 'Asset 2'});
-    heatValue = addCount({oldHeatValue: heatValue, xBucketRangeStart: 124, bucketIndex: 6, dataStreamName: 'Asset 2'});
+    heatValue = addCount({oldHeatValue: heatValue, xBucketRangeStart: 123, bucketIndex: 1, dataStreamId: 'data-stream-1'});
+    heatValue = addCount({oldHeatValue: heatValue, xBucketRangeStart: 123, bucketIndex: 2, dataStreamId: 'data-stream-1'});
+    heatValue = addCount({oldHeatValue: heatValue, xBucketRangeStart: 124, bucketIndex: 5, dataStreamId: 'data-stream-1'});
+    heatValue = addCount({oldHeatValue: heatValue, xBucketRangeStart: 123, bucketIndex: 1, dataStreamId: 'data-stream-2'});
+    heatValue = addCount({oldHeatValue: heatValue, xBucketRangeStart: 124, bucketIndex: 6, dataStreamId: 'data-stream-2'});
 
     expect(heatValue).toEqual({
-      '123': {
-        '1': { totalCount: 2, 'Asset 1': 1, 'Asset 2': 1 },
-        '2': { totalCount: 1, 'Asset 1': 1 },
+      123: {
+        1: { totalCount: 2, 'data-stream-1': 1, 'data-stream-2': 1 },
+        2: { totalCount: 1, 'data-stream-1': 1 },
       },
-      '124': {
-        '5': { totalCount: 1, 'Asset 1': 1 },
-        '6': { totalCount: 1, 'Asset 2': 1 },
+      124: {
+        5: { totalCount: 1, 'data-stream-1': 1 },
+        6: { totalCount: 1, 'data-stream-2': 1 },
       },
     });
   });
 });
 
-describe('calcHeatValues', () => {
-  it('calcHeatValue has proper structure', () => {
+describe('calcHeatValues tests', () => {
+  it('returns aggregated data with a dataStream with one data point', () => {
     const oldHeatValue: HeatValueMap = {};
-    const STREAM_1_DATA_POINT_1: DataPoint = { x: 1625072400000, y: 30 };
-    const resolution = MONTH_IN_MS;
+    const STREAM_1_DATA_POINT_1: DataPoint = { x: START_TIME, y: 30 };
 
     const dataStreams: DataStream[] = [
       {
         id: 'data-stream-1',
         name: 'some name 1',
-        resolution,
+        resolution: RESOLUTION,
         aggregates: {},
         data: [STREAM_1_DATA_POINT_1],
         dataType: DataType.NUMBER,
       },
     ];
 
-    const viewPort: ViewPort = {
-      start: new Date('June 30, 2021 10:00:00'),
-      end: new Date('June 30, 2022 21:00:00'),
-      yMin: 0,
-      yMax: 100,
-    };
-    const startTime = viewPort.start.getTime();
-    const endTime = viewPort.end.getTime();
-    const { yMax, yMin} = viewPort;
-    const testHeatValue = calcHeatValues({oldHeatValue, dataStreams, resolution, startTime, endTime, yMax, yMin});
+    const testHeatValue = calcHeatValues({oldHeatValue, dataStreams, resolution: RESOLUTION, viewPort: VIEW_PORT});
     expect(testHeatValue).toEqual({
-      '1625047200000': {
-        '3': { totalCount: 1, 'some name 1': 1 },
+      1625047200000: {
+        3: { totalCount: 1, 'data-stream-1': 1 },
       },
     });
     expect(oldHeatValue).toEqual({});
   });
 
-  it('calcHeatValues has individual datastream counts', () => {
-    let heatValue: HeatValueMap = {};
-    const STREAM_1_DATA_POINT_1: DataPoint = { x: 1625072400000, y: 2 };
-    const STREAM_1_DATA_POINT_2: DataPoint = { x: 1625072400000 + MONTH_IN_MS / 2, y: 4 };
-    const STREAM_1_DATA_POINT_3: DataPoint = { x: 1625072400000 + (MONTH_IN_MS / 2) * 3, y: 3 };
-    const STREAM_1_DATA_POINT_4: DataPoint = { x: 1625072400000 + (MONTH_IN_MS / 2) * 4, y: 8 };
-    const STREAM_1_DATA_POINT_5: DataPoint = { x: 1625072400000 + (MONTH_IN_MS / 2) * 5, y: 5 };
-
-    const STREAM_2_DATA_POINT_1: DataPoint = { x: 1625072400000, y: 2 };
-    const STREAM_2_DATA_POINT_2: DataPoint = { x: 1625072400000 + MONTH_IN_MS / 2, y: 4 };
-    const STREAM_2_DATA_POINT_3: DataPoint = { x: 1625072400000 + (MONTH_IN_MS / 2) * 3, y: 3 };
-    const STREAM_2_DATA_POINT_4: DataPoint = { x: 1625072400000 + (MONTH_IN_MS / 2) * 4, y: 8 };
-    const STREAM_2_DATA_POINT_5: DataPoint = { x: 1625072400000 + (MONTH_IN_MS / 2) * 5, y: 5 };
-
-    const resolution = MONTH_IN_MS;
-
+  it('returns aggregated data with multiple dataStreams', () => {
     const dataStreams: DataStream[] = [
       {
         id: 'data-stream-1',
         name: 'some name 1',
-        resolution,
+        resolution: RESOLUTION,
         aggregates: {},
-        data: [
-          STREAM_1_DATA_POINT_1,
-          STREAM_1_DATA_POINT_2,
-          STREAM_1_DATA_POINT_3,
-          STREAM_1_DATA_POINT_4,
-          STREAM_1_DATA_POINT_5,
-        ],
+        data: DATA_SET_1,
         dataType: DataType.NUMBER,
       },
       {
         id: 'data-stream-2',
         name: 'some name 2',
-        resolution,
+        resolution: RESOLUTION,
         aggregates: {},
-        data: [
-          STREAM_2_DATA_POINT_1,
-          STREAM_2_DATA_POINT_2,
-          STREAM_2_DATA_POINT_3,
-          STREAM_2_DATA_POINT_4,
-          STREAM_2_DATA_POINT_5,
-        ],
+        data: DATA_SET_2,
         dataType: DataType.NUMBER,
       },
     ];
 
-    const viewPort: ViewPort = {
-      start: new Date('June 30, 2021 10:00:00'),
-      end: new Date('June 30, 2022 21:00:00'),
-      yMin: 0,
-      yMax: 10,
-    };
-    const startTime = viewPort.start.getTime();
-    const endTime = viewPort.end.getTime();
-    const { yMax, yMin} = viewPort;
-    heatValue = calcHeatValues(heatValue, dataStreams, resolution, startTime, endTime, yMax, yMin);
-    expect(heatValue).toEqual({
-      '1625047200000': {
-        '2': { totalCount: 2, 'some name 1': 1, 'some name 2': 1 },
-        '4': { totalCount: 2, 'some name 1': 1, 'some name 2': 1 },
-      },
-      '1627639200000': {
-        '3': { totalCount: 2, 'some name 1': 1, 'some name 2': 1 },
-      },
-      '1630231200000': {
-        '5': { totalCount: 2, 'some name 1': 1, 'some name 2': 1 },
-        '8': { totalCount: 2, 'some name 1': 1, 'some name 2': 1 },
-      },
+    const newHeatValue = calcHeatValues({oldHeatValue: {}, dataStreams, resolution: RESOLUTION, viewPort: VIEW_PORT});
+    expect(newHeatValue).toEqual({
+      1625047200000: expect.anything(),
+      1627639200000: expect.anything(),
+      1630231200000: expect.anything(),
     });
   });
-});
 
-describe('general tests', () => {
-  it('lots of data with one data stream', () => {
-    let heatValue: HeatValueMap = {};
-    const STREAM_1_DATA_POINT_1: DataPoint = { x: 1625072400000, y: 38 };
-    const STREAM_1_DATA_POINT_2: DataPoint = { x: 1625072400000 + DAY_IN_MS / 2, y: 97 };
-    const STREAM_1_DATA_POINT_3: DataPoint = { x: 1625072400000 + (DAY_IN_MS / 2) * 3, y: 102 };
-    const STREAM_1_DATA_POINT_4: DataPoint = { x: 1625072400000 + (DAY_IN_MS / 2) * 4, y: 59 };
-    const STREAM_1_DATA_POINT_5: DataPoint = { x: 1625072400000 + (DAY_IN_MS / 2) * 5, y: 164 };
-    const STREAM_1_DATA_POINT_6: DataPoint = { x: 1625072400000 + (DAY_IN_MS / 2) * 7, y: 17 };
-    const STREAM_1_DATA_POINT_7: DataPoint = { x: 1625072400000 + (DAY_IN_MS / 2) * 10, y: 82 };
-    const STREAM_1_DATA_POINT_8: DataPoint = { x: 1625072400000 + (DAY_IN_MS / 2) * 11, y: 92 };
-    const STREAM_1_DATA_POINT_9: DataPoint = { x: 1625072400000 + (DAY_IN_MS / 2) * 12, y: 1 };
-    const STREAM_1_DATA_POINT_10: DataPoint = { x: 1625072400000 + (DAY_IN_MS / 2) * 12, y: 3 };
+  it('returns aggregated data for a dataStream with skipping timestamps', () => {
+    const STREAM_3_DATA_POINT_1: DataPoint = { x: START_TIME, y: Math.random() * 100 };
+    const STREAM_3_DATA_POINT_2: DataPoint = { x: START_TIME + MONTH_IN_MS, y: Math.random() * 100 };
+    const STREAM_3_DATA_POINT_3: DataPoint = { x: START_TIME + MONTH_IN_MS * 5, y: Math.random() * 100 };
+    const STREAM_3_DATA_POINT_4: DataPoint = { x: START_TIME + MONTH_IN_MS * 10, y: Math.random() * 100 };
+    const STREAM_3_DATA_POINT_5: DataPoint = { x: START_TIME + MONTH_IN_MS * 11, y: Math.random() * 100 };
 
-    const resolution = DAY_IN_MS;
+    const DATA_SET_3 = [
+      STREAM_3_DATA_POINT_1,
+      STREAM_3_DATA_POINT_2,
+      STREAM_3_DATA_POINT_3,
+      STREAM_3_DATA_POINT_4,
+      STREAM_3_DATA_POINT_5,
+    ];
 
     const dataStreams: DataStream[] = [
       {
         id: 'data-stream-1',
         name: 'some name 1',
-        resolution,
+        resolution: RESOLUTION,
         aggregates: {},
-        data: [
-          STREAM_1_DATA_POINT_1,
-          STREAM_1_DATA_POINT_2,
-          STREAM_1_DATA_POINT_3,
-          STREAM_1_DATA_POINT_4,
-          STREAM_1_DATA_POINT_5,
-          STREAM_1_DATA_POINT_6,
-          STREAM_1_DATA_POINT_7,
-          STREAM_1_DATA_POINT_8,
-          STREAM_1_DATA_POINT_9,
-          STREAM_1_DATA_POINT_10,
-        ],
+        data: DATA_SET_3,
         dataType: DataType.NUMBER,
       },
     ];
 
-    const viewPort: ViewPort = {
-      start: new Date('June 30, 2021 10:00:00'),
-      end: new Date('June 30, 2022 21:00:00'),
-      yMin: 0,
-      yMax: 200,
-    };
-    const startTime = viewPort.start.getTime();
-    const endTime = viewPort.end.getTime();
-    const { yMax, yMin} = viewPort;
-    heatValue = calcHeatValues(heatValue, dataStreams, resolution, startTime, endTime, yMax, yMin);
-    expect(heatValue).toEqual({
-      '1625047200000': {
-        '2': { totalCount: 1, 'some name 1': 1 },
-        '5': { totalCount: 1, 'some name 1': 1 },
-      },
-      '1625133600000': { '6': { totalCount: 1, 'some name 1': 1 } },
-      '1625220000000': {
-        '3': { totalCount: 1, 'some name 1': 1 },
-        '9': { totalCount: 1, 'some name 1': 1 },
-      },
-      '1625306400000': { '1': { totalCount: 1, 'some name 1': 1 } },
-      '1625479200000': { '5': { totalCount: 2, 'some name 1': 2 } },
-      '1625565600000': { '1': { totalCount: 2, 'some name 1': 2 } },
+    const newHeatValue = calcHeatValues({oldHeatValue: {}, dataStreams, resolution: RESOLUTION, viewPort: VIEW_PORT});;
+    expect(newHeatValue).toEqual({
+      1625047200000: expect.anything(),
+      1635415200000: expect.anything(),
+      1648375200000: expect.anything(),
+      1650967200000: expect.anything(),
     });
-  });  
+  });
 
-  it('few data with multiple data streams', () => {
-    let heatValue: HeatValueMap = {};
-    const STREAM_1_DATA_POINT_1: DataPoint = { x: 1625072400000, y: 38 };
-    const STREAM_1_DATA_POINT_2: DataPoint = { x: 1625072400000 + DAY_IN_MS / 2, y: 168 };
-    const STREAM_1_DATA_POINT_3: DataPoint = { x: 1625072400000 + (DAY_IN_MS / 2) * 3, y: 102 };
-    const STREAM_1_DATA_POINT_4: DataPoint = { x: 1625072400000 + (DAY_IN_MS / 2) * 4, y: 59 };
-    const STREAM_1_DATA_POINT_5: DataPoint = { x: 1625072400000 + (DAY_IN_MS / 2) * 5, y: 164 };
+  it('returns aggregated data for dataStreams with different x-axis bucket ranges', () => {
+    const STREAM_1_POINT_1: DataPoint = { x: START_TIME, y: Math.random() * 20 };
+    const STREAM_1_POINT_2: DataPoint = { x: START_TIME + MONTH_IN_MS, y: Math.random() * 20 };
+    const STREAM_1_POINT_3: DataPoint = { x: START_TIME + MONTH_IN_MS * 5, y: Math.random() * 20 };
+    const STREAM_1_POINT_4: DataPoint = { x: START_TIME + MONTH_IN_MS * 8, y: Math.random() * 20 };
+    const STREAM_1_POINT_5: DataPoint = { x: START_TIME + MONTH_IN_MS * 10, y: Math.random() * 20 };
 
-    const STREAM_2_DATA_POINT_1: DataPoint = { x: 1625072400000, y: 29 };
-    const STREAM_2_DATA_POINT_2: DataPoint = { x: 1625072400000 + DAY_IN_MS / 2, y: 173 };
-    const STREAM_2_DATA_POINT_3: DataPoint = { x: 1625072400000 + (DAY_IN_MS / 2) * 3, y: 89 };
-    const STREAM_2_DATA_POINT_4: DataPoint = { x: 1625072400000 + (DAY_IN_MS / 2) * 6, y: 62 };
-    const STREAM_2_DATA_POINT_5: DataPoint = { x: 1625072400000 + (DAY_IN_MS / 2) * 7, y: 174 };
+    const DATA_1 = [
+      STREAM_1_POINT_1,
+      STREAM_1_POINT_2,
+      STREAM_1_POINT_3,
+      STREAM_1_POINT_4,
+      STREAM_1_POINT_5
+    ]
 
-    const STREAM_3_DATA_POINT_1: DataPoint = { x: 1625072400000 + DAY_IN_MS / 2, y: 170 };
-    const STREAM_3_DATA_POINT_2: DataPoint = { x: 1625072400000 + DAY_IN_MS, y: 12 };
-    const STREAM_3_DATA_POINT_3: DataPoint = { x: 1625072400000 + (DAY_IN_MS / 2) * 3, y: 21 };
-    const STREAM_3_DATA_POINT_4: DataPoint = { x: 1625072400000 + (DAY_IN_MS / 2) * 4, y: 90 };
-    const STREAM_3_DATA_POINT_5: DataPoint = { x: 1625072400000 + (DAY_IN_MS / 2) * 5, y: 71 };
+    const STREAM_2_POINT_1: DataPoint = { x: START_TIME, y: Math.random() * 20 };
+    const STREAM_2_POINT_2: DataPoint = { x: START_TIME + MONTH_IN_MS, y: Math.random() * 20 };
+    const STREAM_2_POINT_3: DataPoint = { x: START_TIME + MONTH_IN_MS * 3, y: Math.random() * 20 };
+    const STREAM_2_POINT_4: DataPoint = { x: START_TIME + MONTH_IN_MS * 7, y: Math.random() * 20 };
+    const STREAM_2_POINT_5: DataPoint = { x: START_TIME + MONTH_IN_MS * 8, y: Math.random() * 20 };
 
-    const STREAM_4_DATA_POINT_1: DataPoint = { x: 1625072400000 + DAY_IN_MS / 2, y: 161 };
-    const STREAM_4_DATA_POINT_2: DataPoint = { x: 1625072400000 + DAY_IN_MS * 5, y: 119 };
-    const STREAM_4_DATA_POINT_3: DataPoint = { x: 1625072400000 + DAY_IN_MS * 8, y: 82 };
-    const STREAM_4_DATA_POINT_4: DataPoint = { x: 1625072400000 + DAY_IN_MS * 8.5, y: 97 };
-    const STREAM_4_DATA_POINT_5: DataPoint = { x: 1625072400000 + DAY_IN_MS * 9, y: 183 };
-
-    const resolution = DAY_IN_MS;
+    const DATA_2 = [
+      STREAM_2_POINT_1,
+      STREAM_2_POINT_2,
+      STREAM_2_POINT_3,
+      STREAM_2_POINT_4,
+      STREAM_2_POINT_5
+    ]
 
     const dataStreams: DataStream[] = [
       {
         id: 'data-stream-1',
         name: 'some name 1',
-        resolution,
+        resolution: RESOLUTION,
         aggregates: {},
-        data: [
-          STREAM_1_DATA_POINT_1,
-          STREAM_1_DATA_POINT_2,
-          STREAM_1_DATA_POINT_3,
-          STREAM_1_DATA_POINT_4,
-          STREAM_1_DATA_POINT_5,
-        ],
+        data: DATA_1,
         dataType: DataType.NUMBER,
       },
       {
         id: 'data-stream-2',
         name: 'some name 2',
-        resolution,
+        resolution: RESOLUTION,
         aggregates: {},
-        data: [
-          STREAM_2_DATA_POINT_1,
-          STREAM_2_DATA_POINT_2,
-          STREAM_2_DATA_POINT_3,
-          STREAM_2_DATA_POINT_4,
-          STREAM_2_DATA_POINT_5,
-        ],
-        dataType: DataType.NUMBER,
-      },
-      {
-        id: 'data-stream-3',
-        name: 'some name 3',
-        resolution,
-        aggregates: {},
-        data: [
-          STREAM_3_DATA_POINT_1,
-          STREAM_3_DATA_POINT_2,
-          STREAM_3_DATA_POINT_3,
-          STREAM_3_DATA_POINT_4,
-          STREAM_3_DATA_POINT_5,
-        ],
-        dataType: DataType.NUMBER,
-      },
-      {
-        id: 'data-stream-4',
-        name: 'some name 4',
-        resolution,
-        aggregates: {},
-        data: [
-          STREAM_4_DATA_POINT_1,
-          STREAM_4_DATA_POINT_2,
-          STREAM_4_DATA_POINT_3,
-          STREAM_4_DATA_POINT_4,
-          STREAM_4_DATA_POINT_5,
-        ],
+        data: DATA_2,
         dataType: DataType.NUMBER,
       },
     ];
 
-    const viewPort: ViewPort = {
-      start: new Date('June 30, 2021 10:00:00'),
-      end: new Date('June 30, 2022 21:00:00'),
-      yMin: 0,
-      yMax: 200,
-    };
-    const startTime = viewPort.start.getTime();
-    const endTime = viewPort.end.getTime();
-    const { yMax, yMin} = viewPort;
-    heatValue = calcHeatValues(heatValue, dataStreams, resolution, startTime, endTime, yMax, yMin);
-    expect(heatValue).toEqual({
-      '1625047200000': {
-        '2': { totalCount: 2, 'some name 1': 1, 'some name 2': 1 },
-        '9': {
-          totalCount: 4,
-          'some name 1': 1,
-          'some name 2': 1,
-          'some name 3': 1,
-          'some name 4': 1,
-        },
-      },
-      '1625133600000': {
-        '1': { totalCount: 1, 'some name 3': 1 },
-        '2': { totalCount: 1, 'some name 3': 1 },
-        '5': { totalCount: 1, 'some name 2': 1 },
-        '6': { totalCount: 1, 'some name 1': 1 },
-      },
-      '1625220000000': {
-        '3': { totalCount: 1, 'some name 1': 1 },
-        '4': { totalCount: 1, 'some name 3': 1 },
-        '5': { totalCount: 1, 'some name 3': 1 },
-        '9': { totalCount: 1, 'some name 1': 1 },
-      },
-      '1625306400000': {
-        '4': { totalCount: 1, 'some name 2': 1 },
-        '9': { totalCount: 1, 'some name 2': 1 },
-      },
-      '1625479200000': { '6': { totalCount: 1, 'some name 4': 1 } },
-      '1625738400000': { '5': { totalCount: 2, 'some name 4': 2 } },
-      '1625824800000': { '10': { totalCount: 1, 'some name 4': 1 } },
+    const newHeatValue = calcHeatValues({oldHeatValue: {}, dataStreams, resolution: RESOLUTION, viewPort: VIEW_PORT});;
+    expect(newHeatValue).toEqual({
+      1625047200000: expect.anything(),
+      1630231200000: expect.anything(),
+      1635415200000: expect.anything(),
+      1640599200000: expect.anything(),
+      1643191200000: expect.anything(),
+      1648375200000: expect.anything(),
     });
   });
 
-  it('negative yMin', () => {
-    let heatValue: HeatValueMap = {};
-    const STREAM_1_DATA_POINT_1: DataPoint = { x: 1625072400000, y: -4 };
-    const STREAM_1_DATA_POINT_2: DataPoint = { x: 1625072400000 + MONTH_IN_MS / 2, y: 4 };
-    const STREAM_1_DATA_POINT_3: DataPoint = { x: 1625072400000 + (MONTH_IN_MS / 2) * 3, y: 0 };
-    const STREAM_1_DATA_POINT_4: DataPoint = { x: 1625072400000 + (MONTH_IN_MS / 2) * 4, y: 2 };
-    const STREAM_1_DATA_POINT_5: DataPoint = { x: 1625072400000 + (MONTH_IN_MS / 2) * 5, y: -1 };
-
-    const resolution = MONTH_IN_MS;
-
-    const dataStreams: DataStream[] = [
-      {
-        id: 'data-stream-1',
-        name: 'some name 1',
-        resolution,
-        aggregates: {},
-        data: [
-          STREAM_1_DATA_POINT_1,
-          STREAM_1_DATA_POINT_2,
-          STREAM_1_DATA_POINT_3,
-          STREAM_1_DATA_POINT_4,
-          STREAM_1_DATA_POINT_5,
-        ],
-        dataType: DataType.NUMBER,
-      },
-    ];
-
-    const viewPort: ViewPort = {
-      start: new Date('June 30, 2021 10:00:00'),
-      end: new Date('June 30, 2022 21:00:00'),
-      yMin: -5,
-      yMax: 5,
-    };
-    const startTime = viewPort.start.getTime();
-    const endTime = viewPort.end.getTime();
-    const { yMax, yMin} = viewPort;
-    heatValue = calcHeatValues(heatValue, dataStreams, resolution, startTime, endTime, yMax, yMin);;
-    
-    expect(heatValue).toEqual({
-      '1625047200000': {
-        '1': { totalCount: 1, 'some name 1': 1 },
-        '9': { totalCount: 1, 'some name 1': 1 }
-      },
-      '1627639200000': { '5': { totalCount: 1, 'some name 1': 1 } },
-      '1630231200000': {
-        '4': { totalCount: 1, 'some name 1': 1 },
-        '7': { totalCount: 1, 'some name 1': 1 }
-      }
-    });
-  });
-
-  it('positive nonzero yMin', () => {
-    let heatValue: HeatValueMap = {};
-    const STREAM_1_DATA_POINT_1: DataPoint = { x: 1625072400000, y: 10 };
-    const STREAM_1_DATA_POINT_2: DataPoint = { x: 1625072400000 + MONTH_IN_MS / 2, y: 12 };
-    const STREAM_1_DATA_POINT_3: DataPoint = { x: 1625072400000 + (MONTH_IN_MS / 2) * 3, y: 9 };
-    const STREAM_1_DATA_POINT_4: DataPoint = { x: 1625072400000 + (MONTH_IN_MS / 2) * 4, y: 8 };
-    const STREAM_1_DATA_POINT_5: DataPoint = { x: 1625072400000 + (MONTH_IN_MS / 2) * 5, y: 13 };
-
-    const resolution = MONTH_IN_MS;
-
-    const dataStreams: DataStream[] = [
-      {
-        id: 'data-stream-1',
-        name: 'some name 1',
-        resolution,
-        aggregates: {},
-        data: [
-          STREAM_1_DATA_POINT_1,
-          STREAM_1_DATA_POINT_2,
-          STREAM_1_DATA_POINT_3,
-          STREAM_1_DATA_POINT_4,
-          STREAM_1_DATA_POINT_5,
-        ],
-        dataType: DataType.NUMBER,
-      },
-    ];
-
-    const viewPort: ViewPort = {
-      start: new Date('June 30, 2021 10:00:00'),
-      end: new Date('June 30, 2022 21:00:00'),
-      yMin: 5,
-      yMax: 15,
-    };
-    const startTime = viewPort.start.getTime();
-    const endTime = viewPort.end.getTime();
-    const { yMax, yMin} = viewPort;
-    heatValue = calcHeatValues(heatValue, dataStreams, resolution, startTime, endTime, yMax, yMin);;
-    
-    expect(heatValue).toEqual({
-      '1625047200000': {
-        '5': { totalCount: 1, 'some name 1': 1 },
-        '7': { totalCount: 1, 'some name 1': 1 }
-      },
-      '1627639200000': { '4': { totalCount: 1, 'some name 1': 1 } },
-      '1630231200000': {
-        '3': { totalCount: 1, 'some name 1': 1 },
-        '8': { totalCount: 1, 'some name 1': 1 }
-      }
-    });
-  });
-});
-
-describe('edge cases', () => {
-  it('dataStream with skipped timestream', () => {
-    let heatValue: HeatValueMap = {};
-    const STREAM_1_DATA_POINT_1: DataPoint = { x: 1625072400000, y: 2 };
-    const STREAM_1_DATA_POINT_2: DataPoint = { x: 1625072400000 + MONTH_IN_MS, y: 4 };
-    const STREAM_1_DATA_POINT_3: DataPoint = { x: 1625072400000 + MONTH_IN_MS * 5, y: 3 };
-    const STREAM_1_DATA_POINT_4: DataPoint = { x: 1625072400000 + MONTH_IN_MS * 10, y: 8 };
-    const STREAM_1_DATA_POINT_5: DataPoint = { x: 1625072400000 + MONTH_IN_MS * 11, y: 5 };
-
-    const resolution = MONTH_IN_MS;
-
-    const dataStreams: DataStream[] = [
-      {
-        id: 'data-stream-1',
-        name: 'some name 1',
-        resolution,
-        aggregates: {},
-        data: [
-          STREAM_1_DATA_POINT_1,
-          STREAM_1_DATA_POINT_2,
-          STREAM_1_DATA_POINT_3,
-          STREAM_1_DATA_POINT_4,
-          STREAM_1_DATA_POINT_5,
-        ],
-        dataType: DataType.NUMBER,
-      },
-    ];
-
-    const viewPort: ViewPort = {
-      start: new Date('June 30, 2021 10:00:00'),
-      end: new Date('June 30, 2022 21:00:00'),
-      yMin: 0,
-      yMax: 10,
-    };
-    const startTime = viewPort.start.getTime();
-    const endTime = viewPort.end.getTime();
-    const { yMax, yMin} = viewPort;
-    heatValue = calcHeatValues(heatValue, dataStreams, resolution, startTime, endTime, yMax, yMin);;
-    expect(heatValue).toEqual({
-      '1625047200000': { '2': { totalCount: 1, 'some name 1': 1 } },
-      '1627639200000': { '4': { totalCount: 1, 'some name 1': 1 } },
-      '1638007200000': { '3': { totalCount: 1, 'some name 1': 1 } },
-      '1650967200000': { '8': { totalCount: 1, 'some name 1': 1 } },
-      '1653559200000': { '5': { totalCount: 1, 'some name 1': 1 } },
-    });
-  });
-
-  it('dataStreams with different x-axis bucket ranges', () => {
-    let heatValue: HeatValueMap = {};
-    const STREAM_1_DATA_POINT_1: DataPoint = { x: 1625072400000, y: 2 };
-    const STREAM_1_DATA_POINT_2: DataPoint = { x: 1625072400000 + MONTH_IN_MS, y: 2 };
-    const STREAM_1_DATA_POINT_3: DataPoint = { x: 1625072400000 + MONTH_IN_MS * 5, y: 1 };
-    const STREAM_1_DATA_POINT_4: DataPoint = { x: 1625072400000 + MONTH_IN_MS * 8, y: 9 };
-    const STREAM_1_DATA_POINT_5: DataPoint = { x: 1625072400000 + MONTH_IN_MS * 10, y: 5 };
-
-    const STREAM_2_DATA_POINT_1: DataPoint = { x: 1625072400000, y: 2 };
-    const STREAM_2_DATA_POINT_2: DataPoint = { x: 1625072400000 + MONTH_IN_MS, y: 4 };
-    const STREAM_2_DATA_POINT_3: DataPoint = { x: 1625072400000 + MONTH_IN_MS * 3, y: 3 };
-    const STREAM_2_DATA_POINT_4: DataPoint = { x: 1625072400000 + MONTH_IN_MS * 7, y: 9 };
-    const STREAM_2_DATA_POINT_5: DataPoint = { x: 1625072400000 + MONTH_IN_MS * 8, y: 5 };
-
-    const resolution = MONTH_IN_MS;
-
-    const dataStreams: DataStream[] = [
-      {
-        id: 'data-stream-1',
-        name: 'some name 1',
-        resolution,
-        aggregates: {},
-        data: [
-          STREAM_1_DATA_POINT_1,
-          STREAM_1_DATA_POINT_2,
-          STREAM_1_DATA_POINT_3,
-          STREAM_1_DATA_POINT_4,
-          STREAM_1_DATA_POINT_5,
-        ],
-        dataType: DataType.NUMBER,
-      },
-      {
-        id: 'data-stream-2',
-        name: 'some name 2',
-        resolution,
-        aggregates: {},
-        data: [
-          STREAM_2_DATA_POINT_1,
-          STREAM_2_DATA_POINT_2,
-          STREAM_2_DATA_POINT_3,
-          STREAM_2_DATA_POINT_4,
-          STREAM_2_DATA_POINT_5,
-        ],
-        dataType: DataType.NUMBER,
-      },
-    ];
-
-    const viewPort: ViewPort = {
-      start: new Date('June 30, 2021 10:00:00'),
-      end: new Date('June 30, 2022 21:00:00'),
-      yMin: 0,
-      yMax: 10,
-    };
-    const startTime = viewPort.start.getTime();
-    const endTime = viewPort.end.getTime();
-    const { yMax, yMin} = viewPort;
-    heatValue = calcHeatValues(heatValue, dataStreams, resolution, startTime, endTime, yMax, yMin);;
-    expect(heatValue).toEqual({
-      '1625047200000': { '2': { totalCount: 2, 'some name 1': 1, 'some name 2': 1 } },
-      '1627639200000': {
-        '2': { totalCount: 1, 'some name 1': 1 },
-        '4': { totalCount: 1, 'some name 2': 1 },
-      },
-      '1638007200000': { '1': { totalCount: 1, 'some name 1': 1 } },
-      '1645783200000': {
-        '5': { totalCount: 1, 'some name 2': 1 },
-        '9': { totalCount: 1, 'some name 1': 1 },
-      },
-      '1650967200000': { '5': { totalCount: 1, 'some name 1': 1 } },
-      '1632823200000': { '3': { totalCount: 1, 'some name 2': 1 } },
-      '1643191200000': { '9': { totalCount: 1, 'some name 2': 1 } },
-    });
-  });
-
-  it('dataStream with missing name', () => {
-    let heatValue: HeatValueMap = {};
-    const STREAM_1_DATA_POINT_1: DataPoint = { x: 1625072400000, y: 2 };
-    const STREAM_1_DATA_POINT_2: DataPoint = { x: 1625072400000 + MONTH_IN_MS, y: 4 };
-    const STREAM_1_DATA_POINT_3: DataPoint = { x: 1625072400000 + MONTH_IN_MS * 2, y: 3 };
-    const STREAM_1_DATA_POINT_4: DataPoint = { x: 1625072400000 + MONTH_IN_MS * 3, y: 8 };
-    const STREAM_1_DATA_POINT_5: DataPoint = { x: 1625072400000 + MONTH_IN_MS * 4, y: 5 };
-
-    const resolution = MONTH_IN_MS;
-
+  it('returns only dataStreams with a nonempty id', () => {
     const dataStreams: DataStream[] = [
       {
         id: 'data-stream-1',
         name: '',
-        resolution,
+        resolution: RESOLUTION,
         aggregates: {},
-        data: [
-          STREAM_1_DATA_POINT_1,
-          STREAM_1_DATA_POINT_2,
-          STREAM_1_DATA_POINT_3,
-          STREAM_1_DATA_POINT_4,
-          STREAM_1_DATA_POINT_5,
-        ],
+        data: DATA_SET_1,
         dataType: DataType.NUMBER,
       },
       {
         id: 'data-stream-1',
         name: 'has name',
-        resolution,
+        resolution: RESOLUTION,
         aggregates: {},
-        data: [
-          STREAM_1_DATA_POINT_1,
-          STREAM_1_DATA_POINT_2,
-          STREAM_1_DATA_POINT_3,
-          STREAM_1_DATA_POINT_4,
-          STREAM_1_DATA_POINT_5,
-        ],
+        data: DATA_SET_1,
         dataType: DataType.NUMBER,
       },
     ];
 
-    const viewPort: ViewPort = {
-      start: new Date('June 30, 2021 10:00:00'),
-      end: new Date('June 30, 2022 21:00:00'),
-      yMin: 0,
-      yMax: 10,
-    };
-    const startTime = viewPort.start.getTime();
-    const endTime = viewPort.end.getTime();
-    const { yMax, yMin} = viewPort;
-    heatValue = calcHeatValues(heatValue, dataStreams, resolution, startTime, endTime, yMax, yMin);
-    expect(heatValue).toEqual({
-      '1625047200000': { '2': { totalCount: 1, 'has name': 1 } },
-      '1627639200000': { '4': { totalCount: 1, 'has name': 1 } },
-      '1630231200000': { '3': { totalCount: 1, 'has name': 1 } },
-      '1632823200000': { '8': { totalCount: 1, 'has name': 1 } },
-      '1635415200000': { '5': { totalCount: 1, 'has name': 1 } },
+    const newHeatValue = calcHeatValues({oldHeatValue: {}, dataStreams, resolution: RESOLUTION, viewPort: VIEW_PORT});
+    expect(newHeatValue).toEqual({
+      1625047200000: expect.anything(),
+      1627639200000: expect.anything(),
+      1630231200000: expect.anything(),
     });
   });
 });

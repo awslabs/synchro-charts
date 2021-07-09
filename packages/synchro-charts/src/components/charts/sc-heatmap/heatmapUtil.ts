@@ -1,17 +1,17 @@
-import { DataStream, DataPoint } from '../../../utils/dataTypes';
-import { SECOND_IN_MS, MONTH_IN_MS, DAY_IN_MS } from '../../../utils/time';
+import { DataStream, ViewPort } from '../../../utils/dataTypes';
+import { SECOND_IN_MS} from '../../../utils/time';
 import { } from '../common/tests/chart/constants';
 
 export type HeatValueMap = {
   [xBucketRangeStart: number]: {
     [bucketIndex: number]: {
       totalCount: number;
-      [streamName: string]: number;
+      [streamId: string]: number;
     };
   };
 };
 
-const calculateBucketIndex = ({
+export const calculateBucketIndex = ({
   yValue,
   yMax,
   yMin,
@@ -21,7 +21,7 @@ const calculateBucketIndex = ({
   yMax: number;
   yMin: number;
   bucketCount: number;
-  }): number =>
+}): number =>
   Math.ceil(((yValue - yMin) / (yMax - yMin)) * bucketCount);
 
 /**
@@ -38,23 +38,23 @@ export const addCount = ({
   oldHeatValue = {},
   xBucketRangeStart,
   bucketIndex,
-  dataStreamName,
+  dataStreamId,
 }: {
   oldHeatValue: HeatValueMap,
   xBucketRangeStart: number,
   bucketIndex: number,
-  dataStreamName: string
+  dataStreamId: string
 }): HeatValueMap => {
   // deep copy of oldHeatValue to newHeatValue
-  if (!dataStreamName) {
+  if (!dataStreamId) {
     return {};
   }
   const newHeatValue: HeatValueMap = JSON.parse(JSON.stringify(oldHeatValue));
   newHeatValue[xBucketRangeStart] = newHeatValue[xBucketRangeStart] ?? {};
   newHeatValue[xBucketRangeStart][bucketIndex] = newHeatValue[xBucketRangeStart][bucketIndex] ?? { totalCount: 0 };
-  newHeatValue[xBucketRangeStart][bucketIndex][dataStreamName] =
-    newHeatValue[xBucketRangeStart][bucketIndex][dataStreamName] ?? 0;
-  newHeatValue[xBucketRangeStart][bucketIndex][dataStreamName] += 1;
+  newHeatValue[xBucketRangeStart][bucketIndex][dataStreamId] =
+    newHeatValue[xBucketRangeStart][bucketIndex][dataStreamId] ?? 0;
+  newHeatValue[xBucketRangeStart][bucketIndex][dataStreamId] += 1;
   newHeatValue[xBucketRangeStart][bucketIndex].totalCount += 1;
   return newHeatValue;
 };
@@ -65,53 +65,48 @@ export const addCount = ({
  * buckets possibly don't have to be recalculated.
  * @param dataStreams DataStream array object that's passed into Mesh.
  * @param resolution Resolution of the graph's view.
- * @param startTime Left most value on the x-axis.
- * @param endTime Right most value on the x-axis.
- * @param yMax Maximum y-value on the y-axis.
- * @param yMin Minimum y-value on the y-axis.
+ * @param viewPort ViewPort object
  * @returns Updated HeatValueMap with the aggregated data from the dataStreams.
  */
 export const calcHeatValues = ({
   oldHeatValue = {},
   dataStreams,
   resolution,
-  startTime,
-  endTime,
-  yMax,
-  yMin
+  viewPort,
 }:{
   oldHeatValue: HeatValueMap;
   dataStreams: DataStream[];
   resolution: number;
-  startTime: number;
-  endTime: number;
-  yMax: number;
-  yMin: number;
+  viewPort: ViewPort;
 }) => {
-  let newHeatValue: HeatValueMap = {};
   // if resolution is 0 then set the XAxisBucketRange to be 1 second
-  const XAxisBucketRange = resolution === 0 ? SECOND_IN_MS : resolution;
+  const xAxisBucketRange = resolution === 0 ? SECOND_IN_MS : resolution;
+  let newHeatValue: HeatValueMap = {};
+  const startTime = viewPort.start.getTime();
+  const endTime = viewPort.end.getTime();
+  const yMax = viewPort.yMax;
+  const yMin = viewPort.yMin;
   dataStreams.forEach(dataStream => {
-    let nextTimeStamp = startTime + XAxisBucketRange;
+    let nextTimeStamp = startTime + xAxisBucketRange;
     dataStream.data.forEach(point => {
       const { x, y } = point;
       if (typeof y === 'string') {
         return;
       }
       while (x > nextTimeStamp && nextTimeStamp < endTime) {
-        nextTimeStamp += XAxisBucketRange;
+        nextTimeStamp += xAxisBucketRange;
       }
       // acts the same as continue in a forEach loop
       if (nextTimeStamp > endTime) {
         return;
       }
-      const xBucketRangeStart = nextTimeStamp - XAxisBucketRange;
+      const xBucketRangeStart = nextTimeStamp - xAxisBucketRange;
       const bucketIndex = calculateBucketIndex({yValue: y, yMax, yMin, bucketCount: 10});
       if (newHeatValue) {
         oldHeatValue = newHeatValue;
-        newHeatValue = addCount({oldHeatValue, xBucketRangeStart, bucketIndex, dataStreamName: dataStream.name});
+        newHeatValue = addCount({oldHeatValue, xBucketRangeStart, bucketIndex, dataStreamId: dataStream.id});
       } else {
-        newHeatValue = addCount({oldHeatValue, xBucketRangeStart, bucketIndex, dataStreamName: dataStream.name});
+        newHeatValue = addCount({oldHeatValue, xBucketRangeStart, bucketIndex, dataStreamId: dataStream.id});
       }
     });
   });
