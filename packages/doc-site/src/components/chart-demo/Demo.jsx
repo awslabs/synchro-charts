@@ -1,4 +1,7 @@
 import React from 'react';
+import Button from "@awsui/components-react/button";
+import ButtonDropdown from "@awsui/components-react/button-dropdown";
+import Input from "@awsui/components-react/input";
 import { LineChart, BarChart, ScatterChart } from '@synchro-charts/react';
 import { LEGEND_POSITION,COMPARISON_OPERATOR, TREND_TYPE } from '@synchro-charts/core';
 import {DAY_IN_MS}  from "./dateUtil";
@@ -47,6 +50,44 @@ const TESTING_GROUND_CHART_CONFIG = {
   },
   dataStreams: streams,
 };
+
+const COMPARISON_OPTIONS = [
+  {
+    id: COMPARISON_OPERATOR.LESS_THAN,
+    text: "Less than '<'",
+  },
+  {
+    id: COMPARISON_OPERATOR.LESS_THAN_EQUAL,
+    text: "Less than or equal '<='",
+  },
+  {
+    id: COMPARISON_OPERATOR.GREATER_THAN,
+    text: "Greater than '>'",
+  },
+  {
+    id: COMPARISON_OPERATOR.GREATER_THAN_EQUAL,
+    text: "Greater than or equal '>='",
+  },
+  {
+    id: COMPARISON_OPERATOR.EQUAL,
+    text: "Equal '='",
+  },
+];
+
+const CHART_OPTIONS = [
+  {
+    id: 'lineChart',
+    text: 'Line Chart',
+  },
+  {
+    id: 'scatterChart',
+    text: 'Scatter Chart',
+  },
+  {
+    id: 'barChart',
+    text: 'Bar Chart',
+  }
+];
 
 export class Demo extends React.Component {
   constructor(props) {
@@ -125,7 +166,7 @@ export class Demo extends React.Component {
 
   changeComponent = (e) => {
     this.setState({
-      componentTag: e.target.value
+      componentTag: e.detail.id
     });
   };
 
@@ -142,8 +183,8 @@ export class Demo extends React.Component {
   };
 
   changeAnnotationValue = (event) => {
-    if (event != null && event.target != null) {
-      const targetValue = event.target.value;
+    if (event != null && event.detail != null) {
+      const targetValue = event.detail.value;
       if (!isNumeric(targetValue)) {
         this.setState({
           annotationValue: targetValue,
@@ -176,17 +217,17 @@ export class Demo extends React.Component {
   };
 
   changeAnnotationColor = (event) => {
-    if (event != null && event.target != null) {
+    if (event != null && event.detail != null) {
       this.setState({
-        annotationColor: event.target.value,
+        annotationColor: event.detail.value,
       })
     }
   };
 
   changeAnnotationComparator = (event) => {
-    if (event != null && event.target != null) {
+    if (event != null && event.detail != null) {
       this.setState({
-        annotationComp: event.target.value,
+        annotationComp: event.detail.id,
       })
     }
   };
@@ -233,12 +274,20 @@ export class Demo extends React.Component {
     }
   };
 
+  changeTrendColor = (event) => {
+    if (event != null && event.detail != null) {
+      this.setState({
+        trendColor: event.detail.value,
+      })
+    }
+  };
+
   changeTrendDataId = (event) => {
-    if (event == null || event.target == null) {
+    if (event == null || event.detail == null) {
       return;
     }
 
-    const trendDataId = event.target.value;
+    const trendDataId = event.detail.id;
     const streamInfo = this.config.dataStreams.find(info => info.id === trendDataId);
     if (streamInfo) {
       this.setState({
@@ -248,6 +297,25 @@ export class Demo extends React.Component {
     }
   };
 
+  trendOptions = () => {
+    return this.config.dataStreams.map(({id, name}) => {
+      return {
+        id,
+        text: name,
+      }
+    });
+  }
+
+  currentTrend = () => {
+    const { trendDataId } = this.state;
+
+    if (trendDataId === '' || trendDataId == null) {
+      return 'Please select a trend';
+    }
+
+    return this.config.dataStreams.find(({id}) => id === trendDataId).name;
+  }
+
   removeTrend = (dataStreamId, trendType) => {
     const trends = this.state.trends.filter(trend => trend.dataStreamId !== dataStreamId || trend.type !== trendType);
     this.setState({
@@ -255,34 +323,46 @@ export class Demo extends React.Component {
     });
   };
 
+  currentChartOption = () => {
+    const { componentTag } = this.state;
+    return CHART_OPTIONS.find(item => item.id === componentTag).text
+  }
+
+  comparatorOptions = () => {
+    return COMPARISON_OPTIONS;
+  }
+
+  currentComparatorOption = () => {
+    const { annotationComp } = this.state;
+
+    return COMPARISON_OPTIONS.find(item => item.id === annotationComp).text;
+  }
+
   render() {
     const ChartName = components[this.state.componentTag];
     return (
-      <div style={{ fontSize: '1.1rem' }}>
+      <div style={{ fontSize: '1.3rem' }}>
         <div style={{display: 'flex'}}>
           <label htmlFor="display">
             <strong>Display: </strong>
-            <select id="display" onChange={this.changeComponent}>
-              <option value="lineChart">Line Chart</option>
-              <option value="scatterChart">Scatter Chart</option>
-              <option value="barChart">Bar Chart</option>
-            </select>
+            <ButtonDropdown items={CHART_OPTIONS} onItemClick={this.changeComponent}>{this.currentChartOption()}</ButtonDropdown>
           </label>
           <div style={{flexGrow: '1'}}/>
           <div>
-            <button onClick={this.addStream}>
-              <strong>+</strong> Data
-            </button>
+            <Button onClick={this.addStream}>
+              Add Data
+            </Button>
             {' '}
-            <button disabled={this.numCharts === 0} onClick={this.removeStream}>
-              <strong>-</strong> Data
-            </button>
+            <Button disabled={this.numCharts === 0} onClick={this.removeStream}>
+              Remove Data
+            </Button>
             {' '}
           </div>
         </div>
         <div style={{display: 'flex', flexWrap: 'wrap'}}>
           {new Array(this.state.numCharts).fill(0).map(i => (
             <div
+              key={i}
               className="chart-container"
               style={{
 
@@ -312,35 +392,28 @@ export class Demo extends React.Component {
               </tr>
               <tr>
                 <td>
-                  <input
-                    style={{height: '18px'}}
+                  <Input
                     type="color"
                     value={this.state.annotationColor}
                     onChange={this.changeAnnotationColor}
                   />
                 </td>
-                <td>
-                  <input
-                    style={{width: '60px'}}
+                <td style={{ maxWidth: '80px'}}>
+                  <Input
                     {...(this.state.annotationComp !== COMPARISON_OPERATOR.EQUAL && {type: 'number'})}
                     onChange={this.changeAnnotationValue}
-                    placeholder="value"
                     value={this.state.annotationValue}
                   />
                 </td>
                 <td>
-                  <select onChange={this.changeAnnotationComparator}>
-                    <option value={COMPARISON_OPERATOR.LESS_THAN}>Less than {"'<'"}</option>
-                    <option value={COMPARISON_OPERATOR.LESS_THAN_EQUAL}>Less than or equal {"'<='"}</option>
-                    <option value={COMPARISON_OPERATOR.GREATER_THAN}>Greater than {"'>'"} </option>
-                    <option value={COMPARISON_OPERATOR.GREATER_THAN_EQUAL}>Greater than or equal {"'>='"} </option>
-                    <option value={COMPARISON_OPERATOR.EQUAL}>Equal &#39;=&#39; </option>
-                  </select>
+                  <ButtonDropdown items={this.comparatorOptions()} onItemClick={this.changeAnnotationComparator}>
+                    {this.currentComparatorOption()}
+                  </ButtonDropdown>
                 </td>
                 <td>
-                  <button onClick={this.saveThreshold} disabled={this.doesThresholdExist()}>
+                  <Button onClick={this.saveThreshold} disabled={this.doesThresholdExist()}>
                     Add Threshold
-                  </button>
+                  </Button>
                 </td>
               </tr>
               {this.getThresholds().map((threshold, i) => {
@@ -359,25 +432,21 @@ export class Demo extends React.Component {
               </tr>
               <tr>
                 <td>
-                  <input
-                    style={{height: '18px'}}
+                  <Input
                     type="color"
                     value={this.state.trendColor}
                     onChange={this.changeTrendColor}
                   />
                 </td>
                 <td>
-                  <select onChange={this.changeTrendDataId}>
-                    <option value="">Select a data set</option>
-                    {this.config.dataStreams.map(({id, name}) => {
-                      return <option value={id}>{name}</option>;
-                    })}
-                  </select>
+                  <ButtonDropdown items={this.trendOptions()} onItemClick={this.changeTrendDataId}>
+                    {this.currentTrend()}
+                  </ButtonDropdown>
                 </td>
                 <td>
-                  <button onClick={this.addTrend} disabled={this.doesTrendExist()}>
+                  <Button onClick={this.addTrend} disabled={this.doesTrendExist()}>
                     Add Trend
-                  </button>
+                  </Button>
                 </td>
               </tr>
               {this.state.trends.map(trend => {
