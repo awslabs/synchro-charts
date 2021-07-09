@@ -3,10 +3,13 @@ import { DataPoint, DataStream, ViewPort } from '../../../utils/dataTypes';
 import { HeatValueMap, addCount, calcHeatValues } from './heatmapUtil';
 import { MONTH_IN_MS, DAY_IN_MS } from '../../../utils/time';
 
-describe('simple addCount tests', () => {
+const ADDCOUNT_HEATVALUE: HeatValueMap = {};
+const ADDCOUNT_INPUT_1 = {oldHeatValue: ADDCOUNT_HEATVALUE, xBucketRangeStart: 123, bucketIndex: 1, dataStreamName: 'Asset 1'};
+
+describe('addCount', () => {
   it('addCount has proper structure', () => {
     let heatValue: HeatValueMap = {};
-    heatValue = addCount(heatValue, 123, 1, 'Asset 1');
+    heatValue = addCount(ADDCOUNT_INPUT_1);
 
     expect(heatValue).toEqual({
       '123': {
@@ -16,9 +19,9 @@ describe('simple addCount tests', () => {
   });
 
   it("addCount isn't destructive", () => {
-    const heatValue: HeatValueMap = {};
     let testHeatValue: HeatValueMap = {};
-    testHeatValue = addCount(heatValue, 123, 1, 'Asset 1');
+    let heatValue: HeatValueMap = {};
+    heatValue = addCount(ADDCOUNT_INPUT_1);
 
     expect(testHeatValue).toEqual({
       '123': {
@@ -30,11 +33,11 @@ describe('simple addCount tests', () => {
 
   it('multiple addCount calls add on top of each other', () => {
     let heatValue: HeatValueMap = {};
-    heatValue = addCount(heatValue, 123, 1, 'Asset 1');
-    heatValue = addCount(heatValue, 123, 2, 'Asset 1');
-    heatValue = addCount(heatValue, 124, 5, 'Asset 1');
-    heatValue = addCount(heatValue, 123, 1, 'Asset 2');
-    heatValue = addCount(heatValue, 124, 6, 'Asset 2');
+    heatValue = addCount(ADDCOUNT_INPUT_1);
+    heatValue = addCount({oldHeatValue: heatValue, xBucketRangeStart: 123, bucketIndex: 2, dataStreamName: 'Asset 1'});
+    heatValue = addCount({oldHeatValue: heatValue, xBucketRangeStart: 124, bucketIndex: 5, dataStreamName: 'Asset 1'});
+    heatValue = addCount({oldHeatValue: heatValue, xBucketRangeStart: 123, bucketIndex: 1, dataStreamName: 'Asset 2'});
+    heatValue = addCount({oldHeatValue: heatValue, xBucketRangeStart: 124, bucketIndex: 6, dataStreamName: 'Asset 2'});
 
     expect(heatValue).toEqual({
       '123': {
@@ -49,10 +52,9 @@ describe('simple addCount tests', () => {
   });
 });
 
-describe('simple calcHeatValue tests', () => {
+describe('calcHeatValues', () => {
   it('calcHeatValue has proper structure', () => {
-    const heatValue: HeatValueMap = {};
-    let testHeatValue: HeatValueMap = {};
+    const oldHeatValue: HeatValueMap = {};
     const STREAM_1_DATA_POINT_1: DataPoint = { x: 1625072400000, y: 30 };
     const resolution = MONTH_IN_MS;
 
@@ -76,13 +78,13 @@ describe('simple calcHeatValue tests', () => {
     const startTime = viewPort.start.getTime();
     const endTime = viewPort.end.getTime();
     const { yMax, yMin} = viewPort;
-    testHeatValue = calcHeatValues(heatValue, dataStreams, resolution, startTime, endTime, yMax, yMin);
+    const testHeatValue = calcHeatValues({oldHeatValue, dataStreams, resolution, startTime, endTime, yMax, yMin});
     expect(testHeatValue).toEqual({
       '1625047200000': {
         '3': { totalCount: 1, 'some name 1': 1 },
       },
     });
-    expect(heatValue).toEqual({});
+    expect(oldHeatValue).toEqual({});
   });
 
   it('calcHeatValues has individual datastream counts', () => {

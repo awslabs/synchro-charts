@@ -1,4 +1,6 @@
 import { DataStream, DataPoint } from '../../../utils/dataTypes';
+import { SECOND_IN_MS, MONTH_IN_MS, DAY_IN_MS } from '../../../utils/time';
+import { } from '../common/tests/chart/constants';
 
 export type HeatValueMap = {
   [xBucketRangeStart: number]: {
@@ -9,9 +11,18 @@ export type HeatValueMap = {
   };
 };
 
-const calculateBucketIndex = (yValue: number, yMax: number, yMin: number, bucketCount: number): number => {
-  return Math.ceil(((yValue - yMin) / (yMax - yMin)) * bucketCount);
-};
+const calculateBucketIndex = ({
+  yValue,
+  yMax,
+  yMin,
+  bucketCount
+}: {
+  yValue: number;
+  yMax: number;
+  yMin: number;
+  bucketCount: number;
+  }): number =>
+  Math.ceil(((yValue - yMin) / (yMax - yMin)) * bucketCount);
 
 /**
  * Keeps track of the total number of data points within a point's respective bucket and
@@ -23,12 +34,17 @@ const calculateBucketIndex = (yValue: number, yMax: number, yMin: number, bucket
  * @returns Updated HeatValueMap object with the new data added -- not destructive.
  * @source deep copy: https://www.javascripttutorial.net/object/3-ways-to-copy-objects-in-javascript/
  */
-export const addCount = (
-  oldHeatValue: HeatValueMap = {},
+export const addCount = ({
+  oldHeatValue = {},
+  xBucketRangeStart,
+  bucketIndex,
+  dataStreamName,
+}: {
+  oldHeatValue: HeatValueMap,
   xBucketRangeStart: number,
   bucketIndex: number,
   dataStreamName: string
-): HeatValueMap => {
+}): HeatValueMap => {
   // deep copy of oldHeatValue to newHeatValue
   if (!dataStreamName) {
     return {};
@@ -44,29 +60,6 @@ export const addCount = (
 };
 
 /**
- * Finds the data point's respective bucket index.
- * @param oldHeatValue HeatValueMap object with the previous heatValues.
- * @param dataPoint DataPoint object with the x and y values of the point.
- * @param xBucketRangeStart Index of the bucket that the point resides in based on its y-value.
- * @param yMax Maximum y-value on the y-axis.
- * @param yMin Minimum y-value on the y-axis.
- * @param dataStreamName Name of the datastream that the point belongs to.
- * @returns Updated HeatValueMap object with the new data added -- not destructive.
- */
-const countFunc = (
-  oldHeatValue: HeatValueMap,
-  dataPoint: DataPoint,
-  xBucketRangeStart: number,
-  yMax: number,
-  yMin: number,
-  dataStreamName: string,
-): HeatValueMap => {
-  const { y } = dataPoint;
-  const bucketIndex = calculateBucketIndex(parseInt(y.toString(), 10), yMax, yMin, 10);
-  return addCount(oldHeatValue, xBucketRangeStart, bucketIndex, dataStreamName);
-};
-
-/**
  * Iterates through the points of all the datastreams and find the x-axis bucket of each data point.
  * @param heatValue Given HeatValueMap object, default is an empty map but otherwise used so that some
  * buckets possibly don't have to be recalculated.
@@ -78,21 +71,33 @@ const countFunc = (
  * @param yMin Minimum y-value on the y-axis.
  * @returns Updated HeatValueMap with the aggregated data from the dataStreams.
  */
-export const calcHeatValues = (
-  heatValue: HeatValueMap = {},
-  dataStreams: DataStream[],
-  resolution: number,
-  startTime: number,
-  endTime: number,
-  yMax: number,
-  yMin: number,
-) => {
+export const calcHeatValues = ({
+  oldHeatValue = {},
+  dataStreams,
+  resolution,
+  startTime,
+  endTime,
+  yMax,
+  yMin
+}:{
+  oldHeatValue: HeatValueMap;
+  dataStreams: DataStream[];
+  resolution: number;
+  startTime: number;
+  endTime: number;
+  yMax: number;
+  yMin: number;
+}) => {
   let newHeatValue: HeatValueMap = {};
-  const XAxisBucketRange = resolution === 0 ? 1000 : resolution;
+  // if resolution is 0 then set the XAxisBucketRange to be 1 second
+  const XAxisBucketRange = resolution === 0 ? SECOND_IN_MS : resolution;
   dataStreams.forEach(dataStream => {
     let nextTimeStamp = startTime + XAxisBucketRange;
     dataStream.data.forEach(point => {
-      const { x } = point;
+      const { x, y } = point;
+      if (typeof y === 'string') {
+        return;
+      }
       while (x > nextTimeStamp && nextTimeStamp < endTime) {
         nextTimeStamp += XAxisBucketRange;
       }
@@ -100,11 +105,13 @@ export const calcHeatValues = (
       if (nextTimeStamp > endTime) {
         return;
       }
-      const currXBucketRangeStart = nextTimeStamp - XAxisBucketRange;
+      const xBucketRangeStart = nextTimeStamp - XAxisBucketRange;
+      const bucketIndex = calculateBucketIndex({yValue: y, yMax, yMin, bucketCount: 10});
       if (newHeatValue) {
-        newHeatValue = countFunc(newHeatValue, point, currXBucketRangeStart, yMax, yMin, dataStream.name);
+        oldHeatValue = newHeatValue;
+        newHeatValue = addCount({oldHeatValue, xBucketRangeStart, bucketIndex, dataStreamName: dataStream.name});
       } else {
-        newHeatValue = countFunc(heatValue, point, currXBucketRangeStart, yMax, yMin, dataStream.name);
+        newHeatValue = addCount({oldHeatValue, xBucketRangeStart, bucketIndex, dataStreamName: dataStream.name});
       }
     });
   });
