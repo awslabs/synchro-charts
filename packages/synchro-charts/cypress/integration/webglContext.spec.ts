@@ -1,6 +1,6 @@
 import { SECOND_IN_MS } from '../../src/utils/time';
 
-const root = 'localhost:3333/tests/sc-webgl-chart';
+const root = '/tests/sc-webgl-chart';
 
 const snapshotOptions = {
   failureThreshold: 1.2,

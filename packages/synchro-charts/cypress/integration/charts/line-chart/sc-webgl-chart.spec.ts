@@ -13,7 +13,7 @@ import {
 import { clickAndDrag } from '../../../utils';
 import { CHART_VIZ_CONTAINER_SELECTOR, visitDynamicWidget } from '../../../../src/testing/selectors';
 
-const root = 'localhost:3333/tests/sc-webgl-chart';
+const root = '/tests/sc-webgl-chart';
 
 const VIEWPORT_HEIGHT = 500;
 const VIEWPORT_WIDTH = 500;
@@ -275,7 +275,7 @@ describe('line chart', () => {
 });
 
 describe('view port updating', () => {
-  const VIEW_PORT_CHANGE_URL = 'localhost:3333/tests/line-chart/viewport-change';
+  const VIEW_PORT_CHANGE_URL = '/tests/line-chart/viewport-change';
   const NARROW_VIEWPORT_X_AXIS_LABEL = '12 PM'; // A label which renders when viewing the 'narrow' view port
   const WIDE_VIEWPORT_X_AXIS_LABEL = 'July'; // A label which renders when viewing the 'wide' view port
 

@@ -3,7 +3,7 @@ import { initFPSMetering } from '../../../src/utils/fps';
 import { DAY_IN_MS, SECOND_IN_MS } from '../../../src/utils/time';
 import { avg, standardDeviation } from '../../utils';
 
-const root = 'localhost:3333/tests/sc-webgl-chart/performance';
+const root = '/tests/sc-webgl-chart/performance';
 
 type PerfTestCase = {
   // The minimum frames per second which will be considered a passing test
