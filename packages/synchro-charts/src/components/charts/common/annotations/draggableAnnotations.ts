@@ -1,7 +1,6 @@
 import { ValueFn } from 'd3';
 import { drag } from 'd3-drag';
 import * as d3 from 'd3';
-import { select } from 'd3-selection';
 import { Annotations, YAnnotation } from '../types';
 import { ViewPort } from '../../../../utils/dataTypes';
 import { DRAGGABLE_HANDLE_SELECTOR, TEXT_VALUE_SELECTOR } from './YAnnotations/YAnnotations';
@@ -87,7 +86,7 @@ export const draggable = ({
   onUpdate,
   activeViewPort,
 }: DraggableAnnotationsOptions): void => {
-  const containerSelection = select(container);
+  const containerSelection = d3.select(container);
 
   const thresholdGroup = containerSelection.selectAll(DRAGGABLE_HANDLE_SELECTOR);
 
@@ -96,11 +95,10 @@ export const draggable = ({
 
   // TODO - this way of selection will not work if we have duplicate thresholds with same values probably?
 
-  thresholdGroup.call(
-    d3
-      .drag()
-      .on('start', function handleStarted() {
-        console.log("drag start");
+  // debugger;
+  thresholdGroup.call(drag()
+      .on('start', function dragStarted() {
+        console.log("drag started");
         d3.select(this)
           .raise()
           .classed('active', true);
