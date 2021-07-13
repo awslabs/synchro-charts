@@ -73,7 +73,6 @@ export const renderAnnotations = ({
       container,
       viewPort,
       size,
-      annotations,
       onUpdate,
       activeViewPort,
     });
