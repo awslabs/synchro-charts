@@ -12,13 +12,11 @@ install:
   - yarn install
 jobs:
   include:
-    - stage: Build
-    script: 
-      - yarn build
-    - stage: Lint and Test
-    name: Unit Tests
-    script: 
-      - yarn test
-    name: Lint
-    script: 
-      - yarn lint
+    - stage: 'Build'
+      name: 'Build'
+      script: yarn build
+    - stage: 'Lint and Test'
+      name: 'Unit Tests'
+      script: yarn test
+    - script: yarn lint
+      name: 'Lint'
