@@ -49,7 +49,7 @@ describe('scatter chart', () => {
     cy.matchImageSnapshotOnCI();
   });
 
-  it('correctly renders data stream and trend line information in legend', () => {
+  it.only('correctly renders data stream and trend line information in legend', () => {
     cy.visit(`${root}/trend-line-with-legend`);
 
     cy.get('.data-container')
@@ -74,7 +74,7 @@ describe('scatter chart', () => {
       .invoke('text')
       .should('equal', DATA_POINT_Y);
 
-    const TREND_VALUE = '3669.4428';
+    const TREND_VALUE = '3669.3688';
     // Display trend line label
     cy.get('[data-test-tag="expandable-input"]')
       .eq(1)
@@ -89,7 +89,7 @@ describe('scatter chart', () => {
     cy.matchImageSnapshotOnCI();
   });
 
-  it('trend line and icons are the correct color', () => {
+  it.only('trend line and icons are the correct color', () => {
     cy.visit(`${root}/trend-line-color-configuration`);
 
     cy.get('.data-container')
