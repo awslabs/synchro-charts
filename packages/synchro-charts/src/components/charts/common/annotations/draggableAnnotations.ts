@@ -61,9 +61,7 @@ export const changeThreshold = (
   if (annotations == null || annotations.y == null || annotations.y.length === 0) {
     return;
   }
-  const currentThreshold: YAnnotation | undefined = annotations.y
-    .filter(isThreshold) // TODO maybe this filter is not nescessary
-    .find(threshold => threshold.value === oldThreshold);
+  const currentThreshold: YAnnotation | undefined = annotations.y.find(threshold => threshold.value === oldThreshold);
   if (currentThreshold == null) {
     return;
   }
@@ -94,7 +92,7 @@ export const draggable = ({
   let newValue: number = -1;
 
   // TODO - this way of selection will not work if we have duplicate thresholds with same values probably?
-
+  // TODO - could possibly use datum passed in to change it automatically instead of having to rely on the changeThreshold function: EX:  handleDragged(d: YAnnotation, event: unknown)
   // debugger;
   thresholdGroup.call(drag()
       .on('start', function dragStarted() {
@@ -105,8 +103,9 @@ export const draggable = ({
       })
       .on('drag', function handleDragged(event: unknown) {
         /** Drag Event */
-
+        console.log("dragging");
         const { y: yPos } = event as { y: number };
+
 
         newValue = calculateNewThreshold({ yPos, viewPort, size });
         const box = d3.select(this);
@@ -122,6 +121,7 @@ export const draggable = ({
         changeThreshold(selectedValue, newValue, annotations, onUpdate, activeViewPort);
       })
       .on('end', function dragEnded() {
+        console.log("drag ended");
         d3.select(this).classed('active', false);
         changeThreshold(selectedValue, newValue, annotations, onUpdate, activeViewPort);
         selectedValue = -1;
