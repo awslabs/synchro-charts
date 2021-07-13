@@ -19,10 +19,12 @@ services:
       - root
     environment:
       - CYPRESS_BASE_URL=http://root:3333
-    working_dir: /app
+    working_dir: /app/packages/synchro-charts
+    command: npx cypress run --headless --browser chrome --env updateSnapshots=true
     volumes:
+      - .:/app
       # - ./node_modules:/app/node_modules
-      - ./packages/synchro-charts/node_modules:/app/node_modules
-      - ./packages/synchro-charts:/app
-      - ./packages/synchro-charts/cypress:/app/cypress
-      - ./packages/synchro-charts/cypress.json:/app/cypress.json
+      # - ./packages/synchro-charts/node_modules:/app/node_modules
+      # - ./packages/synchro-charts:/app
+      # - ./packages/synchro-charts/cypress:/app/cypress
+      # - ./packages/synchro-charts/cypress.json:/app/cypress.json
