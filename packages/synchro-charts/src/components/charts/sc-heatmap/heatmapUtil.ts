@@ -86,7 +86,6 @@ export const calcHeatValues = ({
   }
   // if resolution is 0 then set the XAxisBucketRange to be 1 second
   const xAxisBucketRange = resolution === 0 ? SECOND_IN_MS : resolution;
-  let newHeatValue: HeatValueMap = {};
   let tempStartTime = dataStreams[0].data[0].x;
   dataStreams.forEach(dataStream => {
     if (dataStream.data[0].x < tempStartTime) {
@@ -96,38 +95,27 @@ export const calcHeatValues = ({
   const startTime = Math.floor(tempStartTime / xAxisBucketRange) * xAxisBucketRange;
   const yMax = viewPort.yMax;
   const yMin = viewPort.yMin;
-  dataStreams.forEach(dataStream => {
-    let nextTimeStamp = startTime + xAxisBucketRange;
-
-    newHeatValue = dataStream.data.reduce(
-      function(newHeatValue, currPoint) {
-        while (currPoint.x > nextTimeStamp) {
-          nextTimeStamp += xAxisBucketRange;
-        }
-        const xBucketRangeStart = nextTimeStamp - xAxisBucketRange;
-        const bucketIndex = calculateBucketIndex({yValue: currPoint.y, yMax, yMin, bucketCount: NUM_OF_BUCKETS});
-        if (newHeatValue) {
-          newHeatValue = addCount({oldHeatValue: newHeatValue, xBucketRangeStart, bucketIndex, dataStreamId: dataStream.id});
-        } else {
-          newHeatValue = addCount({oldHeatValue, xBucketRangeStart, bucketIndex, dataStreamId: dataStream.id});
-        }
-        return newHeatValue;
-      },
-      {}
-    )
-    // dataStream.data.forEach(point => {
-    //   const { x, y } = point;
-    //   while (x > nextTimeStamp) {
-    //     nextTimeStamp += xAxisBucketRange;
-    //   }
-    //   const xBucketRangeStart = nextTimeStamp - xAxisBucketRange;
-    //   const bucketIndex = calculateBucketIndex({yValue: y, yMax, yMin, bucketCount: 10});
-    //   if (newHeatValue) {
-    //     newHeatValue = addCount({oldHeatValue: newHeatValue, xBucketRangeStart, bucketIndex, dataStreamId: dataStream.id});
-    //   } else {
-    //     newHeatValue = addCount({oldHeatValue, xBucketRangeStart, bucketIndex, dataStreamId: dataStream.id});
-    //   }
-    // });
-  });
+  return dataStreams.reduce(
+    function(newHeatValue, dataStream) {
+      let nextTimeStamp = startTime + xAxisBucketRange;
+      return dataStream.data.reduce(
+        function(newHeatValue, currPoint) {
+          while (currPoint.x > nextTimeStamp) {
+            nextTimeStamp += xAxisBucketRange;
+          }
+          const xBucketRangeStart = nextTimeStamp - xAxisBucketRange;
+          const bucketIndex = calculateBucketIndex({yValue: currPoint.y, yMax, yMin, bucketCount: NUM_OF_BUCKETS});
+          if (newHeatValue) {
+            newHeatValue = addCount({oldHeatValue: newHeatValue, xBucketRangeStart, bucketIndex, dataStreamId: dataStream.id});
+          } else {
+            newHeatValue = addCount({oldHeatValue, xBucketRangeStart, bucketIndex, dataStreamId: dataStream.id});
+          }
+          return newHeatValue;
+        },
+        {}
+      )
+    },
+    {}
+  )
   return newHeatValue;
 };
