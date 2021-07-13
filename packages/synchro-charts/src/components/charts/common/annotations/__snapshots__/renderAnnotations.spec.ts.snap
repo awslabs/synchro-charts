@@ -1,19 +1,158 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`x annotation handles rendering updating multiple annotations 1`] = `
+<svg viewBox="0 0 100 50">
+  <g class="x-annotation" transform="translate(0,0)">
+    <line class="x-line" font-size="10" stroke="red" x1="50" x2="50" y1="0" y2="50" style="stroke: red; stroke-width: 1.5;"></line>
+    <text class="x-text" display="inline" font-size="10" x="0" y="-50" style="pointer-events: none; user-select: none; transform: rotate(90deg) translateY(-5px); fill: red;">
+      some text
+    </text>
+  </g>
+  <g class="x-annotation" transform="translate(0,0)">
+    <line class="x-line" font-size="10" stroke="red" x1="0" x2="0" y1="0" y2="50" style="stroke: red; stroke-width: 1.5;"></line>
+    <text class="x-text" display="inline" font-size="10" x="0" y="0" style="pointer-events: none; user-select: none; transform: rotate(90deg) translateY(-5px); fill: red;">
+      some text (12/31/1999)
+    </text>
+  </g>
+  <g class="x-annotation" transform="translate(0,0)">
+    <line class="x-line" font-size="10" x1="0" x2="0" y1="0" y2="50" style="stroke: red; stroke-width: 1.5;"></line>
+    <text class="x-text" display="none" font-size="10" x="0" y="0" style="pointer-events: none; user-select: none; transform: rotate(90deg) translateY(-5px); fill: red;"></text>
+  </g>
+  <g class="x-annotation" transform="translate(0,0)">
+    <line class="x-line" font-size="10" x1="99" x2="99" y1="0" y2="50" style="stroke: red; stroke-width: 1.5;"></line>
+    <text class="x-text" display="inline" font-size="10" x="0" y="-99" style="pointer-events: none; user-select: none; transform: rotate(90deg) translateY(-5px); fill: red;">
+      some text (12/30/2000)
+    </text>
+  </g>
+  <g class="x-annotation" transform="translate(0,0)">
+    <line class="x-line" font-size="10" x1="99" x2="99" y1="0" y2="50" style="stroke: red; stroke-width: 1.5;"></line>
+    <text class="x-text" display="inline" font-size="10" x="0" y="-99" style="pointer-events: none; user-select: none; transform: rotate(90deg) translateY(-5px); fill: red;">
+      some text
+    </text>
+  </g>
+</svg>
+`;
+
+exports[`x annotation has proper threshold grouping structure 1`] = `
+<svg viewBox="0 0 100 50">
+  <g class="x-annotation" transform="translate(0,0)">
+    <line class="x-line" font-size="10" stroke="red" x1="50" x2="50" y1="0" y2="50" style="stroke: red; stroke-width: 1.5;"></line>
+    <text class="x-text" display="inline" font-size="10" x="0" y="-50" style="pointer-events: none; user-select: none; transform: rotate(90deg) translateY(-5px); fill: red;">
+      some text
+    </text>
+  </g>
+  <g class="x-annotation" transform="translate(0,0)">
+    <line class="x-line" font-size="10" x1="99" x2="99" y1="0" y2="50" style="stroke: red; stroke-width: 1.5;"></line>
+    <text class="x-text" display="inline" font-size="10" x="0" y="-99" style="pointer-events: none; user-select: none; transform: rotate(90deg) translateY(-5px); fill: red;">
+      some text
+    </text>
+  </g>
+</svg>
+`;
+
 exports[`x annotation renders correctly 1`] = `
 <svg viewBox="0 0 100 50">
-  <text class="x" font-size="10" x="0" y="-50" style="pointer-events: none; user-select: none; transform: rotate(90deg) translateY(-5px); fill: red;">
-    some text
-  </text>
-  <line class="x" font-size="10" x1="50" x2="50" y1="0" y2="50" style="stroke: red; stroke-width: 1.5;"></line>
+  <g class="x-annotation" transform="translate(0,0)">
+    <line class="x-line" font-size="10" x1="50" x2="50" y1="0" y2="50" style="stroke: red; stroke-width: 1.5;"></line>
+    <text class="x-text" display="inline" font-size="10" x="0" y="-50" style="pointer-events: none; user-select: none; transform: rotate(90deg) translateY(-5px); fill: red;">
+      some text
+    </text>
+  </g>
+</svg>
+`;
+
+exports[`y annotation handles rendering updating multiple annotations 1`] = `
+<svg viewBox="0 0 100 50">
+  <g class="y-annotation" transform="translate(0,0)">
+    <line class="y-line" x1="0" x2="100" y1="25" y2="25" style="stroke: red; stroke-width: 1.5;"></line>
+    <text class="y-value-text" display="none" font-size="10" text-anchor="start" x="108" y="28" style="user-select: none; pointer-events: none; fill: red;"></text>
+    <text class="y-text" display="inline" font-size="10" text-anchor="end" x="95" y="20" style="user-select: none; pointer-events: none; fill: red;">
+      some text
+    </text>
+  </g>
+  <g class="y-annotation" transform="translate(0,0)">
+    <line class="y-line" x1="0" x2="100" y1="49" y2="49" style="stroke: red; stroke-width: 1.5;"></line>
+    <text class="y-value-text" display="inline" font-size="10" text-anchor="start" x="108" y="52" style="user-select: none; pointer-events: none; fill: red;">
+      2
+    </text>
+    <text class="y-text" display="inline" font-size="10" text-anchor="end" x="95" y="44" style="user-select: none; pointer-events: none; fill: red;">
+      some text
+    </text>
+  </g>
+  <g class="y-annotation" transform="translate(0,0)">
+    <line class="y-line" x1="0" x2="100" y1="0.5" y2="0.5" style="stroke: red; stroke-width: 1.5;"></line>
+    <text class="y-value-text" display="none" font-size="10" text-anchor="start" x="108" y="3.5" style="user-select: none; pointer-events: none; fill: red;"></text>
+    <text class="y-text" display="inline" font-size="10" text-anchor="end" x="95" y="-4.5" style="user-select: none; pointer-events: none; fill: red;">
+      some text
+    </text>
+  </g>
+  <g class="y-annotation" transform="translate(0,0)">
+    <line class="y-line" x1="0" x2="100" y1="1" y2="1" style="stroke: red; stroke-width: 1.5;"></line>
+    <text class="y-value-text" display="inline" font-size="10" text-anchor="start" x="108" y="4" style="user-select: none; pointer-events: none; fill: red;">
+      98
+    </text>
+    <text class="y-text" display="inline" font-size="10" text-anchor="end" x="95" y="-4" style="user-select: none; pointer-events: none; fill: red;">
+      some text
+    </text>
+  </g>
+  <g class="y-annotation" transform="translate(0,0)">
+    <line class="y-line" x1="0" x2="100" y1="49.5" y2="49.5" style="stroke: red; stroke-width: 1.5;"></line>
+    <text class="y-value-text" display="none" font-size="10" text-anchor="start" x="108" y="52.5" style="user-select: none; pointer-events: none; fill: red;"></text>
+    <text class="y-text" display="inline" font-size="10" text-anchor="end" x="95" y="44.5" style="user-select: none; pointer-events: none; fill: red;">
+      some text
+    </text>
+  </g>
+</svg>
+`;
+
+exports[`y annotation has proper threshold grouping structure 1`] = `
+<svg viewBox="0 0 100 50">
+  <g class="y-annotation" transform="translate(0,0)">
+    <line class="y-line" x1="0" x2="100" y1="25" y2="25" style="stroke: red; stroke-width: 1.5;"></line>
+    <text class="y-value-text" display="none" font-size="10" text-anchor="start" x="108" y="28" style="user-select: none; pointer-events: none; fill: red;"></text>
+    <text class="y-text" display="inline" font-size="10" text-anchor="end" x="95" y="20" style="user-select: none; pointer-events: none; fill: red;">
+      some text
+    </text>
+  </g>
+  <g class="y-annotation" transform="translate(0,0)">
+    <line class="y-line" x1="0" x2="100" y1="2" y2="2" style="stroke: red; stroke-width: 1.5;"></line>
+    <text class="y-value-text" display="none" font-size="10" text-anchor="start" x="108" y="5" style="user-select: none; pointer-events: none; fill: red;"></text>
+    <text class="y-text" display="inline" font-size="10" text-anchor="end" x="95" y="-3" style="user-select: none; pointer-events: none; fill: red;">
+      some text
+    </text>
+  </g>
 </svg>
 `;
 
 exports[`y annotation renders correctly 1`] = `
 <svg viewBox="0 0 100 50">
-  <text class="y" font-size="10" text-anchor="end" x="95" y="20" style="user-select: none; pointer-events: none; fill: red;">
-    some text
-  </text>
-  <line class="y" x1="0" x2="100" y1="25" y2="25" style="stroke: red; stroke-width: 1.5;"></line>
+  <g class="y-annotation" transform="translate(0,0)">
+    <line class="y-line" x1="0" x2="100" y1="25" y2="25" style="stroke: red; stroke-width: 1.5;"></line>
+    <text class="y-value-text" display="none" font-size="10" text-anchor="start" x="108" y="28" style="user-select: none; pointer-events: none; fill: red;"></text>
+    <text class="y-text" display="inline" font-size="10" text-anchor="end" x="95" y="20" style="user-select: none; pointer-events: none; fill: red;">
+      some text
+    </text>
+  </g>
+</svg>
+`;
+
+exports[`y annotation updates annotation label and value text visibility 1`] = `
+<svg viewBox="0 0 100 50">
+  <g class="y-annotation" transform="translate(0,0)">
+    <line class="y-line" x1="0" x2="100" y1="33.33333333333333" y2="33.33333333333333" style="stroke: red; stroke-width: 1.5;"></line>
+    <text class="y-value-text" display="inline" font-size="10" text-anchor="start" x="108" y="36.33333333333333" style="user-select: none; pointer-events: none; fill: red;">
+      33.333333333333336
+    </text>
+    <text class="y-text" display="inline" font-size="10" text-anchor="end" x="95" y="28.33333333333333" style="user-select: none; pointer-events: none; fill: red;">
+      some-label!
+    </text>
+  </g>
+  <g class="y-annotation" transform="translate(0,0)">
+    <line class="y-line" x1="0" x2="100" y1="25" y2="25" style="stroke: red; stroke-width: 1.5;"></line>
+    <text class="y-value-text" display="none" font-size="10" text-anchor="start" x="108" y="28" style="user-select: none; pointer-events: none; fill: red;"></text>
+    <text class="y-text" display="inline" font-size="10" text-anchor="end" x="95" y="20" style="user-select: none; pointer-events: none; fill: red;">
+      some text
+    </text>
+  </g>
 </svg>
 `;

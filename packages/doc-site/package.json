@@ -1,8 +1,11 @@
 {
-    "name": "synchro-charts",
-    "homepage": ".",
+    "name": "@synchro-charts/doc-site",
+    "description": "Synchro Charts documentation site",
+    "homepage": "https://synchrocharts.com",
     "version": "0.1.0",
+    "private": true,
     "dependencies": {
+        "@awsui/components-react": "^3.0.182",
         "@synchro-charts/core": "*",
         "@synchro-charts/react": "*",
         "react": "^16.13.1",
@@ -14,12 +17,13 @@
     },
     "scripts": {
         "start": "styleguidist server",
-        "build": "styleguidist build",
-        "clean": "rm -rf node_modules && rm -rf build",
+        "build": "styleguidist build && yarn run build:create-docs",
+        "build:create-docs": "rm -rf ../../docs && mkdir ../../docs && cp -R app/* ../../docs",
+        "clean": "rm -rf node_modules && rm -rf build && rm -rf ../../docs",
         "test": "echo \"INFO: no test specified\"",
         "release": "echo \"INFO: do nothing for release\"",
         "prepublishOnly": "npm run release",
-        "publish": "echo \"INFO: do nothing for publish\""
+        "publish": "echo \"INFO: doc-site does not publish to npm\""
     },
     "browserslist": {
         "production": [

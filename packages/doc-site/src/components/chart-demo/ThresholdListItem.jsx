@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from "@awsui/components-react/button";
 
 const COMPARATOR_MAP = {
   GTE: '>=',
@@ -19,10 +20,10 @@ const ThresholdListItem = ({threshold, removeThreshold, thresholdId}) => {
       </td>
       <td>{value}</td>
       <td>{COMPARATOR_MAP[comparisonOperator]}</td>
-      <td>
-        <button onClick={() => removeThreshold(thresholdId)}>
-          <strong>X</strong>
-        </button>
+      <td style={{ display: 'flex', justifyContent: 'space-around'}}>
+        <Button onClick={() => removeThreshold(thresholdId)}>
+          Remove
+        </Button>
       </td>
     </tr>
     </tbody>

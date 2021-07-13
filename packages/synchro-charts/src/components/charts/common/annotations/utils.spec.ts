@@ -1,12 +1,15 @@
 import { Annotation, Annotations, Threshold, XAnnotation, YAnnotation } from '../types';
 import {
   getBreachedThreshold,
+  getLabelTextVisibility,
   getNumberAnnotations,
   getNumberThresholds,
   getText,
   getThresholds,
   getValueAndText,
+  getValueAndTextVisibility,
   getValueText,
+  getValueTextVisibility,
   isThreshold,
   isThresholdBreached,
   sortThreshold,
@@ -15,7 +18,7 @@ import { VIEW_PORT } from '../testUtil';
 import { highestPriorityThreshold, thresholdAppliesToDataStream } from './breachedThreshold';
 import { COMPARISON_OPERATOR } from '../constants';
 
-describe('getValueAndText', () => {
+describe('getValueAndText and getValueAndTextVisibility', () => {
   it('returns a text from annotation', () => {
     const annotationLabelText = 'new label';
     const xAnnotations: XAnnotation[] = [
@@ -31,6 +34,9 @@ describe('getValueAndText', () => {
     ];
     const text = getText(xAnnotations[0]);
     expect(text).toBe(annotationLabelText);
+
+    const displayMode = getLabelTextVisibility(xAnnotations[0]);
+    expect(displayMode).toEqual('inline');
   });
 
   it('returns a value text from annotation', () => {
@@ -53,6 +59,9 @@ describe('getValueAndText', () => {
       viewPort: VIEW_PORT,
     });
     expect(valueText).toBe(value.toString());
+
+    const displayMode = getValueTextVisibility(yAnnotations[0]);
+    expect(displayMode).toEqual('inline');
   });
 
   it('returns value and text for an annotation', () => {
@@ -76,6 +85,9 @@ describe('getValueAndText', () => {
     });
 
     expect(valueAndText).toBe(`${label} (${value})`);
+
+    const displayMode = getValueAndTextVisibility(yAnnotations[0]);
+    expect(displayMode).toEqual('inline');
   });
 
   it('returns only text if showValue is false', () => {
@@ -99,9 +111,11 @@ describe('getValueAndText', () => {
     });
 
     expect(valueAndText).toBe(label);
+    const displayMode = getValueAndTextVisibility(yAnnotations[0]);
+    expect(displayMode).toEqual('inline');
   });
 
-  it('returns empty label of value and label are not specified to be shown', () => {
+  it('returns empty label of value and label if not specified to be shown', () => {
     const value = 50;
     const yAnnotations: YAnnotation[] = [
       {
@@ -116,6 +130,50 @@ describe('getValueAndText', () => {
     });
 
     expect(valueAndText).toBeEmpty();
+
+    const displayMode = getValueAndTextVisibility(yAnnotations[0]);
+    expect(displayMode).toEqual('none');
+  });
+
+  it('returns empty label of value if not specified to be shown', () => {
+    const value = 50;
+    const yAnnotations: YAnnotation[] = [
+      {
+        color: 'red',
+        value,
+        showValue: false,
+      },
+    ];
+    const valueText = getValueText({
+      annotation: yAnnotations[0],
+      resolution: 1000,
+      viewPort: VIEW_PORT,
+    });
+
+    expect(valueText).toBeEmpty();
+
+    const displayMode = getValueTextVisibility(yAnnotations[0]);
+    expect(displayMode).toEqual('none');
+  });
+
+  it('returns empty label if not specified to be shown', () => {
+    const value = 50;
+    const yAnnotations: YAnnotation[] = [
+      {
+        color: 'red',
+        value,
+        label: {
+          text: 'test',
+          show: false,
+        },
+      },
+    ];
+    const labelText = getText(yAnnotations[0]);
+
+    expect(labelText).toBeEmpty();
+
+    const displayMode = getLabelTextVisibility(yAnnotations[0]);
+    expect(displayMode).toEqual('none');
   });
 });
 

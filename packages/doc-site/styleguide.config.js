@@ -1,5 +1,14 @@
 const path = require('path');
 
+function kebabize(string) {
+  if (string.toUpperCase() === 'KPI') {
+    return 'kpi';
+  }
+  // uppercase after a non-uppercase or uppercase before non-uppercase
+  const upper = /(?<!\p{Uppercase_Letter})\p{Uppercase_Letter}|\p{Uppercase_Letter}(?!\p{Uppercase_Letter})/gu;
+  return string.replace(upper, "-$&").replace(/^-/, "").toLowerCase();
+}
+
 module.exports = {
     title: 'Synchro Charts',
     theme: {
@@ -13,24 +22,33 @@ module.exports = {
         {
             name: 'Introduction',
             content: 'docs/introduction.md',
+            exampleMode: 'hide',
+        },
+        {
+            name: 'Demo',
+            content: 'docs/demo.md',
+            exampleMode: 'hide',
         },
         {
             name: 'Setup',
             content: 'docs/setup.md',
+            exampleMode: 'hide',
         },
         {
             name: 'Components',
             sectionDepth: 2,
+            content: 'docs/components.md',
             components: 'src/components/**/*.js',
             ignore: 'src/components/chart-demo/**',
         },
         {
             name: 'API',
+            content: 'docs/api.md',
             sectionDepth: 2,
             sections: [
                 {
                   name: 'Properties',
-                  content: 'docs/api.md',
+                  content: 'docs/properties.md',
                 },
                 {
                   name: 'Events',
@@ -41,14 +59,17 @@ module.exports = {
         {
             name: 'Features',
             sectionDepth: 2,
+            content: 'docs/features.md',
             sections: [
                 {
                     name: 'Synchronization',
                     content: 'docs/synchronization.md',
+                    exampleMode: 'hide',
                 },
                 {
                     name: 'Performance',
                     content: 'docs/performance.md',
+                    exampleMode: 'hide',
                 },
                 {
                     name: 'Annotation',
@@ -63,7 +84,7 @@ module.exports = {
                     content: 'docs/trendLine.md',
                 },
                 {
-                    name: 'Widget Configuration Updates',
+                    name: 'Configuration updates',
                     content: 'docs/widgetConfigurationUpdates.md',
                 }
             ]
@@ -83,7 +104,7 @@ module.exports = {
     ],
     getComponentPathLine(componentPath) {
         const name = path.basename(componentPath, '.js');
-        return `import { ${name} } from '@synchro-charts/react';`;
+        return `import { ${name} } from '@synchro-charts/react'; // <sc-${kebabize(name)}>`;
     },
     styleguideComponents: {
         SectionsRenderer: path.join(__dirname, 'src/styleguide/Sections'),

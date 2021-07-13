@@ -77,6 +77,7 @@ export const createWebGLRenderer = () => {
    * Remove and dispose of a given scene.
    */
   const removeChartScene = (chartSceneId: string) => {
+    mustBeInitialized();
     sceneManager.remove(chartSceneId);
 
     rectMap.removeChartScene(chartSceneId);
@@ -120,6 +121,8 @@ export const createWebGLRenderer = () => {
   };
 
   const onResize = () => {
+    mustBeInitialized();
+
     if (renderer && canvas) {
       resizeRendererToDisplaySize(renderer);
       rectMap.updateCanvas();
@@ -143,7 +146,23 @@ export const createWebGLRenderer = () => {
     window.addEventListener('resize', onResize);
   };
 
+  /**
+   * Enforces that the webgl context must first be initialized.
+   *
+   * Throws an error when the initialized has failed to occur.
+   */
+  const mustBeInitialized = () => {
+    if (rectMap == null) {
+      throw new Error(
+        'webgl context must be initialized before it can be utilized. ' +
+          'Please refer to https://synchrocharts.com/#/Setup to learn more about how to setup Synchro Charts.'
+      );
+    }
+  };
+
   const render = (chartScene: ChartScene) => {
+    mustBeInitialized();
+
     const clipSpaceRect = rectMap.clipRect(chartScene.id);
     if (renderer && canvas && clipSpaceRect) {
       renderChartScene(renderer, chartScene, clipSpaceRect);
@@ -167,6 +186,7 @@ export const createWebGLRenderer = () => {
    * Clears the previous renderer location if it exists.
    */
   const setChartRect = (sceneId: string, rect: RectScrollFixed) => {
+    mustBeInitialized();
     rectMap.updateChartScene(sceneId, rect);
     fullClearAndRerender();
   };
