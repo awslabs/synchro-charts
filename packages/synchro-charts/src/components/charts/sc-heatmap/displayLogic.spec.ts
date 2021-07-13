@@ -46,38 +46,16 @@ describe('getSequential', () => {
 
 describe('getBucketColor', () => {
   it('returns lowest opacity', () => {
-    const colorArray = getSequential('#ffffff', '#0073bb');
     const lowestOpacityRGB = [COLOR_ARRAY[0][0], COLOR_ARRAY[1][0], COLOR_ARRAY[2][0]];
-    let rgb = getBucketColor(colorArray, 1, TOTAL_POSSIBLE_POINT);
+    let rgb = getBucketColor(COLOR_ARRAY, 1, TOTAL_POSSIBLE_POINT);
     expect(rgb).toEqual(lowestOpacityRGB);
-    rgb = getBucketColor(colorArray, TOTAL_POSSIBLE_POINT / 8 - 1, TOTAL_POSSIBLE_POINT);
+    rgb = getBucketColor(COLOR_ARRAY, TOTAL_POSSIBLE_POINT / 8 - 1, TOTAL_POSSIBLE_POINT);
     expect(rgb).toEqual(lowestOpacityRGB);
-  });
 
-  it('returns third lowest opacity', () => {
-    const colorArray = getSequential('#ffffff', '#0073bb');
-    const lowestOpacityRGB = [COLOR_ARRAY[0][2], COLOR_ARRAY[1][2], COLOR_ARRAY[2][2]];
-    let rgb = getBucketColor(colorArray, TOTAL_POSSIBLE_POINT / 8 * 2 + 1, TOTAL_POSSIBLE_POINT);
-    expect(rgb).toEqual(lowestOpacityRGB);
-    rgb = getBucketColor(colorArray, (TOTAL_POSSIBLE_POINT / 8) * 3 - 1, TOTAL_POSSIBLE_POINT);
-    expect(rgb).toEqual(lowestOpacityRGB);
+    const midOpacityRGB = [COLOR_ARRAY[0][4], COLOR_ARRAY[1][4], COLOR_ARRAY[2][4]];
+    rgb = getBucketColor(COLOR_ARRAY, TOTAL_POSSIBLE_POINT / 8 * 4 + 1, TOTAL_POSSIBLE_POINT);
+    expect(rgb).toEqual(midOpacityRGB);
+    rgb = getBucketColor(COLOR_ARRAY, (TOTAL_POSSIBLE_POINT / 8) * 5 - 1, TOTAL_POSSIBLE_POINT);
+    expect(rgb).toEqual(midOpacityRGB);
   });
-
-  it('returns fifth lowest opacity', () => {
-    const colorArray = getSequential('#ffffff', '#0073bb');
-    const lowestOpacityRGB = [COLOR_ARRAY[0][4], COLOR_ARRAY[1][4], COLOR_ARRAY[2][4]];
-    let rgb = getBucketColor(colorArray, TOTAL_POSSIBLE_POINT / 8 * 4 + 1, TOTAL_POSSIBLE_POINT);
-    expect(rgb).toEqual(lowestOpacityRGB);
-    rgb = getBucketColor(colorArray, (TOTAL_POSSIBLE_POINT / 8) * 5 - 1, TOTAL_POSSIBLE_POINT);
-    expect(rgb).toEqual(lowestOpacityRGB);
-  });
-
-  it('returns darkest color', () => {
-	const colorArray = getSequential('#ffffff', '#0073bb');
-	const lowestOpacityRGB = [COLOR_ARRAY[0][7], COLOR_ARRAY[1][7], COLOR_ARRAY[2][7]];
-	let rgb = getBucketColor(colorArray, TOTAL_POSSIBLE_POINT / 8 * 7 + 1, TOTAL_POSSIBLE_POINT);
-	expect(rgb).toEqual(lowestOpacityRGB);
-	rgb = getBucketColor(colorArray, TOTAL_POSSIBLE_POINT, TOTAL_POSSIBLE_POINT);
-	expect(rgb).toEqual(lowestOpacityRGB);
-      });
 });
