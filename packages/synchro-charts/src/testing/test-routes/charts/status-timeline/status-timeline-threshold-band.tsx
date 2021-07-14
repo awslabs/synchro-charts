@@ -23,19 +23,14 @@ if (isStringData === '1') {
   data.y = 'test';
 }
 
-/**
- * Testing route for the webGL rendering without being fully coupled to the chart.
- *
- */
-
 @Component({
-  tag: 'status-chart-threshold-coloration-band',
+  tag: 'status-timeline-threshold-coloration-band',
 })
-export class StatusChartThresholdBand {
+export class StatusTimelineThresholdBand {
   render() {
     return (
       <div>
-        <sc-status-chart
+        <sc-status-timeline
           alarms={{ expires: MINUTE_IN_MS }}
           dataStreams={[
             {

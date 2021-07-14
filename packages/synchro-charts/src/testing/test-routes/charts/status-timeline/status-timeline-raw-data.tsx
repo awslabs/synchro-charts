@@ -45,13 +45,13 @@ const annotations: Annotations = {
 };
 
 @Component({
-  tag: 'status-chart-raw-data',
+  tag: 'status-timeline-raw-data',
 })
-export class StatusChartRawData {
+export class StatusTimelineRawData {
   render() {
     return (
       <div>
-        <sc-status-chart
+        <sc-status-timeline
           alarms={{ expires: MINUTE_IN_MS }}
           dataStreams={[
             {
