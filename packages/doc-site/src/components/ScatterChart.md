@@ -153,3 +153,5 @@ const MONTH_RESOLUTION = 1000 * 60 * 60 * 24 * 30; // one month
   />
 </div>
 ```
+
+**Note**: This component requires a WebGL context to be initialized. Read more about how to set that up in the [WebGL context documentation]( https://synchrocharts.com//#/WebGL%20context )
