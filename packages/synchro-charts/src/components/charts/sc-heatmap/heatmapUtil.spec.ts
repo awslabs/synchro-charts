@@ -20,7 +20,6 @@ const DATA_POINT_4: DataPoint = { x: START_TIME, y: Math.random() * 100 };
 const DATA_POINT_5: DataPoint = { x: START_TIME + MONTH_IN_MS * 10, y: Math.random() * 100 };
 
 const DATA_SET_1 = [DATA_POINT_1, DATA_POINT_2, DATA_POINT_3];
-
 const DATA_SET_2 = [DATA_POINT_3, DATA_POINT_4, DATA_POINT_5];
 
 const DATASTREAM_1 = {
