@@ -1,6 +1,6 @@
-import * as d3 from 'd3';
+import {select} from 'd3-selection-v3';
 import {drag} from 'd3-drag';
-import {Annotations, YAnnotation} from '../types';
+import { YAnnotation} from '../types';
 import {ViewPort} from '../../../../utils/dataTypes';
 import {DRAGGABLE_HANDLE_SELECTOR} from './YAnnotations/YAnnotations';
 
@@ -54,12 +54,12 @@ export const draggable = ({
   onUpdate,
   activeViewPort,
 }: DraggableAnnotationsOptions): void => {
-  const containerSelection = d3.select(container);
+  const containerSelection = select(container);
   const thresholdGroup = containerSelection.selectAll(DRAGGABLE_HANDLE_SELECTOR);
   thresholdGroup.call(drag()
       .on('start', function dragStarted(d: unknown) {
         if((d as YAnnotation).isEditable){
-          d3.select(this)
+          select(this)
             .raise()
             .classed('active', true);
         }
@@ -79,7 +79,7 @@ export const draggable = ({
           const { y: yPos } = event as { y: number };
           annotationDragged.value = calculateNewThreshold({yPos, viewPort, size});
           onUpdate(activeViewPort(), false, false, true);
-          d3.select(this).classed('active', false);
+          select(this).classed('active', false);
         }
       }) as any
   );

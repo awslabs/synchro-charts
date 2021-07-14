@@ -45,5 +45,8 @@
     "lerna": "^4.0.0",
     "lerna-changelog": "^1.0.1",
     "rimraf": "^3.0.2"
+  },
+  "dependencies": {
+    "d3-selection-v3": "npm:d3-selection@3.0.0"
   }
 }
