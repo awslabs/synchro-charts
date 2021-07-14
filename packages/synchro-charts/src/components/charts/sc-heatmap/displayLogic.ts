@@ -10,8 +10,8 @@ export type HeatmapColorPalette = {
 /**
  * Display Constants
  *
- * Adjust these to scale the margins provided within the bar chart.
- * This represent which fraction of the 'width' of a given bar group a margin.
+ * Adjust these to scale the margins provided within the heatmap.
+ * This represent which fraction of the 'width' of a given bucket group a margin.
  */
 const MARGIN_FACTOR = 1 / 6;
 
@@ -19,16 +19,16 @@ const SEQUENTIAL_OPACITIES = [0.2, 0.4, 0.6, 0.8, 1.0];
 const NUM_OF_COLORS_SEQUENTIAL = 8;
 const SEQUENTIAL_BASE_COLOR_INDEX = 5;
 
-export const getBarMargin = (toClipSpace: (time: number) => number, resolution: number) =>
+export const getBucketMargin = (toClipSpace: (time: number) => number, resolution: number) =>
   getDistanceFromDuration(toClipSpace, resolution * MARGIN_FACTOR);
 
 /**
- * Get the bar width
+ * Get the bucket width
  *
- * Returns the clipSpace width which each bar should be.
- * It is assumed that each bar within a group will have the same width.
+ * Returns the clipSpace width which each bucket should be.
+ * It is assumed that each bucket within a group will have the same width.
  */
-export const getBarWidth = ({
+export const getBucketWidth = ({
   toClipSpace,
   resolution,
   numDataStreams,
@@ -37,7 +37,7 @@ export const getBarWidth = ({
   numDataStreams: number;
   resolution: number; // milliseconds
 }) => {
-  return (getDistanceFromDuration(toClipSpace, resolution) - getBarMargin(toClipSpace, resolution)) / numDataStreams;
+  return (getDistanceFromDuration(toClipSpace, resolution) - getBucketMargin(toClipSpace, resolution)) / numDataStreams;
 };
 
 export const getSequential = ({ minColor, maxColor }: { minColor: string; maxColor: string }): HeatmapColorPalette => {
