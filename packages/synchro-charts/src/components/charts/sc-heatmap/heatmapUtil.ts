@@ -63,7 +63,7 @@ export const addCount = ({
     heatValue[xBucketRangeStart][bucketIndex].streamCount[dataStreamId] ?? 0;
   newHeatValue[xBucketRangeStart][bucketIndex].streamCount[dataStreamId] += 1;
   newHeatValue[xBucketRangeStart][bucketIndex].totalCount += 1;
-  return heatValue;
+  return newHeatValue;
 };
 
 /**
