@@ -1,4 +1,3 @@
-import { stratify } from 'd3-hierarchy';
 import { DataType } from '../../../utils/dataConstants';
 import { DataPoint, DataStream, ViewPort } from '../../../utils/dataTypes';
 import { calculateBucketIndex, HeatValueMap, addCount, calcHeatValues, calculateXBucketStart } from './heatmapUtil';
@@ -101,8 +100,7 @@ ${START_TIME + MONTH_IN_MS * 5}    | ${MONTH_IN_MS}       | ${1632960000000}
 
 describe('addCount', () => {
   it('returns aggregated data for one data point', () => {
-    const oldHeatValue: HeatValueMap = {};
-    const newHeatValue = addCount({heatValue: oldHeatValue, xBucketRangeStart: 123, bucketIndex: 1, dataStreamId: 'data-stream-1'});
+    const newHeatValue = addCount({heatValue: {}, xBucketRangeStart: 123, bucketIndex: 1, dataStreamId: 'data-stream-1'});
 
     expect(newHeatValue).toEqual({
       123 : {
