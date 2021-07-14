@@ -85,8 +85,7 @@ export const calcHeatValues = ({
   }
   // if resolution is 0 then set the XAxisBucketRange to be 1 second
   const xAxisBucketRange = resolution === 0 ? SECOND_IN_MS : resolution;
-  const yMax = viewPort.yMax;
-  const yMin = viewPort.yMin;
+  const {yMax, yMin} = viewPort;
   return dataStreams.reduce(
     function(newHeatValue, dataStream) {
       return dataStream.data.reduce(
