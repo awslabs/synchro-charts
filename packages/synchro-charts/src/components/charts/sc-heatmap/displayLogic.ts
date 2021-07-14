@@ -1,6 +1,12 @@
 import { getCSSColorByString } from '../sc-webgl-base-chart/utils';
 import { getDistanceFromDuration } from '../common/getDistanceFromDuration';
 
+export type HeatmapColorPalette = {
+  r: number[];
+  g: number[];
+  b: number[];
+};
+
 /**
  * Display Constants
  *
@@ -9,7 +15,7 @@ import { getDistanceFromDuration } from '../common/getDistanceFromDuration';
  */
 const MARGIN_FACTOR = 1 / 6;
 
-const SEQUENTIAL_OPACITIES = [0.2, 0.4, 0.6, 0.8, 1.0, 0.2, 0.4, 0.6];
+const SEQUENTIAL_OPACITIES = [0.2, 0.4, 0.6, 0.8, 1.0];
 const NUM_OF_COLORS_SEQUENTIAL = 8;
 const SEQUENTIAL_BASE_COLOR_INDEX = 5;
 
@@ -34,44 +40,42 @@ export const getBarWidth = ({
   return (getDistanceFromDuration(toClipSpace, resolution) - getBarMargin(toClipSpace, resolution)) / numDataStreams;
 };
 
-export const getSequential = (minColor: string, maxColor: string): number[][] => {
-  const heatmapR: number[] = [];
-  const heatmapG: number[] = [];
-  const heatmapB: number[] = [];
+export const getSequential = ({ minColor, maxColor }: { minColor: string; maxColor: string }): HeatmapColorPalette => {
+  const heatmapColor: HeatmapColorPalette = { r: [], g: [], b: [] };
   let i = 0;
 
   const minColorRGB = getCSSColorByString(minColor);
   const maxColorRGB = getCSSColorByString(maxColor);
 
   while (i < NUM_OF_COLORS_SEQUENTIAL) {
-    const opacity = SEQUENTIAL_OPACITIES[i];
+    const opacity = SEQUENTIAL_OPACITIES[i % SEQUENTIAL_BASE_COLOR_INDEX];
     if (i < SEQUENTIAL_BASE_COLOR_INDEX) {
-      heatmapR[i] = opacity * maxColorRGB[0] + (1 - opacity) * minColorRGB[0];
-      heatmapG[i] = opacity * maxColorRGB[1] + (1 - opacity) * minColorRGB[1];
-      heatmapB[i] = opacity * maxColorRGB[2] + (1 - opacity) * minColorRGB[2];
+      heatmapColor.r[i] = opacity * maxColorRGB[0] + (1 - opacity) * minColorRGB[0];
+      heatmapColor.g[i] = opacity * maxColorRGB[1] + (1 - opacity) * minColorRGB[1];
+      heatmapColor.b[i] = opacity * maxColorRGB[2] + (1 - opacity) * minColorRGB[2];
     } else {
-      heatmapR[i] = maxColorRGB[0] * (1 - opacity);
-      heatmapG[i] = maxColorRGB[1] * (1 - opacity);
-      heatmapB[i] = maxColorRGB[2] * (1 - opacity);
+      heatmapColor.r[i] = maxColorRGB[0] * (1 - opacity);
+      heatmapColor.g[i] = maxColorRGB[1] * (1 - opacity);
+      heatmapColor.b[i] = maxColorRGB[2] * (1 - opacity);
     }
-    i++;
+    i += 1;
   }
 
-  return [heatmapR, heatmapG, heatmapB];
+  return heatmapColor;
 };
 
-export const getBucketColor = (colorArray: number[][], countInBucket: number, totalPossiblePoints: number): number[] => {
+export const getBucketColor = (
+  colorArray: HeatmapColorPalette,
+  countInBucket: number,
+  totalPossiblePoints: number
+): number[] => {
   if (countInBucket >= totalPossiblePoints) {
     return [
-      colorArray[0][NUM_OF_COLORS_SEQUENTIAL - 1],
-      colorArray[1][NUM_OF_COLORS_SEQUENTIAL - 1],
-      colorArray[2][NUM_OF_COLORS_SEQUENTIAL - 1],
-    ]; 
+      colorArray.r[NUM_OF_COLORS_SEQUENTIAL - 1],
+      colorArray.g[NUM_OF_COLORS_SEQUENTIAL - 1],
+      colorArray.b[NUM_OF_COLORS_SEQUENTIAL - 1],
+    ];
   }
   const index = Math.floor((countInBucket / totalPossiblePoints) * NUM_OF_COLORS_SEQUENTIAL);
-  return [
-    colorArray[0][index],
-    colorArray[1][index],
-    colorArray[2][index],
-  ];
+  return [colorArray.r[index], colorArray.g[index], colorArray.b[index]];
 };
