@@ -74,25 +74,29 @@ const START_TIME_EPOCH_2 = calculateXBucketStart({xValue: START_TIME + MONTH_IN_
 const START_TIME_EPOCH_5 = calculateXBucketStart({xValue: START_TIME + MONTH_IN_MS * 5, xAxisBucketRange: MONTH_IN_MS});
 const START_TIME_EPOCH_10 = calculateXBucketStart({xValue: START_TIME + MONTH_IN_MS * 10, xAxisBucketRange: MONTH_IN_MS});
 
-describe('calculateBucketIndex', () => {
-  it('returns the bucket index for each y-value', () => {
-    expect(calculateBucketIndex({yValue: 100, yMax: 100, yMin: 0, bucketCount: 10})).toBe(10);
-    expect(calculateBucketIndex({yValue: 62, yMax: 100, yMin: 0, bucketCount: 10})).toBe(7);
-
-    expect(calculateBucketIndex({yValue: 10, yMax: 15, yMin: 5, bucketCount: 10})).toBe(5);
-    expect(calculateBucketIndex({yValue: 12, yMax: 15, yMin: 5, bucketCount: 10})).toBe(7);
-
-    expect(calculateBucketIndex({yValue: -4, yMax: 5, yMin: -5, bucketCount: 10})).toBe(1);
-    expect(calculateBucketIndex({yValue: 4, yMax: 5, yMin: -5, bucketCount: 10})).toBe(9);
+describe.each`
+yValue                      | yMax                 | yMin               | bucketCount     | bucketIndex
+${100}                      | ${100}               | ${0}               | ${10}           | ${10}    
+${62}                       | ${100}               | ${0}               | ${10}           | ${7}
+${10}                       | ${15}                | ${5}               | ${10}           | ${5}
+${12}                       | ${15}                | ${5}               | ${10}           | ${7}
+${-4}                       | ${5}                 | ${-5}              | ${10}           | ${1}
+${4}                        | ${5}                 | ${-5}              | ${10}           | ${9}
+`('calculateBucketIndex', ({yValue, yMax, yMin, bucketCount, bucketIndex }) => {
+  test(`bucket index for ${yValue} with yMax: ${yMax} and yMin: ${yMin}`, () => {
+    expect(calculateBucketIndex({yValue, yMax, yMin, bucketCount})).toBe(bucketIndex);
   });
 });
 
-describe('calculateXBucketStart', () => {
-  it('returns lower end of the x bucket value for each x-value', () => {
-    expect(calculateXBucketStart({xValue: START_TIME, xAxisBucketRange: MONTH_IN_MS})).toBe(1620000000000);
-    expect(calculateXBucketStart({xValue: START_TIME + MONTH_IN_MS * 2, xAxisBucketRange: MONTH_IN_MS})).toBe(1625184000000);
-    expect(calculateXBucketStart({xValue: START_TIME + MONTH_IN_MS * 5, xAxisBucketRange: MONTH_IN_MS})).toBe(1632960000000);
-  })
+describe.each`
+xValue                             | xAxisBucketRange     | bucketRangeStart
+${START_TIME}                      | ${MONTH_IN_MS}       | ${1620000000000}  
+${START_TIME + MONTH_IN_MS * 2}    | ${MONTH_IN_MS}       | ${1625184000000}
+${START_TIME + MONTH_IN_MS * 5}    | ${MONTH_IN_MS}       | ${1632960000000}
+`('calculateXBucketStart', ({ xValue, xAxisBucketRange, bucketRangeStart }) => {
+  test(`bucket range start for ${xValue}`, () => {
+    expect(calculateXBucketStart({xValue, xAxisBucketRange})).toBe(bucketRangeStart);
+  });
 });
 
 describe('addCount', () => {
@@ -155,7 +159,6 @@ describe('addCount', () => {
 
 describe('calcHeatValues', () => {
   it('returns aggregated data with multiple dataStreams', () => {
-    console.log(Math.floor(1622541600000 / MONTH_IN_MS) * MONTH_IN_MS);
     const dataStreams: DataStream[] = [
       DATASTREAM_1,
       DATASTREAM_2,
