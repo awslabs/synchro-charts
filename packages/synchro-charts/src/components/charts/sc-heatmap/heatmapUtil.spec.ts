@@ -85,7 +85,7 @@ describe('addCount', () => {
       heatValue: {},
       xBucketRangeStart: START_TIME_EPOCH,
       bucketIndex: 1,
-      dataStreamId: 'data-stream-1',
+      dataStreamId: DATASTREAM_1.id,
     });
     expect(newHeatValue).toEqual({
       [START_TIME_EPOCH]: {
@@ -169,7 +169,6 @@ describe('addCount', () => {
 describe('calcHeatValues', () => {
   it('returns aggregated data for dataStreams with different x-axis bucket ranges', () => {
     const dataStreams: DataStream[] = [DATASTREAM_1, DATASTREAM_2];
-
     const newHeatValue = calcHeatValues({ oldHeatValue: {}, dataStreams, resolution: RESOLUTION, viewPort: VIEW_PORT });
     expect(newHeatValue).toEqual({
       [START_TIME_EPOCH]: expect.any(Object),
@@ -177,5 +176,18 @@ describe('calcHeatValues', () => {
       [START_TIME_EPOCH_5]: expect.any(Object),
       [START_TIME_EPOCH_10]: expect.any(Object),
     });
+  });
+
+  it('returns empty when given non-number datatype', () => {
+    const DATASTREAM = {
+      id: 'data-stream-1',
+      name: 'some name 1',
+      resolution: RESOLUTION,
+      data: DATA_SET_1,
+      dataType: DataType.STRING,
+    };
+    const dataStreams: DataStream[] = [DATASTREAM];
+    const newHeatValue = calcHeatValues({ oldHeatValue: {}, dataStreams, resolution: RESOLUTION, viewPort: VIEW_PORT });
+    expect(newHeatValue).toEqual({});
   });
 });
