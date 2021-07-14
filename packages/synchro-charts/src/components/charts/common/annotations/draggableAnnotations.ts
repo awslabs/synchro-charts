@@ -1,4 +1,4 @@
-import {select} from 'd3-selection-v3';
+import {select, event} from 'd3-selection';
 import {drag} from 'd3-drag';
 import { YAnnotation} from '../types';
 import {ViewPort} from '../../../../utils/dataTypes';
@@ -64,7 +64,7 @@ export const draggable = ({
             .classed('active', true);
         }
       })
-      .on('drag', function handleDragged(event: unknown, d: unknown) {
+      .on('drag', function handleDragged(d: unknown) {
         /** Drag Event */
         const annotationDragged = d as YAnnotation;
         if(annotationDragged.isEditable){
@@ -73,7 +73,7 @@ export const draggable = ({
           onUpdate(activeViewPort(), false, false, true);
         }
       })
-      .on('end', function dragEnded(event: unknown, d: unknown) {
+      .on('end', function dragEnded(d: unknown) {
         const annotationDragged = d as YAnnotation;
         if(annotationDragged.isEditable){
           const { y: yPos } = event as { y: number };

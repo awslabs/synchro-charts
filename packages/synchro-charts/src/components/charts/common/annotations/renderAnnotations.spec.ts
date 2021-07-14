@@ -33,6 +33,8 @@ const render = (props: Partial<RenderAnnotationsOptions>, page: SpecPage) => {
     container: page.body.querySelector('svg') as SVGElement,
     viewPort: VIEWPORT,
     size: SIZE,
+    onUpdate: () => {},
+    activeViewPort: () => {},
   };
 
   renderAnnotations({

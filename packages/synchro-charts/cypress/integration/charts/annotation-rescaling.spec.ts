@@ -35,6 +35,7 @@ const timelineParams: Partial<SearchQueryParams> = {
         },
         showValue: true,
         color: 'blue',
+        isEditable: true,
       },
     ],
   },

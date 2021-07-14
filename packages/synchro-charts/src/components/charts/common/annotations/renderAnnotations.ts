@@ -12,7 +12,6 @@ export type RenderAnnotationsOptions = {
   size: { width: number; height: number };
   onUpdate: Function;
   activeViewPort: Function;
-  isDraggable?: boolean;
 };
 
 type AnnotationPredicate = (annotation: Annotation<AnnotationValue>) => boolean;
@@ -34,7 +33,6 @@ export const renderAnnotations = ({
   size,
   onUpdate,
   activeViewPort,
-  isDraggable,
 }: RenderAnnotationsOptions) => {
   if (typeof annotations === 'object' && typeof annotations.show === 'boolean' && !annotations.show) {
     removeXAnnotations({ container });
@@ -68,7 +66,6 @@ export const renderAnnotations = ({
     size,
   });
 
-  if (isDraggable) {
     draggable({
       container,
       viewPort,
@@ -76,5 +73,5 @@ export const renderAnnotations = ({
       onUpdate,
       activeViewPort,
     });
-  }
+
 };

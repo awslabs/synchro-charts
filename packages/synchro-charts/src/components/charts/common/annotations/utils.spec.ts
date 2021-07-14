@@ -59,6 +59,7 @@ describe('getValueAndText and getValueAndTextVisibility', () => {
       annotation: yAnnotations[0],
       resolution: 1000,
       viewPort: VIEW_PORT,
+      niceDisplayValueText: false,
     });
     expect(valueText).toBe(value.toString());
 
@@ -150,6 +151,7 @@ describe('getValueAndText and getValueAndTextVisibility', () => {
       annotation: yAnnotations[0],
       resolution: 1000,
       viewPort: VIEW_PORT,
+      niceDisplayValueText: false,
     });
 
     expect(valueText).toBeEmpty();

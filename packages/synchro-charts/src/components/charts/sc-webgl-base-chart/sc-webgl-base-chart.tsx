@@ -55,8 +55,6 @@ const MIN_HEIGHT = 50;
 const LEGEND_HEIGHT = 100;
 const DATE_RANGE_EMIT_EVENT_MS = 0.5 * SECOND_IN_MS;
 
-const IS_DRAGGABLE = true;
-
 const DEFAULT_SHOW_DATA_STREAM_COLOR = true;
 
 @Component({
@@ -547,7 +545,6 @@ export class ScWebglBaseChart {
         resolution: this.dataStreams[0] ? this.dataStreams[0].resolution : 0,
         onUpdate: this.onUpdate,
         activeViewPort: this.activeViewPort,
-        isDraggable: IS_DRAGGABLE,
       });
     }
 
