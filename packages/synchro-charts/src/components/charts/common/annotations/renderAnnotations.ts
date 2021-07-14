@@ -66,12 +66,11 @@ export const renderAnnotations = ({
     size,
   });
 
-    draggable({
-      container,
-      viewPort,
-      size,
-      onUpdate,
-      activeViewPort,
-    });
-
+  draggable({
+    container,
+    viewPort,
+    size,
+    onUpdate,
+    activeViewPort,
+  });
 };

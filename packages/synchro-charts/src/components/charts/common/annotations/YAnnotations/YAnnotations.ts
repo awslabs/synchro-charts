@@ -10,7 +10,7 @@ const Y_ANNOTATION_TEXT_PADDING = 3;
 const Y_ANNOTATION_TEXT_LEFT_PADDING = 8;
 
 const HANDLE_OFFSET_X = 1;
-const HANDLE_OFFSET_Y = -11;
+export const HANDLE_OFFSET_Y = -11;
 const HANDLE_WIDTH = 45;
 const HANDLE_HEIGHT = 20;
 
@@ -57,8 +57,10 @@ export const renderYAnnotations = ({
   const getYAnnotationDraggableLineY2 = (yAnnotation: YAnnotation): number =>
     getYPosition(yAnnotation) + HANDLE_OFFSET_Y + DRAGGABLE_LINE_OFFSET_Y + DRAGGABLE_LINE_LENGTH;
 
-  const YAnnotationDragHandleVisibility = (yAnnotation: YAnnotation) : string => yAnnotation.isEditable? 'inline': 'none';
-  const YAnnotationDragHandlePointerActions = (yAnnotation: YAnnotation) : string => yAnnotation.isEditable? 'auto': 'none';
+  const YAnnotationDragHandleVisibility = (yAnnotation: YAnnotation): string =>
+    yAnnotation.isEditable ? 'inline' : 'none';
+  const YAnnotationDragHandlePointerActions = (yAnnotation: YAnnotation): string =>
+    yAnnotation.isEditable ? 'auto' : 'none';
 
   const annotationSelection = select(container)
     .selectAll(ANNOTATION_GROUP_SELECTOR)
@@ -85,7 +87,6 @@ export const renderYAnnotations = ({
   /** Create Value Text */
   annotationGroup
     .append('text')
-    .attr('id', annotation => getValueText({ annotation, resolution, viewPort, niceDisplayValueText: false }))
     .attr('display', getValueTextVisibility)
     .attr('font-size', ANNOTATION_FONT_SIZE)
     .attr('class', 'y-value-text')
@@ -154,7 +155,6 @@ export const renderYAnnotations = ({
   /** Update Threshold Value Text */
   annotationSelection
     .select(TEXT_VALUE_SELECTOR)
-    .attr('id', annotation => getValueText({ annotation, resolution, viewPort, niceDisplayValueText: false }))
     .attr('display', getValueTextVisibility)
     .attr('y', getYAnnotationValueTextY)
     .attr('x', width + Y_ANNOTATION_TEXT_LEFT_PADDING)

@@ -40,7 +40,7 @@ export const getNumberAnnotations = (annotations: Annotations): Annotations => {
 
 const makeNiceValueString = (thresholdValue: number): string => {
   const upperLimit = 99999;
-  const lowerBound = 0.0001;
+  const lowerBound = 0.001;
   const digits = 5;
   const limit = 4;
 

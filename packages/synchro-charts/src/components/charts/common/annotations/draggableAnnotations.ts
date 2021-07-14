@@ -1,8 +1,8 @@
-import {select, event} from 'd3-selection';
-import {drag} from 'd3-drag';
-import { YAnnotation} from '../types';
-import {ViewPort} from '../../../../utils/dataTypes';
-import {DRAGGABLE_HANDLE_SELECTOR} from './YAnnotations/YAnnotations';
+import { select, event } from 'd3-selection';
+import { drag } from 'd3-drag';
+import { YAnnotation } from '../types';
+import { ViewPort } from '../../../../utils/dataTypes';
+import { DRAGGABLE_HANDLE_SELECTOR } from './YAnnotations/YAnnotations';
 
 export type DraggableAnnotationsOptions = {
   container: SVGElement;
@@ -56,9 +56,10 @@ export const draggable = ({
 }: DraggableAnnotationsOptions): void => {
   const containerSelection = select(container);
   const thresholdGroup = containerSelection.selectAll(DRAGGABLE_HANDLE_SELECTOR);
-  thresholdGroup.call(drag()
+  thresholdGroup.call(
+    drag()
       .on('start', function dragStarted(d: unknown) {
-        if((d as YAnnotation).isEditable){
+        if ((d as YAnnotation).isEditable) {
           select(this)
             .raise()
             .classed('active', true);
@@ -67,17 +68,17 @@ export const draggable = ({
       .on('drag', function handleDragged(d: unknown) {
         /** Drag Event */
         const annotationDragged = d as YAnnotation;
-        if(annotationDragged.isEditable){
+        if (annotationDragged.isEditable) {
           const { y: yPos } = event as { y: number };
-          annotationDragged.value = calculateNewThreshold({yPos, viewPort, size});
+          annotationDragged.value = calculateNewThreshold({ yPos, viewPort, size });
           onUpdate(activeViewPort(), false, false, true);
         }
       })
       .on('end', function dragEnded(d: unknown) {
         const annotationDragged = d as YAnnotation;
-        if(annotationDragged.isEditable){
+        if (annotationDragged.isEditable) {
           const { y: yPos } = event as { y: number };
-          annotationDragged.value = calculateNewThreshold({yPos, viewPort, size});
+          annotationDragged.value = calculateNewThreshold({ yPos, viewPort, size });
           onUpdate(activeViewPort(), false, false, true);
           select(this).classed('active', false);
         }

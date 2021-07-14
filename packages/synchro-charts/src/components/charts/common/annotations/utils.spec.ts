@@ -181,6 +181,207 @@ describe('getValueAndText and getValueAndTextVisibility', () => {
   });
 });
 
+describe('getValueAndText niceDisplayValueText', () => {
+  it('returns rounded exponential value for very small numbers - edge', () => {
+    const value = 0.000000156;
+    const expectedDisplayValue = '1.6e-7';
+    const yAnnotations: YAnnotation[] = [
+      {
+        color: 'red',
+        value,
+        showValue: true,
+        label: {
+          text: 'label',
+          show: true,
+        },
+      },
+    ];
+
+    const valueText = getValueText({
+      annotation: yAnnotations[0],
+      resolution: 1000,
+      viewPort: VIEW_PORT,
+      niceDisplayValueText: true,
+    });
+
+    expect(valueText).toBe(expectedDisplayValue);
+  });
+
+  it('returns rounded exponential value for very small numbers - edge', () => {
+    const value = 0.0009987;
+    const expectedDisplayValue = '1.0e-3';
+    const yAnnotations: YAnnotation[] = [
+      {
+        color: 'red',
+        value,
+        showValue: true,
+        label: {
+          text: 'label',
+          show: true,
+        },
+      },
+    ];
+
+    const valueText = getValueText({
+      annotation: yAnnotations[0],
+      resolution: 1000,
+      viewPort: VIEW_PORT,
+      niceDisplayValueText: true,
+    });
+
+    expect(valueText).toBe(expectedDisplayValue);
+  });
+
+  it('returns rounded exponential value for very large numbers - edge', () => {
+    const value = 199999;
+    const expectedDisplayValue = '2.0e+5';
+    const yAnnotations: YAnnotation[] = [
+      {
+        color: 'red',
+        value,
+        showValue: true,
+        label: {
+          text: 'label',
+          show: true,
+        },
+      },
+    ];
+
+    const valueText = getValueText({
+      annotation: yAnnotations[0],
+      resolution: 1000,
+      viewPort: VIEW_PORT,
+      niceDisplayValueText: true,
+    });
+
+    expect(valueText).toBe(expectedDisplayValue);
+  });
+
+  it('returns rounded exponential value for very large numbers', () => {
+    const value = 9987654321;
+    const expectedDisplayValue = '1.0e+10';
+    const yAnnotations: YAnnotation[] = [
+      {
+        color: 'red',
+        value,
+        showValue: true,
+        label: {
+          text: 'label',
+          show: true,
+        },
+      },
+    ];
+
+    const valueText = getValueText({
+      annotation: yAnnotations[0],
+      resolution: 1000,
+      viewPort: VIEW_PORT,
+      niceDisplayValueText: true,
+    });
+
+    expect(valueText).toBe(expectedDisplayValue);
+  });
+
+  it('returns truncated value for small numbers - edge', () => {
+    const value = 0.0012345;
+    const expectedDisplayValue = '0.001';
+    const yAnnotations: YAnnotation[] = [
+      {
+        color: 'red',
+        value,
+        showValue: true,
+        label: {
+          text: 'label',
+          show: true,
+        },
+      },
+    ];
+
+    const valueText = getValueText({
+      annotation: yAnnotations[0],
+      resolution: 1000,
+      viewPort: VIEW_PORT,
+      niceDisplayValueText: true,
+    });
+    expect(valueText).toBe(expectedDisplayValue);
+  });
+
+  it('returns truncated value for small numbers', () => {
+    const value = 0.98765;
+    const expectedDisplayValue = '0.987';
+    const yAnnotations: YAnnotation[] = [
+      {
+        color: 'red',
+        value,
+        showValue: true,
+        label: {
+          text: 'label',
+          show: true,
+        },
+      },
+    ];
+
+    const valueText = getValueText({
+      annotation: yAnnotations[0],
+      resolution: 1000,
+      viewPort: VIEW_PORT,
+      niceDisplayValueText: true,
+    });
+
+    expect(valueText).toBe(expectedDisplayValue);
+  });
+
+  it('returns truncated value for large decimal values in range', () => {
+    const value = 12345.6789;
+    const expectedDisplayValue = '12345';
+    const yAnnotations: YAnnotation[] = [
+      {
+        color: 'red',
+        value,
+        showValue: true,
+        label: {
+          text: 'label',
+          show: true,
+        },
+      },
+    ];
+
+    const valueText = getValueText({
+      annotation: yAnnotations[0],
+      resolution: 1000,
+      viewPort: VIEW_PORT,
+      niceDisplayValueText: true,
+    });
+
+    expect(valueText).toBe(expectedDisplayValue);
+  });
+
+  it('returns truncated value for small decimal values in range', () => {
+    const value = 0.23456789;
+    const expectedDisplayValue = '0.234';
+    const yAnnotations: YAnnotation[] = [
+      {
+        color: 'red',
+        value,
+        showValue: true,
+        label: {
+          text: 'label',
+          show: true,
+        },
+      },
+    ];
+
+    const valueText = getValueText({
+      annotation: yAnnotations[0],
+      resolution: 1000,
+      viewPort: VIEW_PORT,
+      niceDisplayValueText: true,
+    });
+
+    expect(valueText).toBe(expectedDisplayValue);
+  });
+});
+
 describe('annotation logic', () => {
   describe.each`
     key      | thresholdValue | operator                                  | expected
