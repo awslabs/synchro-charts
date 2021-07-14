@@ -13,10 +13,10 @@ import bucketVert from './heatmap.vert';
 import bucketFrag from './heatmap.frag';
 import { WriteableBufferAttribute, WriteableInstancedBufferAttribute } from '../../sc-webgl-context/types';
 import { numDataPoints, vertices, getCSSColorByString } from '../sc-webgl-base-chart/utils';
-import { getBucketWidth } from './displayLogic';
+import { getBucketWidth, getSequential, getBucketColor } from './displayLogic';
 import { getBreachedThreshold } from '../common/annotations/utils';
 import { isNumberDataStream } from '../../../utils/predicates';
-import { DataStream, Primitive } from '../../../utils/dataTypes';
+import { DataStream, Primitive, ViewPort } from '../../../utils/dataTypes';
 import { Threshold, ThresholdOptions } from '../common/types';
 
 type BucketBufferGeometry = BufferGeometry & {
@@ -24,16 +24,18 @@ type BucketBufferGeometry = BufferGeometry & {
     position: WriteableBufferAttribute;
     bucket: WriteableInstancedBufferAttribute;
     color: WriteableInstancedBufferAttribute;
+    bucketHeight: WriteableInstancedBufferAttribute;
   };
 };
-type BucketChartLineMaterial = Material & {
+type HeatmapMaterial = Material & {
   uniforms: {
     width: { value: number };
     devicePixelRatio: { value: number };
+    bucketHeight: {value: number};
   };
 };
 
-export type BucketChartBucketMesh = InstancedMesh & { geometry: BucketBufferGeometry; material: BucketChartLineMaterial };
+export type HeatmapBucketMesh = InstancedMesh & { geometry: BucketBufferGeometry; material: HeatmapMaterial };
 
 // Used to set the default buffer size for a given chart - the larger this is set to, the more memory will be allocated
 // up front per `ChartScene`.
@@ -68,7 +70,7 @@ const updateMesh = ({
   thresholdOptions,
 }: {
   dataStreams: DataStream[];
-  mesh: BucketChartBucketMesh;
+  mesh: HeatmapBucketMesh;
   toClipSpace: (time: number) => number;
   thresholdOptions: ThresholdOptions;
   thresholds: Threshold[];
@@ -146,6 +148,7 @@ export const bucketMesh = ({
   minBufferSize,
   thresholdOptions,
   thresholds,
+  viewPort,
 }: {
   dataStreams: DataStream[];
   toClipSpace: (time: number) => number;
@@ -153,6 +156,7 @@ export const bucketMesh = ({
   minBufferSize: number;
   thresholdOptions: ThresholdOptions;
   thresholds: Threshold[];
+  viewPort: ViewPort;
 }) => {
   const instGeo = (new InstancedBufferGeometry() as unknown) as BucketBufferGeometry;
   const bufferSize = Math.max(minBufferSize, numDataPoints(dataStreams) * bufferFactor);
@@ -177,10 +181,13 @@ export const bucketMesh = ({
       width: {
         value: getUniformWidth(dataStreams, toClipSpace),
       },
+      bucketHeight: {
+        value: viewPort.yMax / 10,
+      }
     },
   });
 
-  const mesh = <BucketChartBucketMesh>new InstancedMesh(instGeo, bucketChartMaterial, bufferSize);
+  const mesh = <HeatmapBucketMesh>new InstancedMesh(instGeo, bucketChartMaterial, bufferSize);
   updateMesh({ dataStreams, mesh, toClipSpace, thresholds, thresholdOptions });
 
   // Prevent bounding sphere from being called
@@ -196,17 +203,20 @@ export const updateBucketMesh = ({
   hasDataChanged,
   thresholdOptions,
   thresholds,
+  viewPort,
 }: {
-  buckets: BucketChartBucketMesh;
+  buckets: HeatmapBucketMesh;
   dataStreams: DataStream[];
   toClipSpace: (time: number) => number;
   hasDataChanged: boolean;
   thresholdOptions: ThresholdOptions;
   thresholds: Threshold[];
+  viewPort: ViewPort;
 }) => {
   if (hasDataChanged) {
     // eslint-disable-next-line no-param-reassign
     buckets.material.uniforms.width.value = getUniformWidth(dataStreams, toClipSpace);
+    buckets.material.uniforms.bucketHeight.value = viewPort.yMax / 10;
     updateMesh({ dataStreams, mesh: buckets, toClipSpace, thresholds, thresholdOptions });
   }
 };
