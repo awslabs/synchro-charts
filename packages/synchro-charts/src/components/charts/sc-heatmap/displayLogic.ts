@@ -1,4 +1,4 @@
-import { getCSSColorByString } from '../sc-webgl-base-chart/utils';
+import { getCSSColorByString } from '../common/getCSSColorByString';
 import { getDistanceFromDuration } from '../common/getDistanceFromDuration';
 
 export type HeatmapColorPalette = {
