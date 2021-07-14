@@ -11,12 +11,6 @@ const Y_MAX = 5000;
 const X_MIN = new Date(1998, 1, 0);
 const X_MAX = new Date(1998, 6, 0);
 
-/**
- * Testing route for the webGL rendering without being fully coupled to the chart.
- *
- * Used to test the behavior of a status chart when adding/removing data points
- */
-
 const DATA_STREAM_1: DataStream = {
   id: 'test',
   color: 'red',
@@ -44,15 +38,15 @@ const DATA_STREAM_2: DataStream = {
 };
 
 @Component({
-  tag: 'status-chart-margin',
+  tag: 'status-timeline-margin',
 })
-export class StatusChartStatusMargin {
+export class StatusTimelineStatusMargin {
   @State() data: DataPoint<number>[] = [];
 
   render() {
     return (
       <div id="chart-container" style={{ height: '500px', width: '500px', marginTop: '20px' }}>
-        <sc-status-chart
+        <sc-status-timeline
           alarms={{ expires: MONTH_IN_MS }}
           widgetId="widget-id"
           dataStreams={[DATA_STREAM_1, DATA_STREAM_2]}

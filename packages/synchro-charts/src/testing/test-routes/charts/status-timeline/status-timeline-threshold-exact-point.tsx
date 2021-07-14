@@ -4,20 +4,14 @@ import { MINUTE_IN_MS } from '../../../../utils/time';
 import { TEST_DATA_POINT_STANDARD, Y_MAX, Y_MIN, X_MIN, X_MAX } from '../constants';
 import { COMPARISON_OPERATOR, DataType } from '../../../..';
 
-/**
- * Testing route for the webGL rendering without being fully coupled to the chart.
- *
- * Tests that a single point renders as a status correctly
- */
-
 @Component({
-  tag: 'status-chart-threshold-coloration',
+  tag: 'status-timeline-threshold-coloration-exact-point',
 })
-export class StatusChartThresholdColoration {
+export class StatusTimelineThresholdExactPoint {
   render() {
     return (
       <div>
-        <sc-status-chart
+        <sc-status-timeline
           alarms={{ expires: MINUTE_IN_MS }}
           dataStreams={[
             {
@@ -33,7 +27,7 @@ export class StatusChartThresholdColoration {
           annotations={{
             y: [
               {
-                value: 2000,
+                value: 2500,
                 label: {
                   text: 'y label',
                   show: true,

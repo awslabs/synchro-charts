@@ -8,10 +8,10 @@ import 'webgl-mock-threejs';
 import { newChartSpecPage } from '../../../testing/chartDescriptions/newChartSpecPage';
 import { describeChart } from '../../../testing/chartDescriptions/describeChart';
 
-const statusChart = newChartSpecPage('sc-status-chart');
+const statusTimeline = newChartSpecPage('sc-status-timeline');
 
-describe('sc-status-chart', () => {
-  describeChart(statusChart, {
+describe('status-timeline', () => {
+  describeChart(statusTimeline, {
     yRange: true,
     viewport: true,
     trends: true,
@@ -32,7 +32,7 @@ describe('annotations', () => {
       show: true,
     };
 
-    const { chart } = await statusChart({ annotations: ANNOTATIONS });
+    const { chart } = await statusTimeline({ annotations: ANNOTATIONS });
     const baseChart = chart.querySelector('sc-webgl-base-chart') as HTMLScWebglBaseChartElement;
 
     expect(baseChart.annotations).toMatchObject({
