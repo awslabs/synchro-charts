@@ -4,11 +4,7 @@ import { MONTH_IN_MS, DAY_IN_MS } from '../../../utils/time';
 
 const VIEW_PORT = { start: new Date(2000, 0), end: new Date(2000, 1, 0), yMin: 0, yMax: 100 };
 const toClipSpace = clipSpaceConversion(VIEW_PORT);
-const COLOR_PALLETE: HeatmapColorPalette = {
-  r: [204, 153, 102, 50.999999999999986, 0, 0, 0, 0],
-  g: [227, 199, 171, 143, 115, 92, 69, 46],
-  b: [241.4, 227.8, 214.2, 200.59999999999997, 187, 149.6, 112.2, 74.8],
-};
+const COLOR_PALLETE: HeatmapColorPalette = getSequential({minColor: '#ffffff', maxColor: '#0073bb'});
 
 const TOTAL_NUM_POINTS_MIN = DAY_IN_MS / 1000;
 const THREE_DATA_STREAM = 3;
@@ -29,7 +25,9 @@ describe('getBucketWidth', () => {
 describe('getSequential', () => {
   it('returns a blue sequential color palette', () => {
     const colorArray = getSequential({ minColor: '#ffffff', maxColor: '#0073bb' });
-    expect(colorArray).toEqual(COLOR_PALLETE);
+    expect(colorArray.r.length).toBe(8);
+    expect(colorArray.g.length).toBe(8);
+    expect(colorArray.b.length).toBe(8);
   });
 });
 
