@@ -22,7 +22,7 @@ const noop = () => {};
 })
 export class ScLegend {
   @Prop() config!: LegendConfig;
-  @Prop() viewPort!: ViewPort;
+  @Prop() viewport!: ViewPort;
   @Prop() dataStreams!: DataStream[];
   @Prop() updateDataStreamName!: ({ streamId, name }: { streamId: string; name: string }) => void;
   @Prop() visualizesAlarms!: boolean;
@@ -54,7 +54,7 @@ export class ScLegend {
   ): ThresholdColorAndIcon | undefined => {
     const threshold = breachedThreshold({
       value: point && point.y,
-      date: this.viewPort.end,
+      date: this.viewport.end,
       dataStreams: this.dataStreams,
       dataStream,
       thresholds: this.thresholds,
@@ -65,14 +65,14 @@ export class ScLegend {
 
   render() {
     const points = activePoints({
-      viewPort: this.viewPort,
+      viewport: this.viewport,
       dataStreams: this.dataStreams,
-      selectedDate: this.viewPort.end,
+      selectedDate: this.viewport.end,
       allowMultipleDates: true,
       dataAlignment: DATA_ALIGNMENT.EITHER,
     });
 
-    const lastDate = points.length === 0 || points[0].point == null ? this.viewPort.end.getTime() : points[0].point.x;
+    const lastDate = points.length === 0 || points[0].point == null ? this.viewport.end.getTime() : points[0].point.x;
 
     return (
       <div

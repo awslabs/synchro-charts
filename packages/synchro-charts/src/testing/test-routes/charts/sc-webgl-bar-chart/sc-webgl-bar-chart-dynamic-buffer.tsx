@@ -54,7 +54,7 @@ export class ScWebglBarChartDynamicBuffer {
                 dataType: DataType.NUMBER,
               },
             ]}
-            viewPort={{
+            viewport={{
               yMin: Y_MIN,
               yMax: Y_MAX,
               start: X_MIN,

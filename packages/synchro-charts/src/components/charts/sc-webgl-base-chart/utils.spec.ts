@@ -16,12 +16,12 @@ describe('construct chart scene', () => {
   const X_MAX = new Date(2001, 0, 0);
   const Y_MIN = 100;
   const Y_MAX = 5000;
-  const VIEW_PORT = { start: X_MIN, end: X_MAX, yMin: Y_MIN, yMax: Y_MAX };
+  const VIEWPORT = { start: X_MIN, end: X_MAX, yMin: Y_MIN, yMax: Y_MAX };
 
   it('onUpdate is called when viewport is updated with the new viewport dates', () => {
     const onUpdate = jest.fn();
     const scene = constructChartScene({
-      viewPort: VIEW_PORT,
+      viewport: VIEWPORT,
       container: document.createElement('div'),
       scene: new Scene(),
       toClipSpace: z => z,
@@ -40,7 +40,7 @@ describe('construct chart scene', () => {
 
   it('initializes the camera with the correct view port based on the x and y domains', () => {
     const scene = constructChartScene({
-      viewPort: VIEW_PORT,
+      viewport: VIEWPORT,
       container: document.createElement('div'),
       scene: new Scene(),
       toClipSpace: z => z,
@@ -53,13 +53,13 @@ describe('construct chart scene', () => {
 
   it('creates a unique id', () => {
     const scene1 = constructChartScene({
-      viewPort: VIEW_PORT,
+      viewport: VIEWPORT,
       container: document.createElement('div'),
       scene: new Scene(),
       toClipSpace: z => z,
     });
     const scene2 = constructChartScene({
-      viewPort: VIEW_PORT,
+      viewport: VIEWPORT,
       container: document.createElement('div'),
       scene: new Scene(),
       toClipSpace: z => z,
@@ -70,7 +70,7 @@ describe('construct chart scene', () => {
   describe('disposal of scene', () => {
     it('disposes top level scene', () => {
       const chartScene = constructChartScene({
-        viewPort: VIEW_PORT,
+        viewport: VIEWPORT,
         container: document.createElement('div'),
         scene: new Scene(),
         toClipSpace: z => z,
@@ -82,7 +82,7 @@ describe('construct chart scene', () => {
 
     it('disposes of a single mesh correctly', () => {
       const chartScene = constructChartScene({
-        viewPort: VIEW_PORT,
+        viewport: VIEWPORT,
         container: document.createElement('div'),
         scene: new Scene(),
         toClipSpace: z => z,
@@ -108,7 +108,7 @@ describe('construct chart scene', () => {
         dataStreams: [],
         minBufferSize: 100,
         bufferFactor: 2,
-        viewPort: VIEW_PORT,
+        viewport: VIEWPORT,
         container: document.createElement('div'),
         chartSize: CHART_SIZE,
         thresholdOptions: {

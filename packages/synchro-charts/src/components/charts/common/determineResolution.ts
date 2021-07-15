@@ -11,25 +11,25 @@ const ZERO_RESOLUTION_THRESHOLD = MINUTE_IN_MS / 4;
 
 export const determineResolution = ({
   supportedResolutions,
-  viewPortStartDate,
-  viewPortEndDate,
+  viewportStartDate,
+  viewportEndDate,
   maxPoints,
 }: {
   // The valid resolutions in seconds that can be utilized
   supportedResolutions: number[];
   // The maximum amount of points allowed to be rendered (too many points -> bad performance)
   maxPoints: number;
-  viewPortStartDate?: Date;
-  viewPortEndDate?: Date;
+  viewportStartDate?: Date;
+  viewportEndDate?: Date;
 }): number => {
   if (supportedResolutions.length === 0) {
     throw new Error('Must support at least one resolution of data');
   }
-  if (!viewPortEndDate || !viewPortStartDate) {
+  if (!viewportEndDate || !viewportStartDate) {
     throw new Error('determine resolution does not yet support not passing in start and end date');
   }
 
-  const timeSpan = viewPortEndDate.getTime() - viewPortStartDate.getTime();
+  const timeSpan = viewportEndDate.getTime() - viewportStartDate.getTime();
   const minResolution = timeSpan / maxPoints;
   const sortedResolutions = supportedResolutions.sort((a, b) => a - b);
 

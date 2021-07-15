@@ -4,7 +4,7 @@ import { MONTH_IN_MS } from '../../../utils/time';
 import { StatusChartStatusMesh } from './statusMesh';
 import { DataType } from '../../../utils/dataConstants';
 
-const VIEW_PORT = { start: new Date(2000), end: new Date(2001, 0, 0), yMin: 0, yMax: 100 };
+const VIEWPORT = { start: new Date(2000), end: new Date(2001, 0, 0), yMin: 0, yMax: 100 };
 
 const TEST_DATA_POINTS: DataPoint<number>[] = Array.from({ length: 7 }, (_, index) => {
   return {
@@ -26,7 +26,7 @@ describe('statuses', () => {
         { id: 'data-stream', name: 'some name', resolution: MONTH_IN_MS, data: [], dataType: DataType.NUMBER },
       ],
       minBufferSize: 0,
-      viewPort: VIEW_PORT,
+      viewport: VIEWPORT,
       thresholdOptions: {
         showColor: false,
       },
@@ -52,7 +52,7 @@ describe('statuses', () => {
       hasDataChanged: true,
       minBufferSize: 0,
       scene,
-      viewPort: VIEW_PORT,
+      viewport: VIEWPORT,
       thresholdOptions: {
         showColor: false,
       },

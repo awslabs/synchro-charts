@@ -8,11 +8,11 @@ import { ViewPort } from '../../../utils/dataTypes';
  */
 
 export const pixelDensity = ({
-  viewPort: { end, start, yMax, yMin },
+  viewport: { end, start, yMax, yMin },
   toClipSpace,
   size,
 }: {
-  viewPort: ViewPort;
+  viewport: ViewPort;
   toClipSpace: (time: number) => number;
   size: { width: number; height: number };
 }) => {

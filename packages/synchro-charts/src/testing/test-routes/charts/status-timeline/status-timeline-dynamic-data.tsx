@@ -63,7 +63,7 @@ export class StatusTimelineDynamicData {
               height: 500,
             }}
             widgetId="widget-id"
-            viewPort={{
+            viewport={{
               yMin: Y_MIN,
               yMax: Y_MAX,
               start: X_MIN,

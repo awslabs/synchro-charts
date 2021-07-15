@@ -68,7 +68,7 @@ const tooltip = (alarms?: AlarmsConfig) => (props: Tooltip.Props) => {
 })
 export class ScStatusTimeline implements ChartConfig {
   /** Chart API */
-  @Prop() viewPort: MinimalViewPortConfig;
+  @Prop() viewport: MinimalViewPortConfig;
   @Prop() gestures: boolean = true;
   @Prop() movement?: MovementConfig;
   @Prop() scale?: ScaleConfig;
@@ -136,8 +136,8 @@ export class ScStatusTimeline implements ChartConfig {
                 size={chartSize}
                 dataStreams={this.dataStreams}
                 alarms={this.alarms}
-                viewPort={{
-                  ...this.viewPort,
+                viewport={{
+                  ...this.viewport,
                   yMin: 0,
                   yMax: HEIGHT,
                 }}
@@ -154,7 +154,7 @@ export class ScStatusTimeline implements ChartConfig {
               <sc-status-timeline-overlay
                 isEditing={this.isEditing}
                 thresholds={this.thresholds()}
-                date={this.viewPort.end || new Date()}
+                date={this.viewport.end || new Date()}
                 dataStreams={this.dataStreams}
                 size={chartSize}
                 widgetId={this.widgetId}

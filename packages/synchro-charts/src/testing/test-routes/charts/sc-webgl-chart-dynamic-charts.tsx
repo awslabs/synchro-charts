@@ -142,7 +142,7 @@ export class ScWebglChartStandard {
             <sc-line-chart
               dataStreams={data}
               widgetId={key}
-              viewPort={{ start: X_MIN, end: X_MAX, yMin: Y_MIN, yMax: Y_MAX }}
+              viewport={{ start: X_MIN, end: X_MAX, yMin: Y_MIN, yMax: Y_MAX }}
             />
           </div>
         ))}

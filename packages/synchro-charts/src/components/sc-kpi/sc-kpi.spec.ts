@@ -20,8 +20,8 @@ import { ScWidgetGrid } from '../sc-widget-grid/sc-widget-grid';
 import { ScGridTooltip } from '../sc-widget-grid/sc-grid-tooltip';
 import { DataPoint } from '../../utils/dataTypes';
 
-const VIEW_PORT = {
-  ...DEFAULT_CHART_CONFIG.viewPort,
+const VIEWPORT = {
+  ...DEFAULT_CHART_CONFIG.viewport,
   duration: MINUTE_IN_MS,
 };
 
@@ -36,7 +36,7 @@ const newValueSpecPage = async (propOverrides: Partial<Components.ScKpi> = {}) =
     widgetId: 'test-kpi-widget',
     isEditing: false,
     dataStreams: DATA_STREAMS,
-    viewPort: VIEW_PORT,
+    viewport: VIEWPORT,
     ...propOverrides,
   };
   update(kpi, props);
@@ -155,15 +155,15 @@ describe('when enabled', () => {
 
 describe('when disabled', () => {
   it('renders base kpi per data stream', async () => {
-    const NON_LIVE_VIEW_PORT = {
-      ...VIEW_PORT,
+    const NON_LIVE_VIEWPORT = {
+      ...VIEWPORT,
       duration: undefined,
     };
 
     const dataStreams = [STRING_STREAM_1, STRING_STREAM_2, DATA_STREAM, ALARM_STREAM];
 
     const { kpi } = await newValueSpecPage({
-      viewPort: NON_LIVE_VIEW_PORT,
+      viewport: NON_LIVE_VIEWPORT,
       dataStreams,
     });
 
@@ -172,13 +172,13 @@ describe('when disabled', () => {
   });
 
   it('renders a help icon', async () => {
-    const NON_LIVE_VIEW_PORT = {
-      ...VIEW_PORT,
+    const NON_LIVE_VIEWPORT = {
+      ...VIEWPORT,
       duration: undefined,
     };
 
     const { kpi } = await newValueSpecPage({
-      viewPort: NON_LIVE_VIEW_PORT,
+      viewport: NON_LIVE_VIEWPORT,
     });
 
     expect(kpi.querySelector('sc-help-tooltip')).not.toBeNull();

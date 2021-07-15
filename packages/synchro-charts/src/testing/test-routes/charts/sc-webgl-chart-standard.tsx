@@ -43,7 +43,7 @@ export class ScWebglChartStandard {
             height: 500,
             width: 500,
           }}
-          viewPort={{ start: X_MIN, end: X_MAX, yMin: Y_MIN, yMax: Y_MAX }}
+          viewport={{ start: X_MIN, end: X_MAX, yMin: Y_MIN, yMax: Y_MAX }}
         />
         <sc-webgl-context />
       </div>

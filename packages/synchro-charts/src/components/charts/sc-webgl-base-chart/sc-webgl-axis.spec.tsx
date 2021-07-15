@@ -45,7 +45,7 @@ const axisSpecPage = async (axisRendererProps?: Partial<AxisRendererProps>) => {
   axisRenderer({
     container: axis.querySelector('svg.axis') as SVGElement,
     size: SIZE_CONFIG,
-    viewPort: VIEWPORT,
+    viewport: VIEWPORT,
     ...axisRendererProps,
   });
 
@@ -208,7 +208,7 @@ describe('updated correctly', () => {
     axisRenderer({
       container: axis.querySelector('svg.axis') as SVGElement,
       size: SIZE_CONFIG,
-      viewPort: {
+      viewport: {
         ...VIEWPORT,
         start: new Date(1995, 0, 0),
         end: new Date(1997, 0, 0),
@@ -233,7 +233,7 @@ describe('updated correctly', () => {
     axisRenderer({
       container: axis.querySelector('svg.axis') as SVGElement,
       size: SIZE_CONFIG,
-      viewPort: {
+      viewport: {
         ...VIEWPORT,
         yMin: 4000,
         yMax: 5000,
@@ -262,7 +262,7 @@ describe('updated correctly', () => {
     axisRenderer({
       container: axis.querySelector('svg.axis') as SVGElement,
       size: SIZE_CONFIG,
-      viewPort: {
+      viewport: {
         ...VIEWPORT,
         yMin: 4000,
         yMax: 5000,

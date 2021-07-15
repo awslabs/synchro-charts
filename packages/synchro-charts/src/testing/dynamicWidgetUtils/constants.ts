@@ -160,7 +160,7 @@ const oilAlarmStream: DataStream<string> = {
 
 export const DATA = [mphStream, speedingAlarmStream, oilAlarmStream];
 
-export const VIEW_PORT = {
+export const VIEWPORT = {
   start: X_MIN,
   end: X_MAX,
 };

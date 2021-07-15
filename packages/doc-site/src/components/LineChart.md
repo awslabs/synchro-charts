@@ -3,7 +3,7 @@ const MONTH_RESOLUTION = 1000 * 60 * 60 * 24 * 30; // one month
 <div style={{ width: '100%', height: '500px' }}>
   <LineChart
     widgetId="widget-id"
-    viewPort={{
+    viewport={{
         start: new Date(2000, 0, 0),
         end: new Date(2001, 2, 0),
     }}
@@ -79,7 +79,7 @@ const MONTH_RESOLUTION = 1000 * 60 * 60 * 24 * 30; // one month
 <div style={{ width: '100%', height: '500px' }}>
   <LineChart
     widgetId="widget-id"
-    viewPort={{
+    viewport={{
         start: new Date(2000, 0, 0),
         end: new Date(2001, 2, 0),
     }}

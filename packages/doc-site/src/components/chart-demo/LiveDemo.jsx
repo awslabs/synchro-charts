@@ -139,7 +139,7 @@ export class LiveDemo extends React.Component {
       dataStreams,
       alarmStatusStreams,
       isLiveMode: true,
-      viewPort: {
+      viewport: {
         start: new Date (Date.now() - DURATION),
         end: new Date(),
         group: 'Live_demo',
@@ -151,8 +151,8 @@ export class LiveDemo extends React.Component {
     setInterval(() => {
       if (this.state.isLiveMode) {
         this.setState({
-          viewPort: {
-            ...this.state.viewPort,
+          viewport: {
+            ...this.state.viewport,
             start: new Date (Date.now() - DURATION),
             end: new Date(),
           },
@@ -198,8 +198,8 @@ export class LiveDemo extends React.Component {
   onDateRangeChange = ({ detail: [start, end]}) => {
     this.setState({
       isLiveMode: false,
-      viewPort: {
-        ...this.state.viewPort,
+      viewport: {
+        ...this.state.viewport,
         start,
         end,
       }
@@ -207,13 +207,13 @@ export class LiveDemo extends React.Component {
   }
 
   render() {
-    const { viewPort, dataStreams, alarmStatusStreams } = this.state;
+    const { viewport, dataStreams, alarmStatusStreams } = this.state;
     return (
       <div ref={this.liveDemoContainer}>
         <div style={{ height: '250px', width: '100%' }}>
           <LineChart
             widgetId="line-chart-1"
-            viewPort={viewPort}
+            viewport={viewport}
             dataStreams={dataStreams}
             annotations={propertyAnnotations}
           />
@@ -221,7 +221,7 @@ export class LiveDemo extends React.Component {
         <div style={{ height: '250px', marginLeft: '40px', width: 'calc(100% - 75px)' }}>
           <StatusTimeline
             widgetId="status-timeline-1"
-            viewPort={viewPort}
+            viewport={viewport}
             dataStreams={alarmStatusStreams}
             annotations={annotations}
           />

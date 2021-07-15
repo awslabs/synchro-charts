@@ -15,7 +15,7 @@ type PerfTestCase = {
   // Data added per round
   dataPerRound: number;
   // Incremental increase in MS of the viewport per frame
-  viewPortSpeed?: number;
+  viewportSpeed?: number;
 };
 
 const RUN_EACH_TEST_NUM_TIMES = 1;
@@ -63,14 +63,14 @@ const testCases: PerfTestCase[] = [
     testDuration: 5 * SECOND_IN_MS,
     roundFrequency: SECOND_IN_MS / 50,
     dataPerRound: 2000,
-    viewPortSpeed: DAY_IN_MS,
+    viewportSpeed: DAY_IN_MS,
   },
   {
     minFPS: 7,
     testDuration: 15 * SECOND_IN_MS,
     roundFrequency: SECOND_IN_MS / 50,
     dataPerRound: 2000,
-    viewPortSpeed: DAY_IN_MS,
+    viewportSpeed: DAY_IN_MS,
   },
 ];
 
@@ -83,15 +83,15 @@ describe.skip('line chart', () => {
   const results: any = {};
 
   describe('with all data being added within the viewport', () => {
-    testCases.forEach(({ viewPortSpeed, minFPS, roundFrequency, dataPerRound, testDuration }) => {
-      const testName = `${viewPortSpeed != null ? `view port moving at a rate of ${viewPortSpeed}ms ` : ''}with ${dataPerRound} data per round, coming in at a frequency of ${roundFrequency}ms, a min FPS will be ${minFPS} over a duration of ${Math.floor(
+    testCases.forEach(({ viewportSpeed, minFPS, roundFrequency, dataPerRound, testDuration }) => {
+      const testName = `${viewportSpeed != null ? `view port moving at a rate of ${viewportSpeed}ms ` : ''}with ${dataPerRound} data per round, coming in at a frequency of ${roundFrequency}ms, a min FPS will be ${minFPS} over a duration of ${Math.floor(
         testDuration / SECOND_IN_MS
       )}sec`;
       results[testName] = {};
       new Array(RUN_EACH_TEST_NUM_TIMES).fill(0).forEach((_, runNum) => {
         it(`RUN ${runNum + 1}: ${testName}`, () => {
           cy.visit(
-            `${root}/sc-line-chart-stream-data?viewPortSpeed=${viewPortSpeed || 0}&roundFrequency=${roundFrequency}&dataPerRound=${dataPerRound}`
+            `${root}/sc-line-chart-stream-data?viewportSpeed=${viewportSpeed || 0}&roundFrequency=${roundFrequency}&dataPerRound=${dataPerRound}`
           );
           cy.get('sc-line-chart').should('exist');
 

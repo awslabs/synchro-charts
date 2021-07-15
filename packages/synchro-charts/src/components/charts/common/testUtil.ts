@@ -5,7 +5,7 @@ import { ScaleType } from './constants';
 import { DataType } from '../../../utils/dataConstants';
 import { ViewPort } from '../../../utils/dataTypes';
 
-export const VIEW_PORT: ViewPort = {
+export const VIEWPORT: ViewPort = {
   start: new Date(2000, 0, 0, 0),
   end: new Date(2001, 0, 0, 0),
   yMin: 0,
@@ -18,7 +18,7 @@ export const VIEW_PORT: ViewPort = {
 export const CHART_CONFIG: BaseChartConfig = {
   ...DEFAULT_CHART_CONFIG,
   widgetId: 'base-chart-config',
-  viewPort: VIEW_PORT,
+  viewport: VIEWPORT,
   size: { width: 500, height: 500, marginLeft: 100, marginRight: 40, marginTop: 40, marginBottom: 100 },
   movement: {
     enableXScroll: true,

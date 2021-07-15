@@ -7,7 +7,7 @@ import { Components } from '../../../components.d';
 import { ScKpiBase } from './sc-kpi-base';
 import { DataStream, DataStreamInfo, DEFAULT_MESSAGE_OVERRIDES } from '../../../utils/dataTypes';
 
-import { VIEW_PORT } from '../../charts/common/testUtil';
+import { VIEWPORT } from '../../charts/common/testUtil';
 import { HOUR_IN_MS, YEAR_IN_MS } from '../../../utils/time';
 import { NO_VALUE_PRESENT } from '../../common/terms';
 import { DATA_STREAM, THRESHOLD } from '../../../testing/__mocks__/mockWidgetProperties';
@@ -44,7 +44,7 @@ const newValueSpecPage = async (propOverrides: Partial<Components.ScKpiBase> = {
     messageOverrides: {},
     trendStream: undefined,
     propertyStream: DATA_STREAM,
-    viewPort: VIEW_PORT,
+    viewport: VIEWPORT,
     miniVersion: false,
     onChangeLabel: () => null,
     ...propOverrides,
@@ -64,7 +64,7 @@ describe('disabled', () => {
   it('renders placeholder text when point is within viewport', async () => {
     const { chart } = await newValueSpecPage({
       isEnabled: false,
-      viewPort: {
+      viewport: {
         start: new Date(1999, 0, 0),
         end: new Date(2001, 0, 0),
         duration: YEAR_IN_MS,
@@ -100,9 +100,9 @@ describe('messageOverrides', () => {
 });
 
 describe('latest value', () => {
-  it('renders single data points value which is within the viewPort', async () => {
+  it('renders single data points value which is within the viewport', async () => {
     const { chart } = await newValueSpecPage({
-      viewPort: {
+      viewport: {
         start: new Date(1999, 0, 0),
         end: new Date(2001, 0, 0),
         duration: HOUR_IN_MS,
@@ -127,7 +127,7 @@ describe('latest value', () => {
   it('renders data for a single datapoint that is outside of the date range', async () => {
     const LATEST_VALUE = 1298;
     const { chart } = await newValueSpecPage({
-      viewPort: {
+      viewport: {
         start: new Date(2000, 0, 0),
         end: new Date(2001, 0, 0),
       },
@@ -145,7 +145,7 @@ describe('latest value', () => {
     const LATEST_VALUE = 8910;
 
     const { chart } = await newValueSpecPage({
-      viewPort: { duration: YEAR_IN_MS },
+      viewport: { duration: YEAR_IN_MS },
       propertyPoint: { x: new Date(1994, 0, 0).getTime(), y: LATEST_VALUE },
       propertyStream: DATA_STREAM,
     });
@@ -179,14 +179,14 @@ describe('trend', () => {
     expect(valueContainer.textContent).toEqual(EXPECTED_PERCENTAGE);
   });
 
-  it('displays the previous value from a given set of data partially within the viewPort', async () => {
+  it('displays the previous value from a given set of data partially within the viewport', async () => {
     const Y_VALUE_1 = 100;
     const Y_VALUE_2 = 150;
     const Y_VALUE_3 = 125;
     const EXPECTED_PERCENTAGE = '16.7%';
 
     const { chart } = await newValueSpecPage({
-      viewPort: {
+      viewport: {
         duration: 5 * YEAR_IN_MS,
       },
       trendStream: {
@@ -210,7 +210,7 @@ describe('trend', () => {
 
   it('displays the trend as 0% when value and prevValue are both 0', async () => {
     const { chart } = await newValueSpecPage({
-      viewPort: {
+      viewport: {
         duration: 5 * YEAR_IN_MS,
       },
       trendStream: {
@@ -231,7 +231,7 @@ describe('trend', () => {
 
   it('displays no previous value on trend when previous value is 0 but current value is positive', async () => {
     const { chart } = await newValueSpecPage({
-      viewPort: {
+      viewport: {
         duration: 5 * YEAR_IN_MS,
       },
       trendStream: {
@@ -252,7 +252,7 @@ describe('trend', () => {
 
   it('displays no previous value on trend when previous value is 0 but current value is negative', async () => {
     const { chart } = await newValueSpecPage({
-      viewPort: {
+      viewport: {
         duration: 5 * YEAR_IN_MS,
       },
       trendStream: {

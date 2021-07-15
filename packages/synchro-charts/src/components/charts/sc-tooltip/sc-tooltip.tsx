@@ -17,7 +17,7 @@ export class ScTooltip {
   @Prop() size!: SizeConfig;
   @Prop() dataContainer!: HTMLElement;
   @Prop() dataStreams!: DataStream[];
-  @Prop() viewPort!: ViewPort;
+  @Prop() viewport!: ViewPort;
   @Prop() thresholds!: Threshold[];
   @Prop() trendResults: TrendResult[] = [];
   @Prop() maxDurationFromDate?: number; // milliseconds
@@ -60,12 +60,12 @@ export class ScTooltip {
 
     if (!isMouseBeingPressed && offsetX != null) {
       // Determine the date which corresponds with the mouses position.
-      const { start, end } = this.viewPort;
+      const { start, end } = this.viewport;
       const { width } = this.size;
 
       const ratio = offsetX / width;
-      const viewPortDuration = end.getTime() - start.getTime();
-      const selectedDateMS = start.getTime() + viewPortDuration * ratio;
+      const viewportDuration = end.getTime() - start.getTime();
+      const selectedDateMS = start.getTime() + viewportDuration * ratio;
 
       this.selectedDate = new Date(selectedDateMS);
     } else {
@@ -88,7 +88,7 @@ export class ScTooltip {
         trendResults={this.trendResults}
         size={this.size}
         dataStreams={this.dataStreams}
-        viewPort={this.viewPort}
+        viewport={this.viewport}
         selectedDate={this.selectedDate}
         thresholds={this.thresholds}
         maxDurationFromDate={this.maxDurationFromDate}

@@ -1,22 +1,22 @@
 import uuid from 'uuid/v4';
 
-import { ViewPortHandler } from './viewPortHandler';
+import { ViewportHandler } from './viewPortHandler';
 import { ViewPortManager } from './types';
 
-const viewportManager = (viewPortGroup?: string): ViewPortManager => ({
+const viewportManager = (viewportGroup?: string): ViewPortManager => ({
   id: uuid(),
   updateViewPort: jest.fn(),
-  viewPortGroup,
+  viewportGroup,
   dispose: jest.fn(),
 });
 
 it('has no managers when initially created', () => {
-  const groups = new ViewPortHandler();
+  const groups = new ViewportHandler();
   expect(groups.managers()).toBeEmpty();
 });
 
 it('appends manager when added', () => {
-  const groups = new ViewPortHandler();
+  const groups = new ViewportHandler();
   const manager = viewportManager();
 
   groups.add(manager);
@@ -25,7 +25,7 @@ it('appends manager when added', () => {
 });
 
 it('is empty after removing all managers from the group', () => {
-  const groups = new ViewPortHandler();
+  const groups = new ViewportHandler();
   const manager = viewportManager();
 
   groups.add(manager);
@@ -35,7 +35,7 @@ it('is empty after removing all managers from the group', () => {
 });
 
 it('disposes of all managers when the group is disposed', () => {
-  const groups = new ViewPortHandler();
+  const groups = new ViewportHandler();
 
   const manager1 = viewportManager();
   const manager2 = viewportManager();
@@ -52,7 +52,7 @@ it('disposes of all managers when the group is disposed', () => {
 
 describe('syncing managers', () => {
   it('updates all managers with the same view port group', () => {
-    const groups = new ViewPortHandler();
+    const groups = new ViewportHandler();
 
     const START = new Date(2000, 0, 0);
     const END = new Date(2001, 0, 0);
@@ -77,7 +77,7 @@ describe('syncing managers', () => {
   });
 
   it('does not update any managers when propagate event is true', () => {
-    const groups = new ViewPortHandler();
+    const groups = new ViewportHandler();
 
     const START = new Date(2000, 0, 0);
     const END = new Date(2001, 0, 0);
@@ -97,7 +97,7 @@ describe('syncing managers', () => {
   });
 
   it('does not update manager not in same view port group', () => {
-    const groups = new ViewPortHandler();
+    const groups = new ViewportHandler();
 
     const START = new Date(2000, 0, 0);
     const END = new Date(2001, 0, 0);
@@ -120,7 +120,7 @@ describe('syncing managers', () => {
   });
 
   it('a manager in no view port group does not sync to any other managers', () => {
-    const groups = new ViewPortHandler();
+    const groups = new ViewportHandler();
 
     const START = new Date(2000, 0, 0);
     const END = new Date(2001, 0, 0);
@@ -140,7 +140,7 @@ describe('syncing managers', () => {
   });
 
   it('a manager added to an existing view port group that has had view ports updated, will have the managers viewport updated to match the existing managers view ports', () => {
-    const groups = new ViewPortHandler();
+    const groups = new ViewportHandler();
 
     const VIEWPORT_GROUP = 'view-port-group';
     const START = new Date(2000, 0, 0);
@@ -161,7 +161,7 @@ describe('syncing managers', () => {
   });
 
   it('will not update viewport when syncUpdate is false', () => {
-    const groups = new ViewPortHandler();
+    const groups = new ViewportHandler();
 
     const VIEWPORT_GROUP = 'view-port-group';
     const START = new Date(2000, 0, 0);
@@ -181,7 +181,7 @@ describe('syncing managers', () => {
   });
 
   it('a manager added to a non existing view port group does not have its view port updated', () => {
-    const groups = new ViewPortHandler();
+    const groups = new ViewportHandler();
 
     const VIEWPORT_GROUP_1 = 'view-port-group-1';
     const VIEWPORT_GROUP_2 = 'view-port-group-2';

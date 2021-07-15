@@ -154,7 +154,7 @@ const initializeGeometry = (geometry: LineBufferGeometry, bufferSize: number) =>
 };
 
 export const lineMesh = ({
-  viewPort,
+  viewport,
   dataStreams,
   chartSize,
   minBufferSize,
@@ -165,7 +165,7 @@ export const lineMesh = ({
 }: {
   chartSize: { width: number; height: number };
   dataStreams: DataStream[];
-  viewPort: ViewPort;
+  viewport: ViewPort;
   minBufferSize: number;
   bufferFactor: number;
   toClipSpace: (time: number) => number;
@@ -180,7 +180,7 @@ export const lineMesh = ({
   initializeGeometry(geometry, bufferSize);
 
   // Construct shader
-  const { x: xPixelDensity, y: yPixelDensity } = pixelDensity({ viewPort, toClipSpace, size: chartSize });
+  const { x: xPixelDensity, y: yPixelDensity } = pixelDensity({ viewport, toClipSpace, size: chartSize });
   const { showColor = true } = thresholdOptions;
 
   const lineMaterial = new RawShaderMaterial({
@@ -217,20 +217,20 @@ export const updateLineMesh = ({
   toClipSpace,
   lines,
   dataStreams,
-  viewPort,
+  viewport,
   hasDataChanged,
 }: {
   chartSize: { width: number; height: number };
   toClipSpace: (time: number) => number;
   lines: LineChartLineMesh;
   dataStreams: DataStream[];
-  viewPort: ViewPort;
+  viewport: ViewPort;
   hasDataChanged: boolean;
 }) => {
   /**
    * Update Uniforms
    */
-  const { x: xPixelDensity, y: yPixelDensity } = pixelDensity({ viewPort, toClipSpace, size: chartSize });
+  const { x: xPixelDensity, y: yPixelDensity } = pixelDensity({ viewport, toClipSpace, size: chartSize });
   lines.material.uniforms.xPixelDensity.value = xPixelDensity;
   lines.material.uniforms.yPixelDensity.value = yPixelDensity;
 

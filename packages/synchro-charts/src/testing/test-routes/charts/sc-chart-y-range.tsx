@@ -66,7 +66,7 @@ export class ScChartYRange {
             height: 500,
             width: 500,
           }}
-          viewPort={{ start: X_MIN, end: X_MAX }}
+          viewport={{ start: X_MIN, end: X_MAX }}
         />
         <sc-webgl-context />
       </div>

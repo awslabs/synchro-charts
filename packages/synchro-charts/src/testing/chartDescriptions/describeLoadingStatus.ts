@@ -3,7 +3,7 @@ import { DataStream } from '../../utils/dataTypes';
 import { LOADING_SPINNER_SELECTOR } from '../selectors';
 import { DataType } from '../../utils/dataConstants';
 
-const VIEW_PORT = { start: new Date(2000), end: new Date(2001, 0, 0), yMin: 0, yMax: 100 };
+const VIEWPORT = { start: new Date(2000), end: new Date(2001, 0, 0), yMin: 0, yMax: 100 };
 
 const DATA_STREAM: DataStream<number> = {
   id: 'stream-id',
@@ -13,7 +13,7 @@ const DATA_STREAM: DataStream<number> = {
   resolution: 0,
   data: [
     {
-      x: VIEW_PORT.end.getTime(),
+      x: VIEWPORT.end.getTime(),
       y: 50,
     },
   ],

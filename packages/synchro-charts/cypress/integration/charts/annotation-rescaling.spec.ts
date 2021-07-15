@@ -5,12 +5,12 @@ import { X_MAX, X_MIN, Y_MAX, Y_MIN } from '../../../src/testing/test-routes/cha
 const baseChartHeight = 500;
 const baseChartWidth = 700;
 
-const viewPortStart = X_MIN;
-const viewPortEnd = X_MAX;
+const viewportStart = X_MIN;
+const viewportEnd = X_MAX;
 const timelineParams: Partial<SearchQueryParams> = {
   componentTag: 'sc-line-chart',
-  viewPortStart,
-  viewPortEnd,
+  viewportStart,
+  viewportEnd,
   dataStreams: [],
   width: '95%',
   height: '95%',

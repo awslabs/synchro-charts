@@ -14,7 +14,7 @@ import { getNumberThresholds } from '../common/annotations/utils';
 export const chartScene: ChartSceneCreator = ({
   dataStreams,
   container,
-  viewPort,
+  viewport,
   minBufferSize,
   bufferFactor,
   onUpdate,
@@ -22,7 +22,7 @@ export const chartScene: ChartSceneCreator = ({
   thresholds,
 }) => {
   const scene = new Scene();
-  const toClipSpace = clipSpaceConversion(viewPort);
+  const toClipSpace = clipSpaceConversion(viewport);
 
   const numberThresholds = getNumberThresholds(thresholds);
 
@@ -39,7 +39,7 @@ export const chartScene: ChartSceneCreator = ({
 
   meshList.forEach(mesh => scene.add(mesh));
 
-  return constructChartScene({ scene, viewPort, container, toClipSpace, onUpdate });
+  return constructChartScene({ scene, viewport, container, toClipSpace, onUpdate });
 };
 
 const maxDataPointsRendered = (points: PointMesh): number =>
@@ -50,7 +50,7 @@ export const updateChartScene: ChartSceneUpdater = ({
   dataStreams,
   chartSize,
   container,
-  viewPort,
+  viewport,
   hasDataChanged,
   bufferFactor,
   minBufferSize,
@@ -65,12 +65,12 @@ export const updateChartScene: ChartSceneUpdater = ({
   // chart scene, we must fully recreate the chart scene. This is a costly operation.
   const isDataOverflowingBuffer = maxDataPointsRendered(points) < numDataPoints(dataStreams);
 
-  if (isDataOverflowingBuffer || needsNewClipSpace(viewPort, scene.toClipSpace) || hasAnnotationChanged) {
+  if (isDataOverflowingBuffer || needsNewClipSpace(viewport, scene.toClipSpace) || hasAnnotationChanged) {
     return chartScene({
       dataStreams,
       chartSize,
       container,
-      viewPort,
+      viewport,
       minBufferSize,
       bufferFactor,
       onUpdate,
