@@ -51,9 +51,9 @@ export const getSequential = ({
   midColor = DEFAULT_SEQUENTIAL_MID,
   maxColor = DEFAULT_SEQUENTIAL_MAX,
 }: {
-  minColor: string | undefined;
-  midColor: string | undefined;
-  maxColor: string | undefined;
+  minColor?: string;
+  midColor?: string;
+  maxColor?: string;
 }): HeatmapColorPalette => {
   const heatmapColor: HeatmapColorPalette = { r: [], g: [], b: [] };
   const minColorRGB = getCSSColorByString(minColor);
