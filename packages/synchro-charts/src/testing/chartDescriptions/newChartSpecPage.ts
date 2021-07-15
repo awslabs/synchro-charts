@@ -12,11 +12,11 @@ import { LEGEND_POSITION } from '../..';
 import { update } from '../../components/charts/common/tests/merge';
 import { ScBarChart } from '../../components/charts/sc-bar-chart/sc-bar-chart';
 import { ScScatterChart } from '../../components/charts/sc-scatter-chart/sc-scatter-chart';
-import { ScStatusChart } from '../../components/charts/sc-status-chart/sc-status-chart';
+import { ScStatusTimeline } from '../../components/charts/sc-status-timeline/sc-status-timeline';
 import { ScWebglAxis } from '../../components/charts/sc-webgl-base-chart/sc-webgl-axis';
 import { ScErrorBadge } from '../../components/sc-error-badge/sc-error-badge';
-import { ScStatusTimelineOverlayRow } from '../../components/charts/sc-status-chart/sc-status-timeline-overlay/sc-status-timeline-overlay-row';
-import { ScStatusTimelineOverlay } from '../../components/charts/sc-status-chart/sc-status-timeline-overlay/sc-status-timeline-overlay';
+import { ScStatusTimelineOverlayRow } from '../../components/charts/sc-status-timeline/sc-status-timeline-overlay/sc-status-timeline-overlay-row';
+import { ScStatusTimelineOverlay } from '../../components/charts/sc-status-timeline/sc-status-timeline-overlay/sc-status-timeline-overlay';
 import { ScChartIcon } from '../../components/charts/chart-icon/sc-chart-icon';
 
 const VIEW_PORT = { start: new Date(2000), end: new Date(2001, 0, 0), yMin: 0, yMax: 100 };
@@ -41,7 +41,7 @@ export const newChartSpecPage = (tagName: string): ChartSpecPage => async props 
       ScLineChart,
       ScBarChart,
       ScScatterChart,
-      ScStatusChart,
+      ScStatusTimeline,
       ScSizeProvider,
       ScWebglAxis,
       ScStatusTimelineOverlayRow,

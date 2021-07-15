@@ -232,7 +232,7 @@ describe('when provided alarm data through a `dynamic-widget`', () => {
     describe('status-timeline', () => {
       it('does visualize numerical alarm data', () => {
         visitDynamicWidget(cy, {
-          componentTag: 'sc-status-chart',
+          componentTag: 'sc-status-timeline',
           alarms: { expires: MINUTE_IN_MS },
           dataStreams: [NUMERICAL_ALARM_STREAM],
           viewPortStart,
@@ -247,7 +247,7 @@ describe('when provided alarm data through a `dynamic-widget`', () => {
 
       it('does render alarms on tooltip', () => {
         visitDynamicWidget(cy, {
-          componentTag: 'sc-status-chart',
+          componentTag: 'sc-status-timeline',
           dataStreams: [NUMERICAL_ALARM_STREAM],
           annotations: { y: [ALARM_THRESHOLD] },
           viewPortStart,
@@ -312,7 +312,7 @@ describe('when provided alarm data through a `dynamic-widget`', () => {
 
     it('does display a legend entry for numerical alarm data when rendering a status-timeline', () => {
       visitDynamicWidget(cy, {
-        componentTag: 'sc-status-chart',
+        componentTag: 'sc-status-timeline',
         dataStreams: [NUMERICAL_ALARM_STREAM, PROPERTY_STREAM],
         annotations: { y: [ALARM_THRESHOLD] },
       });

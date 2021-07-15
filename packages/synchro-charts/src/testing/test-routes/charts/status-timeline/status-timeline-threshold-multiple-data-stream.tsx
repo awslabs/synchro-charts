@@ -31,18 +31,14 @@ const TEST_2_DATA_POINT_2: DataPoint<number> = {
   y: 3000,
 };
 
-/**
- * Testing route for the webGL rendering without being fully coupled to the chart.
- *
- */
 @Component({
-  tag: 'status-chart-threshold-coloration-multiple-data-stream',
+  tag: 'status-timeline-threshold-coloration-multiple-data-stream',
 })
-export class StatusChartThresholdMultipleDataStream {
+export class StatusTimelineThresholdMultipleDataStream {
   render() {
     return (
       <div>
-        <sc-status-chart
+        <sc-status-timeline
           alarms={{ expires: YEAR_IN_MS }}
           dataStreams={[
             {

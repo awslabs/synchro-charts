@@ -18,14 +18,10 @@ const DATA_POINTS: DataPoint<number>[] = Array.from({ length: 50 }, (_, index) =
   };
 });
 
-/**
- * Used to test the behavior of a statys chart when changing viewport fast and wide
- */
-
 @Component({
-  tag: 'status-chart-fast-viewport',
+  tag: 'status-timeline-fast-viewport',
 })
-export class StatusChartFastViewport {
+export class StatusTimelineFastViewport {
   @State() dataStreams: DataStream<number>[] = [];
   @State() colorIndex: number = 0;
   @State() start: Date = X_MIN;
@@ -56,7 +52,7 @@ export class StatusChartFastViewport {
         <br />
         <br />
         <div id="chart-container" style={{ border: '1px solid lightgray', height: '500px', width: '500px' }}>
-          <sc-status-chart
+          <sc-status-timeline
             alarms={{ expires: HOUR_IN_MS }}
             dataStreams={[
               {

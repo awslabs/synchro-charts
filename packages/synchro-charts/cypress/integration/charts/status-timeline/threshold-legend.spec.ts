@@ -22,7 +22,7 @@ it('renders threshold legend', () => {
   };
 
   visitDynamicWidget(cy, {
-    componentTag: 'sc-status-chart',
+    componentTag: 'sc-status-timeline',
     annotations: {
       y: [eqThreshold],
     },
@@ -42,7 +42,7 @@ it('renders many thresholds at once', () => {
   const thresholds = createUniqueThresholds(NUM_THRESHOLDS);
 
   visitDynamicWidget(cy, {
-    componentTag: 'sc-status-chart',
+    componentTag: 'sc-status-timeline',
     annotations: {
       y: thresholds,
     },
@@ -60,7 +60,7 @@ it('does not render annotations (that are not thresholds)', () => {
   };
 
   visitDynamicWidget(cy, {
-    componentTag: 'sc-status-chart',
+    componentTag: 'sc-status-timeline',
     annotations: {
       y: [annotation],
     },
