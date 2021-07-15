@@ -10,8 +10,8 @@ describe('determination of resolution for data fetching', () => {
     expect(
       determineResolution({
         supportedResolutions: [0, SECOND_IN_MS],
-        viewPortStartDate: START_DATE,
-        viewPortEndDate: new Date(2000, 0, 0, 0, 5),
+        viewportStartDate: START_DATE,
+        viewportEndDate: new Date(2000, 0, 0, 0, 5),
         maxPoints: 100,
       })
     ).toBe(0);
@@ -21,8 +21,8 @@ describe('determination of resolution for data fetching', () => {
     expect(
       determineResolution({
         supportedResolutions: [SECOND_IN_MS],
-        viewPortStartDate: START_DATE,
-        viewPortEndDate: END_DATE,
+        viewportStartDate: START_DATE,
+        viewportEndDate: END_DATE,
         maxPoints: 1,
       })
     ).toBe(SECOND_IN_MS);
@@ -32,8 +32,8 @@ describe('determination of resolution for data fetching', () => {
     expect(
       determineResolution({
         supportedResolutions: RESOLUTIONS,
-        viewPortStartDate: START_DATE,
-        viewPortEndDate: END_DATE,
+        viewportStartDate: START_DATE,
+        viewportEndDate: END_DATE,
         maxPoints: DAY_IN_MS / MINUTE_IN_MS,
       })
     ).toBe(MINUTE_IN_MS);
@@ -43,8 +43,8 @@ describe('determination of resolution for data fetching', () => {
     expect(
       determineResolution({
         supportedResolutions: RESOLUTIONS,
-        viewPortStartDate: START_DATE,
-        viewPortEndDate: END_DATE,
+        viewportStartDate: START_DATE,
+        viewportEndDate: END_DATE,
         maxPoints: DAY_IN_MS / HOUR_IN_MS,
       })
     ).toBe(HOUR_IN_MS);
@@ -54,8 +54,8 @@ describe('determination of resolution for data fetching', () => {
     expect(
       determineResolution({
         supportedResolutions: RESOLUTIONS,
-        viewPortStartDate: START_DATE,
-        viewPortEndDate: END_DATE,
+        viewportStartDate: START_DATE,
+        viewportEndDate: END_DATE,
         maxPoints: 30,
       })
     ).toBe(HOUR_IN_MS);
@@ -65,8 +65,8 @@ describe('determination of resolution for data fetching', () => {
     expect(
       determineResolution({
         supportedResolutions: RESOLUTIONS,
-        viewPortStartDate: START_DATE,
-        viewPortEndDate: END_DATE,
+        viewportStartDate: START_DATE,
+        viewportEndDate: END_DATE,
         maxPoints: 23,
       })
     ).toBe(DAY_IN_MS);
@@ -76,8 +76,8 @@ describe('determination of resolution for data fetching', () => {
     expect(() =>
       determineResolution({
         supportedResolutions: [],
-        viewPortStartDate: START_DATE,
-        viewPortEndDate: END_DATE,
+        viewportStartDate: START_DATE,
+        viewportEndDate: END_DATE,
         maxPoints: 1000,
       })
     ).toThrowError('resolution');

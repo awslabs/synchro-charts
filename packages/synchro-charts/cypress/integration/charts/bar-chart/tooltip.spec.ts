@@ -19,8 +19,8 @@ import {
 it('renders no tooltip when only info is empty or string', () => {
   visitDynamicWidget(cy, {
     componentTag: 'sc-bar-chart',
-    viewPortStart: new Date(START_DATE.getTime() - MINUTE_IN_MS),
-    viewPortEnd: new Date(START_DATE.getTime() + 10 * MINUTE_IN_MS),
+    viewportStart: new Date(START_DATE.getTime() - MINUTE_IN_MS),
+    viewportEnd: new Date(START_DATE.getTime() + 10 * MINUTE_IN_MS),
     dataStreams: [
       { ...NUMBER_EMPTY_STREAM, resolution: SECOND_IN_MS },
       { ...STRING_STREAM_1, data: [], aggregates: { [SECOND_IN_MS]: STRING_STREAM_1.data }, resolution: SECOND_IN_MS },
@@ -42,8 +42,8 @@ it('renders no tooltip when only info is empty or string', () => {
 it('renders no tooltip when there is no data for the requested resolution', () => {
   visitDynamicWidget(cy, {
     componentTag: 'sc-bar-chart',
-    viewPortStart: new Date(START_DATE.getTime() - MINUTE_IN_MS),
-    viewPortEnd: new Date(START_DATE.getTime() + 10 * MINUTE_IN_MS),
+    viewportStart: new Date(START_DATE.getTime() - MINUTE_IN_MS),
+    viewportEnd: new Date(START_DATE.getTime() + 10 * MINUTE_IN_MS),
     dataStreams: [{ ...NUMBER_STREAM_1, resolution: SECOND_IN_MS }],
   });
 
@@ -63,8 +63,8 @@ it('renders tooltip rows in order of values magnitude', () => {
   const resolution = MINUTE_IN_MS;
   visitDynamicWidget(cy, {
     componentTag: 'sc-bar-chart',
-    viewPortStart: new Date(START_DATE.getTime() - MINUTE_IN_MS),
-    viewPortEnd: new Date(START_DATE.getTime() + 10 * MINUTE_IN_MS),
+    viewportStart: new Date(START_DATE.getTime() - MINUTE_IN_MS),
+    viewportEnd: new Date(START_DATE.getTime() + 10 * MINUTE_IN_MS),
     dataStreams: [
       { ...NUMBER_STREAM_1, data: [], aggregates: { [resolution]: NUMBER_STREAM_1.data }, resolution },
       { ...NUMBER_STREAM_2, data: [], aggregates: { [resolution]: NUMBER_STREAM_2.data }, resolution },

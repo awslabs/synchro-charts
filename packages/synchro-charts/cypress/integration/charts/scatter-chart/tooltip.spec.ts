@@ -18,8 +18,8 @@ import {
 it('renders no tooltip when only info is empty or string', () => {
   visitDynamicWidget(cy, {
     componentTag: 'sc-scatter-chart',
-    viewPortStart: new Date(2000, 0, 0),
-    viewPortEnd: new Date(2000, 0, 0, 0, 5),
+    viewportStart: new Date(2000, 0, 0),
+    viewportEnd: new Date(2000, 0, 0, 0, 5),
     dataStreams: [NUMBER_EMPTY_STREAM, STRING_STREAM_1],
   });
 
@@ -38,8 +38,8 @@ it('renders no tooltip when only info is empty or string', () => {
 it('renders tooltip rows in order of values magnitude', () => {
   visitDynamicWidget(cy, {
     componentTag: 'sc-scatter-chart',
-    viewPortStart: new Date(2000, 0, 0),
-    viewPortEnd: new Date(2000, 0, 0, 0, 5),
+    viewportStart: new Date(2000, 0, 0),
+    viewportEnd: new Date(2000, 0, 0, 0, 5),
     dataStreams: [NUMBER_STREAM_1, NUMBER_EMPTY_STREAM, NUMBER_STREAM_2],
   });
 

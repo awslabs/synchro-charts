@@ -23,14 +23,14 @@ export const pointBisector = bisector((p: DataPoint<Primitive>) => p.x);
  */
 export const getVisibleData = <T extends Primitive>(
   data: DataPoint<T>[],
-  viewPort: MinimalViewPortConfig,
+  viewport: MinimalViewPortConfig,
   // Whether we want to include a single point to the right, and to the left of the provide viewport.
   // This is useful when rendering lines since you need to connect a point to a point outside of the viewport
   // to fully render the data correctly.
   includeBoundaryPoints: boolean = true
 ): DataPoint<T>[] => {
-  const start = viewPort.start ? viewPort.start : new Date(Date.now() - (viewPort.duration as number));
-  const end = viewPort.end ? viewPort.end : new Date();
+  const start = viewport.start ? viewport.start : new Date(Date.now() - (viewport.duration as number));
+  const end = viewport.end ? viewport.end : new Date();
 
   // If there is no data
   if (data.length === 0) {

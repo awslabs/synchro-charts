@@ -423,13 +423,13 @@ describe('update point mesh', () => {
   });
 
   it('updates the position buffer to match the data streams', () => {
-    const viewPort = {
+    const viewport = {
       start: new Date(1999, 11, 0),
       end: new Date(2001, 1, 0),
       yMax: 100,
       yMin: 0,
     };
-    const toClipSpace = clipSpaceConversion(viewPort);
+    const toClipSpace = clipSpaceConversion(viewport);
 
     const points = pointMesh({
       dataStreams: [],

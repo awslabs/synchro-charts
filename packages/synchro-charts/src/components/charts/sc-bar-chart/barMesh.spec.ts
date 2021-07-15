@@ -8,8 +8,8 @@ import { DataPoint, DataStream } from '../../../utils/dataTypes';
 import { Threshold } from '../common/types';
 import { COMPARISON_OPERATOR } from '../common/constants';
 
-const VIEW_PORT = { start: new Date(2000, 0, 0), end: new Date(2001, 0, 0), yMin: 0, yMax: 100 };
-const toClipSpace = clipSpaceConversion(VIEW_PORT);
+const VIEWPORT = { start: new Date(2000, 0, 0), end: new Date(2001, 0, 0), yMin: 0, yMax: 100 };
+const toClipSpace = clipSpaceConversion(VIEWPORT);
 
 const BUFFER_FACTOR = 2;
 const MIN_BUFFER_SIZE = 100;

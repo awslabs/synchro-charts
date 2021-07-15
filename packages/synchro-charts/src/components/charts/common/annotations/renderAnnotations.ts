@@ -7,22 +7,22 @@ export type RenderAnnotationsOptions = {
   container: SVGElement;
   resolution: number;
   annotations: Annotations;
-  viewPort: ViewPort;
+  viewport: ViewPort;
   size: { width: number; height: number };
 };
 
 type AnnotationPredicate = (annotation: Annotation<AnnotationValue>) => boolean;
 
-const withinViewport = (viewPort: ViewPort): AnnotationPredicate => {
+const withinViewport = (viewport: ViewPort): AnnotationPredicate => {
   return ({ value }: Annotation<AnnotationValue>) => {
     if (typeof value === 'number') {
-      return viewPort.yMin <= value && viewPort.yMax >= value;
+      return viewport.yMin <= value && viewport.yMax >= value;
     }
-    return viewPort.start <= value && viewPort.end >= value;
+    return viewport.start <= value && viewport.end >= value;
   };
 };
 
-export const renderAnnotations = ({ container, resolution, annotations, viewPort, size }: RenderAnnotationsOptions) => {
+export const renderAnnotations = ({ container, resolution, annotations, viewport, size }: RenderAnnotationsOptions) => {
   if (typeof annotations === 'object' && typeof annotations.show === 'boolean' && !annotations.show) {
     removeXAnnotations({ container });
     removeYAnnotations({ container });
@@ -30,8 +30,8 @@ export const renderAnnotations = ({ container, resolution, annotations, viewPort
   }
 
   // get annotations which have a value that lays within the viewport.
-  const xAnnotations: XAnnotation[] = annotations.x == null ? [] : annotations.x.filter(withinViewport(viewPort));
-  const yAnnotations: YAnnotation[] = annotations.y == null ? [] : annotations.y.filter(withinViewport(viewPort));
+  const xAnnotations: XAnnotation[] = annotations.x == null ? [] : annotations.x.filter(withinViewport(viewport));
+  const yAnnotations: YAnnotation[] = annotations.y == null ? [] : annotations.y.filter(withinViewport(viewport));
 
   /**
    * X Annotations
@@ -39,7 +39,7 @@ export const renderAnnotations = ({ container, resolution, annotations, viewPort
   renderXAnnotations({
     container,
     xAnnotations,
-    viewPort,
+    viewport,
     resolution,
     size,
   });
@@ -50,7 +50,7 @@ export const renderAnnotations = ({ container, resolution, annotations, viewPort
   renderYAnnotations({
     container,
     yAnnotations,
-    viewPort,
+    viewport,
     resolution,
     size,
   });

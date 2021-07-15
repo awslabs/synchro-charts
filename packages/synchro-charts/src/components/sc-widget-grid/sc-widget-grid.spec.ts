@@ -22,8 +22,8 @@ const mockCurrentTime = (mockedDate: Date) => {
   Date.now = jest.spyOn(Date, 'now').mockImplementation(() => mockedDate.getTime());
 };
 
-const VIEW_PORT: MinimalViewPortConfig = {
-  ...DEFAULT_CHART_CONFIG.viewPort,
+const VIEWPORT: MinimalViewPortConfig = {
+  ...DEFAULT_CHART_CONFIG.viewport,
   duration: MINUTE_IN_MS,
 };
 
@@ -45,7 +45,7 @@ const widgetGridSpecPage = async (propOverrides: Partial<Components.ScWidgetGrid
     widgetId: 'sc-status-grid-widget-id',
     isEditing: false,
     dataStreams: DATA_STREAMS,
-    viewPort: VIEW_PORT,
+    viewport: VIEWPORT,
     renderCell,
     ...propOverrides,
   };
@@ -94,11 +94,11 @@ describe('when enabled', () => {
 
 describe('updating the viewport', () => {
   it('updates the viewport and renders a cell with the data point that was previously outside of the viewport', async () => {
-    const laterDate = new Date(VIEW_PORT.end!.getTime() + MINUTE_IN_MS);
+    const laterDate = new Date(VIEWPORT.end!.getTime() + MINUTE_IN_MS);
     const SOME_LATER_POINT: DataPoint<number> = { y: 111, x: laterDate.getTime() };
 
     const { renderCell, widgetGrid, page } = await widgetGridSpecPage({
-      viewPort: VIEW_PORT,
+      viewport: VIEWPORT,
       dataStreams: [
         {
           ...DATA_STREAM,
@@ -114,8 +114,8 @@ describe('updating the viewport', () => {
     );
 
     update(widgetGrid, {
-      viewPort: {
-        ...VIEW_PORT,
+      viewport: {
+        ...VIEWPORT,
         end: laterDate,
       },
     });
@@ -134,11 +134,11 @@ describe('updating the viewport', () => {
     mockCurrentTime(DATE_NOW);
 
     const { renderCell, widgetGrid, page } = await widgetGridSpecPage({
-      viewPort: VIEW_PORT,
+      viewport: VIEWPORT,
     });
 
     update(widgetGrid, {
-      viewPort: {
+      viewport: {
         duration: DAY_IN_MS,
       },
     });
@@ -147,7 +147,7 @@ describe('updating the viewport', () => {
 
     expect(renderCell).toHaveBeenLastCalledWith(
       expect.objectContaining({
-        viewPort: {
+        viewport: {
           start: new Date(DATE_NOW.getTime() - DAY_IN_MS),
           end: DATE_NOW,
         },
@@ -157,13 +157,13 @@ describe('updating the viewport', () => {
 
   it('updates the viewport based on duration and a start date', async () => {
     const { renderCell, widgetGrid, page } = await widgetGridSpecPage({
-      viewPort: VIEW_PORT,
+      viewport: VIEWPORT,
     });
 
     const startDate = new Date(2000, 0, 0);
 
     update(widgetGrid, {
-      viewPort: {
+      viewport: {
         duration: DAY_IN_MS,
         start: startDate,
       },
@@ -173,7 +173,7 @@ describe('updating the viewport', () => {
 
     expect(renderCell).toHaveBeenLastCalledWith(
       expect.objectContaining({
-        viewPort: {
+        viewport: {
           start: startDate,
           end: new Date(startDate.getTime() + DAY_IN_MS),
         },
@@ -183,13 +183,13 @@ describe('updating the viewport', () => {
 
   it('updates the viewport based on duration and a end date', async () => {
     const { renderCell, widgetGrid, page } = await widgetGridSpecPage({
-      viewPort: VIEW_PORT,
+      viewport: VIEWPORT,
     });
 
     const endDate = new Date(2000, 0, 0);
 
     update(widgetGrid, {
-      viewPort: {
+      viewport: {
         duration: DAY_IN_MS,
         end: endDate,
       },
@@ -199,7 +199,7 @@ describe('updating the viewport', () => {
 
     expect(renderCell).toHaveBeenLastCalledWith(
       expect.objectContaining({
-        viewPort: {
+        viewport: {
           start: new Date(endDate.getTime() - DAY_IN_MS),
           end: endDate,
         },
@@ -209,8 +209,8 @@ describe('updating the viewport', () => {
 });
 
 describe('live time frame', () => {
-  const POINT: DataPoint<number> = { x: (VIEW_PORT.end as Date).getTime(), y: 100 };
-  const STRING_POINT: DataPoint<string> = { x: (VIEW_PORT.end as Date).getTime(), y: 'im a string!' };
+  const POINT: DataPoint<number> = { x: (VIEWPORT.end as Date).getTime(), y: 100 };
+  const STRING_POINT: DataPoint<string> = { x: (VIEWPORT.end as Date).getTime(), y: 'im a string!' };
 
   it('does render cell with string data', async () => {
     const stream = { ...STRING_STREAM_1, data: [STRING_POINT] };
@@ -251,7 +251,7 @@ describe('live time frame', () => {
     const stream = {
       ...DATA_STREAM,
       // Shift point to be one minute past the end of the viewport
-      data: [{ ...POINT, x: (VIEW_PORT.end as Date).getTime() + MINUTE_IN_MS }],
+      data: [{ ...POINT, x: (VIEWPORT.end as Date).getTime() + MINUTE_IN_MS }],
     };
 
     const { renderCell } = await widgetGridSpecPage({
@@ -376,14 +376,14 @@ describe('live time frame', () => {
 });
 
 describe('historical time frame', () => {
-  const NON_LIVE_VIEW_PORT: MinimalViewPortConfig = {
-    ...VIEW_PORT,
+  const NON_LIVE_VIEWPORT: MinimalViewPortConfig = {
+    ...VIEWPORT,
     duration: undefined,
   };
 
   it('renders cell as disabled', async () => {
     const { renderCell } = await widgetGridSpecPage({
-      viewPort: NON_LIVE_VIEW_PORT,
+      viewport: NON_LIVE_VIEWPORT,
       dataStreams: [DATA_STREAM],
     });
 
@@ -399,7 +399,7 @@ describe('historical time frame', () => {
 
   it('renders a help icon', async () => {
     const { widgetGrid } = await widgetGridSpecPage({
-      viewPort: NON_LIVE_VIEW_PORT,
+      viewport: NON_LIVE_VIEWPORT,
     });
 
     expect(widgetGrid.querySelector('sc-help-tooltip')).not.toBeNull();

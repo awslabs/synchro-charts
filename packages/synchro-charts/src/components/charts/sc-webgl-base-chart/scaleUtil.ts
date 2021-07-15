@@ -34,11 +34,11 @@ const getScale = (scaleType: ScaleType): Scale => {
  * them will always be the range.
  */
 export const createScales = ({
-  viewPort: { start, end, yMin, yMax },
+  viewport: { start, end, yMin, yMax },
   size: { width, height },
   scale: { xScaleType, yScaleType },
 }: {
-  viewPort: ViewPort;
+  viewport: ViewPort;
   size: SizeConfig;
   scale: ScaleConfig;
 }): {

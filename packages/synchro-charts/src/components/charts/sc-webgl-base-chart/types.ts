@@ -13,7 +13,7 @@ export type ChartSceneCreator = (options: {
   alarms?: AlarmsConfig;
   container: HTMLElement;
   chartSize: { width: number; height: number };
-  viewPort: ViewPort;
+  viewport: ViewPort;
 
   // The minimum number of points the buffer must be able to fit. The smaller this number is, the
   // less memory upfront is allocated to the buffers which improves performance.
@@ -44,7 +44,7 @@ export type ChartSceneUpdater = (options: {
   dataStreams: DataStream[];
   alarms?: AlarmsConfig;
   container: HTMLElement;
-  viewPort: ViewPort;
+  viewport: ViewPort;
   chartSize: { width: number; height: number };
   bufferFactor: number;
   minBufferSize: number;

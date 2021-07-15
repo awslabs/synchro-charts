@@ -72,9 +72,9 @@ const granularity = (durationMS: number): number => {
  * Converts something from model space (millisecond representation of time) into our clip space.
  * The goal is to be able to represent the time from `start` to `end` with floating point precision (7 significant digits).
  */
-export const clipSpaceConversion = (viewPort: ViewPort): ((t: number) => number) => {
-  const durationMS = viewPort.end.getTime() - viewPort.start.getTime();
-  const anchorMS = viewPort.start.getTime() - durationMS * 0.25;
+export const clipSpaceConversion = (viewport: ViewPort): ((t: number) => number) => {
+  const durationMS = viewport.end.getTime() - viewport.start.getTime();
+  const anchorMS = viewport.start.getTime() - durationMS * 0.25;
 
   const granularityMS = granularity(durationMS);
 
@@ -98,11 +98,11 @@ const MIN_GRANULARITY = 3000;
  * 2. The granularity within the viewport mapped to the clip space is too low - i.e. if the viewport maps to [0, 10],
  *    then we can only represent 11 distinct points.
  */
-export const needsNewClipSpace = (viewPort: ViewPort, toClipSpace: (time: number) => number): boolean => {
-  const isOutOfBounds = isDateOutOfBounds(viewPort.start, toClipSpace) || isDateOutOfBounds(viewPort.end, toClipSpace);
+export const needsNewClipSpace = (viewport: ViewPort, toClipSpace: (time: number) => number): boolean => {
+  const isOutOfBounds = isDateOutOfBounds(viewport.start, toClipSpace) || isDateOutOfBounds(viewport.end, toClipSpace);
 
-  const distanceMS = viewPort.end.getTime() - viewPort.start.getTime();
-  const distanceClipSpace = toClipSpace(viewPort.end.getTime()) - toClipSpace(viewPort.start.getTime());
+  const distanceMS = viewport.end.getTime() - viewport.start.getTime();
+  const distanceClipSpace = toClipSpace(viewport.end.getTime()) - toClipSpace(viewport.start.getTime());
 
   const hasTooLowGranularity = distanceMS > distanceClipSpace && distanceClipSpace < MIN_GRANULARITY;
   return isOutOfBounds || hasTooLowGranularity;

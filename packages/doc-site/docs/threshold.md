@@ -11,7 +11,7 @@ const annotations = {
     comparisonOperator: 'GTE',
   }],
 };
-const viewPort = {
+const viewport = {
   start: new Date(2000, 0, 0),
   end: new Date(2001, 0, 0),
   group: 'threshold',
@@ -61,7 +61,7 @@ const dataStreams = [{
     style={style}
     annotations={annotations}
     widgetId="widget-id"
-    viewPort={viewPort}
+    viewport={viewport}
     legend={legend}
     dataStreams={dataStreams}
   />
@@ -69,7 +69,7 @@ const dataStreams = [{
     style={style}
     annotations={annotations}
     widgetId="widget-id"
-    viewPort={viewPort}
+    viewport={viewport}
     legend={legend}
     dataStreams={dataStreams}
   />
@@ -77,7 +77,7 @@ const dataStreams = [{
     style={style}
     annotations={annotations}
     widgetId="widget-id"
-    viewPort={viewPort}
+    viewport={viewport}
     legend={legend}
     dataStreams={[{
       id: 'car-count',
@@ -205,7 +205,7 @@ const annotations = {
     comparisonOperator: 'GTE',
   }],
 };
-const viewPort = {
+const viewport = {
    start: new Date(2000, 0, 0),
    end: new Date(2001, 0, 0),
 };
@@ -254,7 +254,7 @@ const dataStreams = [{
     style={style}        
     annotations={annotations}
     widgetId="widget-id"
-    viewPort={viewPort}
+    viewport={viewport}
     legend={legend}
     dataStreams={dataStreams}
   />
@@ -280,7 +280,7 @@ const annotations = {
     comparisonOperator: 'LTE',
   }],
 };
-const viewPort = {
+const viewport = {
    start: new Date(2000, 0, 0),
    end: new Date(2001, 0, 0),
 };
@@ -329,7 +329,7 @@ const dataStreams = [{
     style={style}        
     annotations={annotations}
     widgetId="widget-id"
-    viewPort={viewPort}
+    viewport={viewport}
     legend={legend}
     dataStreams={dataStreams}
   />
@@ -356,7 +356,7 @@ const annotations = {
     comparisonOperator: 'GTE',
   }],
 };
-const viewPort = {
+const viewport = {
    start: new Date(2000, 0, 0),
    end: new Date(2001, 0, 0),
 };
@@ -405,7 +405,7 @@ const dataStreams = [{
     style={style}        
     annotations={annotations}
     widgetId="widget-id"
-    viewPort={viewPort}
+    viewport={viewport}
     legend={legend}
     dataStreams={dataStreams}
   />
@@ -431,7 +431,7 @@ const annotations = {
     comparisonOperator: 'LTE',
   }],
 };
-const viewPort = {
+const viewport = {
    start: new Date(2000, 0, 0),
    end: new Date(2001, 0, 0),
 };
@@ -481,7 +481,7 @@ const dataStreams = [{
     style={style}        
     annotations={annotations}
     widgetId="widget-id"
-    viewPort={viewPort}
+    viewport={viewport}
     legend={legend}
     dataStreams={dataStreams}
   />

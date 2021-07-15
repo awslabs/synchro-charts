@@ -42,8 +42,8 @@ const AGGREGATED_DATA_STREAM = {
 it('displays each aggregation description within tooltip', () => {
   visitDynamicWidget(cy, {
     componentTag: 'sc-line-chart',
-    viewPortStart: START,
-    viewPortEnd: END,
+    viewportStart: START,
+    viewportEnd: END,
     dataStreams: [RAW_DATA_STREAM, AGGREGATED_DATA_STREAM],
   });
   cy.waitForChart();

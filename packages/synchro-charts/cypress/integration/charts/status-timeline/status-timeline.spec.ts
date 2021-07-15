@@ -27,16 +27,16 @@ describe('status timeline', () => {
   const VIEWPORT_WIDTH = 500;
 
   describe('alarm configuration', () => {
-    const viewPortStart = new Date(2000, 0, 0);
-    const viewPortEnd = new Date(2000, 0, 1);
+    const viewportStart = new Date(2000, 0, 0);
+    const viewportEnd = new Date(2000, 0, 1);
     const timelineParams: Partial<SearchQueryParams> = {
       componentTag: 'sc-status-timeline',
-      viewPortStart,
-      viewPortEnd,
+      viewportStart,
+      viewportEnd,
       dataStreams: [
         {
           ...DATA_STREAM,
-          data: [{ x: viewPortStart.getTime(), y: 100 }],
+          data: [{ x: viewportStart.getTime(), y: 100 }],
         },
       ],
     };

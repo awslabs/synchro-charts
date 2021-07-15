@@ -2,7 +2,7 @@ import 'webgl-mock-threejs';
 import { Scene } from 'three';
 import { createWebGLRenderer } from './webglContext';
 import { constructChartScene } from '../charts/sc-webgl-base-chart/utils';
-import { VIEW_PORT } from '../charts/common/testUtil';
+import { VIEWPORT } from '../charts/common/testUtil';
 import { rectScrollFixed } from '../common/webGLPositioning';
 
 const testDomRect: DOMRect = {
@@ -32,12 +32,12 @@ export const createTestWebglRenderer = (domRect: DOMRect, skipInit = false) => {
   return webGLRenderer;
 };
 
-const createTestChartScene = (viewPortGroup?: string) => {
+const createTestChartScene = (viewportGroup?: string) => {
   const container = document.createElement('div');
   const chartScene = constructChartScene({
     scene: new Scene(),
     container,
-    viewPort: { ...VIEW_PORT, group: viewPortGroup },
+    viewport: { ...VIEWPORT, group: viewportGroup },
     toClipSpace: x => x,
   });
 
@@ -47,7 +47,7 @@ const createTestChartScene = (viewPortGroup?: string) => {
   return chartScene;
 };
 
-const VIEW_PORT_GROUP = 'view-port-group';
+const VIEWPORT_GROUP = 'view-port-group';
 
 describe('sync chart scene cameras', () => {
   it('syncs a single cameras viewport', () => {
@@ -67,8 +67,8 @@ describe('sync chart scene cameras', () => {
   it('syncs multiple cameras viewport', () => {
     const webGLRenderer = createTestWebglRenderer(testDomRect);
 
-    const chartScene1 = createTestChartScene(VIEW_PORT_GROUP);
-    const chartScene2 = createTestChartScene(VIEW_PORT_GROUP);
+    const chartScene1 = createTestChartScene(VIEWPORT_GROUP);
+    const chartScene2 = createTestChartScene(VIEWPORT_GROUP);
 
     webGLRenderer.addChartScene(chartScene1);
     webGLRenderer.addChartScene(chartScene2);
@@ -85,8 +85,8 @@ describe('sync chart scene cameras', () => {
   it('does not sync camera of removed chart scene', () => {
     const webGLRenderer = createTestWebglRenderer(testDomRect);
 
-    const chartScene1 = createTestChartScene(VIEW_PORT_GROUP);
-    const chartScene2 = createTestChartScene(VIEW_PORT_GROUP);
+    const chartScene1 = createTestChartScene(VIEWPORT_GROUP);
+    const chartScene2 = createTestChartScene(VIEWPORT_GROUP);
 
     webGLRenderer.addChartScene(chartScene1);
     webGLRenderer.addChartScene(chartScene2);

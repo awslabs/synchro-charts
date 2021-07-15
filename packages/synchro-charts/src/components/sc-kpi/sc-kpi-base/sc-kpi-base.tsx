@@ -32,7 +32,7 @@ export class ScKpiBase {
 
   @Prop() messageOverrides!: MessageOverrides;
 
-  @Prop() viewPort!: MinimalViewPortConfig;
+  @Prop() viewport!: MinimalViewPortConfig;
   @Prop() trendStream!: DataStream | undefined;
   @Prop() isEditing: boolean = false;
   @Prop() isEnabled: boolean = true;

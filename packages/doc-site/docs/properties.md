@@ -5,7 +5,7 @@
   
 --- 
   
-- `viewPort`: Object
+- `viewport`: Object
 
     Specifies the window of data which will be visible within the widget.
     

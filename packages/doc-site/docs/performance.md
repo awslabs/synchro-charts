@@ -24,7 +24,7 @@ return (
     <ScatterChart
       widgetId={`chart-${i}`}
       size={{ marginRight: 10 }}
-      viewPort={{
+      viewport={{
         yMin: -250,
         yMax: 250,
         start: new Date(2000, 0, 0),

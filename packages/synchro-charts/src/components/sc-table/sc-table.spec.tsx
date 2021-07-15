@@ -45,8 +45,8 @@ const TABLE_COLUMNS: TableColumn[] = [
   { header: 'Alarm', rows: [STREAM_3.id] },
 ];
 
-const VIEW_PORT = {
-  ...DEFAULT_CHART_CONFIG.viewPort,
+const VIEWPORT = {
+  ...DEFAULT_CHART_CONFIG.viewport,
   duration: MINUTE_IN_MS,
 };
 const WIDGET_ID = 'test-widget-it';
@@ -63,7 +63,7 @@ const tableSpecPage = async (propOverrides: Partial<Components.ScTable> = {}) =>
     dataStreams: [],
     tableColumns: [],
     widgetId: WIDGET_ID,
-    viewPort: VIEW_PORT,
+    viewport: VIEWPORT,
     annotations: {},
     trends: [],
     ...propOverrides,
@@ -268,15 +268,15 @@ describe('rendering', () => {
   });
 
   it('while in a historical time frame, only display table header and disable status', async () => {
-    const NON_LIVE_VIEW_PORT = {
-      ...VIEW_PORT,
+    const NON_LIVE_VIEWPORT = {
+      ...VIEWPORT,
       duration: undefined,
     };
 
     const { table } = await tableSpecPage({
       dataStreams: [],
       tableColumns: TABLE_COLUMNS,
-      viewPort: NON_LIVE_VIEW_PORT,
+      viewport: NON_LIVE_VIEWPORT,
     });
 
     const headers = table.querySelectorAll('th');
@@ -287,15 +287,15 @@ describe('rendering', () => {
   });
 
   it('while in a historical time frame, only display `liveModeOnlyMessage` for disable status', async () => {
-    const NON_LIVE_VIEW_PORT = {
-      ...VIEW_PORT,
+    const NON_LIVE_VIEWPORT = {
+      ...VIEWPORT,
       duration: undefined,
     };
     const LIVE_MODE_MSG = 'liveModeOnlyMessage';
     const { table } = await tableSpecPage({
       dataStreams: [],
       tableColumns: TABLE_COLUMNS,
-      viewPort: NON_LIVE_VIEW_PORT,
+      viewport: NON_LIVE_VIEWPORT,
       liveModeOnlyMessage: LIVE_MODE_MSG,
     });
 

@@ -11,7 +11,7 @@ import { COMPARISON_OPERATOR, LEGEND_POSITION, StatusIcon, TREND_TYPE } from '..
 import { ScLegendRow } from './sc-legend-row/sc-legend-row';
 import { DEFAULT_LEGEND_TEXT_COLOR } from './constants';
 import { POINT_TYPE } from '../sc-webgl-base-chart/activePoints';
-import { VIEW_PORT } from '../common/testUtil';
+import { VIEWPORT } from '../common/testUtil';
 import { DAY_IN_MS } from '../../../utils/time';
 import { NON_BREACHED_ALARM_INFO } from '../../../testing/__mocks__/mockWidgetProperties';
 import { DataType, StreamType } from '../../../utils/dataConstants';
@@ -51,7 +51,7 @@ const ALARM_THRESHOLD: Threshold<string> = {
 };
 
 const WITHIN_VIEWPORT_DATE = new Date(2000, 0, 1).getTime();
-const BEFORE_VIEWPORT_DATE = new Date(VIEW_PORT.start.getTime() - DAY_IN_MS).getTime();
+const BEFORE_VIEWPORT_DATE = new Date(VIEWPORT.start.getTime() - DAY_IN_MS).getTime();
 
 const ALARM_STREAM: DataStream<string> = {
   id: 'alarm-stream',
@@ -128,7 +128,7 @@ const newChartLegendSpecPage = async (props: Partial<Components.ScLegend>) => {
     isLoading: false,
     isEditing: false,
     dataStreams: [],
-    viewPort: {
+    viewport: {
       yMin: 0,
       yMax: 100,
       start: new Date(2000, 0),
@@ -624,7 +624,7 @@ describe('active point passed into legend rows', () => {
     };
 
     const { legend } = await newChartLegendSpecPage({
-      viewPort: {
+      viewport: {
         yMin: 0,
         yMax: 100,
         start: new Date(2000, 0),
@@ -663,7 +663,7 @@ describe('active point passed into legend rows', () => {
     };
 
     const { legend } = await newChartLegendSpecPage({
-      viewPort: {
+      viewport: {
         yMin: 0,
         yMax: 100,
         start: new Date(2000, 0),

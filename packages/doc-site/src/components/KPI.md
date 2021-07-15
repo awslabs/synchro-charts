@@ -69,7 +69,7 @@ import { LEGEND_POSITION, DataType, COMPARISON_OPERATOR, StreamType, StatusIcon 
         icon: StatusIcon.LATCHED,
       }],
     }}
-    viewPort={{ duration: 0, start: new Date(1999, 0, 0), end: new Date(2001, 0, 0) }}
+    viewport={{ duration: 0, start: new Date(1999, 0, 0), end: new Date(2001, 0, 0) }}
   />
 </div>
 ```
@@ -111,7 +111,7 @@ import { LEGEND_POSITION, DataType, COMPARISON_OPERATOR } from '@synchro-charts/
         dataStreamIds: ['car-speed-alarm']
       }],
     }}
-    viewPort={{ duration: 0, start: new Date(1999, 0, 0), end: new Date(2001, 0, 0) }}
+    viewport={{ duration: 0, start: new Date(1999, 0, 0), end: new Date(2001, 0, 0) }}
   />
 </div>
 ```
@@ -149,7 +149,7 @@ import { LEGEND_POSITION, DataType, COMPARISON_OPERATOR } from '@synchro-charts/
         comparisonOperator: COMPARISON_OPERATOR.EQUAL,
       }],
     }}
-    viewPort={{ duration: 0, start: new Date(1999, 0, 0), end: new Date(2001, 0, 0) }}
+    viewport={{ duration: 0, start: new Date(1999, 0, 0), end: new Date(2001, 0, 0) }}
   />
 </div>
 ```
@@ -212,7 +212,7 @@ import { LEGEND_POSITION, DataType, COMPARISON_OPERATOR, StatusIcon, StreamType 
         icon: StatusIcon.LATCHED
       }],
     }}
-    viewPort={{ duration: 0, start: new Date(1999, 0, 0), end: new Date(2001, 0, 0) }}
+    viewport={{ duration: 0, start: new Date(1999, 0, 0), end: new Date(2001, 0, 0) }}
   />
 </div>
 ```

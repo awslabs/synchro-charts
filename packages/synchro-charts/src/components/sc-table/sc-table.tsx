@@ -5,7 +5,7 @@ import { Trend } from '../charts/common/trends/types';
 import { Annotations, ChartConfig, Threshold } from '../charts/common/types';
 import { webGLRenderer } from '../sc-webgl-context/webglContext';
 import { constructTableData, Row } from './constructTableData';
-import { viewPortEndDate, viewPortStartDate } from '../../utils/viewPort';
+import { viewportEndDate, viewportStartDate } from '../../utils/viewPort';
 
 const MSG =
   'This visualization displays only live data. Choose a live time frame to display data in this visualization.';
@@ -15,7 +15,7 @@ const MSG =
   shadow: false,
 })
 export class ScTable implements ChartConfig {
-  @Prop() viewPort: MinimalViewPortConfig;
+  @Prop() viewport: MinimalViewPortConfig;
   @Prop() widgetId!: string;
   @Prop() dataStreams!: DataStream[];
   @Prop() annotations: Annotations;
@@ -27,16 +27,16 @@ export class ScTable implements ChartConfig {
   @Prop() tableColumns: TableColumn[];
 
   /** Active Viewport */
-  @State() start: Date = viewPortStartDate(this.viewPort);
-  @State() end: Date = viewPortEndDate(this.viewPort);
-  @State() duration?: number = this.viewPort.duration;
+  @State() start: Date = viewportStartDate(this.viewport);
+  @State() end: Date = viewportEndDate(this.viewport);
+  @State() duration?: number = this.viewport.duration;
 
-  @Watch('viewPort')
+  @Watch('viewport')
   onViewPortChange(newViewPort: MinimalViewPortConfig) {
     this.onUpdate({
       ...newViewPort,
-      start: viewPortStartDate(this.viewPort),
-      end: viewPortEndDate(this.viewPort),
+      start: viewportStartDate(this.viewport),
+      end: viewportEndDate(this.viewport),
     });
   }
 
@@ -50,7 +50,7 @@ export class ScTable implements ChartConfig {
   componentDidLoad() {
     webGLRenderer.addChartScene({
       id: this.widgetId,
-      viewPortGroup: this.viewPort.group,
+      viewportGroup: this.viewport.group,
       dispose: () => {},
       updateViewPort: this.onUpdate,
     });
