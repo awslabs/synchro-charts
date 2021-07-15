@@ -6,6 +6,7 @@ export type HeatmapColorPalette = {
   g: number[];
   b: number[];
 };
+export const NUM_OF_COLORS_SEQUENTIAL = 8;
 
 /**
  * Display Constants
@@ -16,7 +17,6 @@ export type HeatmapColorPalette = {
 const MARGIN_FACTOR = 1 / 6;
 
 const SEQUENTIAL_OPACITIES = [0.2, 0.4, 0.6, 0.8, 1.0, 0.33, 0.66, 1.0];
-const NUM_OF_COLORS_SEQUENTIAL = 8;
 const SEQUENTIAL_BASE_COLOR_INDEX = 5;
 const DEFAULT_SEQUENTIAL_MIN = '#ffffff';
 const DEFAULT_SEQUENTIAL_MID = '#0073bb';
