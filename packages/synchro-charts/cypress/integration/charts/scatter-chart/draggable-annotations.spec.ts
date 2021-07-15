@@ -1,10 +1,32 @@
 import { visitDynamicWidget } from '../../../../src/testing/selectors';
 import { SearchQueryParams } from '../../../../src/testing/dynamicWidgetUtils/testCaseParameters';
-import { TEST_DATA_POINT_STANDARD, X_MAX, X_MIN } from '../../../../src/testing/test-routes/charts/constants';
 import { Threshold, XAnnotation, YAnnotation } from '../../../../src/components/charts/common/types';
 import { COMPARISON_OPERATOR, DataType } from '../../../../src/constants';
-import { MINUTE_IN_MS } from '../../../../src/utils/time';
 import { DRAGGABLE_HANDLE_SELECTOR } from '../../../../src/components/charts/common/annotations/YAnnotations/YAnnotations';
+import { DataPoint } from '../../../../src/utils/dataTypes';
+
+const X_MIN = new Date(1998, 0, 0);
+const X_MAX = new Date(2001, 0, 1);
+
+const TEST_DATA_POINT: DataPoint<number> = {
+  x: new Date(1999, 0, 0).getTime(),
+  y: 2000,
+};
+
+const TEST_DATA_POINT_2: DataPoint<number> = {
+  x: new Date(2000, 0, 0).getTime(),
+  y: 4000,
+};
+
+const TEST_2_DATA_POINT: DataPoint<number> = {
+  x: new Date(1999, 0, 0).getTime(),
+  y: 4000,
+};
+
+const TEST_2_DATA_POINT_2: DataPoint<number> = {
+  x: new Date(2000, 0, 0).getTime(),
+  y: 2000,
+};
 
 const viewPortStart = X_MIN;
 const viewPortEnd = X_MAX;
@@ -12,7 +34,7 @@ const viewPortEnd = X_MAX;
 const yThreshold: Threshold<number> = {
   isEditable: true,
   comparisonOperator: COMPARISON_OPERATOR.GREATER_THAN,
-  value: 100,
+  value: 2200,
   label: {
     text: 'here is a y label',
     show: true,
@@ -33,7 +55,7 @@ const yAnnotation: YAnnotation = {
 };
 
 const xAnnotation: XAnnotation = {
-  value: new Date(X_MIN.getTime() + (1 / 3) * (X_MAX.getTime() - X_MIN.getTime())),
+  value: new Date(X_MIN.getTime() + (1 / 4) * (X_MAX.getTime() - X_MIN.getTime())),
   label: {
     text: 'here is a x label',
     show: true,
@@ -43,7 +65,7 @@ const xAnnotation: XAnnotation = {
 };
 
 const timelineParams: Partial<SearchQueryParams> = {
-  componentTag: 'sc-bar-chart',
+  componentTag: 'sc-scatter-chart',
   viewPortStart,
   viewPortEnd,
   dataStreams: [
@@ -51,9 +73,16 @@ const timelineParams: Partial<SearchQueryParams> = {
       id: 'test',
       color: 'black',
       name: 'test stream',
-      data: [],
-      aggregates: { [MINUTE_IN_MS]: [TEST_DATA_POINT_STANDARD] },
-      resolution: MINUTE_IN_MS,
+      data: [TEST_DATA_POINT, TEST_DATA_POINT_2],
+      resolution: 0,
+      dataType: DataType.NUMBER,
+    },
+    {
+      id: 'test2',
+      color: 'orange',
+      name: 'test stream2',
+      data: [TEST_2_DATA_POINT, TEST_2_DATA_POINT_2],
+      resolution: 0,
       dataType: DataType.NUMBER,
     },
   ],
@@ -162,7 +191,7 @@ it('hidden value annotation is draggable', () => {
     },
   });
   cy.waitForChart();
-  moveHandle(DRAGGABLE_HANDLE_SELECTOR, 0, 200);
+  moveHandle(DRAGGABLE_HANDLE_SELECTOR, 0, 0);
   cy.matchImageSnapshotOnCI();
 });
 
@@ -176,6 +205,7 @@ it('allows independent dragging of multiple annotations', () => {
           ...yThreshold,
           showValue: false,
           color: 'red',
+          comparisonOperator: COMPARISON_OPERATOR.LESS_THAN,
         },
         {
           ...yAnnotation,
@@ -183,7 +213,7 @@ it('allows independent dragging of multiple annotations', () => {
         },
         {
           ...yThreshold,
-          value: 1500,
+          value: 3600,
           color: 'green',
         },
       ],
@@ -191,15 +221,15 @@ it('allows independent dragging of multiple annotations', () => {
   });
   cy.waitForChart();
 
-  const moveFirst = 400;
+  const moveFirst = 180;
   const firstFilter = '[style*="stroke: blue;"]';
   moveHandleFilter(DRAGGABLE_HANDLE_SELECTOR, firstFilter, 0, moveFirst);
 
-  const moveSecond = 150;
+  const moveSecond = 100;
   const secondFilter = '[style*="stroke: red;"]';
   moveHandleFilter(DRAGGABLE_HANDLE_SELECTOR, secondFilter, 0, moveSecond);
 
-  const moveThird = -50;
+  const moveThird = 400;
   const thirdFilter = '[style*="stroke: green;"]';
   moveHandleFilter(DRAGGABLE_HANDLE_SELECTOR, thirdFilter, 0, moveThird);
 });
