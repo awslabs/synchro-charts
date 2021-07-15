@@ -1,4 +1,3 @@
-import colorString from 'color-string';
 import { Mesh, OrthographicCamera, Scene } from 'three';
 import uuid from 'uuid/v4';
 import { ChartScene } from '../../sc-webgl-context/types';
