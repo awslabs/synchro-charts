@@ -2,14 +2,30 @@ sudo: false
 language: node_js
 node_js:
   - '14'
+
+env:
+  - DOCKER_COMPOSE_VERSION=1.27.0
+
 branches:
   only:
     - poc/cypress-docker
+services:
+  - docker
 cache:
+  yarn: true
   directories:
     - node_modules
+    - ~/.cache
+before_install:
+  - sudo rm /usr/local/bin/docker-compose
+  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
+  - docker-compose --version # to verify installation
+
 install:
-  - yarn install
+  - yarn install --frozen-lockfile
+
 jobs:
   include:
     - stage: 'Build'
@@ -20,3 +36,12 @@ jobs:
       script: yarn test
     - script: yarn lint
       name: 'Lint'
+    - stage: 'Integ Test'
+      name: 'Integ'
+      script:
+        - docker-compose up -d --build
+        - docker ps # logging to make sure both container are build and running
+
+after_script:
+  - cat packages/synchro-charts/cypress/results/output.xml
+  - docker-compose down
