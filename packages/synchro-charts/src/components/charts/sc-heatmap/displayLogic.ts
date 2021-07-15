@@ -52,7 +52,7 @@ export const getSequential = ({
   colorChoices?: string[];
 } = {}): HeatmapColorPalette => {
   const heatmapColor: HeatmapColorPalette = { r: [], g: [], b: [] };
-  const colorRGBArray = colorChoices.reduce(function convertToRGB(tempColorRGBArray, hexColor, indexArray,) {
+  const colorRGBArray = colorChoices.reduce(function convertToRGB(tempColorRGBArray: number[][], hexColor, indexArray,) {
     tempColorRGBArray[indexArray] = getCSSColorByString(hexColor);
     return tempColorRGBArray;
   }, []);
