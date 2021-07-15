@@ -10,7 +10,6 @@ import { MONTH_IN_MS, DAY_IN_MS } from '../../../utils/time';
 const VIEW_PORT = { start: new Date(2000, 0), end: new Date(2000, 1, 0), yMin: 0, yMax: 100 };
 const toClipSpace = clipSpaceConversion(VIEW_PORT);
 const COLOR_PALLETE: HeatmapColorPalette = getSequential();
-console.log(COLOR_PALLETE);
 
 const TOTAL_NUM_POINTS_MIN = DAY_IN_MS / 1000;
 const THREE_DATA_STREAM = 3;
@@ -29,7 +28,7 @@ describe('getBucketWidth', () => {
 });
 
 describe('getSequential', () => {
-  it('returns a blue sequential color palette', () => {
+  it('returns a color palette with NUM_OF_COLORS_SEQUENTIAL colors', () => {
     expect(COLOR_PALLETE.r.length).toBe(NUM_OF_COLORS_SEQUENTIAL);
     expect(COLOR_PALLETE.g.length).toBe(NUM_OF_COLORS_SEQUENTIAL);
     expect(COLOR_PALLETE.b.length).toBe(NUM_OF_COLORS_SEQUENTIAL);
