@@ -14,7 +14,7 @@ export const NUM_OF_COLORS_SEQUENTIAL = 8;
  * Adjust these to scale the margins provided within the heatmap.
  * This represent which fraction of the 'width' of a given bucket group a margin.
  */
-const MARGIN_FACTOR = 1 / 6;
+const MARGIN_FACTOR = 1/ 20;
 
 const SEQUENTIAL_OPACITIES = [0.2, 0.4, 0.6, 0.8, 1.0, 0.33, 0.66, 1.0];
 const SEQUENTIAL_BASE_COLOR_INDEX = 5;
@@ -47,32 +47,29 @@ export const getBucketWidth = ({
  * Creates a gradient between the hex code of the min, mid, and max colors.
  */
 export const getSequential = ({
-  minColor = DEFAULT_SEQUENTIAL_MIN,
-  midColor = DEFAULT_SEQUENTIAL_MID,
-  maxColor = DEFAULT_SEQUENTIAL_MAX,
+  colorChoices = [DEFAULT_SEQUENTIAL_MIN, DEFAULT_SEQUENTIAL_MID, DEFAULT_SEQUENTIAL_MAX],
 }: {
-  minColor?: string;
-  midColor?: string;
-  maxColor?: string;
-}): HeatmapColorPalette => {
+  colorChoices?: string[];
+} = {}): HeatmapColorPalette => {
   const heatmapColor: HeatmapColorPalette = { r: [], g: [], b: [] };
-  const minColorRGB = getCSSColorByString(minColor);
-  const midColorRGB = getCSSColorByString(midColor);
-  const maxColorRGB = getCSSColorByString(maxColor);
+  const colorRGBArray = colorChoices.reduce(function convertToRGB(tempColorRGBArray, hexColor, indexArray,) {
+    tempColorRGBArray[indexArray] = getCSSColorByString(hexColor);
+    return tempColorRGBArray;
+  }, []);
 
-  let i = 0;
-  while (i < NUM_OF_COLORS_SEQUENTIAL) {
-    const opacity = SEQUENTIAL_OPACITIES[i % SEQUENTIAL_BASE_COLOR_INDEX];
-    if (i < SEQUENTIAL_BASE_COLOR_INDEX) {
-      heatmapColor.r[i] = opacity * midColorRGB[0] + (1 - opacity) * minColorRGB[0];
-      heatmapColor.g[i] = opacity * midColorRGB[1] + (1 - opacity) * minColorRGB[1];
-      heatmapColor.b[i] = opacity * midColorRGB[2] + (1 - opacity) * minColorRGB[2];
-    } else {
-      heatmapColor.r[i] = opacity * midColorRGB[0] + (1 - opacity) * maxColorRGB[0];
-      heatmapColor.g[i] = opacity * midColorRGB[1] + (1 - opacity) * maxColorRGB[1];
-      heatmapColor.b[i] = opacity * midColorRGB[2] + (1 - opacity) * maxColorRGB[2];
+  let colorRatio = 1 / SEQUENTIAL_BASE_COLOR_INDEX;
+  let colorRatioIncrement = 1 / SEQUENTIAL_BASE_COLOR_INDEX;
+  let colorArrayIndex = 0;
+  for (let i = 0; i < NUM_OF_COLORS_SEQUENTIAL; i++) {
+    if (i === SEQUENTIAL_BASE_COLOR_INDEX) {
+      colorRatio = 0;
+      colorRatioIncrement = 1 / (NUM_OF_COLORS_SEQUENTIAL - SEQUENTIAL_BASE_COLOR_INDEX);
+      colorArrayIndex += 1;
     }
-    i += 1;
+    heatmapColor.r[i] = colorRatio * colorRGBArray[colorArrayIndex + 1][0] + (1 - colorRatio) * colorRGBArray[colorArrayIndex][0];
+    heatmapColor.g[i] = colorRatio * colorRGBArray[colorArrayIndex + 1][1] + (1 - colorRatio) * colorRGBArray[colorArrayIndex][1];
+    heatmapColor.b[i] = colorRatio * colorRGBArray[colorArrayIndex + 1][2] + (1 - colorRatio) * colorRGBArray[colorArrayIndex][2];
+    colorRatio += colorRatioIncrement;
   }
   return heatmapColor;
 };
