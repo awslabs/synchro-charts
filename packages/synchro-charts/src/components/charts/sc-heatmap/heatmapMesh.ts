@@ -14,6 +14,7 @@ import bucketFrag from './heatmap.frag';
 import { WriteableBufferAttribute, WriteableInstancedBufferAttribute } from '../../sc-webgl-context/types';
 import { numDataPoints, vertices, getCSSColorByString } from '../sc-webgl-base-chart/utils';
 import { getBucketWidth, getSequential, getBucketColor } from './displayLogic';
+import { HeatValueMap, calcHeatValues } from './heatmapUtil';
 import { getBreachedThreshold } from '../common/annotations/utils';
 import { isNumberDataStream } from '../../../utils/predicates';
 import { DataStream, Primitive, ViewPort } from '../../../utils/dataTypes';
@@ -42,8 +43,10 @@ export type HeatmapBucketMesh = InstancedMesh & { geometry: BucketBufferGeometry
 export const NUM_POSITION_COMPONENTS = 2; // (x, y)
 const NUM_COLOR_COMPONENTS = 3; // (r, g, b)
 
+const bucketCount = 10;
+
 const numBuckets = (streamVertexSets: number[][][]): number => {
-  return streamVertexSets.reduce((totalBuckets, streamVertexSet) => totalBuckets + streamVertexSet.length, 0);
+  return 10 * streamVertexSets.reduce((totalBuckets, streamVertexSet) => totalBuckets + streamVertexSet.length, 0);
 };
 
 const getUniformWidth = <T extends Primitive>(
@@ -68,12 +71,14 @@ const updateMesh = ({
   toClipSpace,
   thresholds,
   thresholdOptions,
+  viewPort,
 }: {
   dataStreams: DataStream[];
   mesh: HeatmapBucketMesh;
   toClipSpace: (time: number) => number;
   thresholdOptions: ThresholdOptions;
   thresholds: Threshold[];
+  viewPort: ViewPort
 }) => {
   const streamVertexSets = dataStreams.filter(isNumberDataStream).map(stream => vertices(stream, stream.resolution));
 
@@ -81,42 +86,35 @@ const updateMesh = ({
   // eslint-disable-next-line no-param-reassign
   mesh.count = numBuckets(streamVertexSets);
 
+  const { resolution } = dataStreams[0];
   const { geometry } = mesh;
   const { color, bucket } = geometry.attributes;
   let positionIndex = 0;
   let colorIndex = 0;
 
-  streamVertexSets.forEach((streamVertexSet, setIndex) => {
-    streamVertexSet.forEach(currVertex => {
-      const [currX, currY, r, g, b] = currVertex;
-      /**
-       * Subtracting setIndex * getUniformWidth(dataStreams, toClipSpace) because with each new
-       * data stream, we want to render it side by side on the left side.
-       */
-      bucket.array[positionIndex] = toClipSpace(currX) - setIndex * getUniformWidth(dataStreams, toClipSpace);
-      bucket.array[positionIndex + 1] = currY;
+  const heatValues: HeatValueMap = calcHeatValues({
+    oldHeatValue: {},
+    dataStreams,
+    resolution,
+    viewPort,
+  });
+  const colorPalette = getSequential({minColor: '#ffffff', maxColor: '#0073bb'});
 
-      const breachedThreshold = getBreachedThreshold(currY, thresholds);
+  for (let xAxisBucketStart in heatValues) {
+    let buckets = heatValues[xAxisBucketStart];
+    for (let oneBucket in buckets) {
+      bucket.array[positionIndex] = toClipSpace(+xAxisBucketStart);
+      bucket.array[positionIndex + 1] = +oneBucket * (viewPort.yMax / bucketCount);
 
-      if (breachedThreshold == null || !thresholdOptions.showColor) {
-        // Set bar color (r, g, b)
-        color.array[colorIndex] = r;
-        color.array[colorIndex + 1] = g;
-        color.array[colorIndex + 2] = b;
-      } else {
-        const [rr, gg, bb] = getCSSColorByString(breachedThreshold.color);
-        // Set bar color (r, g, b)
-        color.array[colorIndex] = rr;
-        color.array[colorIndex + 1] = gg;
-        color.array[colorIndex + 2] = bb;
-      }
+      const bucketColor = getBucketColor(buckets[oneBucket].totalCount, colorPalette, resolution, streamVertexSets.length);
+      color.array[colorIndex] = bucketColor[0];
+      color.array[colorIndex + 1] = bucketColor[1];
+      color.array[colorIndex + 2] = bucketColor[2];
 
-      // Increment Indexes by the associated stride of the buffer
       colorIndex += NUM_COLOR_COMPONENTS;
       positionIndex += NUM_POSITION_COMPONENTS;
-    });
-  });
-
+    }
+  }
   bucket.needsUpdate = true;
   color.needsUpdate = true;
 };
@@ -182,13 +180,13 @@ export const bucketMesh = ({
         value: getUniformWidth(dataStreams, toClipSpace),
       },
       bucketHeight: {
-        value: viewPort.yMax / 10,
+        value: viewPort.yMax / 10 - 2,
       }
     },
   });
 
   const mesh = <HeatmapBucketMesh>new InstancedMesh(instGeo, bucketChartMaterial, bufferSize);
-  updateMesh({ dataStreams, mesh, toClipSpace, thresholds, thresholdOptions });
+  updateMesh({ dataStreams, mesh, toClipSpace, thresholds, thresholdOptions, viewPort });
 
   // Prevent bounding sphere from being called
   mesh.frustumCulled = false;
@@ -216,7 +214,7 @@ export const updateBucketMesh = ({
   if (hasDataChanged) {
     // eslint-disable-next-line no-param-reassign
     buckets.material.uniforms.width.value = getUniformWidth(dataStreams, toClipSpace);
-    buckets.material.uniforms.bucketHeight.value = viewPort.yMax / 10;
-    updateMesh({ dataStreams, mesh: buckets, toClipSpace, thresholds, thresholdOptions });
+    buckets.material.uniforms.bucketHeight.value = viewPort.yMax / 10 - 2;
+    updateMesh({ dataStreams, mesh: buckets, toClipSpace, thresholds, thresholdOptions, viewPort });
   }
 };
