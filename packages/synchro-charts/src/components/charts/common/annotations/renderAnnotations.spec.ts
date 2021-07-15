@@ -16,6 +16,8 @@ import {
   DRAGGABLE_LINE_TWO_SELECTOR,
   DRAGGABLE_LINE_ONE_SELECTOR,
   HANDLE_OFFSET_Y,
+  HANDLE_WIDTH,
+  SMALL_HANDLE_WIDTH,
 } from './YAnnotations/YAnnotations';
 
 const VIEWPORT = {
@@ -1353,6 +1355,42 @@ describe('y annotation', () => {
     expect(page.body.querySelectorAll(DRAGGABLE_HANDLE_SELECTOR)).toHaveLength(5);
     expect(page.body.querySelectorAll(DRAGGABLE_LINE_TWO_SELECTOR)).toHaveLength(5);
     expect(page.body.querySelectorAll(DRAGGABLE_LINE_ONE_SELECTOR)).toHaveLength(5);
+    expect(page.body.querySelector('svg')).toMatchSnapshot();
+  });
+
+  it('renders different draggable handles for annotations according to showValue', async () => {
+    const { page } = await newAnnotationsPage({
+      annotations: {
+        y: [
+          {
+            ...Y_ANNOTATION,
+            showValue: true,
+            isEditable: true,
+            color: 'red',
+          },
+          {
+            ...Y_ANNOTATION,
+            value: VIEWPORT.yMin + 3,
+            showValue: false,
+            isEditable: true,
+            color: 'blue',
+          },
+        ],
+      },
+    });
+    expect(page.body.querySelectorAll(Y_THRESHOLD_SELECTOR)).toHaveLength(2);
+    expect(page.body.querySelectorAll(Y_TEXT_SELECTOR)).toHaveLength(2);
+    expect(page.body.querySelectorAll(Y_TEXT_VALUE_SELECTOR)).toHaveLength(2);
+    expect(page.body.querySelectorAll(DRAGGABLE_HANDLE_SELECTOR)).toHaveLength(2);
+    expect(page.body.querySelectorAll(DRAGGABLE_LINE_TWO_SELECTOR)).toHaveLength(2);
+    expect(page.body.querySelectorAll(DRAGGABLE_LINE_ONE_SELECTOR)).toHaveLength(2);
+
+    const draggableHandleOne = page.body.querySelectorAll(DRAGGABLE_HANDLE_SELECTOR)[0] as SVGRectElement;
+    expect(draggableHandleOne.getAttribute('width')).toEqual(HANDLE_WIDTH.toString());
+
+    const draggableHandleTwo = page.body.querySelectorAll(DRAGGABLE_HANDLE_SELECTOR)[1] as SVGRectElement;
+    expect(draggableHandleTwo.getAttribute('width')).toEqual(SMALL_HANDLE_WIDTH.toString());
+
     expect(page.body.querySelector('svg')).toMatchSnapshot();
   });
 

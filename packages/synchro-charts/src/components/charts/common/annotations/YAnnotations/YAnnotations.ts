@@ -11,11 +11,13 @@ const Y_ANNOTATION_TEXT_LEFT_PADDING = 8;
 
 const HANDLE_OFFSET_X = 1;
 export const HANDLE_OFFSET_Y = -11;
-const HANDLE_WIDTH = 45;
+export const HANDLE_WIDTH = 45;
+export const SMALL_HANDLE_WIDTH = 18;
 const HANDLE_HEIGHT = 20;
 
 const DRAGGABLE_LINE_OFFSET_Y = 5;
 const DRAGGABLE_LINE_OFFSET_X = 40;
+const SMALL_DRAGGABLE_LINE_OFFSET_X = 13;
 const DRAGGABLE_LINE_LENGTH = 10;
 const DRAGGABLE_LINE_STROKE = 1;
 const DRAGGABLE_LINE_SEPARATION = 2;
@@ -61,6 +63,17 @@ export const renderYAnnotations = ({
     yAnnotation.isEditable ? 'inline' : 'none';
   const YAnnotationDragHandlePointerActions = (yAnnotation: YAnnotation): string =>
     yAnnotation.isEditable ? 'auto' : 'none';
+
+  const getYHandleWidth = (yAnnotation: YAnnotation): number =>
+    getValueTextVisibility(yAnnotation) === 'inline' ? HANDLE_WIDTH : SMALL_HANDLE_WIDTH;
+  const getDraggableLineTwoX = (yAnnotation: YAnnotation): number =>
+    getValueTextVisibility(yAnnotation) === 'inline'
+      ? width + DRAGGABLE_LINE_OFFSET_X + DRAGGABLE_LINE_SEPARATION
+      : width + SMALL_DRAGGABLE_LINE_OFFSET_X + DRAGGABLE_LINE_SEPARATION;
+  const getDraggableLineOneX = (yAnnotation: YAnnotation): number =>
+    getValueTextVisibility(yAnnotation) === 'inline'
+      ? width + DRAGGABLE_LINE_OFFSET_X
+      : width + SMALL_DRAGGABLE_LINE_OFFSET_X;
 
   const annotationSelection = select(container)
     .selectAll(ANNOTATION_GROUP_SELECTOR)
@@ -120,7 +133,7 @@ export const renderYAnnotations = ({
     .append('rect')
     .attr('display', YAnnotationDragHandleVisibility)
     .attr('class', 'y-annotation')
-    .attr('width', HANDLE_WIDTH)
+    .attr('width', getYHandleWidth)
     .attr('height', HANDLE_HEIGHT)
     .attr('x', width + HANDLE_OFFSET_X)
     .attr('y', getYAnnotationHandleY)
@@ -134,8 +147,8 @@ export const renderYAnnotations = ({
     .append('line')
     .attr('display', YAnnotationDragHandleVisibility)
     .attr('class', 'y-handle-one')
-    .attr('x1', width + DRAGGABLE_LINE_OFFSET_X)
-    .attr('x2', width + DRAGGABLE_LINE_OFFSET_X)
+    .attr('x1', getDraggableLineOneX)
+    .attr('x2', getDraggableLineOneX)
     .attr('y1', getYAnnotationDraggableLineY1)
     .attr('y2', getYAnnotationDraggableLineY2)
     .style('stroke', 'gray')
@@ -145,8 +158,8 @@ export const renderYAnnotations = ({
     .append('line')
     .attr('display', YAnnotationDragHandleVisibility)
     .attr('class', 'y-handle-two')
-    .attr('x1', width + DRAGGABLE_LINE_OFFSET_X + DRAGGABLE_LINE_SEPARATION)
-    .attr('x2', width + DRAGGABLE_LINE_OFFSET_X + DRAGGABLE_LINE_SEPARATION)
+    .attr('x1', getDraggableLineTwoX)
+    .attr('x2', getDraggableLineTwoX)
     .attr('y1', getYAnnotationDraggableLineY1)
     .attr('y2', getYAnnotationDraggableLineY2)
     .style('stroke', 'gray')
@@ -184,6 +197,7 @@ export const renderYAnnotations = ({
     .attr('display', YAnnotationDragHandleVisibility)
     .attr('y', getYAnnotationHandleY)
     .attr('x', width + HANDLE_OFFSET_X)
+    .attr('width', getYHandleWidth)
     .style('stroke', getColor)
     .style('pointer-events', YAnnotationDragHandlePointerActions);
 
@@ -191,16 +205,16 @@ export const renderYAnnotations = ({
   annotationSelection
     .select(DRAGGABLE_LINE_ONE_SELECTOR)
     .attr('display', YAnnotationDragHandleVisibility)
-    .attr('x1', width + DRAGGABLE_LINE_OFFSET_X)
-    .attr('x2', width + DRAGGABLE_LINE_OFFSET_X)
+    .attr('x1', getDraggableLineOneX)
+    .attr('x2', getDraggableLineOneX)
     .attr('y1', getYAnnotationDraggableLineY1)
     .attr('y2', getYAnnotationDraggableLineY2);
 
   annotationSelection
     .select(DRAGGABLE_LINE_TWO_SELECTOR)
     .attr('display', YAnnotationDragHandleVisibility)
-    .attr('x1', width + DRAGGABLE_LINE_OFFSET_X + DRAGGABLE_LINE_SEPARATION)
-    .attr('x2', width + DRAGGABLE_LINE_OFFSET_X + DRAGGABLE_LINE_SEPARATION)
+    .attr('x1', getDraggableLineTwoX)
+    .attr('x2', getDraggableLineTwoX)
     .attr('y1', getYAnnotationDraggableLineY1)
     .attr('y2', getYAnnotationDraggableLineY2);
 
