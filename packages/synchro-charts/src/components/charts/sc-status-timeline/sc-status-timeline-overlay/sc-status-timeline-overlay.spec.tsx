@@ -5,7 +5,7 @@ import { update } from '../../common/tests/merge';
 import { ScStatusTimelineOverlay } from './sc-status-timeline-overlay';
 import { DataStream } from '../../../../utils/dataTypes';
 import { Threshold } from '../../common/types';
-import { VIEW_PORT } from '../../common/testUtil';
+import { VIEWPORT } from '../../common/testUtil';
 import { DAY_IN_MS } from '../../../../utils/time';
 import { ScStatusTimelineOverlayRow } from './sc-status-timeline-overlay-row';
 import { DATA_STREAM_2 } from '../../../../testing/__mocks__/mockWidgetProperties';
@@ -46,7 +46,7 @@ const ALARM_THRESHOLD: Threshold<string> = {
 };
 
 const WITHIN_VIEWPORT_DATE = new Date(2000, 0, 1).getTime();
-const BEFORE_VIEWPORT_DATE = VIEW_PORT.start.getTime() - DAY_IN_MS;
+const BEFORE_VIEWPORT_DATE = VIEWPORT.start.getTime() - DAY_IN_MS;
 
 const ALARM_STREAM: DataStream<string> = {
   id: 'alarm-stream',
@@ -97,7 +97,7 @@ const timelineOverlaySpecPage = async (propOverrides: Partial<Components.ScStatu
   const props: Components.ScStatusTimelineOverlay = {
     thresholds: [],
     dataStreams: [],
-    date: VIEW_PORT.end,
+    date: VIEWPORT.end,
     isEditing: false,
     widgetId: 'some-fake-widget-id',
     size: {

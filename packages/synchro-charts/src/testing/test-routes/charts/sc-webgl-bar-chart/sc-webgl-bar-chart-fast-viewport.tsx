@@ -75,7 +75,7 @@ export class ScWebglBarChartFastViewport {
               height: 500,
               width: 500,
             }}
-            viewPort={{
+            viewport={{
               yMin: Y_MIN,
               yMax: Y_MAX,
               start: this.start,

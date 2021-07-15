@@ -22,7 +22,7 @@ export type CellOptions = {
   propertyStream?: DataStream;
   trendStream: DataStream | undefined;
   valueColor?: string;
-  viewPort: MinimalViewPortConfig;
+  viewport: MinimalViewPortConfig;
 };
 
 export type RenderCell = (cellOptions: CellOptions) => void;

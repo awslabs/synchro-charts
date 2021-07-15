@@ -73,7 +73,7 @@ import { LEGEND_POSITION, DataType, COMPARISON_OPERATOR, StreamType } from '@syn
           dataStreamIds: ['car-speed-alarm']
         }],
     }}
-    viewPort={{ duration: 0, iyMin: 0, yMax: 100, start: new Date(1999, 0, 0), end: new Date(2001, 0, 0) }}
+    viewport={{ duration: 0, iyMin: 0, yMax: 100, start: new Date(1999, 0, 0), end: new Date(2001, 0, 0) }}
   />
 </div>
 ```
@@ -131,7 +131,7 @@ import { LEGEND_POSITION, DataType, COMPARISON_OPERATOR } from '@synchro-charts/
     ]}
     labelsConfig={{ showName: true, showValue: true, showUnit: true }}
     widgetId="widget-id"
-    viewPort={{ duration: 0, iyMin: 0, yMax: 100, start: new Date(1999, 0, 0), end: new Date(2001, 0, 0) }}
+    viewport={{ duration: 0, iyMin: 0, yMax: 100, start: new Date(1999, 0, 0), end: new Date(2001, 0, 0) }}
   />
 </div>
 ```
@@ -179,7 +179,7 @@ import { LEGEND_POSITION, DataType, COMPARISON_OPERATOR } from '@synchro-charts/
         comparisonOperator: COMPARISON_OPERATOR.GREATER_THAN_EQUAL,
       }],
     }}
-    viewPort={{ duration: 0, iyMin: 0, yMax: 100, start: new Date(1999, 0, 0), end: new Date(2001, 0, 0) }}
+    viewport={{ duration: 0, iyMin: 0, yMax: 100, start: new Date(1999, 0, 0), end: new Date(2001, 0, 0) }}
   />
 </div>
 ```
@@ -236,7 +236,7 @@ import { LEGEND_POSITION, DataType, COMPARISON_OPERATOR, StreamType } from '@syn
         dataStreamIds: ['car-speed-alarm']
       }],
     }}
-    viewPort={{ duration: 0, iyMin: 0, yMax: 100, start: new Date(1999, 0, 0), end: new Date(2001, 0, 0) }}
+    viewport={{ duration: 0, iyMin: 0, yMax: 100, start: new Date(1999, 0, 0), end: new Date(2001, 0, 0) }}
   />
 </div>
 ```

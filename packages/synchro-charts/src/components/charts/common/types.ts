@@ -49,7 +49,7 @@ export interface LegendConfig {
  * Missing fields will be substituted with defaults
  */
 export interface ChartConfig extends BaseConfig {
-  viewPort: MinimalViewPortConfig;
+  viewport: MinimalViewPortConfig;
   movement?: MovementConfig;
   scale?: ScaleConfig;
   layout?: LayoutConfig;
@@ -69,7 +69,7 @@ export type WidgetConfigurationUpdate = Partial<ChartConfig> & {
  */
 export interface BaseChartConfig extends ChartConfig {
   dataStreams: DataStream[];
-  viewPort: ViewPortConfig;
+  viewport: ViewPortConfig;
   movement: MovementConfig;
   layout: LayoutConfig;
   scale: ScaleConfig;
@@ -181,7 +181,7 @@ export namespace Tooltip {
     size: SizeConfig;
     style: StencilCSSProperty;
     dataStreams: DataStream[];
-    viewPort: ViewPort;
+    viewport: ViewPort;
     dataContainer: HTMLElement;
     thresholds: Threshold[];
     trendResults: TrendResult[];

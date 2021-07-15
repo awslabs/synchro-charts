@@ -51,7 +51,7 @@ const MONTH_RESOLUTION = 1000 * 60 * 60 * 24 * 30; // one month
       width: 100,
       position: LEGEND_POSITION.BOTTOM,
     }}
-    viewPort={{ yMin: 0, yMax: 100, start: new Date(1999, 0, 0), end: new Date(2001, 6, 0) }}
+    viewport={{ yMin: 0, yMax: 100, start: new Date(1999, 0, 0), end: new Date(2001, 6, 0) }}
   />
 </div>
 ```
@@ -155,7 +155,7 @@ const MONTH_RESOLUTION = 1000 * 60 * 60 * 24 * 30; // one month
       width: 100,
       position: LEGEND_POSITION.BOTTOM,
     }}
-    viewPort={{ yMin: 0, yMax: 100, start: new Date(1999, 0, 0), end: new Date(2001, 6, 0) }}
+    viewport={{ yMin: 0, yMax: 100, start: new Date(1999, 0, 0), end: new Date(2001, 6, 0) }}
   />
 </div>
 ```

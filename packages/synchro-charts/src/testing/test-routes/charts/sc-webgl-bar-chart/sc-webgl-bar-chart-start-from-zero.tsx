@@ -61,7 +61,7 @@ export class ScWebglBarChartStartFromZero {
               width: 500,
               height: 500,
             }}
-            viewPort={{ start: X_MIN, end: X_MAX }}
+            viewport={{ start: X_MIN, end: X_MAX }}
           />
           <sc-webgl-context />
         </div>

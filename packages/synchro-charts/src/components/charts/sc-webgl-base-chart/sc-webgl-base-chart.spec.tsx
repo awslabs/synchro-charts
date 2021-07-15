@@ -20,7 +20,7 @@ import { ScWebglAxis } from './sc-webgl-axis';
 import { chartScene, updateChartScene } from '../sc-line-chart/chartScene';
 import { DATA_ALIGNMENT, LEGEND_POSITION } from '../common/constants';
 
-const VIEW_PORT: ViewPort = { start: new Date(2000), end: new Date(2001, 0, 0), yMin: 0, yMax: 100 };
+const VIEWPORT: ViewPort = { start: new Date(2000), end: new Date(2001, 0, 0), yMin: 0, yMax: 100 };
 
 const STREAM: DataStream<number> = {
   id: 'stream-id',
@@ -53,7 +53,7 @@ const newChartSpecPage = async (props: Partial<Components.ScWebglBaseChart>) => 
     yRangeStartFromZero: false,
     displaysError: true,
     createChartScene: chartScene,
-    viewPort: VIEW_PORT,
+    viewport: VIEWPORT,
     gestures: true,
     size: {
       ...CHART_CONFIG.size,
@@ -127,12 +127,12 @@ describe('legend', () => {
         position: LEGEND_POSITION.BOTTOM,
         width: 200,
       },
-      viewPort: VIEW_PORT,
+      viewport: VIEWPORT,
     });
 
     const legend = chart.querySelector('sc-legend') as HTMLScLegendElement;
 
-    expect(legend.viewPort).toEqual(VIEW_PORT);
+    expect(legend.viewport).toEqual(VIEWPORT);
   });
 });
 
@@ -149,7 +149,7 @@ describe('chart scene management', () => {
       dataType: DataType.NUMBER,
       data: [
         {
-          x: VIEW_PORT.end.getTime(),
+          x: VIEWPORT.end.getTime(),
           y: 50,
         },
       ],
@@ -164,7 +164,7 @@ describe('chart scene management', () => {
       dataType: DataType.NUMBER,
       color: 'red',
       streamType: StreamType.ALARM,
-      data: [{ x: VIEW_PORT.end.getTime(), y: 100 }],
+      data: [{ x: VIEWPORT.end.getTime(), y: 100 }],
     };
 
     it('does not pass any alarm data when visualizesAlarm is true, but there are no data streams', async () => {
@@ -175,7 +175,7 @@ describe('chart scene management', () => {
         createChartScene: mockCreateChartScene,
         updateChartScene: mockUpdateChartScene,
         visualizesAlarms: true,
-        viewPort: VIEW_PORT,
+        viewport: VIEWPORT,
         dataStreams: [],
       });
 
@@ -202,7 +202,7 @@ describe('chart scene management', () => {
         createChartScene: mockCreateChartScene,
         updateChartScene: mockUpdateChartScene,
         visualizesAlarms: true,
-        viewPort: VIEW_PORT,
+        viewport: VIEWPORT,
         dataStreams: DATA,
       });
 
@@ -227,7 +227,7 @@ describe('chart scene management', () => {
         createChartScene: mockCreateChartScene,
         updateChartScene: mockUpdateChartScene,
         visualizesAlarms: true,
-        viewPort: VIEW_PORT,
+        viewport: VIEWPORT,
         dataStreams: [ALARM_DATA_STREAM],
       });
 
@@ -252,7 +252,7 @@ describe('chart scene management', () => {
         createChartScene: mockCreateChartScene,
         updateChartScene: mockUpdateChartScene,
         visualizesAlarms: false,
-        viewPort: VIEW_PORT,
+        viewport: VIEWPORT,
         dataStreams: [ALARM_DATA_STREAM],
       });
 
@@ -277,7 +277,7 @@ describe('chart scene management', () => {
     await newChartSpecPage({
       createChartScene: mockCreateChartScene,
       updateChartScene: mockUpdateChartScene,
-      viewPort: VIEW_PORT,
+      viewport: VIEWPORT,
       minBufferSize: MIN_BUFFER_SIZE,
       bufferFactor: BUFFER_FACTOR,
       dataStreams: DATA_STREAMS,
@@ -287,7 +287,7 @@ describe('chart scene management', () => {
     expect(mockCreateChartScene).toBeCalledTimes(1);
     expect(mockCreateChartScene).toBeCalledWith(
       expect.objectContaining({
-        viewPort: VIEW_PORT,
+        viewport: VIEWPORT,
         minBufferSize: MIN_BUFFER_SIZE,
         bufferFactor: BUFFER_FACTOR,
         dataStreams: DATA_STREAMS,
@@ -299,8 +299,8 @@ describe('chart scene management', () => {
     expect(mockOnUpdateLifeCycle).toBeCalledTimes(1);
     expect(mockOnUpdateLifeCycle).toBeCalledWith(
       expect.objectContaining({
-        start: VIEW_PORT.start,
-        end: VIEW_PORT.end,
+        start: VIEWPORT.start,
+        end: VIEWPORT.end,
       })
     );
   });
@@ -308,7 +308,7 @@ describe('chart scene management', () => {
   it('calls onUpdate when data is changed', async () => {
     const mockOnUpdateLifeCycle = jest.fn();
     const { chart, page } = await newChartSpecPage({
-      viewPort: VIEW_PORT,
+      viewport: VIEWPORT,
       dataStreams: DATA_STREAMS,
       onUpdateLifeCycle: mockOnUpdateLifeCycle,
     });
@@ -320,8 +320,8 @@ describe('chart scene management', () => {
     await page.waitForChanges();
     expect(mockOnUpdateLifeCycle).toBeCalledWith(
       expect.objectContaining({
-        start: VIEW_PORT.start,
-        end: VIEW_PORT.end,
+        start: VIEWPORT.start,
+        end: VIEWPORT.end,
       })
     );
   });
@@ -331,7 +331,7 @@ describe('chart scene management', () => {
     const { chart, page } = await newChartSpecPage({
       createChartScene: chartScene,
       updateChartScene,
-      viewPort: VIEW_PORT,
+      viewport: VIEWPORT,
       minBufferSize: MIN_BUFFER_SIZE,
       bufferFactor: BUFFER_FACTOR,
       dataStreams: DATA_STREAMS,
@@ -343,9 +343,9 @@ describe('chart scene management', () => {
     // Update view port
     const UPDATED_START = new Date(1919, 0, 0);
     const UPDATED_END = new Date(1985, 0, 0);
-    chart.viewPort = {
-      yMax: chart.viewPort.yMax,
-      yMin: chart.viewPort.yMin,
+    chart.viewport = {
+      yMax: chart.viewport.yMax,
+      yMin: chart.viewport.yMin,
       lastUpdatedBy: undefined,
       start: UPDATED_START,
       end: UPDATED_END,
@@ -372,7 +372,7 @@ describe('loading status', () => {
       resolution: 0,
       data: [
         {
-          x: VIEW_PORT.end.getTime(),
+          x: VIEWPORT.end.getTime(),
           y: 50,
         },
       ],

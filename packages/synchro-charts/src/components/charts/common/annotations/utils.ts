@@ -41,11 +41,11 @@ export const getNumberAnnotations = (annotations: Annotations): Annotations => {
 const valueDisplayText = ({
   value,
   resolution,
-  viewPort,
+  viewport,
 }: {
   value: AnnotationValue;
   resolution: number;
-  viewPort: ViewPort;
+  viewport: ViewPort;
 }): string => {
   if (typeof value === 'number') {
     return value.toString();
@@ -53,7 +53,7 @@ const valueDisplayText = ({
   if (typeof value === 'string') {
     return value;
   }
-  return displayDate(value, resolution, viewPort);
+  return displayDate(value, resolution, viewport);
 };
 
 /**
@@ -65,13 +65,13 @@ export const getColor = (annotation: Annotation<AnnotationValue>) => annotation.
 export const getValueAndText = ({
   annotation,
   resolution,
-  viewPort,
+  viewport,
 }: {
   annotation: Annotation<AnnotationValue>;
   resolution: number;
-  viewPort: ViewPort;
+  viewport: ViewPort;
 }): string => {
-  const valueText = annotation.showValue ? valueDisplayText({ value: annotation.value, resolution, viewPort }) : null;
+  const valueText = annotation.showValue ? valueDisplayText({ value: annotation.value, resolution, viewport }) : null;
   const labelText = annotation.label && annotation.label.show ? annotation.label.text : null;
 
   if (labelText && valueText) {
@@ -123,13 +123,13 @@ export const getValueAndTextVisibility = (annotation: Annotation<AnnotationValue
 export const getValueText = ({
   annotation,
   resolution,
-  viewPort,
+  viewport,
 }: {
   annotation: Annotation<AnnotationValue>;
   resolution: number;
-  viewPort: ViewPort;
+  viewport: ViewPort;
 }): string => {
-  const valueText = annotation.showValue ? valueDisplayText({ value: annotation.value, resolution, viewPort }) : null;
+  const valueText = annotation.showValue ? valueDisplayText({ value: annotation.value, resolution, viewport }) : null;
 
   if (valueText) {
     return `${valueText}`;

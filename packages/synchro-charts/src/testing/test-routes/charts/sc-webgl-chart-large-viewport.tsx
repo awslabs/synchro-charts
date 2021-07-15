@@ -43,7 +43,7 @@ export class ScWebglChartLargeViewport {
             height: 500,
             width: 500,
           }}
-          viewPort={VIEWPORT}
+          viewport={VIEWPORT}
         />
         <sc-webgl-context />
       </div>

@@ -28,7 +28,7 @@ export class ScSingleStatus {
     const container = this.el.querySelector('#test-container') as HTMLDivElement;
     const scene = chartScene({
       alarms: { expires: DAY_IN_MS },
-      viewPort: {
+      viewport: {
         start: X_MIN,
         end: X_MAX,
         yMin: 0,

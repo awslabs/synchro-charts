@@ -34,7 +34,7 @@ export class ScTooltipRows {
   @Prop() selectedDate!: Date;
   @Prop() size!: SizeConfig;
   @Prop() dataStreams!: DataStream[];
-  @Prop() viewPort!: ViewPort;
+  @Prop() viewport!: ViewPort;
   @Prop() thresholds!: Threshold[];
   @Prop() trendResults: TrendResult[] = [];
   @Prop() maxDurationFromDate?: number; // milliseconds
@@ -126,7 +126,7 @@ export class ScTooltipRows {
     const minResolution = resolutions.length > 0 ? Math.min(...resolutions) : 0;
 
     const dataPoints = activePoints({
-      viewPort: this.viewPort,
+      viewport: this.viewport,
       dataStreams: this.visualizedDataStreams(),
       dataAlignment: this.dataAlignment,
       selectedDate: this.selectedDate,
@@ -167,7 +167,7 @@ export class ScTooltipRows {
     const position = tooltipPosition({
       points,
       resolution: minResolution,
-      viewPort: this.viewPort,
+      viewport: this.viewport,
       size: this.size,
       selectedTimestamp: this.selectedDate.getTime(),
     });
@@ -204,7 +204,7 @@ export class ScTooltipRows {
         >
           <div class="awsui-util-shadow awsui-util-p-s">
             <small class={{ 'awsui-util-d-b': true, 'left-offset': !this.showDataStreamColor }}>
-              {displayDate(displayedDate, minResolution, this.viewPort)}
+              {displayDate(displayedDate, minResolution, this.viewport)}
             </small>
             {!isCrossResolution && (
               <small

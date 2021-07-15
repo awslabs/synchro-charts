@@ -38,7 +38,7 @@ const DATA_STREAMS: DataStream<Primitive>[] = [
 const render = (props: Partial<RenderTrendLinesOptions>, page: SpecPage) => {
   const defaultProps: RenderTrendLinesOptions = {
     container: page.body.querySelector('svg') as SVGElement,
-    viewPort: VIEWPORT,
+    viewport: VIEWPORT,
     size: SIZE,
     dataStreams: [],
     trendResults: [],

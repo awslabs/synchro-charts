@@ -39,7 +39,7 @@ const tooltip = (props: Tooltip.Props) => (
 })
 export class ScScatterChart implements ChartConfig {
   /** Chart API */
-  @Prop() viewPort: MinimalViewPortConfig;
+  @Prop() viewport: MinimalViewPortConfig;
   @Prop() movement?: MovementConfig;
   @Prop() scale?: ScaleConfig;
   @Prop() layout?: LayoutConfig;
@@ -83,7 +83,7 @@ export class ScScatterChart implements ChartConfig {
             }}
             dataStreams={this.dataStreams}
             alarms={this.alarms}
-            viewPort={this.viewPort}
+            viewport={this.viewport}
             minBufferSize={this.minBufferSize}
             bufferFactor={this.bufferFactor}
             isEditing={this.isEditing}

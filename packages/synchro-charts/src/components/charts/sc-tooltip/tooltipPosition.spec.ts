@@ -4,15 +4,15 @@ import { POINT_TYPE } from '../sc-webgl-base-chart/activePoints';
 import { MINUTE_IN_MS } from '../../../utils/time';
 import { DataPoint } from '../../../utils/dataTypes';
 
-const VIEW_PORT = { start: new Date(2000, 0, 0), end: new Date(2001, 0, 0), yMin: 0, yMax: 100 };
+const VIEWPORT = { start: new Date(2000, 0, 0), end: new Date(2001, 0, 0), yMin: 0, yMax: 100 };
 const SIZE = { width: 500, height: 400 };
 
-const WITHIN_VIEW_PORT_DATE = (VIEW_PORT.start.getTime() + VIEW_PORT.end.getTime()) / 2;
+const WITHIN_VIEWPORT_DATE = (VIEWPORT.start.getTime() + VIEWPORT.end.getTime()) / 2;
 
 const STRING_TOOLTIP_POINT_1: TooltipPoint = {
   streamId: 'some-id',
   point: {
-    x: WITHIN_VIEW_PORT_DATE,
+    x: WITHIN_VIEWPORT_DATE,
     y: 'some-string',
   },
   color: 'red',
@@ -22,7 +22,7 @@ const STRING_TOOLTIP_POINT_1: TooltipPoint = {
 const DATA_TOOLTIP_POINT_1: TooltipPoint = {
   streamId: 'some-id',
   point: {
-    x: WITHIN_VIEW_PORT_DATE,
+    x: WITHIN_VIEWPORT_DATE,
     y: 12,
   },
   color: 'red',
@@ -45,7 +45,7 @@ describe('sanity test', () => {
       tooltipPosition({
         points: [],
         resolution: 0,
-        viewPort: VIEW_PORT,
+        viewport: VIEWPORT,
         size: SIZE,
         selectedTimestamp: Date.now(),
       })
@@ -56,9 +56,9 @@ describe('sanity test', () => {
     const { x, y } = tooltipPosition({
       points: [DATA_TOOLTIP_POINT_1, TREND_TOOLTIP_POINT_1, STRING_TOOLTIP_POINT_1],
       resolution: 0,
-      viewPort: VIEW_PORT,
+      viewport: VIEWPORT,
       size: SIZE,
-      selectedTimestamp: WITHIN_VIEW_PORT_DATE,
+      selectedTimestamp: WITHIN_VIEWPORT_DATE,
     }) as { x: number; y: number };
 
     expect(x).toBeNumber();
@@ -69,9 +69,9 @@ describe('sanity test', () => {
     const { x, y } = tooltipPosition({
       points: [STRING_TOOLTIP_POINT_1],
       resolution: 0,
-      viewPort: VIEW_PORT,
+      viewport: VIEWPORT,
       size: SIZE,
-      selectedTimestamp: WITHIN_VIEW_PORT_DATE,
+      selectedTimestamp: WITHIN_VIEWPORT_DATE,
     }) as { x: number; y: number };
 
     expect(x).toBeNumber();
@@ -85,9 +85,9 @@ describe('x position', () => {
       const { x } = tooltipPosition({
         points: [DATA_TOOLTIP_POINT_1, TREND_TOOLTIP_POINT_1],
         resolution: 0,
-        viewPort: VIEW_PORT,
+        viewport: VIEWPORT,
         size: SIZE,
-        selectedTimestamp: WITHIN_VIEW_PORT_DATE,
+        selectedTimestamp: WITHIN_VIEWPORT_DATE,
       }) as { x: number; y: number };
 
       expect(x).toBe(SIZE.width / 2);
@@ -97,9 +97,9 @@ describe('x position', () => {
       const { x } = tooltipPosition({
         points: [DATA_TOOLTIP_POINT_1, TREND_TOOLTIP_POINT_1],
         resolution: 0,
-        viewPort: VIEW_PORT,
+        viewport: VIEWPORT,
         size: SIZE,
-        selectedTimestamp: VIEW_PORT.start.getTime(),
+        selectedTimestamp: VIEWPORT.start.getTime(),
       }) as { x: number; y: number };
 
       expect(x).toBe(0);
@@ -109,9 +109,9 @@ describe('x position', () => {
       const { x } = tooltipPosition({
         points: [DATA_TOOLTIP_POINT_1, TREND_TOOLTIP_POINT_1],
         resolution: 0,
-        viewPort: VIEW_PORT,
+        viewport: VIEWPORT,
         size: SIZE,
-        selectedTimestamp: VIEW_PORT.end.getTime(),
+        selectedTimestamp: VIEWPORT.end.getTime(),
       }) as { x: number; y: number };
 
       expect(x).toBe(SIZE.width);
@@ -123,9 +123,9 @@ describe('x position', () => {
       const { x } = tooltipPosition({
         points: [DATA_TOOLTIP_POINT_1, TREND_TOOLTIP_POINT_1],
         resolution: MINUTE_IN_MS,
-        viewPort: VIEW_PORT,
+        viewport: VIEWPORT,
         size: SIZE,
-        selectedTimestamp: WITHIN_VIEW_PORT_DATE,
+        selectedTimestamp: WITHIN_VIEWPORT_DATE,
       }) as { x: number; y: number };
 
       expect(x).toBe(SIZE.width / 2);
@@ -136,15 +136,15 @@ describe('x position', () => {
         ...DATA_TOOLTIP_POINT_1,
         point: {
           ...(DATA_TOOLTIP_POINT_1.point as DataPoint<number>),
-          x: VIEW_PORT.start.getTime(),
+          x: VIEWPORT.start.getTime(),
         },
       };
       const { x } = tooltipPosition({
         points: [TOOLTIP_POINT],
         resolution: MINUTE_IN_MS,
-        viewPort: VIEW_PORT,
+        viewport: VIEWPORT,
         size: SIZE,
-        selectedTimestamp: WITHIN_VIEW_PORT_DATE,
+        selectedTimestamp: WITHIN_VIEWPORT_DATE,
       }) as { x: number; y: number };
 
       expect(x).toBe(0);
@@ -155,15 +155,15 @@ describe('x position', () => {
         ...DATA_TOOLTIP_POINT_1,
         point: {
           ...(DATA_TOOLTIP_POINT_1.point as DataPoint<number>),
-          x: VIEW_PORT.end.getTime(),
+          x: VIEWPORT.end.getTime(),
         },
       };
       const { x } = tooltipPosition({
         points: [TOOLTIP_POINT],
         resolution: MINUTE_IN_MS,
-        viewPort: VIEW_PORT,
+        viewport: VIEWPORT,
         size: SIZE,
-        selectedTimestamp: WITHIN_VIEW_PORT_DATE,
+        selectedTimestamp: WITHIN_VIEWPORT_DATE,
       }) as { x: number; y: number };
 
       expect(x).toBe(SIZE.width);
@@ -176,9 +176,9 @@ describe('y position', () => {
     const { y } = tooltipPosition({
       points: [DATA_TOOLTIP_POINT_1, TREND_TOOLTIP_POINT_1],
       resolution: 0,
-      viewPort: VIEW_PORT,
+      viewport: VIEWPORT,
       size: SIZE,
-      selectedTimestamp: WITHIN_VIEW_PORT_DATE,
+      selectedTimestamp: WITHIN_VIEWPORT_DATE,
     }) as { x: number; y: number };
 
     expect(y).toBeGreaterThan(0);
@@ -197,9 +197,9 @@ describe('y position', () => {
         },
       ],
       resolution: 0,
-      viewPort: VIEW_PORT,
+      viewport: VIEWPORT,
       size: SIZE,
-      selectedTimestamp: WITHIN_VIEW_PORT_DATE,
+      selectedTimestamp: WITHIN_VIEWPORT_DATE,
     }) as { x: number; y: number };
 
     expect(y).toBe(0);

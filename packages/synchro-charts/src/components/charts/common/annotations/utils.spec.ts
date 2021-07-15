@@ -14,7 +14,7 @@ import {
   isThresholdBreached,
   sortThreshold,
 } from './utils';
-import { VIEW_PORT } from '../testUtil';
+import { VIEWPORT } from '../testUtil';
 import { highestPriorityThreshold, thresholdAppliesToDataStream } from './breachedThreshold';
 import { COMPARISON_OPERATOR } from '../constants';
 
@@ -56,7 +56,7 @@ describe('getValueAndText and getValueAndTextVisibility', () => {
     const valueText = getValueText({
       annotation: yAnnotations[0],
       resolution: 1000,
-      viewPort: VIEW_PORT,
+      viewport: VIEWPORT,
     });
     expect(valueText).toBe(value.toString());
 
@@ -81,7 +81,7 @@ describe('getValueAndText and getValueAndTextVisibility', () => {
     const valueAndText = getValueAndText({
       annotation: yAnnotations[0],
       resolution: 1000,
-      viewPort: VIEW_PORT,
+      viewport: VIEWPORT,
     });
 
     expect(valueAndText).toBe(`${label} (${value})`);
@@ -107,7 +107,7 @@ describe('getValueAndText and getValueAndTextVisibility', () => {
     const valueAndText = getValueAndText({
       annotation: yAnnotations[0],
       resolution: 1000,
-      viewPort: VIEW_PORT,
+      viewport: VIEWPORT,
     });
 
     expect(valueAndText).toBe(label);
@@ -126,7 +126,7 @@ describe('getValueAndText and getValueAndTextVisibility', () => {
     const valueAndText = getValueAndText({
       annotation: yAnnotations[0],
       resolution: 1000,
-      viewPort: VIEW_PORT,
+      viewport: VIEWPORT,
     });
 
     expect(valueAndText).toBeEmpty();
@@ -147,7 +147,7 @@ describe('getValueAndText and getValueAndTextVisibility', () => {
     const valueText = getValueText({
       annotation: yAnnotations[0],
       resolution: 1000,
-      viewPort: VIEW_PORT,
+      viewport: VIEWPORT,
     });
 
     expect(valueText).toBeEmpty();

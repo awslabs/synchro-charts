@@ -20,7 +20,7 @@ import {
   NUMBER_EMPTY_STREAM,
   WITHIN_VIEWPORT_DATE,
 } from '../../../testing/__mocks__/mockWidgetProperties';
-import { VIEW_PORT } from '../common/testUtil';
+import { VIEWPORT } from '../common/testUtil';
 import { DataType, StreamType, TREND_TYPE } from '../../../utils/dataConstants';
 
 import { COMPARISON_OPERATOR, DATA_ALIGNMENT, StatusIcon } from '../common/constants';
@@ -80,7 +80,7 @@ const TREND: TrendResult = {
   color: 'green',
   type: TREND_TYPE.LINEAR,
   equation: { gradient: 0, intercept: 0 },
-  startDate: VIEW_PORT.start,
+  startDate: VIEWPORT.start,
 };
 
 const newTooltipRowsSpecPage = async (propOverrides: Partial<Components.ScTooltipRows> = {}) => {
@@ -94,12 +94,12 @@ const newTooltipRowsSpecPage = async (propOverrides: Partial<Components.ScToolti
   const props: Components.ScTooltipRows = {
     dataAlignment: DATA_ALIGNMENT.EITHER,
     dataStreams: [],
-    selectedDate: VIEW_PORT.end,
+    selectedDate: VIEWPORT.end,
     showDataStreamColor: true,
     size: DEFAULT_CHART_CONFIG.size,
     thresholds: [],
     trendResults: [],
-    viewPort: VIEW_PORT,
+    viewport: VIEWPORT,
     supportString: true,
     showBlankTooltipRows: false,
     visualizesAlarms: false,

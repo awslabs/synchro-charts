@@ -33,7 +33,7 @@ export class MultipleStatuses {
     const container = this.el.querySelector('#test-container') as HTMLDivElement;
     const scene = chartScene({
       alarms: { expires: HOUR_IN_MS * 5 },
-      viewPort: {
+      viewport: {
         start: X_MIN,
         end: X_MAX,
         yMin: 0,

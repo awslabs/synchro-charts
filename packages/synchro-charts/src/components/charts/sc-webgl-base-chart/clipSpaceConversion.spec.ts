@@ -5,14 +5,14 @@ const FLOATING_POINT_SIG_FIGS = 7;
 
 describe('model space conversion', () => {
   it('for a small viewport window, the distance between two converted positions is the difference in time in milliseconds', () => {
-    const viewPort = {
+    const viewport = {
       start: new Date(2020, 0, 0, 0, 0, 0),
       end: new Date(2020, 0, 0, 0, 0, 10),
       yMin: 0,
       yMax: 100,
     };
 
-    const toClipSpace = clipSpaceConversion(viewPort);
+    const toClipSpace = clipSpaceConversion(viewport);
 
     const DISTANCE_MS = 35;
     const dateA = new Date(2020, 0, 0, 0, 0, 0, 0);
@@ -44,8 +44,8 @@ describe('model space conversion', () => {
     ${new Date(2000, 0, 0, 0, 0, 0, 0).toISOString()} | ${new Date(2100, 0, 0, 0, 0, 0, 0).toISOString()}
   `('converts the time within the viewport to be representable by floating points', ({ start, end }) => {
     // NOTE: yMin and yMax don't effect the conversion
-    const viewPort = { start: new Date(start), end: new Date(end), yMin: 0, yMax: 100 };
-    const toClipSpace = clipSpaceConversion(viewPort);
+    const viewport = { start: new Date(start), end: new Date(end), yMin: 0, yMax: 100 };
+    const toClipSpace = clipSpaceConversion(viewport);
     describe.each`
       percentage
       ${-0.1}
@@ -57,9 +57,9 @@ describe('model space conversion', () => {
       ${1.1}
     `(`given viewport from ( ${start} -> ${end} )`, ({ percentage }) => {
       test(`at ${percentage * 100}% of the viewport, have the position representable by a float`, () => {
-        const pointInTime = viewPort.start.getTime() + (viewPort.start.getTime() - viewPort.end.getTime()) * percentage;
+        const pointInTime = viewport.start.getTime() + (viewport.start.getTime() - viewport.end.getTime()) * percentage;
 
-        // expect(needsNewClipSpace(viewPort, toClipSpace)).toBeFalse();
+        // expect(needsNewClipSpace(viewport, toClipSpace)).toBeFalse();
         expect(Math.abs(toClipSpace(pointInTime))).toBeLessThan(10 ** FLOATING_POINT_SIG_FIGS);
       });
     });
@@ -68,24 +68,24 @@ describe('model space conversion', () => {
 
 describe('whether we need a new clip space provided', () => {
   it('the view port used to create the model space conversion function is always in bounds', () => {
-    const viewPort = { start: new Date(2000, 0), end: new Date(2001, 0), yMin: 0, yMax: 100 };
-    const toClipSpace = clipSpaceConversion(viewPort);
+    const viewport = { start: new Date(2000, 0), end: new Date(2001, 0), yMin: 0, yMax: 100 };
+    const toClipSpace = clipSpaceConversion(viewport);
 
-    expect(needsNewClipSpace(viewPort, toClipSpace)).toBeFalse();
+    expect(needsNewClipSpace(viewport, toClipSpace)).toBeFalse();
   });
 
   it('a view port which is translated a far distance from the original view port is out of bounds', () => {
-    const viewPort = { start: new Date(2000, 0), end: new Date(2000, 0, 1), yMin: 0, yMax: 100 };
+    const viewport = { start: new Date(2000, 0), end: new Date(2000, 0, 1), yMin: 0, yMax: 100 };
     const newViewPort = { start: new Date(2010, 0), end: new Date(2010, 0, 1), yMin: 0, yMax: 100 };
-    const toClipSpace = clipSpaceConversion(viewPort);
+    const toClipSpace = clipSpaceConversion(viewport);
 
     expect(needsNewClipSpace(newViewPort, toClipSpace)).toBeTrue();
   });
 
   it('a view port which is scaled out a far distance from the original view port is out of bounds', () => {
-    const viewPort = { start: new Date(2000, 0), end: new Date(2000, 0, 1), yMin: 0, yMax: 100 };
+    const viewport = { start: new Date(2000, 0), end: new Date(2000, 0, 1), yMin: 0, yMax: 100 };
     const newViewPort = { start: new Date(1999, 0), end: new Date(2002, 0), yMin: 0, yMax: 100 };
-    const toClipSpace = clipSpaceConversion(viewPort);
+    const toClipSpace = clipSpaceConversion(viewport);
 
     expect(needsNewClipSpace(newViewPort, toClipSpace)).toBeTrue();
   });
@@ -103,14 +103,14 @@ describe('whether we need a new clip space provided', () => {
     ${30 * YEAR_IN_MS}
   `('should not need a new clip space when viewport has not changed', ({ duration }) => {
     test(`given a viewport with duration of ${duration / SECOND_IN_MS} seconds`, () => {
-      const viewPort = {
+      const viewport = {
         start: new Date(),
         end: new Date(new Date().getTime() + duration),
         yMin: 0,
         yMax: 100,
       };
-      const toClipSpace = clipSpaceConversion(viewPort);
-      expect(needsNewClipSpace(viewPort, toClipSpace)).toBeFalse();
+      const toClipSpace = clipSpaceConversion(viewport);
+      expect(needsNewClipSpace(viewport, toClipSpace)).toBeFalse();
     });
   });
 });

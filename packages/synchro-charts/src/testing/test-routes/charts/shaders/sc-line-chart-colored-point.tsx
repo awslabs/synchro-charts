@@ -26,7 +26,7 @@ export class ScLineChartColoredPoint {
   componentDidLoad() {
     const container = this.el.querySelector('#test-container') as HTMLDivElement;
     const scene = chartScene({
-      viewPort: {
+      viewport: {
         start: X_MIN,
         end: X_MAX,
         yMin: Y_MIN,

@@ -50,7 +50,7 @@ export class ScScatterChartTrendLineWithLegend {
             height: 500,
             width: 500,
           }}
-          viewPort={{
+          viewport={{
             start: X_MIN,
             end: X_MAX,
             yMin: Y_MIN,
