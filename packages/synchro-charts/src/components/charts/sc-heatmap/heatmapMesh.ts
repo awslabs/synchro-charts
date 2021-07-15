@@ -12,13 +12,14 @@ import {
 import bucketVert from './heatmap.vert';
 import bucketFrag from './heatmap.frag';
 import { WriteableBufferAttribute, WriteableInstancedBufferAttribute } from '../../sc-webgl-context/types';
-import { numDataPoints, vertices, getCSSColorByString } from '../sc-webgl-base-chart/utils';
+import { numDataPoints, vertices } from '../sc-webgl-base-chart/utils';
 import { getBucketWidth, getSequential, getBucketColor } from './displayLogic';
 import { HeatValueMap, calcHeatValues } from './heatmapUtil';
 import { getBreachedThreshold } from '../common/annotations/utils';
 import { isNumberDataStream } from '../../../utils/predicates';
 import { DataStream, Primitive, ViewPort } from '../../../utils/dataTypes';
 import { Threshold, ThresholdOptions } from '../common/types';
+import { DataType } from '../../../utils/dataConstants';
 
 type BucketBufferGeometry = BufferGeometry & {
   attributes: {
@@ -56,8 +57,8 @@ const getUniformWidth = <T extends Primitive>(
   if (dataStreams.length === 0) {
     return 0;
   }
-  const { resolution } = dataStreams[0];
 
+  const { resolution } = dataStreams[0];
   return getBucketWidth({
     toClipSpace,
     numDataStreams: dataStreams.length,
@@ -86,27 +87,28 @@ const updateMesh = ({
   // eslint-disable-next-line no-param-reassign
   mesh.count = numBuckets(streamVertexSets);
 
-  const { resolution } = dataStreams[0];
   const { geometry } = mesh;
   const { color, bucket } = geometry.attributes;
   let positionIndex = 0;
   let colorIndex = 0;
 
+  const { resolution } = dataStreams[0] ?? 0;
   const heatValues: HeatValueMap = calcHeatValues({
     oldHeatValue: {},
     dataStreams,
     resolution,
     viewPort,
   });
-  const colorPalette = getSequential({minColor: '#ffffff', maxColor: '#0073bb'});
 
-  for (let xAxisBucketStart in heatValues) {
+  const colorPalette = getSequential({});
+
+  for (let xAxisBucketStart in heatValues ?? {}) {
     let buckets = heatValues[xAxisBucketStart];
     for (let oneBucket in buckets) {
       bucket.array[positionIndex] = toClipSpace(+xAxisBucketStart);
       bucket.array[positionIndex + 1] = +oneBucket * (viewPort.yMax / bucketCount);
 
-      const bucketColor = getBucketColor(buckets[oneBucket].totalCount, colorPalette, resolution, streamVertexSets.length);
+      const bucketColor = getBucketColor(colorPalette, buckets[oneBucket].totalCount, resolution * streamVertexSets.length);
       color.array[colorIndex] = bucketColor[0];
       color.array[colorIndex + 1] = bucketColor[1];
       color.array[colorIndex + 2] = bucketColor[2];

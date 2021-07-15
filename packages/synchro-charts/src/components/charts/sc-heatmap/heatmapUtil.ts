@@ -81,6 +81,9 @@ export const calcHeatValues = ({
   resolution: number;
   viewPort: ViewPort;
 }) => {
+  if (dataStreams === []) {
+    return {};
+  }
   if (dataStreams[0].dataType !== DataType.NUMBER) {
     return {};
   }

@@ -1,7 +1,7 @@
 import { clipSpaceConversion } from '../sc-webgl-base-chart/clipSpaceConversion';
-import { barMesh, updateBarMesh } from './barMesh';
+import { bucketMesh, updateBucketMesh } from './heatmapMesh';
 import { MONTH_IN_MS, DAY_IN_MS } from '../../../utils/time';
-import { getBarMargin, getBarWidth } from './displayLogic';
+import { getBucketMargin, getBucketWidth } from './displayLogic';
 import { getDistanceFromDuration } from '../common/getDistanceFromDuration';
 import { DataType } from '../../../utils/dataConstants';
 import { DataPoint, DataStream } from '../../../utils/dataTypes';
@@ -38,9 +38,9 @@ const DATA_STREAMS: DataStream[] = [
   },
 ];
 
-describe('create bar mesh', () => {
+describe('create bucket mesh', () => {
   it('sets the width uniform', () => {
-    const mesh = barMesh({
+    const mesh = bucketMesh({
       dataStreams: DATA_STREAMS,
       toClipSpace,
       minBufferSize: MIN_BUFFER_SIZE,
@@ -49,13 +49,15 @@ describe('create bar mesh', () => {
         showColor: false,
       },
       thresholds: [],
+      viewPort: VIEW_PORT,
     });
 
     expect(mesh.material.uniforms.width.value).toBeGreaterThan(0);
+    expect(mesh.material.uniforms.bucketHeight.value).toBeGreaterThan(0);
   });
 
-  it('draws no bar with an empty data set', () => {
-    const mesh = barMesh({
+  it('draws no buckets with an empty data set', () => {
+    const mesh = bucketMesh({
       dataStreams: [],
       toClipSpace,
       minBufferSize: MIN_BUFFER_SIZE,
@@ -64,15 +66,16 @@ describe('create bar mesh', () => {
         showColor: false,
       },
       thresholds: [],
+      viewPort: VIEW_PORT,
     });
     expect(mesh.count).toEqual(0);
 
-    expect(mesh.geometry.attributes.bar.array[0]).toBe(0);
-    expect(mesh.geometry.attributes.bar.array[1]).toBe(0);
+    expect(mesh.geometry.attributes.bucket.array[0]).toBe(0);
+    expect(mesh.geometry.attributes.bucket.array[1]).toBe(0);
   });
 
-  it('increase buffer size when there are more bars than the minimum buffer size', () => {
-    const mesh = barMesh({
+  it('increase buffer size when there are more buckets than the minimum buffer size', () => {
+    const mesh = bucketMesh({
       dataStreams: DATA_STREAMS,
       toClipSpace,
       minBufferSize: 1,
@@ -81,20 +84,21 @@ describe('create bar mesh', () => {
         showColor: false,
       },
       thresholds: [],
+      viewPort: VIEW_PORT,
     });
     expect(mesh.count).toEqual(3);
 
-    // Bar points
-    expect(mesh.geometry.attributes.bar.array[0]).toBeDefined();
-    expect(mesh.geometry.attributes.bar.array[1]).toBeDefined();
+    // bucket points
+    expect(mesh.geometry.attributes.bucket.array[0]).toBeDefined();
+    expect(mesh.geometry.attributes.bucket.array[1]).toBeDefined();
 
-    expect(mesh.geometry.attributes.bar.array[2]).toBeDefined();
-    expect(mesh.geometry.attributes.bar.array[3]).toBeDefined();
+    expect(mesh.geometry.attributes.bucket.array[2]).toBeDefined();
+    expect(mesh.geometry.attributes.bucket.array[3]).toBeDefined();
 
-    expect(mesh.geometry.attributes.bar.array[4]).toBeDefined();
-    expect(mesh.geometry.attributes.bar.array[5]).toBeDefined();
+    expect(mesh.geometry.attributes.bucket.array[4]).toBeDefined();
+    expect(mesh.geometry.attributes.bucket.array[5]).toBeDefined();
 
-    // Bar Colors
+    // bucket Colors
     expect(mesh.geometry.attributes.color.array[0]).toBeDefined();
     expect(mesh.geometry.attributes.color.array[1]).toBeDefined();
     expect(mesh.geometry.attributes.color.array[2]).toBeDefined();
@@ -108,8 +112,8 @@ describe('create bar mesh', () => {
     expect(mesh.geometry.attributes.color.array[8]).toBeDefined();
   });
 
-  it('draws one bar with single-point data set', () => {
-    const mesh = barMesh({
+  it('draws one bucket with single-point data set', () => {
+    const mesh = bucketMesh({
       dataStreams: [
         { id: 'data-stream', name: 'some name', resolution: 0, data: [DATA_POINT_1], dataType: DataType.NUMBER },
       ],
@@ -120,15 +124,16 @@ describe('create bar mesh', () => {
         showColor: false,
       },
       thresholds: [],
+      viewPort: VIEW_PORT,
     });
     expect(mesh.count).toEqual(1);
 
-    expect(mesh.geometry.attributes.bar.array[0]).toBe(toClipSpace(DATA_POINT_1.x));
-    expect(mesh.geometry.attributes.bar.array[1]).toBe(DATA_POINT_1.y);
+    expect(mesh.geometry.attributes.bucket.array[0]).toBe(toClipSpace(DATA_POINT_1.x));
+    expect(mesh.geometry.attributes.bucket.array[1]).toBe(DATA_POINT_1.y);
   });
 
-  it('draws two bars with two point data set', () => {
-    const mesh = barMesh({
+  it('draws two buckets with two point data set', () => {
+    const mesh = bucketMesh({
       dataStreams: [
         {
           id: 'data-stream',
@@ -145,14 +150,15 @@ describe('create bar mesh', () => {
         showColor: false,
       },
       thresholds: [],
+      viewPort: VIEW_PORT,
     });
     expect(mesh.count).toEqual(2);
 
-    expect(mesh.geometry.attributes.bar.array[0]).toBe(toClipSpace(DATA_POINT_1.x));
-    expect(mesh.geometry.attributes.bar.array[1]).toBe(DATA_POINT_1.y);
+    expect(mesh.geometry.attributes.bucket.array[0]).toBe(toClipSpace(DATA_POINT_1.x));
+    expect(mesh.geometry.attributes.bucket.array[1]).toBe(DATA_POINT_1.y);
 
-    expect(mesh.geometry.attributes.bar.array[2]).toBe(toClipSpace(DATA_POINT_2.x));
-    expect(mesh.geometry.attributes.bar.array[3]).toBe(DATA_POINT_2.y);
+    expect(mesh.geometry.attributes.bucket.array[2]).toBe(toClipSpace(DATA_POINT_2.x));
+    expect(mesh.geometry.attributes.bucket.array[3]).toBe(DATA_POINT_2.y);
 
     // Black is rgb(0, 0, 0) and both of them are color black
     expect(mesh.geometry.attributes.color.array[0]).toBe(0);
@@ -164,10 +170,10 @@ describe('create bar mesh', () => {
     expect(mesh.geometry.attributes.color.array[5]).toBe(0);
   });
 
-  it('draws four bars for two separated data streams with two data points in each data stream', () => {
+  it('draws four buckets for two separated data streams with two data points in each data stream', () => {
     const numberOfDataStreams = 2;
     const resolution = MONTH_IN_MS;
-    const mesh = barMesh({
+    const mesh = bucketMesh({
       dataStreams: [
         {
           id: 'data-stream-1',
@@ -199,61 +205,62 @@ describe('create bar mesh', () => {
         showColor: false,
       },
       thresholds: [],
+      viewPort: VIEW_PORT,
     });
 
-    const width = getBarWidth({
+    const width = getBucketWidth({
       toClipSpace,
       numDataStreams: numberOfDataStreams,
       resolution,
     });
 
-    expect(getDistanceFromDuration(toClipSpace, resolution) - getBarMargin(toClipSpace, resolution)).toEqual(
+    expect(getDistanceFromDuration(toClipSpace, resolution) - getbucketMargin(toClipSpace, resolution)).toEqual(
       width * numberOfDataStreams
     );
     expect(mesh.count).toEqual(4);
 
-    // Check for stream 1 bar 1
-    expect(mesh.geometry.attributes.bar.array[0]).toBe(toClipSpace(STREAM_1_DATA_POINT_1.x));
-    expect(mesh.geometry.attributes.bar.array[1]).toBe(STREAM_1_DATA_POINT_1.y);
+    // Check for stream 1 bucket 1
+    expect(mesh.geometry.attributes.bucket.array[0]).toBe(toClipSpace(STREAM_1_DATA_POINT_1.x));
+    expect(mesh.geometry.attributes.bucket.array[1]).toBe(STREAM_1_DATA_POINT_1.y);
 
-    // Check for stream 1 bar 2
-    expect(mesh.geometry.attributes.bar.array[2]).toBe(toClipSpace(STREAM_1_DATA_POINT_2.x));
-    expect(mesh.geometry.attributes.bar.array[3]).toBe(STREAM_1_DATA_POINT_2.y);
+    // Check for stream 1 bucket 2
+    expect(mesh.geometry.attributes.bucket.array[2]).toBe(toClipSpace(STREAM_1_DATA_POINT_2.x));
+    expect(mesh.geometry.attributes.bucket.array[3]).toBe(STREAM_1_DATA_POINT_2.y);
 
-    // Check for stream 2 bar 1
-    expect(mesh.geometry.attributes.bar.array[4]).toBe(toClipSpace(STREAM_2_DATA_POINT_1.x) - width);
-    expect(mesh.geometry.attributes.bar.array[5]).toBe(STREAM_2_DATA_POINT_1.y);
+    // Check for stream 2 bucket 1
+    expect(mesh.geometry.attributes.bucket.array[4]).toBe(toClipSpace(STREAM_2_DATA_POINT_1.x) - width);
+    expect(mesh.geometry.attributes.bucket.array[5]).toBe(STREAM_2_DATA_POINT_1.y);
 
-    // Check for stream 2 bar 2
-    expect(mesh.geometry.attributes.bar.array[6]).toBe(toClipSpace(STREAM_2_DATA_POINT_2.x) - width);
-    expect(mesh.geometry.attributes.bar.array[7]).toBe(STREAM_2_DATA_POINT_2.y);
+    // Check for stream 2 bucket 2
+    expect(mesh.geometry.attributes.bucket.array[6]).toBe(toClipSpace(STREAM_2_DATA_POINT_2.x) - width);
+    expect(mesh.geometry.attributes.bucket.array[7]).toBe(STREAM_2_DATA_POINT_2.y);
 
-    // Data stream 1 bar 1 is red, which is rgb(255, 0, 0)
+    // Data stream 1 bucket 1 is red, which is rgb(255, 0, 0)
     expect(mesh.geometry.attributes.color.array[0]).toBe(255);
     expect(mesh.geometry.attributes.color.array[1]).toBe(0);
     expect(mesh.geometry.attributes.color.array[2]).toBe(0);
 
-    // Data stream 1 bar 2 is red, which is rgb(255, 0, 0)
+    // Data stream 1 bucket 2 is red, which is rgb(255, 0, 0)
     expect(mesh.geometry.attributes.color.array[3]).toBe(255);
     expect(mesh.geometry.attributes.color.array[4]).toBe(0);
     expect(mesh.geometry.attributes.color.array[5]).toBe(0);
 
-    // Data stream 2 bar 1 is blue, which is rgb(0, 0, 255)
+    // Data stream 2 bucket 1 is blue, which is rgb(0, 0, 255)
     expect(mesh.geometry.attributes.color.array[6]).toBe(0);
     expect(mesh.geometry.attributes.color.array[7]).toBe(0);
     expect(mesh.geometry.attributes.color.array[8]).toBe(255);
 
-    // Data stream 2 bar 2 is blue, which is rgb(0, 0, 255)
+    // Data stream 2 bucket 2 is blue, which is rgb(0, 0, 255)
     expect(mesh.geometry.attributes.color.array[9]).toBe(0);
     expect(mesh.geometry.attributes.color.array[10]).toBe(0);
     expect(mesh.geometry.attributes.color.array[11]).toBe(255);
   });
 
-  it('draws six bars for three separated data streams with two data points in each data stream', () => {
+  it('draws six buckets for three separated data streams with two data points in each data stream', () => {
     const numberOfDataStreams = 3;
     const dataType = DataType.NUMBER;
     const resolution = MONTH_IN_MS;
-    const mesh = barMesh({
+    const mesh = bucketMesh({
       dataStreams: [
         {
           id: 'data-stream-1',
@@ -296,79 +303,80 @@ describe('create bar mesh', () => {
         showColor: false,
       },
       thresholds: [],
+      viewPort: VIEW_PORT,
     });
 
-    const width = getBarWidth({
+    const width = getBucketWidth({
       toClipSpace,
       numDataStreams: numberOfDataStreams,
       resolution,
     });
 
-    expect(getDistanceFromDuration(toClipSpace, resolution) - getBarMargin(toClipSpace, resolution)).toEqual(
+    expect(getDistanceFromDuration(toClipSpace, resolution) - getBucketMargin(toClipSpace, resolution)).toEqual(
       width * numberOfDataStreams
     );
     expect(mesh.count).toEqual(6);
 
-    // Check for stream 1 bar 1
-    expect(mesh.geometry.attributes.bar.array[0]).toBe(toClipSpace(STREAM_1_DATA_POINT_1.x));
-    expect(mesh.geometry.attributes.bar.array[1]).toBe(STREAM_1_DATA_POINT_1.y);
+    // Check for stream 1 bucket 1
+    expect(mesh.geometry.attributes.bucket.array[0]).toBe(toClipSpace(STREAM_1_DATA_POINT_1.x));
+    expect(mesh.geometry.attributes.bucket.array[1]).toBe(STREAM_1_DATA_POINT_1.y);
 
-    // Check for stream 1 bar 2
-    expect(mesh.geometry.attributes.bar.array[2]).toBe(toClipSpace(STREAM_1_DATA_POINT_2.x));
-    expect(mesh.geometry.attributes.bar.array[3]).toBe(STREAM_1_DATA_POINT_2.y);
+    // Check for stream 1 bucket 2
+    expect(mesh.geometry.attributes.bucket.array[2]).toBe(toClipSpace(STREAM_1_DATA_POINT_2.x));
+    expect(mesh.geometry.attributes.bucket.array[3]).toBe(STREAM_1_DATA_POINT_2.y);
 
-    // Check for stream 2 bar 1
-    expect(mesh.geometry.attributes.bar.array[4]).toBe(toClipSpace(STREAM_2_DATA_POINT_1.x) - width);
-    expect(mesh.geometry.attributes.bar.array[5]).toBe(STREAM_2_DATA_POINT_1.y);
+    // Check for stream 2 bucket 1
+    expect(mesh.geometry.attributes.bucket.array[4]).toBe(toClipSpace(STREAM_2_DATA_POINT_1.x) - width);
+    expect(mesh.geometry.attributes.bucket.array[5]).toBe(STREAM_2_DATA_POINT_1.y);
 
-    // Check for stream 2 bar 2
-    expect(mesh.geometry.attributes.bar.array[6]).toBe(toClipSpace(STREAM_2_DATA_POINT_2.x) - width);
-    expect(mesh.geometry.attributes.bar.array[7]).toBe(STREAM_2_DATA_POINT_2.y);
+    // Check for stream 2 bucket 2
+    expect(mesh.geometry.attributes.bucket.array[6]).toBe(toClipSpace(STREAM_2_DATA_POINT_2.x) - width);
+    expect(mesh.geometry.attributes.bucket.array[7]).toBe(STREAM_2_DATA_POINT_2.y);
 
-    // Check for stream 3 bar 1. We minus two here because of the offset by the number of data stream
-    expect(mesh.geometry.attributes.bar.array[8]).toBe(toClipSpace(STREAM_3_DATA_POINT_1.x) - 2 * width);
-    expect(mesh.geometry.attributes.bar.array[9]).toBe(STREAM_3_DATA_POINT_1.y);
+    // Check for stream 3 bucket 1. We minus two here because of the offset by the number of data stream
+    expect(mesh.geometry.attributes.bucket.array[8]).toBe(toClipSpace(STREAM_3_DATA_POINT_1.x) - 2 * width);
+    expect(mesh.geometry.attributes.bucket.array[9]).toBe(STREAM_3_DATA_POINT_1.y);
 
-    // Check for stream 3 bar 2 We minus two here because of the offset by the number of data stream
-    expect(mesh.geometry.attributes.bar.array[10]).toBe(toClipSpace(STREAM_3_DATA_POINT_2.x) - 2 * width);
-    expect(mesh.geometry.attributes.bar.array[11]).toBe(STREAM_3_DATA_POINT_2.y);
+    // Check for stream 3 bucket 2 We minus two here because of the offset by the number of data stream
+    expect(mesh.geometry.attributes.bucket.array[10]).toBe(toClipSpace(STREAM_3_DATA_POINT_2.x) - 2 * width);
+    expect(mesh.geometry.attributes.bucket.array[11]).toBe(STREAM_3_DATA_POINT_2.y);
 
-    // Data stream 1 bar 1 is red, which is rgb(255, 0, 0)
+    // Data stream 1 bucket 1 is red, which is rgb(255, 0, 0)
     expect(mesh.geometry.attributes.color.array[0]).toBe(255);
     expect(mesh.geometry.attributes.color.array[1]).toBe(0);
     expect(mesh.geometry.attributes.color.array[2]).toBe(0);
 
-    // Data stream 1 bar 1 is red, which is rgb(255, 0, 0)
+    // Data stream 1 bucket 1 is red, which is rgb(255, 0, 0)
     expect(mesh.geometry.attributes.color.array[3]).toBe(255);
     expect(mesh.geometry.attributes.color.array[4]).toBe(0);
     expect(mesh.geometry.attributes.color.array[5]).toBe(0);
 
-    // Data stream 2 bar 1 is blue, which is rgb(0, 0, 255)
+    // Data stream 2 bucket 1 is blue, which is rgb(0, 0, 255)
     expect(mesh.geometry.attributes.color.array[6]).toBe(0);
     expect(mesh.geometry.attributes.color.array[7]).toBe(0);
     expect(mesh.geometry.attributes.color.array[8]).toBe(255);
 
-    // Data stream 2 bar 2 is blue, which is rgb(0, 0, 255)
+    // Data stream 2 bucket 2 is blue, which is rgb(0, 0, 255)
     expect(mesh.geometry.attributes.color.array[9]).toBe(0);
     expect(mesh.geometry.attributes.color.array[10]).toBe(0);
     expect(mesh.geometry.attributes.color.array[11]).toBe(255);
 
-    // Data stream 3 bar 1 is black, which is rgb(0, 0, 0)
+    // Data stream 3 bucket 1 is black, which is rgb(0, 0, 0)
     expect(mesh.geometry.attributes.color.array[12]).toBe(0);
     expect(mesh.geometry.attributes.color.array[13]).toBe(0);
     expect(mesh.geometry.attributes.color.array[14]).toBe(0);
 
-    // Data stream 3 bar 2 is black, which is rgb(0, 0, 0)
+    // Data stream 3 bucket 2 is black, which is rgb(0, 0, 0)
     expect(mesh.geometry.attributes.color.array[15]).toBe(0);
     expect(mesh.geometry.attributes.color.array[16]).toBe(0);
     expect(mesh.geometry.attributes.color.array[17]).toBe(0);
   });
 
-  it('draws five bars for three separated data streams with two data points in first and last data stream and one data point in the second data stream ', () => {
+  it('draws five buckets for three separated data streams with two data points in first and last data stream and one data point in the second data stream ', () => {
     const numberOfDataStreams = 3;
     const resolution = MONTH_IN_MS;
     const dataType = DataType.NUMBER;
-    const mesh = barMesh({
+    const mesh = bucketMesh({
       dataStreams: [
         {
           id: 'data-stream-1',
@@ -411,68 +419,69 @@ describe('create bar mesh', () => {
         showColor: false,
       },
       thresholds: [],
+      viewPort: VIEW_PORT,
     });
 
-    const width = getBarWidth({
+    const width = getBucketWidth({
       toClipSpace,
       numDataStreams: numberOfDataStreams,
       resolution,
     });
 
-    expect(getDistanceFromDuration(toClipSpace, resolution) - getBarMargin(toClipSpace, resolution)).toEqual(
+    expect(getDistanceFromDuration(toClipSpace, resolution) - getBucketMargin(toClipSpace, resolution)).toEqual(
       width * numberOfDataStreams
     );
     expect(mesh.count).toEqual(5);
 
-    // Check for stream 1 bar 1
-    expect(mesh.geometry.attributes.bar.array[0]).toBe(toClipSpace(STREAM_1_DATA_POINT_1.x));
-    expect(mesh.geometry.attributes.bar.array[1]).toBe(STREAM_1_DATA_POINT_1.y);
+    // Check for stream 1 bucket 1
+    expect(mesh.geometry.attributes.bucket.array[0]).toBe(toClipSpace(STREAM_1_DATA_POINT_1.x));
+    expect(mesh.geometry.attributes.bucket.array[1]).toBe(STREAM_1_DATA_POINT_1.y);
 
-    // Check for stream 1 bar 2
-    expect(mesh.geometry.attributes.bar.array[2]).toBe(toClipSpace(STREAM_1_DATA_POINT_2.x));
-    expect(mesh.geometry.attributes.bar.array[3]).toBe(STREAM_1_DATA_POINT_2.y);
+    // Check for stream 1 bucket 2
+    expect(mesh.geometry.attributes.bucket.array[2]).toBe(toClipSpace(STREAM_1_DATA_POINT_2.x));
+    expect(mesh.geometry.attributes.bucket.array[3]).toBe(STREAM_1_DATA_POINT_2.y);
 
-    // Check for stream 2 bar 1
-    expect(mesh.geometry.attributes.bar.array[4]).toBe(toClipSpace(STREAM_2_DATA_POINT_1.x) - width);
-    expect(mesh.geometry.attributes.bar.array[5]).toBe(STREAM_2_DATA_POINT_1.y);
+    // Check for stream 2 bucket 1
+    expect(mesh.geometry.attributes.bucket.array[4]).toBe(toClipSpace(STREAM_2_DATA_POINT_1.x) - width);
+    expect(mesh.geometry.attributes.bucket.array[5]).toBe(STREAM_2_DATA_POINT_1.y);
 
-    // Check for stream 3 bar 1 We minus two here because of the offset by the number of data stream
-    expect(mesh.geometry.attributes.bar.array[6]).toBe(toClipSpace(STREAM_3_DATA_POINT_1.x) - 2 * width);
-    expect(mesh.geometry.attributes.bar.array[7]).toBe(STREAM_3_DATA_POINT_1.y);
+    // Check for stream 3 bucket 1 We minus two here because of the offset by the number of data stream
+    expect(mesh.geometry.attributes.bucket.array[6]).toBe(toClipSpace(STREAM_3_DATA_POINT_1.x) - 2 * width);
+    expect(mesh.geometry.attributes.bucket.array[7]).toBe(STREAM_3_DATA_POINT_1.y);
 
-    // Check for stream 3 bar 2 We minus two here because of the offset by the number of data stream
-    expect(mesh.geometry.attributes.bar.array[8]).toBe(toClipSpace(STREAM_3_DATA_POINT_2.x) - 2 * width);
-    expect(mesh.geometry.attributes.bar.array[9]).toBe(STREAM_3_DATA_POINT_2.y);
+    // Check for stream 3 bucket 2 We minus two here because of the offset by the number of data stream
+    expect(mesh.geometry.attributes.bucket.array[8]).toBe(toClipSpace(STREAM_3_DATA_POINT_2.x) - 2 * width);
+    expect(mesh.geometry.attributes.bucket.array[9]).toBe(STREAM_3_DATA_POINT_2.y);
 
-    // Data stream 1 bar 1 is red, which is rgb(255, 0, 0)
+    // Data stream 1 bucket 1 is red, which is rgb(255, 0, 0)
     expect(mesh.geometry.attributes.color.array[0]).toBe(255);
     expect(mesh.geometry.attributes.color.array[1]).toBe(0);
     expect(mesh.geometry.attributes.color.array[2]).toBe(0);
 
-    // Data stream 1 bar 1 is red, which is rgb(255, 0, 0)
+    // Data stream 1 bucket 1 is red, which is rgb(255, 0, 0)
     expect(mesh.geometry.attributes.color.array[3]).toBe(255);
     expect(mesh.geometry.attributes.color.array[4]).toBe(0);
     expect(mesh.geometry.attributes.color.array[5]).toBe(0);
 
-    // Data stream 2 bar 1 is blue, which is rgb(0, 0, 255)
+    // Data stream 2 bucket 1 is blue, which is rgb(0, 0, 255)
     expect(mesh.geometry.attributes.color.array[6]).toBe(0);
     expect(mesh.geometry.attributes.color.array[7]).toBe(0);
     expect(mesh.geometry.attributes.color.array[8]).toBe(255);
 
-    // Data stream 3 bar 1 is black, which is rgb(0, 0, 0)
+    // Data stream 3 bucket 1 is black, which is rgb(0, 0, 0)
     expect(mesh.geometry.attributes.color.array[9]).toBe(0);
     expect(mesh.geometry.attributes.color.array[10]).toBe(0);
     expect(mesh.geometry.attributes.color.array[11]).toBe(0);
 
-    // Data stream 3 bar 2 is black, which is rgb(0, 0, 0)
+    // Data stream 3 bucket 2 is black, which is rgb(0, 0, 0)
     expect(mesh.geometry.attributes.color.array[12]).toBe(0);
     expect(mesh.geometry.attributes.color.array[13]).toBe(0);
     expect(mesh.geometry.attributes.color.array[14]).toBe(0);
   });
 });
 
-describe('update bar mesh', () => {
-  it('updates an empty bar mesh to contain a bar', () => {
+describe('update bucket mesh', () => {
+  it('updates an empty bucket mesh to contain a bucket', () => {
     const DATA_STREAM_TEMP = [
       {
         id: 'data-stream',
@@ -485,7 +494,7 @@ describe('update bar mesh', () => {
         dataType: DataType.NUMBER,
       },
     ];
-    const mesh = barMesh({
+    const mesh = bucketMesh({
       dataStreams: [],
       toClipSpace,
       minBufferSize: MIN_BUFFER_SIZE,
@@ -494,12 +503,13 @@ describe('update bar mesh', () => {
         showColor: false,
       },
       thresholds: [],
+      viewPort: VIEW_PORT,
     });
     expect(mesh.count).toEqual(0);
     expect(mesh.material.uniforms.width.value).toEqual(0);
 
-    updateBarMesh({
-      bars: mesh,
+    updateBucketMesh({
+      buckets: mesh,
       dataStreams: DATA_STREAM_TEMP,
       toClipSpace,
       hasDataChanged: true,
@@ -507,15 +517,16 @@ describe('update bar mesh', () => {
         showColor: false,
       },
       thresholds: [],
+      viewPort: VIEW_PORT,
     });
     expect(mesh.count).toEqual(2);
     expect(mesh.material.uniforms.width.value).toBeGreaterThan(0);
 
-    expect(mesh.geometry.attributes.bar.array[0]).toBe(toClipSpace(DATA_POINT_1.x));
-    expect(mesh.geometry.attributes.bar.array[1]).toBe(DATA_POINT_1.y);
+    expect(mesh.geometry.attributes.bucket.array[0]).toBe(toClipSpace(DATA_POINT_1.x));
+    expect(mesh.geometry.attributes.bucket.array[1]).toBe(DATA_POINT_1.y);
 
-    expect(mesh.geometry.attributes.bar.array[2]).toBe(toClipSpace(DATA_POINT_2.x));
-    expect(mesh.geometry.attributes.bar.array[3]).toBe(DATA_POINT_2.y);
+    expect(mesh.geometry.attributes.bucket.array[2]).toBe(toClipSpace(DATA_POINT_2.x));
+    expect(mesh.geometry.attributes.bucket.array[3]).toBe(DATA_POINT_2.y);
 
     // Black is rgb(0, 0, 0) and both of them are color black
     expect(mesh.geometry.attributes.color.array[0]).toBe(0);
@@ -527,7 +538,7 @@ describe('update bar mesh', () => {
     expect(mesh.geometry.attributes.color.array[5]).toBe(0);
   });
 
-  it('updates a non-empty bar mesh to an empty one', () => {
+  it('updates a non-empty bucket mesh to an empty one', () => {
     const DATA_STREAM_TEMP = [
       {
         id: 'data-stream',
@@ -537,7 +548,7 @@ describe('update bar mesh', () => {
         dataType: DataType.NUMBER,
       },
     ];
-    const mesh = barMesh({
+    const mesh = bucketMesh({
       dataStreams: DATA_STREAM_TEMP,
       toClipSpace,
       minBufferSize: MIN_BUFFER_SIZE,
@@ -546,11 +557,12 @@ describe('update bar mesh', () => {
         showColor: false,
       },
       thresholds: [],
+      viewPort: VIEW_PORT,
     });
     expect(mesh.count).toEqual(2);
 
-    updateBarMesh({
-      bars: mesh,
+    updateBucketMesh({
+      buckets: mesh,
       dataStreams: [],
       toClipSpace,
       hasDataChanged: true,
@@ -558,17 +570,18 @@ describe('update bar mesh', () => {
         showColor: false,
       },
       thresholds: [],
+      viewPort: VIEW_PORT,
     });
     expect(mesh.count).toEqual(0);
 
-    expect(mesh.geometry.attributes.bar.array[0]).not.toBe(0);
-    expect(mesh.geometry.attributes.bar.array[1]).not.toBe(0);
+    expect(mesh.geometry.attributes.bucket.array[0]).not.toBe(0);
+    expect(mesh.geometry.attributes.bucket.array[1]).not.toBe(0);
 
-    expect(mesh.geometry.attributes.bar.array[2]).not.toBe(0);
-    expect(mesh.geometry.attributes.bar.array[3]).not.toBe(0);
+    expect(mesh.geometry.attributes.bucket.array[2]).not.toBe(0);
+    expect(mesh.geometry.attributes.bucket.array[3]).not.toBe(0);
   });
 
-  it('updates a non-empty bar mesh to have an additional one bar mesh', () => {
+  it('updates a non-empty bucket mesh to have an additional one bucket mesh', () => {
     const DATA_STREAM_TEMP = [
       {
         id: 'data-stream',
@@ -578,7 +591,7 @@ describe('update bar mesh', () => {
         dataType: DataType.NUMBER,
       },
     ];
-    const mesh = barMesh({
+    const mesh = bucketMesh({
       dataStreams: DATA_STREAM_TEMP,
       toClipSpace,
       minBufferSize: MIN_BUFFER_SIZE,
@@ -587,11 +600,12 @@ describe('update bar mesh', () => {
         showColor: false,
       },
       thresholds: [],
+      viewPort: VIEW_PORT,
     });
     expect(mesh.count).toEqual(2);
 
-    updateBarMesh({
-      bars: mesh,
+    updateBucketMesh({
+      buckets: mesh,
       dataStreams: DATA_STREAMS,
       toClipSpace,
       hasDataChanged: true,
@@ -599,20 +613,21 @@ describe('update bar mesh', () => {
         showColor: false,
       },
       thresholds: [],
+      viewPort: VIEW_PORT,
     });
     expect(mesh.count).toEqual(3);
 
-    expect(mesh.geometry.attributes.bar.array[0]).toBe(toClipSpace(DATA_POINT_1.x));
-    expect(mesh.geometry.attributes.bar.array[1]).toBe(DATA_POINT_1.y);
+    expect(mesh.geometry.attributes.bucket.array[0]).toBe(toClipSpace(DATA_POINT_1.x));
+    expect(mesh.geometry.attributes.bucket.array[1]).toBe(DATA_POINT_1.y);
 
-    expect(mesh.geometry.attributes.bar.array[2]).toBe(toClipSpace(DATA_POINT_2.x));
-    expect(mesh.geometry.attributes.bar.array[3]).toBe(DATA_POINT_2.y);
+    expect(mesh.geometry.attributes.bucket.array[2]).toBe(toClipSpace(DATA_POINT_2.x));
+    expect(mesh.geometry.attributes.bucket.array[3]).toBe(DATA_POINT_2.y);
 
-    expect(mesh.geometry.attributes.bar.array[4]).toBe(toClipSpace(DATA_POINT_3.x));
-    expect(mesh.geometry.attributes.bar.array[5]).toBe(DATA_POINT_3.y);
+    expect(mesh.geometry.attributes.bucket.array[4]).toBe(toClipSpace(DATA_POINT_3.x));
+    expect(mesh.geometry.attributes.bucket.array[5]).toBe(DATA_POINT_3.y);
   });
 
-  it('updates the color of the bar', () => {
+  it('updates the color of the bucket', () => {
     const DATA_STREAM_TEMP: DataStream = {
       id: 'data-stream',
       color: 'black',
@@ -624,7 +639,7 @@ describe('update bar mesh', () => {
       },
       dataType: DataType.NUMBER,
     };
-    const mesh = barMesh({
+    const mesh = bucketMesh({
       dataStreams: [DATA_STREAM_TEMP],
       toClipSpace,
       minBufferSize: MIN_BUFFER_SIZE,
@@ -633,16 +648,17 @@ describe('update bar mesh', () => {
         showColor: false,
       },
       thresholds: [],
+      viewPort: VIEW_PORT,
     });
     expect(mesh.count).toEqual(1);
 
-    // Old bar Colors
+    // Old bucket Colors
     expect(mesh.geometry.attributes.color.array[0]).toBe(0);
     expect(mesh.geometry.attributes.color.array[1]).toBe(0);
     expect(mesh.geometry.attributes.color.array[2]).toBe(0);
 
-    updateBarMesh({
-      bars: mesh,
+    updateBucketMesh({
+      buckets: mesh,
       dataStreams: [{ ...DATA_STREAM_TEMP, color: 'red' }],
       toClipSpace,
       hasDataChanged: true,
@@ -650,16 +666,17 @@ describe('update bar mesh', () => {
         showColor: false,
       },
       thresholds: [],
+      viewPort: VIEW_PORT,
     });
     expect(mesh.count).toEqual(1);
 
-    // New bar Colors
+    // New bucket Colors
     expect(mesh.geometry.attributes.color.array[0]).toBe(255);
     expect(mesh.geometry.attributes.color.array[1]).toBe(0);
     expect(mesh.geometry.attributes.color.array[2]).toBe(0);
   });
 
-  it('updates the width of the bar based on resolution of the data', () => {
+  it('updates the width of the bucket based on resolution of the data', () => {
     const DATA_STREAM_TEMP: DataStream[] = [
       {
         id: 'data-stream',
@@ -673,12 +690,12 @@ describe('update bar mesh', () => {
       },
     ];
     const { resolution } = DATA_STREAM_TEMP[0];
-    const oldWidth = getBarWidth({
+    const oldWidth = getBucketWidth({
       toClipSpace,
       numDataStreams: DATA_STREAM_TEMP.length,
       resolution,
     });
-    const mesh = barMesh({
+    const mesh = bucketMesh({
       dataStreams: DATA_STREAM_TEMP,
       toClipSpace,
       minBufferSize: MIN_BUFFER_SIZE,
@@ -687,6 +704,7 @@ describe('update bar mesh', () => {
         showColor: false,
       },
       thresholds: [],
+      viewPort: VIEW_PORT,
     });
     expect(mesh.count).toEqual(1);
     expect(mesh.material.uniforms.width.value).toBe(oldWidth);
@@ -704,8 +722,8 @@ describe('update bar mesh', () => {
         dataType: DataType.NUMBER,
       },
     ];
-    updateBarMesh({
-      bars: mesh,
+    updateBucketMesh({
+      buckets: mesh,
       dataStreams: DATA_STREAM_TEMP_2,
       toClipSpace,
       hasDataChanged: true,
@@ -713,10 +731,11 @@ describe('update bar mesh', () => {
         showColor: false,
       },
       thresholds: [],
+      viewPort: VIEW_PORT,
     });
 
     const { resolution: newResolution } = DATA_STREAM_TEMP_2[0];
-    const newWidth = getBarWidth({
+    const newWidth = getBucketWidth({
       toClipSpace,
       numDataStreams: DATA_STREAM_TEMP.length,
       resolution: newResolution,
@@ -739,7 +758,7 @@ describe('update bar mesh', () => {
         dataType: DataType.NUMBER,
       },
     ];
-    const mesh = barMesh({
+    const mesh = bucketMesh({
       dataStreams: DATA_STREAM_TEMP,
       toClipSpace,
       minBufferSize: MIN_BUFFER_SIZE,
@@ -748,6 +767,7 @@ describe('update bar mesh', () => {
         showColor: false,
       },
       thresholds: [],
+      viewPort: VIEW_PORT,
     });
     expect(mesh.count).toEqual(1);
 
@@ -761,8 +781,8 @@ describe('update bar mesh', () => {
         dataType: DataType.NUMBER,
       },
     ];
-    updateBarMesh({
-      bars: mesh,
+    updateBucketMesh({
+      buckets: mesh,
       dataStreams: DATA_STREAM_TEMP_2,
       toClipSpace,
       hasDataChanged: false,
@@ -770,6 +790,7 @@ describe('update bar mesh', () => {
         showColor: false,
       },
       thresholds: [],
+      viewPort: VIEW_PORT,
     });
 
     expect(mesh.count).toEqual(1);
@@ -777,7 +798,7 @@ describe('update bar mesh', () => {
 });
 
 describe('threshold correctly effects the color buffer', () => {
-  it('does not initialize color buffer with threshold color for a single bar when threshold coloration is off', () => {
+  it('does not initialize color buffer with threshold color for a single bucket when threshold coloration is off', () => {
     const thresholds: Threshold[] = [
       {
         color: 'red',
@@ -791,7 +812,7 @@ describe('threshold correctly effects the color buffer', () => {
       },
     ];
 
-    const mesh = barMesh({
+    const mesh = bucketMesh({
       dataStreams: [
         {
           id: 'data-stream',
@@ -812,6 +833,7 @@ describe('threshold correctly effects the color buffer', () => {
       thresholdOptions: {
         showColor: false,
       },
+      viewPort: VIEW_PORT,
     });
     expect(mesh.count).toEqual(1);
 
@@ -821,7 +843,7 @@ describe('threshold correctly effects the color buffer', () => {
     expect(mesh.geometry.attributes.color.array[2]).toBe(0);
   });
 
-  it('initializes color buffer with the correct threshold color for a single bar', () => {
+  it('initializes color buffer with the correct threshold color for a single bucket', () => {
     const thresholds: Threshold[] = [
       {
         color: 'red',
@@ -835,7 +857,7 @@ describe('threshold correctly effects the color buffer', () => {
       },
     ];
 
-    const mesh = barMesh({
+    const mesh = bucketMesh({
       dataStreams: [
         {
           id: 'data-stream',
@@ -856,6 +878,7 @@ describe('threshold correctly effects the color buffer', () => {
       thresholdOptions: {
         showColor: true,
       },
+      viewPort: VIEW_PORT,
     });
     expect(mesh.count).toEqual(1);
 
@@ -879,7 +902,7 @@ describe('threshold correctly effects the color buffer', () => {
       },
     ];
 
-    const mesh = barMesh({
+    const mesh = bucketMesh({
       dataStreams: [
         {
           id: 'data-stream',
@@ -911,6 +934,7 @@ describe('threshold correctly effects the color buffer', () => {
       thresholdOptions: {
         showColor: true,
       },
+      viewPort: VIEW_PORT,
     });
     expect(mesh.count).toEqual(2);
 
@@ -952,7 +976,7 @@ describe('threshold correctly effects the color buffer', () => {
       },
     ];
 
-    const mesh = barMesh({
+    const mesh = bucketMesh({
       dataStreams: DATA_STREAM_TEMP,
       toClipSpace,
       minBufferSize: MIN_BUFFER_SIZE,
@@ -961,6 +985,7 @@ describe('threshold correctly effects the color buffer', () => {
       thresholdOptions: {
         showColor: true,
       },
+      viewPort: VIEW_PORT,
     });
     expect(mesh.count).toEqual(1);
 
@@ -969,8 +994,8 @@ describe('threshold correctly effects the color buffer', () => {
     expect(mesh.geometry.attributes.color.array[1]).toBe(0);
     expect(mesh.geometry.attributes.color.array[2]).toBe(0);
 
-    updateBarMesh({
-      bars: mesh,
+    updateBucketMesh({
+      buckets: mesh,
       dataStreams: DATA_STREAM_TEMP,
       toClipSpace,
       hasDataChanged: true,
@@ -978,6 +1003,7 @@ describe('threshold correctly effects the color buffer', () => {
       thresholdOptions: {
         showColor: false,
       },
+      viewPort: VIEW_PORT,
     });
     expect(mesh.count).toEqual(1);
 
@@ -1014,7 +1040,7 @@ describe('threshold correctly effects the color buffer', () => {
       },
     ];
 
-    const mesh = barMesh({
+    const mesh = bucketMesh({
       dataStreams: DATA_STREAM_TEMP,
       toClipSpace,
       minBufferSize: MIN_BUFFER_SIZE,
@@ -1023,6 +1049,7 @@ describe('threshold correctly effects the color buffer', () => {
       thresholdOptions: {
         showColor: true,
       },
+      viewPort: VIEW_PORT,
     });
     expect(mesh.count).toEqual(1);
 
@@ -1031,8 +1058,8 @@ describe('threshold correctly effects the color buffer', () => {
     expect(mesh.geometry.attributes.color.array[1]).toBe(0);
     expect(mesh.geometry.attributes.color.array[2]).toBe(0);
 
-    updateBarMesh({
-      bars: mesh,
+    updateBucketMesh({
+      buckets: mesh,
       dataStreams: [{ ...DATA_STREAM_TEMP[0], color: 'purple' }],
       toClipSpace,
       hasDataChanged: true,
@@ -1040,6 +1067,7 @@ describe('threshold correctly effects the color buffer', () => {
       thresholdOptions: {
         showColor: true,
       },
+      viewPort: VIEW_PORT,
     });
     expect(mesh.count).toEqual(1);
 
@@ -1063,7 +1091,7 @@ describe('threshold correctly effects the color buffer', () => {
       },
     ];
 
-    const mesh = barMesh({
+    const mesh = bucketMesh({
       dataStreams: [
         {
           id: 'data-stream',
@@ -1084,6 +1112,7 @@ describe('threshold correctly effects the color buffer', () => {
       thresholdOptions: {
         showColor: true,
       },
+      viewPort: VIEW_PORT,
     });
     expect(mesh.count).toEqual(1);
 
@@ -1092,8 +1121,8 @@ describe('threshold correctly effects the color buffer', () => {
     expect(mesh.geometry.attributes.color.array[1]).toBe(0);
     expect(mesh.geometry.attributes.color.array[2]).toBe(0);
 
-    updateBarMesh({
-      bars: mesh,
+    updateBucketMesh({
+      buckets: mesh,
       dataStreams: [
         {
           id: 'data-stream',
@@ -1113,6 +1142,7 @@ describe('threshold correctly effects the color buffer', () => {
       thresholdOptions: {
         showColor: true,
       },
+      viewPort: VIEW_PORT,
     });
     expect(mesh.count).toEqual(1);
 
@@ -1136,7 +1166,7 @@ describe('threshold correctly effects the color buffer', () => {
       },
     ];
 
-    const mesh = barMesh({
+    const mesh = bucketMesh({
       dataStreams: [
         {
           id: 'data-stream',
@@ -1157,6 +1187,7 @@ describe('threshold correctly effects the color buffer', () => {
       thresholdOptions: {
         showColor: true,
       },
+      viewPort: VIEW_PORT,
     });
     expect(mesh.count).toEqual(1);
 
@@ -1165,8 +1196,8 @@ describe('threshold correctly effects the color buffer', () => {
     expect(mesh.geometry.attributes.color.array[1]).toBe(0);
     expect(mesh.geometry.attributes.color.array[2]).toBe(0);
 
-    updateBarMesh({
-      bars: mesh,
+    updateBucketMesh({
+      buckets: mesh,
       dataStreams: [
         {
           id: 'data-stream',
@@ -1186,6 +1217,7 @@ describe('threshold correctly effects the color buffer', () => {
       thresholdOptions: {
         showColor: true,
       },
+      viewPort: VIEW_PORT,
     });
     expect(mesh.count).toEqual(1);
 
@@ -1234,7 +1266,7 @@ describe('threshold correctly effects the color buffer', () => {
       },
     ];
 
-    const mesh = barMesh({
+    const mesh = bucketMesh({
       dataStreams,
       toClipSpace,
       minBufferSize: MIN_BUFFER_SIZE,
@@ -1243,6 +1275,7 @@ describe('threshold correctly effects the color buffer', () => {
       thresholdOptions: {
         showColor: true,
       },
+      viewPort: VIEW_PORT,
     });
     expect(mesh.count).toEqual(2);
 
@@ -1269,8 +1302,8 @@ describe('threshold correctly effects the color buffer', () => {
       },
     ];
 
-    updateBarMesh({
-      bars: mesh,
+    updateBucketMesh({
+      buckets: mesh,
       dataStreams,
       toClipSpace,
       hasDataChanged: true,
@@ -1278,6 +1311,7 @@ describe('threshold correctly effects the color buffer', () => {
       thresholdOptions: {
         showColor: true,
       },
+      viewPort: VIEW_PORT,
     });
     expect(mesh.count).toEqual(2);
 
@@ -1319,7 +1353,7 @@ describe('threshold correctly effects the color buffer', () => {
       },
     ];
 
-    const mesh = barMesh({
+    const mesh = bucketMesh({
       dataStreams: DATA_STREAM_TEMP,
       toClipSpace,
       minBufferSize: MIN_BUFFER_SIZE,
@@ -1328,6 +1362,7 @@ describe('threshold correctly effects the color buffer', () => {
       thresholdOptions: {
         showColor: true,
       },
+      viewPort: VIEW_PORT,
     });
     expect(mesh.count).toEqual(1);
 
@@ -1349,8 +1384,8 @@ describe('threshold correctly effects the color buffer', () => {
       },
     ];
 
-    updateBarMesh({
-      bars: mesh,
+    updateBucketMesh({
+      buckets: mesh,
       dataStreams: DATA_STREAM_TEMP,
       toClipSpace,
       hasDataChanged: true,
@@ -1358,6 +1393,7 @@ describe('threshold correctly effects the color buffer', () => {
       thresholdOptions: {
         showColor: true,
       },
+      viewPort: VIEW_PORT,
     });
     expect(mesh.count).toEqual(1);
 
@@ -1390,7 +1426,7 @@ describe('threshold correctly effects the color buffer', () => {
       },
     ];
 
-    const mesh = barMesh({
+    const mesh = bucketMesh({
       dataStreams: DATA_STREAM_TEMP,
       toClipSpace,
       minBufferSize: MIN_BUFFER_SIZE,
@@ -1399,6 +1435,7 @@ describe('threshold correctly effects the color buffer', () => {
       thresholdOptions: {
         showColor: true,
       },
+      viewPort: VIEW_PORT,
     });
     expect(mesh.count).toEqual(1);
 
@@ -1420,8 +1457,8 @@ describe('threshold correctly effects the color buffer', () => {
       },
     ];
 
-    updateBarMesh({
-      bars: mesh,
+    updateBucketMesh({
+      buckets: mesh,
       dataStreams: DATA_STREAM_TEMP,
       toClipSpace,
       hasDataChanged: true,
@@ -1429,6 +1466,7 @@ describe('threshold correctly effects the color buffer', () => {
       thresholdOptions: {
         showColor: true,
       },
+      viewPort: VIEW_PORT,
     });
     expect(mesh.count).toEqual(1);
 
