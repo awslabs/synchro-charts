@@ -28,18 +28,18 @@ install:
 
 jobs:
   include:
-    - stage: 'Build'
-      name: 'Build'
-      script: yarn build
-    - stage: 'Lint and Test'
-      name: 'Unit Tests'
-      script: yarn test
-    - script: yarn lint
-      name: 'Lint'
+    # - stage: 'Build'
+    #   name: 'Build'
+    #   script: yarn build
+    # - stage: 'Lint and Test'
+    #   name: 'Unit Tests'
+    #   script: yarn test
+    # - script: yarn lint
+    #   name: 'Lint'
     - stage: 'Integ Test'
       name: 'Integ'
       script:
-        - docker-compose up -d --build
+        - docker-compose up --abort-on-container-exit --build
         - docker ps # logging to make sure both container are build and running
 
 after_script:
