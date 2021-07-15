@@ -44,7 +44,7 @@ export type HeatmapBucketMesh = InstancedMesh & { geometry: BucketBufferGeometry
 export const NUM_POSITION_COMPONENTS = 2; // (x, y)
 const NUM_COLOR_COMPONENTS = 3; // (r, g, b)
 
-const bucketCount = 10;
+export const BUCKET_COUNT = 10;
 
 const numBuckets = (streamVertexSets: number[][][]): number => {
   return 10 * streamVertexSets.reduce((totalBuckets, streamVertexSet) => totalBuckets + streamVertexSet.length, 0);
@@ -93,20 +93,20 @@ const updateMesh = ({
   let colorIndex = 0;
 
   const { resolution } = dataStreams[0] ?? 0;
-  const heatValues: HeatValueMap = calcHeatValues({
+  let heatValues: HeatValueMap = {};
+  heatValues = calcHeatValues({
     oldHeatValue: {},
     dataStreams,
     resolution,
     viewPort,
   });
-
   const colorPalette = getSequential({});
 
   for (let xAxisBucketStart in heatValues ?? {}) {
     let buckets = heatValues[xAxisBucketStart];
     for (let oneBucket in buckets) {
       bucket.array[positionIndex] = toClipSpace(+xAxisBucketStart);
-      bucket.array[positionIndex + 1] = +oneBucket * (viewPort.yMax / bucketCount);
+      bucket.array[positionIndex + 1] = +oneBucket * (viewPort.yMax / BUCKET_COUNT);
 
       const bucketColor = getBucketColor(colorPalette, buckets[oneBucket].totalCount, resolution * streamVertexSets.length);
       color.array[colorIndex] = bucketColor[0];

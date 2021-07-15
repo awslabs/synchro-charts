@@ -1,5 +1,5 @@
 import { clipSpaceConversion } from '../sc-webgl-base-chart/clipSpaceConversion';
-import { bucketMesh, updateBucketMesh } from './heatmapMesh';
+import { bucketMesh, updateBucketMesh, BUCKET_COUNT } from './heatmapMesh';
 import { MONTH_IN_MS, DAY_IN_MS } from '../../../utils/time';
 import { getBucketMargin, getBucketWidth } from './displayLogic';
 import { getDistanceFromDuration } from '../common/getDistanceFromDuration';
@@ -86,7 +86,7 @@ describe('create bucket mesh', () => {
       thresholds: [],
       viewPort: VIEW_PORT,
     });
-    expect(mesh.count).toEqual(3);
+    expect(mesh.count).toEqual(3 * BUCKET_COUNT);
 
     // bucket points
     expect(mesh.geometry.attributes.bucket.array[0]).toBeDefined();
@@ -126,7 +126,7 @@ describe('create bucket mesh', () => {
       thresholds: [],
       viewPort: VIEW_PORT,
     });
-    expect(mesh.count).toEqual(1);
+    expect(mesh.count).toEqual(1 * BUCKET_COUNT);
 
     expect(mesh.geometry.attributes.bucket.array[0]).toBe(toClipSpace(DATA_POINT_1.x));
     expect(mesh.geometry.attributes.bucket.array[1]).toBe(DATA_POINT_1.y);
@@ -152,7 +152,7 @@ describe('create bucket mesh', () => {
       thresholds: [],
       viewPort: VIEW_PORT,
     });
-    expect(mesh.count).toEqual(2);
+    expect(mesh.count).toEqual(2 * BUCKET_COUNT);
 
     expect(mesh.geometry.attributes.bucket.array[0]).toBe(toClipSpace(DATA_POINT_1.x));
     expect(mesh.geometry.attributes.bucket.array[1]).toBe(DATA_POINT_1.y);
@@ -214,10 +214,10 @@ describe('create bucket mesh', () => {
       resolution,
     });
 
-    expect(getDistanceFromDuration(toClipSpace, resolution) - getbucketMargin(toClipSpace, resolution)).toEqual(
+    expect(getDistanceFromDuration(toClipSpace, resolution) - getBucketMargin(toClipSpace, resolution)).toEqual(
       width * numberOfDataStreams
     );
-    expect(mesh.count).toEqual(4);
+    expect(mesh.count).toEqual(4 * BUCKET_COUNT);
 
     // Check for stream 1 bucket 1
     expect(mesh.geometry.attributes.bucket.array[0]).toBe(toClipSpace(STREAM_1_DATA_POINT_1.x));
@@ -315,7 +315,7 @@ describe('create bucket mesh', () => {
     expect(getDistanceFromDuration(toClipSpace, resolution) - getBucketMargin(toClipSpace, resolution)).toEqual(
       width * numberOfDataStreams
     );
-    expect(mesh.count).toEqual(6);
+    expect(mesh.count).toEqual(6 * BUCKET_COUNT);
 
     // Check for stream 1 bucket 1
     expect(mesh.geometry.attributes.bucket.array[0]).toBe(toClipSpace(STREAM_1_DATA_POINT_1.x));
@@ -431,7 +431,7 @@ describe('create bucket mesh', () => {
     expect(getDistanceFromDuration(toClipSpace, resolution) - getBucketMargin(toClipSpace, resolution)).toEqual(
       width * numberOfDataStreams
     );
-    expect(mesh.count).toEqual(5);
+    expect(mesh.count).toEqual(5 * BUCKET_COUNT);
 
     // Check for stream 1 bucket 1
     expect(mesh.geometry.attributes.bucket.array[0]).toBe(toClipSpace(STREAM_1_DATA_POINT_1.x));
@@ -519,7 +519,7 @@ describe('update bucket mesh', () => {
       thresholds: [],
       viewPort: VIEW_PORT,
     });
-    expect(mesh.count).toEqual(2);
+    expect(mesh.count).toEqual(2 * BUCKET_COUNT);
     expect(mesh.material.uniforms.width.value).toBeGreaterThan(0);
 
     expect(mesh.geometry.attributes.bucket.array[0]).toBe(toClipSpace(DATA_POINT_1.x));
@@ -559,7 +559,7 @@ describe('update bucket mesh', () => {
       thresholds: [],
       viewPort: VIEW_PORT,
     });
-    expect(mesh.count).toEqual(2);
+    expect(mesh.count).toEqual(2 * BUCKET_COUNT);
 
     updateBucketMesh({
       buckets: mesh,
@@ -602,7 +602,7 @@ describe('update bucket mesh', () => {
       thresholds: [],
       viewPort: VIEW_PORT,
     });
-    expect(mesh.count).toEqual(2);
+    expect(mesh.count).toEqual(2 * BUCKET_COUNT);
 
     updateBucketMesh({
       buckets: mesh,
@@ -615,7 +615,7 @@ describe('update bucket mesh', () => {
       thresholds: [],
       viewPort: VIEW_PORT,
     });
-    expect(mesh.count).toEqual(3);
+    expect(mesh.count).toEqual(3 * BUCKET_COUNT);
 
     expect(mesh.geometry.attributes.bucket.array[0]).toBe(toClipSpace(DATA_POINT_1.x));
     expect(mesh.geometry.attributes.bucket.array[1]).toBe(DATA_POINT_1.y);
@@ -668,7 +668,7 @@ describe('update bucket mesh', () => {
       thresholds: [],
       viewPort: VIEW_PORT,
     });
-    expect(mesh.count).toEqual(1);
+    expect(mesh.count).toEqual(1 * BUCKET_COUNT);
 
     // New bucket Colors
     expect(mesh.geometry.attributes.color.array[0]).toBe(255);
@@ -706,7 +706,7 @@ describe('update bucket mesh', () => {
       thresholds: [],
       viewPort: VIEW_PORT,
     });
-    expect(mesh.count).toEqual(1);
+    expect(mesh.count).toEqual(1 * BUCKET_COUNT);
     expect(mesh.material.uniforms.width.value).toBe(oldWidth);
 
     const DATA_STREAM_TEMP_2 = [
@@ -740,7 +740,7 @@ describe('update bucket mesh', () => {
       numDataStreams: DATA_STREAM_TEMP.length,
       resolution: newResolution,
     });
-    expect(mesh.count).toEqual(1);
+    expect(mesh.count).toEqual(1 * BUCKET_COUNT);
     expect(mesh.material.uniforms.width.value).toBe(newWidth);
   });
 
@@ -769,7 +769,7 @@ describe('update bucket mesh', () => {
       thresholds: [],
       viewPort: VIEW_PORT,
     });
-    expect(mesh.count).toEqual(1);
+    expect(mesh.count).toEqual(1 * BUCKET_COUNT);
 
     const DATA_STREAM_TEMP_2: DataStream[] = [
       {
@@ -793,7 +793,7 @@ describe('update bucket mesh', () => {
       viewPort: VIEW_PORT,
     });
 
-    expect(mesh.count).toEqual(1);
+    expect(mesh.count).toEqual(1 * BUCKET_COUNT);
   });
 });
 
@@ -835,7 +835,7 @@ describe('threshold correctly effects the color buffer', () => {
       },
       viewPort: VIEW_PORT,
     });
-    expect(mesh.count).toEqual(1);
+    expect(mesh.count).toEqual(1 * BUCKET_COUNT);
 
     // Black
     expect(mesh.geometry.attributes.color.array[0]).toBe(0);
@@ -880,7 +880,7 @@ describe('threshold correctly effects the color buffer', () => {
       },
       viewPort: VIEW_PORT,
     });
-    expect(mesh.count).toEqual(1);
+    expect(mesh.count).toEqual(1 * BUCKET_COUNT);
 
     // Red
     expect(mesh.geometry.attributes.color.array[0]).toBe(255);
@@ -936,7 +936,7 @@ describe('threshold correctly effects the color buffer', () => {
       },
       viewPort: VIEW_PORT,
     });
-    expect(mesh.count).toEqual(2);
+    expect(mesh.count).toEqual(2 * BUCKET_COUNT);
 
     // Purple
     expect(mesh.geometry.attributes.color.array[0]).toBe(128);
@@ -987,7 +987,7 @@ describe('threshold correctly effects the color buffer', () => {
       },
       viewPort: VIEW_PORT,
     });
-    expect(mesh.count).toEqual(1);
+    expect(mesh.count).toEqual(1 * BUCKET_COUNT);
 
     // Red
     expect(mesh.geometry.attributes.color.array[0]).toBe(255);
@@ -1005,7 +1005,7 @@ describe('threshold correctly effects the color buffer', () => {
       },
       viewPort: VIEW_PORT,
     });
-    expect(mesh.count).toEqual(1);
+    expect(mesh.count).toEqual(1 * BUCKET_COUNT);
 
     // black
     expect(mesh.geometry.attributes.color.array[0]).toBe(0);
@@ -1051,7 +1051,7 @@ describe('threshold correctly effects the color buffer', () => {
       },
       viewPort: VIEW_PORT,
     });
-    expect(mesh.count).toEqual(1);
+    expect(mesh.count).toEqual(1 * BUCKET_COUNT);
 
     // Red
     expect(mesh.geometry.attributes.color.array[0]).toBe(255);
@@ -1069,7 +1069,7 @@ describe('threshold correctly effects the color buffer', () => {
       },
       viewPort: VIEW_PORT,
     });
-    expect(mesh.count).toEqual(1);
+    expect(mesh.count).toEqual(1 * BUCKET_COUNT);
 
     // Red
     expect(mesh.geometry.attributes.color.array[0]).toBe(255);
@@ -1114,7 +1114,7 @@ describe('threshold correctly effects the color buffer', () => {
       },
       viewPort: VIEW_PORT,
     });
-    expect(mesh.count).toEqual(1);
+    expect(mesh.count).toEqual(1 * BUCKET_COUNT);
 
     // Black
     expect(mesh.geometry.attributes.color.array[0]).toBe(0);
@@ -1144,7 +1144,7 @@ describe('threshold correctly effects the color buffer', () => {
       },
       viewPort: VIEW_PORT,
     });
-    expect(mesh.count).toEqual(1);
+    expect(mesh.count).toEqual(1 * BUCKET_COUNT);
 
     // Red
     expect(mesh.geometry.attributes.color.array[0]).toBe(255);
@@ -1189,7 +1189,7 @@ describe('threshold correctly effects the color buffer', () => {
       },
       viewPort: VIEW_PORT,
     });
-    expect(mesh.count).toEqual(1);
+    expect(mesh.count).toEqual(1 * BUCKET_COUNT);
 
     // Red
     expect(mesh.geometry.attributes.color.array[0]).toBe(255);
@@ -1219,7 +1219,7 @@ describe('threshold correctly effects the color buffer', () => {
       },
       viewPort: VIEW_PORT,
     });
-    expect(mesh.count).toEqual(1);
+    expect(mesh.count).toEqual(1 * BUCKET_COUNT);
 
     // Black
     expect(mesh.geometry.attributes.color.array[0]).toBe(0);
@@ -1277,7 +1277,7 @@ describe('threshold correctly effects the color buffer', () => {
       },
       viewPort: VIEW_PORT,
     });
-    expect(mesh.count).toEqual(2);
+    expect(mesh.count).toEqual(2 * BUCKET_COUNT);
 
     // Black
     expect(mesh.geometry.attributes.color.array[0]).toBe(0);
@@ -1313,7 +1313,7 @@ describe('threshold correctly effects the color buffer', () => {
       },
       viewPort: VIEW_PORT,
     });
-    expect(mesh.count).toEqual(2);
+    expect(mesh.count).toEqual(2 * BUCKET_COUNT);
 
     // Red
     expect(mesh.geometry.attributes.color.array[0]).toBe(255);
@@ -1364,7 +1364,7 @@ describe('threshold correctly effects the color buffer', () => {
       },
       viewPort: VIEW_PORT,
     });
-    expect(mesh.count).toEqual(1);
+    expect(mesh.count).toEqual(1 * BUCKET_COUNT);
 
     // Red
     expect(mesh.geometry.attributes.color.array[0]).toBe(255);
@@ -1395,7 +1395,7 @@ describe('threshold correctly effects the color buffer', () => {
       },
       viewPort: VIEW_PORT,
     });
-    expect(mesh.count).toEqual(1);
+    expect(mesh.count).toEqual(1 * BUCKET_COUNT);
 
     // Blue
     expect(mesh.geometry.attributes.color.array[0]).toBe(0);
@@ -1437,7 +1437,7 @@ describe('threshold correctly effects the color buffer', () => {
       },
       viewPort: VIEW_PORT,
     });
-    expect(mesh.count).toEqual(1);
+    expect(mesh.count).toEqual(1 * BUCKET_COUNT);
 
     // Red
     expect(mesh.geometry.attributes.color.array[0]).toBe(255);
@@ -1468,7 +1468,7 @@ describe('threshold correctly effects the color buffer', () => {
       },
       viewPort: VIEW_PORT,
     });
-    expect(mesh.count).toEqual(1);
+    expect(mesh.count).toEqual(1 * BUCKET_COUNT);
 
     // Blue
     expect(mesh.geometry.attributes.color.array[0]).toBe(0);
