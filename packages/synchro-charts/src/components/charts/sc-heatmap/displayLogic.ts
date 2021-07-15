@@ -15,9 +15,12 @@ export type HeatmapColorPalette = {
  */
 const MARGIN_FACTOR = 1 / 6;
 
-const SEQUENTIAL_OPACITIES = [0.2, 0.4, 0.6, 0.8, 1.0];
+const SEQUENTIAL_OPACITIES = [0.2, 0.4, 0.6, 0.8, 1.0, 0.33, 0.66, 1.0];
 const NUM_OF_COLORS_SEQUENTIAL = 8;
 const SEQUENTIAL_BASE_COLOR_INDEX = 5;
+const DEFAULT_SEQUENTIAL_MIN = '#ffffff';
+const DEFAULT_SEQUENTIAL_MID = '#0073bb';
+const DEFAULT_SEQUENTIAL_MAX = '#012E4A';
 
 export const getBucketMargin = (toClipSpace: (time: number) => number, resolution: number) =>
   getDistanceFromDuration(toClipSpace, resolution * MARGIN_FACTOR);
@@ -40,30 +43,44 @@ export const getBucketWidth = ({
   return (getDistanceFromDuration(toClipSpace, resolution) - getBucketMargin(toClipSpace, resolution)) / numDataStreams;
 };
 
-export const getSequential = ({ minColor, maxColor }: { minColor: string; maxColor: string }): HeatmapColorPalette => {
+/**
+ * Creates a gradient between the hex code of the min, mid, and max colors.
+ */
+export const getSequential = ({
+  minColor = DEFAULT_SEQUENTIAL_MIN,
+  midColor = DEFAULT_SEQUENTIAL_MID,
+  maxColor = DEFAULT_SEQUENTIAL_MAX,
+}: {
+  minColor: string | undefined;
+  midColor: string | undefined;
+  maxColor: string | undefined;
+}): HeatmapColorPalette => {
   const heatmapColor: HeatmapColorPalette = { r: [], g: [], b: [] };
-  let i = 0;
-
   const minColorRGB = getCSSColorByString(minColor);
+  const midColorRGB = getCSSColorByString(midColor);
   const maxColorRGB = getCSSColorByString(maxColor);
 
+  let i = 0;
   while (i < NUM_OF_COLORS_SEQUENTIAL) {
     const opacity = SEQUENTIAL_OPACITIES[i % SEQUENTIAL_BASE_COLOR_INDEX];
     if (i < SEQUENTIAL_BASE_COLOR_INDEX) {
-      heatmapColor.r[i] = opacity * maxColorRGB[0] + (1 - opacity) * minColorRGB[0];
-      heatmapColor.g[i] = opacity * maxColorRGB[1] + (1 - opacity) * minColorRGB[1];
-      heatmapColor.b[i] = opacity * maxColorRGB[2] + (1 - opacity) * minColorRGB[2];
+      heatmapColor.r[i] = opacity * midColorRGB[0] + (1 - opacity) * minColorRGB[0];
+      heatmapColor.g[i] = opacity * midColorRGB[1] + (1 - opacity) * minColorRGB[1];
+      heatmapColor.b[i] = opacity * midColorRGB[2] + (1 - opacity) * minColorRGB[2];
     } else {
-      heatmapColor.r[i] = maxColorRGB[0] * (1 - opacity);
-      heatmapColor.g[i] = maxColorRGB[1] * (1 - opacity);
-      heatmapColor.b[i] = maxColorRGB[2] * (1 - opacity);
+      heatmapColor.r[i] = opacity * midColorRGB[0] + (1 - opacity) * maxColorRGB[0];
+      heatmapColor.g[i] = opacity * midColorRGB[1] + (1 - opacity) * maxColorRGB[1];
+      heatmapColor.b[i] = opacity * midColorRGB[2] + (1 - opacity) * maxColorRGB[2];
     }
     i += 1;
   }
-
   return heatmapColor;
 };
 
+/**
+ * Returns the color of the bucket based on the number of points in the bucket and the 
+ * total possible number of points that can be in a bucket
+ */
 export const getBucketColor = (
   colorArray: HeatmapColorPalette,
   countInBucket: number,
