@@ -1,18 +1,9 @@
-import colorString from 'color-string';
 import { Mesh, OrthographicCamera, Scene } from 'three';
 import uuid from 'uuid/v4';
 import { ChartScene } from '../../sc-webgl-context/types';
 import { getDataPoints } from '../../../utils/getDataPoints';
 import { DataStream, Primitive, Resolution, ViewPort } from '../../../utils/dataTypes';
-
-export const getCSSColorByString = (color: string) => {
-  const cssColor = colorString.get(color);
-  if (cssColor == null) {
-    // eslint-disable-next-line no-console
-    console.error(`provided an invalid color string, '${color}'`);
-  }
-  return cssColor == null ? [0, 0, 0] : cssColor.value;
-};
+import { getCSSColorByString } from '../common/getCSSColorByString';
 
 /**
  * Create Vertices
