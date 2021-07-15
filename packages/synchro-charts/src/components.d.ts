@@ -277,7 +277,22 @@ export namespace Components {
         "propertyStream"?: DataStream;
         "valueColor"?: string;
     }
-    interface ScStatusChart {
+    interface ScStatusGrid {
+        "annotations": Annotations;
+        "dataStreams": DataStream[];
+        "isEditing": boolean;
+        /**
+          * Status Grid Specific configuration
+         */
+        "labelsConfig": LabelsConfig;
+        "liveModeOnlyMessage": string;
+        "messageOverrides": MessageOverrides;
+        "viewPort": MinimalViewPortConfig;
+        "widgetId": string;
+    }
+    interface ScStatusGridStandard {
+    }
+    interface ScStatusTimeline {
         "alarms"?: AlarmsConfig;
         "annotations"?: Annotations;
         "axis"?: Axis.Options;
@@ -303,21 +318,6 @@ export namespace Components {
          */
         "viewPort": MinimalViewPortConfig;
         "widgetId": string;
-    }
-    interface ScStatusGrid {
-        "annotations": Annotations;
-        "dataStreams": DataStream[];
-        "isEditing": boolean;
-        /**
-          * Status Grid Specific configuration
-         */
-        "labelsConfig": LabelsConfig;
-        "liveModeOnlyMessage": string;
-        "messageOverrides": MessageOverrides;
-        "viewPort": MinimalViewPortConfig;
-        "widgetId": string;
-    }
-    interface ScStatusGridStandard {
     }
     interface ScStatusTimelineOverlay {
         "dataStreams": DataStream[];
@@ -552,33 +552,33 @@ export namespace Components {
     }
     interface SingleStatus {
     }
-    interface StatusChartDynamicBuffer {
+    interface StatusTimelineDynamicBuffer {
     }
-    interface StatusChartDynamicData {
+    interface StatusTimelineDynamicData {
     }
-    interface StatusChartDynamicDataStreams {
+    interface StatusTimelineDynamicDataStreams {
     }
-    interface StatusChartFastViewport {
+    interface StatusTimelineFastViewport {
     }
-    interface StatusChartMargin {
+    interface StatusTimelineMargin {
     }
-    interface StatusChartMultipleDataStreams {
+    interface StatusTimelineMultipleDataStreams {
     }
-    interface StatusChartRawData {
+    interface StatusTimelineRawData {
     }
-    interface StatusChartStandard {
+    interface StatusTimelineStandard {
     }
-    interface StatusChartThresholdColoration {
+    interface StatusTimelineThresholdColoration {
     }
-    interface StatusChartThresholdColorationBand {
+    interface StatusTimelineThresholdColorationBand {
     }
-    interface StatusChartThresholdColorationExactPoint {
+    interface StatusTimelineThresholdColorationExactPoint {
     }
-    interface StatusChartThresholdColorationMultipleDataStream {
+    interface StatusTimelineThresholdColorationMultipleDataStream {
     }
-    interface StatusChartThresholdColorationMultipleThresholds {
+    interface StatusTimelineThresholdColorationMultipleThresholds {
     }
-    interface StatusChartThresholdNoColoration {
+    interface StatusTimelineThresholdNoColoration {
     }
     interface WidgetTestRoute {
         "component": string;
@@ -856,12 +856,6 @@ declare global {
         prototype: HTMLScStatusCellElement;
         new (): HTMLScStatusCellElement;
     };
-    interface HTMLScStatusChartElement extends Components.ScStatusChart, HTMLStencilElement {
-    }
-    var HTMLScStatusChartElement: {
-        prototype: HTMLScStatusChartElement;
-        new (): HTMLScStatusChartElement;
-    };
     interface HTMLScStatusGridElement extends Components.ScStatusGrid, HTMLStencilElement {
     }
     var HTMLScStatusGridElement: {
@@ -873,6 +867,12 @@ declare global {
     var HTMLScStatusGridStandardElement: {
         prototype: HTMLScStatusGridStandardElement;
         new (): HTMLScStatusGridStandardElement;
+    };
+    interface HTMLScStatusTimelineElement extends Components.ScStatusTimeline, HTMLStencilElement {
+    }
+    var HTMLScStatusTimelineElement: {
+        prototype: HTMLScStatusTimelineElement;
+        new (): HTMLScStatusTimelineElement;
     };
     interface HTMLScStatusTimelineOverlayElement extends Components.ScStatusTimelineOverlay, HTMLStencilElement {
     }
@@ -1186,89 +1186,89 @@ declare global {
         prototype: HTMLSingleStatusElement;
         new (): HTMLSingleStatusElement;
     };
-    interface HTMLStatusChartDynamicBufferElement extends Components.StatusChartDynamicBuffer, HTMLStencilElement {
+    interface HTMLStatusTimelineDynamicBufferElement extends Components.StatusTimelineDynamicBuffer, HTMLStencilElement {
     }
-    var HTMLStatusChartDynamicBufferElement: {
-        prototype: HTMLStatusChartDynamicBufferElement;
-        new (): HTMLStatusChartDynamicBufferElement;
+    var HTMLStatusTimelineDynamicBufferElement: {
+        prototype: HTMLStatusTimelineDynamicBufferElement;
+        new (): HTMLStatusTimelineDynamicBufferElement;
     };
-    interface HTMLStatusChartDynamicDataElement extends Components.StatusChartDynamicData, HTMLStencilElement {
+    interface HTMLStatusTimelineDynamicDataElement extends Components.StatusTimelineDynamicData, HTMLStencilElement {
     }
-    var HTMLStatusChartDynamicDataElement: {
-        prototype: HTMLStatusChartDynamicDataElement;
-        new (): HTMLStatusChartDynamicDataElement;
+    var HTMLStatusTimelineDynamicDataElement: {
+        prototype: HTMLStatusTimelineDynamicDataElement;
+        new (): HTMLStatusTimelineDynamicDataElement;
     };
-    interface HTMLStatusChartDynamicDataStreamsElement extends Components.StatusChartDynamicDataStreams, HTMLStencilElement {
+    interface HTMLStatusTimelineDynamicDataStreamsElement extends Components.StatusTimelineDynamicDataStreams, HTMLStencilElement {
     }
-    var HTMLStatusChartDynamicDataStreamsElement: {
-        prototype: HTMLStatusChartDynamicDataStreamsElement;
-        new (): HTMLStatusChartDynamicDataStreamsElement;
+    var HTMLStatusTimelineDynamicDataStreamsElement: {
+        prototype: HTMLStatusTimelineDynamicDataStreamsElement;
+        new (): HTMLStatusTimelineDynamicDataStreamsElement;
     };
-    interface HTMLStatusChartFastViewportElement extends Components.StatusChartFastViewport, HTMLStencilElement {
+    interface HTMLStatusTimelineFastViewportElement extends Components.StatusTimelineFastViewport, HTMLStencilElement {
     }
-    var HTMLStatusChartFastViewportElement: {
-        prototype: HTMLStatusChartFastViewportElement;
-        new (): HTMLStatusChartFastViewportElement;
+    var HTMLStatusTimelineFastViewportElement: {
+        prototype: HTMLStatusTimelineFastViewportElement;
+        new (): HTMLStatusTimelineFastViewportElement;
     };
-    interface HTMLStatusChartMarginElement extends Components.StatusChartMargin, HTMLStencilElement {
+    interface HTMLStatusTimelineMarginElement extends Components.StatusTimelineMargin, HTMLStencilElement {
     }
-    var HTMLStatusChartMarginElement: {
-        prototype: HTMLStatusChartMarginElement;
-        new (): HTMLStatusChartMarginElement;
+    var HTMLStatusTimelineMarginElement: {
+        prototype: HTMLStatusTimelineMarginElement;
+        new (): HTMLStatusTimelineMarginElement;
     };
-    interface HTMLStatusChartMultipleDataStreamsElement extends Components.StatusChartMultipleDataStreams, HTMLStencilElement {
+    interface HTMLStatusTimelineMultipleDataStreamsElement extends Components.StatusTimelineMultipleDataStreams, HTMLStencilElement {
     }
-    var HTMLStatusChartMultipleDataStreamsElement: {
-        prototype: HTMLStatusChartMultipleDataStreamsElement;
-        new (): HTMLStatusChartMultipleDataStreamsElement;
+    var HTMLStatusTimelineMultipleDataStreamsElement: {
+        prototype: HTMLStatusTimelineMultipleDataStreamsElement;
+        new (): HTMLStatusTimelineMultipleDataStreamsElement;
     };
-    interface HTMLStatusChartRawDataElement extends Components.StatusChartRawData, HTMLStencilElement {
+    interface HTMLStatusTimelineRawDataElement extends Components.StatusTimelineRawData, HTMLStencilElement {
     }
-    var HTMLStatusChartRawDataElement: {
-        prototype: HTMLStatusChartRawDataElement;
-        new (): HTMLStatusChartRawDataElement;
+    var HTMLStatusTimelineRawDataElement: {
+        prototype: HTMLStatusTimelineRawDataElement;
+        new (): HTMLStatusTimelineRawDataElement;
     };
-    interface HTMLStatusChartStandardElement extends Components.StatusChartStandard, HTMLStencilElement {
+    interface HTMLStatusTimelineStandardElement extends Components.StatusTimelineStandard, HTMLStencilElement {
     }
-    var HTMLStatusChartStandardElement: {
-        prototype: HTMLStatusChartStandardElement;
-        new (): HTMLStatusChartStandardElement;
+    var HTMLStatusTimelineStandardElement: {
+        prototype: HTMLStatusTimelineStandardElement;
+        new (): HTMLStatusTimelineStandardElement;
     };
-    interface HTMLStatusChartThresholdColorationElement extends Components.StatusChartThresholdColoration, HTMLStencilElement {
+    interface HTMLStatusTimelineThresholdColorationElement extends Components.StatusTimelineThresholdColoration, HTMLStencilElement {
     }
-    var HTMLStatusChartThresholdColorationElement: {
-        prototype: HTMLStatusChartThresholdColorationElement;
-        new (): HTMLStatusChartThresholdColorationElement;
+    var HTMLStatusTimelineThresholdColorationElement: {
+        prototype: HTMLStatusTimelineThresholdColorationElement;
+        new (): HTMLStatusTimelineThresholdColorationElement;
     };
-    interface HTMLStatusChartThresholdColorationBandElement extends Components.StatusChartThresholdColorationBand, HTMLStencilElement {
+    interface HTMLStatusTimelineThresholdColorationBandElement extends Components.StatusTimelineThresholdColorationBand, HTMLStencilElement {
     }
-    var HTMLStatusChartThresholdColorationBandElement: {
-        prototype: HTMLStatusChartThresholdColorationBandElement;
-        new (): HTMLStatusChartThresholdColorationBandElement;
+    var HTMLStatusTimelineThresholdColorationBandElement: {
+        prototype: HTMLStatusTimelineThresholdColorationBandElement;
+        new (): HTMLStatusTimelineThresholdColorationBandElement;
     };
-    interface HTMLStatusChartThresholdColorationExactPointElement extends Components.StatusChartThresholdColorationExactPoint, HTMLStencilElement {
+    interface HTMLStatusTimelineThresholdColorationExactPointElement extends Components.StatusTimelineThresholdColorationExactPoint, HTMLStencilElement {
     }
-    var HTMLStatusChartThresholdColorationExactPointElement: {
-        prototype: HTMLStatusChartThresholdColorationExactPointElement;
-        new (): HTMLStatusChartThresholdColorationExactPointElement;
+    var HTMLStatusTimelineThresholdColorationExactPointElement: {
+        prototype: HTMLStatusTimelineThresholdColorationExactPointElement;
+        new (): HTMLStatusTimelineThresholdColorationExactPointElement;
     };
-    interface HTMLStatusChartThresholdColorationMultipleDataStreamElement extends Components.StatusChartThresholdColorationMultipleDataStream, HTMLStencilElement {
+    interface HTMLStatusTimelineThresholdColorationMultipleDataStreamElement extends Components.StatusTimelineThresholdColorationMultipleDataStream, HTMLStencilElement {
     }
-    var HTMLStatusChartThresholdColorationMultipleDataStreamElement: {
-        prototype: HTMLStatusChartThresholdColorationMultipleDataStreamElement;
-        new (): HTMLStatusChartThresholdColorationMultipleDataStreamElement;
+    var HTMLStatusTimelineThresholdColorationMultipleDataStreamElement: {
+        prototype: HTMLStatusTimelineThresholdColorationMultipleDataStreamElement;
+        new (): HTMLStatusTimelineThresholdColorationMultipleDataStreamElement;
     };
-    interface HTMLStatusChartThresholdColorationMultipleThresholdsElement extends Components.StatusChartThresholdColorationMultipleThresholds, HTMLStencilElement {
+    interface HTMLStatusTimelineThresholdColorationMultipleThresholdsElement extends Components.StatusTimelineThresholdColorationMultipleThresholds, HTMLStencilElement {
     }
-    var HTMLStatusChartThresholdColorationMultipleThresholdsElement: {
-        prototype: HTMLStatusChartThresholdColorationMultipleThresholdsElement;
-        new (): HTMLStatusChartThresholdColorationMultipleThresholdsElement;
+    var HTMLStatusTimelineThresholdColorationMultipleThresholdsElement: {
+        prototype: HTMLStatusTimelineThresholdColorationMultipleThresholdsElement;
+        new (): HTMLStatusTimelineThresholdColorationMultipleThresholdsElement;
     };
-    interface HTMLStatusChartThresholdNoColorationElement extends Components.StatusChartThresholdNoColoration, HTMLStencilElement {
+    interface HTMLStatusTimelineThresholdNoColorationElement extends Components.StatusTimelineThresholdNoColoration, HTMLStencilElement {
     }
-    var HTMLStatusChartThresholdNoColorationElement: {
-        prototype: HTMLStatusChartThresholdNoColorationElement;
-        new (): HTMLStatusChartThresholdNoColorationElement;
+    var HTMLStatusTimelineThresholdNoColorationElement: {
+        prototype: HTMLStatusTimelineThresholdNoColorationElement;
+        new (): HTMLStatusTimelineThresholdNoColorationElement;
     };
     interface HTMLWidgetTestRouteElement extends Components.WidgetTestRoute, HTMLStencilElement {
     }
@@ -1322,9 +1322,9 @@ declare global {
         "sc-size-provider": HTMLScSizeProviderElement;
         "sc-size-provider-standard": HTMLScSizeProviderStandardElement;
         "sc-status-cell": HTMLScStatusCellElement;
-        "sc-status-chart": HTMLScStatusChartElement;
         "sc-status-grid": HTMLScStatusGridElement;
         "sc-status-grid-standard": HTMLScStatusGridStandardElement;
+        "sc-status-timeline": HTMLScStatusTimelineElement;
         "sc-status-timeline-overlay": HTMLScStatusTimelineOverlayElement;
         "sc-status-timeline-overlay-row": HTMLScStatusTimelineOverlayRowElement;
         "sc-straight-line-segment": HTMLScStraightLineSegmentElement;
@@ -1377,20 +1377,20 @@ declare global {
         "sc-widget-grid": HTMLScWidgetGridElement;
         "single-colored-status": HTMLSingleColoredStatusElement;
         "single-status": HTMLSingleStatusElement;
-        "status-chart-dynamic-buffer": HTMLStatusChartDynamicBufferElement;
-        "status-chart-dynamic-data": HTMLStatusChartDynamicDataElement;
-        "status-chart-dynamic-data-streams": HTMLStatusChartDynamicDataStreamsElement;
-        "status-chart-fast-viewport": HTMLStatusChartFastViewportElement;
-        "status-chart-margin": HTMLStatusChartMarginElement;
-        "status-chart-multiple-data-streams": HTMLStatusChartMultipleDataStreamsElement;
-        "status-chart-raw-data": HTMLStatusChartRawDataElement;
-        "status-chart-standard": HTMLStatusChartStandardElement;
-        "status-chart-threshold-coloration": HTMLStatusChartThresholdColorationElement;
-        "status-chart-threshold-coloration-band": HTMLStatusChartThresholdColorationBandElement;
-        "status-chart-threshold-coloration-exact-point": HTMLStatusChartThresholdColorationExactPointElement;
-        "status-chart-threshold-coloration-multiple-data-stream": HTMLStatusChartThresholdColorationMultipleDataStreamElement;
-        "status-chart-threshold-coloration-multiple-thresholds": HTMLStatusChartThresholdColorationMultipleThresholdsElement;
-        "status-chart-threshold-no-coloration": HTMLStatusChartThresholdNoColorationElement;
+        "status-timeline-dynamic-buffer": HTMLStatusTimelineDynamicBufferElement;
+        "status-timeline-dynamic-data": HTMLStatusTimelineDynamicDataElement;
+        "status-timeline-dynamic-data-streams": HTMLStatusTimelineDynamicDataStreamsElement;
+        "status-timeline-fast-viewport": HTMLStatusTimelineFastViewportElement;
+        "status-timeline-margin": HTMLStatusTimelineMarginElement;
+        "status-timeline-multiple-data-streams": HTMLStatusTimelineMultipleDataStreamsElement;
+        "status-timeline-raw-data": HTMLStatusTimelineRawDataElement;
+        "status-timeline-standard": HTMLStatusTimelineStandardElement;
+        "status-timeline-threshold-coloration": HTMLStatusTimelineThresholdColorationElement;
+        "status-timeline-threshold-coloration-band": HTMLStatusTimelineThresholdColorationBandElement;
+        "status-timeline-threshold-coloration-exact-point": HTMLStatusTimelineThresholdColorationExactPointElement;
+        "status-timeline-threshold-coloration-multiple-data-stream": HTMLStatusTimelineThresholdColorationMultipleDataStreamElement;
+        "status-timeline-threshold-coloration-multiple-thresholds": HTMLStatusTimelineThresholdColorationMultipleThresholdsElement;
+        "status-timeline-threshold-no-coloration": HTMLStatusTimelineThresholdNoColorationElement;
         "widget-test-route": HTMLWidgetTestRouteElement;
     }
 }
@@ -1656,7 +1656,22 @@ declare namespace LocalJSX {
         "propertyStream"?: DataStream;
         "valueColor"?: string;
     }
-    interface ScStatusChart {
+    interface ScStatusGrid {
+        "annotations"?: Annotations;
+        "dataStreams": DataStream[];
+        "isEditing"?: boolean;
+        /**
+          * Status Grid Specific configuration
+         */
+        "labelsConfig"?: LabelsConfig;
+        "liveModeOnlyMessage"?: string;
+        "messageOverrides"?: MessageOverrides;
+        "viewPort"?: MinimalViewPortConfig;
+        "widgetId": string;
+    }
+    interface ScStatusGridStandard {
+    }
+    interface ScStatusTimeline {
         "alarms"?: AlarmsConfig;
         "annotations"?: Annotations;
         "axis"?: Axis.Options;
@@ -1682,21 +1697,6 @@ declare namespace LocalJSX {
          */
         "viewPort"?: MinimalViewPortConfig;
         "widgetId": string;
-    }
-    interface ScStatusGrid {
-        "annotations"?: Annotations;
-        "dataStreams": DataStream[];
-        "isEditing"?: boolean;
-        /**
-          * Status Grid Specific configuration
-         */
-        "labelsConfig"?: LabelsConfig;
-        "liveModeOnlyMessage"?: string;
-        "messageOverrides"?: MessageOverrides;
-        "viewPort"?: MinimalViewPortConfig;
-        "widgetId": string;
-    }
-    interface ScStatusGridStandard {
     }
     interface ScStatusTimelineOverlay {
         "dataStreams": DataStream[];
@@ -1938,33 +1938,33 @@ declare namespace LocalJSX {
     }
     interface SingleStatus {
     }
-    interface StatusChartDynamicBuffer {
+    interface StatusTimelineDynamicBuffer {
     }
-    interface StatusChartDynamicData {
+    interface StatusTimelineDynamicData {
     }
-    interface StatusChartDynamicDataStreams {
+    interface StatusTimelineDynamicDataStreams {
     }
-    interface StatusChartFastViewport {
+    interface StatusTimelineFastViewport {
     }
-    interface StatusChartMargin {
+    interface StatusTimelineMargin {
     }
-    interface StatusChartMultipleDataStreams {
+    interface StatusTimelineMultipleDataStreams {
     }
-    interface StatusChartRawData {
+    interface StatusTimelineRawData {
     }
-    interface StatusChartStandard {
+    interface StatusTimelineStandard {
     }
-    interface StatusChartThresholdColoration {
+    interface StatusTimelineThresholdColoration {
     }
-    interface StatusChartThresholdColorationBand {
+    interface StatusTimelineThresholdColorationBand {
     }
-    interface StatusChartThresholdColorationExactPoint {
+    interface StatusTimelineThresholdColorationExactPoint {
     }
-    interface StatusChartThresholdColorationMultipleDataStream {
+    interface StatusTimelineThresholdColorationMultipleDataStream {
     }
-    interface StatusChartThresholdColorationMultipleThresholds {
+    interface StatusTimelineThresholdColorationMultipleThresholds {
     }
-    interface StatusChartThresholdNoColoration {
+    interface StatusTimelineThresholdNoColoration {
     }
     interface WidgetTestRoute {
         "component"?: string;
@@ -2016,9 +2016,9 @@ declare namespace LocalJSX {
         "sc-size-provider": ScSizeProvider;
         "sc-size-provider-standard": ScSizeProviderStandard;
         "sc-status-cell": ScStatusCell;
-        "sc-status-chart": ScStatusChart;
         "sc-status-grid": ScStatusGrid;
         "sc-status-grid-standard": ScStatusGridStandard;
+        "sc-status-timeline": ScStatusTimeline;
         "sc-status-timeline-overlay": ScStatusTimelineOverlay;
         "sc-status-timeline-overlay-row": ScStatusTimelineOverlayRow;
         "sc-straight-line-segment": ScStraightLineSegment;
@@ -2071,20 +2071,20 @@ declare namespace LocalJSX {
         "sc-widget-grid": ScWidgetGrid;
         "single-colored-status": SingleColoredStatus;
         "single-status": SingleStatus;
-        "status-chart-dynamic-buffer": StatusChartDynamicBuffer;
-        "status-chart-dynamic-data": StatusChartDynamicData;
-        "status-chart-dynamic-data-streams": StatusChartDynamicDataStreams;
-        "status-chart-fast-viewport": StatusChartFastViewport;
-        "status-chart-margin": StatusChartMargin;
-        "status-chart-multiple-data-streams": StatusChartMultipleDataStreams;
-        "status-chart-raw-data": StatusChartRawData;
-        "status-chart-standard": StatusChartStandard;
-        "status-chart-threshold-coloration": StatusChartThresholdColoration;
-        "status-chart-threshold-coloration-band": StatusChartThresholdColorationBand;
-        "status-chart-threshold-coloration-exact-point": StatusChartThresholdColorationExactPoint;
-        "status-chart-threshold-coloration-multiple-data-stream": StatusChartThresholdColorationMultipleDataStream;
-        "status-chart-threshold-coloration-multiple-thresholds": StatusChartThresholdColorationMultipleThresholds;
-        "status-chart-threshold-no-coloration": StatusChartThresholdNoColoration;
+        "status-timeline-dynamic-buffer": StatusTimelineDynamicBuffer;
+        "status-timeline-dynamic-data": StatusTimelineDynamicData;
+        "status-timeline-dynamic-data-streams": StatusTimelineDynamicDataStreams;
+        "status-timeline-fast-viewport": StatusTimelineFastViewport;
+        "status-timeline-margin": StatusTimelineMargin;
+        "status-timeline-multiple-data-streams": StatusTimelineMultipleDataStreams;
+        "status-timeline-raw-data": StatusTimelineRawData;
+        "status-timeline-standard": StatusTimelineStandard;
+        "status-timeline-threshold-coloration": StatusTimelineThresholdColoration;
+        "status-timeline-threshold-coloration-band": StatusTimelineThresholdColorationBand;
+        "status-timeline-threshold-coloration-exact-point": StatusTimelineThresholdColorationExactPoint;
+        "status-timeline-threshold-coloration-multiple-data-stream": StatusTimelineThresholdColorationMultipleDataStream;
+        "status-timeline-threshold-coloration-multiple-thresholds": StatusTimelineThresholdColorationMultipleThresholds;
+        "status-timeline-threshold-no-coloration": StatusTimelineThresholdNoColoration;
         "widget-test-route": WidgetTestRoute;
     }
 }
@@ -2137,9 +2137,9 @@ declare module "@stencil/core" {
             "sc-size-provider": LocalJSX.ScSizeProvider & JSXBase.HTMLAttributes<HTMLScSizeProviderElement>;
             "sc-size-provider-standard": LocalJSX.ScSizeProviderStandard & JSXBase.HTMLAttributes<HTMLScSizeProviderStandardElement>;
             "sc-status-cell": LocalJSX.ScStatusCell & JSXBase.HTMLAttributes<HTMLScStatusCellElement>;
-            "sc-status-chart": LocalJSX.ScStatusChart & JSXBase.HTMLAttributes<HTMLScStatusChartElement>;
             "sc-status-grid": LocalJSX.ScStatusGrid & JSXBase.HTMLAttributes<HTMLScStatusGridElement>;
             "sc-status-grid-standard": LocalJSX.ScStatusGridStandard & JSXBase.HTMLAttributes<HTMLScStatusGridStandardElement>;
+            "sc-status-timeline": LocalJSX.ScStatusTimeline & JSXBase.HTMLAttributes<HTMLScStatusTimelineElement>;
             "sc-status-timeline-overlay": LocalJSX.ScStatusTimelineOverlay & JSXBase.HTMLAttributes<HTMLScStatusTimelineOverlayElement>;
             "sc-status-timeline-overlay-row": LocalJSX.ScStatusTimelineOverlayRow & JSXBase.HTMLAttributes<HTMLScStatusTimelineOverlayRowElement>;
             "sc-straight-line-segment": LocalJSX.ScStraightLineSegment & JSXBase.HTMLAttributes<HTMLScStraightLineSegmentElement>;
@@ -2192,20 +2192,20 @@ declare module "@stencil/core" {
             "sc-widget-grid": LocalJSX.ScWidgetGrid & JSXBase.HTMLAttributes<HTMLScWidgetGridElement>;
             "single-colored-status": LocalJSX.SingleColoredStatus & JSXBase.HTMLAttributes<HTMLSingleColoredStatusElement>;
             "single-status": LocalJSX.SingleStatus & JSXBase.HTMLAttributes<HTMLSingleStatusElement>;
-            "status-chart-dynamic-buffer": LocalJSX.StatusChartDynamicBuffer & JSXBase.HTMLAttributes<HTMLStatusChartDynamicBufferElement>;
-            "status-chart-dynamic-data": LocalJSX.StatusChartDynamicData & JSXBase.HTMLAttributes<HTMLStatusChartDynamicDataElement>;
-            "status-chart-dynamic-data-streams": LocalJSX.StatusChartDynamicDataStreams & JSXBase.HTMLAttributes<HTMLStatusChartDynamicDataStreamsElement>;
-            "status-chart-fast-viewport": LocalJSX.StatusChartFastViewport & JSXBase.HTMLAttributes<HTMLStatusChartFastViewportElement>;
-            "status-chart-margin": LocalJSX.StatusChartMargin & JSXBase.HTMLAttributes<HTMLStatusChartMarginElement>;
-            "status-chart-multiple-data-streams": LocalJSX.StatusChartMultipleDataStreams & JSXBase.HTMLAttributes<HTMLStatusChartMultipleDataStreamsElement>;
-            "status-chart-raw-data": LocalJSX.StatusChartRawData & JSXBase.HTMLAttributes<HTMLStatusChartRawDataElement>;
-            "status-chart-standard": LocalJSX.StatusChartStandard & JSXBase.HTMLAttributes<HTMLStatusChartStandardElement>;
-            "status-chart-threshold-coloration": LocalJSX.StatusChartThresholdColoration & JSXBase.HTMLAttributes<HTMLStatusChartThresholdColorationElement>;
-            "status-chart-threshold-coloration-band": LocalJSX.StatusChartThresholdColorationBand & JSXBase.HTMLAttributes<HTMLStatusChartThresholdColorationBandElement>;
-            "status-chart-threshold-coloration-exact-point": LocalJSX.StatusChartThresholdColorationExactPoint & JSXBase.HTMLAttributes<HTMLStatusChartThresholdColorationExactPointElement>;
-            "status-chart-threshold-coloration-multiple-data-stream": LocalJSX.StatusChartThresholdColorationMultipleDataStream & JSXBase.HTMLAttributes<HTMLStatusChartThresholdColorationMultipleDataStreamElement>;
-            "status-chart-threshold-coloration-multiple-thresholds": LocalJSX.StatusChartThresholdColorationMultipleThresholds & JSXBase.HTMLAttributes<HTMLStatusChartThresholdColorationMultipleThresholdsElement>;
-            "status-chart-threshold-no-coloration": LocalJSX.StatusChartThresholdNoColoration & JSXBase.HTMLAttributes<HTMLStatusChartThresholdNoColorationElement>;
+            "status-timeline-dynamic-buffer": LocalJSX.StatusTimelineDynamicBuffer & JSXBase.HTMLAttributes<HTMLStatusTimelineDynamicBufferElement>;
+            "status-timeline-dynamic-data": LocalJSX.StatusTimelineDynamicData & JSXBase.HTMLAttributes<HTMLStatusTimelineDynamicDataElement>;
+            "status-timeline-dynamic-data-streams": LocalJSX.StatusTimelineDynamicDataStreams & JSXBase.HTMLAttributes<HTMLStatusTimelineDynamicDataStreamsElement>;
+            "status-timeline-fast-viewport": LocalJSX.StatusTimelineFastViewport & JSXBase.HTMLAttributes<HTMLStatusTimelineFastViewportElement>;
+            "status-timeline-margin": LocalJSX.StatusTimelineMargin & JSXBase.HTMLAttributes<HTMLStatusTimelineMarginElement>;
+            "status-timeline-multiple-data-streams": LocalJSX.StatusTimelineMultipleDataStreams & JSXBase.HTMLAttributes<HTMLStatusTimelineMultipleDataStreamsElement>;
+            "status-timeline-raw-data": LocalJSX.StatusTimelineRawData & JSXBase.HTMLAttributes<HTMLStatusTimelineRawDataElement>;
+            "status-timeline-standard": LocalJSX.StatusTimelineStandard & JSXBase.HTMLAttributes<HTMLStatusTimelineStandardElement>;
+            "status-timeline-threshold-coloration": LocalJSX.StatusTimelineThresholdColoration & JSXBase.HTMLAttributes<HTMLStatusTimelineThresholdColorationElement>;
+            "status-timeline-threshold-coloration-band": LocalJSX.StatusTimelineThresholdColorationBand & JSXBase.HTMLAttributes<HTMLStatusTimelineThresholdColorationBandElement>;
+            "status-timeline-threshold-coloration-exact-point": LocalJSX.StatusTimelineThresholdColorationExactPoint & JSXBase.HTMLAttributes<HTMLStatusTimelineThresholdColorationExactPointElement>;
+            "status-timeline-threshold-coloration-multiple-data-stream": LocalJSX.StatusTimelineThresholdColorationMultipleDataStream & JSXBase.HTMLAttributes<HTMLStatusTimelineThresholdColorationMultipleDataStreamElement>;
+            "status-timeline-threshold-coloration-multiple-thresholds": LocalJSX.StatusTimelineThresholdColorationMultipleThresholds & JSXBase.HTMLAttributes<HTMLStatusTimelineThresholdColorationMultipleThresholdsElement>;
+            "status-timeline-threshold-no-coloration": LocalJSX.StatusTimelineThresholdNoColoration & JSXBase.HTMLAttributes<HTMLStatusTimelineThresholdNoColorationElement>;
             "widget-test-route": LocalJSX.WidgetTestRoute & JSXBase.HTMLAttributes<HTMLWidgetTestRouteElement>;
         }
     }

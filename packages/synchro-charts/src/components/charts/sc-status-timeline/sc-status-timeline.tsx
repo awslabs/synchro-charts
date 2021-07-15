@@ -62,11 +62,11 @@ const tooltip = (alarms?: AlarmsConfig) => (props: Tooltip.Props) => {
 };
 
 @Component({
-  tag: 'sc-status-chart',
-  styleUrl: './sc-status-chart.css',
+  tag: 'sc-status-timeline',
+  styleUrl: './sc-status-timeline.css',
   shadow: false,
 })
-export class ScStatusChart implements ChartConfig {
+export class ScStatusTimeline implements ChartConfig {
   /** Chart API */
   @Prop() viewPort: MinimalViewPortConfig;
   @Prop() gestures: boolean = true;

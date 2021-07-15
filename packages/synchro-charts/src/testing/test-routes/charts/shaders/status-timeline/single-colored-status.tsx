@@ -1,9 +1,9 @@
 import { Component, Element, h } from '@stencil/core';
 import { webGLRenderer } from '../../../../../components/sc-webgl-context/webglContext';
-import { chartScene } from '../../../../../components/charts/sc-status-chart/chartScene';
+import { chartScene } from '../../../../../components/charts/sc-status-timeline/chartScene';
 import { CHART_SIZE } from '../chartSize';
 import { DAY_IN_MS } from '../../../../../utils/time';
-import { HEIGHT } from '../../../../../components/charts/sc-status-chart/constants';
+import { HEIGHT } from '../../../../../components/charts/sc-status-timeline/constants';
 import { DataPoint } from '../../../../../utils/dataTypes';
 import { DataType } from '../../../../../utils/dataConstants';
 
@@ -17,12 +17,6 @@ const TEST_DATA_POINT_1: DataPoint<number> = {
   x: X_MIN.getTime() + WIDTH / 3,
   y: 123,
 };
-
-/**
- * Testing route for the webGL rendering without being fully coupled to the chart.
- *
- * Tests that a single point renders as a colored status correctly.
- */
 
 @Component({
   tag: 'single-colored-status',

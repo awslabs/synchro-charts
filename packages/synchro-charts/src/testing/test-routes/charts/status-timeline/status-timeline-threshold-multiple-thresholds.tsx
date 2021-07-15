@@ -4,20 +4,14 @@ import { MINUTE_IN_MS } from '../../../../utils/time';
 import { TEST_DATA_POINT_STANDARD, Y_MAX, Y_MIN, X_MIN, X_MAX } from '../constants';
 import { COMPARISON_OPERATOR, DataType } from '../../../..';
 
-/**
- * Testing route for the webGL rendering without being fully coupled to the chart.
- *
- * Tests that a single point renders as a status correctly
- */
-
 @Component({
-  tag: 'status-chart-threshold-coloration-multiple-thresholds',
+  tag: 'status-timeline-threshold-coloration-multiple-thresholds',
 })
-export class StatusChartThresholdMultipleThresholds {
+export class StatusTimelineThresholdMultipleThresholds {
   render() {
     return (
       <div>
-        <sc-status-chart
+        <sc-status-timeline
           alarms={{ expires: MINUTE_IN_MS }}
           dataStreams={[
             {

@@ -4,19 +4,14 @@ import { MINUTE_IN_MS } from '../../../../utils/time';
 import { TEST_DATA_POINT_STANDARD, Y_MAX, Y_MIN, X_MIN, X_MAX } from '../constants';
 import { DataType } from '../../../..';
 
-/**
- *  - ensure that tooltip renders at top of screen
- *  - ensure that tooltip row order reflects order in infos, not the alphabetical order
- */
-
 @Component({
-  tag: 'status-chart-multiple-data-streams',
+  tag: 'status-timeline-multiple-data-streams',
 })
-export class StatusChartMultipleDataStreams {
+export class StatusTimelineMultipleDataStreams {
   render() {
     return (
       <div>
-        <sc-status-chart
+        <sc-status-timeline
           alarms={{ expires: MINUTE_IN_MS }}
           dataStreams={[
             {

@@ -14,14 +14,10 @@ const LEFT_X = new Date(2000, 3).getTime();
 const MIDDLE_X = new Date(2000, 6).getTime();
 const RIGHT_X = new Date(2000, 9).getTime();
 
-/**
- * Used to test the behavior of a status chart when adding/removing data streams
- */
-
 @Component({
-  tag: 'status-chart-dynamic-data-streams',
+  tag: 'status-timeline-dynamic-data-streams',
 })
-export class StatusChartDynamicDataStreams {
+export class StatusTimelineDynamicDataStreams {
   @State() dataStreams: DataStream<number>[] = [];
   @State() colorIndex: number = 0;
 
@@ -85,7 +81,7 @@ export class StatusChartDynamicDataStreams {
         <br />
         <br />
         <div id="chart-container" style={{ marginTop: '20px', width: '500px', height: '500px' }}>
-          <sc-status-chart
+          <sc-status-timeline
             alarms={{ expires: MONTH_IN_MS }}
             dataStreams={this.dataStreams}
             size={{
