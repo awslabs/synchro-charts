@@ -1,17 +1,83 @@
-import { visitDynamicWidget } from '../../../src/testing/selectors';
-import { SearchQueryParams } from '../../../src/testing/dynamicWidgetUtils/testCaseParameters';
-import { X_MAX, X_MIN, Y_MAX, Y_MIN } from '../../../src/testing/test-routes/charts/constants';
+import {visitDynamicWidget} from '../../../src/testing/selectors';
+import {SearchQueryParams} from '../../../src/testing/dynamicWidgetUtils/testCaseParameters';
+import { COMPARISON_OPERATOR, DataType } from '../../../src/constants';
+import {DataPoint} from "../../../src/utils/dataTypes";
+import {Threshold, YAnnotation} from "../../../src/components/charts/common/types";
 
 const baseChartHeight = 500;
 const baseChartWidth = 700;
 
+const X_MIN = new Date(1998, 0, 0);
+const X_MAX = new Date(2001, 0, 1);
+
+const TEST_DATA_POINT: DataPoint<number> = {
+  x: new Date(1999, 0, 0).getTime(),
+  y: 2000,
+};
+
+const TEST_DATA_POINT_2: DataPoint<number> = {
+  x: new Date(2000, 0, 0).getTime(),
+  y: 4000,
+};
+
+const TEST_2_DATA_POINT: DataPoint<number> = {
+  x: new Date(1999, 0, 0).getTime(),
+  y: 4000,
+};
+
+const TEST_2_DATA_POINT_2: DataPoint<number> = {
+  x: new Date(2000, 0, 0).getTime(),
+  y: 2000,
+};
+
 const viewPortStart = X_MIN;
 const viewPortEnd = X_MAX;
+
+const yThreshold: Threshold<number> = {
+  isEditable: true,
+  comparisonOperator: COMPARISON_OPERATOR.GREATER_THAN,
+  value: 3500,
+  label: {
+    text: 'here is a y label',
+    show: true,
+  },
+  showValue: true,
+  color: 'blue',
+};
+
+const yAnnotation: YAnnotation = {
+  isEditable: true,
+  value: 2900,
+  label: {
+    text: 'another y label',
+    show: true,
+  },
+  showValue: true,
+  color: 'green',
+};
+
 const timelineParams: Partial<SearchQueryParams> = {
   componentTag: 'sc-line-chart',
   viewPortStart,
   viewPortEnd,
-  dataStreams: [],
+  dataStreams: [
+    {
+      id: 'test',
+      color: 'black',
+      name: 'test stream',
+      data: [TEST_DATA_POINT, TEST_DATA_POINT_2],
+      resolution: 0,
+      dataType: DataType.NUMBER,
+    },
+    {
+      id: 'test2',
+      color: 'orange',
+      name: 'test stream2',
+      data: [TEST_2_DATA_POINT, TEST_2_DATA_POINT_2],
+      resolution: 0,
+      dataType: DataType.NUMBER,
+    },
+  ],
   width: '95%',
   height: '95%',
   annotations: {
@@ -23,20 +89,16 @@ const timelineParams: Partial<SearchQueryParams> = {
           show: true,
         },
         showValue: true,
-        color: 'red',
+        color: 'purple',
       },
     ],
-    y: [
-      {
-        value: (Y_MAX - Y_MIN) / 2,
-        label: {
-          text: 'here is a y label',
-          show: true,
-        },
-        showValue: true,
-        color: 'blue',
-        isEditable: true,
-      },
+    y: [yAnnotation, yThreshold,
+      {...yThreshold,
+      isEditable:false,
+      value: 2300,
+      comparisonOperator: COMPARISON_OPERATOR.LESS_THAN,
+        color: 'red',
+      }
     ],
   },
 };
