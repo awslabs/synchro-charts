@@ -3,8 +3,8 @@ import { DataPoint } from '../../../utils/dataTypes';
 import { clipSpaceConversion } from '../sc-webgl-base-chart/clipSpaceConversion';
 import { DataType } from '../../../utils/dataConstants';
 
-const VIEW_PORT = { start: new Date(2000), end: new Date(2001, 0, 0), yMin: 0, yMax: 100 };
-const toClipSpace = clipSpaceConversion(VIEW_PORT);
+const VIEWPORT = { start: new Date(2000), end: new Date(2001, 0, 0), yMin: 0, yMax: 100 };
+const toClipSpace = clipSpaceConversion(VIEWPORT);
 
 const DATA_POINT_1: DataPoint = { x: new Date(2000, 0, 0).getTime(), y: 200 };
 const DATA_POINT_2: DataPoint = { x: new Date(2000, 1, 0).getTime(), y: 300 };
@@ -22,7 +22,7 @@ describe('create line mesh', () => {
     const mesh = lineMesh({
       dataStreams: [],
       chartSize: CHART_SIZE,
-      viewPort: VIEW_PORT,
+      viewport: VIEWPORT,
       minBufferSize: 100,
       bufferFactor: 2,
       toClipSpace,
@@ -38,7 +38,7 @@ describe('create line mesh', () => {
     const mesh = lineMesh({
       dataStreams: [],
       chartSize: CHART_SIZE,
-      viewPort: VIEW_PORT,
+      viewport: VIEWPORT,
       minBufferSize: 100,
       bufferFactor: 2,
       toClipSpace,
@@ -48,16 +48,16 @@ describe('create line mesh', () => {
       thresholds: [],
     });
     expect(mesh.material.uniforms.xPixelDensity.value).toBe(
-      (toClipSpace(VIEW_PORT.end.getTime()) - toClipSpace(VIEW_PORT.start.getTime())) / CHART_SIZE.width
+      (toClipSpace(VIEWPORT.end.getTime()) - toClipSpace(VIEWPORT.start.getTime())) / CHART_SIZE.width
     );
-    expect(mesh.material.uniforms.yPixelDensity.value).toBe((VIEW_PORT.yMax - VIEW_PORT.yMin) / CHART_SIZE.height);
+    expect(mesh.material.uniforms.yPixelDensity.value).toBe((VIEWPORT.yMax - VIEWPORT.yMin) / CHART_SIZE.height);
   });
 
   it('with an empty data set, draw no vertices', () => {
     const mesh = lineMesh({
       dataStreams: [],
       chartSize: CHART_SIZE,
-      viewPort: VIEW_PORT,
+      viewport: VIEWPORT,
       minBufferSize: 100,
       bufferFactor: 2,
       toClipSpace,
@@ -90,7 +90,7 @@ describe('create line mesh', () => {
         },
       ],
       chartSize: CHART_SIZE,
-      viewPort: VIEW_PORT,
+      viewport: VIEWPORT,
       minBufferSize: 1,
       bufferFactor: 1,
       toClipSpace,
@@ -139,7 +139,7 @@ describe('create line mesh', () => {
         { id: 'data-stream', name: 'some name', resolution: 0, data: [DATA_POINT], dataType: DataType.NUMBER },
       ],
       chartSize: CHART_SIZE,
-      viewPort: VIEW_PORT,
+      viewport: VIEWPORT,
       minBufferSize: 100,
       bufferFactor: 2,
       toClipSpace,
@@ -172,7 +172,7 @@ describe('create line mesh', () => {
         },
       ],
       chartSize: CHART_SIZE,
-      viewPort: VIEW_PORT,
+      viewport: VIEWPORT,
       minBufferSize: 100,
       bufferFactor: 2,
       toClipSpace,
@@ -230,7 +230,7 @@ describe('create line mesh', () => {
         },
       ],
       chartSize: CHART_SIZE,
-      viewPort: VIEW_PORT,
+      viewport: VIEWPORT,
       minBufferSize: 100,
       bufferFactor: 2,
       toClipSpace,
@@ -305,7 +305,7 @@ describe('update line mesh', () => {
     const lines = lineMesh({
       dataStreams: [],
       chartSize: CHART_SIZE,
-      viewPort: VIEW_PORT,
+      viewport: VIEWPORT,
       minBufferSize: 100,
       bufferFactor: 2,
       toClipSpace,
@@ -319,7 +319,7 @@ describe('update line mesh', () => {
       lines,
       dataStreams: DATA_STREAMS,
       chartSize: CHART_SIZE,
-      viewPort: VIEW_PORT,
+      viewport: VIEWPORT,
       hasDataChanged: true,
       toClipSpace,
     });
@@ -367,7 +367,7 @@ describe('update line mesh', () => {
     const lines = lineMesh({
       dataStreams: DATA_STREAMS,
       chartSize: CHART_SIZE,
-      viewPort: VIEW_PORT,
+      viewport: VIEWPORT,
       minBufferSize: 100,
       bufferFactor: 2,
       toClipSpace,
@@ -381,7 +381,7 @@ describe('update line mesh', () => {
       lines,
       dataStreams: [],
       chartSize: CHART_SIZE,
-      viewPort: VIEW_PORT,
+      viewport: VIEWPORT,
       hasDataChanged: true,
       toClipSpace,
     });
@@ -408,7 +408,7 @@ describe('update line mesh', () => {
         },
       ],
       chartSize: CHART_SIZE,
-      viewPort: VIEW_PORT,
+      viewport: VIEWPORT,
       minBufferSize: 100,
       bufferFactor: 2,
       toClipSpace,
@@ -430,7 +430,7 @@ describe('update line mesh', () => {
         },
       ],
       chartSize: CHART_SIZE,
-      viewPort: VIEW_PORT,
+      viewport: VIEWPORT,
       hasDataChanged: true,
       toClipSpace,
     });
@@ -474,7 +474,7 @@ describe('update line mesh', () => {
     const lines = lineMesh({
       dataStreams: [],
       chartSize,
-      viewPort: VIEW_PORT,
+      viewport: VIEWPORT,
       minBufferSize: 100,
       bufferFactor: 2,
       toClipSpace,
@@ -488,17 +488,15 @@ describe('update line mesh', () => {
       lines,
       dataStreams: [],
       chartSize: updatedChartSize,
-      viewPort: VIEW_PORT,
+      viewport: VIEWPORT,
       hasDataChanged: false,
       toClipSpace,
     });
 
     expect(lines.material.uniforms.xPixelDensity.value).toBe(
-      (toClipSpace(VIEW_PORT.end.getTime()) - toClipSpace(VIEW_PORT.start.getTime())) / updatedChartSize.width
+      (toClipSpace(VIEWPORT.end.getTime()) - toClipSpace(VIEWPORT.start.getTime())) / updatedChartSize.width
     );
-    expect(lines.material.uniforms.yPixelDensity.value).toBe(
-      (VIEW_PORT.yMax - VIEW_PORT.yMin) / updatedChartSize.height
-    );
+    expect(lines.material.uniforms.yPixelDensity.value).toBe((VIEWPORT.yMax - VIEWPORT.yMin) / updatedChartSize.height);
   });
 
   it('updates the color of line segments', () => {
@@ -514,7 +512,7 @@ describe('update line mesh', () => {
         },
       ],
       chartSize: CHART_SIZE,
-      viewPort: VIEW_PORT,
+      viewport: VIEWPORT,
       minBufferSize: 100,
       bufferFactor: 2,
       toClipSpace,
@@ -537,7 +535,7 @@ describe('update line mesh', () => {
         },
       ],
       chartSize: CHART_SIZE,
-      viewPort: VIEW_PORT,
+      viewport: VIEWPORT,
       hasDataChanged: true,
       toClipSpace,
     });

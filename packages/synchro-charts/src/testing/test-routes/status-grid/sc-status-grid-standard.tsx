@@ -43,7 +43,7 @@ export class ScStatusGridStandard {
         labelsConfig={labelsConfig}
         annotations={annotations}
         dataStreams={data}
-        viewPort={{ start: X_MIN, end: X_MAX, yMin: Y_MIN, yMax: Y_MAX, duration: isEnabled ? YEAR_IN_MS : undefined }}
+        viewport={{ start: X_MIN, end: X_MAX, yMin: Y_MIN, yMax: Y_MAX, duration: isEnabled ? YEAR_IN_MS : undefined }}
         isEditing={isEditing}
       />
     );

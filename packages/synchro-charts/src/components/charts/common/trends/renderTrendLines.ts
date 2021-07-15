@@ -8,11 +8,11 @@ import { TREND_TYPE } from '../../../../utils/dataConstants';
 const getLinearPathCommand = ({
   trendResult,
   size: { width, height },
-  viewPort: { start, end, yMin, yMax },
+  viewport: { start, end, yMin, yMax },
 }: {
   trendResult: LinearRegressionResult;
   size: { width: number; height: number };
-  viewPort: ViewPort;
+  viewport: ViewPort;
 }) => {
   // convert y-value to pixel position for start and end points of path
   const startY = Math.round(height - ((getTrendValue(trendResult, start.getTime()) - yMin) * height) / (yMax - yMin));
@@ -24,7 +24,7 @@ const getLinearPathCommand = ({
 
 export const renderTrendLines = ({
   container,
-  viewPort,
+  viewport,
   size: { width, height },
   dataStreams,
   trendResults,
@@ -41,7 +41,7 @@ export const renderTrendLines = ({
             command: getLinearPathCommand({
               trendResult,
               size: { width, height },
-              viewPort,
+              viewport,
             }),
           });
           break;

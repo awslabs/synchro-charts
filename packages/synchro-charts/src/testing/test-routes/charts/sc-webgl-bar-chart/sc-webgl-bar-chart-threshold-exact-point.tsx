@@ -49,7 +49,7 @@ export class ScWebglBarChartThresholdExactPoint {
             width: 500,
             height: 500,
           }}
-          viewPort={{ yMin: Y_MIN, yMax: Y_MAX, start: X_MIN, end: X_MAX }}
+          viewport={{ yMin: Y_MIN, yMax: Y_MAX, start: X_MIN, end: X_MAX }}
         />
         <sc-webgl-context />
       </div>

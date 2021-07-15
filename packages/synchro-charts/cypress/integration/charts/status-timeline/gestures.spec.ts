@@ -7,8 +7,8 @@ it('moves viewport when gestures are applied', () => {
 
   visitDynamicWidget(cy, {
     componentTag: 'sc-status-timeline',
-    viewPortStart: START,
-    viewPortEnd: END,
+    viewportStart: START,
+    viewportEnd: END,
     gestures: true,
   });
 
@@ -30,8 +30,8 @@ it('does not move viewport when gestures are not applied', () => {
 
   visitDynamicWidget(cy, {
     componentTag: 'sc-status-timeline',
-    viewPortStart: START,
-    viewPortEnd: END,
+    viewportStart: START,
+    viewportEnd: END,
     gestures: false,
   });
 

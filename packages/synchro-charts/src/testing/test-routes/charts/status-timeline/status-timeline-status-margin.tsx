@@ -50,7 +50,7 @@ export class StatusTimelineStatusMargin {
           alarms={{ expires: MONTH_IN_MS }}
           widgetId="widget-id"
           dataStreams={[DATA_STREAM_1, DATA_STREAM_2]}
-          viewPort={{ yMin: Y_MIN, yMax: Y_MAX, start: X_MIN, end: X_MAX }}
+          viewport={{ yMin: Y_MIN, yMax: Y_MAX, start: X_MIN, end: X_MAX }}
         />
         <sc-webgl-context />
       </div>

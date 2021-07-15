@@ -55,20 +55,20 @@ export const describePassedInProps = (newChartSpecPage: ChartSpecPage, disableLi
     if (!disableList.viewport) {
       describe('View Port', () => {
         it('sets the provided viewport, and has a y range set when viewport has none provided', async () => {
-          const VIEW_PORT = {
+          const VIEWPORT = {
             start: new Date(2000, 0, 0),
             end: new Date(2001, 0, 0),
           };
 
-          const { chart } = await newChartSpecPage({ viewPort: VIEW_PORT });
+          const { chart } = await newChartSpecPage({ viewport: VIEWPORT });
           const baseChart = chart.querySelector('sc-webgl-base-chart') as HTMLScWebglBaseChartElement;
 
           /** Start and end date is equal to what was provided */
-          expect(baseChart.viewPort).toEqual(expect.objectContaining(VIEW_PORT));
+          expect(baseChart.viewport).toEqual(expect.objectContaining(VIEWPORT));
 
           /** Y Range set since viewport had none provided */
-          expect(baseChart.viewPort.yMin).not.toBeDefined();
-          expect(baseChart.viewPort.yMax).not.toBeDefined();
+          expect(baseChart.viewport.yMin).not.toBeDefined();
+          expect(baseChart.viewport.yMax).not.toBeDefined();
         });
       });
     }

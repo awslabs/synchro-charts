@@ -63,16 +63,16 @@ export const convertMS = (
 };
 
 export const displayDate = (date: Date, resolution: number, { start, end }: { start: Date; end: Date }): string => {
-  const viewPortDurationMS = end.getTime() - start.getTime();
+  const viewportDurationMS = end.getTime() - start.getTime();
   if (resolution < HOUR_IN_MS) {
-    if (viewPortDurationMS < MINUTE_IN_MS) {
+    if (viewportDurationMS < MINUTE_IN_MS) {
       return date.toLocaleString('en-US', {
         minute: 'numeric',
         second: 'numeric',
       });
     }
 
-    if (viewPortDurationMS <= 10 * MINUTE_IN_MS) {
+    if (viewportDurationMS <= 10 * MINUTE_IN_MS) {
       return date.toLocaleString('en-US', {
         hour: 'numeric',
         minute: 'numeric',
@@ -81,7 +81,7 @@ export const displayDate = (date: Date, resolution: number, { start, end }: { st
       });
     }
 
-    if (viewPortDurationMS <= HOUR_IN_MS) {
+    if (viewportDurationMS <= HOUR_IN_MS) {
       return date.toLocaleString('en-US', {
         hour: 'numeric',
         minute: 'numeric',
@@ -89,7 +89,7 @@ export const displayDate = (date: Date, resolution: number, { start, end }: { st
       });
     }
 
-    if (viewPortDurationMS <= DAY_IN_MS) {
+    if (viewportDurationMS <= DAY_IN_MS) {
       return date.toLocaleString('en-US', {
         hour12: true,
         hour: 'numeric',
@@ -99,7 +99,7 @@ export const displayDate = (date: Date, resolution: number, { start, end }: { st
       });
     }
 
-    if (viewPortDurationMS <= MONTH_IN_MS) {
+    if (viewportDurationMS <= MONTH_IN_MS) {
       return date.toLocaleString('en-US', {
         hour12: true,
         hour: 'numeric',

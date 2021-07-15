@@ -2,8 +2,8 @@ import { Annotations, LegendConfig } from '../components/charts/common/types';
 import { DataStream, DataStreamInfo, Resolution } from '../utils/dataTypes';
 
 export type WidgetSearchQueryParams = {
-  viewPortStart: Date;
-  viewPortEnd: Date;
+  viewportStart: Date;
+  viewportEnd: Date;
   componentTag: string;
   legend: LegendConfig;
   resolution: Resolution;

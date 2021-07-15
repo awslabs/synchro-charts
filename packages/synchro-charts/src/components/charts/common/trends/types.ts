@@ -37,7 +37,7 @@ export type TrendResult = LinearRegressionResult;
  */
 export type RenderTrendLinesOptions = {
   container: SVGElement;
-  viewPort: ViewPort;
+  viewport: ViewPort;
   size: { width: number; height: number };
   dataStreams: DataStream<Primitive>[];
   trendResults: TrendResult[];

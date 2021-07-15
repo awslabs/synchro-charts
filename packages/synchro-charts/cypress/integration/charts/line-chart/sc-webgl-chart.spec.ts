@@ -278,7 +278,7 @@ describe('line chart', () => {
 });
 
 describe('view port updating', () => {
-  const VIEW_PORT_CHANGE_URL = 'localhost:3333/tests/line-chart/viewport-change';
+  const VIEWPORT_CHANGE_URL = 'localhost:3333/tests/line-chart/viewport-change';
   const NARROW_VIEWPORT_X_AXIS_LABEL = '12 PM'; // A label which renders when viewing the 'narrow' view port
   const WIDE_VIEWPORT_X_AXIS_LABEL = 'July'; // A label which renders when viewing the 'wide' view port
 
@@ -293,7 +293,7 @@ describe('view port updating', () => {
 
   describe('while part of a view port group', () => {
     it('takes new viewport on first view port update', () => {
-      cy.visit(VIEW_PORT_CHANGE_URL);
+      cy.visit(VIEWPORT_CHANGE_URL);
 
       /** Has initially loaded */
       cy.contains(NARROW_VIEWPORT_X_AXIS_LABEL).should('exist');
@@ -308,7 +308,7 @@ describe('view port updating', () => {
     });
 
     it('takes new viewport on second view port update', () => {
-      cy.visit(VIEW_PORT_CHANGE_URL);
+      cy.visit(VIEWPORT_CHANGE_URL);
 
       /** Has initially loaded */
       cy.contains(NARROW_VIEWPORT_X_AXIS_LABEL).should('exist');

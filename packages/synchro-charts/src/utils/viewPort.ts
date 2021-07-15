@@ -1,6 +1,6 @@
 import { MinimalViewPortConfig } from './dataTypes';
 
-export const viewPortStartDate = ({ start, end, duration }: MinimalViewPortConfig): Date => {
+export const viewportStartDate = ({ start, end, duration }: MinimalViewPortConfig): Date => {
   if (start) {
     return start;
   }
@@ -14,7 +14,7 @@ export const viewPortStartDate = ({ start, end, duration }: MinimalViewPortConfi
   return new Date(Date.now());
 };
 
-export const viewPortEndDate = ({ start, end, duration }: MinimalViewPortConfig): Date => {
+export const viewportEndDate = ({ start, end, duration }: MinimalViewPortConfig): Date => {
   if (end) {
     return end;
   }

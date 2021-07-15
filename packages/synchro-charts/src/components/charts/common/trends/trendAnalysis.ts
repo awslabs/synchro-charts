@@ -64,7 +64,7 @@ export const computeTrendResult = (dataStream: DataStream<number>, trendType: TR
  * Computes trend results for all requested trends using the data in the provided viewport (including boundary points).
  */
 export const getAllTrendResults = (
-  viewPort: ViewPortConfig,
+  viewport: ViewPortConfig,
   dataStreams: DataStream<number>[],
   trends: Trend[]
 ): TrendResult[] => {
@@ -75,7 +75,7 @@ export const getAllTrendResults = (
 
     // only compute a trend line if there are at least two visible and/or boundary data points, the reason being that
     // a trend line based on a single point of data has no informational value and may actually be misleading
-    const dataInViewport = getVisibleData(dataPoints, viewPort);
+    const dataInViewport = getVisibleData(dataPoints, viewport);
     if (dataInViewport.length >= 2) {
       trends
         .filter(({ dataStreamId }) => id === dataStreamId)

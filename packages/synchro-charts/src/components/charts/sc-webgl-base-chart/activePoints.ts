@@ -96,14 +96,14 @@ export const closestPoint = <T extends Primitive>(
  * However if you have 10 points of different dates, only the closest point would be returned.
  */
 export const activePoints = <T extends Primitive>({
-  viewPort,
+  viewport,
   dataStreams,
   selectedDate,
   allowMultipleDates,
   dataAlignment,
   maxDurationFromDate,
 }: {
-  viewPort: { start: Date; end: Date };
+  viewport: { start: Date; end: Date };
   dataStreams: DataStream<T>[];
   selectedDate: Date;
   // Whether we allow points containing different x values (dates).
@@ -113,7 +113,7 @@ export const activePoints = <T extends Primitive>({
 }): ActivePoint<T>[] => {
   const dataStreamUtilizedData = dataStreams.map(stream => ({
     streamId: stream.id,
-    dataPoints: getDataBeforeDate(getDataPoints(stream, stream.resolution), viewPort.end),
+    dataPoints: getDataBeforeDate(getDataPoints(stream, stream.resolution), viewport.end),
   }));
   const selectedTimestamp = selectedDate.getTime();
 

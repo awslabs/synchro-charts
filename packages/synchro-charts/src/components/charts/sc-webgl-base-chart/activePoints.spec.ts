@@ -9,7 +9,7 @@ const STREAM_ID = 'stream-id';
 const STREAM_ID_2 = 'stream-id-2';
 const STREAM_ID_3 = 'stream-id-3';
 
-const VIEW_PORT: ViewPort = {
+const VIEWPORT: ViewPort = {
   start: new Date(2000, 0, 0),
   end: new Date(2001, 0, 0),
   yMin: 0,
@@ -45,7 +45,7 @@ describe('right data alignment', () => {
   it('returns no points if there is only data to the left of the selected date', () => {
     expect(
       activePoints({
-        viewPort: VIEW_PORT,
+        viewport: VIEWPORT,
         dataAlignment: DATA_ALIGNMENT.RIGHT,
         dataStreams: [
           {
@@ -65,7 +65,7 @@ describe('right data alignment', () => {
   it('returns data point if data point falls exactly on selected date', () => {
     expect(
       activePoints({
-        viewPort: VIEW_PORT,
+        viewport: VIEWPORT,
         dataAlignment: DATA_ALIGNMENT.RIGHT,
         dataStreams: [
           {
@@ -85,7 +85,7 @@ describe('right data alignment', () => {
   it('returns data point if data point is after the selected date', () => {
     expect(
       activePoints({
-        viewPort: VIEW_PORT,
+        viewport: VIEWPORT,
         dataAlignment: DATA_ALIGNMENT.RIGHT,
         dataStreams: [
           {
@@ -105,7 +105,7 @@ describe('right data alignment', () => {
   it('returns data point if data point is after the selected date far in the future', () => {
     expect(
       activePoints({
-        viewPort: VIEW_PORT,
+        viewport: VIEWPORT,
         dataAlignment: DATA_ALIGNMENT.RIGHT,
         dataStreams: [
           {
@@ -126,7 +126,7 @@ describe('right data alignment', () => {
     const MAX_DURATION_FROM_DATE = MINUTE_IN_MS;
     expect(
       activePoints({
-        viewPort: VIEW_PORT,
+        viewport: VIEWPORT,
         dataAlignment: DATA_ALIGNMENT.RIGHT,
         dataStreams: [
           {
@@ -148,7 +148,7 @@ describe('right data alignment', () => {
     const MAX_DURATION_FROM_DATE = MINUTE_IN_MS;
     expect(
       activePoints({
-        viewPort: VIEW_PORT,
+        viewport: VIEWPORT,
         dataAlignment: DATA_ALIGNMENT.RIGHT,
         dataStreams: [
           {
@@ -171,7 +171,7 @@ describe('left data alignment', () => {
   it('returns no points if there is only data to the right of the selected date', () => {
     expect(
       activePoints({
-        viewPort: VIEW_PORT,
+        viewport: VIEWPORT,
         dataAlignment: DATA_ALIGNMENT.LEFT,
         dataStreams: [
           {
@@ -191,7 +191,7 @@ describe('left data alignment', () => {
   it('returns data point if data point falls exactly on selected date', () => {
     expect(
       activePoints({
-        viewPort: VIEW_PORT,
+        viewport: VIEWPORT,
         dataAlignment: DATA_ALIGNMENT.LEFT,
         dataStreams: [
           {
@@ -211,7 +211,7 @@ describe('left data alignment', () => {
   it('returns data point if data point is before the selected date', () => {
     expect(
       activePoints({
-        viewPort: VIEW_PORT,
+        viewport: VIEWPORT,
         dataAlignment: DATA_ALIGNMENT.LEFT,
         dataStreams: [
           {
@@ -231,7 +231,7 @@ describe('left data alignment', () => {
   it('returns data point if data point is before the selected date far in the past', () => {
     expect(
       activePoints({
-        viewPort: VIEW_PORT,
+        viewport: VIEWPORT,
         dataAlignment: DATA_ALIGNMENT.LEFT,
         dataStreams: [
           {
@@ -252,7 +252,7 @@ describe('left data alignment', () => {
     const MAX_DURATION_FROM_DATE = MINUTE_IN_MS;
     expect(
       activePoints({
-        viewPort: VIEW_PORT,
+        viewport: VIEWPORT,
         dataAlignment: DATA_ALIGNMENT.LEFT,
         dataStreams: [
           {
@@ -274,7 +274,7 @@ describe('left data alignment', () => {
     const MAX_DURATION_FROM_DATE = MINUTE_IN_MS;
     expect(
       activePoints({
-        viewPort: VIEW_PORT,
+        viewport: VIEWPORT,
         dataAlignment: DATA_ALIGNMENT.LEFT,
         dataStreams: [
           {
@@ -298,7 +298,7 @@ describe('data alignment set to either side', () => {
     it('with a single point within a view port, return that point', () => {
       expect(
         activePoints({
-          viewPort: VIEW_PORT,
+          viewport: VIEWPORT,
           dataAlignment: DATA_ALIGNMENT.EITHER,
           dataStreams: [
             {
@@ -318,7 +318,7 @@ describe('data alignment set to either side', () => {
     it('with multiple points with different dates, only return the closest point', () => {
       expect(
         activePoints({
-          viewPort: VIEW_PORT,
+          viewport: VIEWPORT,
           dataAlignment: DATA_ALIGNMENT.EITHER,
           dataStreams: [
             {
@@ -342,7 +342,7 @@ describe('data alignment set to either side', () => {
 
       expect(
         activePoints({
-          viewPort: VIEW_PORT,
+          viewport: VIEWPORT,
           dataAlignment: DATA_ALIGNMENT.EITHER,
           dataStreams: [
             {
@@ -378,7 +378,7 @@ describe('data alignment set to either side', () => {
 
       expect(
         activePoints({
-          viewPort: VIEW_PORT,
+          viewport: VIEWPORT,
           dataAlignment: DATA_ALIGNMENT.EITHER,
           dataStreams: [
             {
@@ -417,7 +417,7 @@ describe('data alignment set to either side', () => {
     it('returns no active points when there are no data streams', () => {
       expect(
         activePoints({
-          viewPort: VIEW_PORT,
+          viewport: VIEWPORT,
           dataAlignment: DATA_ALIGNMENT.EITHER,
           dataStreams: [],
           selectedDate: new Date(2000, 6, 0),
@@ -430,7 +430,7 @@ describe('data alignment set to either side', () => {
       it('returns no active points when all points are after the viewport', () => {
         expect(
           activePoints({
-            viewPort: VIEW_PORT,
+            viewport: VIEWPORT,
             dataAlignment: DATA_ALIGNMENT.EITHER,
             dataStreams: [
               {
@@ -450,7 +450,7 @@ describe('data alignment set to either side', () => {
       it('returns the point which has a date exactly matching the selected date', () => {
         expect(
           activePoints({
-            viewPort: VIEW_PORT,
+            viewport: VIEWPORT,
             dataAlignment: DATA_ALIGNMENT.EITHER,
             dataStreams: [
               {
@@ -476,7 +476,7 @@ describe('data alignment set to either side', () => {
       it('returns the right most point when the selected date is equidistant from two points', () => {
         expect(
           activePoints({
-            viewPort: VIEW_PORT,
+            viewport: VIEWPORT,
             dataAlignment: DATA_ALIGNMENT.EITHER,
             dataStreams: [
               {
@@ -502,7 +502,7 @@ describe('data alignment set to either side', () => {
       it('returns the right biased point when the closest point is to the left of the selected date', () => {
         expect(
           activePoints({
-            viewPort: VIEW_PORT,
+            viewport: VIEWPORT,
             dataAlignment: DATA_ALIGNMENT.EITHER,
             dataStreams: [
               {
@@ -528,7 +528,7 @@ describe('data alignment set to either side', () => {
       it('returns the right biased point when the closest point is to the right of the selected date', () => {
         expect(
           activePoints({
-            viewPort: VIEW_PORT,
+            viewport: VIEWPORT,
             dataAlignment: DATA_ALIGNMENT.EITHER,
             dataStreams: [
               {
@@ -554,7 +554,7 @@ describe('data alignment set to either side', () => {
       it('returns the closest point within the viewport', () => {
         expect(
           activePoints({
-            viewPort: VIEW_PORT,
+            viewport: VIEWPORT,
             dataAlignment: DATA_ALIGNMENT.EITHER,
             dataStreams: [
               {
@@ -582,7 +582,7 @@ describe('data alignment set to either side', () => {
       it('returns the closest point across multiple data streams', () => {
         expect(
           activePoints({
-            viewPort: VIEW_PORT,
+            viewport: VIEWPORT,
             dataAlignment: DATA_ALIGNMENT.EITHER,
             dataStreams: [
               {
@@ -612,7 +612,7 @@ describe('data alignment set to either side', () => {
       it('returns points for each stream which has data within the viewport', () => {
         expect(
           activePoints({
-            viewPort: VIEW_PORT,
+            viewport: VIEWPORT,
             dataAlignment: DATA_ALIGNMENT.EITHER,
             dataStreams: [
               {
@@ -642,7 +642,7 @@ describe('data alignment set to either side', () => {
       it('only returns point for one data stream when points have different dates but allowMultipleDates is false', () => {
         expect(
           activePoints({
-            viewPort: VIEW_PORT,
+            viewport: VIEWPORT,
             dataAlignment: DATA_ALIGNMENT.EITHER,
             dataStreams: [
               {
@@ -673,7 +673,7 @@ describe('aggregated data', () => {
   it('does not return any active points when requesting raw data but there is only aggregated data', () => {
     expect(
       activePoints({
-        viewPort: VIEW_PORT,
+        viewport: VIEWPORT,
         dataAlignment: DATA_ALIGNMENT.EITHER,
         dataStreams: [
           {
@@ -692,7 +692,7 @@ describe('aggregated data', () => {
   it('does not return any active points when requesting aggregated data but there is only raw data', () => {
     expect(
       activePoints({
-        viewPort: VIEW_PORT,
+        viewport: VIEWPORT,
         dataAlignment: DATA_ALIGNMENT.EITHER,
         dataStreams: [
           {
@@ -711,7 +711,7 @@ describe('aggregated data', () => {
   it('does return the aggregate data when requested', () => {
     expect(
       activePoints({
-        viewPort: VIEW_PORT,
+        viewport: VIEWPORT,
         dataAlignment: DATA_ALIGNMENT.EITHER,
         dataStreams: [
           {
@@ -730,7 +730,7 @@ describe('aggregated data', () => {
   it('only returns aggregated data of the correct resolution', () => {
     expect(
       activePoints({
-        viewPort: VIEW_PORT,
+        viewport: VIEWPORT,
         dataAlignment: DATA_ALIGNMENT.EITHER,
         dataStreams: [
           {

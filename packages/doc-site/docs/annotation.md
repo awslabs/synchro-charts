@@ -10,7 +10,7 @@ const annotations = {
     showValue: true,
   }],
 };
-const viewPort = {
+const viewport = {
   start: new Date(2000, 0, 0),
   end: new Date(2001, 0, 0),
   group: 'viewport-group',
@@ -59,7 +59,7 @@ const dataStreams = [{
     style={style}
     annotations={annotations}
     widgetId="widget-id"
-    viewPort={viewPort}
+    viewport={viewport}
     legend={legend}
     dataStreams={dataStreams}
   />
@@ -67,7 +67,7 @@ const dataStreams = [{
     style={style}
     annotations={annotations}
     widgetId="widget-id"
-    viewPort={viewPort}
+    viewport={viewport}
     legend={legend}
     dataStreams={dataStreams}
   />
@@ -75,7 +75,7 @@ const dataStreams = [{
     style={style}
     annotations={annotations}
     widgetId="widget-id"
-    viewPort={viewPort}
+    viewport={viewport}
     legend={legend}
     dataStreams={[{
       id: 'car-count',

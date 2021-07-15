@@ -47,7 +47,7 @@ export class StatusTimelineDynamicBuffer {
                 dataType: DataType.NUMBER,
               },
             ]}
-            viewPort={{
+            viewport={{
               yMin: Y_MIN,
               yMax: Y_MAX,
               start: X_MIN,

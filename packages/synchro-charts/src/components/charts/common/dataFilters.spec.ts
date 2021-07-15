@@ -1,5 +1,5 @@
 import { getDataBeforeDate, getVisibleData } from './dataFilters';
-import { VIEW_PORT } from './testUtil';
+import { VIEWPORT } from './testUtil';
 import { MINUTE_IN_MS, MONTH_IN_MS } from '../../../utils/time';
 
 describe('getDataBeforeDate', () => {
@@ -90,29 +90,29 @@ describe('getVisibleData', () => {
 
   describe('get visible data to render within the chart, including boundary points', () => {
     it('returns an empty list when provided no data', () => {
-      expect(getVisibleData([], VIEW_PORT)).toHaveLength(0);
+      expect(getVisibleData([], VIEWPORT)).toHaveLength(0);
     });
 
     it('returns nothing for a single point beyond the end date', () => {
       const data = [{ x: new Date(2999, 1, 0).getTime(), y: 1 }];
-      const viewPort = {
+      const viewport = {
         yMin: 0,
         yMax: 100,
         start: new Date(2000, 0, 0),
         end: new Date(2001, 0, 0),
       };
-      expect(getVisibleData(data, viewPort)).toHaveLength(0);
+      expect(getVisibleData(data, viewport)).toHaveLength(0);
     });
 
     it('returns nothing for a single point before the start date', () => {
       const data = [{ x: new Date(999, 1, 0).getTime(), y: 1 }];
-      const viewPort = {
+      const viewport = {
         yMin: 0,
         yMax: 100,
         start: new Date(2000, 0, 0),
         end: new Date(2001, 0, 0),
       };
-      expect(getVisibleData(data, viewPort)).toHaveLength(0);
+      expect(getVisibleData(data, viewport)).toHaveLength(0);
     });
 
     it('returns data within the viewport date range', () => {
@@ -120,13 +120,13 @@ describe('getVisibleData', () => {
         { x: new Date(2000, 1, 0).getTime(), y: 1 },
         { x: new Date(2000, 2, 0).getTime(), y: 1 },
       ];
-      const viewPort = {
+      const viewport = {
         yMin: 0,
         yMax: 100,
         start: new Date(2000, 0, 0),
         end: new Date(2001, 0, 0),
       };
-      expect(getVisibleData(data, viewPort)).toEqual(data);
+      expect(getVisibleData(data, viewport)).toEqual(data);
     });
 
     it('returns the two closest points to the view port to include in the visible data', () => {
@@ -140,36 +140,36 @@ describe('getVisibleData', () => {
         ...visibleData,
         { x: new Date(2002, 0, 0).getTime(), y: 1 },
       ];
-      const viewPort = {
+      const viewport = {
         yMin: 0,
         yMax: 100,
         start: new Date(2000, 0, 0),
         end: new Date(2000, 1, 0),
       };
-      expect(getVisibleData(data, viewPort)).toEqual(visibleData);
+      expect(getVisibleData(data, viewport)).toEqual(visibleData);
     });
 
     describe('get visible data to render within the chart, not including boundary points', () => {
       it('returns nothing for a single point beyond the end date', () => {
         const data = [{ x: new Date(2999, 1, 0).getTime(), y: 1 }];
-        const viewPort = {
+        const viewport = {
           yMin: 0,
           yMax: 100,
           start: new Date(2000, 0, 0),
           end: new Date(2001, 0, 0),
         };
-        expect(getVisibleData(data, viewPort, false)).toHaveLength(0);
+        expect(getVisibleData(data, viewport, false)).toHaveLength(0);
       });
 
       it('returns nothing for a single point before the start date', () => {
         const data = [{ x: new Date(999, 1, 0).getTime(), y: 1 }];
-        const viewPort = {
+        const viewport = {
           yMin: 0,
           yMax: 100,
           start: new Date(2000, 0, 0),
           end: new Date(2001, 0, 0),
         };
-        expect(getVisibleData(data, viewPort, false)).toHaveLength(0);
+        expect(getVisibleData(data, viewport, false)).toHaveLength(0);
       });
 
       it('only returns points within viewport', () => {
@@ -178,13 +178,13 @@ describe('getVisibleData', () => {
           { x: new Date(2000, 0, 15).getTime(), y: 1 },
           { x: new Date(2001, 0, 0).getTime(), y: 1 },
         ];
-        const viewPort = {
+        const viewport = {
           yMin: 0,
           yMax: 100,
           start: new Date(2000, 0, 0),
           end: new Date(2000, 1, 0),
         };
-        expect(getVisibleData(data, viewPort, false)).toEqual([data[1]]);
+        expect(getVisibleData(data, viewport, false)).toEqual([data[1]]);
       });
     });
   });

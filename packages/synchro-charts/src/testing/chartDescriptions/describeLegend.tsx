@@ -2,7 +2,7 @@ import { ChartSpecPage } from './newChartSpecPage';
 import { Threshold } from '../../components/charts/common/types';
 import { COMPARISON_OPERATOR, LEGEND_POSITION } from '../../components/charts/common/constants';
 
-const VIEW_PORT = { start: new Date(2000), end: new Date(2001, 0, 0), yMin: 0, yMax: 100 };
+const VIEWPORT = { start: new Date(2000), end: new Date(2001, 0, 0), yMin: 0, yMax: 100 };
 
 export const describeLegend = (newChartSpecPage: ChartSpecPage) => {
   describe('legend', () => {
@@ -37,12 +37,12 @@ export const describeLegend = (newChartSpecPage: ChartSpecPage) => {
           position: LEGEND_POSITION.BOTTOM,
           width: 200,
         },
-        viewPort: VIEW_PORT,
+        viewport: VIEWPORT,
       });
 
       const legend = chart.querySelector('sc-legend') as HTMLScLegendElement;
 
-      expect(legend.viewPort).toMatchObject({ start: VIEW_PORT.start, end: VIEW_PORT.end });
+      expect(legend.viewport).toMatchObject({ start: VIEWPORT.start, end: VIEWPORT.end });
     });
 
     /**

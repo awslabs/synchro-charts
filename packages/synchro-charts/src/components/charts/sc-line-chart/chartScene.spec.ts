@@ -4,7 +4,7 @@ import { chartScene, updateChartScene } from './chartScene';
 import { PointMesh, POINT_MESH_INDEX } from '../common/meshes/pointMesh';
 import { DataType } from '../../../utils/dataConstants';
 
-const VIEW_PORT = { start: new Date(2000), end: new Date(2001, 0, 0), yMin: 0, yMax: 100 };
+const VIEWPORT = { start: new Date(2000), end: new Date(2001, 0, 0), yMin: 0, yMax: 100 };
 
 const DATA_POINT_1: DataPoint = { x: new Date(2000, 0, 0).getTime(), y: 200 };
 const DATA_POINT_2: DataPoint = { x: new Date(2000, 1, 0).getTime(), y: 300 };
@@ -16,7 +16,7 @@ describe('points', () => {
     const container = document.createElement('div');
 
     const scene = chartScene({
-      viewPort: VIEW_PORT,
+      viewport: VIEWPORT,
       container,
       chartSize: CHART_SIZE,
       dataStreams: [{ id: 'data-stream', name: 'some name', resolution: 0, data: [], dataType: DataType.NUMBER }],
@@ -30,7 +30,7 @@ describe('points', () => {
 
     const updatedScene = updateChartScene({
       scene,
-      viewPort: VIEW_PORT,
+      viewport: VIEWPORT,
       chartSize: CHART_SIZE,
       container,
       dataStreams: [
@@ -88,7 +88,7 @@ describe('lines', () => {
     const container = document.createElement('div');
 
     const scene = chartScene({
-      viewPort: VIEW_PORT,
+      viewport: VIEWPORT,
       chartSize: CHART_SIZE,
       container,
       dataStreams: [{ id: 'data-stream', name: 'some name', resolution: 0, data: [], dataType: DataType.NUMBER }],
@@ -102,7 +102,7 @@ describe('lines', () => {
 
     const updatedScene = updateChartScene({
       scene,
-      viewPort: VIEW_PORT,
+      viewport: VIEWPORT,
       container,
       chartSize: CHART_SIZE,
       dataStreams: [

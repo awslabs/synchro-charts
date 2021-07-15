@@ -4,7 +4,7 @@ import { BaseConfig } from '../../../utils/dataTypes';
 
 export const DEFAULT_BASE_CONFIG: BaseConfig = {
   widgetId: 'fake-id',
-  viewPort: {
+  viewport: {
     start: new Date(1995, 0, 0, 0),
     end: new Date(2020, 1, 0, 0),
     yMin: 0,
@@ -16,7 +16,7 @@ export const DEFAULT_BASE_CONFIG: BaseConfig = {
 
 export const DEFAULT_CHART_CONFIG: BaseChartConfig = {
   widgetId: 'fake-id',
-  viewPort: {
+  viewport: {
     start: new Date(1995, 0, 0, 0),
     end: new Date(2020, 1, 0, 0),
     yMin: 0,

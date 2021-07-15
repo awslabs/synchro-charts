@@ -161,7 +161,7 @@ const carSpeedTableColumn = {
       }
     ]}
     widgetId="widget-id"
-    viewPort={{ duration: 0, start: new Date(1999, 0, 0), end: new Date(2001, 0, 0) }}
+    viewport={{ duration: 0, start: new Date(1999, 0, 0), end: new Date(2001, 0, 0) }}
     tableColumns={[windTableColumn, carSpeedTableColumn]}
   />
 </div>
@@ -384,7 +384,7 @@ const carSpeedTableColumn = {
       width: 100,
       position: LEGEND_POSITION.BOTTOM,
     }}
-    viewPort={{ duration: 0, start: new Date(1999, 0, 0), end: new Date(2001, 0, 0) }}
+    viewport={{ duration: 0, start: new Date(1999, 0, 0), end: new Date(2001, 0, 0) }}
     tableColumns={[windTableColumn, carSpeedTableColumn]}
   />
 </div>
@@ -605,7 +605,7 @@ const windTempAlarm = {
       width: 100,
       position: LEGEND_POSITION.BOTTOM,
     }}
-    viewPort={{ duration: 0, start: new Date(1999, 0, 0), end: new Date(2001, 0, 0) }}
+    viewport={{ duration: 0, start: new Date(1999, 0, 0), end: new Date(2001, 0, 0) }}
     tableColumns={[windTableColumn, windTempAlarm]}
   />
 </div>

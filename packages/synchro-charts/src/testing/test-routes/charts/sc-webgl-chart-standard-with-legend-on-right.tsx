@@ -42,7 +42,7 @@ export class ScWebglChartStandardWithLegendOnRight {
             width: 100,
             position: LEGEND_POSITION.RIGHT,
           }}
-          viewPort={{ start: X_MIN, end: X_MAX, yMin: Y_MIN, yMax: Y_MAX }}
+          viewport={{ start: X_MIN, end: X_MAX, yMin: Y_MIN, yMax: Y_MAX }}
         />
         <sc-webgl-context />
       </div>

@@ -99,7 +99,7 @@ describe('linear regression computation', () => {
 
 describe('no trend results', () => {
   it('does not compute trend result when data is completely to one side of viewport', async () => {
-    const viewPort = {
+    const viewport = {
       start: new Date(2019, 0, 1),
       end: new Date(2019, 11, 1),
       yMin: -50,
@@ -125,13 +125,13 @@ describe('no trend results', () => {
         type: TREND_TYPE.LINEAR,
       },
     ];
-    const trendResults = getAllTrendResults(viewPort, streams, trends);
+    const trendResults = getAllTrendResults(viewport, streams, trends);
 
     expect(trendResults).toHaveLength(0);
   });
 
   it('does not compute trend result when there is a single data point, which is inside the viewport', async () => {
-    const viewPort = {
+    const viewport = {
       start: new Date(2019, 0, 1),
       end: new Date(2019, 11, 1),
       yMin: -50,
@@ -152,7 +152,7 @@ describe('no trend results', () => {
         type: TREND_TYPE.LINEAR,
       },
     ];
-    const trendResults = getAllTrendResults(viewPort, streams, trends);
+    const trendResults = getAllTrendResults(viewport, streams, trends);
 
     expect(trendResults).toHaveLength(0);
   });
@@ -160,7 +160,7 @@ describe('no trend results', () => {
 
 describe('get all trend results', () => {
   it('computes multiple trend results', async () => {
-    const viewPort = {
+    const viewport = {
       start: new Date(2020, 0, 0),
       end: new Date(2020, 1, 12),
       yMin: -50,
@@ -208,7 +208,7 @@ describe('get all trend results', () => {
         type: TREND_TYPE.LINEAR,
       },
     ];
-    const trendResults = getAllTrendResults(viewPort, streams, trends);
+    const trendResults = getAllTrendResults(viewport, streams, trends);
 
     expect(trendResults).toHaveLength(2);
 

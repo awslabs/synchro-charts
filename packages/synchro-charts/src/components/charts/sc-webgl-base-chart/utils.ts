@@ -71,22 +71,22 @@ const dispose = (scene: Scene) => {
 export const constructChartScene = ({
   scene,
   container,
-  viewPort,
+  viewport,
   toClipSpace,
   onUpdate,
 }: {
   scene: Scene;
   container: HTMLElement;
-  viewPort: ViewPort;
+  viewport: ViewPort;
   toClipSpace: (time: number) => number;
   onUpdate?: ({ start, end }: { start: Date; end: Date }) => void;
 }): ChartScene => {
   // Create a camera pointed at our viewport - this determines which part of the mesh we see.
   const camera = new OrthographicCamera(
-    toClipSpace(viewPort.start.getTime()),
-    toClipSpace(viewPort.end.getTime()),
-    viewPort.yMax,
-    viewPort.yMin,
+    toClipSpace(viewport.start.getTime()),
+    toClipSpace(viewport.end.getTime()),
+    viewport.yMax,
+    viewport.yMin,
     NEAR,
     FAR
   );
@@ -102,14 +102,14 @@ export const constructChartScene = ({
     dispose: () => dispose(scene),
 
     /**
-     * A Unique identifier for the grouping of viewPorts which this chart syncs with.
+     * A Unique identifier for the grouping of viewports which this chart syncs with.
      *
      * Whenever any of the viewports are altered within a viewport group, all of the charts
      * within the view port group will have their viewport start and end dates synced.
      *
-     * A lack of a viewPortGroup means that the chart is not synced with any of charts.
+     * A lack of a viewportGroup means that the chart is not synced with any of charts.
      */
-    viewPortGroup: viewPort.group,
+    viewportGroup: viewport.group,
 
     updateViewPort: ({ start, end }: { start: Date; end: Date }) => {
       /**

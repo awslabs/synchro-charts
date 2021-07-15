@@ -1,5 +1,5 @@
 import { Component, h, Listen, Prop } from '@stencil/core';
-import { SIZE, VIEW_PORT as DEFAULT_VIEW_PORT } from '../dynamicWidgetUtils/constants';
+import { SIZE, VIEWPORT as DEFAULT_VIEWPORT } from '../dynamicWidgetUtils/constants';
 import { testCaseParameters } from '../dynamicWidgetUtils/testCaseParameters';
 import { DataStreamInfo } from '../../utils/dataTypes';
 
@@ -15,8 +15,8 @@ const {
   axis,
   componentTag,
   annotations,
-  viewPortStart,
-  viewPortEnd,
+  viewportStart,
+  viewportEnd,
   duration,
   isEditing,
   dataStreams,
@@ -25,10 +25,10 @@ const {
   tableColumns,
 } = testCaseParameters();
 
-const viewPort = {
-  ...DEFAULT_VIEW_PORT,
-  start: viewPortStart,
-  end: viewPortEnd,
+const viewport = {
+  ...DEFAULT_VIEWPORT,
+  start: viewportStart,
+  end: viewportEnd,
   duration,
   group: 'some-viewport-group',
 };
@@ -73,7 +73,7 @@ export class WidgetTestRoute {
           dataStreams={dataStreams}
           isEditing={isEditing}
           alarms={alarms}
-          viewPort={viewPort}
+          viewport={viewport}
           legend={legend}
           size={getSize(width)}
           axis={axis}

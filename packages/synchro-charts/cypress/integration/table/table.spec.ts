@@ -9,8 +9,8 @@ const DISABLE_STATUS_SELECTOR = '.disable-status';
 
 const DATE_OF_POINT = new Date(2000, 0, 0);
 
-const viewPortStart = new Date(DATE_OF_POINT.getTime() - MINUTE_IN_MS);
-const viewPortEnd = new Date(DATE_OF_POINT.getTime() + 5 * MINUTE_IN_MS);
+const viewportStart = new Date(DATE_OF_POINT.getTime() - MINUTE_IN_MS);
+const viewportEnd = new Date(DATE_OF_POINT.getTime() + 5 * MINUTE_IN_MS);
 
 it('renders table column values', () => {
   const { tableColumns, dataStreams, annotations } = tableMockData({});
@@ -20,8 +20,8 @@ it('renders table column values', () => {
     dataStreams,
     tableColumns,
     annotations,
-    viewPortStart,
-    viewPortEnd,
+    viewportStart,
+    viewportEnd,
   });
 
   cy.get(COLUMN_SELECTOR)
@@ -47,8 +47,8 @@ it('renders table row values', () => {
     dataStreams,
     tableColumns,
     annotations,
-    viewPortStart,
-    viewPortEnd,
+    viewportStart,
+    viewportEnd,
   });
 
   cy.get(CELL_SELECTOR)
@@ -85,8 +85,8 @@ it('renders loading spinner for cells in a table', () => {
     duration: MINUTE_IN_MS,
     tableColumns,
     annotations,
-    viewPortStart,
-    viewPortEnd,
+    viewportStart,
+    viewportEnd,
   });
 
   cy.get(CELL_SELECTOR).should('be.visible');
@@ -105,8 +105,8 @@ it('renders error string and icon in a table', () => {
     delayBeforeDataLoads: 5 * SECOND_IN_MS,
     tableColumns,
     annotations,
-    viewPortStart,
-    viewPortEnd,
+    viewportStart,
+    viewportEnd,
   });
 
   cy.get(CELL_SELECTOR)
@@ -126,8 +126,8 @@ describe('layout edge cases', () => {
       dataStreams,
       duration: MINUTE_IN_MS,
       tableColumns,
-      viewPortStart,
-      viewPortEnd,
+      viewportStart,
+      viewportEnd,
       height: 140, // short enough not all 4 rows can be shown
     });
 
@@ -152,7 +152,7 @@ describe('layout edge cases', () => {
           ...dataStreams[0],
           data: [
             {
-              x: viewPortStart.getTime(),
+              x: viewportStart.getTime(),
               y:
                 'this is a cell with very very long text, i am unsure why i need to be this long but this is not the place to ask such questions. there is a secrete message embedded within this string. or is there?',
             },
@@ -160,8 +160,8 @@ describe('layout edge cases', () => {
         },
       ],
       tableColumns: [tableColumns[0]],
-      viewPortStart,
-      viewPortEnd,
+      viewportStart,
+      viewportEnd,
       height: 140,
       width: 100,
     });
@@ -183,8 +183,8 @@ describe('layout edge cases', () => {
         rows: [undefined],
       })),
       duration: MINUTE_IN_MS,
-      viewPortStart,
-      viewPortEnd,
+      viewportStart,
+      viewportEnd,
       width: 500, // small enough that not all columns can fit
     });
 
@@ -204,8 +204,8 @@ it('empty state', () => {
     dataStreams: [],
     tableColumns,
     annotations,
-    viewPortStart,
-    viewPortEnd,
+    viewportStart,
+    viewportEnd,
   });
   cy.get('sc-table')
     .get(EMPTY_STATUS_SELECTOR)
@@ -220,8 +220,8 @@ it('disable state', () => {
     dataStreams: [],
     tableColumns,
     annotations,
-    viewPortStart,
-    viewPortEnd,
+    viewportStart,
+    viewportEnd,
   });
   cy.get('sc-table')
     .get(DISABLE_STATUS_SELECTOR)

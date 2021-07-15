@@ -8,35 +8,35 @@ import { ViewPortManager } from './types';
  *
  * This allows us to have performant syncing of charts.
  */
-export class ViewPortHandler<T extends ViewPortManager> {
-  private viewPortManagers: T[] = [];
-  private viewPortMap: {
-    [viewPortGroup: string]: { start: Date; end: Date };
+export class ViewportHandler<T extends ViewPortManager> {
+  private viewportManagers: T[] = [];
+  private viewportMap: {
+    [viewportGroup: string]: { start: Date; end: Date };
   } = {};
 
   managers = (): T[] => {
     // NOTE: Providing new reference to a array to prevent manipulation of the internal array from the outside.
-    return [...this.viewPortManagers];
+    return [...this.viewportManagers];
   };
 
   dispose = () => {
-    this.viewPortManagers.forEach(({ id }) => this.remove(id));
+    this.viewportManagers.forEach(({ id }) => this.remove(id));
   };
 
   add = (v: T, shouldSync = true) => {
-    this.viewPortManagers = [...this.viewPortManagers, v];
+    this.viewportManagers = [...this.viewportManagers, v];
 
     /**
      * If the added chart scene is part of a view port group, sync it's viewport to
      * the current viewport groups time span.
      */
-    if (v.viewPortGroup && this.viewPortMap[v.viewPortGroup] && shouldSync) {
-      v.updateViewPort(this.viewPortMap[v.viewPortGroup]);
+    if (v.viewportGroup && this.viewportMap[v.viewportGroup] && shouldSync) {
+      v.updateViewPort(this.viewportMap[v.viewportGroup]);
     }
   };
 
   remove = (managerId: string) => {
-    const v = this.viewPortManagers.find(({ id }) => id === managerId);
+    const v = this.viewportManagers.find(({ id }) => id === managerId);
 
     // Dispose of the chart scene to ensure that the memory is released
     if (v) {
@@ -44,7 +44,7 @@ export class ViewPortHandler<T extends ViewPortManager> {
     }
 
     // Remove manager from list of registered view port managers
-    this.viewPortManagers = this.viewPortManagers.filter(({ id }) => id !== managerId);
+    this.viewportManagers = this.viewportManagers.filter(({ id }) => id !== managerId);
   };
 
   /**
@@ -65,8 +65,8 @@ export class ViewPortHandler<T extends ViewPortManager> {
     manager: T;
     preventPropagation?: boolean;
   }) => {
-    if (manager.viewPortGroup) {
-      this.viewPortMap[manager.viewPortGroup] = { start, end };
+    if (manager.viewportGroup) {
+      this.viewportMap[manager.viewportGroup] = { start, end };
     }
 
     if (!preventPropagation) {
@@ -74,9 +74,9 @@ export class ViewPortHandler<T extends ViewPortManager> {
         v.updateViewPort({ start, end });
       };
 
-      if (manager.viewPortGroup) {
+      if (manager.viewportGroup) {
         /** Get all of the groups which belong within the viewport group */
-        const managers = this.viewPortManagers.filter(({ viewPortGroup: group }) => manager.viewPortGroup === group);
+        const managers = this.viewportManagers.filter(({ viewportGroup: group }) => manager.viewportGroup === group);
 
         /**  Sync all of the chart scenes within the viewport group. */
         managers.forEach(updateViewPort);

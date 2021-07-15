@@ -4,12 +4,12 @@ import { ViewPort } from '../../../../../utils/dataTypes';
 export const getY = ({
   annotation,
   height,
-  viewPort,
+  viewport,
 }: {
   annotation: YAnnotation;
   height: number;
-  viewPort: ViewPort;
+  viewport: ViewPort;
 }) => {
-  const { yMax, yMin } = viewPort;
+  const { yMax, yMin } = viewport;
   return height - (((annotation.value as number) - yMin) * height) / (yMax - yMin);
 };

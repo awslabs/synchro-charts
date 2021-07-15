@@ -50,7 +50,7 @@ export namespace Components {
         /**
           * Chart API
          */
-        "viewPort": MinimalViewPortConfig;
+        "viewport": MinimalViewPortConfig;
         "widgetId": string;
     }
     interface ScBox {
@@ -88,7 +88,7 @@ export namespace Components {
     interface ScGestureHandler {
         "onDateRangeChange": ({ end, start }: { start: Date; end: Date }) => void;
         "size": SizeConfig;
-        "viewPort": ViewPort;
+        "viewport": ViewPort;
     }
     interface ScGrid {
     }
@@ -108,7 +108,7 @@ export namespace Components {
         "isEditing": boolean;
         "liveModeOnlyMessage": string;
         "messageOverrides": MessageOverrides;
-        "viewPort": MinimalViewPortConfig;
+        "viewport": MinimalViewPortConfig;
         "widgetId": string;
     }
     interface ScKpiBase {
@@ -126,7 +126,7 @@ export namespace Components {
         "propertyStream"?: DataStream;
         "trendStream": DataStream | undefined;
         "valueColor"?: string;
-        "viewPort": MinimalViewPortConfig;
+        "viewport": MinimalViewPortConfig;
     }
     interface ScKpiStandard {
     }
@@ -140,7 +140,7 @@ export namespace Components {
         "thresholds": Threshold[];
         "trendResults": TrendResult[];
         "updateDataStreamName": ({ streamId, name }: { streamId: string; name: string }) => void;
-        "viewPort": ViewPort;
+        "viewport": ViewPort;
         "visualizesAlarms": boolean;
     }
     interface ScLegendRow {
@@ -184,7 +184,7 @@ export namespace Components {
         /**
           * Chart API
          */
-        "viewPort": MinimalViewPortConfig;
+        "viewport": MinimalViewPortConfig;
         "widgetId": string;
     }
     interface ScLineChartColoredPoint {
@@ -227,7 +227,7 @@ export namespace Components {
         /**
           * Chart API
          */
-        "viewPort": MinimalViewPortConfig;
+        "viewport": MinimalViewPortConfig;
         "widgetId": string;
     }
     interface ScScatterChartDynamicData {
@@ -287,7 +287,7 @@ export namespace Components {
         "labelsConfig": LabelsConfig;
         "liveModeOnlyMessage": string;
         "messageOverrides": MessageOverrides;
-        "viewPort": MinimalViewPortConfig;
+        "viewport": MinimalViewPortConfig;
         "widgetId": string;
     }
     interface ScStatusGridStandard {
@@ -316,7 +316,7 @@ export namespace Components {
         /**
           * Chart API
          */
-        "viewPort": MinimalViewPortConfig;
+        "viewport": MinimalViewPortConfig;
         "widgetId": string;
     }
     interface ScStatusTimelineOverlay {
@@ -351,7 +351,7 @@ export namespace Components {
          */
         "tableColumns": TableColumn[];
         "trends": Trend[];
-        "viewPort": MinimalViewPortConfig;
+        "viewport": MinimalViewPortConfig;
         "widgetId": string;
     }
     interface ScTableBase {
@@ -390,7 +390,7 @@ export namespace Components {
          */
         "top": number;
         "trendResults": TrendResult[];
-        "viewPort": ViewPort;
+        "viewport": ViewPort;
         "visualizesAlarms": boolean;
     }
     interface ScTooltipRow {
@@ -422,7 +422,7 @@ export namespace Components {
          */
         "top"?: number;
         "trendResults": TrendResult[];
-        "viewPort": ViewPort;
+        "viewport": ViewPort;
         "visualizesAlarms": boolean;
     }
     interface ScWebglAxis {
@@ -479,7 +479,7 @@ export namespace Components {
         /**
           * Optionally hooks to integrate custom logic into the base chart
          */
-        "onUpdateLifeCycle"?: (viewPort: ViewPortConfig) => void;
+        "onUpdateLifeCycle"?: (viewport: ViewPortConfig) => void;
         /**
           * Optionally provided callback to initiate a request for data. Used to ensure gestures emit events for request data.
          */
@@ -489,7 +489,7 @@ export namespace Components {
         "tooltip": (props: Tooltip.Props) => HTMLElement;
         "trends": Trend[];
         "updateChartScene": ChartSceneUpdater;
-        "viewPort": MinimalViewPortConfig;
+        "viewport": MinimalViewPortConfig;
         "visualizesAlarms": boolean;
         "yRangeStartFromZero": boolean;
     }
@@ -545,7 +545,7 @@ export namespace Components {
         "liveModeOnlyMessage": string;
         "messageOverrides": MessageOverrides;
         "renderCell": RenderCell;
-        "viewPort": MinimalViewPortConfig;
+        "viewport": MinimalViewPortConfig;
         "widgetId": string;
     }
     interface SingleColoredStatus {
@@ -1429,7 +1429,7 @@ declare namespace LocalJSX {
         /**
           * Chart API
          */
-        "viewPort"?: MinimalViewPortConfig;
+        "viewport"?: MinimalViewPortConfig;
         "widgetId": string;
     }
     interface ScBox {
@@ -1467,7 +1467,7 @@ declare namespace LocalJSX {
     interface ScGestureHandler {
         "onDateRangeChange": ({ end, start }: { start: Date; end: Date }) => void;
         "size": SizeConfig;
-        "viewPort": ViewPort;
+        "viewport": ViewPort;
     }
     interface ScGrid {
     }
@@ -1487,7 +1487,7 @@ declare namespace LocalJSX {
         "isEditing"?: boolean;
         "liveModeOnlyMessage"?: string;
         "messageOverrides"?: MessageOverrides;
-        "viewPort"?: MinimalViewPortConfig;
+        "viewport"?: MinimalViewPortConfig;
         "widgetId": string;
     }
     interface ScKpiBase {
@@ -1505,7 +1505,7 @@ declare namespace LocalJSX {
         "propertyStream"?: DataStream;
         "trendStream": DataStream | undefined;
         "valueColor"?: string;
-        "viewPort": MinimalViewPortConfig;
+        "viewport": MinimalViewPortConfig;
     }
     interface ScKpiStandard {
     }
@@ -1519,7 +1519,7 @@ declare namespace LocalJSX {
         "thresholds": Threshold[];
         "trendResults"?: TrendResult[];
         "updateDataStreamName": ({ streamId, name }: { streamId: string; name: string }) => void;
-        "viewPort": ViewPort;
+        "viewport": ViewPort;
         "visualizesAlarms": boolean;
     }
     interface ScLegendRow {
@@ -1563,7 +1563,7 @@ declare namespace LocalJSX {
         /**
           * Chart API
          */
-        "viewPort": MinimalViewPortConfig;
+        "viewport": MinimalViewPortConfig;
         "widgetId": string;
     }
     interface ScLineChartColoredPoint {
@@ -1606,7 +1606,7 @@ declare namespace LocalJSX {
         /**
           * Chart API
          */
-        "viewPort"?: MinimalViewPortConfig;
+        "viewport"?: MinimalViewPortConfig;
         "widgetId": string;
     }
     interface ScScatterChartDynamicData {
@@ -1666,7 +1666,7 @@ declare namespace LocalJSX {
         "labelsConfig"?: LabelsConfig;
         "liveModeOnlyMessage"?: string;
         "messageOverrides"?: MessageOverrides;
-        "viewPort"?: MinimalViewPortConfig;
+        "viewport"?: MinimalViewPortConfig;
         "widgetId": string;
     }
     interface ScStatusGridStandard {
@@ -1695,7 +1695,7 @@ declare namespace LocalJSX {
         /**
           * Chart API
          */
-        "viewPort"?: MinimalViewPortConfig;
+        "viewport"?: MinimalViewPortConfig;
         "widgetId": string;
     }
     interface ScStatusTimelineOverlay {
@@ -1731,7 +1731,7 @@ declare namespace LocalJSX {
          */
         "tableColumns"?: TableColumn[];
         "trends"?: Trend[];
-        "viewPort"?: MinimalViewPortConfig;
+        "viewport"?: MinimalViewPortConfig;
         "widgetId": string;
     }
     interface ScTableBase {
@@ -1770,7 +1770,7 @@ declare namespace LocalJSX {
          */
         "top"?: number;
         "trendResults"?: TrendResult[];
-        "viewPort": ViewPort;
+        "viewport": ViewPort;
         "visualizesAlarms": boolean;
     }
     interface ScTooltipRow {
@@ -1802,7 +1802,7 @@ declare namespace LocalJSX {
          */
         "top"?: number;
         "trendResults"?: TrendResult[];
-        "viewPort": ViewPort;
+        "viewport": ViewPort;
         "visualizesAlarms": boolean;
     }
     interface ScWebglAxis {
@@ -1863,7 +1863,7 @@ declare namespace LocalJSX {
         /**
           * Optionally hooks to integrate custom logic into the base chart
          */
-        "onUpdateLifeCycle"?: (viewPort: ViewPortConfig) => void;
+        "onUpdateLifeCycle"?: (viewport: ViewPortConfig) => void;
         "onWidgetUpdated"?: (event: CustomEvent<WidgetConfigurationUpdate>) => void;
         /**
           * Optionally provided callback to initiate a request for data. Used to ensure gestures emit events for request data.
@@ -1874,7 +1874,7 @@ declare namespace LocalJSX {
         "tooltip"?: (props: Tooltip.Props) => HTMLElement;
         "trends"?: Trend[];
         "updateChartScene": ChartSceneUpdater;
-        "viewPort": MinimalViewPortConfig;
+        "viewport": MinimalViewPortConfig;
         "visualizesAlarms"?: boolean;
         "yRangeStartFromZero"?: boolean;
     }
@@ -1931,7 +1931,7 @@ declare namespace LocalJSX {
         "messageOverrides"?: MessageOverrides;
         "onWidgetUpdated"?: (event: CustomEvent<WidgetConfigurationUpdate>) => void;
         "renderCell"?: RenderCell;
-        "viewPort"?: MinimalViewPortConfig;
+        "viewport"?: MinimalViewPortConfig;
         "widgetId": string;
     }
     interface SingleColoredStatus {

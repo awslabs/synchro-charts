@@ -76,7 +76,7 @@ export class ScWebglBaseChart {
   @Prop() dataStreams!: DataStream[];
   @Prop() updateChartScene!: ChartSceneUpdater;
   @Prop() createChartScene!: ChartSceneCreator;
-  @Prop() viewPort!: MinimalViewPortConfig;
+  @Prop() viewport!: MinimalViewPortConfig;
   @Prop() gestures!: boolean;
   @Prop() size!: SizePositionConfig;
   @Prop() isEditing: boolean = false;
@@ -100,7 +100,7 @@ export class ScWebglBaseChart {
   @Prop() requestData?: RequestDataFn;
 
   /** Optionally hooks to integrate custom logic into the base chart */
-  @Prop() onUpdateLifeCycle?: (viewPort: ViewPortConfig) => void;
+  @Prop() onUpdateLifeCycle?: (viewport: ViewPortConfig) => void;
 
   @Prop() messageOverrides?: MessageOverrides;
 
@@ -113,11 +113,11 @@ export class ScWebglBaseChart {
   /**
    * Active View Port Config
    */
-  @State() yMin: number = this.viewPort.yMin || 0;
-  @State() yMax: number = this.viewPort.yMax || 100;
+  @State() yMin: number = this.viewport.yMin || 0;
+  @State() yMax: number = this.viewport.yMax || 100;
   // NOTE: If a start and end date are not provided, that means we are in 'live' mode
-  @State() start: Date = this.viewPort.start || new Date(Date.now() - (this.viewPort.duration as number));
-  @State() end: Date = this.viewPort.end || new Date();
+  @State() start: Date = this.viewport.start || new Date(Date.now() - (this.viewport.duration as number));
+  @State() end: Date = this.viewport.end || new Date();
 
   @State() trendResults: TrendResult[] = [];
 
@@ -199,7 +199,7 @@ export class ScWebglBaseChart {
     return this.dataStreams.filter(({ streamType }) => streamType !== StreamType.ALARM);
   }
 
-  @Watch('viewPort')
+  @Watch('viewport')
   onViewPortChange(newViewPort: ViewPortConfig, oldViewPort: ViewPortConfig) {
     if (this.scene && !isEqual(newViewPort, oldViewPort)) {
       const hasYRangeChanged = newViewPort.yMin !== oldViewPort.yMin || newViewPort.yMax !== oldViewPort.yMax;
@@ -274,13 +274,13 @@ export class ScWebglBaseChart {
 
   @Watch('axis')
   onAxisChange(newProp: Axis.Options, oldProp: Axis.Options) {
-    const viewPort = this.activeViewPort();
+    const viewport = this.activeViewPort();
     const size = this.chartSizeConfig();
 
     if (!isEqual(newProp, oldProp)) {
       this.axisRenderer({
         container: this.getAxisContainer(),
-        viewPort,
+        viewport,
         size,
         axis: this.axis,
       });
@@ -328,7 +328,7 @@ export class ScWebglBaseChart {
     end: this.end,
     yMin: this.yMin,
     yMax: this.yMax,
-    group: this.viewPort.group,
+    group: this.viewport.group,
   });
 
   handleCameraEvent = ({ start, end }: { start: Date; end: Date }) => {
@@ -337,7 +337,7 @@ export class ScWebglBaseChart {
       webGLRenderer.updateViewPorts({ start, end, manager: this.scene });
 
       // Emit date range change to allow other non-webgl based components to sync the new date range
-      this.onDateRangeChange([start, end, this.viewPort.group]);
+      this.onDateRangeChange([start, end, this.viewport.group]);
     }
   };
 
@@ -362,8 +362,8 @@ export class ScWebglBaseChart {
     });
 
     /** Update active viewport. */
-    this.yMin = this.viewPort.yMin != null ? this.viewPort.yMin : yMin;
-    this.yMax = this.viewPort.yMax != null ? this.viewPort.yMax : yMax;
+    this.yMin = this.viewport.yMin != null ? this.viewport.yMin : yMin;
+    this.yMax = this.viewport.yMax != null ? this.viewport.yMax : yMax;
 
     this.applyYRangeChanges();
   };
@@ -440,7 +440,7 @@ export class ScWebglBaseChart {
 
   setupChartScene() {
     this.scene = this.createChartScene({
-      viewPort: this.activeViewPort(),
+      viewport: this.activeViewPort(),
       chartSize: this.chartSizeConfig(),
       dataStreams: this.visualizedDataStreams(),
       alarms: this.alarms,
@@ -511,7 +511,7 @@ export class ScWebglBaseChart {
     this.updateAndRegisterChartScene({ hasDataChanged, hasSizeChanged, hasAnnotationChanged });
 
     // settings to utilize in all feature updates.
-    const viewPort = this.activeViewPort();
+    const viewport = this.activeViewPort();
     const size = this.chartSizeConfig();
 
     if (this.onUpdateLifeCycle) {
@@ -538,7 +538,7 @@ export class ScWebglBaseChart {
       renderAnnotations({
         container: this.getThresholdContainer(),
         annotations: numberAnnotations,
-        viewPort,
+        viewport,
         size,
         // TODO: Revisit this.
         // If no data streams are present we will fallback to a resolution of 0, i.e. 'raw' data
@@ -553,10 +553,10 @@ export class ScWebglBaseChart {
      */
     if (!this.supportString) {
       const dataStreamsWithTrends = this.visualizedDataStreams().filter(isNumberDataStream);
-      this.trendResults = getAllTrendResults(viewPort, dataStreamsWithTrends, this.trends);
+      this.trendResults = getAllTrendResults(viewport, dataStreamsWithTrends, this.trends);
       renderTrendLines({
         container: this.getTrendContainer(),
-        viewPort,
+        viewport,
         size,
         dataStreams: this.visualizedDataStreams(),
         trendResults: this.trendResults,
@@ -568,7 +568,7 @@ export class ScWebglBaseChart {
      */
     this.axisRenderer({
       container: this.getAxisContainer(),
-      viewPort,
+      viewport,
       size,
       axis: this.axis,
     });
@@ -604,7 +604,7 @@ export class ScWebglBaseChart {
         dataStreams: this.visualizedDataStreams(),
         alarms: this.alarms,
         container,
-        viewPort: this.activeViewPort(),
+        viewport: this.activeViewPort(),
         minBufferSize: this.minBufferSize,
         bufferFactor: this.bufferFactor,
         onUpdate: this.onUpdate,
@@ -691,7 +691,7 @@ export class ScWebglBaseChart {
       size: this.chartSizeConfig(),
       style: { marginLeft: `${marginLeft}px`, marginTop: `${marginTop}px` },
       dataStreams: this.dataStreams,
-      viewPort: this.activeViewPort(),
+      viewport: this.activeViewPort(),
       dataContainer: this.getDataContainer(),
       thresholds,
       trendResults: this.trendResults,
@@ -712,7 +712,7 @@ export class ScWebglBaseChart {
       if (points.length === 0) {
         return true;
       }
-      // Check the latest datapoint to see if its before the start of viewPort
+      // Check the latest datapoint to see if its before the start of viewport
       const isDataOutOfRange = points[points.length - 1].x < this.start.getTime();
       return isDataOutOfRange;
     });
@@ -741,7 +741,7 @@ export class ScWebglBaseChart {
             <sc-gesture-handler
               onDateRangeChange={this.handleCameraEvent}
               size={chartSizeConfig}
-              viewPort={this.activeViewPort()}
+              viewport={this.activeViewPort()}
             />
           )}
         </DataContainer>
@@ -752,7 +752,7 @@ export class ScWebglBaseChart {
               dataStreams={this.dataStreams}
               visualizesAlarms={this.visualizesAlarms}
               updateDataStreamName={this.updateDataStreamName}
-              viewPort={this.activeViewPort()}
+              viewport={this.activeViewPort()}
               isEditing={this.isEditing}
               isLoading={shouldDisplayAsLoading}
               thresholds={thresholds}

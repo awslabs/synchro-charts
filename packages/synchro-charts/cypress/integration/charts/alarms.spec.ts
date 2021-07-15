@@ -75,8 +75,8 @@ describe('when provided alarm data through a `dynamic-widget`', () => {
   const DATE_OF_POINT = NUMERICAL_ALARM_STREAM.data[0].x;
 
   // View port which contains the point
-  const viewPortStart = new Date(DATE_OF_POINT - MINUTE_IN_MS);
-  const viewPortEnd = new Date(DATE_OF_POINT + 5 * MINUTE_IN_MS);
+  const viewportStart = new Date(DATE_OF_POINT - MINUTE_IN_MS);
+  const viewportEnd = new Date(DATE_OF_POINT + 5 * MINUTE_IN_MS);
 
   describe('widgets determine whether to visualize alarm data or not', () => {
     describe('kpi', () => {
@@ -86,8 +86,8 @@ describe('when provided alarm data through a `dynamic-widget`', () => {
           dataStreams: [NUMERICAL_ALARM_STREAM, PROPERTY_STREAM],
           annotations: { y: [ALARM_THRESHOLD] },
           duration: MINUTE_IN_MS,
-          viewPortStart,
-          viewPortEnd,
+          viewportStart,
+          viewportEnd,
         });
 
         cy.get('sc-chart-icon').should('be.visible');
@@ -105,8 +105,8 @@ describe('when provided alarm data through a `dynamic-widget`', () => {
           dataStreams: [NUMERICAL_ALARM_STREAM, PROPERTY_STREAM],
           annotations: { y: [ALARM_THRESHOLD] },
           duration: MINUTE_IN_MS,
-          viewPortStart,
-          viewPortEnd,
+          viewportStart,
+          viewportEnd,
         });
 
         cy.get('sc-chart-icon').should('be.visible');
@@ -126,8 +126,8 @@ describe('when provided alarm data through a `dynamic-widget`', () => {
         visitDynamicWidget(cy, {
           componentTag: 'sc-line-chart',
           dataStreams: [NUMERICAL_ALARM_STREAM],
-          viewPortStart,
-          viewPortEnd,
+          viewportStart,
+          viewportEnd,
         });
 
         cy.waitForChart();
@@ -140,8 +140,8 @@ describe('when provided alarm data through a `dynamic-widget`', () => {
         visitDynamicWidget(cy, {
           componentTag: 'sc-line-chart',
           dataStreams: [NUMERICAL_ALARM_STREAM],
-          viewPortStart,
-          viewPortEnd,
+          viewportStart,
+          viewportEnd,
         });
 
         cy.waitForChart();
@@ -162,8 +162,8 @@ describe('when provided alarm data through a `dynamic-widget`', () => {
         visitDynamicWidget(cy, {
           componentTag: 'sc-scatter-chart',
           dataStreams: [NUMERICAL_ALARM_STREAM],
-          viewPortStart,
-          viewPortEnd,
+          viewportStart,
+          viewportEnd,
         });
 
         cy.waitForChart();
@@ -176,8 +176,8 @@ describe('when provided alarm data through a `dynamic-widget`', () => {
         visitDynamicWidget(cy, {
           componentTag: 'sc-scatter-chart',
           dataStreams: [NUMERICAL_ALARM_STREAM],
-          viewPortStart,
-          viewPortEnd,
+          viewportStart,
+          viewportEnd,
         });
 
         cy.waitForChart();
@@ -198,8 +198,8 @@ describe('when provided alarm data through a `dynamic-widget`', () => {
         visitDynamicWidget(cy, {
           componentTag: 'sc-bar-chart',
           dataStreams: [NUMERICAL_ALARM_STREAM],
-          viewPortStart,
-          viewPortEnd,
+          viewportStart,
+          viewportEnd,
         });
 
         cy.waitForChart();
@@ -212,8 +212,8 @@ describe('when provided alarm data through a `dynamic-widget`', () => {
         visitDynamicWidget(cy, {
           componentTag: 'sc-bar-chart',
           dataStreams: [NUMERICAL_ALARM_STREAM],
-          viewPortStart,
-          viewPortEnd,
+          viewportStart,
+          viewportEnd,
         });
 
         cy.waitForChart();
@@ -235,8 +235,8 @@ describe('when provided alarm data through a `dynamic-widget`', () => {
           componentTag: 'sc-status-timeline',
           alarms: { expires: MINUTE_IN_MS },
           dataStreams: [NUMERICAL_ALARM_STREAM],
-          viewPortStart,
-          viewPortEnd,
+          viewportStart,
+          viewportEnd,
         });
 
         cy.contains(STATUS_TIMELINE_OVERLAY_ROW_SELECTOR, NUMERICAL_ALARM_STREAM.data[0].y).should('be.visible');
@@ -250,8 +250,8 @@ describe('when provided alarm data through a `dynamic-widget`', () => {
           componentTag: 'sc-status-timeline',
           dataStreams: [NUMERICAL_ALARM_STREAM],
           annotations: { y: [ALARM_THRESHOLD] },
-          viewPortStart,
-          viewPortEnd,
+          viewportStart,
+          viewportEnd,
         });
 
         cy.waitForChart();
@@ -353,8 +353,8 @@ describe('when provided alarm data through a `dynamic-widget`', () => {
       componentTag: 'sc-line-chart',
       dataStreams: DATA,
       annotations: ANNOTATIONS,
-      viewPortStart: new Date(2000, 0, 0, 6),
-      viewPortEnd: new Date(2000, 0, 0, 12),
+      viewportStart: new Date(2000, 0, 0, 6),
+      viewportEnd: new Date(2000, 0, 0, 12),
     });
 
     cy.get(LEGEND_VALUE_SELECTOR)
@@ -373,8 +373,8 @@ describe('when provided alarm data through a `dynamic-widget`', () => {
       componentTag: 'sc-line-chart',
       dataStreams: DATA,
       annotations: ANNOTATIONS,
-      viewPortStart: new Date(2000, 0, 3),
-      viewPortEnd: new Date(2000, 0, 4),
+      viewportStart: new Date(2000, 0, 3),
+      viewportEnd: new Date(2000, 0, 4),
     });
 
     cy.get(LEGEND_VALUE_SELECTOR)
@@ -393,8 +393,8 @@ describe('when provided alarm data through a `dynamic-widget`', () => {
       componentTag: 'sc-line-chart',
       annotations: ANNOTATIONS,
       dataStreams: DATA,
-      viewPortStart: new Date(1990, 0, 0),
-      viewPortEnd: new Date(1991, 0, 0),
+      viewportStart: new Date(1990, 0, 0),
+      viewportEnd: new Date(1991, 0, 0),
     });
 
     cy.get(LEGEND_VALUE_SELECTOR)

@@ -19,7 +19,7 @@ import { ScStatusTimelineOverlayRow } from '../../components/charts/sc-status-ti
 import { ScStatusTimelineOverlay } from '../../components/charts/sc-status-timeline/sc-status-timeline-overlay/sc-status-timeline-overlay';
 import { ScChartIcon } from '../../components/charts/chart-icon/sc-chart-icon';
 
-const VIEW_PORT = { start: new Date(2000), end: new Date(2001, 0, 0), yMin: 0, yMax: 100 };
+const VIEWPORT = { start: new Date(2000), end: new Date(2001, 0, 0), yMin: 0, yMax: 100 };
 
 export type ChartProps = Components.ScLineChart;
 
@@ -57,7 +57,7 @@ export const newChartSpecPage = (tagName: string): ChartSpecPage => async props 
   const defaultProps: ChartProps = {
     widgetId: 'default-id',
     gestures: true,
-    viewPort: VIEW_PORT,
+    viewport: VIEWPORT,
     legend: {
       position: LEGEND_POSITION.BOTTOM,
       width: 300,
