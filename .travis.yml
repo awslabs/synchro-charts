@@ -43,5 +43,5 @@ jobs:
         - docker ps # logging to make sure both container are build and running
 
 after_script:
-  - cat packages/synchro-charts/cypress/results/output.xml
+  - docker-compose logs --tail="all"
   - docker-compose down
