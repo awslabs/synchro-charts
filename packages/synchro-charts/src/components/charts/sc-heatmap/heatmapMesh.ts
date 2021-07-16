@@ -45,6 +45,7 @@ export const NUM_POSITION_COMPONENTS = 2; // (x, y)
 const NUM_COLOR_COMPONENTS = 3; // (r, g, b)
 
 export const BUCKET_COUNT = 10;
+export const colorPalette = getSequential();
 
 const numBuckets = (streamVertexSets: number[][][]): number => {
   return 10 * streamVertexSets.reduce((totalBuckets, streamVertexSet) => totalBuckets + streamVertexSet.length, 0);
@@ -94,21 +95,22 @@ const updateMesh = ({
 
   const { resolution } = dataStreams[0] ?? 0;
   let heatValues: HeatValueMap = {};
-  heatValues = calcHeatValues({
-    oldHeatValue: {},
-    dataStreams,
-    resolution,
-    viewPort,
-  });
-  const colorPalette = getSequential({});
+  if (dataStreams.length !== 0) {
+    heatValues = calcHeatValues({
+      oldHeatValue: {},
+      dataStreams,
+      resolution,
+      viewPort,
+    });
+  }
 
-  for (let xAxisBucketStart in heatValues ?? {}) {
+  for (let xAxisBucketStart in heatValues) {
     let buckets = heatValues[xAxisBucketStart];
-    for (let oneBucket in buckets) {
+    for (let bucketIndex in buckets) {
       bucket.array[positionIndex] = toClipSpace(+xAxisBucketStart);
-      bucket.array[positionIndex + 1] = +oneBucket * (viewPort.yMax / BUCKET_COUNT);
+      bucket.array[positionIndex + 1] = +bucketIndex * (viewPort.yMax / BUCKET_COUNT);
 
-      const bucketColor = getBucketColor(colorPalette, buckets[oneBucket].totalCount, resolution * streamVertexSets.length);
+      const bucketColor = getBucketColor(colorPalette, buckets[bucketIndex].totalCount, resolution * streamVertexSets.length);
       color.array[colorIndex] = bucketColor[0];
       color.array[colorIndex + 1] = bucketColor[1];
       color.array[colorIndex + 2] = bucketColor[2];

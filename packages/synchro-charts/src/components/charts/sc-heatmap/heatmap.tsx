@@ -35,10 +35,10 @@ const tooltip = (props: Tooltip.Props) => (
 );
 
 @Component({
-  tag: 'sc-bar-chart',
+  tag: 'sc-heatmap',
   shadow: false,
 })
-export class ScBarChart implements ChartConfig {
+export class ScHeatmap implements ChartConfig {
   /** Chart API */
   @Prop() viewPort: MinimalViewPortConfig;
   @Prop() movement?: MovementConfig;

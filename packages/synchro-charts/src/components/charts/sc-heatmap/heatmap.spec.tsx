@@ -6,8 +6,8 @@ import 'webgl-mock-threejs';
 import { newChartSpecPage } from '../../../testing/chartDescriptions/newChartSpecPage';
 import { describeChart } from '../../../testing/chartDescriptions/describeChart';
 
-const barChart = newChartSpecPage('sc-bar-chart');
+const heatmap = newChartSpecPage('sc-heatmap');
 
-describe('sc-bar-chart', () => {
-  describeChart(barChart);
+describe('sc-heatmap', () => {
+  describeChart(heatmap);
 });
