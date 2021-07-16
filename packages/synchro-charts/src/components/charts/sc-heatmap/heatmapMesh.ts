@@ -126,7 +126,7 @@ const updateMesh = ({
       bucket.array[positionIndex] = toClipSpace(+xAxisBucketStart);
       bucket.array[positionIndex + 1] = +bucketIndex * (viewport.yMax / BUCKET_COUNT);
 
-      const bucketColor = getBucketColor(colorPalette, buckets[bucketIndex].totalCount, resolution * streamVertexSets.length);
+      const bucketColor = getBucketColor(colorPalette, buckets[bucketIndex].totalCount, resolution / 1000 * streamVertexSets.length);
       color.array[colorIndex] = bucketColor[0];
       color.array[colorIndex + 1] = bucketColor[1];
       color.array[colorIndex + 2] = bucketColor[2];
