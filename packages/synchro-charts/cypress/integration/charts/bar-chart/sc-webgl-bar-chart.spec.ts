@@ -193,7 +193,6 @@ describe('handles buffer increasing in size after initialization', () => {
     cy.wait(SMALL_WAIT);
 
     // Should see the bars.
-    cy.get('#chart-container').matchImageSnapshotOnCI({ customDiffConfig: { threshold: 0.3 } },
-    );
+    cy.get('#chart-container').matchImageSnapshotOnCI({ customDiffConfig: { threshold: 0.3 } });
   });
 });
