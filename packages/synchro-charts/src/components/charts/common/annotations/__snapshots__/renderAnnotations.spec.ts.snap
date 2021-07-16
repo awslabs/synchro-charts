@@ -69,9 +69,9 @@ exports[`y annotation handles rendering updating multiple annotations 1`] = `
     <text class="y-text" display="inline" font-size="10" text-anchor="end" x="95" y="20" style="user-select: none; pointer-events: none; fill: red;">
       some text
     </text>
-    <rect class="y-annotation" display="none" height="20" width="45" x="101" y="14" style="stroke: red; stroke-width: 1.5; fill-opacity: 0; pointer-events: none;"></rect>
-    <line class="y-handle-one" display="none" x1="140" x2="140" y1="19" y2="29" style="stroke: gray; stroke-width: 1;"></line>
-    <line class="y-handle-two" display="none" x1="142" x2="142" y1="19" y2="29" style="stroke: gray; stroke-width: 1;"></line>
+    <rect class="y-annotation" display="none" height="20" width="18" x="101" y="14" style="stroke: red; stroke-width: 1.5; fill-opacity: 0; pointer-events: none;"></rect>
+    <line class="y-handle-one" display="none" x1="113" x2="113" y1="19" y2="29" style="stroke: gray; stroke-width: 1;"></line>
+    <line class="y-handle-two" display="none" x1="115" x2="115" y1="19" y2="29" style="stroke: gray; stroke-width: 1;"></line>
   </g>
   <g class="y-annotation" transform="translate(0,0)">
     <line class="y-line" x1="0" x2="100" y1="49" y2="49" style="stroke: red; stroke-width: 1.5;"></line>
@@ -91,9 +91,9 @@ exports[`y annotation handles rendering updating multiple annotations 1`] = `
     <text class="y-text" display="inline" font-size="10" text-anchor="end" x="95" y="-4.5" style="user-select: none; pointer-events: none; fill: red;">
       some text
     </text>
-    <rect class="y-annotation" display="inline" height="20" width="45" x="101" y="-10.5" style="stroke: red; stroke-width: 1.5; fill-opacity: 0; pointer-events: auto;"></rect>
-    <line class="y-handle-one" display="inline" x1="140" x2="140" y1="-5.5" y2="4.5" style="stroke: gray; stroke-width: 1;"></line>
-    <line class="y-handle-two" display="inline" x1="142" x2="142" y1="-5.5" y2="4.5" style="stroke: gray; stroke-width: 1;"></line>
+    <rect class="y-annotation" display="inline" height="20" width="18" x="101" y="-10.5" style="stroke: red; stroke-width: 1.5; fill-opacity: 0; pointer-events: auto;"></rect>
+    <line class="y-handle-one" display="inline" x1="113" x2="113" y1="-5.5" y2="4.5" style="stroke: gray; stroke-width: 1;"></line>
+    <line class="y-handle-two" display="inline" x1="115" x2="115" y1="-5.5" y2="4.5" style="stroke: gray; stroke-width: 1;"></line>
   </g>
   <g class="y-annotation" transform="translate(0,0)">
     <line class="y-line" x1="0" x2="100" y1="1" y2="1" style="stroke: red; stroke-width: 1.5;"></line>
@@ -113,9 +113,9 @@ exports[`y annotation handles rendering updating multiple annotations 1`] = `
     <text class="y-text" display="inline" font-size="10" text-anchor="end" x="95" y="44.5" style="user-select: none; pointer-events: none; fill: red;">
       some text
     </text>
-    <rect class="y-annotation" display="none" height="20" width="45" x="101" y="38.5" style="stroke: red; stroke-width: 1.5; fill-opacity: 0; pointer-events: none;"></rect>
-    <line class="y-handle-one" display="none" x1="140" x2="140" y1="43.5" y2="53.5" style="stroke: gray; stroke-width: 1;"></line>
-    <line class="y-handle-two" display="none" x1="142" x2="142" y1="43.5" y2="53.5" style="stroke: gray; stroke-width: 1;"></line>
+    <rect class="y-annotation" display="none" height="20" width="18" x="101" y="38.5" style="stroke: red; stroke-width: 1.5; fill-opacity: 0; pointer-events: none;"></rect>
+    <line class="y-handle-one" display="none" x1="113" x2="113" y1="43.5" y2="53.5" style="stroke: gray; stroke-width: 1;"></line>
+    <line class="y-handle-two" display="none" x1="115" x2="115" y1="43.5" y2="53.5" style="stroke: gray; stroke-width: 1;"></line>
   </g>
 </svg>
 `;
@@ -128,9 +128,9 @@ exports[`y annotation has proper threshold grouping structure 1`] = `
     <text class="y-text" display="inline" font-size="10" text-anchor="end" x="95" y="20" style="user-select: none; pointer-events: none; fill: red;">
       some text
     </text>
-    <rect class="y-annotation" display="none" height="20" width="45" x="101" y="14" style="stroke: red; stroke-width: 1.5; fill-opacity: 0; pointer-events: none;"></rect>
-    <line class="y-handle-one" display="none" x1="140" x2="140" y1="19" y2="29" style="stroke: gray; stroke-width: 1;"></line>
-    <line class="y-handle-two" display="none" x1="142" x2="142" y1="19" y2="29" style="stroke: gray; stroke-width: 1;"></line>
+    <rect class="y-annotation" display="none" height="20" width="18" x="101" y="14" style="stroke: red; stroke-width: 1.5; fill-opacity: 0; pointer-events: none;"></rect>
+    <line class="y-handle-one" display="none" x1="113" x2="113" y1="19" y2="29" style="stroke: gray; stroke-width: 1;"></line>
+    <line class="y-handle-two" display="none" x1="115" x2="115" y1="19" y2="29" style="stroke: gray; stroke-width: 1;"></line>
   </g>
   <g class="y-annotation" transform="translate(0,0)">
     <line class="y-line" x1="0" x2="100" y1="2" y2="2" style="stroke: red; stroke-width: 1.5;"></line>
@@ -138,9 +138,9 @@ exports[`y annotation has proper threshold grouping structure 1`] = `
     <text class="y-text" display="inline" font-size="10" text-anchor="end" x="95" y="-3" style="user-select: none; pointer-events: none; fill: red;">
       some text
     </text>
-    <rect class="y-annotation" display="inline" height="20" width="45" x="101" y="-9" style="stroke: red; stroke-width: 1.5; fill-opacity: 0; pointer-events: auto;"></rect>
-    <line class="y-handle-one" display="inline" x1="140" x2="140" y1="-4" y2="6" style="stroke: gray; stroke-width: 1;"></line>
-    <line class="y-handle-two" display="inline" x1="142" x2="142" y1="-4" y2="6" style="stroke: gray; stroke-width: 1;"></line>
+    <rect class="y-annotation" display="inline" height="20" width="18" x="101" y="-9" style="stroke: red; stroke-width: 1.5; fill-opacity: 0; pointer-events: auto;"></rect>
+    <line class="y-handle-one" display="inline" x1="113" x2="113" y1="-4" y2="6" style="stroke: gray; stroke-width: 1;"></line>
+    <line class="y-handle-two" display="inline" x1="115" x2="115" y1="-4" y2="6" style="stroke: gray; stroke-width: 1;"></line>
   </g>
 </svg>
 `;
@@ -153,9 +153,36 @@ exports[`y annotation renders correctly 1`] = `
     <text class="y-text" display="inline" font-size="10" text-anchor="end" x="95" y="20" style="user-select: none; pointer-events: none; fill: red;">
       some text
     </text>
-    <rect class="y-annotation" display="none" height="20" width="45" x="101" y="14" style="stroke: red; stroke-width: 1.5; fill-opacity: 0; pointer-events: none;"></rect>
-    <line class="y-handle-one" display="none" x1="140" x2="140" y1="19" y2="29" style="stroke: gray; stroke-width: 1;"></line>
-    <line class="y-handle-two" display="none" x1="142" x2="142" y1="19" y2="29" style="stroke: gray; stroke-width: 1;"></line>
+    <rect class="y-annotation" display="none" height="20" width="18" x="101" y="14" style="stroke: red; stroke-width: 1.5; fill-opacity: 0; pointer-events: none;"></rect>
+    <line class="y-handle-one" display="none" x1="113" x2="113" y1="19" y2="29" style="stroke: gray; stroke-width: 1;"></line>
+    <line class="y-handle-two" display="none" x1="115" x2="115" y1="19" y2="29" style="stroke: gray; stroke-width: 1;"></line>
+  </g>
+</svg>
+`;
+
+exports[`y annotation renders different draggable handles for annotations according to showValue 1`] = `
+<svg viewBox="0 0 100 50">
+  <g class="y-annotation" transform="translate(0,0)">
+    <line class="y-line" x1="0" x2="100" y1="25" y2="25" style="stroke: red; stroke-width: 1.5;"></line>
+    <text class="y-value-text" display="inline" font-size="10" text-anchor="start" x="108" y="28" style="user-select: none; pointer-events: none; fill: red;">
+      50
+    </text>
+    <text class="y-text" display="inline" font-size="10" text-anchor="end" x="95" y="20" style="user-select: none; pointer-events: none; fill: red;">
+      some text
+    </text>
+    <rect class="y-annotation" display="inline" height="20" width="45" x="101" y="14" style="stroke: red; stroke-width: 1.5; fill-opacity: 0; pointer-events: auto;"></rect>
+    <line class="y-handle-one" display="inline" x1="140" x2="140" y1="19" y2="29" style="stroke: gray; stroke-width: 1;"></line>
+    <line class="y-handle-two" display="inline" x1="142" x2="142" y1="19" y2="29" style="stroke: gray; stroke-width: 1;"></line>
+  </g>
+  <g class="y-annotation" transform="translate(0,0)">
+    <line class="y-line" x1="0" x2="100" y1="48.5" y2="48.5" style="stroke: blue; stroke-width: 1.5;"></line>
+    <text class="y-value-text" display="none" font-size="10" text-anchor="start" x="108" y="51.5" style="user-select: none; pointer-events: none; fill: blue;"></text>
+    <text class="y-text" display="inline" font-size="10" text-anchor="end" x="95" y="43.5" style="user-select: none; pointer-events: none; fill: blue;">
+      some text
+    </text>
+    <rect class="y-annotation" display="inline" height="20" width="18" x="101" y="37.5" style="stroke: blue; stroke-width: 1.5; fill-opacity: 0; pointer-events: auto;"></rect>
+    <line class="y-handle-one" display="inline" x1="113" x2="113" y1="42.5" y2="52.5" style="stroke: gray; stroke-width: 1;"></line>
+    <line class="y-handle-two" display="inline" x1="115" x2="115" y1="42.5" y2="52.5" style="stroke: gray; stroke-width: 1;"></line>
   </g>
 </svg>
 `;
@@ -180,9 +207,9 @@ exports[`y annotation updates annotation label and value text visibility 1`] = `
     <text class="y-text" display="inline" font-size="10" text-anchor="end" x="95" y="20" style="user-select: none; pointer-events: none; fill: red;">
       some text
     </text>
-    <rect class="y-annotation" display="none" height="20" width="45" x="101" y="14" style="stroke: red; stroke-width: 1.5; fill-opacity: 0; pointer-events: none;"></rect>
-    <line class="y-handle-one" display="none" x1="140" x2="140" y1="19" y2="29" style="stroke: gray; stroke-width: 1;"></line>
-    <line class="y-handle-two" display="none" x1="142" x2="142" y1="19" y2="29" style="stroke: gray; stroke-width: 1;"></line>
+    <rect class="y-annotation" display="none" height="20" width="18" x="101" y="14" style="stroke: red; stroke-width: 1.5; fill-opacity: 0; pointer-events: none;"></rect>
+    <line class="y-handle-one" display="none" x1="113" x2="113" y1="19" y2="29" style="stroke: gray; stroke-width: 1;"></line>
+    <line class="y-handle-two" display="none" x1="115" x2="115" y1="19" y2="29" style="stroke: gray; stroke-width: 1;"></line>
   </g>
 </svg>
 `;
@@ -195,9 +222,9 @@ exports[`y annotation updates position and text value when value is updated 1`] 
     <text class="y-text" display="inline" font-size="10" text-anchor="end" x="95" y="20" style="user-select: none; pointer-events: none; fill: red;">
       some text
     </text>
-    <rect class="y-annotation" display="none" height="20" width="45" x="101" y="14" style="stroke: red; stroke-width: 1.5; fill-opacity: 0; pointer-events: none;"></rect>
-    <line class="y-handle-one" display="none" x1="140" x2="140" y1="19" y2="29" style="stroke: gray; stroke-width: 1;"></line>
-    <line class="y-handle-two" display="none" x1="142" x2="142" y1="19" y2="29" style="stroke: gray; stroke-width: 1;"></line>
+    <rect class="y-annotation" display="none" height="20" width="18" x="101" y="14" style="stroke: red; stroke-width: 1.5; fill-opacity: 0; pointer-events: none;"></rect>
+    <line class="y-handle-one" display="none" x1="113" x2="113" y1="19" y2="29" style="stroke: gray; stroke-width: 1;"></line>
+    <line class="y-handle-two" display="none" x1="115" x2="115" y1="19" y2="29" style="stroke: gray; stroke-width: 1;"></line>
   </g>
   <g class="y-annotation" transform="translate(0,0)">
     <line class="y-line" x1="0" x2="100" y1="0" y2="0" style="stroke: red; stroke-width: 1.5;"></line>
@@ -220,9 +247,9 @@ exports[`y annotation updates threshold handle visibility depending on isEditabl
     <line class="y-line" x1="0" x2="100" y1="33.33333333333333" y2="33.33333333333333" style="stroke: red; stroke-width: 1.5;"></line>
     <text class="y-value-text" display="none" font-size="10" text-anchor="start" x="108" y="36.33333333333333" style="user-select: none; pointer-events: none; fill: red;"></text>
     <text class="y-text" display="none" font-size="10" text-anchor="end" x="95" y="28.33333333333333" style="user-select: none; pointer-events: none; fill: red;"></text>
-    <rect class="y-annotation" display="inline" height="20" width="45" x="101" y="22.33333333333333" style="stroke: red; stroke-width: 1.5; fill-opacity: 0; pointer-events: auto;"></rect>
-    <line class="y-handle-one" display="inline" x1="140" x2="140" y1="27.33333333333333" y2="37.33333333333333" style="stroke: gray; stroke-width: 1;"></line>
-    <line class="y-handle-two" display="inline" x1="142" x2="142" y1="27.33333333333333" y2="37.33333333333333" style="stroke: gray; stroke-width: 1;"></line>
+    <rect class="y-annotation" display="inline" height="20" width="18" x="101" y="22.33333333333333" style="stroke: red; stroke-width: 1.5; fill-opacity: 0; pointer-events: auto;"></rect>
+    <line class="y-handle-one" display="inline" x1="113" x2="113" y1="27.33333333333333" y2="37.33333333333333" style="stroke: gray; stroke-width: 1;"></line>
+    <line class="y-handle-two" display="inline" x1="115" x2="115" y1="27.33333333333333" y2="37.33333333333333" style="stroke: gray; stroke-width: 1;"></line>
   </g>
   <g class="y-annotation" transform="translate(0,0)">
     <line class="y-line" x1="0" x2="100" y1="25" y2="25" style="stroke: red; stroke-width: 1.5;"></line>
@@ -230,9 +257,9 @@ exports[`y annotation updates threshold handle visibility depending on isEditabl
     <text class="y-text" display="inline" font-size="10" text-anchor="end" x="95" y="20" style="user-select: none; pointer-events: none; fill: red;">
       some text
     </text>
-    <rect class="y-annotation" display="none" height="20" width="45" x="101" y="14" style="stroke: red; stroke-width: 1.5; fill-opacity: 0; pointer-events: none;"></rect>
-    <line class="y-handle-one" display="none" x1="140" x2="140" y1="19" y2="29" style="stroke: gray; stroke-width: 1;"></line>
-    <line class="y-handle-two" display="none" x1="142" x2="142" y1="19" y2="29" style="stroke: gray; stroke-width: 1;"></line>
+    <rect class="y-annotation" display="none" height="20" width="18" x="101" y="14" style="stroke: red; stroke-width: 1.5; fill-opacity: 0; pointer-events: none;"></rect>
+    <line class="y-handle-one" display="none" x1="113" x2="113" y1="19" y2="29" style="stroke: gray; stroke-width: 1;"></line>
+    <line class="y-handle-two" display="none" x1="115" x2="115" y1="19" y2="29" style="stroke: gray; stroke-width: 1;"></line>
   </g>
 </svg>
 `;

@@ -56,7 +56,7 @@ describe('getValueAndText and getValueAndTextVisibility', () => {
     const valueText = getValueText({
       annotation: yAnnotations[0],
       resolution: 1000,
-      viewPort: VIEWPORT,
+      viewport: VIEWPORT,
       niceDisplayValueText: false,
     });
     expect(valueText).toBe(value.toString());
@@ -198,7 +198,7 @@ describe('getValueAndText niceDisplayValueText', () => {
     const valueText = getValueText({
       annotation: yAnnotations[0],
       resolution: 1000,
-      viewPort: VIEWPORT,
+      viewport: VIEWPORT,
       niceDisplayValueText: true,
     });
 
@@ -223,7 +223,7 @@ describe('getValueAndText niceDisplayValueText', () => {
     const valueText = getValueText({
       annotation: yAnnotations[0],
       resolution: 1000,
-      viewPort: VIEWPORT,
+      viewport: VIEWPORT,
       niceDisplayValueText: true,
     });
 
@@ -248,7 +248,7 @@ describe('getValueAndText niceDisplayValueText', () => {
     const valueText = getValueText({
       annotation: yAnnotations[0],
       resolution: 1000,
-      viewPort: VIEWPORT,
+      viewport: VIEWPORT,
       niceDisplayValueText: true,
     });
 
@@ -273,7 +273,7 @@ describe('getValueAndText niceDisplayValueText', () => {
     const valueText = getValueText({
       annotation: yAnnotations[0],
       resolution: 1000,
-      viewPort: VIEWPORT,
+      viewport: VIEWPORT,
       niceDisplayValueText: true,
     });
 
@@ -298,7 +298,7 @@ describe('getValueAndText niceDisplayValueText', () => {
     const valueText = getValueText({
       annotation: yAnnotations[0],
       resolution: 1000,
-      viewPort: VIEWPORT,
+      viewport: VIEWPORT,
       niceDisplayValueText: true,
     });
     expect(valueText).toBe(expectedDisplayValue);
@@ -322,7 +322,7 @@ describe('getValueAndText niceDisplayValueText', () => {
     const valueText = getValueText({
       annotation: yAnnotations[0],
       resolution: 1000,
-      viewPort: VIEWPORT,
+      viewport: VIEWPORT,
       niceDisplayValueText: true,
     });
 
@@ -347,7 +347,7 @@ describe('getValueAndText niceDisplayValueText', () => {
     const valueText = getValueText({
       annotation: yAnnotations[0],
       resolution: 1000,
-      viewPort: VIEWPORT,
+      viewport: VIEWPORT,
       niceDisplayValueText: true,
     });
 
@@ -372,7 +372,7 @@ describe('getValueAndText niceDisplayValueText', () => {
     const valueText = getValueText({
       annotation: yAnnotations[0],
       resolution: 1000,
-      viewPort: VIEWPORT,
+      viewport: VIEWPORT,
       niceDisplayValueText: true,
     });
 

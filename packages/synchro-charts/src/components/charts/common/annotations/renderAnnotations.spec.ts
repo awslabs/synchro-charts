@@ -41,6 +41,7 @@ const render = (props: Partial<RenderAnnotationsOptions>, page: SpecPage) => {
     size: SIZE,
     onUpdate: () => {},
     activeViewPort: () => {},
+    emitUpdatedWidgetConfiguration: () => {},
   };
 
   renderAnnotations({
