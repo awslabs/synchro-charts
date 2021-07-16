@@ -6,7 +6,7 @@ import { DRAGGABLE_HANDLE_SELECTOR } from './YAnnotations/YAnnotations';
 
 export type DraggableAnnotationsOptions = {
   container: SVGElement;
-  viewPort: ViewPort;
+  viewport: ViewPort;
   size: { height: number };
   onUpdate: Function;
   activeViewPort: Function;
@@ -20,15 +20,15 @@ export type DraggableAnnotationsOptions = {
  */
 const calculateNewThreshold = ({
   yPos,
-  viewPort,
+  viewport,
   size,
 }: {
   yPos: number;
-  viewPort: ViewPort;
+  viewport: ViewPort;
   size: { height: number };
 }): number => {
   const { height } = size;
-  const { yMax, yMin } = viewPort;
+  const { yMax, yMin } = viewport;
   const newVal = (height * yMax - yMax * yPos + yMin * yPos) / height;
 
   /** We truncate the newVal to 1/2000 of the axis scale */
@@ -49,7 +49,7 @@ const calculateNewThreshold = ({
  */
 export const draggable = ({
   container,
-  viewPort,
+  viewport,
   size,
   onUpdate,
   activeViewPort,
@@ -70,7 +70,7 @@ export const draggable = ({
         const annotationDragged = d as YAnnotation;
         if (annotationDragged.isEditable) {
           const { y: yPos } = event as { y: number };
-          annotationDragged.value = calculateNewThreshold({ yPos, viewPort, size });
+          annotationDragged.value = calculateNewThreshold({ yPos, viewport, size });
           onUpdate(activeViewPort(), false, false, true);
         }
       })
@@ -78,7 +78,7 @@ export const draggable = ({
         const annotationDragged = d as YAnnotation;
         if (annotationDragged.isEditable) {
           const { y: yPos } = event as { y: number };
-          annotationDragged.value = calculateNewThreshold({ yPos, viewPort, size });
+          annotationDragged.value = calculateNewThreshold({ yPos, viewport, size });
           onUpdate(activeViewPort(), false, false, true);
           select(this).classed('active', false);
         }

@@ -6,8 +6,8 @@ import { COMPARISON_OPERATOR, DataType } from '../../../../src/constants';
 import { MINUTE_IN_MS } from '../../../../src/utils/time';
 import { DRAGGABLE_HANDLE_SELECTOR } from '../../../../src/components/charts/common/annotations/YAnnotations/YAnnotations';
 
-const viewPortStart = X_MIN;
-const viewPortEnd = X_MAX;
+const viewportStart = X_MIN;
+const viewportEnd = X_MAX;
 
 const yThreshold: Threshold<number> = {
   isEditable: true,
@@ -44,8 +44,8 @@ const xAnnotation: XAnnotation = {
 
 const timelineParams: Partial<SearchQueryParams> = {
   componentTag: 'sc-bar-chart',
-  viewPortStart,
-  viewPortEnd,
+  viewportStart,
+  viewportEnd,
   dataStreams: [
     {
       id: 'test',

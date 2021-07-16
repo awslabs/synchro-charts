@@ -1,8 +1,8 @@
-import {visitDynamicWidget} from '../../../src/testing/selectors';
-import {SearchQueryParams} from '../../../src/testing/dynamicWidgetUtils/testCaseParameters';
+import { visitDynamicWidget } from '../../../src/testing/selectors';
+import { SearchQueryParams } from '../../../src/testing/dynamicWidgetUtils/testCaseParameters';
 import { COMPARISON_OPERATOR, DataType } from '../../../src/constants';
-import {DataPoint} from "../../../src/utils/dataTypes";
-import {Threshold, YAnnotation} from "../../../src/components/charts/common/types";
+import { DataPoint } from '../../../src/utils/dataTypes';
+import { Threshold, YAnnotation } from '../../../src/components/charts/common/types';
 
 const baseChartHeight = 500;
 const baseChartWidth = 700;
@@ -92,13 +92,16 @@ const timelineParams: Partial<SearchQueryParams> = {
         color: 'purple',
       },
     ],
-    y: [yAnnotation, yThreshold,
-      {...yThreshold,
-      isEditable:false,
-      value: 2300,
-      comparisonOperator: COMPARISON_OPERATOR.LESS_THAN,
+    y: [
+      yAnnotation,
+      yThreshold,
+      {
+        ...yThreshold,
+        isEditable: false,
+        value: 2300,
+        comparisonOperator: COMPARISON_OPERATOR.LESS_THAN,
         color: 'red',
-      }
+      },
     ],
   },
 };
