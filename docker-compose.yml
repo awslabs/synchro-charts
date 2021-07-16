@@ -1,0 +1,24 @@
+version: '3.6'
+
+services:
+  root:
+    image: node:14
+    command: sh -c "yarn start"
+    working_dir: /app/packages/synchro-charts
+    environment:
+      - PORT=3333
+    volumes:
+      - .:/app
+    ports:
+      - '3333'
+
+  core:
+    image: 'cypress/included:6.8.0'
+    depends_on:
+      - root
+    environment:
+      - CYPRESS_BASE_URL=http://root:3333
+    working_dir: /app/packages/synchro-charts
+    entrypoint: ['/bin/sh', '-c', 'sleep 60 && cypress run --headless --browser chrome']
+    volumes:
+      - .:/app
