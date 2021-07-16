@@ -1,8 +1,6 @@
 import { Annotation, Annotations, AnnotationValue, XAnnotation, YAnnotation } from '../types';
-import { renderXAnnotationTexts, removeXAnnotationTexts } from './XAnnotations/XAnnotationTexts';
-import { renderYAnnotationTexts, removeYAnnotationTexts } from './YAnnotations/YAnnotationTexts';
-import { renderXAnnotationLines, removeXAnnotationLines } from './XAnnotations/XAnnotationLines';
-import { renderYAnnotationLines, removeYAnnotationLines } from './YAnnotations/YAnnotationLines';
+import { renderXAnnotations, removeXAnnotations } from './XAnnotations/XAnnotations';
+import { renderYAnnotations, removeYAnnotations } from './YAnnotations/YAnnotations';
 import { ViewPort } from '../../../../utils/dataTypes';
 
 export type RenderAnnotationsOptions = {
@@ -26,10 +24,8 @@ const withinViewport = (viewPort: ViewPort): AnnotationPredicate => {
 
 export const renderAnnotations = ({ container, resolution, annotations, viewPort, size }: RenderAnnotationsOptions) => {
   if (typeof annotations === 'object' && typeof annotations.show === 'boolean' && !annotations.show) {
-    removeXAnnotationLines({ container });
-    removeXAnnotationTexts({ container });
-    removeYAnnotationLines({ container });
-    removeYAnnotationTexts({ container });
+    removeXAnnotations({ container });
+    removeYAnnotations({ container });
     return;
   }
 
@@ -38,44 +34,24 @@ export const renderAnnotations = ({ container, resolution, annotations, viewPort
   const yAnnotations: YAnnotation[] = annotations.y == null ? [] : annotations.y.filter(withinViewport(viewPort));
 
   /**
-   * X Annotations Text
+   * X Annotations
    */
-  renderXAnnotationTexts({
+  renderXAnnotations({
     container,
     xAnnotations,
-    viewPort,
-    resolution,
-    width: size.width,
-  });
-
-  /**
-   * Y Annotations Text
-   */
-  renderYAnnotationTexts({
-    container,
-    yAnnotations,
     viewPort,
     resolution,
     size,
   });
 
   /**
-   * X Annotations Lines
+   * Y Annotations
    */
-  renderXAnnotationLines({
-    container,
-    xAnnotations,
-    viewPort,
-    size,
-  });
-
-  /**
-   * Y Annotations Lines
-   */
-  renderYAnnotationLines({
+  renderYAnnotations({
     container,
     yAnnotations,
     viewPort,
+    resolution,
     size,
   });
 };

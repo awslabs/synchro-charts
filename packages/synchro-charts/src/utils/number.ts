@@ -20,7 +20,7 @@ export const round = (num: number): number => {
 
   const integer = Math.trunc(num);
   const decimal = num - integer;
-  return integer + Number(decimal.toFixed(MAX_PRECISION));
+  return Number((integer + Number(decimal.toFixed(MAX_PRECISION))).toFixed(MAX_PRECISION));
 };
 
 /**

@@ -1,14 +1,14 @@
 import * as queryString from 'query-string';
 import { LEGEND } from './constants';
 import { AlarmsConfig, DataStream, DataStreamInfo, MessageOverrides, TableColumn } from '../../utils/dataTypes';
-import { Annotations, Axis, LegendConfig } from '../../components/charts/common/types';
+import { Annotations, Axis, LegendConfig, XAnnotation } from '../../components/charts/common/types';
 
 export type SearchQueryParams = {
   alarms?: AlarmsConfig;
   messageOverrides?: MessageOverrides;
-  width?: number;
+  width?: number | string;
   axis?: Axis.Options;
-  height?: number;
+  height?: number | string;
   duration?: number;
   errMsg: string;
   viewPortStart: Date;
@@ -39,12 +39,18 @@ export type SearchQueryParams = {
 const parseBool = (str: string): boolean => str === 'true';
 
 const deserializeAnnotations = (str: string): Annotations => {
-  const a = JSON.parse(str) as Annotations;
-  if (a.x) {
-    throw new Error('need to implement this.');
-  }
+  const annotations = JSON.parse(str) as Annotations;
+  const { x } = annotations;
 
-  return a;
+  const deserializeXAnnotation = (xAnnotation: XAnnotation): XAnnotation => ({
+    ...xAnnotation,
+    value: new Date(xAnnotation.value),
+  });
+
+  return {
+    ...annotations,
+    x: x != null ? x.map(deserializeXAnnotation) : undefined,
+  };
 };
 
 export const SCREEN_SIZE = {
@@ -64,6 +70,8 @@ export const constructSearchQuery = ({
   annotations,
   messageOverrides,
   axis,
+  width,
+  height,
   // Props that can be directly serialized, i.e. numbers, booleans, and strings
   ...serializableProps
 }: Partial<SearchQueryParams>): string =>
@@ -80,6 +88,8 @@ export const constructSearchQuery = ({
     tableColumns: tableColumns && JSON.stringify(tableColumns),
     messageOverrides: messageOverrides && JSON.stringify(messageOverrides),
     axis: axis && JSON.stringify(axis),
+    width: width && JSON.stringify(width),
+    height: height && JSON.stringify(height),
     // For the rest, we don't have to do any work! and doing less is better
     ...serializableProps,
   });

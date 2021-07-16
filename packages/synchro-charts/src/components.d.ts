@@ -93,10 +93,10 @@ export namespace Components {
     interface ScGrid {
     }
     interface ScGridTooltip {
-        "alarmPoint"?: DataPoint<Primitive>;
+        "alarmPoint"?: DataPoint;
         "breachedThreshold"?: Threshold;
         "isEnabled": boolean;
-        "propertyPoint"?: DataPoint<Primitive>;
+        "propertyPoint"?: DataPoint;
         "title": string;
     }
     interface ScHelpTooltip {
@@ -1472,10 +1472,10 @@ declare namespace LocalJSX {
     interface ScGrid {
     }
     interface ScGridTooltip {
-        "alarmPoint"?: DataPoint<Primitive>;
+        "alarmPoint"?: DataPoint;
         "breachedThreshold"?: Threshold;
         "isEnabled"?: boolean;
-        "propertyPoint"?: DataPoint<Primitive>;
+        "propertyPoint"?: DataPoint;
         "title"?: string;
     }
     interface ScHelpTooltip {

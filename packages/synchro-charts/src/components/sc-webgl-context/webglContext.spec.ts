@@ -17,14 +17,17 @@ const testDomRect: DOMRect = {
   toJSON: () => '{}',
 };
 
-export const createTestWebglRenderer = (domRect: DOMRect) => {
+export const createTestWebglRenderer = (domRect: DOMRect, skipInit = false) => {
   const webGLRenderer = createWebGLRenderer();
   // @ts-ignore
   const canvas = new HTMLCanvasElement(domRect.width, domRect.height);
   // @ts-ignore
   canvas.style = {};
   canvas.getBoundingClientRect = () => domRect;
-  webGLRenderer.initRendering(canvas);
+
+  if (!skipInit) {
+    webGLRenderer.initRendering(canvas);
+  }
 
   return webGLRenderer;
 };
@@ -131,5 +134,45 @@ describe('disposal of removed chart scene', () => {
 
     expect(chartScene1.dispose).toBeCalled();
     expect(chartScene2.dispose).not.toBeCalled();
+  });
+});
+
+describe('when not initialized', () => {
+  it('throws error when setChartRect is called', () => {
+    const chartScene = createTestChartScene();
+    const webGLRenderer = createTestWebglRenderer(testDomRect, true);
+    expect(() => {
+      webGLRenderer.setChartRect('some-id', rectScrollFixed(chartScene.container));
+    }).toThrowError(/webgl context must be initialized before it can be utilized./);
+  });
+
+  it('throws error when onResolution is called', () => {
+    const webGLRenderer = createTestWebglRenderer(testDomRect, true);
+    expect(() => {
+      webGLRenderer.onResolutionChange();
+    }).toThrowError(/webgl context must be initialized before it can be utilized./);
+  });
+
+  it('throws error when render is called', () => {
+    const chartScene = createTestChartScene();
+    const webGLRenderer = createTestWebglRenderer(testDomRect, true);
+    expect(() => {
+      webGLRenderer.render(chartScene);
+    }).toThrowError(/webgl context must be initialized before it can be utilized./);
+  });
+
+  it('throws error when removeChartScene is called', () => {
+    const webGLRenderer = createTestWebglRenderer(testDomRect, true);
+    expect(() => {
+      webGLRenderer.removeChartScene('some-id');
+    }).toThrowError(/webgl context must be initialized before it can be utilized./);
+  });
+
+  it('does not throw error when addChartScene is called', () => {
+    const chartScene1 = createTestChartScene();
+    const webGLRenderer = createTestWebglRenderer(testDomRect, true);
+    expect(() => {
+      webGLRenderer.addChartScene(chartScene1);
+    }).not.toThrowError();
   });
 });

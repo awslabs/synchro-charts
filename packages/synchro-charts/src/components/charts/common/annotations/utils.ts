@@ -1,6 +1,6 @@
 import { bisector } from 'd3-array';
 
-import { Annotation, Annotations, AnnotationValue, Threshold } from '../types';
+import { Annotation, Annotations, AnnotationValue, Threshold, YAnnotation } from '../types';
 import { displayDate } from '../../../../utils/time';
 import { Primitive, ViewPort } from '../../../../utils/dataTypes';
 import { isValid } from '../../../../utils/predicates';
@@ -95,6 +95,29 @@ export const getText = (annotation: Annotation<AnnotationValue>): string => {
   }
 
   return '';
+};
+
+export const getLabelTextVisibility = (annotation: Annotation<AnnotationValue>): string => {
+  if (annotation.label && annotation.label.show) {
+    return 'inline';
+  }
+  return 'none';
+};
+
+export const getValueTextVisibility = (annotation: YAnnotation): string => {
+  if (annotation.showValue) {
+    return 'inline';
+  }
+  return 'none';
+};
+
+export const getValueAndTextVisibility = (annotation: Annotation<AnnotationValue>): string => {
+  const showValueText = annotation.showValue;
+  const showLabelText = annotation.label && annotation.label.show;
+  if (showValueText || showLabelText) {
+    return 'inline';
+  }
+  return 'none';
 };
 
 export const getValueText = ({

@@ -2,7 +2,7 @@ import { Component, Element, h, Prop } from '@stencil/core';
 
 import tippy, { Instance } from 'tippy.js';
 import { TIPPY_SETTINGS } from '../common/toolTipSettings';
-import { DataPoint, Primitive } from '../../utils/dataTypes';
+import { DataPoint } from '../../utils/dataTypes';
 import { Value } from '../value/Value';
 import { Threshold } from '../charts/common/types';
 
@@ -15,8 +15,8 @@ export class ScGridTooltip {
 
   @Prop() isEnabled: boolean;
   @Prop() title: string;
-  @Prop() propertyPoint?: DataPoint<Primitive>;
-  @Prop() alarmPoint?: DataPoint<Primitive>;
+  @Prop() propertyPoint?: DataPoint;
+  @Prop() alarmPoint?: DataPoint;
   @Prop() breachedThreshold?: Threshold;
 
   private tooltip: Instance | undefined;
@@ -51,8 +51,8 @@ export class ScGridTooltip {
     const displaysMoreThanTitle = thereIsSomeData && this.isEnabled;
 
     return (
-      <div onMouseOver={this.displayToolTip} onFocus={this.displayToolTip} class="tooltip-container">
-        <div class="cell-tooltip awsui-util-container awsui" style={{ display: 'none' }}>
+      <div class="tooltip-container">
+        <div class="cell-tooltip awsui-util-container awsui">
           <div class={{ 'awsui-util-container-header': true, 'awsui-util-mb-m': displaysMoreThanTitle }}>
             <h3>{this.title}</h3>
           </div>

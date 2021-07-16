@@ -32,10 +32,23 @@ const viewPort = {
   duration,
   group: 'some-viewport-group',
 };
-const size = {
-  ...SIZE,
-  width,
-  height,
+
+const getSize = (value: number | string): { height: number | string; width: number | string } | undefined => {
+  if (typeof value === 'string') {
+    return undefined;
+  }
+  return {
+    ...SIZE,
+    width,
+    height,
+  };
+};
+
+const styleSize = (value: number | string): string => {
+  if (typeof value === 'string') {
+    return value;
+  }
+  return `${value}px`;
 };
 
 @Component({
@@ -54,27 +67,25 @@ export class WidgetTestRoute {
 
   render() {
     return (
-      <div>
-        <div style={{ width: `${width}px`, height: `${height}px` }}>
-          <this.component
-            widgetId="some-widget-id"
-            dataStreams={dataStreams}
-            isEditing={isEditing}
-            alarms={alarms}
-            viewPort={viewPort}
-            legend={legend}
-            size={size}
-            axis={axis}
-            tableColumns={tableColumns}
-            annotations={annotations}
-            gestures={gestures}
-            messageOverrides={messageOverrides}
-            /** TODO: Port these over to the message overrides */
-            invalidTagErrorHeader="invalidComponentTag.header"
-            invalidTagErrorSubheader="invalidComponentTag.subheader"
-            liveModeOnlyMessage="invalidWidgetForHistoricalData.content"
-          />
-        </div>
+      <div style={{ width: styleSize(width), height: styleSize(height) }}>
+        <this.component
+          widgetId="some-widget-id"
+          dataStreams={dataStreams}
+          isEditing={isEditing}
+          alarms={alarms}
+          viewPort={viewPort}
+          legend={legend}
+          size={getSize(width)}
+          axis={axis}
+          tableColumns={tableColumns}
+          annotations={annotations}
+          gestures={gestures}
+          messageOverrides={messageOverrides}
+          /** TODO: Port these over to the message overrides */
+          invalidTagErrorHeader="invalidComponentTag.header"
+          invalidTagErrorSubheader="invalidComponentTag.subheader"
+          liveModeOnlyMessage="invalidWidgetForHistoricalData.content"
+        />
         <sc-webgl-context />
       </div>
     );

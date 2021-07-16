@@ -11,6 +11,7 @@
   word-wrap: break-word !important;
   display: flex !important;
   box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.33) !important;
+  box-sizing: border-box;
 }
 
 .tippy-arrow,
