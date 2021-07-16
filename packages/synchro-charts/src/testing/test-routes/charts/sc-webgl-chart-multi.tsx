@@ -2,7 +2,7 @@ import { Component, h } from '@stencil/core';
 import { DataPoint } from '../../../utils/dataTypes';
 import { DataType } from '../../../utils/dataConstants';
 
-const VIEW_PORT_GROUP = 'group';
+const VIEWPORT_GROUP = 'group';
 
 // viewport boundaries
 const Y_MIN = 0;
@@ -41,7 +41,7 @@ export class ScWebglChartMulti {
               dataType: DataType.NUMBER,
             },
           ]}
-          viewPort={{ start: X_MIN, end: X_MAX, yMin: Y_MIN, yMax: Y_MAX, group: VIEW_PORT_GROUP }}
+          viewport={{ start: X_MIN, end: X_MAX, yMin: Y_MIN, yMax: Y_MAX, group: VIEWPORT_GROUP }}
         />
 
         <sc-line-chart
@@ -61,7 +61,7 @@ export class ScWebglChartMulti {
             height: 150,
             width: 500,
           }}
-          viewPort={{ start: X_MIN, end: X_MAX, yMin: Y_MIN, yMax: Y_MAX, group: VIEW_PORT_GROUP }}
+          viewport={{ start: X_MIN, end: X_MAX, yMin: Y_MIN, yMax: Y_MAX, group: VIEWPORT_GROUP }}
         />
         <sc-webgl-context />
       </div>

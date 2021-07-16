@@ -7,7 +7,7 @@ import { DATA_STREAM } from '../../../../src/testing/__mocks__/mockWidgetPropert
 
 it('displays error when there is an error', () => {
   visitDynamicWidget(cy, {
-    componentTag: 'sc-status-chart',
+    componentTag: 'sc-status-timeline',
     dataStreams: [{ ...DATA_STREAM, error: 'beep beep SEV-2' }],
   });
 
@@ -20,7 +20,7 @@ it('displays error when there is an error', () => {
 
 it('truncates long error message', () => {
   visitDynamicWidget(cy, {
-    componentTag: 'sc-status-chart',
+    componentTag: 'sc-status-timeline',
     dataStreams: [
       { ...DATA_STREAM, error: 'a really really really really really long and not very useful error message.' },
     ],

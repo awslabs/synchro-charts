@@ -21,22 +21,22 @@ const createInfos = (num: number): DataStreamInfo[] =>
   }));
 
 describe('status timeline', () => {
-  const root = 'localhost:3333/tests/status-chart';
+  const root = 'localhost:3333/tests/status-timeline';
 
   const VIEWPORT_HEIGHT = 600;
   const VIEWPORT_WIDTH = 500;
 
   describe('alarm configuration', () => {
-    const viewPortStart = new Date(2000, 0, 0);
-    const viewPortEnd = new Date(2000, 0, 1);
+    const viewportStart = new Date(2000, 0, 0);
+    const viewportEnd = new Date(2000, 0, 1);
     const timelineParams: Partial<SearchQueryParams> = {
-      componentTag: 'sc-status-chart',
-      viewPortStart,
-      viewPortEnd,
+      componentTag: 'sc-status-timeline',
+      viewportStart,
+      viewportEnd,
       dataStreams: [
         {
           ...DATA_STREAM,
-          data: [{ x: viewPortStart.getTime(), y: 100 }],
+          data: [{ x: viewportStart.getTime(), y: 100 }],
         },
       ],
     };
@@ -69,7 +69,7 @@ describe('status timeline', () => {
       unit: 'mph',
     };
     visitDynamicWidget(cy, {
-      componentTag: 'sc-status-chart',
+      componentTag: 'sc-status-timeline',
       alarms: { expires: MINUTE_IN_MS },
       dataStreams: [
         {
@@ -88,7 +88,7 @@ describe('status timeline', () => {
   describe('isEditing', () => {
     it('edits a info name while `isEditing` is true', () => {
       visitDynamicWidget(cy, {
-        componentTag: 'sc-status-chart',
+        componentTag: 'sc-status-timeline',
         alarms: { expires: MINUTE_IN_MS },
         isEditing: true,
         dataStreams: [DATA_STREAM],
@@ -123,7 +123,7 @@ describe('status timeline', () => {
     }));
 
     visitDynamicWidget(cy, {
-      componentTag: 'sc-status-chart',
+      componentTag: 'sc-status-timeline',
       alarms: { expires: MINUTE_IN_MS },
       dataStreams,
     });
@@ -150,7 +150,7 @@ describe('status timeline', () => {
     const dataStreamInfos = createInfos(3); // Maximum that can fit within a chart the given size
 
     visitDynamicWidget(cy, {
-      componentTag: 'sc-status-chart',
+      componentTag: 'sc-status-timeline',
       alarms: { expires: MINUTE_IN_MS },
       dataStreams: dataStreamInfos.map(info => ({ ...info, data: [] })),
     });
@@ -172,7 +172,7 @@ describe('status timeline', () => {
     })); // Maximum that can fit within a chart the given size
 
     visitDynamicWidget(cy, {
-      componentTag: 'sc-status-chart',
+      componentTag: 'sc-status-timeline',
       alarms: { expires: MINUTE_IN_MS },
       dataStreams: dataStreamInfos.map(info => ({ ...info, data: [] })),
     });
@@ -209,7 +209,7 @@ describe('status timeline', () => {
 
   it('renders multiple statuses from a single data stream with multiple points', () => {
     cy.viewport(VIEWPORT_WIDTH, 700);
-    cy.visit(`${root}/status-chart-dynamic-data-streams`);
+    cy.visit(`${root}/status-timeline-dynamic-data-streams`);
 
     cy.waitForStatusTimeline();
 
@@ -226,7 +226,7 @@ describe('status timeline', () => {
 
   it('renders correctly for multiple data streams', () => {
     cy.viewport(VIEWPORT_WIDTH, 700);
-    cy.visit(`${root}/status-chart-dynamic-data-streams`);
+    cy.visit(`${root}/status-timeline-dynamic-data-streams`);
 
     cy.waitForStatusTimeline();
 
@@ -249,7 +249,7 @@ describe('status timeline', () => {
   });
 
   it('renders two statuses when data is added twice', () => {
-    cy.visit(`${root}/status-chart-dynamic-data`);
+    cy.visit(`${root}/status-timeline-dynamic-data`);
 
     cy.waitForStatusTimeline();
 
@@ -266,7 +266,7 @@ describe('status timeline', () => {
   });
 
   it('renders no points or status when data is added and then removed', () => {
-    cy.visit(`${root}/status-chart-dynamic-data`);
+    cy.visit(`${root}/status-timeline-dynamic-data`);
 
     cy.waitForStatusTimeline();
 
@@ -282,7 +282,7 @@ describe('status timeline', () => {
 });
 
 describe('handles buffer increasing in size after initialization', () => {
-  const root = 'localhost:3333/tests/status-chart';
+  const root = 'localhost:3333/tests/status-timeline';
   const VIEWPORT_HEIGHT = 600;
   const VIEWPORT_WIDTH = 500;
 
@@ -291,7 +291,7 @@ describe('handles buffer increasing in size after initialization', () => {
   });
 
   it('renders status that are added and do not fit beyond the initial buffer size', () => {
-    cy.visit(`${root}/status-chart-dynamic-buffer`);
+    cy.visit(`${root}/status-timeline-dynamic-buffer`);
 
     cy.waitForStatusTimeline();
 
@@ -307,7 +307,7 @@ describe('handles buffer increasing in size after initialization', () => {
   });
 
   it('renders status when switch to a viewport way outside the points and back to the original viewport', () => {
-    cy.visit(`${root}/status-chart-fast-viewport`);
+    cy.visit(`${root}/status-timeline-fast-viewport`);
 
     cy.waitForStatusTimeline();
 

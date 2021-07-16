@@ -11,7 +11,7 @@ const Y_MAX = 300;
 
 it('updates camera position for associated scene info', () => {
   const scene = chartScene({
-    viewPort: {
+    viewport: {
       start: X_MIN,
       end: X_MAX,
       yMin: Y_MIN,
@@ -43,7 +43,7 @@ it('updates camera position for associated scene info', () => {
 it('updates all cameras x positions', () => {
   const chartScenes: ChartScene[] = [
     chartScene({
-      viewPort: {
+      viewport: {
         start: X_MIN,
         end: X_MAX,
         yMin: Y_MIN,
@@ -60,7 +60,7 @@ it('updates all cameras x positions', () => {
       thresholds: [],
     }),
     chartScene({
-      viewPort: {
+      viewport: {
         start: X_MIN,
         end: X_MAX,
         yMin: Y_MIN,
@@ -98,7 +98,7 @@ it('updates all cameras x positions', () => {
 it('does not update camera position when there is no associated scene info', () => {
   const scenes: ChartScene[] = [
     chartScene({
-      viewPort: {
+      viewport: {
         start: X_MIN,
         end: X_MAX,
         yMin: Y_MIN,

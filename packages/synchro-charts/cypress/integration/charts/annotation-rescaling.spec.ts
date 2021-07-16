@@ -30,8 +30,8 @@ const TEST_2_DATA_POINT_2: DataPoint<number> = {
   y: 2000,
 };
 
-const viewPortStart = X_MIN;
-const viewPortEnd = X_MAX;
+const viewportStart = X_MIN;
+const viewportEnd = X_MAX;
 
 const yThreshold: Threshold<number> = {
   isEditable: true,
@@ -58,8 +58,8 @@ const yAnnotation: YAnnotation = {
 
 const timelineParams: Partial<SearchQueryParams> = {
   componentTag: 'sc-line-chart',
-  viewPortStart,
-  viewPortEnd,
+  viewportStart,
+  viewportEnd,
   dataStreams: [
     {
       id: 'test',

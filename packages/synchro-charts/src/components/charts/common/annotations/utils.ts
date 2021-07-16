@@ -63,12 +63,12 @@ const makeNiceValueString = (thresholdValue: number): string => {
 const valueDisplayText = ({
   value,
   resolution,
-  viewPort,
+  viewport,
   niceDisplayText,
 }: {
   value: AnnotationValue;
   resolution: number;
-  viewPort: ViewPort;
+  viewport: ViewPort;
   niceDisplayText: boolean;
 }): string => {
   if (typeof value === 'number') {
@@ -80,7 +80,7 @@ const valueDisplayText = ({
   if (typeof value === 'string') {
     return value;
   }
-  return displayDate(value, resolution, viewPort);
+  return displayDate(value, resolution, viewport);
 };
 
 /**
@@ -92,14 +92,14 @@ export const getColor = (annotation: Annotation<AnnotationValue>) => annotation.
 export const getValueAndText = ({
   annotation,
   resolution,
-  viewPort,
+  viewport,
 }: {
   annotation: Annotation<AnnotationValue>;
   resolution: number;
-  viewPort: ViewPort;
+  viewport: ViewPort;
 }): string => {
   const valueText = annotation.showValue
-    ? valueDisplayText({ value: annotation.value, resolution, viewPort, niceDisplayText: false })
+    ? valueDisplayText({ value: annotation.value, resolution, viewport, niceDisplayText: false })
     : null;
   const labelText = annotation.label && annotation.label.show ? annotation.label.text : null;
 
@@ -152,16 +152,16 @@ export const getValueAndTextVisibility = (annotation: Annotation<AnnotationValue
 export const getValueText = ({
   annotation,
   resolution,
-  viewPort,
+  viewport,
   niceDisplayValueText,
 }: {
   annotation: Annotation<AnnotationValue>;
   resolution: number;
-  viewPort: ViewPort;
+  viewport: ViewPort;
   niceDisplayValueText: boolean;
 }): string => {
   const valueText = annotation.showValue
-    ? valueDisplayText({ value: annotation.value, resolution, viewPort, niceDisplayText: niceDisplayValueText })
+    ? valueDisplayText({ value: annotation.value, resolution, viewport, niceDisplayText: niceDisplayValueText })
     : null;
 
   if (valueText) {

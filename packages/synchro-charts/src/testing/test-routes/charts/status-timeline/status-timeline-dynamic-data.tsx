@@ -7,29 +7,30 @@ import { DataType } from '../../../../utils/dataConstants';
 // viewport boundaries
 const Y_MIN = 0;
 const Y_MAX = 5000;
-const X_MIN = new Date(1998, 0, 0);
-const X_MAX = new Date(2000, 0, 1);
 
-/**
- * Testing route for the webGL rendering without being fully coupled to the chart.
- *
- * Used to test the behavior of a status chart when adding/removing data points
- */
-const WIDTH = X_MAX.getTime() - X_MIN.getTime();
+const X_MIN = new Date(2000, 0);
+const X_MAX = new Date(2001, 12);
 
 @Component({
-  tag: 'status-chart-dynamic-buffer',
+  tag: 'status-timeline-dynamic-data',
 })
-export class StatusChartDynamicBuffer {
+export class StatusTimelineDynamicData {
   @State() data: DataPoint<number>[] = [];
+  @State() monthIndex: number = 1;
 
   addDataPoint = () => {
     const dataPoint = {
-      // To generate new status with half of the distance.
-      x: X_MIN.getTime() + WIDTH / (2 + this.data.length),
-      y: 2.5,
+      x: new Date(2000, this.monthIndex).getTime(),
+      y: 3000,
     };
     this.data = [dataPoint, ...this.data];
+    this.monthIndex += 2;
+  };
+
+  removeDataPoint = () => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [_firstPoint, ...rest] = this.data;
+    this.data = rest;
   };
 
   render() {
@@ -38,29 +39,36 @@ export class StatusChartDynamicBuffer {
         <button id="add-data-point" onClick={this.addDataPoint}>
           Add Data Point
         </button>
-        <div id="chart-container" style={{ height: '500px', width: '500px', marginTop: '20px' }}>
-          <sc-status-chart
-            widgetId="widget-id"
+        <button id="remove-data-point" onClick={this.removeDataPoint}>
+          Remove Data Point
+        </button>
+        <br />
+        <br />
+        <div id="chart-container" style={{ height: '500px', width: '500px' }}>
+          <sc-status-timeline
             alarms={{ expires: MONTH_IN_MS }}
             dataStreams={[
               {
                 id: 'test',
-                color: 'red',
                 name: 'test stream',
+                color: 'red',
                 aggregates: { [MONTH_IN_MS]: this.data },
                 data: [],
                 resolution: MONTH_IN_MS,
                 dataType: DataType.NUMBER,
               },
             ]}
-            viewPort={{
+            size={{
+              width: 500,
+              height: 500,
+            }}
+            widgetId="widget-id"
+            viewport={{
               yMin: Y_MIN,
               yMax: Y_MAX,
               start: X_MIN,
               end: X_MAX,
             }}
-            bufferFactor={1}
-            minBufferSize={1}
           />
           <sc-webgl-context />
         </div>

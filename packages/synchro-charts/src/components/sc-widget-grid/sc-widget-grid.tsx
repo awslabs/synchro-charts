@@ -8,7 +8,7 @@ import { webGLRenderer } from '../sc-webgl-context/webglContext';
 import { breachedThreshold } from '../charts/common/annotations/breachedThreshold';
 import { streamPairs } from '../../utils/streamPairs';
 import { RenderCell } from './types';
-import { viewPortEndDate, viewPortStartDate } from '../../utils/viewPort';
+import { viewportEndDate, viewportStartDate } from '../../utils/viewPort';
 import { Annotations, ChartConfig, Threshold, WidgetConfigurationUpdate } from '../charts/common/types';
 import { LabelsConfig } from '../common/types';
 import { DATA_ALIGNMENT } from '../charts/common/constants';
@@ -43,7 +43,7 @@ export class ScWidgetGrid implements ChartConfig {
 
   /** Chart API */
   @Prop() labelsConfig?: LabelsConfig;
-  @Prop() viewPort: MinimalViewPortConfig;
+  @Prop() viewport: MinimalViewPortConfig;
   @Prop() widgetId!: string;
   @Prop() dataStreams!: DataStream[];
   @Prop() annotations: Annotations;
@@ -56,9 +56,9 @@ export class ScWidgetGrid implements ChartConfig {
   @State() names: NameValue[] = [];
 
   /** Active Viewport */
-  @State() start: Date = viewPortStartDate(this.viewPort);
-  @State() end: Date = viewPortEndDate(this.viewPort);
-  @State() duration?: number = this.viewPort.duration;
+  @State() start: Date = viewportStartDate(this.viewport);
+  @State() end: Date = viewportEndDate(this.viewport);
+  @State() duration?: number = this.viewport.duration;
 
   @Event()
   widgetUpdated: EventEmitter<WidgetConfigurationUpdate>;
@@ -66,18 +66,18 @@ export class ScWidgetGrid implements ChartConfig {
   componentDidLoad() {
     webGLRenderer.addChartScene({
       id: this.widgetId,
-      viewPortGroup: this.viewPort.group,
+      viewportGroup: this.viewport.group,
       dispose: () => {},
       updateViewPort: this.onUpdate,
     });
   }
 
-  @Watch('viewPort')
+  @Watch('viewport')
   onViewPortChange(newViewPort: MinimalViewPortConfig) {
     this.onUpdate({
       ...newViewPort,
-      start: viewPortStartDate(this.viewPort),
-      end: viewPortEndDate(this.viewPort),
+      start: viewportStartDate(this.viewport),
+      end: viewportEndDate(this.viewport),
     });
   }
 
@@ -123,7 +123,7 @@ export class ScWidgetGrid implements ChartConfig {
 
   getPoints = (): ActivePoint<Primitive>[] =>
     activePoints({
-      viewPort: {
+      viewport: {
         start: this.start,
         end: this.end,
       },
@@ -136,7 +136,7 @@ export class ScWidgetGrid implements ChartConfig {
   getBreachedThreshold = (point: DataPoint | undefined, dataStream: DataStream): Threshold | undefined =>
     breachedThreshold({
       value: point && point.y,
-      date: this.viewPort.end || new Date(),
+      date: this.viewport.end || new Date(),
       dataStreams: this.dataStreams,
       dataStream,
       thresholds: getThresholds(this.annotations),
@@ -199,7 +199,7 @@ export class ScWidgetGrid implements ChartConfig {
                   alarmPoint,
                   breachedThreshold: threshold,
                   isEditing: this.isEditing,
-                  viewPort: { start: this.start, end: this.end },
+                  viewport: { start: this.start, end: this.end },
                   miniVersion: isMiniVersion,
                   onChangeLabel: this.onChangeLabel,
                   messageOverrides: this.messageOverrides,

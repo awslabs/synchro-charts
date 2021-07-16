@@ -33,12 +33,6 @@ const STREAM_2_POINT_2: DataPoint<number> = {
   y: 25,
 };
 
-/**
- * Testing route for the webGL rendering without being fully coupled to the chart.
- *
- * Tests that a single point renders as a circle correctly
- */
-
 @Component({
   tag: 'sc-multiple-lines',
 })
@@ -48,7 +42,7 @@ export class ScMultipleLines {
   componentDidLoad() {
     const container = this.el.querySelector('#test-container') as HTMLDivElement;
     const scene = chartScene({
-      viewPort: {
+      viewport: {
         start: X_MIN,
         end: X_MAX,
         yMin: Y_MIN,

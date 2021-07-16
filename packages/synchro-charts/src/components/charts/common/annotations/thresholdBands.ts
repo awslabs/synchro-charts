@@ -1,5 +1,5 @@
 import { Threshold, ThresholdBand } from '../types';
-import { getCSSColorByString } from '../../sc-webgl-base-chart/utils';
+import { getCSSColorByString } from '../getCSSColorByString';
 import { getBreachedThreshold, sortThreshold, getNumberThresholds } from './utils';
 import { COMPARISON_OPERATOR } from '../constants';
 

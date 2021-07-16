@@ -20,9 +20,9 @@ import { ANNOTATIONS } from '../../../../src/testing/dynamicWidgetUtils/constant
 it('renders with tooltip for multiple data streams with order in which they were added', () => {
   // tooltip position is based on info order, *not* data order.
   visitDynamicWidget(cy, {
-    componentTag: 'sc-status-chart',
-    viewPortStart: new Date(2000, 0, 0),
-    viewPortEnd: new Date(2000, 0, 0, 0, 5),
+    componentTag: 'sc-status-timeline',
+    viewportStart: new Date(2000, 0, 0),
+    viewportEnd: new Date(2000, 0, 0, 0, 5),
     dataStreams: [STRING_STREAM_1, NUMBER_EMPTY_STREAM, STRING_STREAM_2],
     annotations: ANNOTATIONS,
     alarms: { expires: MINUTE_IN_MS },

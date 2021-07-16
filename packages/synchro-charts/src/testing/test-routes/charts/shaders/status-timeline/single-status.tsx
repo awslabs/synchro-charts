@@ -1,9 +1,9 @@
 import { Component, Element, h } from '@stencil/core';
 import { webGLRenderer } from '../../../../../components/sc-webgl-context/webglContext';
-import { chartScene } from '../../../../../components/charts/sc-status-chart/chartScene';
+import { chartScene } from '../../../../../components/charts/sc-status-timeline/chartScene';
 import { CHART_SIZE } from '../chartSize';
 import { DAY_IN_MS } from '../../../../../utils/time';
-import { HEIGHT } from '../../../../../components/charts/sc-status-chart/constants';
+import { HEIGHT } from '../../../../../components/charts/sc-status-timeline/constants';
 import { DataType } from '../../../../../utils/dataConstants';
 import { DataPoint } from '../../../../../utils/dataTypes';
 
@@ -18,12 +18,6 @@ const TEST_DATA_POINT_1: DataPoint<number> = {
   y: 12,
 };
 
-/**
- * Testing route for the webGL rendering without being fully coupled to the chart.
- *
- * Tests that a single point renders as a status correctly.
- */
-
 @Component({
   tag: 'single-status',
 })
@@ -34,7 +28,7 @@ export class ScSingleStatus {
     const container = this.el.querySelector('#test-container') as HTMLDivElement;
     const scene = chartScene({
       alarms: { expires: DAY_IN_MS },
-      viewPort: {
+      viewport: {
         start: X_MIN,
         end: X_MAX,
         yMin: 0,

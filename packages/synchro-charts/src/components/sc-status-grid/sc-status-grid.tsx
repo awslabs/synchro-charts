@@ -25,7 +25,7 @@ const MSG =
 export class ScStatusGrid implements ChartConfig {
   /** Status Grid Specific configuration */
   @Prop() labelsConfig: LabelsConfig;
-  @Prop() viewPort: MinimalViewPortConfig;
+  @Prop() viewport: MinimalViewPortConfig;
   @Prop() widgetId!: string;
   @Prop() dataStreams!: DataStream[];
   @Prop() annotations: Annotations;
@@ -35,7 +35,7 @@ export class ScStatusGrid implements ChartConfig {
 
   render() {
     const {
-      viewPort,
+      viewport,
       widgetId,
       dataStreams,
       annotations,
@@ -47,7 +47,7 @@ export class ScStatusGrid implements ChartConfig {
     return (
       <sc-widget-grid
         labelsConfig={labelsConfig}
-        viewPort={viewPort}
+        viewport={viewport}
         widgetId={widgetId}
         dataStreams={dataStreams}
         annotations={annotations}

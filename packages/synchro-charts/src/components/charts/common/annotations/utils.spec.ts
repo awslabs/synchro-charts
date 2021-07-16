@@ -14,11 +14,9 @@ import {
   isThresholdBreached,
   sortThreshold,
 } from './utils';
-import { VIEW_PORT } from '../testUtil';
+import { VIEWPORT } from '../testUtil';
 import { highestPriorityThreshold, thresholdAppliesToDataStream } from './breachedThreshold';
 import { COMPARISON_OPERATOR } from '../constants';
-
-// TODO ADD UNIT TESTS HERE TO TEST THE NEW FUNCTIONS!
 
 describe('getValueAndText and getValueAndTextVisibility', () => {
   it('returns a text from annotation', () => {
@@ -58,7 +56,7 @@ describe('getValueAndText and getValueAndTextVisibility', () => {
     const valueText = getValueText({
       annotation: yAnnotations[0],
       resolution: 1000,
-      viewPort: VIEW_PORT,
+      viewPort: VIEWPORT,
       niceDisplayValueText: false,
     });
     expect(valueText).toBe(value.toString());
@@ -84,7 +82,7 @@ describe('getValueAndText and getValueAndTextVisibility', () => {
     const valueAndText = getValueAndText({
       annotation: yAnnotations[0],
       resolution: 1000,
-      viewPort: VIEW_PORT,
+      viewport: VIEWPORT,
     });
 
     expect(valueAndText).toBe(`${label} (${value})`);
@@ -110,7 +108,7 @@ describe('getValueAndText and getValueAndTextVisibility', () => {
     const valueAndText = getValueAndText({
       annotation: yAnnotations[0],
       resolution: 1000,
-      viewPort: VIEW_PORT,
+      viewport: VIEWPORT,
     });
 
     expect(valueAndText).toBe(label);
@@ -129,7 +127,7 @@ describe('getValueAndText and getValueAndTextVisibility', () => {
     const valueAndText = getValueAndText({
       annotation: yAnnotations[0],
       resolution: 1000,
-      viewPort: VIEW_PORT,
+      viewport: VIEWPORT,
     });
 
     expect(valueAndText).toBeEmpty();
@@ -150,7 +148,7 @@ describe('getValueAndText and getValueAndTextVisibility', () => {
     const valueText = getValueText({
       annotation: yAnnotations[0],
       resolution: 1000,
-      viewPort: VIEW_PORT,
+      viewport: VIEWPORT,
       niceDisplayValueText: false,
     });
 
@@ -200,7 +198,7 @@ describe('getValueAndText niceDisplayValueText', () => {
     const valueText = getValueText({
       annotation: yAnnotations[0],
       resolution: 1000,
-      viewPort: VIEW_PORT,
+      viewPort: VIEWPORT,
       niceDisplayValueText: true,
     });
 
@@ -225,7 +223,7 @@ describe('getValueAndText niceDisplayValueText', () => {
     const valueText = getValueText({
       annotation: yAnnotations[0],
       resolution: 1000,
-      viewPort: VIEW_PORT,
+      viewPort: VIEWPORT,
       niceDisplayValueText: true,
     });
 
@@ -250,7 +248,7 @@ describe('getValueAndText niceDisplayValueText', () => {
     const valueText = getValueText({
       annotation: yAnnotations[0],
       resolution: 1000,
-      viewPort: VIEW_PORT,
+      viewPort: VIEWPORT,
       niceDisplayValueText: true,
     });
 
@@ -275,7 +273,7 @@ describe('getValueAndText niceDisplayValueText', () => {
     const valueText = getValueText({
       annotation: yAnnotations[0],
       resolution: 1000,
-      viewPort: VIEW_PORT,
+      viewPort: VIEWPORT,
       niceDisplayValueText: true,
     });
 
@@ -300,7 +298,7 @@ describe('getValueAndText niceDisplayValueText', () => {
     const valueText = getValueText({
       annotation: yAnnotations[0],
       resolution: 1000,
-      viewPort: VIEW_PORT,
+      viewPort: VIEWPORT,
       niceDisplayValueText: true,
     });
     expect(valueText).toBe(expectedDisplayValue);
@@ -324,7 +322,7 @@ describe('getValueAndText niceDisplayValueText', () => {
     const valueText = getValueText({
       annotation: yAnnotations[0],
       resolution: 1000,
-      viewPort: VIEW_PORT,
+      viewPort: VIEWPORT,
       niceDisplayValueText: true,
     });
 
@@ -349,7 +347,7 @@ describe('getValueAndText niceDisplayValueText', () => {
     const valueText = getValueText({
       annotation: yAnnotations[0],
       resolution: 1000,
-      viewPort: VIEW_PORT,
+      viewPort: VIEWPORT,
       niceDisplayValueText: true,
     });
 
@@ -374,7 +372,7 @@ describe('getValueAndText niceDisplayValueText', () => {
     const valueText = getValueText({
       annotation: yAnnotations[0],
       resolution: 1000,
-      viewPort: VIEW_PORT,
+      viewPort: VIEWPORT,
       niceDisplayValueText: true,
     });
 

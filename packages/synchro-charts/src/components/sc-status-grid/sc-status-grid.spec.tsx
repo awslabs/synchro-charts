@@ -14,8 +14,8 @@ import { ScWidgetGrid } from '../sc-widget-grid/sc-widget-grid';
 import { ScGridTooltip } from '../sc-widget-grid/sc-grid-tooltip';
 import { DataType, StreamType } from '../../utils/dataConstants';
 
-const VIEW_PORT = {
-  ...DEFAULT_CHART_CONFIG.viewPort,
+const VIEWPORT = {
+  ...DEFAULT_CHART_CONFIG.viewport,
   duration: MINUTE_IN_MS,
 };
 
@@ -49,7 +49,7 @@ const statusGridSpecPage = async (propOverrides: Partial<Components.ScStatusGrid
   const props: Partial<Components.ScStatusGrid> = {
     widgetId: WIDGET_ID,
     dataStreams: DATA_STREAMS,
-    viewPort: VIEW_PORT,
+    viewport: VIEWPORT,
     labelsConfig: {
       showValue: true,
       showName: true,
@@ -109,7 +109,7 @@ describe('when enabled', () => {
 
   it('renders on cell for an alarm plus a property info, when associated', async () => {
     const point: DataPoint<number> = {
-      x: (VIEW_PORT.end as Date).getTime(),
+      x: (VIEWPORT.end as Date).getTime(),
       y: 100,
     };
     const ASSOCIATED_DATA_STREAM: DataStream<number> = {
@@ -184,13 +184,13 @@ describe('alarms', () => {
 
 describe('when disabled', () => {
   it('renders cell per data stream', async () => {
-    const NON_LIVE_VIEW_PORT = {
-      ...VIEW_PORT,
+    const NON_LIVE_VIEWPORT = {
+      ...VIEWPORT,
       duration: undefined,
     };
 
     const { statusGrid } = await statusGridSpecPage({
-      viewPort: NON_LIVE_VIEW_PORT,
+      viewport: NON_LIVE_VIEWPORT,
       dataStreams: [NUMBER_STREAM, STRING_STREAM],
     });
 
@@ -199,13 +199,13 @@ describe('when disabled', () => {
   });
 
   it('renders a help icon', async () => {
-    const NON_LIVE_VIEW_PORT = {
-      ...VIEW_PORT,
+    const NON_LIVE_VIEWPORT = {
+      ...VIEWPORT,
       duration: undefined,
     };
 
     const { statusGrid } = await statusGridSpecPage({
-      viewPort: NON_LIVE_VIEW_PORT,
+      viewport: NON_LIVE_VIEWPORT,
     });
 
     expect(statusGrid.querySelector('sc-help-tooltip')).not.toBeNull();

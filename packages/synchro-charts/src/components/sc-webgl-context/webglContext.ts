@@ -3,7 +3,7 @@ import { WebGLRenderer } from 'three';
 import { ChartScene, ViewPortManager } from './types';
 import { ClipSpaceRect, ClipSpaceRectMap } from '../common/webGLPositioning';
 import { RectScrollFixed } from '../../utils/types';
-import { ViewPortHandler } from './viewPortHandler';
+import { ViewportHandler } from './viewPortHandler';
 import { isValid } from '../../utils/predicates';
 
 const isChartScene = isValid((v: Partial<ChartScene>) => v.camera != null);
@@ -56,7 +56,7 @@ function resizeRendererToDisplaySize(renderer: WebGLRenderer): boolean {
  */
 export const createWebGLRenderer = () => {
   let rectMap: ClipSpaceRectMap;
-  const sceneManager: ViewPortHandler<ViewPortManager> = new ViewPortHandler();
+  const sceneManager: ViewportHandler<ViewPortManager> = new ViewportHandler();
 
   /**
    * Add Chart Scene

@@ -1,7 +1,7 @@
 import { zoomIdentity } from 'd3-zoom';
 import { scaleLinear } from 'd3-scale';
 import { createScales, transformScales } from './scaleUtil';
-import { VIEW_PORT, CHART_CONFIG } from '../common/testUtil';
+import { VIEWPORT, CHART_CONFIG } from '../common/testUtil';
 import { ScaleType } from '../common/constants';
 
 describe('scale transformations', () => {
@@ -130,7 +130,7 @@ const createConfig = ({
     width: xRange[1] - xRange[0],
     height: yRange[1] - yRange[0],
   },
-  viewPort: {
+  viewport: {
     start: xDomain[0],
     end: xDomain[1],
     yMin: yDomain[0],
@@ -179,7 +179,7 @@ describe('create scales', () => {
     expect(() =>
       createScales({
         size: CHART_CONFIG.size,
-        viewPort: VIEW_PORT,
+        viewport: VIEWPORT,
         scale: {
           ...CHART_CONFIG.scale,
           xScaleType: 'fake-scale-type' as ScaleType,

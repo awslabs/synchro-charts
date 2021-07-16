@@ -33,12 +33,6 @@ const STREAM_2_POINT_2: DataPoint<number> = {
   y: 55,
 };
 
-/**
- * Test to ensure that disjoint lines render correctly when points and lines overlap.
- *
- * Ensure that the alpha-channels are correctly blending.
- */
-
 @Component({
   tag: 'sc-multiple-lines-overlapping',
 })
@@ -48,7 +42,7 @@ export class ScMultipleLinesOverlapping {
   componentDidLoad() {
     const container = this.el.querySelector('#test-container') as HTMLDivElement;
     const scene = chartScene({
-      viewPort: {
+      viewport: {
         start: X_MIN,
         end: X_MAX,
         yMin: Y_MIN,

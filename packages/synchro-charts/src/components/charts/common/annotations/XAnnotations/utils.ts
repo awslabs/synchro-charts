@@ -4,13 +4,13 @@ import { ViewPort } from '../../../../../utils/dataTypes';
 export const getX = ({
   annotation,
   width,
-  viewPort,
+  viewport,
 }: {
   annotation: XAnnotation;
   width: number;
-  viewPort: ViewPort;
+  viewport: ViewPort;
 }) => {
-  const { start, end } = viewPort;
+  const { start, end } = viewport;
 
   return Math.floor((width / (end.getTime() - start.getTime())) * (annotation.value.getTime() - start.getTime()));
 };

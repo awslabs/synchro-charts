@@ -62,7 +62,7 @@ export class ScKpiStandard {
       <sc-kpi
         widgetId="test-widget"
         dataStreams={dataStreams}
-        viewPort={{ start: X_MIN, end: X_MAX, yMin: Y_MIN, yMax: Y_MAX, duration: isEnabled ? YEAR_IN_MS : undefined }}
+        viewport={{ start: X_MIN, end: X_MAX, yMin: Y_MIN, yMax: Y_MAX, duration: isEnabled ? YEAR_IN_MS : undefined }}
       />
     );
   }

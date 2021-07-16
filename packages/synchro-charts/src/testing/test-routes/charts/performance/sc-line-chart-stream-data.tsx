@@ -18,7 +18,7 @@ const TEST_DATA_POINT: DataPoint<number> = {
 const urlParams = new URLSearchParams(window.location.search);
 const dataPerRoundParam = urlParams.get('dataPerRound');
 const roundFrequencyParam = urlParams.get('roundFrequency');
-const viewportSpeedParam = urlParams.get('viewPortSpeed');
+const viewportSpeedParam = urlParams.get('viewportSpeed');
 
 const DATA_SIZE_BATCH = dataPerRoundParam ? Number.parseInt(dataPerRoundParam, 10) : 1;
 const DATA_FREQUENCY_MS = roundFrequencyParam ? Number.parseInt(roundFrequencyParam, 10) : SECOND_IN_MS;
@@ -35,23 +35,23 @@ const createData = (point: DataPoint<number>): DataPoint<number>[] =>
 })
 export class ScLineChartStreamData {
   @State() dataPoints: DataPoint<number>[] = [TEST_DATA_POINT];
-  @State() viewPort: ViewPort = { start: X_MIN, end: X_MAX, yMin: Y_MIN, yMax: Y_MAX };
+  @State() viewport: ViewPort = { start: X_MIN, end: X_MAX, yMin: Y_MIN, yMax: Y_MAX };
   private dataLoop: number;
-  private viewPortShifter: number | undefined;
+  private viewportShifter: number | undefined;
 
-  viewPortLoop = () =>
+  viewportLoop = () =>
     window.requestAnimationFrame(() => {
-      this.viewPort = {
-        ...this.viewPort,
-        start: new Date(this.viewPort.start.getTime() + VIEWPORT_SPEED),
-        end: new Date(this.viewPort.end.getTime() + VIEWPORT_SPEED),
+      this.viewport = {
+        ...this.viewport,
+        start: new Date(this.viewport.start.getTime() + VIEWPORT_SPEED),
+        end: new Date(this.viewport.end.getTime() + VIEWPORT_SPEED),
       };
-      this.viewPortShifter = this.viewPortLoop();
+      this.viewportShifter = this.viewportLoop();
     });
 
   componentWillLoad() {
     if (VIEWPORT_SPEED > 0) {
-      this.viewPortShifter = this.viewPortLoop();
+      this.viewportShifter = this.viewportLoop();
     }
 
     this.dataLoop = window.setInterval(() => {
@@ -67,8 +67,8 @@ export class ScLineChartStreamData {
 
   disconnectedCallback() {
     clearInterval(this.dataLoop);
-    if (this.viewPortShifter != null) {
-      window.cancelAnimationFrame(this.viewPortShifter);
+    if (this.viewportShifter != null) {
+      window.cancelAnimationFrame(this.viewportShifter);
     }
   }
 
@@ -91,7 +91,7 @@ export class ScLineChartStreamData {
             height: 500,
             width: 500,
           }}
-          viewPort={this.viewPort}
+          viewport={this.viewport}
         />
         <sc-webgl-context />
       </div>

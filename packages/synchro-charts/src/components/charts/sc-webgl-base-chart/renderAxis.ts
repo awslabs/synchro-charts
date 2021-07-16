@@ -11,7 +11,7 @@ import { AnySelection, Axis } from '../common/types';
 export interface AxisRendererProps {
   container: SVGElement;
   size: SizeConfig;
-  viewPort: ViewPort;
+  viewport: ViewPort;
   axis?: Axis.Options;
 }
 
@@ -26,12 +26,12 @@ const DEFAULT_AXIS_OPTIONS = {
  *
  */
 
-const scales = (size: SizeConfig, viewPort: ViewPort) => {
+const scales = (size: SizeConfig, viewport: ViewPort) => {
   const xScale = scaleTime()
-    .domain([viewPort.start.getTime(), viewPort.end.getTime()])
+    .domain([viewport.start.getTime(), viewport.end.getTime()])
     .range([0, size.width]);
   const yScale = scaleLinear()
-    .domain([viewPort.yMin, viewPort.yMax])
+    .domain([viewport.yMin, viewport.yMax])
     .range([size.height, 0]);
   return {
     xScale,
@@ -56,18 +56,18 @@ const tickCount = (size: SizeConfig) =>
  *
  */
 
-const xAxisConstructor = (size: SizeConfig, viewPort: ViewPort) => {
+const xAxisConstructor = (size: SizeConfig, viewport: ViewPort) => {
   const { xTickCount } = tickCount(size);
-  const { xScale } = scales(size, viewPort);
+  const { xScale } = scales(size, viewport);
   return axisBottom(xScale)
     .ticks(xTickCount)
     .tickPadding(TICK_PADDING)
     .tickSize(TICK_SIZE);
 };
 
-const yAxisConstructor = (size: SizeConfig, viewPort: ViewPort) => {
+const yAxisConstructor = (size: SizeConfig, viewport: ViewPort) => {
   const { yTickCount } = tickCount(size);
-  const { yScale } = scales(size, viewPort);
+  const { yScale } = scales(size, viewport);
   return axisLeft(yScale)
     .ticks(yTickCount)
     .tickSize(-size.width)
@@ -75,16 +75,16 @@ const yAxisConstructor = (size: SizeConfig, viewPort: ViewPort) => {
 };
 
 /** D3 call to construct the X Axis */
-const xAxisCall = (size: SizeConfig, viewPort: ViewPort) => (selection: AnySelection) =>
+const xAxisCall = (size: SizeConfig, viewport: ViewPort) => (selection: AnySelection) =>
   selection
     .attr('transform', `translate(${size.marginLeft}, ${size.marginTop + size.height})`)
-    .call(xAxisConstructor(size, viewPort));
+    .call(xAxisConstructor(size, viewport));
 
 /** D3 call to construct the Y Axis */
-const yAxisCall = (size: SizeConfig, viewPort: ViewPort) => (selection: AnySelection) =>
+const yAxisCall = (size: SizeConfig, viewport: ViewPort) => (selection: AnySelection) =>
   selection
     .attr('transform', `translate(${size.marginLeft}, ${size.marginTop})`)
-    .call(yAxisConstructor(size, viewPort));
+    .call(yAxisConstructor(size, viewport));
 
 export const renderAxis = () => {
   // Store axis element references to prevent re-querying DOM nodes on every render.
@@ -92,7 +92,7 @@ export const renderAxis = () => {
   let xAxisSeparator: AnySelection | null;
   let xAxis: AnySelection | null;
 
-  const axisRenderer = ({ container, viewPort, size, axis }: AxisRendererProps) => {
+  const axisRenderer = ({ container, viewport, size, axis }: AxisRendererProps) => {
     const sel = select(container);
 
     const { showX, showY, labels } = {
@@ -126,7 +126,7 @@ export const renderAxis = () => {
       sel
         .append('g')
         .attr('class', 'axis x-axis')
-        .call(xAxisCall(size, viewPort));
+        .call(xAxisCall(size, viewport));
 
       // Note: We are assuming that axis within a component aren't destroyed and recreated.
       xAxis = select(container.querySelector('.x-axis') as SVGElement);
@@ -143,7 +143,7 @@ export const renderAxis = () => {
       sel
         .append('g')
         .attr('class', 'axis y-axis')
-        .call(yAxisCall(size, viewPort));
+        .call(yAxisCall(size, viewport));
 
       // Note: We are assuming that axis within a component aren't destroyed and recreated.
       yAxis = select(container.querySelector('.y-axis') as SVGElement);
@@ -155,7 +155,7 @@ export const renderAxis = () => {
     }
 
     if (xAxis) {
-      xAxis.call(xAxisCall(size, viewPort));
+      xAxis.call(xAxisCall(size, viewport));
 
       /** Update X Axis Separator */
       if (xAxisSeparator) {
@@ -183,7 +183,7 @@ export const renderAxis = () => {
         }
       }
 
-      yAxis.call(yAxisCall(size, viewPort));
+      yAxis.call(yAxisCall(size, viewport));
     }
   };
 

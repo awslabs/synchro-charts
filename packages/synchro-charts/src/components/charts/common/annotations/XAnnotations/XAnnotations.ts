@@ -12,13 +12,13 @@ export const LINE_SELECTOR = 'line.x-line';
 export const renderXAnnotations = ({
   container,
   xAnnotations,
-  viewPort,
+  viewport,
   resolution,
   size: { width, height },
 }: {
   container: SVGElement;
   xAnnotations: XAnnotation[];
-  viewPort: ViewPort;
+  viewport: ViewPort;
   resolution: number;
   size: { width: number; height: number };
 }) => {
@@ -26,7 +26,7 @@ export const renderXAnnotations = ({
     .selectAll(ANNOTATION_GROUP_SELECTOR)
     .data(xAnnotations);
 
-  const getXAnnotationTextX = (a: XAnnotation): number => -getX({ annotation: a, width, viewPort });
+  const getXAnnotationTextX = (a: XAnnotation): number => -getX({ annotation: a, width, viewport });
 
   const padding = 5;
 
@@ -42,8 +42,8 @@ export const renderXAnnotations = ({
     .append('line')
     .attr('class', 'x-line')
     .attr('font-size', ANNOTATION_FONT_SIZE)
-    .attr('x1', annotation => getX({ annotation, width, viewPort }))
-    .attr('x2', annotation => getX({ annotation, width, viewPort }))
+    .attr('x1', annotation => getX({ annotation, width, viewport }))
+    .attr('x2', annotation => getX({ annotation, width, viewport }))
     .attr('y1', 0)
     .attr('y2', height)
     .style('stroke', getColor)
@@ -52,7 +52,7 @@ export const renderXAnnotations = ({
   /** Create X Text */
   annotationGroup
     .append('text')
-    .text(annotation => getValueAndText({ annotation, resolution, viewPort }))
+    .text(annotation => getValueAndText({ annotation, resolution, viewport }))
     .attr('display', getValueAndTextVisibility)
     .attr('font-size', ANNOTATION_FONT_SIZE)
     .attr('class', 'x-text')
@@ -66,8 +66,8 @@ export const renderXAnnotations = ({
   /** Update Line */
   annotationSelection
     .select(LINE_SELECTOR)
-    .attr('x1', annotation => getX({ annotation, width, viewPort }))
-    .attr('x2', annotation => getX({ annotation, width, viewPort }))
+    .attr('x1', annotation => getX({ annotation, width, viewport }))
+    .attr('x2', annotation => getX({ annotation, width, viewport }))
     .attr('y2', height)
     .attr('stroke', getColor);
 
@@ -75,7 +75,7 @@ export const renderXAnnotations = ({
   annotationSelection
     .select(TEXT_SELECTOR)
     .attr('display', getValueAndTextVisibility)
-    .text(annotation => getValueAndText({ annotation, resolution, viewPort }))
+    .text(annotation => getValueAndText({ annotation, resolution, viewport }))
     .attr('y', getXAnnotationTextX)
     .style('fill', getColor);
 

@@ -15,7 +15,7 @@ const renderCell: RenderCell = props => <sc-kpi-base {...props} />;
   shadow: false,
 })
 export class ScKpi implements ChartConfig {
-  @Prop() viewPort: MinimalViewPortConfig;
+  @Prop() viewport: MinimalViewPortConfig;
   @Prop() widgetId!: string;
   @Prop() dataStreams!: DataStream[];
   @Prop() annotations: Annotations;
@@ -24,10 +24,10 @@ export class ScKpi implements ChartConfig {
   @Prop() messageOverrides: MessageOverrides = {};
 
   render() {
-    const { viewPort, widgetId, dataStreams, annotations, liveModeOnlyMessage, isEditing, messageOverrides } = this;
+    const { viewport, widgetId, dataStreams, annotations, liveModeOnlyMessage, isEditing, messageOverrides } = this;
     return (
       <sc-widget-grid
-        viewPort={viewPort}
+        viewport={viewport}
         widgetId={widgetId}
         dataStreams={dataStreams}
         annotations={annotations}

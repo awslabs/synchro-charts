@@ -11,8 +11,8 @@ export type SearchQueryParams = {
   height?: number | string;
   duration?: number;
   errMsg: string;
-  viewPortStart: Date;
-  viewPortEnd: Date;
+  viewportStart: Date;
+  viewportEnd: Date;
   componentTag: string;
   legend: LegendConfig;
   isEditing: boolean;
@@ -59,8 +59,8 @@ export const SCREEN_SIZE = {
 };
 
 export const constructSearchQuery = ({
-  viewPortStart,
-  viewPortEnd,
+  viewportStart,
+  viewportEnd,
   dataStreams,
   asyncDataStreams,
   alarms,
@@ -83,8 +83,8 @@ export const constructSearchQuery = ({
     dataStreams: dataStreams && JSON.stringify(dataStreams),
     asyncDataStreams: asyncDataStreams && JSON.stringify(asyncDataStreams),
     alarms: alarms && JSON.stringify(alarms),
-    viewPortStart: viewPortStart && viewPortStart.toISOString(),
-    viewPortEnd: viewPortEnd && viewPortEnd.toISOString(),
+    viewportStart: viewportStart && viewportStart.toISOString(),
+    viewportEnd: viewportEnd && viewportEnd.toISOString(),
     tableColumns: tableColumns && JSON.stringify(tableColumns),
     messageOverrides: messageOverrides && JSON.stringify(messageOverrides),
     axis: axis && JSON.stringify(axis),
@@ -127,7 +127,7 @@ export const testCaseParameters = (): SearchQueryParams => {
     dataStreams: query.dataStreams != null ? JSON.parse(query.dataStreams).map(deserializeDataStream) : [],
     asyncDataStreams:
       query.asyncDataStreams != null ? JSON.parse(query.asyncDataStreams).map(deserializeDataStream) : [],
-    viewPortStart: query.viewPortStart != null ? new Date(query.viewPortStart) : new Date(2000, 0, 0),
-    viewPortEnd: query.viewPortEnd != null ? new Date(query.viewPortEnd) : new Date(2000, 0, 1),
+    viewportStart: query.viewportStart != null ? new Date(query.viewportStart) : new Date(2000, 0, 0),
+    viewportEnd: query.viewportEnd != null ? new Date(query.viewportEnd) : new Date(2000, 0, 1),
   };
 };

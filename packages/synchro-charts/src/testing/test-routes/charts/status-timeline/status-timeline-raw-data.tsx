@@ -45,13 +45,13 @@ const annotations: Annotations = {
 };
 
 @Component({
-  tag: 'status-chart-raw-data',
+  tag: 'status-timeline-raw-data',
 })
-export class StatusChartRawData {
+export class StatusTimelineRawData {
   render() {
     return (
       <div>
-        <sc-status-chart
+        <sc-status-timeline
           alarms={{ expires: MINUTE_IN_MS }}
           dataStreams={[
             {
@@ -69,7 +69,7 @@ export class StatusChartRawData {
             height: 500,
           }}
           annotations={annotations}
-          viewPort={{ yMin: Y_MIN, yMax: Y_MAX, start: X_MIN, end: X_MAX }}
+          viewport={{ yMin: Y_MIN, yMax: Y_MAX, start: X_MIN, end: X_MAX }}
         />
         <sc-webgl-context />
       </div>

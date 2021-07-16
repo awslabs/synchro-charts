@@ -9,12 +9,12 @@ const utilizedTimestamp = ({
   isRaw,
   points,
   selectedTimestamp,
-  viewPort,
+  viewport,
 }: {
   isRaw: boolean;
   points: TooltipPoint[];
   selectedTimestamp: Timestamp;
-  viewPort: ViewPort;
+  viewport: ViewPort;
 }): Timestamp => {
   if (isRaw) {
     // always use the selected date when raw. this has the impact of having the tooltip cursor always at where the cursor is
@@ -26,23 +26,23 @@ const utilizedTimestamp = ({
     return selectedTimestamp;
   }
 
-  if (pointDate < viewPort.start.getTime()) {
+  if (pointDate < viewport.start.getTime()) {
     // If the date is before the viewport, just use the start of the viewport. This has the effect of making a tooltip
     // appear flush at the left of the viewport when focusing on before-end-of-viewport positioned data.
-    return viewPort.start.getTime();
+    return viewport.start.getTime();
   }
 
   return pointDate;
 };
 
 export const tooltipPosition = ({
-  viewPort,
+  viewport,
   size: { width, height },
   points,
   resolution,
   selectedTimestamp,
 }: {
-  viewPort: ViewPort;
+  viewport: ViewPort;
   size: { width: number; height: number };
   points: TooltipPoint[];
   selectedTimestamp: Timestamp;
@@ -55,14 +55,14 @@ export const tooltipPosition = ({
   const isRaw = resolution === 0;
 
   // represents the date which corresponds with the position to render the cursor at
-  const timestamp = utilizedTimestamp({ isRaw, points, selectedTimestamp, viewPort });
+  const timestamp = utilizedTimestamp({ isRaw, points, selectedTimestamp, viewport });
 
-  const viewPortDuration = viewPort.end.getTime() - viewPort.start.getTime();
-  const datePositionRatio = (timestamp - viewPort.start.getTime()) / viewPortDuration;
+  const viewportDuration = viewport.end.getTime() - viewport.start.getTime();
+  const datePositionRatio = (timestamp - viewport.start.getTime()) / viewportDuration;
   const pixelX = width * datePositionRatio;
 
   const modelY = Math.max(...points.map(({ point }) => (point ? point.y : undefined)).filter(isNumber));
-  const pixelY = Math.max(0, height * (1 - (modelY - viewPort.yMin) / (viewPort.yMax - viewPort.yMin)));
+  const pixelY = Math.max(0, height * (1 - (modelY - viewport.yMin) / (viewport.yMax - viewport.yMin)));
 
   return { x: pixelX, y: pixelY };
 };

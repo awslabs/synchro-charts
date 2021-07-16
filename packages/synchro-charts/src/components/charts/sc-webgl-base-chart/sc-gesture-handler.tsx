@@ -27,7 +27,7 @@ export class ScGestureHandler {
   @Element() el: HTMLElement;
 
   @Prop() size!: SizeConfig;
-  @Prop() viewPort!: ViewPort;
+  @Prop() viewport!: ViewPort;
   @Prop() onDateRangeChange!: ({ end, start }: { start: Date; end: Date }) => void;
 
   @State() start?: number;
@@ -43,7 +43,7 @@ export class ScGestureHandler {
   private initialViewPort: ViewPort;
 
   componentDidLoad() {
-    this.initialViewPort = this.viewPort;
+    this.initialViewPort = this.viewport;
     this.setupZoom();
     this.el.addEventListener('mousedown', this.beginBrush, { capture: true });
     this.el.addEventListener('mousemove', this.moveBrush);
@@ -58,7 +58,7 @@ export class ScGestureHandler {
     this.el.removeEventListener('mouseleave', this.cancelBrush);
   }
 
-  @Watch('viewPort')
+  @Watch('viewport')
   onViewPortChange(newViewPort: ViewPort) {
     this.zoom.updateViewPort(newViewPort);
   }
@@ -122,7 +122,7 @@ export class ScGestureHandler {
 
   initiateTransform = (startPx: number, endPx: number) => {
     const xScale = scaleTime()
-      .domain([this.viewPort.start.getTime(), this.viewPort.end.getTime()])
+      .domain([this.viewport.start.getTime(), this.viewport.end.getTime()])
       .range([0, this.size.width]);
     const xScaleOriginal = scaleTime()
       .domain([this.initialViewPort.start.getTime(), this.initialViewPort.end.getTime()])
@@ -141,7 +141,7 @@ export class ScGestureHandler {
   };
 
   scales() {
-    const { yMin, yMax, start, end } = this.viewPort;
+    const { yMin, yMax, start, end } = this.viewport;
     const { width, height } = this.size;
     const xScale = scaleTime()
       .domain([start.getTime(), end.getTime()])

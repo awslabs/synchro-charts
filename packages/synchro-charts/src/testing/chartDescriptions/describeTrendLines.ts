@@ -2,7 +2,7 @@ import { ChartSpecPage } from './newChartSpecPage';
 import { DataStream } from '../../utils/dataTypes';
 import { DataType, TREND_TYPE } from '../../utils/dataConstants';
 
-const VIEW_PORT = {
+const VIEWPORT = {
   start: new Date(2019, 0, 0),
   end: new Date(2020, 0, 0),
   yMin: -50,
@@ -49,7 +49,7 @@ export const describeTrendLines = (newChartSpecPage: ChartSpecPage) => {
   describe('regression', () => {
     it('chart renders regression with the correct properties', async () => {
       const { chart } = await newChartSpecPage({
-        viewPort: VIEW_PORT,
+        viewport: VIEWPORT,
         dataStreams: DATA_STREAMS,
         trends: [
           {

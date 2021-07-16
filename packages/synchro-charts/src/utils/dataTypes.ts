@@ -150,7 +150,7 @@ export interface BaseConfig {
   // A unique identifier to the widget
   widgetId: string;
   // The viewport in which the widget analyzes/visualizes data.
-  viewPort: MinimalViewPortConfig | ViewPortConfig;
+  viewport: MinimalViewPortConfig | ViewPortConfig;
   // Exact pixel dimensions of the widget
   size?: MinimalSizeConfig;
 }

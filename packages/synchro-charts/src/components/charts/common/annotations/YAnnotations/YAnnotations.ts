@@ -33,13 +33,13 @@ export const DRAGGABLE_LINE_TWO_SELECTOR = 'line.y-handle-two';
 export const renderYAnnotations = ({
   container,
   yAnnotations,
-  viewPort,
+  viewport,
   resolution,
   size: { width, height },
 }: {
   container: SVGElement;
   yAnnotations: YAnnotation[];
-  viewPort: ViewPort;
+  viewport: ViewPort;
   resolution: number;
   size: { width: number; height: number };
 }) => {
@@ -47,7 +47,7 @@ export const renderYAnnotations = ({
     getY({
       annotation,
       height,
-      viewPort,
+      viewport,
     });
 
   const getYAnnotationValueTextY = (yAnnotation: YAnnotation): number =>
@@ -106,7 +106,7 @@ export const renderYAnnotations = ({
     .attr('x', width + Y_ANNOTATION_TEXT_LEFT_PADDING)
     .attr('text-anchor', 'start')
     .attr('y', getYAnnotationValueTextY)
-    .text(annotation => getValueText({ annotation, resolution, viewPort, niceDisplayValueText: true }))
+    .text(annotation => getValueText({ annotation, resolution, viewport, niceDisplayValueText: true }))
     .style('user-select', 'none')
     .style('pointer-events', 'none')
     .style('fill', getColor);
@@ -171,7 +171,7 @@ export const renderYAnnotations = ({
     .attr('display', getValueTextVisibility)
     .attr('y', getYAnnotationValueTextY)
     .attr('x', width + Y_ANNOTATION_TEXT_LEFT_PADDING)
-    .text(annotation => getValueText({ annotation, resolution, viewPort, niceDisplayValueText: true }))
+    .text(annotation => getValueText({ annotation, resolution, viewport, niceDisplayValueText: true }))
     .style('fill', getColor);
 
   /** Update Label Text */

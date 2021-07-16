@@ -6,9 +6,9 @@ it('moves viewport when gestures are applied', () => {
   const OLD_Y_TICK_LABEL = 'Fri 31';
 
   visitDynamicWidget(cy, {
-    componentTag: 'sc-status-chart',
-    viewPortStart: START,
-    viewPortEnd: END,
+    componentTag: 'sc-status-timeline',
+    viewportStart: START,
+    viewportEnd: END,
     gestures: true,
   });
 
@@ -29,9 +29,9 @@ it('does not move viewport when gestures are not applied', () => {
   const OLD_Y_TICK_LABEL = 'Fri 31';
 
   visitDynamicWidget(cy, {
-    componentTag: 'sc-status-chart',
-    viewPortStart: START,
-    viewPortEnd: END,
+    componentTag: 'sc-status-timeline',
+    viewportStart: START,
+    viewportEnd: END,
     gestures: false,
   });
 

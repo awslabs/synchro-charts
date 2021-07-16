@@ -4,18 +4,14 @@ import { MINUTE_IN_MS } from '../../../../utils/time';
 import { TEST_DATA_POINT_STANDARD, Y_MAX, Y_MIN, X_MIN, X_MAX } from '../constants';
 import { COMPARISON_OPERATOR, DataType } from '../../../..';
 
-/**
- * Testing route for the webGL rendering without being fully coupled to the chart.
- */
-
 @Component({
-  tag: 'status-chart-threshold-coloration-exact-point',
+  tag: 'status-timeline-threshold-coloration-multiple-thresholds',
 })
-export class StatusChartThresholdExactPoint {
+export class StatusTimelineThresholdMultipleThresholds {
   render() {
     return (
       <div>
-        <sc-status-chart
+        <sc-status-timeline
           alarms={{ expires: MINUTE_IN_MS }}
           dataStreams={[
             {
@@ -31,7 +27,7 @@ export class StatusChartThresholdExactPoint {
           annotations={{
             y: [
               {
-                value: 2500,
+                value: 2000,
                 label: {
                   text: 'y label',
                   show: true,
@@ -40,17 +36,24 @@ export class StatusChartThresholdExactPoint {
                 color: 'blue',
                 comparisonOperator: COMPARISON_OPERATOR.GREATER_THAN_EQUAL,
               },
+              {
+                value: 1000,
+                label: {
+                  text: 'y label',
+                  show: true,
+                },
+                showValue: true,
+                color: 'red',
+                comparisonOperator: COMPARISON_OPERATOR.GREATER_THAN_EQUAL,
+              },
             ],
-            thresholdOptions: {
-              showColor: true,
-            },
           }}
           widgetId="test-id"
           size={{
             width: 500,
             height: 500,
           }}
-          viewPort={{ yMin: Y_MIN, yMax: Y_MAX, start: X_MIN, end: X_MAX }}
+          viewport={{ yMin: Y_MIN, yMax: Y_MAX, start: X_MIN, end: X_MAX }}
         />
         <sc-webgl-context />
       </div>

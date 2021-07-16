@@ -1,9 +1,9 @@
 import { Component, Element, h } from '@stencil/core';
 import { webGLRenderer } from '../../../../../components/sc-webgl-context/webglContext';
-import { chartScene } from '../../../../../components/charts/sc-status-chart/chartScene';
+import { chartScene } from '../../../../../components/charts/sc-status-timeline/chartScene';
 import { CHART_SIZE } from '../chartSize';
 import { HOUR_IN_MS } from '../../../../../utils/time';
-import { HEIGHT } from '../../../../../components/charts/sc-status-chart/constants';
+import { HEIGHT } from '../../../../../components/charts/sc-status-timeline/constants';
 import { DataPoint } from '../../../../../utils/dataTypes';
 import { DataType } from '../../../../../utils/dataConstants';
 
@@ -23,12 +23,6 @@ const TEST_DATA_POINT_2: DataPoint<number> = {
   y: 50,
 };
 
-/**
- * Testing route for the webGL rendering without being fully coupled to the chart.
- *
- * Tests that multiple points renders as multiple statuses correctly.
- */
-
 @Component({
   tag: 'multiple-statuses',
 })
@@ -39,7 +33,7 @@ export class MultipleStatuses {
     const container = this.el.querySelector('#test-container') as HTMLDivElement;
     const scene = chartScene({
       alarms: { expires: HOUR_IN_MS * 5 },
-      viewPort: {
+      viewport: {
         start: X_MIN,
         end: X_MAX,
         yMin: 0,

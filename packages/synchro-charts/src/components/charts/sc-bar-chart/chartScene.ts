@@ -11,7 +11,7 @@ const maxDataPointsRendered = (bars: BarChartBarMesh): number =>
 export const chartScene: ChartSceneCreator = ({
   dataStreams,
   container,
-  viewPort,
+  viewport,
   bufferFactor,
   minBufferSize,
   onUpdate,
@@ -19,9 +19,9 @@ export const chartScene: ChartSceneCreator = ({
   thresholds,
 }) => {
   const scene = new Scene();
-  const toClipSpace = clipSpaceConversion(viewPort);
+  const toClipSpace = clipSpaceConversion(viewport);
   scene.add(barMesh({ dataStreams, toClipSpace, bufferFactor, minBufferSize, thresholdOptions, thresholds }));
-  return constructChartScene({ scene, viewPort, container, toClipSpace, onUpdate });
+  return constructChartScene({ scene, viewport, container, toClipSpace, onUpdate });
 };
 
 export const updateChartScene: ChartSceneUpdater = ({
@@ -30,7 +30,7 @@ export const updateChartScene: ChartSceneUpdater = ({
   hasDataChanged,
   minBufferSize,
   bufferFactor,
-  viewPort,
+  viewport,
   container,
   onUpdate,
   chartSize,
@@ -44,12 +44,12 @@ export const updateChartScene: ChartSceneUpdater = ({
   // chart scene, we must fully recreate the chart scene. This is a costly operation.
   const isDataOverflowingBuffer = maxDataPointsRendered(bars) < numDataPoints(dataStreams);
 
-  if (isDataOverflowingBuffer || needsNewClipSpace(viewPort, scene.toClipSpace) || hasAnnotationChanged) {
+  if (isDataOverflowingBuffer || needsNewClipSpace(viewport, scene.toClipSpace) || hasAnnotationChanged) {
     return chartScene({
       onUpdate,
       dataStreams,
       container,
-      viewPort,
+      viewport,
       minBufferSize,
       bufferFactor,
       chartSize,

@@ -7,7 +7,7 @@ import { ScatterChart } from "@synchro-charts/react";
       type: 'linear-regression',
     }]}
     widgetId="widget-id"
-    viewPort={{
+    viewport={{
       start: new Date(2000, 0, 0),
       end: new Date(2001, 0, 0),
     }}

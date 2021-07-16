@@ -13,6 +13,6 @@ export const ScatterChart = /*@__PURE__*/createReactComponent<JSX.ScScatterChart
 export const BarChart = /*@__PURE__*/createReactComponent<JSX.ScBarChart, HTMLScBarChartElement>('sc-bar-chart');
 export const KPI = /*@__PURE__*/createReactComponent<JSX.ScWebglContext, HTMLScWebglContextElement>('sc-kpi');
 export const StatusGrid = /*@__PURE__*/createReactComponent<JSX.ScWebglContext, HTMLScWebglContextElement>('sc-status-grid');
-export const StatusTimeline = /*@__PURE__*/createReactComponent<JSX.ScWebglContext, HTMLScWebglContextElement>('sc-status-chart');
+export const StatusTimeline = /*@__PURE__*/createReactComponent<JSX.ScWebglContext, HTMLScWebglContextElement>('sc-status-timeline');
 export const Table = /*@__PURE__*/createReactComponent<JSX.ScWebglContext, HTMLScWebglContextElement>('sc-table');
 export const WebglContext = /*@__PURE__*/createReactComponent<JSX.ScWebglContext, HTMLScWebglContextElement>('sc-webgl-context');

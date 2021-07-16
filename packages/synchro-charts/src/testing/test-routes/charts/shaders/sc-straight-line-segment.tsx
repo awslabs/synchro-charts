@@ -23,12 +23,6 @@ const TEST_DATA_POINT_2: DataPoint<number> = {
   y: (Y_MIN + Y_MAX) / 2,
 };
 
-/**
- * Testing route for the webGL rendering without being fully coupled to the chart.
- *
- * Tests that a single point renders as a circle correctly
- */
-
 @Component({
   tag: 'sc-straight-line-segment',
 })
@@ -38,7 +32,7 @@ export class ScStraightLineSegment {
   componentDidLoad() {
     const container = this.el.querySelector('#test-container') as HTMLDivElement;
     const scene = chartScene({
-      viewPort: {
+      viewport: {
         start: X_MIN,
         end: X_MAX,
         yMin: Y_MIN,

@@ -12,7 +12,8 @@ import {
 import barVert from './bar.vert';
 import barFrag from './bar.frag';
 import { WriteableBufferAttribute, WriteableInstancedBufferAttribute } from '../../sc-webgl-context/types';
-import { numDataPoints, vertices, getCSSColorByString } from '../sc-webgl-base-chart/utils';
+import { numDataPoints, vertices } from '../sc-webgl-base-chart/utils';
+import { getCSSColorByString } from '../common/getCSSColorByString';
 import { getBarWidth } from './displayLogic';
 import { getBreachedThreshold } from '../common/annotations/utils';
 import { isNumberDataStream } from '../../../utils/predicates';

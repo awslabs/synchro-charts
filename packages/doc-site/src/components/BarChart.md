@@ -2,7 +2,7 @@
 <div style={{ width: '100%', height: '500px' }}>
   <BarChart
     widgetId="widget-id"
-    viewPort={{
+    viewport={{
         start: new Date(2000, 0, 0),
         end: new Date(2001, 0, 0),
     }}
@@ -74,7 +74,7 @@ import { DataType, COMPARISON_OPERATOR, StatusIcon } from '@synchro-charts/core'
 <div style={{ width: '100%', height: '500px' }}>
   <BarChart
     widgetId="widget-id"
-    viewPort={{
+    viewport={{
         start: new Date(2000, 0, 0),
         end: new Date(2001, 0, 0),
     }}
@@ -145,4 +145,6 @@ import { DataType, COMPARISON_OPERATOR, StatusIcon } from '@synchro-charts/core'
     />
 </div>
 ```
+
+**Note**: This component requires a WebGL context to be initialized. Read more about how to set that up in the [WebGL context documentation]( https://synchrocharts.com//#/WebGL%20context )
 

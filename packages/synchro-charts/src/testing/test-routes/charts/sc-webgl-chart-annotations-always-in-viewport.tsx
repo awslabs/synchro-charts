@@ -63,7 +63,7 @@ export class ScWebglChartAnnotationsAlwaysInViewport {
             height: 500,
             width: 500,
           }}
-          viewPort={{ start: X_MIN, end: X_MAX }}
+          viewport={{ start: X_MIN, end: X_MAX }}
           widgetId="widget-id"
         />
         <sc-webgl-context />

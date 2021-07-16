@@ -6,7 +6,7 @@ const DAY_RESOLUTION = 1000 * 60 * 60 * 24; // one day
   <div style={{ width: "300px", height: "400px" }}>
     <LineChart
       widgetId="chart-1"
-      viewPort={{
+      viewport={{
         start: new Date(2000, 0, 0),
         end: new Date(2001, 0, 0),
         group: 'my-group',
@@ -62,7 +62,7 @@ const DAY_RESOLUTION = 1000 * 60 * 60 * 24; // one day
   <div style={{ width: "300px", height: "400px" }}>
     <LineChart
       widgetId="chart-2"
-      viewPort={{
+      viewport={{
         start: new Date(2000, 0, 0),
         end: new Date(2001, 0, 0),
         group: 'my-group',
@@ -117,7 +117,7 @@ const DAY_RESOLUTION = 1000 * 60 * 60 * 24; // one day
   <div style={{ width: "300px", height: "400px" }}>
     <LineChart
       widgetId="chart-3"
-      viewPort={{
+      viewport={{
         start: new Date(2000, 0, 0),
         end: new Date(2001, 0, 0),
         group: 'my-group',
@@ -186,14 +186,14 @@ The default behavior of a chart is to not synchronize with any other charts. To 
 ```jsx static
 <LineChart
   widgetId="chart-1"
-  viewPort={{
+  viewport={{
     group: 'my-group',
   }}
   ...
 />
 <LineChart
   widgetId="chart-2"
-  viewPort={{
+  viewport={{
     group: 'my-group',
   }}
   ...
@@ -205,25 +205,25 @@ Any number of view port groups may be defined, such as below:
 ```jsx static
 <LineChart
   widgetId="chart-1"
-  viewPort={{
+  viewport={{
     group: 'my-group',
   }}  ...
 />
 <LineChart
   widgetId="chart-2"
-  viewPort={{
+  viewport={{
     group: 'my-group',
   }}  ...
 />
 <LineChart
   widgetId="chart-3"
-  viewPort={{
+  viewport={{
     group: 'my-second-group',
   }}  ...
 />
 <LineChart
   widgetId="chart-4"
-  viewPort={{
+  viewport={{
     group: 'my-second-group',
   }}
   ...

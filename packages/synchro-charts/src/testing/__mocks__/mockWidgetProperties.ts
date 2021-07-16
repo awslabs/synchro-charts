@@ -1,6 +1,6 @@
 import { DataStream, DataStreamInfo } from '../../utils/dataTypes';
 import { Threshold } from '../../components/charts/common/types';
-import { VIEW_PORT } from '../../components/charts/common/testUtil';
+import { VIEWPORT } from '../../components/charts/common/testUtil';
 import { DAY_IN_MS } from '../../utils/time';
 import { DataType, StreamType } from '../../utils/dataConstants';
 import { COMPARISON_OPERATOR, StatusIcon } from '../../components/charts/common/constants';
@@ -215,7 +215,7 @@ export const DATA_WITH_ALARM_INFO: DataStreamInfo = {
 };
 
 export const WITHIN_VIEWPORT_DATE = new Date(2000, 0, 1);
-export const BEFORE_VIEWPORT_DATE = new Date(VIEW_PORT.start.getTime() - DAY_IN_MS);
+export const BEFORE_VIEWPORT_DATE = new Date(VIEWPORT.start.getTime() - DAY_IN_MS);
 
 export const ALARM_STREAM: DataStream<string> = {
   id: 'alarm-stream',

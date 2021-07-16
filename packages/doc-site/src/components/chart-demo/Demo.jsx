@@ -44,7 +44,7 @@ const TESTING_GROUND_CHART_CONFIG = {
     position: LEGEND_POSITION.BOTTOM,
     width: 170,
   },
-  viewPort: {
+  viewport: {
     start: new Date(1998, 0, 0),
     end: new Date(2000, 0, 1),
   },
@@ -104,8 +104,8 @@ export class Demo extends React.Component {
       annotationComp: COMPARISON_OPERATOR.LESS_THAN,
       config: {
         ...TESTING_GROUND_CHART_CONFIG,
-        viewPort: {
-          ...TESTING_GROUND_CHART_CONFIG.viewPort,
+        viewport: {
+          ...TESTING_GROUND_CHART_CONFIG.viewport,
           start: new Date(1998, 0, 0),
           end: new Date(1998, 1, 0),
         }
@@ -372,7 +372,7 @@ export class Demo extends React.Component {
             >
               <ChartName
                 widgetId={this.config.widgetId + i.toString()}
-                viewPort={{...this.config.viewPort, duration: this.duration, group: 'DEMO_GROUP'}}
+                viewport={{...this.config.viewport, duration: this.duration, group: 'DEMO_GROUP'}}
                 legend={this.config.legend}
                 dataStreams={this.config.dataStreams}
                 annotations={this.state.annotations}
