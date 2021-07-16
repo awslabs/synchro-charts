@@ -29,7 +29,7 @@ describe('getBucketWidth', () => {
 });
 
 describe('getSequential', () => {
-  it('returns a blue sequential color palette', () => {
+  it('returns a color palette', () => {
     expect(COLOR_PALLETE.r.length).toBe(NUM_OF_COLORS_SEQUENTIAL);
     expect(COLOR_PALLETE.g.length).toBe(NUM_OF_COLORS_SEQUENTIAL);
     expect(COLOR_PALLETE.b.length).toBe(NUM_OF_COLORS_SEQUENTIAL);
