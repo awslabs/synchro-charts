@@ -35,7 +35,11 @@ module.exports = {
             exampleMode: 'hide',
         },
         {
-            name: 'Components',
+          name: 'WebGL context',
+          content: 'docs/webglContext.md',
+        },
+      {
+        name: 'Components',
             sectionDepth: 2,
             content: 'docs/components.md',
             components: 'src/components/**/*.js',
