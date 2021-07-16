@@ -1,9 +1,9 @@
 import { clipSpaceConversion } from '../sc-webgl-base-chart/clipSpaceConversion';
 import { bucketMesh, updateBucketMesh, BUCKET_COUNT, colorPalette } from './heatmapMesh';
-import { MONTH_IN_MS, DAY_IN_MS } from '../../../utils/time';
 import { getBucketMargin, getBucketWidth } from './displayLogic';
 import { getDistanceFromDuration } from '../common/getDistanceFromDuration';
 import { DataType } from '../../../utils/dataConstants';
+import { MONTH_IN_MS, DAY_IN_MS, SECOND_IN_MS, HOUR_IN_MS, MINUTE_IN_MS } from '../../../utils/time';
 import { DataPoint, DataStream } from '../../../utils/dataTypes';
 import { Threshold } from '../common/types';
 import { COMPARISON_OPERATOR } from '../common/constants';
@@ -30,12 +30,10 @@ const DATA_STREAMS: DataStream[] = [
     id: 'data-stream',
     name: 'some name',
     resolution: MONTH_IN_MS,
-    aggregates: {},
-    data: [
-      DATA_POINT_1,
-      DATA_POINT_2,
-      DATA_POINT_3
-    ],
+    aggregates: {
+      [MONTH_IN_MS]: [DATA_POINT_1, DATA_POINT_2, DATA_POINT_3],
+    },
+    data: [],
     dataType: DataType.NUMBER,
   },
 ];
@@ -51,7 +49,7 @@ describe('create bucket mesh', () => {
         showColor: false,
       },
       thresholds: [],
-      viewPort: VIEW_PORT,
+      viewport: VIEW_PORT,
     });
 
     expect(mesh.material.uniforms.width.value).toBeGreaterThan(0);
@@ -68,7 +66,7 @@ describe('create bucket mesh', () => {
         showColor: false,
       },
       thresholds: [],
-      viewPort: VIEW_PORT,
+      viewport: VIEW_PORT,
     });
     expect(mesh.count).toEqual(0);
 
@@ -86,7 +84,7 @@ describe('create bucket mesh', () => {
         showColor: false,
       },
       thresholds: [],
-      viewPort: VIEW_PORT,
+      viewport: VIEW_PORT,
     });
     expect(mesh.count).toEqual(3 * BUCKET_COUNT);
 
