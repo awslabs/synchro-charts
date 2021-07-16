@@ -32,5 +32,5 @@ addChartCommands();
 addMatchImageSnapshotCommand({
   failureThresholdType: 'pixel',
   failureThreshold: 2,
-  customDiffConfig: { threshold: 0.2 },
+  customDiffConfig: { threshold: 0.3 },
 });

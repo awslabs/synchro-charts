@@ -1,4 +1,3 @@
-import { addMatchImageSnapshotCommand } from 'cypress-image-snapshot/command'
 const webglRoot = 'localhost:3333/tests/sc-webgl-chart';
 
 // @ts-ignore
@@ -36,11 +35,6 @@ it('colors part of the line segments that passes a two greater than threshold fo
 
 it('creates a threshold band coloration with one less than threshold and one greater than threshold', () => {
   cy.visit(`${webglRoot}/threshold/coloration-band`);
-  addMatchImageSnapshotCommand({
-    failureThresholdType: 'pixel',
-    failureThreshold: 4,
-    customDiffConfig: { threshold: 0.2 },
-  });
   cy.waitForChart();
   cy.matchImageSnapshotOnCI();
 });

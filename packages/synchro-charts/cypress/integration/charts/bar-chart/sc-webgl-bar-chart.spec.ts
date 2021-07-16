@@ -1,7 +1,6 @@
 /* eslint-disable cypress/no-unnecessary-waiting */
 import { SECOND_IN_MS } from '../../../../src/utils/time';
 import { Y_VALUE } from '../../../../src/testing/test-routes/charts/constants';
-import { addMatchImageSnapshotCommand } from 'cypress-image-snapshot/command'
 
 const SMALL_WAIT = 0.1 * SECOND_IN_MS;
 
@@ -179,11 +178,6 @@ describe('handles buffer increasing in size after initialization', () => {
     cy.wait(SMALL_WAIT);
 
     // Should see 4 bars.
-    addMatchImageSnapshotCommand({
-      failureThresholdType: 'pixel',
-      failureThreshold: 11,
-      customDiffConfig: { threshold: 0.2 },
-    });
     cy.get('#chart-container').matchImageSnapshotOnCI();
   });
 
