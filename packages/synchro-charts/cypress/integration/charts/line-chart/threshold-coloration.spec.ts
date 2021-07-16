@@ -36,5 +36,7 @@ it('colors part of the line segments that passes a two greater than threshold fo
 it('creates a threshold band coloration with one less than threshold and one greater than threshold', () => {
   cy.visit(`${webglRoot}/threshold/coloration-band`);
   cy.waitForChart();
-  cy.matchImageSnapshotOnCI();
+  cy.matchImageSnapshotOnCI(
+    {customDiffConfig: { threshold: 0.3 }},
+  );
 });
