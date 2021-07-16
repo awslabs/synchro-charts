@@ -14,9 +14,8 @@ export const NUM_OF_COLORS_SEQUENTIAL = 8;
  * Adjust these to scale the margins provided within the heatmap.
  * This represent which fraction of the 'width' of a given bucket group a margin.
  */
-const MARGIN_FACTOR = 1/ 20;
+const MARGIN_FACTOR = 1 / 20;
 
-const SEQUENTIAL_OPACITIES = [0.2, 0.4, 0.6, 0.8, 1.0, 0.33, 0.66, 1.0];
 const SEQUENTIAL_BASE_COLOR_INDEX = 5;
 const DEFAULT_SEQUENTIAL_MIN = '#ffffff';
 const DEFAULT_SEQUENTIAL_MID = '#0073bb';
@@ -52,30 +51,30 @@ export const getSequential = ({
   colorChoices?: string[];
 } = {}): HeatmapColorPalette => {
   const heatmapColor: HeatmapColorPalette = { r: [], g: [], b: [] };
-  const colorRGBArray = colorChoices.reduce(function convertToRGB(tempColorRGBArray: number[][], hexColor, indexArray,) {
-    tempColorRGBArray[indexArray] = getCSSColorByString(hexColor);
-    return tempColorRGBArray;
-  }, []);
+  const colorRGBArray = colorChoices.map(hexColor => getCSSColorByString(hexColor));
 
   let colorRatio = 1 / SEQUENTIAL_BASE_COLOR_INDEX;
   let colorRatioIncrement = 1 / SEQUENTIAL_BASE_COLOR_INDEX;
   let colorArrayIndex = 0;
-  for (let i = 0; i < NUM_OF_COLORS_SEQUENTIAL; i++) {
+  for (let i = 0; i < NUM_OF_COLORS_SEQUENTIAL; i += 1) {
     if (i === SEQUENTIAL_BASE_COLOR_INDEX) {
       colorRatio = 0;
       colorRatioIncrement = 1 / (NUM_OF_COLORS_SEQUENTIAL - SEQUENTIAL_BASE_COLOR_INDEX);
       colorArrayIndex += 1;
     }
-    heatmapColor.r[i] = colorRatio * colorRGBArray[colorArrayIndex + 1][0] + (1 - colorRatio) * colorRGBArray[colorArrayIndex][0];
-    heatmapColor.g[i] = colorRatio * colorRGBArray[colorArrayIndex + 1][1] + (1 - colorRatio) * colorRGBArray[colorArrayIndex][1];
-    heatmapColor.b[i] = colorRatio * colorRGBArray[colorArrayIndex + 1][2] + (1 - colorRatio) * colorRGBArray[colorArrayIndex][2];
+    heatmapColor.r[i] =
+      colorRatio * colorRGBArray[colorArrayIndex + 1][0] + (1 - colorRatio) * colorRGBArray[colorArrayIndex][0];
+    heatmapColor.g[i] =
+      colorRatio * colorRGBArray[colorArrayIndex + 1][1] + (1 - colorRatio) * colorRGBArray[colorArrayIndex][1];
+    heatmapColor.b[i] =
+      colorRatio * colorRGBArray[colorArrayIndex + 1][2] + (1 - colorRatio) * colorRGBArray[colorArrayIndex][2];
     colorRatio += colorRatioIncrement;
   }
   return heatmapColor;
 };
 
 /**
- * Returns the color of the bucket based on the number of points in the bucket and the 
+ * Returns the color of the bucket based on the number of points in the bucket and the
  * total possible number of points that can be in a bucket
  */
 export const getBucketColor = (
