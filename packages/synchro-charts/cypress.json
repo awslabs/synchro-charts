@@ -10,9 +10,5 @@
   "ignoreTestFiles": [
     "**/__snapshots__/*",
     "**/__image_snapshots__/*"
-  ],
-  "reporter": "junit",
-  "reporterOptions": {
-    "mochaFile": "cypress/results/output.xml"
-  }
+  ]
 }
