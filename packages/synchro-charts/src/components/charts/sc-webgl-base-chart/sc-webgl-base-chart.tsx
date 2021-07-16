@@ -143,23 +143,52 @@ export class ScWebglBaseChart {
   };
 
   /**
+   * Emit the current widget configuration
+   */
+  emitUpdatedWidgetConfiguration = () => {
+    const configUpdate: WidgetConfigurationUpdate = {
+      movement: undefined,
+      scale: undefined,
+      layout: undefined,
+      legend: this.legend,
+      annotations: this.annotations,
+      axis: this.axis,
+      widgetId: this.configId,
+      dataStreams: this.dataStreams.map(dataStream => {
+        return {
+          id: dataStream.id,
+          name: dataStream.name,
+          detailedName: dataStream.detailedName,
+          color: dataStream.color,
+          unit: dataStream.unit,
+          dataType: dataStream.dataType,
+          streamType: dataStream.streamType,
+          associatedStreams: dataStream.associatedStreams,
+          isLoading: dataStream.isLoading,
+          isRefreshing: dataStream.isRefreshing,
+          error: dataStream.error,
+          resolution: dataStream.resolution,
+        };
+      }),
+    };
+    this.widgetUpdated.emit(configUpdate);
+    console.log('WidgetConfigurationUpdate Emitted');
+  };
+
+  /**
    * On Widget Updated - Persist `DataStreamInfo`
    *
    * Emits an event which persists the current `NameValue[]` state into the
    * data stream.
    */
   updateDataStreamName = ({ streamId, name }: { streamId: string; name: string }) => {
-    // Construct the config update with the new names specified.
-    const configUpdate: WidgetConfigurationUpdate = {
-      widgetId: this.configId,
-      dataStreams: this.dataStreams.map(dataStream => {
-        return {
-          id: dataStream.id,
-          name: dataStream.id === streamId ? name : dataStream.name,
-        };
-      }),
-    };
-    this.widgetUpdated.emit(configUpdate);
+    this.dataStreams.map(dataStream => {
+      return {
+        ...dataStream,
+        name: dataStream.id === streamId ? name : dataStream.name,
+      };
+    });
+    this.emitUpdatedWidgetConfiguration();
   };
 
   onDateRangeChange = throttle(
@@ -545,6 +574,7 @@ export class ScWebglBaseChart {
         resolution: this.dataStreams[0] ? this.dataStreams[0].resolution : 0,
         onUpdate: this.onUpdate,
         activeViewPort: this.activeViewPort,
+        emitUpdatedWidgetConfiguration: this.emitUpdatedWidgetConfiguration,
       });
     }
 

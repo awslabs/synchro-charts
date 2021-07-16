@@ -12,6 +12,7 @@ export type RenderAnnotationsOptions = {
   size: { width: number; height: number };
   onUpdate: Function;
   activeViewPort: Function;
+  emitUpdatedWidgetConfiguration: Function;
 };
 
 type AnnotationPredicate = (annotation: Annotation<AnnotationValue>) => boolean;
@@ -33,6 +34,7 @@ export const renderAnnotations = ({
   size,
   onUpdate,
   activeViewPort,
+  emitUpdatedWidgetConfiguration,
 }: RenderAnnotationsOptions) => {
   if (typeof annotations === 'object' && typeof annotations.show === 'boolean' && !annotations.show) {
     removeXAnnotations({ container });
@@ -72,5 +74,6 @@ export const renderAnnotations = ({
     size,
     onUpdate,
     activeViewPort,
+    emitUpdatedWidgetConfiguration,
   });
 };

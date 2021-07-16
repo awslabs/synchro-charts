@@ -10,6 +10,7 @@ export type DraggableAnnotationsOptions = {
   size: { height: number };
   onUpdate: Function;
   activeViewPort: Function;
+  emitUpdatedWidgetConfiguration: Function;
 };
 
 /**
@@ -53,6 +54,7 @@ export const draggable = ({
   size,
   onUpdate,
   activeViewPort,
+  emitUpdatedWidgetConfiguration,
 }: DraggableAnnotationsOptions): void => {
   const containerSelection = select(container);
   const thresholdGroup = containerSelection.selectAll(DRAGGABLE_HANDLE_SELECTOR);
@@ -81,6 +83,9 @@ export const draggable = ({
           annotationDragged.value = calculateNewThreshold({ yPos, viewport, size });
           onUpdate(activeViewPort(), false, false, true);
           select(this).classed('active', false);
+
+          /** emit event updating annotation on mouse up */
+          emitUpdatedWidgetConfiguration();
         }
       }) as any
   );

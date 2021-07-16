@@ -94,26 +94,55 @@ export class ScWidgetGrid implements ChartConfig {
   }
 
   /**
+   * Emit the current widget configuration
+   */
+  emitUpdatedWidgetConfiguration = () => {
+    const configUpdate: WidgetConfigurationUpdate = {
+      movement: undefined,
+      scale: undefined,
+      layout: undefined,
+      legend: undefined,
+      annotations: this.annotations,
+      axis: undefined,
+      widgetId: this.widgetId,
+      dataStreams: this.dataStreams.map(dataStream => {
+        return {
+          id: dataStream.id,
+          name: dataStream.name,
+          detailedName: dataStream.detailedName,
+          color: dataStream.color,
+          unit: dataStream.unit,
+          dataType: dataStream.dataType,
+          streamType: dataStream.streamType,
+          associatedStreams: dataStream.associatedStreams,
+          isLoading: dataStream.isLoading,
+          isRefreshing: dataStream.isRefreshing,
+          error: dataStream.error,
+          resolution: dataStream.resolution,
+        };
+      }),
+    };
+    this.widgetUpdated.emit(configUpdate);
+  };
+
+  /**
    * On Widget Updated - Persist `DataStreamInfo`
    *
    * Emits an event which persists the current `NameValue[]` state into the
    * data stream info.
    */
   onWidgetUpdated() {
-    const { widgetId, dataStreams } = this;
     // Construct the config update with the new names specified.
-    const configUpdate: WidgetConfigurationUpdate = {
-      widgetId,
-      dataStreams: dataStreams.map(stream => {
-        const nameValue = this.names.find(({ id: nameId }) => stream.id === nameId);
-        const name = nameValue != null ? nameValue.name : stream.name;
-        return {
-          id: stream.id,
-          name,
-        };
-      }),
-    };
-    this.widgetUpdated.emit(configUpdate);
+    this.dataStreams.map(dataStream => {
+      const nameValue = this.names.find(({ id: nameId }) => dataStream.id === nameId);
+      const name = nameValue != null ? nameValue.name : dataStream.name;
+      return {
+        ...dataStream,
+        name,
+      };
+    });
+
+    this.emitUpdatedWidgetConfiguration();
   }
 
   onChangeLabel = ({ streamId, name }: { streamId: string; name: string }): void => {
