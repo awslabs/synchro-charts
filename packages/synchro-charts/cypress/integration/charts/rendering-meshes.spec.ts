@@ -2,7 +2,7 @@
 import { CHART_SIZE } from '../../../src/testing/test-routes/charts/shaders/chartSize';
 import { SECOND_IN_MS } from '../../../src/utils/time';
 
-const root = 'localhost:3333';
+const root = '';
 
 const WAIT_MS = SECOND_IN_MS * 2;
 

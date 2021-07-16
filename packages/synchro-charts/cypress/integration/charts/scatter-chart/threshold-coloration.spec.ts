@@ -1,4 +1,4 @@
-const scRoot = 'localhost:3333/tests/sc-scatter-chart';
+const scRoot = '/tests/sc-scatter-chart';
 
 // @ts-ignore
 const VIEWPORT_HEIGHT = 500;

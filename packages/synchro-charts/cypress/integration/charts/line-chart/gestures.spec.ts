@@ -2,7 +2,7 @@
 import { CHART_VIZ_CONTAINER_SELECTOR, visitDynamicWidget } from '../../../../src/testing/selectors';
 import { SECOND_IN_MS } from '../../../../src/utils/time';
 
-const root = 'localhost:3333/tests';
+const root = '/tests';
 
 const VIEWPORT_HEIGHT = 800;
 const VIEWPORT_WIDTH = 500;

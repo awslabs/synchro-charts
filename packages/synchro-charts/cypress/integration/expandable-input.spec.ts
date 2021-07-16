@@ -1,4 +1,4 @@
-const subRoot = 'http://localhost:3333/tests/sc-expandable-input/standard';
+const subRoot = '/tests/sc-expandable-input/standard';
 it('onValueChange is invoked only after blur', () => {
   cy.visit(subRoot);
   const SOME_TEXT = 'some text';
