@@ -1,0 +1,23 @@
+sudo: false
+language: node_js
+node_js:
+  - '14'
+
+cache:
+  yarn: true
+  directories:
+    - node_modules
+    - ~/.cache
+install:
+  - yarn install --frozen-lockfile
+
+jobs:
+  include:
+    - stage: 'Build'
+      name: 'Build'
+      script: yarn build
+    - stage: 'Lint and Test'
+      name: 'Unit Tests'
+      script: yarn test
+    - script: yarn lint
+      name: 'Lint'
