@@ -2,6 +2,7 @@ import { Annotation, Annotations, AnnotationValue, XAnnotation, YAnnotation } fr
 import { renderXAnnotations, removeXAnnotations } from './XAnnotations/XAnnotations';
 import { renderYAnnotations, removeYAnnotations } from './YAnnotations/YAnnotations';
 import { ViewPort } from '../../../../utils/dataTypes';
+import { draggable } from './draggableAnnotations';
 
 export type RenderAnnotationsOptions = {
   container: SVGElement;
@@ -9,6 +10,8 @@ export type RenderAnnotationsOptions = {
   annotations: Annotations;
   viewport: ViewPort;
   size: { width: number; height: number };
+  onUpdate: Function;
+  activeViewPort: Function;
 };
 
 type AnnotationPredicate = (annotation: Annotation<AnnotationValue>) => boolean;
@@ -22,7 +25,15 @@ const withinViewport = (viewport: ViewPort): AnnotationPredicate => {
   };
 };
 
-export const renderAnnotations = ({ container, resolution, annotations, viewport, size }: RenderAnnotationsOptions) => {
+export const renderAnnotations = ({
+  container,
+  resolution,
+  annotations,
+  viewport,
+  size,
+  onUpdate,
+  activeViewPort,
+}: RenderAnnotationsOptions) => {
   if (typeof annotations === 'object' && typeof annotations.show === 'boolean' && !annotations.show) {
     removeXAnnotations({ container });
     removeYAnnotations({ container });
@@ -53,5 +64,13 @@ export const renderAnnotations = ({ container, resolution, annotations, viewport
     viewport,
     resolution,
     size,
+  });
+
+  draggable({
+    container,
+    viewport,
+    size,
+    onUpdate,
+    activeViewPort,
   });
 };

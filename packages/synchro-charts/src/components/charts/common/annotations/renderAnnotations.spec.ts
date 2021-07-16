@@ -12,6 +12,12 @@ import {
   TEXT_SELECTOR as Y_TEXT_SELECTOR,
   TEXT_VALUE_SELECTOR as Y_TEXT_VALUE_SELECTOR,
   ANNOTATION_GROUP_SELECTOR as Y_THRESHOLD_SELECTOR,
+  DRAGGABLE_HANDLE_SELECTOR,
+  DRAGGABLE_LINE_TWO_SELECTOR,
+  DRAGGABLE_LINE_ONE_SELECTOR,
+  HANDLE_OFFSET_Y,
+  HANDLE_WIDTH,
+  SMALL_HANDLE_WIDTH,
 } from './YAnnotations/YAnnotations';
 
 const VIEWPORT = {
@@ -33,6 +39,8 @@ const render = (props: Partial<RenderAnnotationsOptions>, page: SpecPage) => {
     container: page.body.querySelector('svg') as SVGElement,
     viewport: VIEWPORT,
     size: SIZE,
+    onUpdate: () => {},
+    activeViewPort: () => {},
   };
 
   renderAnnotations({
@@ -68,6 +76,7 @@ describe('no annotations', () => {
 
     expect(page.body.querySelectorAll('line')).toBeEmpty();
     expect(page.body.querySelectorAll('text')).toBeEmpty();
+    expect(page.body.querySelectorAll('rect')).toBeEmpty();
     expect(page.body.querySelectorAll('g')).toBeEmpty();
   });
 
@@ -76,6 +85,7 @@ describe('no annotations', () => {
 
     expect(page.body.querySelectorAll('line')).toBeEmpty();
     expect(page.body.querySelectorAll('text')).toBeEmpty();
+    expect(page.body.querySelectorAll('rect')).toBeEmpty();
     expect(page.body.querySelectorAll('g')).toBeEmpty();
   });
 
@@ -88,6 +98,7 @@ describe('no annotations', () => {
         show: true,
       },
       value: (VIEWPORT.yMax + VIEWPORT.yMin) / 2,
+      isEditable: true,
     };
     const X_ANNOTATION = {
       color: 'blue',
@@ -111,6 +122,9 @@ describe('no annotations', () => {
     let yLine = page.body.querySelector(Y_LINE_SELECTOR);
     let yText = page.body.querySelector(Y_TEXT_SELECTOR);
     let yTextValue = page.body.querySelector(Y_TEXT_VALUE_SELECTOR);
+    let yHandle = page.body.querySelector(DRAGGABLE_HANDLE_SELECTOR);
+    let yHandleDraggableLineOne = page.body.querySelector(DRAGGABLE_LINE_ONE_SELECTOR);
+    let yHandleDraggableLineTwo = page.body.querySelector(DRAGGABLE_LINE_TWO_SELECTOR);
     let yThresholdGroup = page.body.querySelector(Y_THRESHOLD_SELECTOR);
     let xAnnotationGroup = page.body.querySelector(X_ANNOTATION_GROUP_SELECTOR);
 
@@ -119,6 +133,9 @@ describe('no annotations', () => {
     expect(yLine).not.toBeNull();
     expect(yText).not.toBeNull();
     expect(yTextValue).not.toBeNull();
+    expect(yHandle).not.toBeNull();
+    expect(yHandleDraggableLineOne).not.toBeNull();
+    expect(yHandleDraggableLineTwo).not.toBeNull();
     expect(yThresholdGroup).not.toBeNull();
     expect(xAnnotationGroup).not.toBeNull();
 
@@ -139,6 +156,9 @@ describe('no annotations', () => {
     yText = page.body.querySelector(Y_TEXT_SELECTOR);
     yTextValue = page.body.querySelector(Y_TEXT_VALUE_SELECTOR);
     yThresholdGroup = page.body.querySelector(Y_THRESHOLD_SELECTOR);
+    yHandle = page.body.querySelector(DRAGGABLE_HANDLE_SELECTOR);
+    yHandleDraggableLineOne = page.body.querySelector(DRAGGABLE_LINE_ONE_SELECTOR);
+    yHandleDraggableLineTwo = page.body.querySelector(DRAGGABLE_LINE_TWO_SELECTOR);
     xAnnotationGroup = page.body.querySelector(X_ANNOTATION_GROUP_SELECTOR);
 
     expect(xLine).toBeNull();
@@ -146,6 +166,9 @@ describe('no annotations', () => {
     expect(yLine).toBeNull();
     expect(yText).toBeNull();
     expect(yTextValue).toBeNull();
+    expect(yHandle).toBeNull();
+    expect(yHandleDraggableLineOne).toBeNull();
+    expect(yHandleDraggableLineTwo).toBeNull();
     expect(yThresholdGroup).toBeNull();
     expect(xAnnotationGroup).toBeNull();
   });
@@ -309,7 +332,6 @@ describe('x annotation', () => {
         ],
       },
     });
-
     expect(page.body.querySelectorAll(X_TEXT_SELECTOR)).toHaveLength(1);
     expect(page.body.querySelectorAll(X_ANNOTATION_GROUP_SELECTOR)).toHaveLength(1);
     const text = page.body.querySelector(X_TEXT_SELECTOR) as SVGTextElement;
@@ -769,6 +791,7 @@ describe('y annotation', () => {
     });
     expect(page.body.querySelectorAll('g')).toBeEmpty();
     expect(page.body.querySelectorAll('line')).toBeEmpty();
+    expect(page.body.querySelectorAll('rect')).toBeEmpty();
     expect(page.body.querySelectorAll('text')).toBeEmpty();
   });
 
@@ -785,13 +808,19 @@ describe('y annotation', () => {
     });
     expect(page.body.querySelectorAll('g')).toBeEmpty();
     expect(page.body.querySelectorAll('line')).toBeEmpty();
+    expect(page.body.querySelectorAll('rect')).toBeEmpty();
     expect(page.body.querySelectorAll('text')).toBeEmpty();
   });
 
   it('renders single annotation bisecting the viewport', async () => {
     const { page } = await newAnnotationsPage({
       annotations: {
-        y: [Y_ANNOTATION],
+        y: [
+          {
+            ...Y_ANNOTATION,
+            isEditable: true,
+          },
+        ],
       },
     });
 
@@ -802,6 +831,10 @@ describe('y annotation', () => {
 
     // Has expected lines
     expect(page.body.querySelectorAll(Y_LINE_SELECTOR)).toHaveLength(1);
+    expect(page.body.querySelectorAll(DRAGGABLE_HANDLE_SELECTOR)).toHaveLength(1);
+    expect(page.body.querySelectorAll(DRAGGABLE_LINE_TWO_SELECTOR)).toHaveLength(1);
+    expect(page.body.querySelectorAll(DRAGGABLE_LINE_ONE_SELECTOR)).toHaveLength(1);
+
     expect(page.body.querySelectorAll(X_LINE_SELECTOR)).toBeEmpty();
 
     // Line bisects the viewport vertically
@@ -827,6 +860,7 @@ describe('y annotation', () => {
               ...Y_ANNOTATION,
               value: VIEWPORT.yMax - 4,
               showValue: false,
+              isEditable: true,
             },
           ],
         },
@@ -838,11 +872,13 @@ describe('y annotation', () => {
     expect(page.body.querySelectorAll(Y_TEXT_SELECTOR)).toHaveLength(2);
 
     const groupY = page.body.querySelectorAll(Y_THRESHOLD_SELECTOR)[1] as SVGElement;
-    expect(groupY.childElementCount).toEqual(3);
+    expect(groupY.childElementCount).toEqual(6);
     expect(groupY.querySelectorAll(Y_TEXT_SELECTOR)).toHaveLength(1);
     expect(groupY.querySelectorAll(Y_LINE_SELECTOR)).toHaveLength(1);
     expect(groupY.querySelectorAll(Y_TEXT_VALUE_SELECTOR)).toHaveLength(1);
-
+    expect(groupY.querySelectorAll(DRAGGABLE_LINE_ONE_SELECTOR)).toHaveLength(1);
+    expect(groupY.querySelectorAll(DRAGGABLE_LINE_TWO_SELECTOR)).toHaveLength(1);
+    expect(groupY.querySelectorAll(DRAGGABLE_HANDLE_SELECTOR)).toHaveLength(1);
     expect(page.body.querySelector('svg')).toMatchSnapshot();
   });
 
@@ -860,7 +896,7 @@ describe('y annotation', () => {
   it('renders updated color', async () => {
     const { page } = await newAnnotationsPage({
       annotations: {
-        y: [Y_ANNOTATION],
+        y: [{ ...Y_ANNOTATION, isEditable: true, showValue: true }],
       },
     });
 
@@ -873,6 +909,8 @@ describe('y annotation', () => {
             {
               ...Y_ANNOTATION,
               color: UPDATED_COLOR,
+              isEditable: true,
+              showValue: true,
             },
           ],
         },
@@ -883,12 +921,35 @@ describe('y annotation', () => {
 
     const lineY = page.body.querySelector(Y_LINE_SELECTOR) as SVGLineElement;
     expect(lineY.style.stroke).toBe(UPDATED_COLOR);
+
+    const handle = page.body.querySelector(DRAGGABLE_HANDLE_SELECTOR) as SVGRectElement;
+    expect(handle.style.stroke).toBe(UPDATED_COLOR);
+
+    const valueText = page.body.querySelector(Y_TEXT_VALUE_SELECTOR) as SVGTextElement;
+    expect(valueText.style.fill).toBe(UPDATED_COLOR);
+
+    const labelText = page.body.querySelector(Y_TEXT_SELECTOR) as SVGTextElement;
+    expect(labelText.style.fill).toBe(UPDATED_COLOR);
+
+    const handleLineOne = page.body.querySelector(DRAGGABLE_LINE_ONE_SELECTOR) as SVGLineElement;
+    expect(handleLineOne.style.stroke).toBe('gray');
+
+    const handleLineTwo = page.body.querySelector(DRAGGABLE_LINE_TWO_SELECTOR) as SVGLineElement;
+    expect(handleLineTwo.style.stroke).toBe('gray');
   });
 
   it('updates position and text value when value is updated', async () => {
     const { page } = await newAnnotationsPage({
       annotations: {
-        y: [Y_ANNOTATION],
+        y: [
+          Y_ANNOTATION,
+          {
+            ...Y_ANNOTATION,
+            value: VIEWPORT.yMin + 2,
+            showValue: true,
+            isEditable: true,
+          },
+        ],
       },
     });
 
@@ -896,10 +957,12 @@ describe('y annotation', () => {
       {
         annotations: {
           y: [
+            Y_ANNOTATION,
             {
               ...Y_ANNOTATION,
               value: VIEWPORT.yMax,
               showValue: true,
+              isEditable: true,
             },
           ],
         },
@@ -909,13 +972,18 @@ describe('y annotation', () => {
 
     await page.waitForChanges();
 
-    const lineY = page.body.querySelector(Y_LINE_SELECTOR) as SVGLineElement;
+    expect(page.body.querySelector('svg')).toMatchSnapshot();
+
+    const lineY = page.body.querySelectorAll(Y_LINE_SELECTOR)[1] as SVGLineElement;
 
     const updatedY = 0;
     expect(lineY.getAttribute('y1')).toEqual(updatedY.toString());
     expect(lineY.getAttribute('y2')).toEqual(updatedY.toString());
 
-    const valueText = page.body.querySelector(Y_TEXT_VALUE_SELECTOR) as SVGTextElement;
+    const handle = page.body.querySelectorAll(DRAGGABLE_HANDLE_SELECTOR)[1] as SVGRectElement;
+    expect(handle.getAttribute('y')).toEqual((updatedY + HANDLE_OFFSET_Y).toString());
+
+    const valueText = page.body.querySelectorAll(Y_TEXT_VALUE_SELECTOR)[1] as SVGTextElement;
     expect(valueText.getAttribute('display')).toEqual('inline');
     expect(valueText.toString()).toBe(VIEWPORT.yMax.toString());
   });
@@ -945,7 +1013,8 @@ describe('y annotation', () => {
 
   it('updates annotation label and value text visibility', async () => {
     const SOME_LABEL = 'some-label!';
-    const newValue = (VIEWPORT.yMax + VIEWPORT.yMin) / 3;
+    const newValue = 33.3333333333333333;
+    const expectedDisplayValue = '33.33';
     const { page } = await newAnnotationsPage({
       annotations: {
         y: [
@@ -958,6 +1027,7 @@ describe('y annotation', () => {
             },
             showValue: false,
             value: newValue,
+            isEditable: true,
           },
         ],
       },
@@ -989,6 +1059,7 @@ describe('y annotation', () => {
               },
               value: newValue,
               showValue: true,
+              isEditable: true,
             },
             Y_ANNOTATION,
           ],
@@ -1005,7 +1076,7 @@ describe('y annotation', () => {
 
     const valueTextTwo = page.body.querySelectorAll(Y_TEXT_VALUE_SELECTOR)[0] as SVGTextElement;
     expect(valueTextTwo.getAttribute('display')).toEqual('inline');
-    expect(valueTextTwo.toString()).toBe(newValue.toString());
+    expect(valueTextTwo.toString()).toBe(expectedDisplayValue);
 
     const stableLabelTextTwo = page.body.querySelectorAll(Y_TEXT_SELECTOR)[1] as SVGTextElement;
     expect(stableLabelTextTwo.getAttribute('display')).toEqual('inline');
@@ -1063,10 +1134,9 @@ describe('y annotation', () => {
 
     const valueTextFour = page.body.querySelector(Y_TEXT_VALUE_SELECTOR) as SVGTextElement;
     expect(valueTextFour.getAttribute('display')).toEqual('inline');
-    expect(valueTextFour.toString()).toBe(newValue.toString());
+    expect(valueTextFour.toString()).toBe(expectedDisplayValue);
   });
 
-  // TODO CLEAN UP!
   it('updates annotation label if added/removed', async () => {
     const SOME_LABEL = 'some-label!';
     const { page } = await newAnnotationsPage({
@@ -1234,6 +1304,7 @@ describe('y annotation', () => {
             ...Y_ANNOTATION,
             value: VIEWPORT.yMin + 3,
             showValue: false,
+            isEditable: true,
           },
         ],
       },
@@ -1241,6 +1312,9 @@ describe('y annotation', () => {
     expect(page.body.querySelectorAll(Y_THRESHOLD_SELECTOR)).toHaveLength(2);
     expect(page.body.querySelectorAll(Y_TEXT_SELECTOR)).toHaveLength(2);
     expect(page.body.querySelectorAll(Y_TEXT_VALUE_SELECTOR)).toHaveLength(2);
+    expect(page.body.querySelectorAll(DRAGGABLE_HANDLE_SELECTOR)).toHaveLength(2);
+    expect(page.body.querySelectorAll(DRAGGABLE_LINE_TWO_SELECTOR)).toHaveLength(2);
+    expect(page.body.querySelectorAll(DRAGGABLE_LINE_ONE_SELECTOR)).toHaveLength(2);
 
     render(
       {
@@ -1251,11 +1325,13 @@ describe('y annotation', () => {
               ...Y_ANNOTATION,
               value: VIEWPORT.yMin + 2,
               showValue: true,
+              isEditable: true,
             },
             {
               ...Y_ANNOTATION,
               value: VIEWPORT.yMax - 1,
               showValue: false,
+              isEditable: true,
             },
             {
               ...Y_ANNOTATION,
@@ -1276,6 +1352,173 @@ describe('y annotation', () => {
     expect(page.body.querySelectorAll(Y_THRESHOLD_SELECTOR)).toHaveLength(5);
     expect(page.body.querySelectorAll(Y_TEXT_SELECTOR)).toHaveLength(5);
     expect(page.body.querySelectorAll(Y_TEXT_VALUE_SELECTOR)).toHaveLength(5);
+    expect(page.body.querySelectorAll(DRAGGABLE_HANDLE_SELECTOR)).toHaveLength(5);
+    expect(page.body.querySelectorAll(DRAGGABLE_LINE_TWO_SELECTOR)).toHaveLength(5);
+    expect(page.body.querySelectorAll(DRAGGABLE_LINE_ONE_SELECTOR)).toHaveLength(5);
     expect(page.body.querySelector('svg')).toMatchSnapshot();
+  });
+
+  it('renders different draggable handles for annotations according to showValue', async () => {
+    const { page } = await newAnnotationsPage({
+      annotations: {
+        y: [
+          {
+            ...Y_ANNOTATION,
+            showValue: true,
+            isEditable: true,
+            color: 'red',
+          },
+          {
+            ...Y_ANNOTATION,
+            value: VIEWPORT.yMin + 3,
+            showValue: false,
+            isEditable: true,
+            color: 'blue',
+          },
+        ],
+      },
+    });
+    expect(page.body.querySelectorAll(Y_THRESHOLD_SELECTOR)).toHaveLength(2);
+    expect(page.body.querySelectorAll(Y_TEXT_SELECTOR)).toHaveLength(2);
+    expect(page.body.querySelectorAll(Y_TEXT_VALUE_SELECTOR)).toHaveLength(2);
+    expect(page.body.querySelectorAll(DRAGGABLE_HANDLE_SELECTOR)).toHaveLength(2);
+    expect(page.body.querySelectorAll(DRAGGABLE_LINE_TWO_SELECTOR)).toHaveLength(2);
+    expect(page.body.querySelectorAll(DRAGGABLE_LINE_ONE_SELECTOR)).toHaveLength(2);
+
+    const draggableHandleOne = page.body.querySelectorAll(DRAGGABLE_HANDLE_SELECTOR)[0] as SVGRectElement;
+    expect(draggableHandleOne.getAttribute('width')).toEqual(HANDLE_WIDTH.toString());
+
+    const draggableHandleTwo = page.body.querySelectorAll(DRAGGABLE_HANDLE_SELECTOR)[1] as SVGRectElement;
+    expect(draggableHandleTwo.getAttribute('width')).toEqual(SMALL_HANDLE_WIDTH.toString());
+
+    expect(page.body.querySelector('svg')).toMatchSnapshot();
+  });
+
+  it('updates threshold handle visibility depending on isEditable', async () => {
+    const SOME_LABEL = 'some-label!';
+    const newValue = 33.3333333333333333;
+    const { page } = await newAnnotationsPage({
+      annotations: {
+        y: [
+          Y_ANNOTATION,
+          {
+            ...Y_ANNOTATION,
+            label: {
+              text: SOME_LABEL,
+              show: true,
+            },
+            value: newValue,
+          },
+        ],
+      },
+    });
+
+    render(
+      {
+        annotations: {
+          y: [
+            Y_ANNOTATION,
+            {
+              ...Y_ANNOTATION,
+              label: {
+                text: SOME_LABEL,
+                show: true,
+              },
+              showValue: false,
+              value: newValue,
+              isEditable: true,
+            },
+          ],
+        },
+      },
+      page
+    );
+
+    const stableDraggableHandleOne = page.body.querySelectorAll(DRAGGABLE_HANDLE_SELECTOR)[0] as SVGRectElement;
+    expect(stableDraggableHandleOne.getAttribute('display')).toEqual('none');
+
+    const stableDraggableFirstLineOne = page.body.querySelectorAll(DRAGGABLE_LINE_ONE_SELECTOR)[0] as SVGRectElement;
+    expect(stableDraggableFirstLineOne.getAttribute('display')).toEqual('none');
+
+    const stableDraggableSecondLineOne = page.body.querySelectorAll(DRAGGABLE_LINE_TWO_SELECTOR)[0] as SVGRectElement;
+    expect(stableDraggableSecondLineOne.getAttribute('display')).toEqual('none');
+
+    const draggableHandleOne = page.body.querySelectorAll(DRAGGABLE_HANDLE_SELECTOR)[1] as SVGRectElement;
+    expect(draggableHandleOne.getAttribute('display')).toEqual('inline');
+
+    const draggableFirstLineOne = page.body.querySelectorAll(DRAGGABLE_LINE_ONE_SELECTOR)[1] as SVGRectElement;
+    expect(draggableFirstLineOne.getAttribute('display')).toEqual('inline');
+
+    const draggableSecondLineOne = page.body.querySelectorAll(DRAGGABLE_LINE_TWO_SELECTOR)[1] as SVGRectElement;
+    expect(draggableSecondLineOne.getAttribute('display')).toEqual('inline');
+
+    render(
+      {
+        annotations: {
+          y: [
+            {
+              ...Y_ANNOTATION,
+              label: {
+                text: SOME_LABEL,
+                show: false,
+              },
+              value: newValue,
+              showValue: false,
+              isEditable: true,
+            },
+            Y_ANNOTATION,
+          ],
+        },
+      },
+      page
+    );
+
+    expect(page.body.querySelector('svg')).toMatchSnapshot();
+
+    const draggableHandleTwo = page.body.querySelectorAll(DRAGGABLE_HANDLE_SELECTOR)[0] as SVGRectElement;
+    expect(draggableHandleTwo.getAttribute('display')).toEqual('inline');
+
+    const draggableFirstLineTwo = page.body.querySelectorAll(DRAGGABLE_LINE_ONE_SELECTOR)[0] as SVGRectElement;
+    expect(draggableFirstLineTwo.getAttribute('display')).toEqual('inline');
+
+    const draggableSecondLineTwo = page.body.querySelectorAll(DRAGGABLE_LINE_TWO_SELECTOR)[0] as SVGRectElement;
+    expect(draggableSecondLineTwo.getAttribute('display')).toEqual('inline');
+
+    const stableDraggableHandleTwo = page.body.querySelectorAll(DRAGGABLE_HANDLE_SELECTOR)[1] as SVGRectElement;
+    expect(stableDraggableHandleTwo.getAttribute('display')).toEqual('none');
+
+    const stableDraggableFirstLineTwo = page.body.querySelectorAll(DRAGGABLE_LINE_ONE_SELECTOR)[1] as SVGRectElement;
+    expect(stableDraggableFirstLineTwo.getAttribute('display')).toEqual('none');
+
+    const stableDraggableSecondLineTwo = page.body.querySelectorAll(DRAGGABLE_LINE_TWO_SELECTOR)[1] as SVGRectElement;
+    expect(stableDraggableSecondLineTwo.getAttribute('display')).toEqual('none');
+
+    render(
+      {
+        annotations: {
+          y: [
+            {
+              ...Y_ANNOTATION,
+              label: {
+                text: SOME_LABEL,
+                show: true,
+              },
+              value: newValue,
+              showValue: true,
+            },
+          ],
+        },
+      },
+      page
+    );
+
+    const draggableHandleThree = page.body.querySelectorAll(DRAGGABLE_HANDLE_SELECTOR)[0] as SVGRectElement;
+    expect(draggableHandleThree.getAttribute('display')).toEqual('none');
+
+    const draggableFirstLineThree = page.body.querySelectorAll(DRAGGABLE_LINE_ONE_SELECTOR)[0] as SVGRectElement;
+    expect(draggableFirstLineThree.getAttribute('display')).toEqual('none');
+
+    const draggableSecondLineThree = page.body.querySelectorAll(DRAGGABLE_LINE_TWO_SELECTOR)[0] as SVGRectElement;
+    expect(draggableSecondLineThree.getAttribute('display')).toEqual('none');
   });
 });

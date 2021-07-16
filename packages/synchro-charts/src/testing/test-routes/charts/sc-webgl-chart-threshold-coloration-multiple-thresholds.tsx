@@ -78,6 +78,7 @@ export class ScWebglChartThresholdColorationMultipleThresholds {
                 showValue: true,
                 color: 'purple',
                 comparisonOperator: COMPARISON_OPERATOR.GREATER_THAN_EQUAL,
+                isEditable: true,
               },
             ],
           }}

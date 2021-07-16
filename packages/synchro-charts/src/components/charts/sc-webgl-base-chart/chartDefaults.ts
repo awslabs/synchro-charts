@@ -11,7 +11,7 @@ export const DEFAULT_BASE_CONFIG: BaseConfig = {
     yMax: 10000,
   },
   // width is width - marginLeft - marginRight
-  size: { width: 400 + 50 + 40, height: 350, marginLeft: 50, marginRight: 40, marginTop: 8, marginBottom: 30 },
+  size: { width: 400 + 50 + 50, height: 350, marginLeft: 50, marginRight: 50, marginTop: 8, marginBottom: 30 },
 };
 
 export const DEFAULT_CHART_CONFIG: BaseChartConfig = {
@@ -23,7 +23,7 @@ export const DEFAULT_CHART_CONFIG: BaseChartConfig = {
     yMax: 10000,
   },
   // width is width - marginLeft - marginRight
-  size: { width: 400 + 50 + 25, height: 350, marginLeft: 50, marginRight: 40, marginTop: 24, marginBottom: 30 },
+  size: { width: 400 + 50 + 25, height: 350, marginLeft: 50, marginRight: 50, marginTop: 24, marginBottom: 30 },
   movement: {
     enableXScroll: true,
     enableYScroll: false,

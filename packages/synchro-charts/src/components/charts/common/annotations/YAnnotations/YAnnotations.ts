@@ -9,10 +9,26 @@ const PADDING = 5;
 const Y_ANNOTATION_TEXT_PADDING = 3;
 const Y_ANNOTATION_TEXT_LEFT_PADDING = 8;
 
+const HANDLE_OFFSET_X = 1;
+export const HANDLE_OFFSET_Y = -11;
+export const HANDLE_WIDTH = 45;
+export const SMALL_HANDLE_WIDTH = 18;
+const HANDLE_HEIGHT = 20;
+
+const DRAGGABLE_LINE_OFFSET_Y = 5;
+const DRAGGABLE_LINE_OFFSET_X = 40;
+const SMALL_DRAGGABLE_LINE_OFFSET_X = 13;
+const DRAGGABLE_LINE_LENGTH = 10;
+const DRAGGABLE_LINE_STROKE = 1;
+const DRAGGABLE_LINE_SEPARATION = 2;
+
 export const TEXT_SELECTOR = 'text.y-text';
 export const TEXT_VALUE_SELECTOR = 'text.y-value-text';
 export const ANNOTATION_GROUP_SELECTOR = 'g.y-annotation';
 export const LINE_SELECTOR = 'line.y-line';
+export const DRAGGABLE_HANDLE_SELECTOR = 'rect.y-annotation';
+export const DRAGGABLE_LINE_ONE_SELECTOR = 'line.y-handle-one';
+export const DRAGGABLE_LINE_TWO_SELECTOR = 'line.y-handle-two';
 
 export const renderYAnnotations = ({
   container,
@@ -37,6 +53,27 @@ export const renderYAnnotations = ({
   const getYAnnotationValueTextY = (yAnnotation: YAnnotation): number =>
     getYPosition(yAnnotation) + Y_ANNOTATION_TEXT_PADDING;
   const getYAnnotationTextY = (yAnnotation: YAnnotation): number => getYPosition(yAnnotation) - PADDING;
+  const getYAnnotationHandleY = (yAnnotation: YAnnotation): number => getYPosition(yAnnotation) + HANDLE_OFFSET_Y;
+  const getYAnnotationDraggableLineY1 = (yAnnotation: YAnnotation): number =>
+    getYPosition(yAnnotation) + HANDLE_OFFSET_Y + DRAGGABLE_LINE_OFFSET_Y;
+  const getYAnnotationDraggableLineY2 = (yAnnotation: YAnnotation): number =>
+    getYPosition(yAnnotation) + HANDLE_OFFSET_Y + DRAGGABLE_LINE_OFFSET_Y + DRAGGABLE_LINE_LENGTH;
+
+  const YAnnotationDragHandleVisibility = (yAnnotation: YAnnotation): string =>
+    yAnnotation.isEditable ? 'inline' : 'none';
+  const YAnnotationDragHandlePointerActions = (yAnnotation: YAnnotation): string =>
+    yAnnotation.isEditable ? 'auto' : 'none';
+
+  const getYHandleWidth = (yAnnotation: YAnnotation): number =>
+    getValueTextVisibility(yAnnotation) === 'inline' ? HANDLE_WIDTH : SMALL_HANDLE_WIDTH;
+  const getDraggableLineTwoX = (yAnnotation: YAnnotation): number =>
+    getValueTextVisibility(yAnnotation) === 'inline'
+      ? width + DRAGGABLE_LINE_OFFSET_X + DRAGGABLE_LINE_SEPARATION
+      : width + SMALL_DRAGGABLE_LINE_OFFSET_X + DRAGGABLE_LINE_SEPARATION;
+  const getDraggableLineOneX = (yAnnotation: YAnnotation): number =>
+    getValueTextVisibility(yAnnotation) === 'inline'
+      ? width + DRAGGABLE_LINE_OFFSET_X
+      : width + SMALL_DRAGGABLE_LINE_OFFSET_X;
 
   const annotationSelection = select(container)
     .selectAll(ANNOTATION_GROUP_SELECTOR)
@@ -69,7 +106,7 @@ export const renderYAnnotations = ({
     .attr('x', width + Y_ANNOTATION_TEXT_LEFT_PADDING)
     .attr('text-anchor', 'start')
     .attr('y', getYAnnotationValueTextY)
-    .text(annotation => getValueText({ annotation, resolution, viewport }))
+    .text(annotation => getValueText({ annotation, resolution, viewport, niceDisplayValueText: true }))
     .style('user-select', 'none')
     .style('pointer-events', 'none')
     .style('fill', getColor);
@@ -88,13 +125,53 @@ export const renderYAnnotations = ({
     .style('pointer-events', 'none')
     .style('fill', getColor);
 
+  // TODO add getVisibility for the draggable handles depending on if the annotation is editable
+  // TODO should the draggable handle be visible if the value text is not visible?
+
+  /** Create Draggable Annotation Handle */
+  annotationGroup
+    .append('rect')
+    .attr('display', YAnnotationDragHandleVisibility)
+    .attr('class', 'y-annotation')
+    .attr('width', getYHandleWidth)
+    .attr('height', HANDLE_HEIGHT)
+    .attr('x', width + HANDLE_OFFSET_X)
+    .attr('y', getYAnnotationHandleY)
+    .style('stroke', getColor)
+    .style('stroke-width', ANNOTATION_STROKE_WIDTH)
+    .style('fill-opacity', 0)
+    .style('pointer-events', YAnnotationDragHandlePointerActions);
+
+  /** Create lines for draggable annotation handle */
+  annotationGroup
+    .append('line')
+    .attr('display', YAnnotationDragHandleVisibility)
+    .attr('class', 'y-handle-one')
+    .attr('x1', getDraggableLineOneX)
+    .attr('x2', getDraggableLineOneX)
+    .attr('y1', getYAnnotationDraggableLineY1)
+    .attr('y2', getYAnnotationDraggableLineY2)
+    .style('stroke', 'gray')
+    .style('stroke-width', DRAGGABLE_LINE_STROKE);
+
+  annotationGroup
+    .append('line')
+    .attr('display', YAnnotationDragHandleVisibility)
+    .attr('class', 'y-handle-two')
+    .attr('x1', getDraggableLineTwoX)
+    .attr('x2', getDraggableLineTwoX)
+    .attr('y1', getYAnnotationDraggableLineY1)
+    .attr('y2', getYAnnotationDraggableLineY2)
+    .style('stroke', 'gray')
+    .style('stroke-width', DRAGGABLE_LINE_STROKE);
+
   /** Update Threshold Value Text */
   annotationSelection
     .select(TEXT_VALUE_SELECTOR)
     .attr('display', getValueTextVisibility)
     .attr('y', getYAnnotationValueTextY)
     .attr('x', width + Y_ANNOTATION_TEXT_LEFT_PADDING)
-    .text(annotation => getValueText({ annotation, resolution, viewport }))
+    .text(annotation => getValueText({ annotation, resolution, viewport, niceDisplayValueText: true }))
     .style('fill', getColor);
 
   /** Update Label Text */
@@ -113,6 +190,33 @@ export const renderYAnnotations = ({
     .attr('y1', getYPosition)
     .attr('y2', getYPosition)
     .style('stroke', getColor);
+
+  /** Update Draggable Handle */
+  annotationSelection
+    .select(DRAGGABLE_HANDLE_SELECTOR)
+    .attr('display', YAnnotationDragHandleVisibility)
+    .attr('y', getYAnnotationHandleY)
+    .attr('x', width + HANDLE_OFFSET_X)
+    .attr('width', getYHandleWidth)
+    .style('stroke', getColor)
+    .style('pointer-events', YAnnotationDragHandlePointerActions);
+
+  /** Update Handle Lines */
+  annotationSelection
+    .select(DRAGGABLE_LINE_ONE_SELECTOR)
+    .attr('display', YAnnotationDragHandleVisibility)
+    .attr('x1', getDraggableLineOneX)
+    .attr('x2', getDraggableLineOneX)
+    .attr('y1', getYAnnotationDraggableLineY1)
+    .attr('y2', getYAnnotationDraggableLineY2);
+
+  annotationSelection
+    .select(DRAGGABLE_LINE_TWO_SELECTOR)
+    .attr('display', YAnnotationDragHandleVisibility)
+    .attr('x1', getDraggableLineTwoX)
+    .attr('x2', getDraggableLineTwoX)
+    .attr('y1', getYAnnotationDraggableLineY1)
+    .attr('y2', getYAnnotationDraggableLineY2);
 
   /** Exit */
   annotationSelection.exit().remove();

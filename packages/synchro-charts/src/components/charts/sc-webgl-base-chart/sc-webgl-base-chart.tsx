@@ -543,6 +543,8 @@ export class ScWebglBaseChart {
         // TODO: Revisit this.
         // If no data streams are present we will fallback to a resolution of 0, i.e. 'raw' data
         resolution: this.dataStreams[0] ? this.dataStreams[0].resolution : 0,
+        onUpdate: this.onUpdate,
+        activeViewPort: this.activeViewPort,
       });
     }
 
