@@ -34,7 +34,7 @@ export const waitForChart = (cy: any) =>
     .click({ multiple: true });
 
 export const route = (params: Partial<SearchQueryParams>): string =>
-  `localhost:3333/tests/widget-test-route?${constructSearchQuery(params)}`;
+  `/tests/widget-test-route?${constructSearchQuery(params)}`;
 
 export const infoNameTestSelector = (id: DataStreamId): string => `#info-${id}`;
 

@@ -1,4 +1,4 @@
-const bcRoot = 'localhost:3333/tests/sc-webgl-bar-chart';
+const bcRoot = '/tests/sc-webgl-bar-chart';
 
 // @ts-ignore
 const VIEWPORT_HEIGHT = 600;
