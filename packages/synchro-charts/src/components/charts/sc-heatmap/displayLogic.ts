@@ -34,13 +34,11 @@ export const getBucketMargin = (toClipSpace: (time: number) => number, resolutio
 export const getBucketWidth = ({
   toClipSpace,
   resolution,
-  numDataStreams,
 }: {
   toClipSpace: (time: number) => number;
-  numDataStreams: number;
   resolution: number; // milliseconds
 }) => {
-  return (getDistanceFromDuration(toClipSpace, resolution) - getBucketMargin(toClipSpace, resolution)) / numDataStreams;
+  return getDistanceFromDuration(toClipSpace, resolution) - getBucketMargin(toClipSpace, resolution);
 };
 
 /**

@@ -52,7 +52,7 @@ const numBuckets = (streamVertexSets: number[][][]): number => {
   return 10 * streamVertexSets.reduce((totalBuckets, streamVertexSet) => totalBuckets + streamVertexSet.length, 0);
 };
 
-const getResolution = (
+export const getResolution = (
   viewport: ViewPort,
 ): number => {
   const duration = viewport.duration ?? viewport.end.getTime() - viewport.start.getTime();
@@ -78,7 +78,6 @@ const getUniformWidth = <T extends Primitive>(
 
   return getBucketWidth({
     toClipSpace,
-    numDataStreams: dataStreams.length,
     resolution,
   });
 };
