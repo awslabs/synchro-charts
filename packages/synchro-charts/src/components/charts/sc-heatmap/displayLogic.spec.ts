@@ -1,9 +1,10 @@
 import { clipSpaceConversion } from '../sc-webgl-base-chart/clipSpaceConversion';
-import { HeatmapColorPalette,
+import {
+  HeatmapColorPalette,
   getBucketWidth,
   getBucketColor,
   getSequential,
-  NUM_OF_COLORS_SEQUENTIAL
+  NUM_OF_COLORS_SEQUENTIAL,
 } from './displayLogic';
 import { MONTH_IN_MS, DAY_IN_MS } from '../../../utils/time';
 
@@ -27,7 +28,7 @@ describe('getBucketWidth', () => {
 });
 
 describe('getSequential', () => {
-  it('returns a blue sequential color palette', () => {
+  it('returns a color palette', () => {
     expect(COLOR_PALLETE.r.length).toBe(NUM_OF_COLORS_SEQUENTIAL);
     expect(COLOR_PALLETE.g.length).toBe(NUM_OF_COLORS_SEQUENTIAL);
     expect(COLOR_PALLETE.b.length).toBe(NUM_OF_COLORS_SEQUENTIAL);
