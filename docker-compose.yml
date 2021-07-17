@@ -13,12 +13,12 @@ services:
       - '3333'
 
   core:
-    image: 'cypress/included:6.4.0'
+    image: 'cypress/included:6.8.0'
     depends_on:
       - root
     environment:
       - CYPRESS_BASE_URL=http://root:3333
     working_dir: /app/packages/synchro-charts
-    command: npx cypress run --headless --browser chrome
+    entrypoint: ['/bin/sh', '-c', 'sleep 60 && cypress run --headless --browser chrome --env disableSnapshotTests=true']
     volumes:
       - .:/app
