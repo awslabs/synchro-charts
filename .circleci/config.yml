@@ -40,7 +40,8 @@ jobs:
           command: |
           docker-compose up --abort-on-container-exit --build
           docker-compose ps
-
+      - store_artifacts:
+                path: cypress/screenshots
 
 workflows:
   sample:
