@@ -37,11 +37,9 @@ jobs:
       #     command: yarn lint
       - run:
           name: Run Integ
-          command: |
-          docker-compose up --abort-on-container-exit --build
-          docker-compose ps
+          command: docker-compose up --abort-on-container-exit --build
       - store_artifacts:
-                path: cypress/screenshots
+          path: cypress/screenshots
 
 workflows:
   sample:
