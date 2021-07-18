@@ -10,6 +10,8 @@ jobs:
     docker:
       - image: cimg/node:14.0
       - image: cimg/base:2021.07
+    machine:
+      docker_layer_caching: false
     steps:
       - checkout
       - restore_cache:
@@ -24,15 +26,21 @@ jobs:
           key: v1-deps-{{ .Branch }}-{{ checksum "package.json" }}
           paths:
             - ~/.cache
+      # - run:
+      #     name: Run build
+      #     command: yarn build
+      # - run:
+      #     name: Run unit tests
+      #     command: yarn test
+      # - run:
+      #     name: Run lint
+      #     command: yarn lint
       - run:
-          name: Run build
-          command: yarn build
-      - run:
-          name: Run unit tests
-          command: yarn test
-      - run:
-          name: Run lint
-          command: yarn lint
+          name: Run Integ
+          command: |
+          docker-compose up --abort-on-container-exit --build
+          docker-compose ps
+
 
 workflows:
   sample:

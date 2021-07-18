@@ -21,7 +21,7 @@ const createInfos = (num: number): DataStreamInfo[] =>
   }));
 
 describe('status timeline', () => {
-  const root = 'localhost:3333/tests/status-timeline';
+  const root = '/tests/status-chart';
 
   const VIEWPORT_HEIGHT = 600;
   const VIEWPORT_WIDTH = 500;
@@ -282,7 +282,7 @@ describe('status timeline', () => {
 });
 
 describe('handles buffer increasing in size after initialization', () => {
-  const root = 'localhost:3333/tests/status-timeline';
+  const root = '/tests/status-chart';
   const VIEWPORT_HEIGHT = 600;
   const VIEWPORT_WIDTH = 500;
 
@@ -324,17 +324,16 @@ describe('handles buffer increasing in size after initialization', () => {
 
 describe('mesh', () => {
   const WAIT_MS = SECOND_IN_MS * 2;
-  const root = 'localhost:3333';
 
   it('renders a single status', () => {
-    cy.visit(`${root}/tests/sc-webgl-chart/single-status`);
+    cy.visit('/tests/sc-webgl-chart/single-status');
     cy.viewport(CHART_SIZE.width, CHART_SIZE.height);
     cy.wait(WAIT_MS);
     cy.get('#test-container').matchImageSnapshotOnCI();
   });
 
   it('renders multiple data streams as parallel status timelines', () => {
-    cy.visit(`${root}/tests/sc-webgl-chart/multiple-statuses`);
+    cy.visit('/tests/sc-webgl-chart/multiple-statuses');
     cy.viewport(200, 200);
     cy.wait(WAIT_MS);
     cy.get('#test-container').matchImageSnapshotOnCI();

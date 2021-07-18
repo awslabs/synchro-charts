@@ -1,0 +1,25 @@
+version: '3.6'
+
+services:
+  root:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - PORT=3333
+    volumes:
+      - '.:/app'
+      - '/app/node_modules'
+    ports:
+      - '3333'
+
+  core:
+    image: 'cypress/included:6.4.0'
+    depends_on:
+      - root
+    environment:
+      - CYPRESS_BASE_URL=http://root:3333
+    working_dir: /app/packages/synchro-charts
+    command: npx cypress run --headless --browser chrome
+    volumes:
+      - .:/app
