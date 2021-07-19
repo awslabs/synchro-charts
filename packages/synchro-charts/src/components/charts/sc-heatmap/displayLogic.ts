@@ -1,7 +1,8 @@
 import { getCSSColorByString } from '../common/getCSSColorByString';
 import { getDistanceFromDuration } from '../common/getDistanceFromDuration';
 
-import { MARGIN_FACTOR,
+import {
+  MARGIN_FACTOR,
   NUM_OF_COLORS_SEQUENTIAL,
   SEQUENTIAL_BASE_COLOR_INDEX,
   DEFAULT_SEQUENTIAL_MIN,

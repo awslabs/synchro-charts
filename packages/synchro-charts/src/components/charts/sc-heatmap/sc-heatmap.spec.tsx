@@ -1,4 +1,3 @@
-
 /* eslint-disable import/first */
 jest.mock('../../sc-size-provider/renderChild');
 jest.mock('../../sc-webgl-context/webglContext');
@@ -9,7 +8,7 @@ import { LEGEND_POSITION } from '../common/constants';
 import { Axis } from '../common/types';
 import { DataStream } from '../../../utils/dataTypes';
 import { LOADING_SPINNER_SELECTOR, ERROR_SYMBOL_SELECTOR } from '../../../testing/selectors';
-import { DataType } from '../../../utils/dataConstants'
+import { DataType } from '../../../utils/dataConstants';
 
 const VIEWPORT = { start: new Date(2000), end: new Date(2001, 0, 0), yMin: 0, yMax: 100 };
 const DATA_STREAM: DataStream<number> = {
@@ -252,11 +251,12 @@ describe('properties pass down correctly to chart implementation', () => {
   });
 
   it('sets the provided viewport, and has a y range set when viewport has none provided', async () => {
-    const { chart } = await heatmap({ viewport: VIEWPORT });
+    const viewport = { start: new Date(2000, 0, 0), end: new Date(2001, 0, 0) };
+    const { chart } = await heatmap({ viewport });
     const baseChart = chart.querySelector('sc-webgl-base-chart') as HTMLScWebglBaseChartElement;
 
     /** Start and end date is equal to what was provided */
-    expect(baseChart.viewport).toEqual(expect.objectContaining(VIEWPORT));
+    expect(baseChart.viewport).toEqual(expect.objectContaining(viewport));
 
     /** Y Range set since viewport had none provided */
     expect(baseChart.viewport.yMin).not.toBeDefined();

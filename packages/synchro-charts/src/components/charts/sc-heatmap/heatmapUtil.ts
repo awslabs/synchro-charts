@@ -81,7 +81,6 @@ export const calcHeatValues = ({
   resolution: number;
   viewport: ViewPort;
 }) => {
-  
   // if resolution is 0 then set the XAxisBucketRange to be 1 second
   const xAxisBucketRange = resolution === 0 ? SECOND_IN_MS : resolution;
   const { yMax, yMin } = viewport;

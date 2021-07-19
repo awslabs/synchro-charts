@@ -12,14 +12,12 @@ import {
 import bucketVert from './heatmap.vert';
 import bucketFrag from './heatmap.frag';
 import { WriteableBufferAttribute, WriteableInstancedBufferAttribute } from '../../sc-webgl-context/types';
-import { numDataPoints, vertices } from '../sc-webgl-base-chart/utils';
+import { numDataPoints } from '../sc-webgl-base-chart/utils';
 import { getBucketWidth, getSequential, getBucketColor } from './displayLogic';
 import { HeatValueMap, calcHeatValues } from './heatmapUtil';
 import { BUCKET_COUNT } from './heatmapConstants';
-import { isNumberDataStream } from '../../../utils/predicates';
 import { DataStream, Primitive, ViewPort } from '../../../utils/dataTypes';
 import { DAY_IN_MS, SECOND_IN_MS, HOUR_IN_MS, MINUTE_IN_MS } from '../../../utils/time';
-import { Threshold, ThresholdOptions } from '../common/types';
 
 type BucketBufferGeometry = BufferGeometry & {
   attributes: {
@@ -55,9 +53,11 @@ export const getResolution = (viewport: ViewPort): number => {
   const duration = viewport.duration ?? viewport.end.getTime() - viewport.start.getTime();
   if (duration > 5 * DAY_IN_MS) {
     return DAY_IN_MS;
-  } else if (duration > 3 * HOUR_IN_MS) {
+  }
+  if (duration > 3 * HOUR_IN_MS) {
     return HOUR_IN_MS;
-  } else if (duration > 3 * MINUTE_IN_MS) {
+  }
+  if (duration > 3 * MINUTE_IN_MS) {
     return MINUTE_IN_MS;
   }
   return SECOND_IN_MS;
@@ -66,7 +66,7 @@ export const getResolution = (viewport: ViewPort): number => {
 const getUniformWidth = <T extends Primitive>(
   dataStreams: DataStream<T>[],
   toClipSpace: (time: number) => number,
-  resolution: number,
+  resolution: number
 ): number => {
   if (dataStreams.length === 0) {
     return 0;
@@ -110,16 +110,15 @@ const updateMesh = ({
 
   mesh.count = numBuckets(heatValues);
 
-  for (const xAxisBucketStart in heatValues) {
-    let buckets = heatValues[xAxisBucketStart];
-    for (const bucketIndex in buckets) {
+  for (const [xAxisBucketStart, buckets] of Object.entries(heatValues)) {
+    for (const bucketIndex of Object.keys(buckets)) {
       bucket.array[positionIndex] = toClipSpace(+xAxisBucketStart);
       bucket.array[positionIndex + 1] = +bucketIndex * (viewport.yMax / BUCKET_COUNT);
 
       const bucketColor = getBucketColor(
         COLOR_PALETTE,
         buckets[bucketIndex].totalCount,
-        resolution / 1000 * dataStreams.length,
+        (resolution / 1000) * dataStreams.length
       );
       color.array[colorIndex] = bucketColor[0];
       color.array[colorIndex + 1] = bucketColor[1];
@@ -192,7 +191,7 @@ export const bucketMesh = ({
       },
       bucketHeight: {
         value: viewport.yMax / 10 - 2,
-      }
+      },
     },
   });
 

@@ -121,7 +121,7 @@ describe('create bucket mesh', () => {
       start: new Date(2000, 0, 0),
       end: new Date(2000, 0, 0, 0, 0, 10),
       yMin: 0,
-      yMax: 500
+      yMax: 500,
     };
     const mesh = bucketMesh({
       dataStreams: [
@@ -137,7 +137,7 @@ describe('create bucket mesh', () => {
       minBufferSize: MIN_BUFFER_SIZE,
       bufferFactor: BUFFER_FACTOR,
       viewport,
-    }); 
+    });
 
     expect(mesh.count).toEqual(1 * BUCKET_COUNT);
 
@@ -243,7 +243,6 @@ describe('create bucket mesh', () => {
   });
 
   it('draws three buckets for three separated data streams with two data points in first and last data stream and one data point in the second data stream ', () => {
-    const numberOfDataStreams = 3;
     const dataType = DataType.NUMBER;
     const mesh = bucketMesh({
       dataStreams: [
@@ -252,31 +251,23 @@ describe('create bucket mesh', () => {
           color: 'red',
           name: 'some name',
           resolution: 0,
-          data: [
-            DATA_POINT_1,
-            DATA_POINT_2,
-          ],
-          dataType: DataType.NUMBER,
+          data: [DATA_POINT_1, DATA_POINT_2],
+          dataType,
         },
         {
           id: 'data-stream-2',
           color: 'blue',
           name: 'some name',
           resolution: 0,
-          data: [
-            DATA_POINT_1
-          ],
-          dataType: DataType.NUMBER,
+          data: [DATA_POINT_1],
+          dataType,
         },
         {
           id: 'data-stream-3',
           name: 'some name',
           resolution: 0,
-          data: [
-            DATA_POINT_2,
-            DATA_POINT_3
-          ],
-          dataType: DataType.NUMBER,
+          data: [DATA_POINT_2, DATA_POINT_3],
+          dataType,
         },
       ],
       minBufferSize: 100,
@@ -290,9 +281,7 @@ describe('create bucket mesh', () => {
       resolution: RESOLUTION,
     });
 
-    expect(getDistanceFromDuration(toClipSpace, RESOLUTION) - getBucketMargin(toClipSpace, RESOLUTION)).toEqual(
-      width
-    );
+    expect(getDistanceFromDuration(toClipSpace, RESOLUTION) - getBucketMargin(toClipSpace, RESOLUTION)).toEqual(width);
     expect(mesh.count).toEqual(3 * BUCKET_COUNT);
 
     // Check for data point 1
@@ -448,7 +437,7 @@ describe('update bucket mesh', () => {
       start: new Date(2000, 0, 0),
       end: new Date(2000, 0, 0, 0, 0, 10),
       yMin: 0,
-      yMax: 500
+      yMax: 500,
     };
     const DATA_STREAM_TEMP_1: DataStream = {
       id: 'data-stream',
@@ -525,7 +514,7 @@ describe('update bucket mesh', () => {
       start: new Date(2000, 0, 0),
       end: new Date(2000, 0, 0, 0, 0, 10),
       yMin: 0,
-      yMax: 500
+      yMax: 500,
     };
     const DATA_STREAM_TEMP_2 = [
       {
