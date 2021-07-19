@@ -15,8 +15,6 @@ export const chartScene: ChartSceneCreator = ({
   bufferFactor,
   minBufferSize,
   onUpdate,
-  thresholdOptions,
-  thresholds,
 }) => {
   const scene = new Scene();
   const toClipSpace = clipSpaceConversion(viewport);

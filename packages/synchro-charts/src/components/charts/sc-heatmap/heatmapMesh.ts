@@ -108,26 +108,27 @@ const updateMesh = ({
     });
   }
 
+  // eslint-disable-next-line no-param-reassign
   mesh.count = numBuckets(heatValues);
 
-  for (const [xAxisBucketStart, buckets] of Object.entries(heatValues)) {
-    for (const bucketIndex of Object.keys(buckets)) {
+  Object.keys(heatValues).forEach((xAxisBucketStart: string) => {
+    Object.keys(heatValues[xAxisBucketStart]).forEach((bucketIndex: string) => {
       bucket.array[positionIndex] = toClipSpace(+xAxisBucketStart);
       bucket.array[positionIndex + 1] = +bucketIndex * (viewport.yMax / BUCKET_COUNT);
 
-      const bucketColor = getBucketColor(
+      const [r, g, b] = getBucketColor(
         COLOR_PALETTE,
-        buckets[bucketIndex].totalCount,
+        heatValues[xAxisBucketStart][bucketIndex].totalCount,
         (resolution / 1000) * dataStreams.length
       );
-      color.array[colorIndex] = bucketColor[0];
-      color.array[colorIndex + 1] = bucketColor[1];
-      color.array[colorIndex + 2] = bucketColor[2];
+      color.array[colorIndex] = r;
+      color.array[colorIndex + 1] = g;
+      color.array[colorIndex + 2] = b;
 
       colorIndex += NUM_COLOR_COMPONENTS;
       positionIndex += NUM_POSITION_COMPONENTS;
-    }
-  }
+    });
+  });
   bucket.needsUpdate = true;
   color.needsUpdate = true;
 };
@@ -221,6 +222,7 @@ export const updateBucketMesh = ({
     const resolution = getResolution(viewport);
     // eslint-disable-next-line no-param-reassign
     buckets.material.uniforms.width.value = getUniformWidth(dataStreams, toClipSpace, resolution);
+    // eslint-disable-next-line no-param-reassign
     buckets.material.uniforms.bucketHeight.value = viewport.yMax / 10 - 2;
     updateMesh({ dataStreams, mesh: buckets, toClipSpace, viewport });
   }
