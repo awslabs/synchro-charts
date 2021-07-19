@@ -48,6 +48,8 @@ jobs:
           command: docker-compose down
       - store_artifacts:
           path: packages/synchro-charts/cypress/screenshots
+      - store_artifacts:
+          path: packages/synchro-charts/cypress/videos
 
 workflows:
   sample:
