@@ -36,11 +36,11 @@ jobs:
     #   script: yarn test
     # - script: yarn lint
     #   name: 'Lint'
-    - stage: 'Integ Test'
-      name: 'Integ'
-      script:
-        - docker-compose up --abort-on-container-exit --build
-        - docker ps # logging to make sure both container are build and running
+    # - stage: 'Integ Test'
+    #   name: 'Integ'
+    #   script:
+    #     - docker-compose up --abort-on-container-exit --build
+    #     - docker ps # logging to make sure both container are build and running
 
 after_script:
   - docker-compose logs --tail="all"
