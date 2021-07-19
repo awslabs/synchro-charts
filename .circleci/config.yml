@@ -9,8 +9,7 @@ jobs:
   build-lint-test:
     docker:
       - image: cimg/node:14.0
-      - image: cimg/base:2021.07
-    environment: DOCKER_HOST=127.0.0.1
+    # environment: DOCKER_HOST=127.0.0.1
     steps:
       - checkout
       - restore_cache:
@@ -25,6 +24,12 @@ jobs:
           key: v1-deps-{{ .Branch }}-{{ checksum "package.json" }}
           paths:
             - ~/.cache
+      - run:
+          name: Install Docker Compose
+          command: |
+            curl -L https://github.com/docker/compose/releases/download/1.25.3/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
+            chmod +x ~/docker-compose
+            sudo mv ~/docker-compose /usr/local/bin/docker-compose
       # - run:
       #     name: Run build
       #     command: yarn build
