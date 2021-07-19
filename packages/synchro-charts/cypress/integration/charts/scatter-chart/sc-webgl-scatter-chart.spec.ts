@@ -76,10 +76,10 @@ describe('scatter chart', () => {
 
     // const TREND_VALUE = '3669.3688';
     // Display trend line label
-    cy.get('[data-test-tag="expandable-input"]')
-      .eq(1)
-      .invoke('text')
-      .should('equal', `${DATA_STREAM_NAME} (linear)`);
+    // cy.get('[data-test-tag="expandable-input"]')
+    //   .eq(1)
+    //   .invoke('text')
+    //   .should('equal', `${DATA_STREAM_NAME} (linear)`);
     // Display latest value
     // cy.get('[data-testid="current-value"]')
     //   .eq(1)
