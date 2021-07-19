@@ -1,25 +1,19 @@
 import { getCSSColorByString } from '../common/getCSSColorByString';
 import { getDistanceFromDuration } from '../common/getDistanceFromDuration';
+import { MARGIN_FACTOR,
+  NUM_OF_COLORS_SEQUENTIAL,
+  SEQUENTIAL_BASE_COLOR_INDEX,
+  DEFAULT_SEQUENTIAL_MIN,
+  DEFAULT_SEQUENTIAL_MID,
+  DEFAULT_SEQUENTIAL_MAX
+} from './heatmapConstants';
+
 
 export type HeatmapColorPalette = {
   r: number[];
   g: number[];
   b: number[];
 };
-export const NUM_OF_COLORS_SEQUENTIAL = 8;
-
-/**
- * Display Constants
- *
- * Adjust these to scale the margins provided within the heatmap.
- * This represent which fraction of the 'width' of a given bucket group a margin.
- */
-const MARGIN_FACTOR = 1 / 20;
-
-const SEQUENTIAL_BASE_COLOR_INDEX = 5;
-const DEFAULT_SEQUENTIAL_MIN = '#ffffff';
-const DEFAULT_SEQUENTIAL_MID = '#0073bb';
-const DEFAULT_SEQUENTIAL_MAX = '#012E4A';
 
 export const getBucketMargin = (toClipSpace: (time: number) => number, resolution: number) =>
   getDistanceFromDuration(toClipSpace, resolution * MARGIN_FACTOR);

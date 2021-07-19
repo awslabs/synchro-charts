@@ -15,12 +15,11 @@ import { WriteableBufferAttribute, WriteableInstancedBufferAttribute } from '../
 import { numDataPoints, vertices } from '../sc-webgl-base-chart/utils';
 import { getBucketWidth, getSequential, getBucketColor } from './displayLogic';
 import { HeatValueMap, calcHeatValues } from './heatmapUtil';
-import { getBreachedThreshold } from '../common/annotations/utils';
+import { BUCKET_COUNT } from './heatmapConstants';
 import { isNumberDataStream } from '../../../utils/predicates';
 import { DataStream, Primitive, ViewPort } from '../../../utils/dataTypes';
-import { MONTH_IN_MS, DAY_IN_MS, SECOND_IN_MS, HOUR_IN_MS, MINUTE_IN_MS } from '../../../utils/time';
+import { DAY_IN_MS, SECOND_IN_MS, HOUR_IN_MS, MINUTE_IN_MS } from '../../../utils/time';
 import { Threshold, ThresholdOptions } from '../common/types';
-import { DataType } from '../../../utils/dataConstants';
 
 type BucketBufferGeometry = BufferGeometry & {
   attributes: {
@@ -45,11 +44,11 @@ export type HeatmapBucketMesh = InstancedMesh & { geometry: BucketBufferGeometry
 export const NUM_POSITION_COMPONENTS = 2; // (x, y)
 const NUM_COLOR_COMPONENTS = 3; // (r, g, b)
 
-export const BUCKET_COUNT = 10;
-export const colorPalette = getSequential();
+export const COLOR_PALETTE = getSequential();
 
-const numBuckets = (streamVertexSets: number[][][]): number => {
-  return 10 * streamVertexSets.reduce((totalBuckets, streamVertexSet) => totalBuckets + streamVertexSet.length, 0);
+// Each timestamp can have 10 buckets
+const numBuckets = (heatValue: HeatValueMap): number => {
+  return 10 * Object.keys(heatValue).length;
 };
 
 export const getResolution = (
@@ -101,8 +100,7 @@ const updateMesh = ({
 
   // Set the number of instances of the bar are to be rendered.
   // eslint-disable-next-line no-param-reassign
-  mesh.count = numBuckets(streamVertexSets);
-
+  
   const { geometry } = mesh;
   const { color, bucket } = geometry.attributes;
   let positionIndex = 0;
@@ -120,13 +118,15 @@ const updateMesh = ({
     });
   }
 
+  mesh.count = numBuckets(heatValues);
+
   for (let xAxisBucketStart in heatValues) {
     let buckets = heatValues[xAxisBucketStart];
     for (let bucketIndex in buckets) {
       bucket.array[positionIndex] = toClipSpace(+xAxisBucketStart);
       bucket.array[positionIndex + 1] = +bucketIndex * (viewport.yMax / BUCKET_COUNT);
 
-      const bucketColor = getBucketColor(colorPalette, buckets[bucketIndex].totalCount, resolution / 1000 * streamVertexSets.length);
+      const bucketColor = getBucketColor(COLOR_PALETTE, buckets[bucketIndex].totalCount, resolution / 1000 * dataStreams.length);
       color.array[colorIndex] = bucketColor[0];
       color.array[colorIndex + 1] = bucketColor[1];
       color.array[colorIndex + 2] = bucketColor[2];

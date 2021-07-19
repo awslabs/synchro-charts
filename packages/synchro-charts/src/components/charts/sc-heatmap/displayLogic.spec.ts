@@ -4,8 +4,8 @@ import {
   getBucketWidth,
   getBucketColor,
   getSequential,
-  NUM_OF_COLORS_SEQUENTIAL,
 } from './displayLogic';
+import { NUM_OF_COLORS_SEQUENTIAL } from './heatmapConstants';
 import { MONTH_IN_MS, DAY_IN_MS } from '../../../utils/time';
 
 const VIEW_PORT = { start: new Date(2000, 0), end: new Date(2000, 1, 0), yMin: 0, yMax: 100 };
