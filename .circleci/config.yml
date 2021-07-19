@@ -15,8 +15,10 @@ jobs:
             - v1-deps-{{ .Branch }}
             - v1-deps
       - run:
-          name: Install yarn
+          name: Install yarn and node
           command: |
+            nvm install 14
+            nvm alias default 14
             curl -o- -L https://yarnpkg.com/install.sh | bash
             echo 'export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"' >> $BASH_ENV
       - run:
