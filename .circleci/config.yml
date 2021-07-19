@@ -14,9 +14,11 @@ jobs:
             - v1-deps-{{ .Branch }}-{{ checksum "package.json" }}
             - v1-deps-{{ .Branch }}
             - v1-deps
-      - run: |
-        curl -o- -L https://yarnpkg.com/install.sh | bash
-        echo 'export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"' >> $BASH_ENV
+      - run: 
+          name: Install yarn
+          command: |
+          curl -o- -L https://yarnpkg.com/install.sh | bash
+          echo 'export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"' >> $BASH_ENV
       - run:
           name: Install Dependencies
           command: yarn install --frozen-lockfile
