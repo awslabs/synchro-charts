@@ -15,7 +15,7 @@ import { WriteableBufferAttribute, WriteableInstancedBufferAttribute } from '../
 import { numDataPoints } from '../sc-webgl-base-chart/utils';
 import { getBucketWidth, getSequential, getBucketColor } from './displayLogic';
 import { HeatValueMap, calcHeatValues } from './heatmapUtil';
-import { BUCKET_COUNT } from './heatmapConstants';
+import { BUCKET_COUNT, CHANGE_RESOLUTION } from './heatmapConstants';
 import { DataStream, Primitive, ViewPort } from '../../../utils/dataTypes';
 import { DAY_IN_MS, SECOND_IN_MS, HOUR_IN_MS, MINUTE_IN_MS } from '../../../utils/time';
 
@@ -46,18 +46,18 @@ export const COLOR_PALETTE = getSequential();
 
 // Each timestamp can have 10 buckets
 const numBuckets = (heatValue: HeatValueMap): number => {
-  return 10 * Object.keys(heatValue).length;
+  return BUCKET_COUNT * Object.keys(heatValue).length;
 };
 
 export const getResolution = (viewport: ViewPort): number => {
   const duration = viewport.duration ?? viewport.end.getTime() - viewport.start.getTime();
-  if (duration > 5 * DAY_IN_MS) {
+  if (duration > (CHANGE_RESOLUTION + 1) * DAY_IN_MS) {
     return DAY_IN_MS;
   }
-  if (duration > 3 * HOUR_IN_MS) {
+  if (duration > CHANGE_RESOLUTION * HOUR_IN_MS) {
     return HOUR_IN_MS;
   }
-  if (duration > 3 * MINUTE_IN_MS) {
+  if (duration > CHANGE_RESOLUTION * MINUTE_IN_MS) {
     return MINUTE_IN_MS;
   }
   return SECOND_IN_MS;
@@ -90,7 +90,6 @@ const updateMesh = ({
   viewport: ViewPort;
 }) => {
   // Set the number of instances of the bar are to be rendered.
-  // eslint-disable-next-line no-param-reassign
   const { geometry } = mesh;
   const { color, bucket } = geometry.attributes;
   let positionIndex = 0;
@@ -98,15 +97,8 @@ const updateMesh = ({
 
   const resolution = getResolution(viewport);
 
-  let heatValues: HeatValueMap = {};
-  if (dataStreams.length !== 0) {
-    heatValues = calcHeatValues({
-      oldHeatValue: {},
-      dataStreams,
-      resolution,
-      viewport,
-    });
-  }
+  const heatValues =
+    dataStreams.length !== 0 ? calcHeatValues({ oldHeatValue: {}, dataStreams, resolution, viewport }) : {};
 
   // eslint-disable-next-line no-param-reassign
   mesh.count = numBuckets(heatValues);
@@ -119,7 +111,7 @@ const updateMesh = ({
       const [r, g, b] = getBucketColor(
         COLOR_PALETTE,
         heatValues[xAxisBucketStart][bucketIndex].totalCount,
-        (resolution / 1000) * dataStreams.length
+        (resolution / SECOND_IN_MS) * dataStreams.length
       );
       color.array[colorIndex] = r;
       color.array[colorIndex + 1] = g;
@@ -191,7 +183,7 @@ export const bucketMesh = ({
         value: getUniformWidth(dataStreams, toClipSpace, resolution),
       },
       bucketHeight: {
-        value: viewport.yMax / 10 - 2,
+        value: viewport.yMax / BUCKET_COUNT - 2,
       },
     },
   });
@@ -223,7 +215,7 @@ export const updateBucketMesh = ({
     // eslint-disable-next-line no-param-reassign
     buckets.material.uniforms.width.value = getUniformWidth(dataStreams, toClipSpace, resolution);
     // eslint-disable-next-line no-param-reassign
-    buckets.material.uniforms.bucketHeight.value = viewport.yMax / 10 - 2;
+    buckets.material.uniforms.bucketHeight.value = viewport.yMax / BUCKET_COUNT - 2;
     updateMesh({ dataStreams, mesh: buckets, toClipSpace, viewport });
   }
 };

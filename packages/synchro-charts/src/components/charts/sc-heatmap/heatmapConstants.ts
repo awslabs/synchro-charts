@@ -12,3 +12,5 @@ export const SEQUENTIAL_BASE_COLOR_INDEX = 5;
 export const DEFAULT_SEQUENTIAL_MIN = '#ffffff';
 export const DEFAULT_SEQUENTIAL_MID = '#0073bb';
 export const DEFAULT_SEQUENTIAL_MAX = '#012E4A';
+
+export const CHANGE_RESOLUTION = 2;

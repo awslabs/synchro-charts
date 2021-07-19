@@ -4,6 +4,7 @@ import { DataStream, SizeConfig, ViewPort } from '../../../utils/dataTypes';
 import { Threshold } from '../common/types';
 import { TrendResult } from '../common/trends/types';
 import { DATA_ALIGNMENT } from '../common/constants';
+import { select } from 'd3-selection';
 
 /**
  * The parent tooltip container, listens for events to ensure tooltip renders at the correct position at the correct time.
@@ -24,6 +25,7 @@ export class ScTooltip {
   @Prop() showDataStreamColor: boolean = true;
   @Prop() supportString!: boolean;
   @Prop() visualizesAlarms!: boolean;
+  @Prop() bucketHeight?: number;
   // If false, do not display a tooltip row if there is no associated point.
   @Prop() showBlankTooltipRows: boolean = false;
 
@@ -42,6 +44,7 @@ export class ScTooltip {
   @Prop() sortPoints: boolean = true;
 
   @State() selectedDate?: Date;
+  @State() selectedBucket?: number[];
 
   componentDidLoad() {
     this.dataContainer.addEventListener('mousemove', this.setSelectedDate);
@@ -54,6 +57,24 @@ export class ScTooltip {
     this.dataContainer.removeEventListener('mouseleave', this.hideTooltip);
     this.dataContainer.removeEventListener('mousedown', this.hideTooltip);
   }
+
+  getCursorBucket = ({ offsetY, buttons }: MouseEvent) => {
+    const isMouseBeingPressed = buttons > 0;
+
+    if (!isMouseBeingPressed && offsetY != null && this.bucketHeight != null) {
+      const { yMax } = this.viewport;
+      const { height } = this.size;
+
+      const bucketHeight = yMax / this.bucketHeight;
+      const ratio = offsetY / height;
+      const selectedHeight = yMax - yMax * ratio;
+      const lowerBucketRange = Math.floor(selectedHeight / bucketHeight) * bucketHeight;
+      const upperBucketRange = Math.ceil(selectedHeight / bucketHeight) * bucketHeight;
+      this.selectedBucket = [lowerBucketRange, upperBucketRange];
+    } else {
+      this.selectedBucket = undefined;
+    }
+  };
 
   setSelectedDate = ({ offsetX, buttons }: MouseEvent) => {
     const isMouseBeingPressed = buttons > 0;
@@ -75,6 +96,7 @@ export class ScTooltip {
 
   hideTooltip = () => {
     this.selectedDate = undefined;
+    this.selectedBucket = undefined;
   };
 
   render() {
