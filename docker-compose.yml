@@ -2,9 +2,9 @@ version: '3.2'
 
 services:
   root:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: node:14
+    command: sh -c "yarn start"
+    working_dir: /app/packages/synchro-charts
     environment:
       - PORT=3333
     volumes:
