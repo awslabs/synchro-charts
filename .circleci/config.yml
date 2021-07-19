@@ -41,7 +41,7 @@ jobs:
       #     command: yarn lint
       - run:
           environment:
-            DOCKER_HOST: 127.0.0.1
+            DOCKER_HOST: 127.0.0.1:3333
           name: Run Integ
           command: |
             set -x
