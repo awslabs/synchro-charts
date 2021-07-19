@@ -51,10 +51,16 @@ jobs:
       #     name: Run lint
       #     command: yarn lint
       - run:
+          name: list before
+          command: ls ./*/*
+      - run:
           name: Run Integ
           command: docker-compose up --abort-on-container-exit --build
+      - run:
+          name: list
+          command: ls ./*/*
       - store_artifacts:
-          path: cypress/screenshots
+          path: packages/synchro-charts/cypress/screenshots
 
 workflows:
   sample:

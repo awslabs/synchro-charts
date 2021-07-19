@@ -1,6 +1,6 @@
 import { CHART_VIZ_CONTAINER_SELECTOR } from '../../../../src/testing/selectors';
 
-const root = '/tests/status-chart';
+const root = '/tests/status-timeline';
 
 const VIEWPORT_HEIGHT = 600;
 const VIEWPORT_WIDTH = 500;

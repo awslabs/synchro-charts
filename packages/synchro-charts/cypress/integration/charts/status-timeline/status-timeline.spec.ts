@@ -21,7 +21,7 @@ const createInfos = (num: number): DataStreamInfo[] =>
   }));
 
 describe('status timeline', () => {
-  const root = '/tests/status-chart';
+  const root = '/tests/status-timeline';
 
   const VIEWPORT_HEIGHT = 600;
   const VIEWPORT_WIDTH = 500;
@@ -282,7 +282,7 @@ describe('status timeline', () => {
 });
 
 describe('handles buffer increasing in size after initialization', () => {
-  const root = '/tests/status-chart';
+  const root = '/tests/status-timeline';
   const VIEWPORT_HEIGHT = 600;
   const VIEWPORT_WIDTH = 500;
 
