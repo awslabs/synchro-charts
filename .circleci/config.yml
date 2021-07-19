@@ -43,9 +43,16 @@ jobs:
           environment:
             DOCKER_HOST: 127.0.0.1
           name: Run Integ
-          command: sudo docker-compose up --abort-on-container-exit --build
+          command: |
+            set -x
+            docker-compose up --abort-on-container-exit --build
       - store_artifacts:
           path: cypress/screenshots
+      - run:
+        name: cleanup
+        command: |
+          set -x
+          docker-compose down
 
 workflows:
   sample:
