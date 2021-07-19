@@ -24,6 +24,7 @@ jobs:
           key: v1-deps-{{ .Branch }}-{{ checksum "package.json" }}
           paths:
             - ~/.cache
+      - setup_remote_docker
       - run:
           name: Install Docker Compose
           command: |
