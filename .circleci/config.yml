@@ -9,7 +9,7 @@ jobs:
   build-lint-test:
     docker:
       - image: cimg/node:14.0
-    # environment: DOCKER_HOST=127.0.0.1
+    environment: DOCKER_HOST=127.0.0.1
     steps:
       - checkout
       - restore_cache:
@@ -41,7 +41,7 @@ jobs:
       #     command: yarn lint
       - run:
           name: Run Integ
-          command: docker-compose up --abort-on-container-exit --build
+          command: sudo docker-compose up --abort-on-container-exit --build
       - store_artifacts:
           path: cypress/screenshots
 
