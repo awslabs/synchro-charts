@@ -252,11 +252,6 @@ describe('properties pass down correctly to chart implementation', () => {
   });
 
   it('sets the provided viewport, and has a y range set when viewport has none provided', async () => {
-    const VIEWPORT = {
-      start: new Date(2000, 0, 0),
-      end: new Date(2001, 0, 0),
-    };
-
     const { chart } = await heatmap({ viewport: VIEWPORT });
     const baseChart = chart.querySelector('sc-webgl-base-chart') as HTMLScWebglBaseChartElement;
 

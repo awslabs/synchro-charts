@@ -1,13 +1,13 @@
 import { getCSSColorByString } from '../common/getCSSColorByString';
 import { getDistanceFromDuration } from '../common/getDistanceFromDuration';
+
 import { MARGIN_FACTOR,
   NUM_OF_COLORS_SEQUENTIAL,
   SEQUENTIAL_BASE_COLOR_INDEX,
   DEFAULT_SEQUENTIAL_MIN,
   DEFAULT_SEQUENTIAL_MID,
-  DEFAULT_SEQUENTIAL_MAX
+  DEFAULT_SEQUENTIAL_MAX,
 } from './heatmapConstants';
-
 
 export type HeatmapColorPalette = {
   r: number[];

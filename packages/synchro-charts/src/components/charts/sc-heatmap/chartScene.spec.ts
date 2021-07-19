@@ -1,6 +1,5 @@
 import { chartScene, updateChartScene } from './chartScene';
 import { DataPoint } from '../../../utils/dataTypes';
-import { MONTH_IN_MS } from '../../../utils/time';
 import { HeatmapBucketMesh } from './heatmapMesh';
 import { DataType } from '../../../utils/dataConstants';
 
@@ -22,9 +21,7 @@ describe('buckets', () => {
       bufferFactor: 1,
       chartSize: CHART_SIZE,
       container,
-      dataStreams: [
-        { id: 'data-stream', name: 'some name', resolution: 0, data: [], dataType: DataType.NUMBER },
-      ],
+      dataStreams: [{ id: 'data-stream', name: 'some name', resolution: 0, data: [], dataType: DataType.NUMBER }],
       minBufferSize: 0,
       viewport: VIEW_PORT,
       thresholdOptions: {

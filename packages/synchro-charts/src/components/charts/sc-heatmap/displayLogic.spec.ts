@@ -1,10 +1,5 @@
 import { clipSpaceConversion } from '../sc-webgl-base-chart/clipSpaceConversion';
-import {
-  HeatmapColorPalette,
-  getBucketWidth,
-  getBucketColor,
-  getSequential,
-} from './displayLogic';
+import { HeatmapColorPalette, getBucketWidth, getBucketColor, getSequential } from './displayLogic';
 import { NUM_OF_COLORS_SEQUENTIAL } from './heatmapConstants';
 import { MONTH_IN_MS, DAY_IN_MS } from '../../../utils/time';
 

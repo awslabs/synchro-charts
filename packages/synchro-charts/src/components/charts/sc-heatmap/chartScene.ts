@@ -20,7 +20,9 @@ export const chartScene: ChartSceneCreator = ({
 }) => {
   const scene = new Scene();
   const toClipSpace = clipSpaceConversion(viewport);
-  scene.add(bucketMesh({ dataStreams, toClipSpace, bufferFactor, minBufferSize, thresholdOptions, thresholds, viewport }));
+  scene.add(
+    bucketMesh({ dataStreams, toClipSpace, bufferFactor, minBufferSize, viewport })
+  );
   return constructChartScene({ scene, viewport, container, toClipSpace, onUpdate });
 };
 
@@ -63,9 +65,7 @@ export const updateChartScene: ChartSceneUpdater = ({
     dataStreams,
     toClipSpace: scene.toClipSpace,
     hasDataChanged,
-    thresholdOptions,
-    thresholds,
-    viewport
+    viewport,
   });
   return scene;
 };

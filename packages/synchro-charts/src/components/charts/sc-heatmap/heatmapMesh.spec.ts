@@ -1,14 +1,12 @@
 import { clipSpaceConversion } from '../sc-webgl-base-chart/clipSpaceConversion';
 import { bucketMesh, updateBucketMesh, COLOR_PALETTE, getResolution } from './heatmapMesh';
 import { BUCKET_COUNT } from './heatmapConstants';
-import { calculateXBucketStart, calculateBucketIndex } from './heatmapUtil'
-import { getBucketColor, getBucketMargin, getBucketWidth } from './displayLogic';
+import { calculateXBucketStart, calculateBucketIndex } from './heatmapUtil';
+import { getBucketMargin, getBucketWidth } from './displayLogic';
 import { getDistanceFromDuration } from '../common/getDistanceFromDuration';
 import { DataType } from '../../../utils/dataConstants';
-import { MONTH_IN_MS, DAY_IN_MS, SECOND_IN_MS, HOUR_IN_MS, MINUTE_IN_MS } from '../../../utils/time';
+import { MONTH_IN_MS } from '../../../utils/time';
 import { DataPoint, DataStream, ViewPort } from '../../../utils/dataTypes';
-import { Threshold } from '../common/types';
-import { COMPARISON_OPERATOR } from '../common/constants';
 
 const VIEW_PORT: ViewPort = { start: new Date(2000, 0, 0), end: new Date(2000, 0, 1), yMin: 0, yMax: 500 };
 const RESOLUTION = getResolution(VIEW_PORT);
@@ -22,35 +20,28 @@ const DATA_POINT_1: DataPoint = { x: new Date(2000, 0, 0, 1).getTime(), y: 200 }
 const DATA_POINT_2: DataPoint = { x: new Date(2000, 0, 0, 4).getTime(), y: 300 };
 const DATA_POINT_3: DataPoint = { x: new Date(2000, 0, 1, 1).getTime(), y: 400 };
 
-const DATA_POINT_1_X_BUCKET = calculateXBucketStart({xValue: DATA_POINT_1.x, xAxisBucketRange: RESOLUTION});
-const DATA_POINT_2_X_BUCKET = calculateXBucketStart({xValue: DATA_POINT_2.x, xAxisBucketRange: RESOLUTION});
-const DATA_POINT_3_X_BUCKET = calculateXBucketStart({xValue: DATA_POINT_3.x, xAxisBucketRange: RESOLUTION});
+const DATA_POINT_1_X_BUCKET = calculateXBucketStart({ xValue: DATA_POINT_1.x, xAxisBucketRange: RESOLUTION });
+const DATA_POINT_2_X_BUCKET = calculateXBucketStart({ xValue: DATA_POINT_2.x, xAxisBucketRange: RESOLUTION });
+const DATA_POINT_3_X_BUCKET = calculateXBucketStart({ xValue: DATA_POINT_3.x, xAxisBucketRange: RESOLUTION });
 
 const DATA_POINT_1_Y_BUCKET = calculateBucketIndex({
   yValue: DATA_POINT_1.y as number,
   yMax: VIEW_PORT.yMax,
   yMin: VIEW_PORT.yMin,
-  bucketCount: BUCKET_COUNT
+  bucketCount: BUCKET_COUNT,
 });
 const DATA_POINT_2_Y_BUCKET = calculateBucketIndex({
   yValue: DATA_POINT_2.y as number,
   yMax: VIEW_PORT.yMax,
   yMin: VIEW_PORT.yMin,
-  bucketCount: BUCKET_COUNT
+  bucketCount: BUCKET_COUNT,
 });
 const DATA_POINT_3_Y_BUCKET = calculateBucketIndex({
   yValue: DATA_POINT_3.y as number,
   yMax: VIEW_PORT.yMax,
   yMin: VIEW_PORT.yMin,
-  bucketCount: BUCKET_COUNT
+  bucketCount: BUCKET_COUNT,
 });
-
-const STREAM_1_DATA_POINT_1: DataPoint = { x: new Date(2000, 0, 0, 6).getTime(), y: 200 };
-const STREAM_1_DATA_POINT_2: DataPoint = { x: new Date(2000, 0, 0, 7).getTime(), y: 300 };
-const STREAM_2_DATA_POINT_1: DataPoint = { x: new Date(2000, 0, 1, 5).getTime(), y: 400 };
-const STREAM_2_DATA_POINT_2: DataPoint = { x: new Date(2000, 0, 0, 7).getTime(), y: 500 };
-const STREAM_3_DATA_POINT_1: DataPoint = { x: new Date(2000, 0, 1, 5).getTime(), y: 500 };
-const STREAM_3_DATA_POINT_2: DataPoint = { x: new Date(2000, 0, 1, 11).getTime(), y: 400 };
 
 const DATA_STREAMS: DataStream[] = [
   {
@@ -69,10 +60,6 @@ describe('create bucket mesh', () => {
       toClipSpace,
       minBufferSize: MIN_BUFFER_SIZE,
       bufferFactor: BUFFER_FACTOR,
-      thresholdOptions: {
-        showColor: false,
-      },
-      thresholds: [],
       viewport: VIEW_PORT,
     });
 
@@ -86,10 +73,6 @@ describe('create bucket mesh', () => {
       toClipSpace,
       minBufferSize: MIN_BUFFER_SIZE,
       bufferFactor: BUFFER_FACTOR,
-      thresholdOptions: {
-        showColor: false,
-      },
-      thresholds: [],
       viewport: VIEW_PORT,
     });
     expect(mesh.count).toEqual(0);
@@ -104,10 +87,6 @@ describe('create bucket mesh', () => {
       toClipSpace,
       minBufferSize: 1,
       bufferFactor: 1,
-      thresholdOptions: {
-        showColor: false,
-      },
-      thresholds: [],
       viewport: VIEW_PORT,
     });
     expect(mesh.count).toEqual(3 * BUCKET_COUNT);
@@ -137,7 +116,13 @@ describe('create bucket mesh', () => {
   });
 
   it('draws one bucket with darkest opacity', () => {
-    const viewport: ViewPort = { duration: 1000, start: new Date(2000, 0, 0), end: new Date(2000, 0, 0, 0, 0, 10), yMin: 0, yMax: 500 };
+    const viewport: ViewPort = {
+      duration: 1000,
+      start: new Date(2000, 0, 0),
+      end: new Date(2000, 0, 0, 0, 0, 10),
+      yMin: 0,
+      yMax: 500
+    };
     const mesh = bucketMesh({
       dataStreams: [
         {
@@ -151,10 +136,6 @@ describe('create bucket mesh', () => {
       toClipSpace,
       minBufferSize: MIN_BUFFER_SIZE,
       bufferFactor: BUFFER_FACTOR,
-      thresholdOptions: {
-        showColor: false,
-      },
-      thresholds: [],
       viewport,
     }); 
 
@@ -182,10 +163,6 @@ describe('create bucket mesh', () => {
       toClipSpace,
       minBufferSize: MIN_BUFFER_SIZE,
       bufferFactor: BUFFER_FACTOR,
-      thresholdOptions: {
-        showColor: false,
-      },
-      thresholds: [],
       viewport: VIEW_PORT,
     });
     expect(mesh.count).toEqual(2 * BUCKET_COUNT);
@@ -206,7 +183,6 @@ describe('create bucket mesh', () => {
   });
 
   it('draws three buckets for two separated data streams with two data points in each data stream', () => {
-    const numberOfDataStreams = 2;
     const mesh = bucketMesh({
       dataStreams: [
         {
@@ -214,10 +190,7 @@ describe('create bucket mesh', () => {
           color: 'red',
           name: 'some name',
           resolution: 0,
-          data: [
-            DATA_POINT_1,
-            DATA_POINT_2,
-          ],
+          data: [DATA_POINT_1, DATA_POINT_2],
           dataType: DataType.NUMBER,
         },
         {
@@ -225,20 +198,13 @@ describe('create bucket mesh', () => {
           color: 'blue',
           name: 'some name',
           resolution: 0,
-          data: [
-            DATA_POINT_2,
-            DATA_POINT_3
-          ],
+          data: [DATA_POINT_2, DATA_POINT_3],
           dataType: DataType.NUMBER,
         },
       ],
       minBufferSize: 100,
       bufferFactor: 2,
       toClipSpace,
-      thresholdOptions: {
-        showColor: false,
-      },
-      thresholds: [],
       viewport: VIEW_PORT,
     });
 
@@ -247,9 +213,7 @@ describe('create bucket mesh', () => {
       resolution: RESOLUTION,
     });
 
-    expect(getDistanceFromDuration(toClipSpace, RESOLUTION) - getBucketMargin(toClipSpace, RESOLUTION)).toEqual(
-      width
-    );
+    expect(getDistanceFromDuration(toClipSpace, RESOLUTION) - getBucketMargin(toClipSpace, RESOLUTION)).toEqual(width);
     expect(mesh.count).toEqual(3 * BUCKET_COUNT);
 
     // Check for stream 1 bucket 1
@@ -318,10 +282,6 @@ describe('create bucket mesh', () => {
       minBufferSize: 100,
       bufferFactor: 2,
       toClipSpace,
-      thresholdOptions: {
-        showColor: false,
-      },
-      thresholds: [],
       viewport: VIEW_PORT,
     });
 
@@ -386,10 +346,6 @@ describe('update bucket mesh', () => {
       toClipSpace,
       minBufferSize: MIN_BUFFER_SIZE,
       bufferFactor: BUFFER_FACTOR,
-      thresholdOptions: {
-        showColor: false,
-      },
-      thresholds: [],
       viewport: VIEW_PORT,
     });
     expect(mesh.count).toEqual(0);
@@ -400,10 +356,6 @@ describe('update bucket mesh', () => {
       dataStreams: DATA_STREAM_TEMP,
       toClipSpace,
       hasDataChanged: true,
-      thresholdOptions: {
-        showColor: false,
-      },
-      thresholds: [],
       viewport: VIEW_PORT,
     });
     expect(mesh.count).toEqual(1 * BUCKET_COUNT);
@@ -432,10 +384,6 @@ describe('update bucket mesh', () => {
       toClipSpace,
       minBufferSize: MIN_BUFFER_SIZE,
       bufferFactor: BUFFER_FACTOR,
-      thresholdOptions: {
-        showColor: false,
-      },
-      thresholds: [],
       viewport: VIEW_PORT,
     });
     expect(mesh.count).toEqual(2 * BUCKET_COUNT);
@@ -445,10 +393,6 @@ describe('update bucket mesh', () => {
       dataStreams: [],
       toClipSpace,
       hasDataChanged: true,
-      thresholdOptions: {
-        showColor: false,
-      },
-      thresholds: [],
       viewport: VIEW_PORT,
     });
     expect(mesh.count).toEqual(0);
@@ -475,10 +419,6 @@ describe('update bucket mesh', () => {
       toClipSpace,
       minBufferSize: MIN_BUFFER_SIZE,
       bufferFactor: BUFFER_FACTOR,
-      thresholdOptions: {
-        showColor: false,
-      },
-      thresholds: [],
       viewport: VIEW_PORT,
     });
     expect(mesh.count).toEqual(2 * BUCKET_COUNT);
@@ -488,10 +428,6 @@ describe('update bucket mesh', () => {
       dataStreams: DATA_STREAMS,
       toClipSpace,
       hasDataChanged: true,
-      thresholdOptions: {
-        showColor: false,
-      },
-      thresholds: [],
       viewport: VIEW_PORT,
     });
     expect(mesh.count).toEqual(3 * BUCKET_COUNT);
@@ -507,7 +443,13 @@ describe('update bucket mesh', () => {
   });
 
   it('updates the color of the bucket', () => {
-    const viewport: ViewPort = { duration: 1000, start: new Date(2000, 0, 0), end: new Date(2000, 0, 0, 0, 0, 10), yMin: 0, yMax: 500 };
+    const viewport: ViewPort = {
+      duration: 1000,
+      start: new Date(2000, 0, 0),
+      end: new Date(2000, 0, 0, 0, 0, 10),
+      yMin: 0,
+      yMax: 500
+    };
     const DATA_STREAM_TEMP_1: DataStream = {
       id: 'data-stream',
       color: 'black',
@@ -529,10 +471,6 @@ describe('update bucket mesh', () => {
       toClipSpace,
       minBufferSize: MIN_BUFFER_SIZE,
       bufferFactor: BUFFER_FACTOR,
-      thresholdOptions: {
-        showColor: false,
-      },
-      thresholds: [],
       viewport,
     });
     expect(mesh.count).toEqual(1 * BUCKET_COUNT);
@@ -547,10 +485,6 @@ describe('update bucket mesh', () => {
       dataStreams: [DATA_STREAM_TEMP_1, DATA_STREAM_TEMP_2],
       toClipSpace,
       hasDataChanged: true,
-      thresholdOptions: {
-        showColor: false,
-      },
-      thresholds: [],
       viewport,
     });
     expect(mesh.count).toEqual(1 * BUCKET_COUNT);
@@ -581,16 +515,18 @@ describe('update bucket mesh', () => {
       toClipSpace,
       minBufferSize: MIN_BUFFER_SIZE,
       bufferFactor: BUFFER_FACTOR,
-      thresholdOptions: {
-        showColor: false,
-      },
-      thresholds: [],
       viewport: VIEW_PORT,
     });
     expect(mesh.count).toEqual(1 * BUCKET_COUNT);
     expect(mesh.material.uniforms.width.value).toBe(oldWidth);
 
-    const newViewport: ViewPort = { duration: 60000, start: new Date(2000, 0, 0), end: new Date(2000, 0, 0, 0, 0, 10), yMin: 0, yMax: 500 };
+    const newViewport: ViewPort = {
+      duration: 60000,
+      start: new Date(2000, 0, 0),
+      end: new Date(2000, 0, 0, 0, 0, 10),
+      yMin: 0,
+      yMax: 500
+    };
     const DATA_STREAM_TEMP_2 = [
       {
         id: 'data-stream',
@@ -605,10 +541,6 @@ describe('update bucket mesh', () => {
       dataStreams: DATA_STREAM_TEMP_2,
       toClipSpace,
       hasDataChanged: true,
-      thresholdOptions: {
-        showColor: false,
-      },
-      thresholds: [],
       viewport: newViewport,
     });
 
@@ -637,10 +569,6 @@ describe('update bucket mesh', () => {
       toClipSpace,
       minBufferSize: MIN_BUFFER_SIZE,
       bufferFactor: BUFFER_FACTOR,
-      thresholdOptions: {
-        showColor: false,
-      },
-      thresholds: [],
       viewport: VIEW_PORT,
     });
     expect(mesh.count).toEqual(1 * BUCKET_COUNT);
@@ -660,10 +588,6 @@ describe('update bucket mesh', () => {
       dataStreams: DATA_STREAM_TEMP_2,
       toClipSpace,
       hasDataChanged: false,
-      thresholdOptions: {
-        showColor: false,
-      },
-      thresholds: [],
       viewport: VIEW_PORT,
     });
     expect(mesh.count).toEqual(1 * BUCKET_COUNT);

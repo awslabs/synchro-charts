@@ -33,7 +33,7 @@ type HeatmapMaterial = Material & {
   uniforms: {
     width: { value: number };
     devicePixelRatio: { value: number };
-    bucketHeight: {value: number};
+    bucketHeight: { value: number };
   };
 };
 
@@ -51,9 +51,7 @@ const numBuckets = (heatValue: HeatValueMap): number => {
   return 10 * Object.keys(heatValue).length;
 };
 
-export const getResolution = (
-  viewport: ViewPort,
-): number => {
+export const getResolution = (viewport: ViewPort): number => {
   const duration = viewport.duration ?? viewport.end.getTime() - viewport.start.getTime();
   if (duration > 5 * DAY_IN_MS) {
     return DAY_IN_MS;
@@ -61,9 +59,8 @@ export const getResolution = (
     return HOUR_IN_MS;
   } else if (duration > 3 * MINUTE_IN_MS) {
     return MINUTE_IN_MS;
-  } else {
-    return SECOND_IN_MS;
   }
+  return SECOND_IN_MS;
 };
 
 const getUniformWidth = <T extends Primitive>(
@@ -85,22 +82,15 @@ const updateMesh = ({
   dataStreams,
   mesh,
   toClipSpace,
-  thresholds,
-  thresholdOptions,
   viewport,
 }: {
   dataStreams: DataStream[];
   mesh: HeatmapBucketMesh;
   toClipSpace: (time: number) => number;
-  thresholdOptions: ThresholdOptions;
-  thresholds: Threshold[];
-  viewport: ViewPort
+  viewport: ViewPort;
 }) => {
-  const streamVertexSets = dataStreams.filter(isNumberDataStream).map(stream => vertices(stream, stream.resolution));
-
   // Set the number of instances of the bar are to be rendered.
   // eslint-disable-next-line no-param-reassign
-  
   const { geometry } = mesh;
   const { color, bucket } = geometry.attributes;
   let positionIndex = 0;
@@ -120,13 +110,17 @@ const updateMesh = ({
 
   mesh.count = numBuckets(heatValues);
 
-  for (let xAxisBucketStart in heatValues) {
+  for (const xAxisBucketStart in heatValues) {
     let buckets = heatValues[xAxisBucketStart];
-    for (let bucketIndex in buckets) {
+    for (const bucketIndex in buckets) {
       bucket.array[positionIndex] = toClipSpace(+xAxisBucketStart);
       bucket.array[positionIndex + 1] = +bucketIndex * (viewport.yMax / BUCKET_COUNT);
 
-      const bucketColor = getBucketColor(COLOR_PALETTE, buckets[bucketIndex].totalCount, resolution / 1000 * dataStreams.length);
+      const bucketColor = getBucketColor(
+        COLOR_PALETTE,
+        buckets[bucketIndex].totalCount,
+        resolution / 1000 * dataStreams.length,
+      );
       color.array[colorIndex] = bucketColor[0];
       color.array[colorIndex + 1] = bucketColor[1];
       color.array[colorIndex + 2] = bucketColor[2];
@@ -164,16 +158,12 @@ export const bucketMesh = ({
   toClipSpace,
   bufferFactor,
   minBufferSize,
-  thresholdOptions,
-  thresholds,
   viewport,
 }: {
   dataStreams: DataStream[];
   toClipSpace: (time: number) => number;
   bufferFactor: number;
   minBufferSize: number;
-  thresholdOptions: ThresholdOptions;
-  thresholds: Threshold[];
   viewport: ViewPort;
 }) => {
   const instGeo = (new InstancedBufferGeometry() as unknown) as BucketBufferGeometry;
@@ -207,7 +197,7 @@ export const bucketMesh = ({
   });
 
   const mesh = <HeatmapBucketMesh>new InstancedMesh(instGeo, bucketChartMaterial, bufferSize);
-  updateMesh({ dataStreams, mesh, toClipSpace, thresholds, thresholdOptions, viewport });
+  updateMesh({ dataStreams, mesh, toClipSpace, viewport });
 
   // Prevent bounding sphere from being called
   mesh.frustumCulled = false;
@@ -220,16 +210,12 @@ export const updateBucketMesh = ({
   dataStreams,
   toClipSpace,
   hasDataChanged,
-  thresholdOptions,
-  thresholds,
   viewport,
 }: {
   buckets: HeatmapBucketMesh;
   dataStreams: DataStream[];
   toClipSpace: (time: number) => number;
   hasDataChanged: boolean;
-  thresholdOptions: ThresholdOptions;
-  thresholds: Threshold[];
   viewport: ViewPort;
 }) => {
   if (hasDataChanged) {
@@ -237,6 +223,6 @@ export const updateBucketMesh = ({
     // eslint-disable-next-line no-param-reassign
     buckets.material.uniforms.width.value = getUniformWidth(dataStreams, toClipSpace, resolution);
     buckets.material.uniforms.bucketHeight.value = viewport.yMax / 10 - 2;
-    updateMesh({ dataStreams, mesh: buckets, toClipSpace, thresholds, thresholdOptions, viewport });
+    updateMesh({ dataStreams, mesh: buckets, toClipSpace, viewport });
   }
 };
