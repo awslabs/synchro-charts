@@ -10,7 +10,7 @@ jobs:
     docker:
       - image: cimg/node:14.0
       - image: cimg/base:2021.07
-    enviornment: DOCKER_HOST=127.0.0.1
+    environment: DOCKER_HOST=127.0.0.1
     steps:
       - checkout
       - restore_cache:
