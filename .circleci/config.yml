@@ -9,7 +9,6 @@ jobs:
   build-lint-test:
     docker:
       - image: cimg/node:14.0
-    environment: DOCKER_HOST=127.0.0.1
     steps:
       - checkout
       - restore_cache:
@@ -41,6 +40,7 @@ jobs:
       #     name: Run lint
       #     command: yarn lint
       - run:
+          environment: DOCKER_HOST=127.0.0.1
           name: Run Integ
           command: sudo docker-compose up --abort-on-container-exit --build
       - store_artifacts:
