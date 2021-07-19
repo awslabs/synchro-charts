@@ -48,11 +48,6 @@ jobs:
             docker-compose up --abort-on-container-exit --build
       - store_artifacts:
           path: cypress/screenshots
-      - run:
-        name: cleanup
-        command: |
-          set -x
-          docker-compose down
 
 workflows:
   sample:
