@@ -17,7 +17,7 @@
     "build": "stencil build",
     "start": "stencil build --dev --watch --serve",
     "clean": "rm -rf dist && rm -rf screenshot",
-    "test": "npm-run-all -p test:unit-test lint test:typescript",
+    "test": "npm-run-all -p test:unit-test test:typescript",
     "test:dev": "npm-run-all test test:integ",
     "test:unit-test": "TZ=UTC stencil test --spec --coverage",
     "test:cypress": "cypress run",
