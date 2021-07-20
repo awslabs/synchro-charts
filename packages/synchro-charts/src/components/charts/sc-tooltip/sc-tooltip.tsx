@@ -113,7 +113,7 @@ export class ScTooltip {
           selectedDate={this.selectedDate}
           selectedBucket={this.selectedBucket}
           maxDurationFromDate={this.maxDurationFromDate}
-          showDataStreamColor={this.showDataStreamColor}
+          showDataStreamColor={false}
           dataAlignment={this.dataAlignment}
           supportString={false}
           visualizesAlarms={false}

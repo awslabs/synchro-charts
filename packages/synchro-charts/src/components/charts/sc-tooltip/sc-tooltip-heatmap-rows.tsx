@@ -2,18 +2,13 @@ import { Component, h, Prop } from '@stencil/core';
 
 import { DataPoint, DataStream, DataStreamId, SizeConfig, ViewPort } from '../../../utils/dataTypes';
 import { activePoints, POINT_TYPE } from '../sc-webgl-base-chart/activePoints';
-import { displayDate } from '../../../utils/time';
 import { tooltipPosition } from './tooltipPosition';
-import { trendLinePoints } from './trendLinePoints';
 import { TooltipPoint } from './types';
 import { isDefined, isSupportedDataType } from '../../../utils/predicates';
-import { Threshold, ThresholdColorAndIcon } from '../common/types';
-import { breachedThreshold } from '../common/annotations/breachedThreshold';
 import { sortTooltipPoints } from './sort';
 import { StreamType } from '../../../utils/dataConstants';
-import { TrendResult } from '../common/trends/types';
 import { DATA_ALIGNMENT } from '../common/constants';
-import { getResolution } from '../sc-heatmap/heatmapUtil';
+import { getResolution, displayDate } from '../sc-heatmap/heatmapUtil';
 
 const TOOLTIP_ROW_HEIGHT = 21;
 const TOOLTIP_EMPTY_HEIGHT = 71;
@@ -129,14 +124,12 @@ export class ScTooltipRows {
   };
 
   render() {
-    const resolutions = this.dataStreams.map(({ resolution }) => resolution);
-    const minResolution = resolutions.length > 0 ? Math.min(...resolutions) : 0;
+    const resolution = getResolution(this.viewport);
 
     const points = this.getTooltipPoints();
-    const displayedDate = this.getDisplayedDate(points);
     const position = tooltipPosition({
       points,
-      resolution: minResolution,
+      resolution,
       viewport: this.viewport,
       size: this.size,
       selectedTimestamp: this.selectedDate.getTime(),
@@ -174,7 +167,7 @@ export class ScTooltipRows {
         >
           <div class="awsui-util-shadow awsui-util-p-s">
             <small class={{ 'awsui-util-d-b': true, 'left-offset': !this.showDataStreamColor }}>
-              {displayDate(displayedDate, this.resolution, this.viewport, this.isHeatmap)}
+              {displayDate(this.selectedDate, resolution, this.viewport)}
             </small>
             <small class={{ 'awsui-util-d-b': true, 'left-offset': !this.showDataStreamColor }}>Bucket range:</small>
             <small

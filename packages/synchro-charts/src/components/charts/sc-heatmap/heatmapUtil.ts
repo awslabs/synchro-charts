@@ -1,6 +1,7 @@
 import { DataStream, ViewPort } from '../../../utils/dataTypes';
 import { SECOND_IN_MS, MINUTE_IN_MS, HOUR_IN_MS, DAY_IN_MS } from '../../../utils/time';
 import { DataType } from '../../../utils/dataConstants';
+import { CHANGE_RESOLUTION } from './heatmapConstants';
 
 const NUM_OF_BUCKETS = 10;
 
@@ -101,69 +102,93 @@ export const calcHeatValues = ({
   }, oldHeatValue);
 };
 
-export const displayDate = (date: Date, resolution: number, { start, end }: { start: Date; end: Date }): string => {
+export const displayDate = (xBucketRangeStart: Date, resolution: number, { start, end }: { start: Date; end: Date }): string => {
   const viewportDurationMS = end.getTime() - start.getTime();
-  if (resolution < HOUR_IN_MS) {
-    if (viewportDurationMS < MINUTE_IN_MS) {
-      return date.toLocaleString('en-CA', {
-        minute: 'numeric',
-        second: 'numeric',
-      });
-    }
+  const xBucketRangeEnd = new Date(xBucketRangeStart.getTime() + resolution);
+  if (viewportDurationMS < CHANGE_RESOLUTION * MINUTE_IN_MS) {
+    return `${xBucketRangeStart.toLocaleString('en-US', {
+      minute: 'numeric',
+      second: 'numeric',
+    })} - ${xBucketRangeEnd.toLocaleString('en-US', {
+      minute: 'numeric',
+      second: 'numeric',
+    })}`;
+  }
 
-    if (viewportDurationMS <= 10 * MINUTE_IN_MS) {
-      return date.toLocaleString('en-CA', {
-        hour: 'numeric',
-        minute: 'numeric',
-        second: 'numeric',
-        hour12: true,
-      });
-    }
+  if (viewportDurationMS <= 10 * MINUTE_IN_MS) {
+    return `${xBucketRangeStart.toLocaleString('en-US', {
+      hour: 'numeric',
+      minute: 'numeric',
+      second: 'numeric',
+      hour12: true,
+    })} - ${xBucketRangeEnd.toLocaleString('en-US', {
+      hour: 'numeric',
+      minute: 'numeric',
+      second: 'numeric',
+      hour12: true,
+    })}`;
+  }
 
-    if (viewportDurationMS <= HOUR_IN_MS) {
-      return date.toLocaleString('en-CA', {
-        hour: 'numeric',
-        minute: 'numeric',
-        hour12: true,
-      });
-    }
+  if (viewportDurationMS <= CHANGE_RESOLUTION * HOUR_IN_MS) {
+    return `${xBucketRangeStart.toLocaleString('en-US', {
+      hour: 'numeric',
+      minute: 'numeric',
+      hour12: true,
+    })} - ${xBucketRangeEnd.toLocaleString('en-US', {
+      hour: 'numeric',
+      minute: 'numeric',
+      hour12: true,
+    })}`;
+  }
 
-    if (viewportDurationMS <= DAY_IN_MS) {
-      return date.toLocaleString('en-CA', {
-        hour12: true,
-        hour: 'numeric',
-        month: 'numeric',
-        minute: 'numeric',
-        day: 'numeric',
-      });
-    }
-
-    return date.toLocaleString('en-CA', {
-      day: 'numeric',
+  if (viewportDurationMS <= (CHANGE_RESOLUTION + 1) * DAY_IN_MS) {
+    return `${xBucketRangeStart.toLocaleString('en-US', {
       month: 'numeric',
-      year: 'numeric',
-    });
+      hour: 'numeric',
+      minute: 'numeric',
+      day: 'numeric',
+      hour12: true,
+    })} - ${xBucketRangeEnd.toLocaleString('en-US', {
+      month: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+      day: 'numeric',
+      hour12: true,
+    })}`;
   }
 
   if (resolution <= HOUR_IN_MS) {
-    return date.toLocaleString('en-CA', {
+    return `${xBucketRangeStart.toLocaleString('en-US', {
       hour: 'numeric',
       day: 'numeric',
       month: 'numeric',
       hour12: true,
-    });
+    })} - ${xBucketRangeEnd.toLocaleString('en-US', {
+      hour: 'numeric',
+      day: 'numeric',
+      month: 'numeric',
+      hour12: true,
+    })}`;
   }
 
   if (resolution < DAY_IN_MS) {
-    return date.toLocaleString('en-CA', {
+    return `${xBucketRangeStart.toLocaleString('en-US', {
       day: 'numeric',
       month: 'numeric',
-    });
+      hour12: true,
+    })} - ${xBucketRangeEnd.toLocaleString('en-US', {
+      day: 'numeric',
+      month: 'numeric',
+    })}`;
   }
 
-  return date.toLocaleString('en-CA', {
+  return `${xBucketRangeStart.toLocaleString('en-US', {
     year: 'numeric',
     month: 'numeric',
     day: 'numeric',
-  });
+  })} - ${xBucketRangeEnd.toLocaleString('en-US', {
+    year: 'numeric',
+    month: 'numeric',
+    day: 'numeric',
+  })}`;
 };
