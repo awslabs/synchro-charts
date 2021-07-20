@@ -198,26 +198,6 @@ describe('viewport', () => {
     expect(baseChart.viewport.yMin).toBe(VIEWPORT.yMin);
     expect(baseChart.viewport.yMax).toBe(VIEWPORT.yMax);
   });
-
-  it('ignores annotations when viewport y range provided', async () => {
-    const LARGE_Y = 9999;
-    const SMALL_Y = -9999;
-
-    const { chart } = await heatmap({
-      viewport: VIEWPORT,
-      annotations: {
-        y: [
-          { value: LARGE_Y, color: 'red' },
-          { value: SMALL_Y, color: 'red' },
-        ],
-      },
-    });
-
-    const baseChart = chart.querySelector('sc-webgl-base-chart') as HTMLScWebglBaseChartElement;
-
-    expect(baseChart.viewport.yMin).toBe(VIEWPORT.yMin);
-    expect(baseChart.viewport.yMax).toBe(VIEWPORT.yMax);
-  });
 });
 
 describe('properties pass down correctly to chart implementation', () => {

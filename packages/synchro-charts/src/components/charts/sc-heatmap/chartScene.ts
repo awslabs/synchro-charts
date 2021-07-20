@@ -34,7 +34,6 @@ export const updateChartScene: ChartSceneUpdater = ({
   chartSize,
   thresholdOptions,
   thresholds,
-  hasAnnotationChanged,
 }) => {
   const buckets = (scene.scene.children[0] as unknown) as HeatmapBucketMesh;
 
@@ -42,7 +41,7 @@ export const updateChartScene: ChartSceneUpdater = ({
   // chart scene, we must fully recreate the chart scene. This is a costly operation.
   const isDataOverflowingBuffer = maxDataPointsRendered(buckets) < numDataPoints(dataStreams);
 
-  if (isDataOverflowingBuffer || needsNewClipSpace(viewport, scene.toClipSpace) || hasAnnotationChanged) {
+  if (isDataOverflowingBuffer || needsNewClipSpace(viewport, scene.toClipSpace)) {
     return chartScene({
       onUpdate,
       dataStreams,
