@@ -82,13 +82,13 @@ export const calcHeatValues = ({
   resolution: number;
   viewport: ViewPort;
 }) => {
-  if (dataStreams[0].dataType !== DataType.NUMBER) {
-    return {};
-  }
   // if resolution is 0 then set the XAxisBucketRange to be 1 second
   const xAxisBucketRange = resolution === 0 ? SECOND_IN_MS : resolution;
   const { yMax, yMin } = viewport;
   return dataStreams.reduce(function reduceDataStream(newHeatValue, dataStream) {
+    if (dataStream.dataType !== DataType.NUMBER) {
+      return {};
+    }
     return dataStream.data.reduce(function reduceData(tempHeatValue, currPoint) {
       const xBucketRangeStart = calculateXBucketStart({ xValue: currPoint.x, xAxisBucketRange });
       const bucketIndex = calculateBucketIndex({

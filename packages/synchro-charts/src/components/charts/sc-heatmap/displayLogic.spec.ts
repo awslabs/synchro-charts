@@ -1,11 +1,6 @@
 import { clipSpaceConversion } from '../sc-webgl-base-chart/clipSpaceConversion';
-import {
-  HeatmapColorPalette,
-  getBucketWidth,
-  getBucketColor,
-  getSequential,
-  NUM_OF_COLORS_SEQUENTIAL,
-} from './displayLogic';
+import { HeatmapColorPalette, getBucketWidth, getBucketColor, getSequential } from './displayLogic';
+import { NUM_OF_COLORS_SEQUENTIAL } from './heatmapConstants';
 import { MONTH_IN_MS, DAY_IN_MS } from '../../../utils/time';
 
 const VIEW_PORT = { start: new Date(2000, 0), end: new Date(2000, 1, 0), yMin: 0, yMax: 100 };
@@ -19,7 +14,6 @@ const TOTAL_POSSIBLE_POINT = TOTAL_NUM_POINTS_MIN * THREE_DATA_STREAM;
 describe('getBucketWidth', () => {
   it('width of the bar is in between the view port', () => {
     const barWidth = getBucketWidth({
-      numDataStreams: 1,
       toClipSpace,
       resolution: MONTH_IN_MS,
     });
