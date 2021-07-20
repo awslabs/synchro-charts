@@ -1,5 +1,5 @@
 import { DataStream, ViewPort } from '../../../utils/dataTypes';
-import { SECOND_IN_MS } from '../../../utils/time';
+import { SECOND_IN_MS, MINUTE_IN_MS, HOUR_IN_MS, DAY_IN_MS } from '../../../utils/time';
 import { DataType } from '../../../utils/dataConstants';
 
 const NUM_OF_BUCKETS = 10;
@@ -99,4 +99,71 @@ export const calcHeatValues = ({
       return addCount({ heatValue: tempHeatValue, xBucketRangeStart, bucketIndex, dataStreamId: dataStream.id });
     }, newHeatValue);
   }, oldHeatValue);
+};
+
+export const displayDate = (date: Date, resolution: number, { start, end }: { start: Date; end: Date }): string => {
+  const viewportDurationMS = end.getTime() - start.getTime();
+  if (resolution < HOUR_IN_MS) {
+    if (viewportDurationMS < MINUTE_IN_MS) {
+      return date.toLocaleString('en-CA', {
+        minute: 'numeric',
+        second: 'numeric',
+      });
+    }
+
+    if (viewportDurationMS <= 10 * MINUTE_IN_MS) {
+      return date.toLocaleString('en-CA', {
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric',
+        hour12: true,
+      });
+    }
+
+    if (viewportDurationMS <= HOUR_IN_MS) {
+      return date.toLocaleString('en-CA', {
+        hour: 'numeric',
+        minute: 'numeric',
+        hour12: true,
+      });
+    }
+
+    if (viewportDurationMS <= DAY_IN_MS) {
+      return date.toLocaleString('en-CA', {
+        hour12: true,
+        hour: 'numeric',
+        month: 'numeric',
+        minute: 'numeric',
+        day: 'numeric',
+      });
+    }
+
+    return date.toLocaleString('en-CA', {
+      day: 'numeric',
+      month: 'numeric',
+      year: 'numeric',
+    });
+  }
+
+  if (resolution <= HOUR_IN_MS) {
+    return date.toLocaleString('en-CA', {
+      hour: 'numeric',
+      day: 'numeric',
+      month: 'numeric',
+      hour12: true,
+    });
+  }
+
+  if (resolution < DAY_IN_MS) {
+    return date.toLocaleString('en-CA', {
+      day: 'numeric',
+      month: 'numeric',
+    });
+  }
+
+  return date.toLocaleString('en-CA', {
+    year: 'numeric',
+    month: 'numeric',
+    day: 'numeric',
+  });
 };

@@ -24,6 +24,8 @@ export class ScTooltip {
   @Prop() showDataStreamColor: boolean = true;
   @Prop() supportString!: boolean;
   @Prop() visualizesAlarms!: boolean;
+  @Prop() bucketCount?: number;
+  @Prop() isHeatmap?: boolean = false;
   // If false, do not display a tooltip row if there is no associated point.
   @Prop() showBlankTooltipRows: boolean = false;
 
@@ -42,6 +44,7 @@ export class ScTooltip {
   @Prop() sortPoints: boolean = true;
 
   @State() selectedDate?: Date;
+  @State() selectedBucket?: number[];
 
   componentDidLoad() {
     this.dataContainer.addEventListener('mousemove', this.setSelectedDate);
@@ -54,6 +57,24 @@ export class ScTooltip {
     this.dataContainer.removeEventListener('mouseleave', this.hideTooltip);
     this.dataContainer.removeEventListener('mousedown', this.hideTooltip);
   }
+
+  getCursorBucket = ({ offsetY, buttons }: MouseEvent) => {
+    const isMouseBeingPressed = buttons > 0;
+
+    if (!isMouseBeingPressed && offsetY != null && this.bucketCount != null) {
+      const { yMax } = this.viewport;
+      const { height } = this.size;
+
+      const bucketHeight = yMax / this.bucketCount;
+      const ratio = offsetY / height;
+      const selectedHeight = yMax - yMax * ratio;
+      const lowerBucketRange = Math.floor(selectedHeight / bucketHeight) * bucketHeight;
+      const upperBucketRange = Math.ceil(selectedHeight / bucketHeight) * bucketHeight;
+      this.selectedBucket = [lowerBucketRange, upperBucketRange];
+    } else {
+      this.selectedBucket = undefined;
+    }
+  };
 
   setSelectedDate = ({ offsetX, buttons }: MouseEvent) => {
     const isMouseBeingPressed = buttons > 0;
@@ -83,6 +104,25 @@ export class ScTooltip {
       return null;
     }
 
+    if (this.isHeatmap) {
+      return (
+        <sc-tooltip-heatmap-rows
+          size={this.size}
+          dataStreams={this.dataStreams}
+          viewport={this.viewport}
+          selectedDate={this.selectedDate}
+          selectedBucket={this.selectedBucket}
+          maxDurationFromDate={this.maxDurationFromDate}
+          showDataStreamColor={this.showDataStreamColor}
+          dataAlignment={this.dataAlignment}
+          supportString={false}
+          visualizesAlarms={false}
+          showBlankTooltipRows={false}
+          sortPoints={this.sortPoints}
+          top={this.top}
+        />
+      );
+    }
     return (
       <sc-tooltip-rows
         trendResults={this.trendResults}
