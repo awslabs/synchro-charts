@@ -172,7 +172,6 @@ export class ScWebglBaseChart {
       }),
     };
     this.widgetUpdated.emit(configUpdate);
-    console.log('WidgetConfigurationUpdate Emitted');
   };
 
   /**
