@@ -1,6 +1,5 @@
 import { Component, h, Prop } from '@stencil/core';
-
-import { DataPoint, DataStream, DataStreamId, SizeConfig, ViewPort } from '../../../utils/dataTypes';
+import { DataStream, SizeConfig, ViewPort } from '../../../utils/dataTypes';
 import { activePoints, POINT_TYPE } from '../sc-webgl-base-chart/activePoints';
 import { tooltipPosition } from './tooltipPosition';
 import { TooltipPoint } from './types';
@@ -8,7 +7,13 @@ import { isDefined, isSupportedDataType } from '../../../utils/predicates';
 import { sortTooltipPoints } from './sort';
 import { StreamType } from '../../../utils/dataConstants';
 import { DATA_ALIGNMENT } from '../common/constants';
-import { getResolution, displayDate } from '../sc-heatmap/heatmapUtil';
+import {
+  getResolution,
+  displayDate,
+  HeatValueMap,
+  calculateXBucketStart,
+  calculateBucketIndex,
+} from '../sc-heatmap/heatmapUtil';
 
 const TOOLTIP_ROW_HEIGHT = 21;
 const TOOLTIP_EMPTY_HEIGHT = 71;
@@ -23,7 +28,7 @@ const X_OFFSET = 8;
   tag: 'sc-tooltip-rows',
   shadow: false,
 })
-export class ScTooltipRows {
+export class ScTooltipHeatmapRows {
   @Prop() selectedDate!: Date;
   @Prop() selectedBucket!: number[];
   @Prop() size!: SizeConfig;
@@ -34,6 +39,7 @@ export class ScTooltipRows {
   @Prop() supportString!: boolean;
   @Prop() showBlankTooltipRows!: boolean;
   @Prop() visualizesAlarms!: boolean;
+  @Prop() heatValues!: HeatValueMap;
 
   /**
    * If we are drawing data from the data timestamp to timestamp + resolution
@@ -52,19 +58,15 @@ export class ScTooltipRows {
   /** Total height of the tool tip display */
   tooltipHeight = (numRows: number) => numRows * TOOLTIP_ROW_HEIGHT + TOOLTIP_EMPTY_HEIGHT;
 
-  /**
-   * The point in time which is 'actively' being viewed within the tooltip.
-   */
-  getDisplayedDate = (points: TooltipPoint[]): Date => {
-    const resolutions = this.dataStreams.map(({ resolution }) => resolution);
-    const minResolution = resolutions.length > 0 ? Math.min(...resolutions) : 0;
-
-    if (minResolution === 0) {
-      return this.selectedDate;
+  getBucketCount = (selectedDate: Date, yValue: number): number => {
+    if (!this.heatValues) {
+      return 0;
     }
-    const firstPoint = points[0] && points[0].point ? new Date(points[0].point.x) : undefined;
-
-    return firstPoint || this.selectedDate;
+    const resolution = getResolution(this.viewport);
+    const xAxisBucketStart = calculateXBucketStart({ xValue: selectedDate.getTime(), xAxisBucketRange: resolution });
+    const { yMin, yMax } = this.viewport;
+    const bucketIndex = calculateBucketIndex({ yValue, yMax, yMin });
+    return this.heatValues[xAxisBucketStart][bucketIndex].totalCount;
   };
 
   /**
@@ -90,7 +92,7 @@ export class ScTooltipRows {
    * each of these will correspond to one `tooltip-row`
    */
   getTooltipPoints = (): TooltipPoint[] => {
-    const resolution = this.getResolution(this.viewport);
+    const resolution = getResolution(this.viewport);
     const minResolution = Math.min(resolution, 0);
 
     const dataPoints = activePoints({
@@ -185,7 +187,7 @@ export class ScTooltipRows {
               class={{ 'value awsui-util-d-b': true, 'left-offset': !this.showDataStreamColor }}
               style={{ color: '#000' }}
             >
-              {this.getCount(this.selectedDate, this.selectedBucket[1])}
+              {this.getBucketCount(this.selectedDate, this.selectedBucket[1])}
             </small>
           </div>
         </div>

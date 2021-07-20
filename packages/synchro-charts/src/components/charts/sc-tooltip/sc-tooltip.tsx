@@ -4,6 +4,7 @@ import { DataStream, SizeConfig, ViewPort } from '../../../utils/dataTypes';
 import { Threshold } from '../common/types';
 import { TrendResult } from '../common/trends/types';
 import { DATA_ALIGNMENT } from '../common/constants';
+import { HeatValueMap } from '../sc-heatmap/heatmapUtil';
 
 /**
  * The parent tooltip container, listens for events to ensure tooltip renders at the correct position at the correct time.
@@ -26,6 +27,7 @@ export class ScTooltip {
   @Prop() visualizesAlarms!: boolean;
   @Prop() bucketCount?: number;
   @Prop() isHeatmap?: boolean = false;
+  @Prop() heatValues?: HeatValueMap = {};
   // If false, do not display a tooltip row if there is no associated point.
   @Prop() showBlankTooltipRows: boolean = false;
 
@@ -120,6 +122,7 @@ export class ScTooltip {
           showBlankTooltipRows={false}
           sortPoints={this.sortPoints}
           top={this.top}
+          heatValues={this.heatValues}
         />
       );
     }

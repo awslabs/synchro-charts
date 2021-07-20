@@ -8,21 +8,13 @@ import {
   MinimalViewPortConfig,
   RequestDataFn,
 } from '../../../utils/dataTypes';
-import {
-  Annotations,
-  Axis,
-  ChartConfig,
-  LayoutConfig,
-  LegendConfig,
-  MovementConfig,
-  ScaleConfig,
-  Tooltip,
-} from '../common/types';
+import { Axis, ChartConfig, LayoutConfig, LegendConfig, MovementConfig, ScaleConfig, Tooltip } from '../common/types';
 import { chartScene, updateChartScene } from './chartScene';
 import { DEFAULT_CHART_CONFIG } from '../sc-webgl-base-chart/chartDefaults';
 import { RectScrollFixed } from '../../../utils/types';
-import { Trend } from '../common/trends/types';
 import { DATA_ALIGNMENT } from '../common/constants';
+import { HeatValueMap } from './heatmapUtil';
+import { heatValues } from './heatmapMesh';
 
 // The initial size of buffers. The larger this is, the more memory allocated up front per chart.
 // The lower this number is, more likely that charts will have to re-initialize there buffers which is
@@ -31,7 +23,13 @@ const DEFAULT_MIN_BUFFER_SIZE = 1000;
 const DEFAULT_BUFFER_FACTOR = 2;
 
 const tooltip = (props: Tooltip.Props) => (
-  <sc-tooltip {...props} visualizesAlarms={false} supportString={false} dataAlignment={DATA_ALIGNMENT.EITHER} />
+  <sc-tooltip
+    {...props}
+    visualizesAlarms={false}
+    supportString={false}
+    dataAlignment={DATA_ALIGNMENT.EITHER}
+    heatValues={heatValues}
+  />
 );
 
 @Component({
@@ -50,12 +48,10 @@ export class ScHeatmap implements ChartConfig {
   @Prop() dataStreams!: DataStream[];
   @Prop() alarms?: AlarmsConfig;
   @Prop() gestures: boolean = true;
-  @Prop() annotations: Annotations;
-  @Prop() trends: Trend[];
   @Prop() requestData?: RequestDataFn;
   @Prop() axis?: Axis.Options;
   @Prop() messageOverrides?: MessageOverrides;
-
+  @Prop() heatValues: HeatValueMap;
   /** Status */
   @Prop() isEditing: boolean = false;
   /** Memory Management */
@@ -73,8 +69,6 @@ export class ScHeatmap implements ChartConfig {
             configId={this.widgetId}
             requestData={this.requestData}
             legend={this.legend}
-            annotations={this.annotations}
-            trends={this.trends}
             updateChartScene={updateChartScene}
             createChartScene={chartScene}
             size={{

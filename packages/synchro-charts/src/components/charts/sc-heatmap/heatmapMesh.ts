@@ -43,6 +43,8 @@ export const NUM_POSITION_COMPONENTS = 2; // (x, y)
 const NUM_COLOR_COMPONENTS = 3; // (r, g, b)
 
 export const COLOR_PALETTE = getSequential();
+// eslint-disable-next-line import/no-mutable-exports
+export let heatValues: HeatValueMap = {};
 
 // Each timestamp can have 10 buckets
 const numBuckets = (heatValue: HeatValueMap): number => {
@@ -97,8 +99,8 @@ const updateMesh = ({
 
   const resolution = getResolution(viewport);
 
-  const heatValues =
-    dataStreams.length !== 0 ? calcHeatValues({ oldHeatValue: {}, dataStreams, resolution, viewport }) : {};
+  heatValues =
+    dataStreams.length !== 0 ? calcHeatValues({ oldHeatValue: heatValues, dataStreams, resolution, viewport }) : {};
 
   // eslint-disable-next-line no-param-reassign
   mesh.count = numBuckets(heatValues);

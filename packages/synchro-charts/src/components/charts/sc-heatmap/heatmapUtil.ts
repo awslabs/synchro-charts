@@ -1,9 +1,7 @@
 import { DataStream, ViewPort } from '../../../utils/dataTypes';
 import { SECOND_IN_MS, MINUTE_IN_MS, HOUR_IN_MS, DAY_IN_MS } from '../../../utils/time';
 import { DataType } from '../../../utils/dataConstants';
-import { CHANGE_RESOLUTION } from './heatmapConstants';
-
-const NUM_OF_BUCKETS = 10;
+import { BUCKET_COUNT, CHANGE_RESOLUTION } from './heatmapConstants';
 
 export type HeatValueMap = {
   [xBucketRangeStart: number]: {
@@ -16,17 +14,8 @@ export type HeatValueMap = {
   };
 };
 
-export const calculateBucketIndex = ({
-  yValue,
-  yMax,
-  yMin,
-  bucketCount,
-}: {
-  yValue: number;
-  yMax: number;
-  yMin: number;
-  bucketCount: number;
-}): number => Math.ceil(((yValue - yMin) / (yMax - yMin)) * bucketCount);
+export const calculateBucketIndex = ({ yValue, yMax, yMin }: { yValue: number; yMax: number; yMin: number }): number =>
+  Math.ceil(((yValue - yMin) / (yMax - yMin)) * BUCKET_COUNT);
 
 export const calculateXBucketStart = ({
   xValue,
@@ -95,17 +84,31 @@ export const calcHeatValues = ({
         yValue: currPoint.y as number, // checked in line 85 if the data value is number
         yMax,
         yMin,
-        bucketCount: NUM_OF_BUCKETS,
       });
       return addCount({ heatValue: tempHeatValue, xBucketRangeStart, bucketIndex, dataStreamId: dataStream.id });
     }, newHeatValue);
   }, oldHeatValue);
 };
 
-export const displayDate = (xBucketRangeStart: Date, resolution: number, { start, end }: { start: Date; end: Date }): string => {
+export const getResolution = (viewport: ViewPort): number => {
+  const duration = viewport.duration ?? viewport.end.getTime() - viewport.start.getTime();
+  if (duration > (CHANGE_RESOLUTION + 1) * DAY_IN_MS) {
+    return DAY_IN_MS;
+  }
+  if (duration > CHANGE_RESOLUTION * HOUR_IN_MS) {
+    return HOUR_IN_MS;
+  }
+  if (duration > CHANGE_RESOLUTION * MINUTE_IN_MS) {
+    return MINUTE_IN_MS;
+  }
+  return SECOND_IN_MS;
+};
+
+export const displayDate = (date: Date, resolution: number, { start, end }: { start: Date; end: Date }): string => {
   const viewportDurationMS = end.getTime() - start.getTime();
+  const xBucketRangeStart = new Date(calculateXBucketStart({ xValue: date.getTime(), xAxisBucketRange: resolution }));
   const xBucketRangeEnd = new Date(xBucketRangeStart.getTime() + resolution);
-  if (viewportDurationMS < CHANGE_RESOLUTION * MINUTE_IN_MS) {
+  if (viewportDurationMS < MINUTE_IN_MS) {
     return `${xBucketRangeStart.toLocaleString('en-US', {
       minute: 'numeric',
       second: 'numeric',
@@ -129,7 +132,7 @@ export const displayDate = (xBucketRangeStart: Date, resolution: number, { start
     })}`;
   }
 
-  if (viewportDurationMS <= CHANGE_RESOLUTION * HOUR_IN_MS) {
+  if (viewportDurationMS <= HOUR_IN_MS) {
     return `${xBucketRangeStart.toLocaleString('en-US', {
       hour: 'numeric',
       minute: 'numeric',
@@ -141,44 +144,17 @@ export const displayDate = (xBucketRangeStart: Date, resolution: number, { start
     })}`;
   }
 
-  if (viewportDurationMS <= (CHANGE_RESOLUTION + 1) * DAY_IN_MS) {
+  if (viewportDurationMS <= 7 * DAY_IN_MS) {
     return `${xBucketRangeStart.toLocaleString('en-US', {
       month: 'numeric',
       hour: 'numeric',
-      minute: 'numeric',
       day: 'numeric',
       hour12: true,
     })} - ${xBucketRangeEnd.toLocaleString('en-US', {
       month: 'numeric',
       hour: 'numeric',
-      minute: 'numeric',
       day: 'numeric',
       hour12: true,
-    })}`;
-  }
-
-  if (resolution <= HOUR_IN_MS) {
-    return `${xBucketRangeStart.toLocaleString('en-US', {
-      hour: 'numeric',
-      day: 'numeric',
-      month: 'numeric',
-      hour12: true,
-    })} - ${xBucketRangeEnd.toLocaleString('en-US', {
-      hour: 'numeric',
-      day: 'numeric',
-      month: 'numeric',
-      hour12: true,
-    })}`;
-  }
-
-  if (resolution < DAY_IN_MS) {
-    return `${xBucketRangeStart.toLocaleString('en-US', {
-      day: 'numeric',
-      month: 'numeric',
-      hour12: true,
-    })} - ${xBucketRangeEnd.toLocaleString('en-US', {
-      day: 'numeric',
-      month: 'numeric',
     })}`;
   }
 
