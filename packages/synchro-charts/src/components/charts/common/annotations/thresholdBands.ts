@@ -4,10 +4,10 @@ import { getBreachedThreshold, sortThreshold, getNumberThresholds } from './util
 import { COMPARISON_OPERATOR } from '../constants';
 
 /**
- * Max of 12 threshold bands because we allow only up to 10 thresholds. Imaging a piece of paper being split into
- * 10 times. You will end up with 11 different pieces. Set it as 12 to over allocate.
+ * Max of 13 threshold bands because we allow only up to 12 thresholds. Imaging a piece of paper being split into
+ * 12 times. You will end up with 13 different pieces.
  */
-export const MAX_THRESHOLD_BANDS = 12;
+export const MAX_THRESHOLD_BANDS = 13;
 
 /**
  * First we sort the thresholds then reverse it. Reversing the sorted threshold allows us to create the band from
