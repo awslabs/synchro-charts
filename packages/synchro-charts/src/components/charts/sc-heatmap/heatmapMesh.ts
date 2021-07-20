@@ -14,10 +14,10 @@ import bucketFrag from './heatmap.frag';
 import { WriteableBufferAttribute, WriteableInstancedBufferAttribute } from '../../sc-webgl-context/types';
 import { numDataPoints } from '../sc-webgl-base-chart/utils';
 import { getBucketWidth, getSequential, getBucketColor } from './displayLogic';
-import { HeatValueMap, calcHeatValues } from './heatmapUtil';
-import { BUCKET_COUNT, CHANGE_RESOLUTION } from './heatmapConstants';
+import { HeatValueMap, calcHeatValues, getResolution } from './heatmapUtil';
+import { BUCKET_COUNT } from './heatmapConstants';
 import { DataStream, Primitive, ViewPort } from '../../../utils/dataTypes';
-import { DAY_IN_MS, SECOND_IN_MS, HOUR_IN_MS, MINUTE_IN_MS } from '../../../utils/time';
+import { SECOND_IN_MS } from '../../../utils/time';
 
 type BucketBufferGeometry = BufferGeometry & {
   attributes: {
@@ -47,20 +47,6 @@ export const COLOR_PALETTE = getSequential();
 // Each timestamp can have 10 buckets
 const numBuckets = (heatValue: HeatValueMap): number => {
   return BUCKET_COUNT * Object.keys(heatValue).length;
-};
-
-export const getResolution = (viewport: ViewPort): number => {
-  const duration = viewport.duration ?? viewport.end.getTime() - viewport.start.getTime();
-  if (duration > (CHANGE_RESOLUTION + 1) * DAY_IN_MS) {
-    return DAY_IN_MS;
-  }
-  if (duration > CHANGE_RESOLUTION * HOUR_IN_MS) {
-    return HOUR_IN_MS;
-  }
-  if (duration > CHANGE_RESOLUTION * MINUTE_IN_MS) {
-    return MINUTE_IN_MS;
-  }
-  return SECOND_IN_MS;
 };
 
 const getUniformWidth = <T extends Primitive>(

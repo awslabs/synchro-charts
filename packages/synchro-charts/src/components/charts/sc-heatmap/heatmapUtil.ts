@@ -1,6 +1,7 @@
 import { DataStream, ViewPort } from '../../../utils/dataTypes';
-import { SECOND_IN_MS } from '../../../utils/time';
+import { DAY_IN_MS, HOUR_IN_MS, MINUTE_IN_MS, SECOND_IN_MS } from '../../../utils/time';
 import { DataType } from '../../../utils/dataConstants';
+import { CHANGE_RESOLUTION } from './heatmapConstants';
 
 const NUM_OF_BUCKETS = 10;
 
@@ -99,4 +100,18 @@ export const calcHeatValues = ({
       return addCount({ heatValue: tempHeatValue, xBucketRangeStart, bucketIndex, dataStreamId: dataStream.id });
     }, newHeatValue);
   }, oldHeatValue);
+};
+
+export const getResolution = (viewport: ViewPort): number => {
+  const duration = viewport.duration ?? viewport.end.getTime() - viewport.start.getTime();
+  if (duration > (CHANGE_RESOLUTION + 1) * DAY_IN_MS) {
+    return DAY_IN_MS;
+  }
+  if (duration > CHANGE_RESOLUTION * HOUR_IN_MS) {
+    return HOUR_IN_MS;
+  }
+  if (duration > CHANGE_RESOLUTION * MINUTE_IN_MS) {
+    return MINUTE_IN_MS;
+  }
+  return SECOND_IN_MS;
 };

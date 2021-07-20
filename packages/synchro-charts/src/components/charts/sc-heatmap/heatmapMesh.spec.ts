@@ -1,7 +1,7 @@
 import { clipSpaceConversion } from '../sc-webgl-base-chart/clipSpaceConversion';
-import { bucketMesh, updateBucketMesh, COLOR_PALETTE, getResolution } from './heatmapMesh';
+import { bucketMesh, updateBucketMesh, COLOR_PALETTE } from './heatmapMesh';
 import { BUCKET_COUNT } from './heatmapConstants';
-import { calculateXBucketStart, calculateBucketIndex } from './heatmapUtil';
+import { calculateXBucketStart, calculateBucketIndex, getResolution } from './heatmapUtil';
 import { getBucketMargin, getBucketWidth } from './displayLogic';
 import { getDistanceFromDuration } from '../common/getDistanceFromDuration';
 import { DataType } from '../../../utils/dataConstants';
