@@ -47,7 +47,9 @@ jobs:
           name: Clean up
           command: docker-compose down
       - store_artifacts:
-          path: packages/synchro-charts/cypress/screenshots
+          path: packages/synchro-charts/cypress/snapshots
+      # - store_artifacts:
+      #     path: packages/synchro-charts/cypress/screenshots
       # - store_artifacts:
       #     path: packages/synchro-charts/cypress/videos
 
