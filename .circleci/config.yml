@@ -3,6 +3,9 @@
 version: 2.1
 jobs:
   build-lint-test:
+    filters:
+      branches:
+        only: ashika01:feature/cci
     machine:
       docker_layer_caching: false
     steps:
