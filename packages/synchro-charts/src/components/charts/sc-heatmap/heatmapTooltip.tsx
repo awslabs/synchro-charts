@@ -1,8 +1,16 @@
 import { Component, h, Prop, State } from '@stencil/core';
 
+import { pointBisector } from '../common/dataFilters';
 import { DataStream, SizeConfig, ViewPort } from '../../../utils/dataTypes';
 import { DATA_ALIGNMENT } from '../common/constants';
-import { calculateBucketIndex, calculateXBucketStart, displayDate, getResolution, HeatValueMap } from './heatmapUtil';
+import {
+  calcHeatValues,
+  calculateBucketIndex,
+  calculateXBucketStart,
+  displayDate,
+  getResolution,
+  HeatValueMap,
+} from './heatmapUtil';
 
 const TOOLTIP_ROW_HEIGHT = 21;
 const TOOLTIP_EMPTY_HEIGHT = 71;
@@ -20,7 +28,6 @@ export class ScHeatmapTooltip {
   @Prop() dataStreams!: DataStream[];
   @Prop() bucketCount?: number;
   @Prop() isHeatmap?: boolean = false;
-  @Prop() heatValues?: HeatValueMap = {};
 
   /**
    * If we are drawing data from the data timestamp to timestamp + resolution
@@ -37,20 +44,65 @@ export class ScHeatmapTooltip {
 
   @State() selectedDate?: Date;
   @State() selectedBucket?: number[];
+  @State() heatValues?: HeatValueMap;
 
   componentDidLoad() {
     this.dataContainer.addEventListener('mousemove', this.setSelectedDate);
+    this.dataContainer.addEventListener('mousemove', this.setSelectedBucket);
     this.dataContainer.addEventListener('mouseleave', this.hideTooltip);
     this.dataContainer.addEventListener('mousedown', this.hideTooltip, { capture: true });
   }
 
   disconnectedCallback() {
     this.dataContainer.removeEventListener('mousemove', this.setSelectedDate);
+    this.dataContainer.removeEventListener('mousemove', this.setSelectedBucket);
     this.dataContainer.removeEventListener('mouseleave', this.hideTooltip);
     this.dataContainer.removeEventListener('mousedown', this.hideTooltip);
   }
 
-  getCursorBucket = ({ offsetY, buttons }: MouseEvent) => {
+  setSelectedDate = ({ offsetX, buttons }: MouseEvent) => {
+    const isMouseBeingPressed = buttons > 0;
+
+    if (!isMouseBeingPressed && offsetX != null) {
+      // Determine the date which corresponds with the mouses position.
+      const { start, end } = this.viewport;
+      const resolution = getResolution(this.viewport);
+      const { width } = this.size;
+
+      const ratio = offsetX / width;
+      const viewportDuration = end.getTime() - start.getTime();
+      const selectedDateMS = start.getTime() + viewportDuration * ratio;
+      const selectedDateBucketStart = calculateXBucketStart({ xValue: selectedDateMS, xAxisBucketRange: resolution });
+      this.selectedDate = new Date(selectedDateBucketStart);
+      this.setHeatValue();
+    } else {
+      this.selectedDate = undefined;
+    }
+  };
+
+  setHeatValue = () => {
+    const newDataStream: DataStream[] = [];
+    const resolution = getResolution(this.viewport);
+    const lowerXBucketBound = this.selectedDate;
+    const upperXBucketBound = new Date(lowerXBucketBound.getTime() + resolution);
+    this.dataStreams.forEach((dataStream, index) => {
+      const startIndex = Math.max(pointBisector.left(dataStream.data, lowerXBucketBound) - 1, 0);
+      const endIndex = Math.min(pointBisector.right(dataStream.data, upperXBucketBound), dataStream.data.length - 1);
+      newDataStream[index] = { ...dataStream, data: dataStream.data.slice(startIndex, endIndex + 1) };
+    });
+    this.heatValues = calcHeatValues({
+      oldHeatValue: {},
+      dataStreams: newDataStream,
+      resolution,
+      viewport: this.viewport,
+    });
+  };
+
+  hideTooltip = () => {
+    this.selectedDate = undefined;
+  };
+
+  setSelectedBucket = ({ offsetY, buttons }: MouseEvent) => {
     const isMouseBeingPressed = buttons > 0;
 
     if (!isMouseBeingPressed && offsetY != null && this.bucketCount != null) {
@@ -66,30 +118,6 @@ export class ScHeatmapTooltip {
     } else {
       this.selectedBucket = undefined;
     }
-  };
-
-  setSelectedDate = ({ offsetX, buttons }: MouseEvent) => {
-    const isMouseBeingPressed = buttons > 0;
-
-    if (!isMouseBeingPressed && offsetX != null) {
-      // Determine the date which corresponds with the mouses position.
-      const { start, end } = this.viewport;
-      const resolution = getResolution(this.viewport);
-      const { width } = this.size;
-
-      const ratio = offsetX / width;
-      const viewportDuration = end.getTime() - start.getTime();
-      const selectedDateMS = start.getTime() + viewportDuration * ratio;
-      const selectedDateBucketStart = calculateXBucketStart({ xValue: selectedDateMS, xAxisBucketRange: resolution });
-
-      this.selectedDate = new Date(selectedDateBucketStart);
-    } else {
-      this.selectedDate = undefined;
-    }
-  };
-
-  hideTooltip = () => {
-    this.selectedDate = undefined;
   };
 
   getBucketCount = (selectedDate: Date, yValue: number): number => {
@@ -132,8 +160,9 @@ export class ScHeatmapTooltip {
       return null;
     }
 
+    this.setHeatValue();
     // if heatValues is undefined then we can't get the totalCount
-    if (this.heatValues === undefined) {
+    if (this.heatValues === {}) {
       return null;
     }
 
@@ -151,7 +180,6 @@ export class ScHeatmapTooltip {
       return null;
     }
 
-    const selectedBucketCount = this.heatValues[selectedDateMS][bucketIndex].totalCount;
     const position = this.getTooltipPosition(this.viewport, this.size);
 
     if (position == null) {
@@ -188,7 +216,7 @@ export class ScHeatmapTooltip {
             </small>
             <small class={{ 'awsui-util-d-b': true, 'awsui-util-mb-s': true }}>Total count:</small>
             <small class={{ 'value awsui-util-d-b': true }} style={{ color: '#000' }}>
-              {selectedBucketCount}
+              {this.heatValues[selectedDateMS][bucketIndex].totalCount}
             </small>
           </div>
         </div>

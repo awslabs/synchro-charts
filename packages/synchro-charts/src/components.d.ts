@@ -1573,6 +1573,7 @@ declare namespace LocalJSX {
          */
         "dataAlignment": DATA_ALIGNMENT;
         "dataContainer": HTMLElement;
+        "dataStreams": DataStream[];
         "heatValues"?: HeatValueMap;
         "isHeatmap"?: boolean;
         "size": SizeConfig;
