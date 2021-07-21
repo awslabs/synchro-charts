@@ -16,9 +16,13 @@ jobs:
           # cache: 'yarn'
       - name: Install dependencies
         run: yarn
-      - name: Run Build
-        run: yarn build
-      - name: Run lint
-        run: yarn lint
-      - name: Run unit tests
-        run: yarn test
+      # - name: Run Build
+      #   run: yarn build
+      # - name: Run lint
+      #   run: yarn lint
+      # - name: Run unit tests
+      #   run: yarn test
+      - name: Start docker containers
+        run: docker-compose up --abort-on-container-exit --build
+      - name: Stop docker containers
+        run: docker-compose down
