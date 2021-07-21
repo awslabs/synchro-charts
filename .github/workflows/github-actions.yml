@@ -15,7 +15,7 @@ jobs:
           node-version: '14.x'
           cache: 'yarn'
       - name: Install dependencies
-        run: yarn --frozen-lockfile
+        run: yarn
       - name: Run Build
         run: yarn build
       - name: Run lint
