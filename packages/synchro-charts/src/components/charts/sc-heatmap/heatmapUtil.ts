@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { DataStream, ViewPort } from '../../../utils/dataTypes';
-import { SECOND_IN_MS, MINUTE_IN_MS, HOUR_IN_MS, DAY_IN_MS, MONTH_IN_MS, YEAR_IN_MS } from '../../../utils/time';
+import { SECOND_IN_MS, MINUTE_IN_MS, HOUR_IN_MS, DAY_IN_MS } from '../../../utils/time';
 import { DataType } from '../../../utils/dataConstants';
 import { CHANGE_RESOLUTION } from './heatmapConstants';
 
