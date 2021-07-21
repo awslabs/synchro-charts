@@ -9,7 +9,7 @@ import {
   RequestDataFn,
 } from '../../../utils/dataTypes';
 import { Axis, ChartConfig, LayoutConfig, LegendConfig, MovementConfig, ScaleConfig, Tooltip } from '../common/types';
-import { chartScene, updateChartScene } from './chartScene';
+import { chartScene, updateChartScene } from '../sc-bar-chart/chartScene';
 import { DEFAULT_CHART_CONFIG } from '../sc-webgl-base-chart/chartDefaults';
 import { RectScrollFixed } from '../../../utils/types';
 import { DATA_ALIGNMENT } from '../common/constants';

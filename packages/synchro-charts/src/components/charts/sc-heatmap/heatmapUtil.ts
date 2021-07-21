@@ -101,10 +101,10 @@ export const calcHeatValues = ({
   }, oldHeatValue);
 };
 
-export const displayDate = (date: Date, resolution: number, { start, end }: { start: Date; end: Date }): string => {
+export const displayDate = (dates: Date[], resolution: number, { start, end }: { start: Date; end: Date }): string => {
   const viewportDurationMS = end.getTime() - start.getTime();
-  const xBucketRangeStart = new Date(calculateXBucketStart({ xValue: date.getTime(), xAxisBucketRange: resolution }));
-  const xBucketRangeEnd = new Date(xBucketRangeStart.getTime() + resolution);
+  const xBucketRangeStart = dates[0];
+  const xBucketRangeEnd = dates[1];
   if (viewportDurationMS < MINUTE_IN_MS) {
     return `${xBucketRangeStart.toLocaleString('en-US', {
       minute: 'numeric',

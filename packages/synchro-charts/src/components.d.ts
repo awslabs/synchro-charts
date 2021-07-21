@@ -10,10 +10,10 @@ import { Annotations, Axis, LayoutConfig, LegendConfig, MovementConfig, ScaleCon
 import { Trend, TrendResult } from "./components/charts/common/trends/types";
 import { DATA_ALIGNMENT, StatusIcon } from "./components/charts/common/constants";
 import { POINT_TYPE } from "./components/charts/sc-webgl-base-chart/activePoints";
-import { HeatValueMap } from "./components/charts/sc-heatmap/heatmapUtil";
 import { RectScrollFixed } from "./utils/types";
 import { LabelsConfig } from "./components/common/types";
 import { Cell, Row } from "./components/sc-table/constructTableData";
+import { HeatValueMap } from "./components/charts/sc-heatmap/heatmapUtil";
 import { ChartSceneCreator, ChartSceneUpdater } from "./components/charts/sc-webgl-base-chart/types";
 import { RenderCell } from "./components/sc-widget-grid/types";
 export namespace Components {
@@ -134,7 +134,7 @@ export namespace Components {
          */
         "dataAlignment": DATA_ALIGNMENT;
         "dataContainer": HTMLElement;
-        "heatValues"?: HeatValueMap;
+        "dataStreams": DataStream[];
         "isHeatmap"?: boolean;
         "size": SizeConfig;
         /**
@@ -1574,7 +1574,6 @@ declare namespace LocalJSX {
         "dataAlignment": DATA_ALIGNMENT;
         "dataContainer": HTMLElement;
         "dataStreams": DataStream[];
-        "heatValues"?: HeatValueMap;
         "isHeatmap"?: boolean;
         "size": SizeConfig;
         /**
