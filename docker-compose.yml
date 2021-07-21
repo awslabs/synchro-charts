@@ -19,11 +19,6 @@ services:
     environment:
       - CYPRESS_BASE_URL=http://root:3333
     working_dir: /app/packages/synchro-charts
-    entrypoint:
-      [
-        '/bin/sh',
-        '-c',
-        'sleep 60 && cypress run --headless --browser chrome --spec cypress/integration/charts/scatter-chart/sc-webgl-scatter-chart.spec.ts --env disableSnapshotTests=true',
-      ]
+    entrypoint: ['/bin/sh', '-c', 'sleep 60 && cypress run --headless --browser chrome --env disableSnapshotTests=true']
     volumes:
       - .:/app
