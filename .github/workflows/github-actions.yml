@@ -29,6 +29,8 @@ jobs:
       - name: cypress run
         uses: cypress-io/github-action@v2
         with:
+          start: yarn start
+          wait-on: 'http://localhost:3333'
           command: yarn test:cypress --env disableSnapshotTests=true
           working-directory: packages/synchro-charts
       # after the test run completes
