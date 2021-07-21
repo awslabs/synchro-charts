@@ -31,7 +31,7 @@ jobs:
         with:
           start: yarn start
           wait-on: 'http://localhost:3333'
-          command: yarn test:cypress
+          command: yarn test:cypress --env updateSnapshots=true
           working-directory: packages/synchro-charts
       # after the test run completes
       # store videos and any screenshots
@@ -46,7 +46,7 @@ jobs:
           name: cypress-videos
           path: packages/synchro-charts/cypress/videos
       - uses: actions/upload-artifact@v1
-        if: failure()
+        if: always()
         with:
           name: cypress-snapshots
           path: packages/synchro-charts/cypress/snapshots
