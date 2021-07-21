@@ -1,4 +1,4 @@
-import { Component, h, Prop } from '@stencil/core';
+import { Component, h, Prop, State } from '@stencil/core';
 
 import {
   AlarmsConfig,
@@ -23,10 +23,10 @@ const DEFAULT_MIN_BUFFER_SIZE = 1000;
 const DEFAULT_BUFFER_FACTOR = 2;
 
 const tooltip = (props: Tooltip.Props) => (
-  <sc-tooltip
-    {...props}
-    visualizesAlarms={false}
-    supportString={false}
+  <sc-heatmap-tooltip
+    size={props.size}
+    viewport={props.viewport}
+    dataContainer={props.dataContainer}
     dataAlignment={DATA_ALIGNMENT.EITHER}
     heatValues={heatValues}
   />
@@ -51,12 +51,14 @@ export class ScHeatmap implements ChartConfig {
   @Prop() requestData?: RequestDataFn;
   @Prop() axis?: Axis.Options;
   @Prop() messageOverrides?: MessageOverrides;
-  @Prop() heatValues: HeatValueMap;
+  // @Prop() heatValues: HeatValueMap;
   /** Status */
   @Prop() isEditing: boolean = false;
   /** Memory Management */
   @Prop() bufferFactor: number = DEFAULT_BUFFER_FACTOR;
   @Prop() minBufferSize: number = DEFAULT_MIN_BUFFER_SIZE;
+
+  @State() heatValues: HeatValueMap = {};
 
   render() {
     return (
@@ -64,6 +66,7 @@ export class ScHeatmap implements ChartConfig {
         size={this.size}
         renderFunc={(size: RectScrollFixed) => (
           <sc-webgl-base-chart
+            {...this.heatValues}
             axis={this.axis}
             gestures={this.gestures}
             configId={this.widgetId}

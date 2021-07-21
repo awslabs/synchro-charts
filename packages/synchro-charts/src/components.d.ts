@@ -10,12 +10,12 @@ import { Annotations, Axis, LayoutConfig, LegendConfig, MovementConfig, ScaleCon
 import { Trend, TrendResult } from "./components/charts/common/trends/types";
 import { DATA_ALIGNMENT, StatusIcon } from "./components/charts/common/constants";
 import { POINT_TYPE } from "./components/charts/sc-webgl-base-chart/activePoints";
+import { HeatValueMap } from "./components/charts/sc-heatmap/heatmapUtil";
 import { RectScrollFixed } from "./utils/types";
 import { LabelsConfig } from "./components/common/types";
 import { Cell, Row } from "./components/sc-table/constructTableData";
 import { ChartSceneCreator, ChartSceneUpdater } from "./components/charts/sc-webgl-base-chart/types";
 import { RenderCell } from "./components/sc-widget-grid/types";
-import { HeatValueMap } from "./components/charts/sc-heatmap/heatmapUtil";
 export namespace Components {
     interface LineChartViewportChange {
     }
@@ -102,7 +102,6 @@ export namespace Components {
     }
     interface ScHeatmap {
         "alarms"?: AlarmsConfig;
-        "annotations": Annotations;
         "axis"?: Axis.Options;
         /**
           * Memory Management
@@ -122,12 +121,27 @@ export namespace Components {
         "requestData"?: RequestDataFn;
         "scale"?: ScaleConfig;
         "size"?: MinimalSizeConfig;
-        "trends": Trend[];
         /**
           * Chart API
          */
         "viewport": MinimalViewPortConfig;
         "widgetId": string;
+    }
+    interface ScHeatmapTooltip {
+        "bucketCount"?: number;
+        /**
+          * If we are drawing data from the data timestamp to timestamp + resolution we want the tooltip to align on the left side  Otherwise we are drawing the data from timestamp - resolution to timestamp then we want the tooltip to align on the right side
+         */
+        "dataAlignment": DATA_ALIGNMENT;
+        "dataContainer": HTMLElement;
+        "heatValues"?: HeatValueMap;
+        "isHeatmap"?: boolean;
+        "size": SizeConfig;
+        /**
+          * CSS Top property for the tooltip container
+         */
+        "top": number;
+        "viewport": ViewPort;
     }
     interface ScHelpTooltip {
         "message": string;
@@ -402,12 +416,15 @@ export namespace Components {
         "label": string;
     }
     interface ScTooltip {
+        "bucketCount"?: number;
         /**
           * If we are drawing data from the data timestamp to timestamp + resolution we want the tooltip to align on the left side  Otherwise we are drawing the data from timestamp - resolution to timestamp then we want the tooltip to align on the right side
          */
         "dataAlignment": DATA_ALIGNMENT;
         "dataContainer": HTMLElement;
         "dataStreams": DataStream[];
+        "heatValues"?: HeatValueMap;
+        "isHeatmap"?: boolean;
         "maxDurationFromDate"?: number;
         "showBlankTooltipRows": boolean;
         "showDataStreamColor": boolean;
@@ -452,28 +469,6 @@ export namespace Components {
          */
         "top"?: number;
         "trendResults": TrendResult[];
-        "viewport": ViewPort;
-        "visualizesAlarms": boolean;
-    }
-
-    interface ScTooltipHeatmapRows {
-        /**
-          * If we are drawing data from the data timestamp to timestamp + resolution we want the tooltip to align on the left side  Otherwise we are drawing the data from timestamp - resolution to timestamp then we want the tooltip to align on the right side
-         */
-        "dataAlignment": DATA_ALIGNMENT;
-        "dataStreams": DataStream[];
-        "maxDurationFromDate"?: number;
-        "selectedDate": Date;
-        "showBlankTooltipRows": boolean;
-        "showDataStreamColor": boolean;
-        "size": SizeConfig;
-        "sortPoints"?: boolean;
-        "supportString": boolean;
-        "heatValues": HeatValueMap;
-        /**
-          * CSS Top property for the tooltip container
-         */
-        "top"?: number;
         "viewport": ViewPort;
         "visualizesAlarms": boolean;
     }
@@ -739,6 +734,12 @@ declare global {
     var HTMLScHeatmapElement: {
         prototype: HTMLScHeatmapElement;
         new (): HTMLScHeatmapElement;
+    };
+    interface HTMLScHeatmapTooltipElement extends Components.ScHeatmapTooltip, HTMLStencilElement {
+    }
+    var HTMLScHeatmapTooltipElement: {
+        prototype: HTMLScHeatmapTooltipElement;
+        new (): HTMLScHeatmapTooltipElement;
     };
     interface HTMLScHelpTooltipElement extends Components.ScHelpTooltip, HTMLStencilElement {
     }
@@ -1352,6 +1353,7 @@ declare global {
         "sc-grid": HTMLScGridElement;
         "sc-grid-tooltip": HTMLScGridTooltipElement;
         "sc-heatmap": HTMLScHeatmapElement;
+        "sc-heatmap-tooltip": HTMLScHeatmapTooltipElement;
         "sc-help-tooltip": HTMLScHelpTooltipElement;
         "sc-kpi": HTMLScKpiElement;
         "sc-kpi-base": HTMLScKpiBaseElement;
@@ -1539,7 +1541,6 @@ declare namespace LocalJSX {
     }
     interface ScHeatmap {
         "alarms"?: AlarmsConfig;
-        "annotations"?: Annotations;
         "axis"?: Axis.Options;
         /**
           * Memory Management
@@ -1559,12 +1560,27 @@ declare namespace LocalJSX {
         "requestData"?: RequestDataFn;
         "scale"?: ScaleConfig;
         "size"?: MinimalSizeConfig;
-        "trends"?: Trend[];
         /**
           * Chart API
          */
         "viewport"?: MinimalViewPortConfig;
         "widgetId": string;
+    }
+    interface ScHeatmapTooltip {
+        "bucketCount"?: number;
+        /**
+          * If we are drawing data from the data timestamp to timestamp + resolution we want the tooltip to align on the left side  Otherwise we are drawing the data from timestamp - resolution to timestamp then we want the tooltip to align on the right side
+         */
+        "dataAlignment": DATA_ALIGNMENT;
+        "dataContainer": HTMLElement;
+        "heatValues"?: HeatValueMap;
+        "isHeatmap"?: boolean;
+        "size": SizeConfig;
+        /**
+          * CSS Top property for the tooltip container
+         */
+        "top"?: number;
+        "viewport": ViewPort;
     }
     interface ScHelpTooltip {
         "message": string;
@@ -1840,12 +1856,15 @@ declare namespace LocalJSX {
         "label": string;
     }
     interface ScTooltip {
+        "bucketCount"?: number;
         /**
           * If we are drawing data from the data timestamp to timestamp + resolution we want the tooltip to align on the left side  Otherwise we are drawing the data from timestamp - resolution to timestamp then we want the tooltip to align on the right side
          */
         "dataAlignment": DATA_ALIGNMENT;
         "dataContainer": HTMLElement;
         "dataStreams": DataStream[];
+        "heatValues"?: HeatValueMap;
+        "isHeatmap"?: boolean;
         "maxDurationFromDate"?: number;
         "showBlankTooltipRows"?: boolean;
         "showDataStreamColor"?: boolean;
@@ -1860,7 +1879,6 @@ declare namespace LocalJSX {
         "trendResults"?: TrendResult[];
         "viewport": ViewPort;
         "visualizesAlarms": boolean;
-        "heatValues"?: HeatValueMap;
     }
     interface ScTooltipRow {
         "color": string;
@@ -2077,6 +2095,7 @@ declare namespace LocalJSX {
         "sc-grid": ScGrid;
         "sc-grid-tooltip": ScGridTooltip;
         "sc-heatmap": ScHeatmap;
+        "sc-heatmap-tooltip": ScHeatmapTooltip;
         "sc-help-tooltip": ScHelpTooltip;
         "sc-kpi": ScKpi;
         "sc-kpi-base": ScKpiBase;
@@ -2199,6 +2218,7 @@ declare module "@stencil/core" {
             "sc-grid": LocalJSX.ScGrid & JSXBase.HTMLAttributes<HTMLScGridElement>;
             "sc-grid-tooltip": LocalJSX.ScGridTooltip & JSXBase.HTMLAttributes<HTMLScGridTooltipElement>;
             "sc-heatmap": LocalJSX.ScHeatmap & JSXBase.HTMLAttributes<HTMLScHeatmapElement>;
+            "sc-heatmap-tooltip": LocalJSX.ScHeatmapTooltip & JSXBase.HTMLAttributes<HTMLScHeatmapTooltipElement>;
             "sc-help-tooltip": LocalJSX.ScHelpTooltip & JSXBase.HTMLAttributes<HTMLScHelpTooltipElement>;
             "sc-kpi": LocalJSX.ScKpi & JSXBase.HTMLAttributes<HTMLScKpiElement>;
             "sc-kpi-base": LocalJSX.ScKpiBase & JSXBase.HTMLAttributes<HTMLScKpiBaseElement>;

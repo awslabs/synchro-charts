@@ -28,19 +28,16 @@ const DATA_POINT_1_Y_BUCKET = calculateBucketIndex({
   yValue: DATA_POINT_1.y as number,
   yMax: VIEW_PORT.yMax,
   yMin: VIEW_PORT.yMin,
-  bucketCount: BUCKET_COUNT,
 });
 const DATA_POINT_2_Y_BUCKET = calculateBucketIndex({
   yValue: DATA_POINT_2.y as number,
   yMax: VIEW_PORT.yMax,
   yMin: VIEW_PORT.yMin,
-  bucketCount: BUCKET_COUNT,
 });
 const DATA_POINT_3_Y_BUCKET = calculateBucketIndex({
   yValue: DATA_POINT_3.y as number,
   yMax: VIEW_PORT.yMax,
   yMin: VIEW_PORT.yMin,
-  bucketCount: BUCKET_COUNT,
 });
 
 const DATA_STREAMS: DataStream[] = [

@@ -17,7 +17,7 @@ import { getBucketWidth, getSequential, getBucketColor } from './displayLogic';
 import { HeatValueMap, calcHeatValues } from './heatmapUtil';
 import { BUCKET_COUNT, CHANGE_RESOLUTION } from './heatmapConstants';
 import { DataStream, Primitive, ViewPort } from '../../../utils/dataTypes';
-import { DAY_IN_MS, SECOND_IN_MS, HOUR_IN_MS, MINUTE_IN_MS } from '../../../utils/time';
+import { DAY_IN_MS, SECOND_IN_MS, HOUR_IN_MS, MINUTE_IN_MS, YEAR_IN_MS } from '../../../utils/time';
 
 type BucketBufferGeometry = BufferGeometry & {
   attributes: {
@@ -53,6 +53,9 @@ const numBuckets = (heatValue: HeatValueMap): number => {
 
 export const getResolution = (viewport: ViewPort): number => {
   const duration = viewport.duration ?? viewport.end.getTime() - viewport.start.getTime();
+  if (duration > 7 * DAY_IN_MS) {
+    return YEAR_IN_MS;
+  }
   if (duration > (CHANGE_RESOLUTION + 1) * DAY_IN_MS) {
     return DAY_IN_MS;
   }

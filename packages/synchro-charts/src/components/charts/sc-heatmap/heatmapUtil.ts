@@ -14,8 +14,20 @@ export type HeatValueMap = {
   };
 };
 
-export const calculateBucketIndex = ({ yValue, yMax, yMin }: { yValue: number; yMax: number; yMin: number }): number =>
-  Math.ceil(((yValue - yMin) / (yMax - yMin)) * BUCKET_COUNT);
+export const calculateBucketIndex = ({
+  yValue,
+  yMax,
+  yMin,
+}: {
+  yValue: number;
+  yMax: number;
+  yMin: number;
+}): number => {
+  if (yValue === 0 && yMin === 0) {
+    return 1;
+  }
+  return Math.ceil(((yValue - yMin) / (yMax - yMin)) * BUCKET_COUNT);
+};
 
 export const calculateXBucketStart = ({
   xValue,
