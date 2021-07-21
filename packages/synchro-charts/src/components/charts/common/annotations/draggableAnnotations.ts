@@ -8,16 +8,19 @@ export type DraggableAnnotationsOptions = {
   container: SVGElement;
   viewport: ViewPort;
   size: { height: number };
-  onUpdate: Function;
-  activeViewPort: Function;
-  emitUpdatedWidgetConfiguration: Function;
+  onUpdate: (
+    { start, end }: { start: Date; end: Date },
+    hasDataChanged: boolean,
+    hasSizeChanged: boolean,
+    hasAnnotationChanged: boolean
+  ) => void;
+  activeViewPort: () => ViewPort;
+  emitUpdatedWidgetConfiguration: () => void;
 };
 
 /**
  * Calculate new threshold value based on where the cursor is dragged
- * @param yPos
- * @param viewPort
- * @param size
+ * Returns the new threshold value and whether the viewport needs to be adjusted
  */
 const calculateNewThreshold = ({
   yPos,
@@ -32,21 +35,25 @@ const calculateNewThreshold = ({
   const { yMax, yMin } = viewport;
   const newVal = (height * yMax - yMax * yPos + yMin * yPos) / height;
 
-  /** We truncate the newVal to 1/2000 of the axis scale */
-  const yAxisScale = (yMax - yMin) / 2000;
+  /** We truncate the newVal to 1/1000 of the axis scale to prevent unnecessary precision */
+  const yAxisScale = (yMax - yMin) / 1000;
   const decimalDigits = Math.log(yAxisScale) / Math.log(10);
+
   if (decimalDigits >= 0) {
     return +newVal.toFixed(0);
   }
   return +newVal.toFixed(-decimalDigits);
 };
 
+const needAxisRescale = ({ annotationValue, viewport }: { annotationValue: number; viewport: ViewPort }): boolean => {
+  const { yMax, yMin } = viewport;
+  const lowerThreshold = 1.25 * yMin;
+  const upperThreshold = 0.75 * yMax;
+  return annotationValue < lowerThreshold || annotationValue > upperThreshold;
+};
+
 /**
- * New Draggable Thresholds Feature
- * @param container
- * @param changeThreshold
- * @param viewPort
- * @param size
+ * Draggable Thresholds Feature
  */
 export const draggable = ({
   container,
@@ -60,30 +67,39 @@ export const draggable = ({
   const thresholdGroup = containerSelection.selectAll(DRAGGABLE_HANDLE_SELECTOR);
   thresholdGroup.call(
     drag()
-      .on('start', function dragStarted(d: unknown) {
-        if ((d as YAnnotation).isEditable) {
+      .on('start', function dragStarted(yAnnotation: unknown) {
+        if ((yAnnotation as YAnnotation).isEditable) {
           select(this)
             .raise()
             .classed('active', true);
         }
       })
-      .on('drag', function handleDragged(d: unknown) {
+      .on('drag', function handleDragged(yAnnotation: unknown) {
         /** Drag Event */
-        const annotationDragged = d as YAnnotation;
+        const annotationDragged = yAnnotation as YAnnotation;
         if (annotationDragged.isEditable) {
           const { y: yPos } = event as { y: number };
           annotationDragged.value = calculateNewThreshold({ yPos, viewport, size });
-          onUpdate(activeViewPort(), false, false, true);
+          const axisRescale = needAxisRescale({ annotationValue: annotationDragged.value, viewport });
+          if (axisRescale) {
+            onUpdate(activeViewPort(), false, axisRescale, true);
+          } else {
+            onUpdate(viewport, false, axisRescale, true);
+          }
         }
       })
-      .on('end', function dragEnded(d: unknown) {
-        const annotationDragged = d as YAnnotation;
+      .on('end', function dragEnded(yAnnotation: unknown) {
+        const annotationDragged = yAnnotation as YAnnotation;
         if (annotationDragged.isEditable) {
           const { y: yPos } = event as { y: number };
           annotationDragged.value = calculateNewThreshold({ yPos, viewport, size });
-          onUpdate(activeViewPort(), false, false, true);
+          const axisRescale = needAxisRescale({ annotationValue: annotationDragged.value, viewport });
+          if (axisRescale) {
+            onUpdate(activeViewPort(), false, axisRescale, true);
+          } else {
+            onUpdate(viewport, false, axisRescale, true);
+          }
           select(this).classed('active', false);
-
           /** emit event updating annotation on mouse up */
           emitUpdatedWidgetConfiguration();
         }

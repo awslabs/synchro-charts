@@ -7,7 +7,7 @@ import { ViewPort } from '../../../../../utils/dataTypes';
 
 const PADDING = 5;
 const Y_ANNOTATION_TEXT_PADDING = 3;
-const Y_ANNOTATION_TEXT_LEFT_PADDING = 8;
+const Y_ANNOTATION_TEXT_LEFT_PADDING = 4;
 
 const HANDLE_OFFSET_X = 1;
 export const HANDLE_OFFSET_Y = -11;
@@ -106,7 +106,7 @@ export const renderYAnnotations = ({
     .attr('x', width + Y_ANNOTATION_TEXT_LEFT_PADDING)
     .attr('text-anchor', 'start')
     .attr('y', getYAnnotationValueTextY)
-    .text(annotation => getValueText({ annotation, resolution, viewport, niceDisplayValueText: true }))
+    .text(annotation => getValueText({ annotation, resolution, viewport, formattedText: true }))
     .style('user-select', 'none')
     .style('pointer-events', 'none')
     .style('fill', getColor);
@@ -171,7 +171,7 @@ export const renderYAnnotations = ({
     .attr('display', getValueTextVisibility)
     .attr('y', getYAnnotationValueTextY)
     .attr('x', width + Y_ANNOTATION_TEXT_LEFT_PADDING)
-    .text(annotation => getValueText({ annotation, resolution, viewport, niceDisplayValueText: true }))
+    .text(annotation => getValueText({ annotation, resolution, viewport, formattedText: true }))
     .style('fill', getColor);
 
   /** Update Label Text */

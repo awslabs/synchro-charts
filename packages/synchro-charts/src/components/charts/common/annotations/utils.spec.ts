@@ -57,7 +57,7 @@ describe('getValueAndText and getValueAndTextVisibility', () => {
       annotation: yAnnotations[0],
       resolution: 1000,
       viewport: VIEWPORT,
-      niceDisplayValueText: false,
+      formattedText: false,
     });
     expect(valueText).toBe(value.toString());
 
@@ -149,7 +149,7 @@ describe('getValueAndText and getValueAndTextVisibility', () => {
       annotation: yAnnotations[0],
       resolution: 1000,
       viewport: VIEWPORT,
-      niceDisplayValueText: false,
+      formattedText: false,
     });
 
     expect(valueText).toBeEmpty();
@@ -179,7 +179,7 @@ describe('getValueAndText and getValueAndTextVisibility', () => {
   });
 });
 
-describe('getValueAndText niceDisplayValueText', () => {
+describe('getValueAndText formattedText', () => {
   it('returns rounded exponential value for very small numbers - edge', () => {
     const value = 0.000000156;
     const expectedDisplayValue = '1.6e-7';
@@ -199,7 +199,7 @@ describe('getValueAndText niceDisplayValueText', () => {
       annotation: yAnnotations[0],
       resolution: 1000,
       viewport: VIEWPORT,
-      niceDisplayValueText: true,
+      formattedText: true,
     });
 
     expect(valueText).toBe(expectedDisplayValue);
@@ -224,7 +224,7 @@ describe('getValueAndText niceDisplayValueText', () => {
       annotation: yAnnotations[0],
       resolution: 1000,
       viewport: VIEWPORT,
-      niceDisplayValueText: true,
+      formattedText: true,
     });
 
     expect(valueText).toBe(expectedDisplayValue);
@@ -249,7 +249,7 @@ describe('getValueAndText niceDisplayValueText', () => {
       annotation: yAnnotations[0],
       resolution: 1000,
       viewport: VIEWPORT,
-      niceDisplayValueText: true,
+      formattedText: true,
     });
 
     expect(valueText).toBe(expectedDisplayValue);
@@ -274,7 +274,7 @@ describe('getValueAndText niceDisplayValueText', () => {
       annotation: yAnnotations[0],
       resolution: 1000,
       viewport: VIEWPORT,
-      niceDisplayValueText: true,
+      formattedText: true,
     });
 
     expect(valueText).toBe(expectedDisplayValue);
@@ -299,7 +299,7 @@ describe('getValueAndText niceDisplayValueText', () => {
       annotation: yAnnotations[0],
       resolution: 1000,
       viewport: VIEWPORT,
-      niceDisplayValueText: true,
+      formattedText: true,
     });
     expect(valueText).toBe(expectedDisplayValue);
   });
@@ -323,7 +323,7 @@ describe('getValueAndText niceDisplayValueText', () => {
       annotation: yAnnotations[0],
       resolution: 1000,
       viewport: VIEWPORT,
-      niceDisplayValueText: true,
+      formattedText: true,
     });
 
     expect(valueText).toBe(expectedDisplayValue);
@@ -348,7 +348,7 @@ describe('getValueAndText niceDisplayValueText', () => {
       annotation: yAnnotations[0],
       resolution: 1000,
       viewport: VIEWPORT,
-      niceDisplayValueText: true,
+      formattedText: true,
     });
 
     expect(valueText).toBe(expectedDisplayValue);
@@ -373,7 +373,7 @@ describe('getValueAndText niceDisplayValueText', () => {
       annotation: yAnnotations[0],
       resolution: 1000,
       viewport: VIEWPORT,
-      niceDisplayValueText: true,
+      formattedText: true,
     });
 
     expect(valueText).toBe(expectedDisplayValue);

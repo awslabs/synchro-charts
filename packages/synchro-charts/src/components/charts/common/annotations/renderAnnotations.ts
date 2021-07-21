@@ -10,9 +10,14 @@ export type RenderAnnotationsOptions = {
   annotations: Annotations;
   viewport: ViewPort;
   size: { width: number; height: number };
-  onUpdate: Function;
-  activeViewPort: Function;
-  emitUpdatedWidgetConfiguration: Function;
+  onUpdate: (
+    { start, end }: { start: Date; end: Date },
+    hasDataChanged: boolean,
+    hasSizeChanged: boolean,
+    hasAnnotationChanged: boolean
+  ) => void;
+  activeViewPort: () => ViewPort;
+  emitUpdatedWidgetConfiguration: () => void;
 };
 
 type AnnotationPredicate = (annotation: Annotation<AnnotationValue>) => boolean;

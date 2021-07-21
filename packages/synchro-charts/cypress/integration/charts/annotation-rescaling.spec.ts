@@ -30,9 +30,6 @@ const TEST_2_DATA_POINT_2: DataPoint<number> = {
   y: 2000,
 };
 
-const viewportStart = X_MIN;
-const viewportEnd = X_MAX;
-
 const yThreshold: Threshold<number> = {
   isEditable: true,
   comparisonOperator: COMPARISON_OPERATOR.GREATER_THAN,
@@ -58,8 +55,8 @@ const yAnnotation: YAnnotation = {
 
 const timelineParams: Partial<SearchQueryParams> = {
   componentTag: 'sc-line-chart',
-  viewportStart,
-  viewportEnd,
+  viewportStart: X_MIN,
+  viewportEnd: X_MAX,
   dataStreams: [
     {
       id: 'test',
@@ -109,6 +106,7 @@ const timelineParams: Partial<SearchQueryParams> = {
 it('elements are located and scaled according to viewport size', () => {
   visitDynamicWidget(cy, {
     ...timelineParams,
+    dataStreams: [],
   });
   cy.waitForChart();
   cy.viewport(baseChartWidth, baseChartHeight);

@@ -40,7 +40,7 @@ const render = (props: Partial<RenderAnnotationsOptions>, page: SpecPage) => {
     viewport: VIEWPORT,
     size: SIZE,
     onUpdate: () => {},
-    activeViewPort: () => {},
+    activeViewPort: () => VIEWPORT,
     emitUpdatedWidgetConfiguration: () => {},
   };
 
