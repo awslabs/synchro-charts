@@ -110,12 +110,6 @@ export const calcHeatValues = ({
 
 export const getResolution = (viewport: ViewPort): number => {
   const duration = viewport.duration ?? viewport.end.getTime() - viewport.start.getTime();
-  if (duration > (CHANGE_RESOLUTION + 1) * MONTH_IN_MS) {
-    return YEAR_IN_MS;
-  }
-  if (duration > 30 * DAY_IN_MS) {
-    return MONTH_IN_MS;
-  }
   if (duration > (CHANGE_RESOLUTION + 1) * DAY_IN_MS) {
     return DAY_IN_MS;
   }

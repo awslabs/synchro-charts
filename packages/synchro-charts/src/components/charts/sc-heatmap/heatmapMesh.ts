@@ -203,7 +203,8 @@ export const updateBucketMesh = ({
     // eslint-disable-next-line no-param-reassign
     buckets.material.uniforms.width.value = getUniformWidth(dataStreams, toClipSpace, resolution);
     // eslint-disable-next-line no-param-reassign
-    buckets.material.uniforms.bucketHeight.value = viewport.yMax / BUCKET_COUNT - (viewport.yMax / BUCKET_COUNT) * VERT_MARGIN_FACTOR;
+    buckets.material.uniforms.bucketHeight.value =
+      viewport.yMax / BUCKET_COUNT - (viewport.yMax / BUCKET_COUNT) * VERT_MARGIN_FACTOR;
     updateMesh({ dataStreams, mesh: buckets, toClipSpace, viewport });
   }
 };
