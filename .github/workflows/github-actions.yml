@@ -31,7 +31,7 @@ jobs:
         with:
           start: yarn start
           wait-on: 'http://localhost:3333'
-          command: yarn test:cypress --spec "cypress/integration/charts/alarms.spec.ts"
+          command: yarn test:cypress
           working-directory: packages/synchro-charts
       # after the test run completes
       # store videos and any screenshots
