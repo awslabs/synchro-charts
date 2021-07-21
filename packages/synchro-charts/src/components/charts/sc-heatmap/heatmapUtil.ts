@@ -1,7 +1,6 @@
 import { DataStream, ViewPort } from '../../../utils/dataTypes';
 import { SECOND_IN_MS, MINUTE_IN_MS, HOUR_IN_MS, DAY_IN_MS } from '../../../utils/time';
 import { DataType } from '../../../utils/dataConstants';
-import { BUCKET_COUNT, CHANGE_RESOLUTION } from './heatmapConstants';
 
 export type HeatValueMap = {
   [xBucketRangeStart: number]: {
@@ -26,7 +25,7 @@ export const calculateBucketIndex = ({
   if (yValue === 0 && yMin === 0) {
     return 1;
   }
-  return Math.ceil(((yValue - yMin) / (yMax - yMin)) * BUCKET_COUNT);
+  return Math.ceil(((yValue - yMin) / (yMax - yMin)) * 10);
 };
 
 export const calculateXBucketStart = ({
@@ -100,20 +99,6 @@ export const calcHeatValues = ({
       return addCount({ heatValue: tempHeatValue, xBucketRangeStart, bucketIndex, dataStreamId: dataStream.id });
     }, newHeatValue);
   }, oldHeatValue);
-};
-
-export const getResolution = (viewport: ViewPort): number => {
-  const duration = viewport.duration ?? viewport.end.getTime() - viewport.start.getTime();
-  if (duration > (CHANGE_RESOLUTION + 1) * DAY_IN_MS) {
-    return DAY_IN_MS;
-  }
-  if (duration > CHANGE_RESOLUTION * HOUR_IN_MS) {
-    return HOUR_IN_MS;
-  }
-  if (duration > CHANGE_RESOLUTION * MINUTE_IN_MS) {
-    return MINUTE_IN_MS;
-  }
-  return SECOND_IN_MS;
 };
 
 export const displayDate = (date: Date, resolution: number, { start, end }: { start: Date; end: Date }): string => {

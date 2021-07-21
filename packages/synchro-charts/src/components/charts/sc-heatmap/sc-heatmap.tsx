@@ -14,7 +14,6 @@ import { DEFAULT_CHART_CONFIG } from '../sc-webgl-base-chart/chartDefaults';
 import { RectScrollFixed } from '../../../utils/types';
 import { DATA_ALIGNMENT } from '../common/constants';
 import { HeatValueMap } from './heatmapUtil';
-import { heatValues } from './heatmapMesh';
 
 // The initial size of buffers. The larger this is, the more memory allocated up front per chart.
 // The lower this number is, more likely that charts will have to re-initialize there buffers which is
@@ -25,10 +24,10 @@ const DEFAULT_BUFFER_FACTOR = 2;
 const tooltip = (props: Tooltip.Props) => (
   <sc-heatmap-tooltip
     size={props.size}
+    dataStreams={props.dataStreams}
     viewport={props.viewport}
     dataContainer={props.dataContainer}
     dataAlignment={DATA_ALIGNMENT.EITHER}
-    heatValues={heatValues}
   />
 );
 
