@@ -1,7 +1,7 @@
 name: End-to-end tests
 on: [push]
 jobs:
-  build-lint-test:
+  build-lint-unit-test:
     runs-on: ubuntu-20.04 # pin ubuntu for no snapshot variance
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
@@ -16,22 +16,30 @@ jobs:
           # cache: 'yarn'
       - name: Install dependencies
         run: yarn
-      # - name: Run Build
-      #   run: yarn build
-      # - name: Run lint
-      #   run: yarn lint
-      # - name: Run unit tests
-      #   run: yarn test
-      # - name: Start docker containers
-      #   run: docker-compose up --abort-on-container-exit --build
-      # - name: Stop docker containers
-      #   run: docker-compose down
+      - name: Run Build
+        run: yarn build
+      - name: Run lint
+        run: yarn lint
+      - name: Run unit tests
+        run: yarn test
+
+  integ-tests:
+    runs-on: ubuntu-20.04 # pin ubuntu for no snapshot variance
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14.x'
+      - name: Install dependencies
+        run: yarn
       - name: cypress run
         uses: cypress-io/github-action@v2
         with:
           start: yarn start
           wait-on: 'http://localhost:3333'
-          command: yarn test:cypress --env updateSnapshots=true
+          command: yarn test:cypress
           working-directory: packages/synchro-charts
       # after the test run completes
       # store videos and any screenshots
@@ -46,7 +54,7 @@ jobs:
           name: cypress-videos
           path: packages/synchro-charts/cypress/videos
       - uses: actions/upload-artifact@v1
-        if: always()
+        if: failure()
         with:
           name: cypress-snapshots
           path: packages/synchro-charts/cypress/snapshots
