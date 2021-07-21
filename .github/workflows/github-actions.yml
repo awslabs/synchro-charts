@@ -26,3 +26,15 @@ jobs:
         run: docker-compose up --abort-on-container-exit --build
       - name: Stop docker containers
         run: docker-compose down
+      # after the test run completes
+      # store videos and any screenshots
+      - uses: actions/upload-artifact@v1
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: packages/synchro-charts/cypress/screenshots
+      - uses: actions/upload-artifact@v1
+        if: failure()
+        with:
+          name: cypress-videos
+          path: packages/synchro-charts/cypress/videos
