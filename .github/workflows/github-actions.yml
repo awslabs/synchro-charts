@@ -3,6 +3,8 @@ on: [push]
 jobs:
   build-lint-unit-test:
     runs-on: ubuntu-20.04 # pin ubuntu for no snapshot variance
+    env:
+      FORCE_COLOR: true # force colored output from yarn
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
@@ -13,7 +15,7 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '14.x'
-          # cache: 'yarn'
+          # cache: 'yarn' // uncomment after adding yarn.lock
       - name: Install dependencies
         run: yarn
       - name: Run Build
