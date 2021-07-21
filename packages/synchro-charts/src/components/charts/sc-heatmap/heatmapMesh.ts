@@ -15,7 +15,7 @@ import { WriteableBufferAttribute, WriteableInstancedBufferAttribute } from '../
 import { numDataPoints } from '../sc-webgl-base-chart/utils';
 import { getBucketWidth, getSequential, getBucketColor } from './displayLogic';
 import { HeatValueMap, calcHeatValues, getResolution } from './heatmapUtil';
-import { BUCKET_COUNT } from './heatmapConstants';
+import { BUCKET_COUNT, VERT_MARGIN_FACTOR } from './heatmapConstants';
 import { DataStream, Primitive, ViewPort } from '../../../utils/dataTypes';
 import { SECOND_IN_MS } from '../../../utils/time';
 
@@ -84,7 +84,9 @@ const updateMesh = ({
   const resolution = getResolution(viewport);
 
   const heatValues =
-    dataStreams.length !== 0 ? calcHeatValues({ oldHeatValue: {}, dataStreams, resolution, viewport }) : {};
+    dataStreams.length !== 0
+      ? calcHeatValues({ oldHeatValue: {}, dataStreams, resolution, viewport, bucketCount: BUCKET_COUNT })
+      : {};
 
   // eslint-disable-next-line no-param-reassign
   mesh.count = numBuckets(heatValues);
@@ -169,7 +171,7 @@ export const bucketMesh = ({
         value: getUniformWidth(dataStreams, toClipSpace, resolution),
       },
       bucketHeight: {
-        value: viewport.yMax / BUCKET_COUNT - 2,
+        value: viewport.yMax / BUCKET_COUNT - (viewport.yMax / BUCKET_COUNT) * VERT_MARGIN_FACTOR,
       },
     },
   });
@@ -201,7 +203,7 @@ export const updateBucketMesh = ({
     // eslint-disable-next-line no-param-reassign
     buckets.material.uniforms.width.value = getUniformWidth(dataStreams, toClipSpace, resolution);
     // eslint-disable-next-line no-param-reassign
-    buckets.material.uniforms.bucketHeight.value = viewport.yMax / BUCKET_COUNT - 2;
+    buckets.material.uniforms.bucketHeight.value = viewport.yMax / BUCKET_COUNT - (viewport.yMax / BUCKET_COUNT) * VERT_MARGIN_FACTOR;
     updateMesh({ dataStreams, mesh: buckets, toClipSpace, viewport });
   }
 };

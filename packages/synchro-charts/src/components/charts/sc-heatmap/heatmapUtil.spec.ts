@@ -2,6 +2,7 @@ import { DataType } from '../../../utils/dataConstants';
 import { DataPoint, DataStream, ViewPort } from '../../../utils/dataTypes';
 import { calculateBucketIndex, HeatValueMap, addCount, calcHeatValues, calculateXBucketStart } from './heatmapUtil';
 import { MONTH_IN_MS } from '../../../utils/time';
+import { BUCKET_COUNT } from './heatmapConstants';
 
 const VIEWPORT: ViewPort = {
   start: new Date('June 1, 2021 10:00:00'),
@@ -168,7 +169,13 @@ describe('addCount', () => {
 describe('calcHeatValues', () => {
   it('returns aggregated data for dataStreams with different x-axis bucket ranges', () => {
     const dataStreams: DataStream[] = [DATASTREAM_1, DATASTREAM_2];
-    const newHeatValue = calcHeatValues({ oldHeatValue: {}, dataStreams, resolution: RESOLUTION, viewport: VIEWPORT });
+    const newHeatValue = calcHeatValues({
+      oldHeatValue: {},
+      dataStreams,
+      resolution: RESOLUTION,
+      viewport: VIEWPORT,
+      bucketCount: BUCKET_COUNT,
+    });
     expect(newHeatValue).toEqual({
       [START_TIME_EPOCH]: expect.any(Object),
       [START_TIME_EPOCH_2]: expect.any(Object),
@@ -186,7 +193,13 @@ describe('calcHeatValues', () => {
       dataType: DataType.STRING,
     };
     const dataStreams: DataStream[] = [DATASTREAM];
-    const newHeatValue = calcHeatValues({ oldHeatValue: {}, dataStreams, resolution: RESOLUTION, viewport: VIEWPORT });
+    const newHeatValue = calcHeatValues({
+      oldHeatValue: {},
+      dataStreams,
+      resolution: RESOLUTION,
+      viewport: VIEWPORT,
+      bucketCount: BUCKET_COUNT,
+    });
     expect(newHeatValue).toEqual({});
   });
 });

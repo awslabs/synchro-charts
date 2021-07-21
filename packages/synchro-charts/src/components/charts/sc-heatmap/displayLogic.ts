@@ -2,7 +2,7 @@ import { getCSSColorByString } from '../common/getCSSColorByString';
 import { getDistanceFromDuration } from '../common/getDistanceFromDuration';
 
 import {
-  MARGIN_FACTOR,
+  HORIZ_MARGIN_FACTOR,
   NUM_OF_COLORS_SEQUENTIAL,
   SEQUENTIAL_BASE_COLOR_INDEX,
   DEFAULT_SEQUENTIAL_MIN,
@@ -17,7 +17,7 @@ export type HeatmapColorPalette = {
 };
 
 export const getBucketMargin = (toClipSpace: (time: number) => number, resolution: number) =>
-  getDistanceFromDuration(toClipSpace, resolution * MARGIN_FACTOR);
+  getDistanceFromDuration(toClipSpace, resolution * HORIZ_MARGIN_FACTOR);
 
 /**
  * Get the bucket width
