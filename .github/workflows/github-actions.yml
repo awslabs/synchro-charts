@@ -2,7 +2,7 @@ name: End-to-end tests
 on: [push]
 jobs:
   build-lint-test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04 # pin ubuntu for no snapshot variance
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
@@ -31,7 +31,7 @@ jobs:
         with:
           start: yarn start
           wait-on: 'http://localhost:3333'
-          command: yarn test:cypress --env disableSnapshotTests=true
+          command: yarn test:cypress
           working-directory: packages/synchro-charts
       # after the test run completes
       # store videos and any screenshots
@@ -45,8 +45,8 @@ jobs:
         with:
           name: cypress-videos
           path: packages/synchro-charts/cypress/videos
-      # - uses: actions/upload-artifact@v1
-      #   if: failure()
-      #   with:
-      #     name: cypress-snapshots
-      #     path: packages/synchro-charts/cypress/snapshots
+      - uses: actions/upload-artifact@v1
+        if: failure()
+        with:
+          name: cypress-snapshots
+          path: packages/synchro-charts/cypress/snapshots
