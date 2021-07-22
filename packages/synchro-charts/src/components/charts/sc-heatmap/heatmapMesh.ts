@@ -13,9 +13,9 @@ import bucketVert from './heatmap.vert';
 import bucketFrag from './heatmap.frag';
 import { WriteableBufferAttribute, WriteableInstancedBufferAttribute } from '../../sc-webgl-context/types';
 import { numDataPoints } from '../sc-webgl-base-chart/utils';
-import { getBucketWidth, getSequential, getBucketColor } from './displayLogic';
+import { getXBucketWidth, getSequential, getBucketColor, getYBucketHeight } from './displayLogic';
 import { HeatValueMap, calcHeatValues, getResolution } from './heatmapUtil';
-import { BUCKET_COUNT, VERT_MARGIN_FACTOR } from './heatmapConstants';
+import { BUCKET_COUNT } from './heatmapConstants';
 import { DataStream, Primitive, ViewPort } from '../../../utils/dataTypes';
 import { SECOND_IN_MS } from '../../../utils/time';
 
@@ -58,7 +58,7 @@ const getUniformWidth = <T extends Primitive>(
     return 0;
   }
 
-  return getBucketWidth({
+  return getXBucketWidth({
     toClipSpace,
     resolution,
   });
@@ -171,7 +171,7 @@ export const bucketMesh = ({
         value: getUniformWidth(dataStreams, toClipSpace, resolution),
       },
       bucketHeight: {
-        value: viewport.yMax / BUCKET_COUNT - (viewport.yMax / BUCKET_COUNT) * VERT_MARGIN_FACTOR,
+        value: getYBucketHeight,
       },
     },
   });
@@ -203,8 +203,7 @@ export const updateBucketMesh = ({
     // eslint-disable-next-line no-param-reassign
     buckets.material.uniforms.width.value = getUniformWidth(dataStreams, toClipSpace, resolution);
     // eslint-disable-next-line no-param-reassign
-    buckets.material.uniforms.bucketHeight.value =
-      viewport.yMax / BUCKET_COUNT - (viewport.yMax / BUCKET_COUNT) * VERT_MARGIN_FACTOR;
+    buckets.material.uniforms.bucketHeight.value = getYBucketHeight(viewport);
     updateMesh({ dataStreams, mesh: buckets, toClipSpace, viewport });
   }
 };

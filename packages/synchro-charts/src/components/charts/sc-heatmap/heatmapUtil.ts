@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 import { DataStream, ViewPort } from '../../../utils/dataTypes';
 import { SECOND_IN_MS, MINUTE_IN_MS, HOUR_IN_MS, DAY_IN_MS } from '../../../utils/time';
 import { DataType } from '../../../utils/dataConstants';
@@ -59,15 +58,16 @@ export const addCount = ({
   if (!dataStreamId) {
     return {};
   }
-  heatValue[xBucketRangeStart] = heatValue[xBucketRangeStart] ?? {};
-  heatValue[xBucketRangeStart][bucketIndex] = heatValue[xBucketRangeStart][bucketIndex] ?? {
+  const newHeatValue: HeatValueMap = heatValue;
+  newHeatValue[xBucketRangeStart] = heatValue[xBucketRangeStart] ?? {};
+  newHeatValue[xBucketRangeStart][bucketIndex] = heatValue[xBucketRangeStart][bucketIndex] ?? {
     totalCount: 0,
     streamCount: {},
   };
-  heatValue[xBucketRangeStart][bucketIndex].streamCount[dataStreamId] =
+  newHeatValue[xBucketRangeStart][bucketIndex].streamCount[dataStreamId] =
     heatValue[xBucketRangeStart][bucketIndex].streamCount[dataStreamId] ?? 0;
-  heatValue[xBucketRangeStart][bucketIndex].streamCount[dataStreamId] += 1;
-  heatValue[xBucketRangeStart][bucketIndex].totalCount += 1;
+  newHeatValue[xBucketRangeStart][bucketIndex].streamCount[dataStreamId] += 1;
+  newHeatValue[xBucketRangeStart][bucketIndex].totalCount += 1;
   return heatValue;
 };
 

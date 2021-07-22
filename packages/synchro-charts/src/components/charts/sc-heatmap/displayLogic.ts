@@ -1,3 +1,4 @@
+import { ViewPort } from '../../../utils/dataTypes';
 import { getCSSColorByString } from '../common/getCSSColorByString';
 import { getDistanceFromDuration } from '../common/getDistanceFromDuration';
 
@@ -8,6 +9,8 @@ import {
   DEFAULT_SEQUENTIAL_MIN,
   DEFAULT_SEQUENTIAL_MID,
   DEFAULT_SEQUENTIAL_MAX,
+  BUCKET_COUNT,
+  VERT_MARGIN_FACTOR,
 } from './heatmapConstants';
 
 export type HeatmapColorPalette = {
@@ -25,7 +28,7 @@ export const getBucketMargin = (toClipSpace: (time: number) => number, resolutio
  * Returns the clipSpace width which each bucket should be.
  * It is assumed that each bucket within a group will have the same width.
  */
-export const getBucketWidth = ({
+export const getXBucketWidth = ({
   toClipSpace,
   resolution,
 }: {
@@ -33,6 +36,17 @@ export const getBucketWidth = ({
   resolution: number; // milliseconds
 }) => {
   return getDistanceFromDuration(toClipSpace, resolution) - getBucketMargin(toClipSpace, resolution);
+};
+
+/**
+ * Get the y bucket height.
+ *
+ * Assumed that each y bucket has the same height.
+ */
+export const getYBucketHeight = (viewport: ViewPort): number => {
+  const { yMin, yMax } = viewport;
+  const yRange = yMax - yMin;
+  return yRange / BUCKET_COUNT - (yRange / BUCKET_COUNT) * VERT_MARGIN_FACTOR;
 };
 
 /**
