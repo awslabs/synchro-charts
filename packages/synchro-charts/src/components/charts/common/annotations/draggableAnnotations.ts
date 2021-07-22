@@ -23,10 +23,10 @@ export type DraggableAnnotationsOptions = {
  * Returns the new threshold value and whether the viewport needs to be adjusted
  */
 const calculateNewThreshold = ({
-                                 yPos,
-                                 viewport,
-                                 size,
-                               }: {
+  yPos,
+  viewport,
+  size,
+}: {
   yPos: number;
   viewport: ViewPort;
   size: { height: number };
@@ -56,13 +56,13 @@ const needAxisRescale = ({ annotationValue, viewport }: { annotationValue: numbe
  * Draggable Thresholds Feature
  */
 export const draggable = ({
-                            container,
-                            viewport,
-                            size,
-                            onUpdate,
-                            activeViewPort,
-                            emitUpdatedWidgetConfiguration,
-                          }: DraggableAnnotationsOptions): void => {
+  container,
+  viewport,
+  size,
+  onUpdate,
+  activeViewPort,
+  emitUpdatedWidgetConfiguration,
+}: DraggableAnnotationsOptions): void => {
   const containerSelection = select(container);
   const thresholdGroup = containerSelection.selectAll(DRAGGABLE_HANDLE_SELECTOR);
   thresholdGroup.call(

@@ -125,9 +125,6 @@ export const renderYAnnotations = ({
     .style('pointer-events', 'none')
     .style('fill', getColor);
 
-  // TODO add getVisibility for the draggable handles depending on if the annotation is editable
-  // TODO should the draggable handle be visible if the value text is not visible?
-
   /** Create Draggable Annotation Handle */
   annotationGroup
     .append('rect')

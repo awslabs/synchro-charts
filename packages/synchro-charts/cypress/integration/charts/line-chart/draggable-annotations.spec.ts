@@ -97,7 +97,6 @@ it('changing isEditable updates draggable annotations', () => {
   moveHandleFilter(DRAGGABLE_HANDLE_SELECTOR, thirdFilter, 0, moveThird);
 
   cy.matchImageSnapshotOnCI();
-
 });
 
 it('editable threshold is draggable and recolors data within viewport', () => {
