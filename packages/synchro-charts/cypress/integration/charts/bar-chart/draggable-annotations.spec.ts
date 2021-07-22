@@ -13,6 +13,7 @@ import { MINUTE_IN_MS } from '../../../../src/utils/time';
 import { DRAGGABLE_HANDLE_SELECTOR } from '../../../../src/components/charts/common/annotations/YAnnotations/YAnnotations';
 import { moveHandle, moveHandleFilter, moveHandlWithPause } from '../utils-draggable.spec';
 
+
 const timelineParams: Partial<SearchQueryParams> = {
   componentTag: 'sc-bar-chart',
   viewportStart: X_MIN,
@@ -31,6 +32,7 @@ const timelineParams: Partial<SearchQueryParams> = {
   width: '95%',
   height: '95%',
 };
+
 
 it('editable threshold is draggable and recolors data within viewport', () => {
   visitDynamicWidget(cy, {

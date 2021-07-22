@@ -66,6 +66,40 @@ const timelineParams: Partial<SearchQueryParams> = {
   height: '95%',
 };
 
+const root = '/tests/sc-webgl-chart/annotations/annotation-editable';
+
+it('changing isEditable updates draggable annotations', () => {
+  cy.visit(root);
+  cy.waitForChart();
+
+  const moveFirst = 400;
+  const firstFilter = '[style*="stroke: blue;"]';
+  moveHandleFilter(DRAGGABLE_HANDLE_SELECTOR, firstFilter, 0, moveFirst);
+
+  const moveSecond = 150;
+  const secondFilter = '[style*="stroke: red;"]';
+  moveHandleFilter(DRAGGABLE_HANDLE_SELECTOR, secondFilter, 0, moveSecond);
+
+  const moveThird = -50;
+  const thirdFilter = '[style*="stroke: green;"]';
+  moveHandleFilter(DRAGGABLE_HANDLE_SELECTOR, thirdFilter, 0, moveThird);
+
+  cy.matchImageSnapshotOnCI();
+
+  cy.get('#change-editable').click();
+
+  const moveFourth = 350;
+
+  moveHandleFilter(DRAGGABLE_HANDLE_SELECTOR, firstFilter, 0, moveFirst);
+
+  moveHandleFilter(DRAGGABLE_HANDLE_SELECTOR, secondFilter, 0, moveFourth);
+
+  moveHandleFilter(DRAGGABLE_HANDLE_SELECTOR, thirdFilter, 0, moveThird);
+
+  cy.matchImageSnapshotOnCI();
+
+});
+
 it('editable threshold is draggable and recolors data within viewport', () => {
   visitDynamicWidget(cy, {
     ...timelineParams,
