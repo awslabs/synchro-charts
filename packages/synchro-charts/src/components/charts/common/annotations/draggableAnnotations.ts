@@ -52,6 +52,9 @@ const needAxisRescale = ({ annotationValue, viewport }: { annotationValue: numbe
   return annotationValue < lowerThreshold || annotationValue > upperThreshold;
 };
 
+const isAnnotationEditable = (annotation: YAnnotation): boolean =>
+  annotation.isEditable ? annotation.isEditable : false;
+
 /**
  * Draggable Thresholds Feature
  */
@@ -65,19 +68,18 @@ export const draggable = ({
 }: DraggableAnnotationsOptions): void => {
   const containerSelection = select(container);
   const thresholdGroup = containerSelection.selectAll(DRAGGABLE_HANDLE_SELECTOR);
-  thresholdGroup.call(
-    drag()
-      .on('start', function dragStarted(yAnnotation: unknown) {
-        if ((yAnnotation as YAnnotation).isEditable) {
+  thresholdGroup
+    .filter(annotation => isAnnotationEditable(annotation as YAnnotation))
+    .call(
+      drag()
+        .on('start', function dragStarted() {
           select(this)
             .raise()
             .classed('active', true);
-        }
-      })
-      .on('drag', function handleDragged(yAnnotation: unknown) {
-        /** Drag Event */
-        const annotationDragged = yAnnotation as YAnnotation;
-        if (annotationDragged.isEditable) {
+        })
+        .on('drag', function handleDragged(yAnnotation: unknown) {
+          /** Drag Event */
+          const annotationDragged = yAnnotation as YAnnotation;
           const { y: yPos } = event as { y: number };
           annotationDragged.value = calculateNewThreshold({ yPos, viewport, size });
           const axisRescale = needAxisRescale({ annotationValue: annotationDragged.value, viewport });
@@ -86,11 +88,9 @@ export const draggable = ({
           } else {
             onUpdate(viewport, false, axisRescale, true);
           }
-        }
-      })
-      .on('end', function dragEnded(yAnnotation: unknown) {
-        const annotationDragged = yAnnotation as YAnnotation;
-        if (annotationDragged.isEditable) {
+        })
+        .on('end', function dragEnded(yAnnotation: unknown) {
+          const annotationDragged = yAnnotation as YAnnotation;
           const { y: yPos } = event as { y: number };
           annotationDragged.value = calculateNewThreshold({ yPos, viewport, size });
           const axisRescale = needAxisRescale({ annotationValue: annotationDragged.value, viewport });
@@ -102,7 +102,6 @@ export const draggable = ({
           select(this).classed('active', false);
           /** emit event updating annotation on mouse up */
           emitUpdatedWidgetConfiguration();
-        }
-      }) as any
-  );
+        }) as any
+    );
 };
