@@ -7,7 +7,7 @@ import { ViewPort } from '../../../../../utils/dataTypes';
 
 const PADDING = 5;
 const Y_ANNOTATION_TEXT_PADDING = 3;
-const Y_ANNOTATION_TEXT_LEFT_PADDING = 4;
+const Y_ANNOTATION_TEXT_LEFT_PADDING = 5;
 
 const HANDLE_OFFSET_X = 1;
 export const HANDLE_OFFSET_Y = -11;
