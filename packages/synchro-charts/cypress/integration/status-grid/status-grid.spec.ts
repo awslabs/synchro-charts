@@ -15,7 +15,7 @@ const STREAM_NAME_THREE = 'Data 3';
 const UNIT = 'unit';
 const CELL = '.status-cell';
 
-const root = 'http://localhost:3333/tests/status-grid';
+const root = '/tests/status-grid';
 
 const route = (params: SearchQueryParams): string => `${root}?${constructSearchQuery(params)}`;
 
