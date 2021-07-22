@@ -1,5 +1,5 @@
 describe('scatter chart', () => {
-  const root = 'localhost:3333/tests/sc-scatter-chart';
+  const root = '/tests/sc-scatter-chart';
 
   const VIEWPORT_HEIGHT = 500;
   const VIEWPORT_WIDTH = 500;
@@ -74,7 +74,7 @@ describe('scatter chart', () => {
       .invoke('text')
       .should('equal', DATA_POINT_Y);
 
-    const TREND_VALUE = '3669.4428';
+    const TREND_VALUE = '3669.3688';
     // Display trend line label
     cy.get('[data-test-tag="expandable-input"]')
       .eq(1)

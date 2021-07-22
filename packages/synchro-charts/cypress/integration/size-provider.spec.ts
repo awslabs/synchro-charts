@@ -1,7 +1,7 @@
 import { DEFAULT_SIZE, SHIFT_X_DIFF } from '../../src/testing/test-routes/sc-size-provider/constants';
 import { SECOND_IN_MS } from '../../src/utils/time';
 
-const root = 'http://localhost:3333/tests/sc-sizer-provider/sc-size-provider-standard';
+const root = '/tests/sc-sizer-provider/sc-size-provider-standard';
 
 it('child of widget sizer inherits size-providers parent size', () => {
   cy.visit(root);

@@ -1,6 +1,7 @@
 {
+  "baseUrl": "http://localhost:3333",
   "videoUploadOnPasses": false,
-  "video": false,
+  "video": true,
   "viewportWidth": 1400,
   "viewportHeight": 2000,
   "watchForFileChanges": true,
