@@ -1,5 +1,11 @@
 name: End-to-end tests
-on: [push]
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 jobs:
   build-lint-unit-test:
     runs-on: ubuntu-20.04 # pin ubuntu for no snapshot variance
