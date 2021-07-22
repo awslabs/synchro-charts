@@ -144,5 +144,4 @@ it('allows independent dragging of multiple annotations', () => {
   const thirdFilter = '[style*="stroke: green;"]';
   moveHandleFilter(DRAGGABLE_HANDLE_SELECTOR, thirdFilter, 0, moveThird);
   cy.matchImageSnapshotOnCI();
-
 });
