@@ -55,9 +55,14 @@ const Y_ANNOTATION: YAnnotation = {
 })
 export class ScWebglChartAnnotationRescaling {
   @State() isEditableValue: boolean = false;
+  @State() isShowValue: boolean = true;
 
   onEditableChange = () => {
     this.isEditableValue = !this.isEditableValue;
+  };
+
+  onShowValueChange = () => {
+    this.isShowValue = !this.isShowValue;
   };
 
   render() {
@@ -66,6 +71,11 @@ export class ScWebglChartAnnotationRescaling {
         <div>
           <button id="change-editable" onClick={this.onEditableChange}>
             Change Editable
+          </button>
+        </div>
+        <div>
+          <button id="change-showvalue" onClick={this.onShowValueChange}>
+            Change Show Value
           </button>
         </div>
         <div>
@@ -102,13 +112,14 @@ export class ScWebglChartAnnotationRescaling {
                 },
               ],
               y: [
-                { ...Y_ANNOTATION, isEditable: !this.isEditableValue },
-                { ...Y_THRESHOLD, isEditable: !this.isEditableValue },
+                { ...Y_ANNOTATION, isEditable: !this.isEditableValue, showValue: this.isShowValue },
+                { ...Y_THRESHOLD, isEditable: !this.isEditableValue, showValue: !this.isShowValue },
                 {
                   ...Y_ANNOTATION,
                   isEditable: this.isEditableValue,
                   value: 2300,
                   color: 'red',
+                  showValue: this.isShowValue,
                 },
               ],
             }}
