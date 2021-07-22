@@ -94,7 +94,7 @@ it('changing isEditable updates draggable annotations', () => {
 
   moveHandleFilter(DRAGGABLE_HANDLE_SELECTOR, thirdFilter, 0, moveThird);
 
-  cy.waitForChart();
+  cy.wait(3000);
 
   cy.matchImageSnapshotOnCI();
 });
@@ -116,6 +116,8 @@ it('changing showValue updates draggable annotations', () => {
   const moveThird = -50;
   const thirdFilter = '[style*="stroke: green;"]';
   moveHandleFilter(DRAGGABLE_HANDLE_SELECTOR, thirdFilter, 0, moveThird);
+
+  cy.waitForChart();
 
   cy.matchImageSnapshotOnCI();
 });
