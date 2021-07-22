@@ -9,7 +9,7 @@ import {
   DATA_WITH_ALARM_INFO,
 } from '../../../src/testing/__mocks__/mockWidgetProperties';
 
-const root = 'http://localhost:3333/tests/kpi';
+const root = '/tests/kpi';
 
 const VALUE_SELECTOR = '[data-testid="current-value"]';
 const PREV_VALUE_SELECTOR = '[data-testid="previous-value"]';

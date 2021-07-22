@@ -1,4 +1,4 @@
-const webglRoot = 'localhost:3333/tests/sc-webgl-chart';
+const webglRoot = '/tests/sc-webgl-chart';
 
 // @ts-ignore
 const VIEWPORT_HEIGHT = 500;
