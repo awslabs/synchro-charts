@@ -18,7 +18,7 @@ import {
 } from '../../testing/__mocks__/mockWidgetProperties';
 import { ScWidgetGrid } from '../sc-widget-grid/sc-widget-grid';
 import { ScGridTooltip } from '../sc-widget-grid/sc-grid-tooltip';
-import { DataPoint } from '../../utils/dataTypes';
+import {DataPoint, MinimalLiveViewport} from '../../utils/dataTypes';
 
 const VIEWPORT = {
   ...DEFAULT_CHART_CONFIG.viewport,
@@ -71,7 +71,12 @@ describe('when enabled', () => {
   });
 
   it('does not render a help icon', async () => {
-    const { kpi } = await newValueSpecPage();
+    const viewport: MinimalLiveViewport = {
+      yMin: 0,
+      yMax: 10000,
+      duration: MINUTE_IN_MS,
+    };
+    const { kpi } = await newValueSpecPage({ viewport });
 
     expect(kpi.querySelector('sc-help-tooltip')).toBeNull();
   });
@@ -156,8 +161,7 @@ describe('when enabled', () => {
 describe('when disabled', () => {
   it('renders base kpi per data stream', async () => {
     const NON_LIVE_VIEWPORT = {
-      ...VIEWPORT,
-      duration: undefined,
+      ...DEFAULT_CHART_CONFIG.viewport,
     };
 
     const dataStreams = [STRING_STREAM_1, STRING_STREAM_2, DATA_STREAM, ALARM_STREAM];
@@ -173,8 +177,7 @@ describe('when disabled', () => {
 
   it('renders a help icon', async () => {
     const NON_LIVE_VIEWPORT = {
-      ...VIEWPORT,
-      duration: undefined,
+      ...DEFAULT_CHART_CONFIG.viewport,
     };
 
     const { kpi } = await newValueSpecPage({

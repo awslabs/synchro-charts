@@ -9,35 +9,25 @@ const mockCurrentTime = (mockedDate: Date) => {
 describe('viewportStart', () => {
   it('returns start date if one is present', () => {
     const START = new Date(2000, 0, 0);
-    expect(viewportStartDate({ start: START })).toBe(START);
+    expect(viewportStartDate({ start: START, end: new Date() })).toStrictEqual(START);
   });
 
-  it('returns start date calculated from the end minus the duration', () => {
-    expect(viewportStartDate({ end: new Date(2000, 0, 1), duration: DAY_IN_MS })).toEqual(new Date(2000, 0, 0));
-  });
-
-  it('returns current date if empty viewport is provided', () => {
-    const CURR_DATE = new Date();
-    mockCurrentTime(CURR_DATE);
-
-    expect(viewportStartDate({})).toEqual(CURR_DATE);
+  it('returns start date when only the duration is present', () => {
+    const TIME = new Date(2000, 0, 1);
+    mockCurrentTime(TIME);
+    expect(viewportStartDate({ duration: DAY_IN_MS })).toEqual(new Date(Date.now() - DAY_IN_MS));
   });
 });
 
 describe('viewportEnd', () => {
   it('returns end date if one is present', () => {
     const END = new Date(2000, 0, 0);
-    expect(viewportEndDate({ end: END })).toBe(END);
+    expect(viewportEndDate({ start: new Date, end: END })).toStrictEqual(END);
   });
 
-  it('returns end date calculated from the start plus the duration', () => {
-    expect(viewportEndDate({ start: new Date(2000, 0, 0), duration: DAY_IN_MS })).toEqual(new Date(2000, 0, 1));
-  });
-
-  it('returns current date if empty viewport is provided', () => {
-    const CURR_DATE = new Date();
-    mockCurrentTime(CURR_DATE);
-
-    expect(viewportEndDate({})).toEqual(CURR_DATE);
+  it('returns end date when only the duration is present', () => {
+    const TIME = new Date(2000, 0, 1);
+    mockCurrentTime(TIME);
+    expect(viewportEndDate({ duration: DAY_IN_MS })).toEqual(TIME);
   });
 });

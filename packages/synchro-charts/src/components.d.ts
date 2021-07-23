@@ -425,6 +425,9 @@ export namespace Components {
         "viewport": ViewPort;
         "visualizesAlarms": boolean;
     }
+    interface ScValidator {
+        "viewport"?: MinimalViewPortConfig;
+    }
     interface ScWebglAxis {
         "size": SizeConfig;
     }
@@ -948,6 +951,12 @@ declare global {
         prototype: HTMLScTooltipRowsElement;
         new (): HTMLScTooltipRowsElement;
     };
+    interface HTMLScValidatorElement extends Components.ScValidator, HTMLStencilElement {
+    }
+    var HTMLScValidatorElement: {
+        prototype: HTMLScValidatorElement;
+        new (): HTMLScValidatorElement;
+    };
     interface HTMLScWebglAxisElement extends Components.ScWebglAxis, HTMLStencilElement {
     }
     var HTMLScWebglAxisElement: {
@@ -1345,6 +1354,7 @@ declare global {
         "sc-tooltip": HTMLScTooltipElement;
         "sc-tooltip-row": HTMLScTooltipRowElement;
         "sc-tooltip-rows": HTMLScTooltipRowsElement;
+        "sc-validator": HTMLScValidatorElement;
         "sc-webgl-axis": HTMLScWebglAxisElement;
         "sc-webgl-bar-chart-dynamic-buffer": HTMLScWebglBarChartDynamicBufferElement;
         "sc-webgl-bar-chart-dynamic-data": HTMLScWebglBarChartDynamicDataElement;
@@ -1814,6 +1824,9 @@ declare namespace LocalJSX {
         "viewport": ViewPort;
         "visualizesAlarms": boolean;
     }
+    interface ScValidator {
+        "viewport"?: MinimalViewPortConfig;
+    }
     interface ScWebglAxis {
         "size": SizeConfig;
     }
@@ -2042,6 +2055,7 @@ declare namespace LocalJSX {
         "sc-tooltip": ScTooltip;
         "sc-tooltip-row": ScTooltipRow;
         "sc-tooltip-rows": ScTooltipRows;
+        "sc-validator": ScValidator;
         "sc-webgl-axis": ScWebglAxis;
         "sc-webgl-bar-chart-dynamic-buffer": ScWebglBarChartDynamicBuffer;
         "sc-webgl-bar-chart-dynamic-data": ScWebglBarChartDynamicData;
@@ -2164,6 +2178,7 @@ declare module "@stencil/core" {
             "sc-tooltip": LocalJSX.ScTooltip & JSXBase.HTMLAttributes<HTMLScTooltipElement>;
             "sc-tooltip-row": LocalJSX.ScTooltipRow & JSXBase.HTMLAttributes<HTMLScTooltipRowElement>;
             "sc-tooltip-rows": LocalJSX.ScTooltipRows & JSXBase.HTMLAttributes<HTMLScTooltipRowsElement>;
+            "sc-validator": LocalJSX.ScValidator & JSXBase.HTMLAttributes<HTMLScValidatorElement>;
             "sc-webgl-axis": LocalJSX.ScWebglAxis & JSXBase.HTMLAttributes<HTMLScWebglAxisElement>;
             "sc-webgl-bar-chart-dynamic-buffer": LocalJSX.ScWebglBarChartDynamicBuffer & JSXBase.HTMLAttributes<HTMLScWebglBarChartDynamicBufferElement>;
             "sc-webgl-bar-chart-dynamic-data": LocalJSX.ScWebglBarChartDynamicData & JSXBase.HTMLAttributes<HTMLScWebglBarChartDynamicDataElement>;

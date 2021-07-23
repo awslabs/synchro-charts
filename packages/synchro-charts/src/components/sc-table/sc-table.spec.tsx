@@ -1,7 +1,14 @@
 import { newSpecPage } from '@stencil/core/testing';
 
 import { Components } from '../../components.d';
-import { DataPoint, DataStream, DataStreamInfo, TableColumn } from '../../utils/dataTypes';
+import {
+  DataPoint,
+  DataStream,
+  DataStreamInfo,
+  MinimalLiveViewport,
+  MinimalStaticViewport,
+  TableColumn
+} from '../../utils/dataTypes';
 import { MINUTE_IN_MS } from '../../utils/time';
 import { CustomHTMLElement } from '../../utils/types';
 import { DEFAULT_CHART_CONFIG } from '../charts/sc-webgl-base-chart/chartDefaults';
@@ -45,8 +52,9 @@ const TABLE_COLUMNS: TableColumn[] = [
   { header: 'Alarm', rows: [STREAM_3.id] },
 ];
 
-const VIEWPORT = {
-  ...DEFAULT_CHART_CONFIG.viewport,
+const VIEWPORT: MinimalLiveViewport = {
+  yMin: DEFAULT_CHART_CONFIG.viewport.yMin,
+  yMax: DEFAULT_CHART_CONFIG.viewport.yMax,
   duration: MINUTE_IN_MS,
 };
 const WIDGET_ID = 'test-widget-it';
@@ -269,8 +277,7 @@ describe('rendering', () => {
 
   it('while in a historical time frame, only display table header and disable status', async () => {
     const NON_LIVE_VIEWPORT = {
-      ...VIEWPORT,
-      duration: undefined,
+      ...DEFAULT_CHART_CONFIG.viewport,
     };
 
     const { table } = await tableSpecPage({
@@ -288,8 +295,7 @@ describe('rendering', () => {
 
   it('while in a historical time frame, only display `liveModeOnlyMessage` for disable status', async () => {
     const NON_LIVE_VIEWPORT = {
-      ...VIEWPORT,
-      duration: undefined,
+      ...DEFAULT_CHART_CONFIG.viewport,
     };
     const LIVE_MODE_MSG = 'liveModeOnlyMessage';
     const { table } = await tableSpecPage({

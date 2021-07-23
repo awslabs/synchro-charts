@@ -64,38 +64,40 @@ export class ScBarChart implements ChartConfig {
 
   render() {
     return (
-      <sc-size-provider
-        size={this.size}
-        renderFunc={(size: RectScrollFixed) => (
-          <sc-webgl-base-chart
-            axis={this.axis}
-            gestures={this.gestures}
-            configId={this.widgetId}
-            requestData={this.requestData}
-            legend={this.legend}
-            annotations={this.annotations}
-            trends={this.trends}
-            updateChartScene={updateChartScene}
-            createChartScene={chartScene}
-            size={{
-              ...DEFAULT_CHART_CONFIG.size,
-              ...this.size,
-              ...size,
-            }}
-            dataStreams={this.dataStreams}
-            alarms={this.alarms}
-            viewport={this.viewport}
-            minBufferSize={this.minBufferSize}
-            bufferFactor={this.bufferFactor}
-            isEditing={this.isEditing}
-            yRangeStartFromZero
-            tooltip={tooltip}
-            supportString={false}
-            visualizesAlarms={false}
-            messageOverrides={this.messageOverrides}
-          />
-        )}
-      />
+      <sc-validator viewport={this.viewport}>
+        <sc-size-provider
+          size={this.size}
+          renderFunc={(size: RectScrollFixed) => (
+            <sc-webgl-base-chart
+              axis={this.axis}
+              gestures={this.gestures}
+              configId={this.widgetId}
+              requestData={this.requestData}
+              legend={this.legend}
+              annotations={this.annotations}
+              trends={this.trends}
+              updateChartScene={updateChartScene}
+              createChartScene={chartScene}
+              size={{
+                ...DEFAULT_CHART_CONFIG.size,
+                ...this.size,
+                ...size,
+              }}
+              dataStreams={this.dataStreams}
+              alarms={this.alarms}
+              viewport={this.viewport}
+              minBufferSize={this.minBufferSize}
+              bufferFactor={this.bufferFactor}
+              isEditing={this.isEditing}
+              yRangeStartFromZero
+              tooltip={tooltip}
+              supportString={false}
+              visualizesAlarms={false}
+              messageOverrides={this.messageOverrides}
+            />
+          )}
+        />
+      </sc-validator>
     );
   }
 }

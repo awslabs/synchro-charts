@@ -86,8 +86,6 @@ describe('when provided alarm data through a `dynamic-widget`', () => {
           dataStreams: [NUMERICAL_ALARM_STREAM, PROPERTY_STREAM],
           annotations: { y: [ALARM_THRESHOLD] },
           duration: MINUTE_IN_MS,
-          viewportStart,
-          viewportEnd,
         });
 
         cy.get('sc-chart-icon').should('be.visible');

@@ -10,3 +10,4 @@ dist
 ./packages/*/dist
 .husky
 */.idea/*
+.idea

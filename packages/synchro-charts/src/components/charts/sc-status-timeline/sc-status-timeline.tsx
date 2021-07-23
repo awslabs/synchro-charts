@@ -25,6 +25,7 @@ import { RectScrollFixed } from '../../../utils/types';
 import { HEIGHT, STATUS_MARGIN_TOP_PX } from './constants';
 import { isThreshold } from '../common/annotations/utils';
 import { DATA_ALIGNMENT } from '../common/constants';
+import { isMinimalStaticViewPort } from '../../../utils/predicates';
 
 // The initial size of buffers. The larger this is, the more memory allocated up front per chart.
 // The lower this number is, more likely that charts will have to re-initialize there buffers which is
@@ -98,74 +99,76 @@ export class ScStatusTimeline implements ChartConfig {
 
   render() {
     return (
-      <sc-size-provider
-        size={this.size}
-        renderFunc={(size: RectScrollFixed) => {
-          const totalSize = {
-            ...DEFAULT_CHART_CONFIG.size,
-            ...DEFAULT_MARGINS,
-            ...this.size,
-            ...size,
-          };
+      <sc-validator viewport={this.viewport}>
+        <sc-size-provider
+          size={this.size}
+          renderFunc={(size: RectScrollFixed) => {
+            const totalSize = {
+              ...DEFAULT_CHART_CONFIG.size,
+              ...DEFAULT_MARGINS,
+              ...this.size,
+              ...size,
+            };
 
-          const chartHeight = totalSize.height - THRESHOLD_LEGEND_HEIGHT_PX;
-          const chartSize = {
-            ...totalSize,
-            height: chartHeight,
-          };
+            const chartHeight = totalSize.height - THRESHOLD_LEGEND_HEIGHT_PX;
+            const chartSize = {
+              ...totalSize,
+              height: chartHeight,
+            };
 
-          return [
-            <div class="status-timeline" style={{ height: `${chartSize.height}px` }}>
-              <sc-webgl-base-chart
-                axis={{
-                  ...this.axis,
-                  showY: false,
-                }}
-                gestures={this.gestures}
-                configId={this.widgetId}
-                requestData={this.requestData}
-                annotations={{
-                  ...this.annotations,
-                  show: false,
-                  thresholdOptions: {
-                    showColor: true,
-                  },
-                }}
-                updateChartScene={updateChartScene}
-                createChartScene={chartScene}
-                size={chartSize}
-                dataStreams={this.dataStreams}
-                alarms={this.alarms}
-                viewport={{
-                  ...this.viewport,
-                  yMin: 0,
-                  yMax: HEIGHT,
-                }}
-                minBufferSize={this.minBufferSize}
-                bufferFactor={this.bufferFactor}
-                isEditing={this.isEditing}
-                tooltip={tooltip(this.alarms)}
-                displaysError={false}
-                supportString
-                visualizesAlarms
-                displaysNoDataPresentMsg={false}
-                messageOverrides={this.messageOverrides}
-              />
-              <sc-status-timeline-overlay
-                isEditing={this.isEditing}
-                thresholds={this.thresholds()}
-                date={this.viewport.end || new Date()}
-                dataStreams={this.dataStreams}
-                size={chartSize}
-                widgetId={this.widgetId}
-              />
-            </div>,
-            <div class="threshold-legend-container" style={{ maxHeight: `${THRESHOLD_LEGEND_HEIGHT_PX}px` }}>
-              <sc-threshold-legend thresholds={this.thresholds()} />
-            </div>,
-          ];
-        }}
-      />
+            return [
+              <div class="status-timeline" style={{ height: `${chartSize.height}px` }}>
+                <sc-webgl-base-chart
+                  axis={{
+                    ...this.axis,
+                    showY: false,
+                  }}
+                  gestures={this.gestures}
+                  configId={this.widgetId}
+                  requestData={this.requestData}
+                  annotations={{
+                    ...this.annotations,
+                    show: false,
+                    thresholdOptions: {
+                      showColor: true,
+                    },
+                  }}
+                  updateChartScene={updateChartScene}
+                  createChartScene={chartScene}
+                  size={chartSize}
+                  dataStreams={this.dataStreams}
+                  alarms={this.alarms}
+                  viewport={{
+                    ...this.viewport,
+                    yMin: 0,
+                    yMax: HEIGHT,
+                  }}
+                  minBufferSize={this.minBufferSize}
+                  bufferFactor={this.bufferFactor}
+                  isEditing={this.isEditing}
+                  tooltip={tooltip(this.alarms)}
+                  displaysError={false}
+                  supportString
+                  visualizesAlarms
+                  displaysNoDataPresentMsg={false}
+                  messageOverrides={this.messageOverrides}
+                />
+                <sc-status-timeline-overlay
+                  isEditing={this.isEditing}
+                  thresholds={this.thresholds()}
+                  date={isMinimalStaticViewPort(this.viewport) ? new Date(this.viewport.end) : new Date()}
+                  dataStreams={this.dataStreams}
+                  size={chartSize}
+                  widgetId={this.widgetId}
+                />
+              </div>,
+              <div class="threshold-legend-container" style={{ maxHeight: `${THRESHOLD_LEGEND_HEIGHT_PX}px` }}>
+                <sc-threshold-legend thresholds={this.thresholds()} />
+              </div>,
+            ];
+          }}
+        />
+      </sc-validator>
     );
   }
 }

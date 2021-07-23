@@ -63,37 +63,39 @@ export class ScLineChart implements ChartConfig {
 
   render() {
     return (
-      <sc-size-provider
-        size={this.size}
-        renderFunc={(rect: RectScrollFixed) => (
-          <sc-webgl-base-chart
-            axis={this.axis}
-            alarms={this.alarms}
-            gestures={this.gestures}
-            configId={this.widgetId}
-            requestData={this.requestData}
-            legend={this.legend}
-            annotations={this.annotations}
-            trends={this.trends}
-            updateChartScene={updateChartScene}
-            createChartScene={chartScene}
-            size={{
-              ...DEFAULT_CHART_CONFIG.size,
-              ...this.size,
-              ...rect,
-            }}
-            dataStreams={this.dataStreams}
-            viewport={this.viewport}
-            minBufferSize={this.minBufferSize}
-            bufferFactor={this.bufferFactor}
-            isEditing={this.isEditing}
-            tooltip={tooltip}
-            supportString={false}
-            visualizesAlarms={false}
-            messageOverrides={this.messageOverrides}
-          />
-        )}
-      />
+      <sc-validator viewport={this.viewport}>
+        <sc-size-provider
+          size={this.size}
+          renderFunc={(rect: RectScrollFixed) => (
+            <sc-webgl-base-chart
+              axis={this.axis}
+              alarms={this.alarms}
+              gestures={this.gestures}
+              configId={this.widgetId}
+              requestData={this.requestData}
+              legend={this.legend}
+              annotations={this.annotations}
+              trends={this.trends}
+              updateChartScene={updateChartScene}
+              createChartScene={chartScene}
+              size={{
+                ...DEFAULT_CHART_CONFIG.size,
+                ...this.size,
+                ...rect,
+              }}
+              dataStreams={this.dataStreams}
+              viewport={this.viewport}
+              minBufferSize={this.minBufferSize}
+              bufferFactor={this.bufferFactor}
+              isEditing={this.isEditing}
+              tooltip={tooltip}
+              supportString={false}
+              visualizesAlarms={false}
+              messageOverrides={this.messageOverrides}
+            />
+          )}
+        />
+      </sc-validator>
     );
   }
 }

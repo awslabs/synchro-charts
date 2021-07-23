@@ -26,16 +26,18 @@ export class ScKpi implements ChartConfig {
   render() {
     const { viewport, widgetId, dataStreams, annotations, liveModeOnlyMessage, isEditing, messageOverrides } = this;
     return (
-      <sc-widget-grid
-        viewport={viewport}
-        widgetId={widgetId}
-        dataStreams={dataStreams}
-        annotations={annotations}
-        liveModeOnlyMessage={liveModeOnlyMessage}
-        isEditing={isEditing}
-        messageOverrides={messageOverrides}
-        renderCell={renderCell}
-      />
+      <sc-validator viewport={this.viewport}>
+        <sc-widget-grid
+          viewport={viewport}
+          widgetId={widgetId}
+          dataStreams={dataStreams}
+          annotations={annotations}
+          liveModeOnlyMessage={liveModeOnlyMessage}
+          isEditing={isEditing}
+          messageOverrides={messageOverrides}
+          renderCell={renderCell}
+        />
+      </sc-validator>
     );
   }
 }

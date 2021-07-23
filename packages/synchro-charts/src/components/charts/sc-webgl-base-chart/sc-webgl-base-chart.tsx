@@ -38,12 +38,12 @@ import { getNumberAnnotations, isThreshold } from '../common/annotations/utils';
 import { renderTrendLines } from '../common/trends/renderTrendLines';
 import { Trend, TrendResult } from '../common/trends/types';
 import { renderAxis } from './renderAxis';
-import { SECOND_IN_MS } from '../../../utils/time';
+import {parseDuration, SECOND_IN_MS} from '../../../utils/time';
 import { getAllTrendResults } from '../common/trends/trendAnalysis';
 import { getVisibleData } from '../common/dataFilters';
 import { getYRange } from '../common/getYRange';
 import { isNumeric } from '../../../utils/number';
-import { isNumberDataStream } from '../../../utils/predicates';
+import { isMinimalStaticViewPort, isNumberDataStream } from '../../../utils/predicates';
 import { EmptyStatus } from './EmptyStatus';
 import { getDataPoints } from '../../../utils/getDataPoints';
 import { StreamType } from '../../../utils/dataConstants';
@@ -117,8 +117,10 @@ export class ScWebglBaseChart {
   @State() yMin: number = this.viewport.yMin || 0;
   @State() yMax: number = this.viewport.yMax || 100;
   // NOTE: If a start and end date are not provided, that means we are in 'live' mode
-  @State() start: Date = this.viewport.start || new Date(Date.now() - (this.viewport.duration as number));
-  @State() end: Date = this.viewport.end || new Date();
+  @State() start: Date = isMinimalStaticViewPort(this.viewport)
+    ? new Date(this.viewport.start)
+    : new Date(Date.now() - parseDuration(this.viewport.duration));
+  @State() end: Date = isMinimalStaticViewPort(this.viewport) ? new Date(this.viewport.end) : new Date();
 
   @State() trendResults: TrendResult[] = [];
 
@@ -230,8 +232,10 @@ export class ScWebglBaseChart {
       const manuallyAppliedViewPortChange = newViewPort.lastUpdatedBy == null;
       if (manuallyAppliedViewPortChange) {
         /** Update active viewport */
-        this.start = newViewPort.start || new Date(Date.now() - (newViewPort.duration as number));
-        this.end = newViewPort.end || new Date();
+        this.start = isMinimalStaticViewPort(newViewPort)
+          ? new Date(newViewPort.start)
+          : new Date(Date.now() - parseDuration(newViewPort.duration));
+        this.end = isMinimalStaticViewPort(newViewPort) ? new Date(newViewPort.end) : new Date();
 
         /**
          * Updates viewport to the active viewport

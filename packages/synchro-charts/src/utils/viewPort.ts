@@ -1,26 +1,12 @@
 import { MinimalViewPortConfig } from './dataTypes';
+import { isMinimalStaticViewPort } from './predicates';
+import { parseDuration } from './time';
 
-export const viewportStartDate = ({ start, end, duration }: MinimalViewPortConfig): Date => {
-  if (start) {
-    return start;
-  }
-  if (end && duration != null) {
-    return new Date(end.getTime() - duration);
-  }
-  if (duration != null) {
-    return new Date(Date.now() - duration);
-  }
-  // This should never actually occur, either you have a start, or you have a duration
-  return new Date(Date.now());
-};
+export const viewportStartDate = (viewportConfig: MinimalViewPortConfig): Date =>
+  isMinimalStaticViewPort(viewportConfig)
+    ? new Date(viewportConfig.start)
+    : new Date(Date.now() - parseDuration(viewportConfig.duration));
 
-export const viewportEndDate = ({ start, end, duration }: MinimalViewPortConfig): Date => {
-  if (end) {
-    return end;
-  }
-  if (start && duration != null) {
-    return new Date(start.getTime() + duration);
-  }
-
-  return new Date(Date.now());
+export const viewportEndDate = (viewportConfig: MinimalViewPortConfig): Date => {
+  return isMinimalStaticViewPort(viewportConfig) ? new Date(viewportConfig.end) : new Date(Date.now());
 };
