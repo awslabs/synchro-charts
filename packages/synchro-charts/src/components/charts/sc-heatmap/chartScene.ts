@@ -26,6 +26,8 @@ export const updateChartScene: ChartSceneUpdater = ({
   scene,
   dataStreams,
   hasDataChanged,
+  hasYRangeChanged = false,
+  hasXRangeChanged = false,
   minBufferSize,
   bufferFactor,
   viewport,
@@ -60,6 +62,8 @@ export const updateChartScene: ChartSceneUpdater = ({
     dataStreams,
     toClipSpace: scene.toClipSpace,
     hasDataChanged,
+    hasYRangeChanged,
+    hasXRangeChanged,
     viewport,
   });
   return scene;

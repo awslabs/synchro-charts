@@ -1,4 +1,4 @@
-import { Component, h, Prop, State } from '@stencil/core';
+import { Component, h, Prop } from '@stencil/core';
 
 import {
   AlarmsConfig,
@@ -8,12 +8,22 @@ import {
   MinimalViewPortConfig,
   RequestDataFn,
 } from '../../../utils/dataTypes';
-import { Axis, ChartConfig, LayoutConfig, LegendConfig, MovementConfig, ScaleConfig, Tooltip } from '../common/types';
-import { chartScene, updateChartScene } from '../sc-bar-chart/chartScene';
+import {
+  Annotations,
+  Axis,
+  ChartConfig,
+  LayoutConfig,
+  LegendConfig,
+  MovementConfig,
+  ScaleConfig,
+  Tooltip,
+} from '../common/types';
+import { chartScene, updateChartScene } from './chartScene';
 import { DEFAULT_CHART_CONFIG } from '../sc-webgl-base-chart/chartDefaults';
 import { RectScrollFixed } from '../../../utils/types';
+import { Trend } from '../common/trends/types';
 import { DATA_ALIGNMENT } from '../common/constants';
-import { HeatValueMap } from './heatmapUtil';
+import { xShouldRerender, yShouldRerender } from './heatmapUtil';
 
 // The initial size of buffers. The larger this is, the more memory allocated up front per chart.
 // The lower this number is, more likely that charts will have to re-initialize there buffers which is
@@ -22,13 +32,7 @@ const DEFAULT_MIN_BUFFER_SIZE = 1000;
 const DEFAULT_BUFFER_FACTOR = 2;
 
 const tooltip = (props: Tooltip.Props) => (
-  <sc-heatmap-tooltip
-    size={props.size}
-    dataStreams={props.dataStreams}
-    viewport={props.viewport}
-    dataContainer={props.dataContainer}
-    dataAlignment={DATA_ALIGNMENT.EITHER}
-  />
+  <sc-tooltip {...props} visualizesAlarms={false} supportString={false} dataAlignment={DATA_ALIGNMENT.EITHER} />
 );
 
 @Component({
@@ -36,7 +40,6 @@ const tooltip = (props: Tooltip.Props) => (
   shadow: false,
 })
 export class ScHeatmap implements ChartConfig {
-  /** Chart API */
   @Prop() viewport: MinimalViewPortConfig;
   @Prop() movement?: MovementConfig;
   @Prop() scale?: ScaleConfig;
@@ -47,17 +50,17 @@ export class ScHeatmap implements ChartConfig {
   @Prop() dataStreams!: DataStream[];
   @Prop() alarms?: AlarmsConfig;
   @Prop() gestures: boolean = true;
+  @Prop() annotations: Annotations;
+  @Prop() trends: Trend[];
   @Prop() requestData?: RequestDataFn;
   @Prop() axis?: Axis.Options;
   @Prop() messageOverrides?: MessageOverrides;
-  // @Prop() heatValues: HeatValueMap;
+
   /** Status */
   @Prop() isEditing: boolean = false;
   /** Memory Management */
   @Prop() bufferFactor: number = DEFAULT_BUFFER_FACTOR;
   @Prop() minBufferSize: number = DEFAULT_MIN_BUFFER_SIZE;
-
-  @State() heatValues: HeatValueMap = {};
 
   render() {
     return (
@@ -65,12 +68,13 @@ export class ScHeatmap implements ChartConfig {
         size={this.size}
         renderFunc={(size: RectScrollFixed) => (
           <sc-webgl-base-chart
-            {...this.heatValues}
             axis={this.axis}
             gestures={this.gestures}
             configId={this.widgetId}
             requestData={this.requestData}
             legend={this.legend}
+            annotations={this.annotations}
+            trends={this.trends}
             updateChartScene={updateChartScene}
             createChartScene={chartScene}
             size={{
@@ -79,6 +83,7 @@ export class ScHeatmap implements ChartConfig {
               ...size,
             }}
             dataStreams={this.dataStreams}
+            alarms={this.alarms}
             viewport={this.viewport}
             minBufferSize={this.minBufferSize}
             bufferFactor={this.bufferFactor}
@@ -88,6 +93,8 @@ export class ScHeatmap implements ChartConfig {
             supportString={false}
             visualizesAlarms={false}
             messageOverrides={this.messageOverrides}
+            yShouldRerender={yShouldRerender}
+            xShouldRerender={xShouldRerender}
           />
         )}
       />

@@ -44,11 +44,6 @@ const NUM_COLOR_COMPONENTS = 3; // (r, g, b)
 
 export const COLOR_PALETTE = getSequential();
 
-// Each timestamp can have 10 buckets
-const numBuckets = (heatValue: HeatValueMap): number => {
-  return BUCKET_COUNT * Object.keys(heatValue).length;
-};
-
 const getUniformWidth = <T extends Primitive>(
   dataStreams: DataStream<T>[],
   toClipSpace: (time: number) => number,
@@ -75,30 +70,28 @@ const updateMesh = ({
   toClipSpace: (time: number) => number;
   viewport: ViewPort;
 }) => {
-  // Set the number of instances of the bar are to be rendered.
+  // Set the number of instances of the buckets are to be rendered.
   const { geometry } = mesh;
   const { color, bucket } = geometry.attributes;
+  const { yMin, yMax } = viewport;
   let positionIndex = 0;
   let colorIndex = 0;
 
   const resolution = getResolution(viewport);
 
-  const heatValues =
+  const heatValues: HeatValueMap =
     dataStreams.length !== 0
       ? calcHeatValues({ oldHeatValue: {}, dataStreams, resolution, viewport, bucketCount: BUCKET_COUNT })
       : {};
 
-  // eslint-disable-next-line no-param-reassign
-  mesh.count = numBuckets(heatValues);
-
   Object.keys(heatValues).forEach((xAxisBucketStart: string) => {
-    Object.keys(heatValues[xAxisBucketStart]).forEach((bucketIndex: string) => {
+    Object.keys(heatValues[+xAxisBucketStart]).forEach((bucketIndex: string) => {
       bucket.array[positionIndex] = toClipSpace(+xAxisBucketStart);
-      bucket.array[positionIndex + 1] = +bucketIndex * (viewport.yMax / BUCKET_COUNT);
+      bucket.array[positionIndex + 1] = yMin + +bucketIndex * ((yMax - yMin) / BUCKET_COUNT);
 
       const [r, g, b] = getBucketColor(
         COLOR_PALETTE,
-        heatValues[xAxisBucketStart][bucketIndex].totalCount,
+        heatValues[+xAxisBucketStart][+bucketIndex].totalCount,
         (resolution / SECOND_IN_MS) * dataStreams.length
       );
       color.array[colorIndex] = r;
@@ -109,6 +102,8 @@ const updateMesh = ({
       positionIndex += NUM_POSITION_COMPONENTS;
     });
   });
+  // eslint-disable-next-line no-param-reassign
+  mesh.count = colorIndex / 3;
   bucket.needsUpdate = true;
   color.needsUpdate = true;
 };
@@ -161,7 +156,7 @@ export const bucketMesh = ({
    * Utilizes an instance of a single unit square, which then gets
    * stretched and transposed across the canvas.
    */
-  const bucketChartMaterial = new RawShaderMaterial({
+  const heatmapMaterial = new RawShaderMaterial({
     vertexShader: bucketVert,
     fragmentShader: bucketFrag,
     side: DoubleSide,
@@ -171,12 +166,12 @@ export const bucketMesh = ({
         value: getUniformWidth(dataStreams, toClipSpace, resolution),
       },
       bucketHeight: {
-        value: getYBucketHeight,
+        value: getYBucketHeight(viewport),
       },
     },
   });
 
-  const mesh = <HeatmapBucketMesh>new InstancedMesh(instGeo, bucketChartMaterial, bufferSize);
+  const mesh = <HeatmapBucketMesh>new InstancedMesh(instGeo, heatmapMaterial, bufferSize);
   updateMesh({ dataStreams, mesh, toClipSpace, viewport });
 
   // Prevent bounding sphere from being called
@@ -190,15 +185,19 @@ export const updateBucketMesh = ({
   dataStreams,
   toClipSpace,
   hasDataChanged,
+  hasYRangeChanged = false,
+  hasXRangeChanged = false,
   viewport,
 }: {
   buckets: HeatmapBucketMesh;
   dataStreams: DataStream[];
   toClipSpace: (time: number) => number;
   hasDataChanged: boolean;
+  hasYRangeChanged: boolean;
+  hasXRangeChanged: boolean;
   viewport: ViewPort;
 }) => {
-  if (hasDataChanged) {
+  if (hasDataChanged || hasYRangeChanged || hasXRangeChanged) {
     const resolution = getResolution(viewport);
     // eslint-disable-next-line no-param-reassign
     buckets.material.uniforms.width.value = getUniformWidth(dataStreams, toClipSpace, resolution);

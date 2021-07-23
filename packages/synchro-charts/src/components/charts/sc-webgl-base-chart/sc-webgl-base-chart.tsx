@@ -92,6 +92,8 @@ export class ScWebglBaseChart {
   @Prop() visualizesAlarms: boolean;
   @Prop() displaysError: boolean = true;
   @Prop() alarms?: AlarmsConfig;
+  @Prop() yShouldRerender?: ({ prevYMin, prevYMax, newYMin, newYMax }) => boolean;
+  @Prop() xShouldRerender?: ({ prevStart, prevEnd, newStart, newEnd }) => boolean;
 
   /** if false, base chart will not display an empty state message when there is no data present. */
   @Prop() displaysNoDataPresentMsg?: boolean;
@@ -208,6 +210,7 @@ export class ScWebglBaseChart {
         /** Update active viewport. */
         this.yMin = newViewPort.yMin;
         this.yMax = newViewPort.yMax;
+
         /** Apply Changes */
         this.applyYRangeChanges();
       }
@@ -238,6 +241,8 @@ export class ScWebglBaseChart {
           hasDataChanged: false,
           hasSizeChanged: false,
           hasAnnotationChanged: false,
+          hasYRangeChanged: true,
+          hasXRangeChanged: false,
         });
       }
     }
@@ -333,6 +338,12 @@ export class ScWebglBaseChart {
 
   handleCameraEvent = ({ start, end }: { start: Date; end: Date }) => {
     if (this.scene) {
+      if (
+        this.xShouldRerender &&
+        this.xShouldRerender({ prevStart: this.start, prevEnd: this.end, newStart: start, newEnd: end })
+      ) {
+        this.onUpdate({ start, end }, false, false, false, false, true);
+      }
       // Update Camera
       webGLRenderer.updateViewPorts({ start, end, manager: this.scene });
 
@@ -361,9 +372,16 @@ export class ScWebglBaseChart {
       startFromZero: this.yRangeStartFromZero,
     });
 
+    const prevYMin = this.yMin;
+    const prevYMax = this.yMax;
+
     /** Update active viewport. */
     this.yMin = this.viewport.yMin != null ? this.viewport.yMin : yMin;
     this.yMax = this.viewport.yMax != null ? this.viewport.yMax : yMax;
+
+    if (this.yShouldRerender && this.yShouldRerender({ prevYMin, prevYMax, newYMin: this.yMin, newYMax: this.yMax })) {
+      this.onUpdate(this.activeViewPort(), false, false, false, true);
+    }
 
     this.applyYRangeChanges();
   };
@@ -469,7 +487,9 @@ export class ScWebglBaseChart {
     { start, end }: { start: Date; end: Date },
     hasDataChanged: boolean = false,
     hasSizeChanged: boolean = false,
-    hasAnnotationChanged: boolean = false
+    hasAnnotationChanged: boolean = false,
+    hasYRangeChanged: boolean = false,
+    hasXRangeChanged: boolean = false
   ) => {
     /**
      * Failure Handling
@@ -503,12 +523,18 @@ export class ScWebglBaseChart {
     this.start = start;
     this.end = end;
 
-    if (!this.supportString) {
+    if (!this.supportString && !hasYRangeChanged) {
       this.updateYRange();
     }
 
     // Render chart scene
-    this.updateAndRegisterChartScene({ hasDataChanged, hasSizeChanged, hasAnnotationChanged });
+    this.updateAndRegisterChartScene({
+      hasDataChanged,
+      hasSizeChanged,
+      hasAnnotationChanged,
+      hasYRangeChanged,
+      hasXRangeChanged,
+    });
 
     // settings to utilize in all feature updates.
     const viewport = this.activeViewPort();
@@ -587,16 +613,19 @@ export class ScWebglBaseChart {
     hasDataChanged,
     hasSizeChanged,
     hasAnnotationChanged,
+    hasYRangeChanged = false,
+    hasXRangeChanged = false,
   }: {
     hasDataChanged: boolean;
     hasSizeChanged: boolean;
     hasAnnotationChanged: boolean;
+    hasYRangeChanged: boolean;
+    hasXRangeChanged: boolean;
   }) {
     if (this.scene) {
       if (hasSizeChanged) {
         this.setChartRenderingPosition();
       }
-
       const container = this.getDataContainer();
       const updatedScene = this.updateChartScene({
         scene: this.scene,
@@ -612,6 +641,8 @@ export class ScWebglBaseChart {
         thresholds: this.thresholds(),
         hasSizeChanged,
         hasDataChanged,
+        hasYRangeChanged,
+        hasXRangeChanged,
         hasAnnotationChanged,
       });
 

@@ -45,7 +45,7 @@ export const getXBucketWidth = ({
  */
 export const getYBucketHeight = (viewport: ViewPort): number => {
   const { yMin, yMax } = viewport;
-  const yRange = yMax - yMin;
+  const yRange = Math.abs(yMax - yMin);
   return yRange / BUCKET_COUNT - (yRange / BUCKET_COUNT) * VERT_MARGIN_FACTOR;
 };
 

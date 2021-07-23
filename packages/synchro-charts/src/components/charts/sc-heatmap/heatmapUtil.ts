@@ -1,7 +1,7 @@
 import { DataStream, ViewPort } from '../../../utils/dataTypes';
 import { SECOND_IN_MS, MINUTE_IN_MS, HOUR_IN_MS, DAY_IN_MS } from '../../../utils/time';
 import { DataType } from '../../../utils/dataConstants';
-import { CHANGE_RESOLUTION } from './heatmapConstants';
+import { BUCKET_COUNT, CHANGE_RESOLUTION, Y_RANGE_BOUNDARY } from './heatmapConstants';
 
 export type HeatValueMap = {
   [xBucketRangeStart: number]: {
@@ -29,7 +29,7 @@ export const calculateBucketIndex = ({
   if (yValue === 0 && yMin === 0) {
     return 1;
   }
-  return Math.ceil(((yValue - yMin) / (yMax - yMin)) * bucketCount);
+  return Math.abs(Math.ceil(((yValue - yMin) / (yMax - yMin)) * bucketCount));
 };
 
 export const calculateXBucketStart = ({
@@ -38,7 +38,12 @@ export const calculateXBucketStart = ({
 }: {
   xValue: number;
   xAxisBucketRange: number;
-}): number => Math.floor(xValue / xAxisBucketRange) * xAxisBucketRange;
+}): number => {
+  if (xAxisBucketRange === SECOND_IN_MS) {
+    return xValue;
+  }
+  return Math.floor(xValue / xAxisBucketRange) * xAxisBucketRange;
+};
 
 /**
  * Keeps track of the total number of data points within a point's respective bucket and
@@ -108,8 +113,8 @@ export const calcHeatValues = ({
   }, oldHeatValue);
 };
 
-export const getResolution = (viewport: ViewPort): number => {
-  const duration = viewport.duration ?? viewport.end.getTime() - viewport.start.getTime();
+export const getResolution = ({ start, end }: { start: Date; end: Date }): number => {
+  const duration = end.getTime() - start.getTime();
   if (duration > (CHANGE_RESOLUTION + 1) * DAY_IN_MS) {
     return DAY_IN_MS;
   }
@@ -185,4 +190,42 @@ export const displayDate = (date: Date, resolution: number, { start, end }: { st
     month: 'numeric',
     day: 'numeric',
   })}`;
+};
+
+export const yShouldRerender = ({
+  prevYMin,
+  prevYMax,
+  newYMin,
+  newYMax,
+}: {
+  prevYMin: number;
+  prevYMax: number;
+  newYMin: number;
+  newYMax: number;
+}): boolean => {
+  const prevYRange = prevYMax - prevYMin;
+  const yBoundary = (prevYRange / BUCKET_COUNT) * Y_RANGE_BOUNDARY;
+  if (Math.abs(prevYMin - newYMin) > yBoundary || Math.abs(prevYMax - newYMax) > yBoundary) {
+    return true;
+  }
+  return false;
+};
+
+export const xShouldRerender = ({
+  prevStart,
+  prevEnd,
+  newStart,
+  newEnd,
+}: {
+  prevStart: Date;
+  prevEnd: Date;
+  newStart: Date;
+  newEnd: Date;
+}): boolean => {
+  const prevXBucketRange = getResolution({ start: prevStart, end: prevEnd });
+  const newXBucketRange = getResolution({ start: newStart, end: newEnd });
+  if (prevXBucketRange !== newXBucketRange) {
+    return true;
+  }
+  return false;
 };
