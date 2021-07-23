@@ -47,8 +47,8 @@ const calculateNewThreshold = ({
 
 const needAxisRescale = ({ annotationValue, viewport }: { annotationValue: number; viewport: ViewPort }): boolean => {
   const { yMax, yMin } = viewport;
-  const lowerThreshold = 1.25 * yMin;
-  const upperThreshold = 0.75 * yMax;
+  const lowerThreshold = yMin + 0.25 * (yMax - yMin);
+  const upperThreshold = yMin + 0.75 * (yMax - yMin);
   return annotationValue < lowerThreshold || annotationValue > upperThreshold;
 };
 

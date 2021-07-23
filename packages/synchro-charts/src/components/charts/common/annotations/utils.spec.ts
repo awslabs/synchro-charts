@@ -18,6 +18,16 @@ import { VIEWPORT } from '../testUtil';
 import { highestPriorityThreshold, thresholdAppliesToDataStream } from './breachedThreshold';
 import { COMPARISON_OPERATOR } from '../constants';
 
+const BASE_Y_ANNOTATION: YAnnotation = {
+  color: 'red',
+  value: 30,
+  showValue: true,
+  label: {
+    text: 'label',
+    show: true,
+  },
+};
+
 describe('getValueAndText and getValueAndTextVisibility', () => {
   it('returns a text from annotation', () => {
     const annotationLabelText = 'new label';
@@ -43,13 +53,8 @@ describe('getValueAndText and getValueAndTextVisibility', () => {
     const value = 50;
     const yAnnotations: YAnnotation[] = [
       {
-        color: 'red',
+        ...BASE_Y_ANNOTATION,
         value,
-        showValue: true,
-        label: {
-          text: 'label',
-          show: true,
-        },
       },
     ];
 
@@ -70,13 +75,8 @@ describe('getValueAndText and getValueAndTextVisibility', () => {
     const label = 'label';
     const yAnnotations: YAnnotation[] = [
       {
-        color: 'red',
+        ...BASE_Y_ANNOTATION,
         value,
-        showValue: true,
-        label: {
-          text: label,
-          show: true,
-        },
       },
     ];
     const valueAndText = getValueAndText({
@@ -96,13 +96,9 @@ describe('getValueAndText and getValueAndTextVisibility', () => {
     const label = 'label';
     const yAnnotations: YAnnotation[] = [
       {
-        color: 'red',
+        ...BASE_Y_ANNOTATION,
         value,
         showValue: false,
-        label: {
-          text: label,
-          show: true,
-        },
       },
     ];
     const valueAndText = getValueAndText({
@@ -183,15 +179,11 @@ describe('getValueAndText formattedText', () => {
   it('returns rounded exponential value for very small numbers - edge', () => {
     const value = 0.000000156;
     const expectedDisplayValue = '1.6e-7';
+
     const yAnnotations: YAnnotation[] = [
       {
-        color: 'red',
+        ...BASE_Y_ANNOTATION,
         value,
-        showValue: true,
-        label: {
-          text: 'label',
-          show: true,
-        },
       },
     ];
 
@@ -210,13 +202,8 @@ describe('getValueAndText formattedText', () => {
     const expectedDisplayValue = '1.0e-3';
     const yAnnotations: YAnnotation[] = [
       {
-        color: 'red',
+        ...BASE_Y_ANNOTATION,
         value,
-        showValue: true,
-        label: {
-          text: 'label',
-          show: true,
-        },
       },
     ];
 
@@ -235,13 +222,8 @@ describe('getValueAndText formattedText', () => {
     const expectedDisplayValue = '2.0e+5';
     const yAnnotations: YAnnotation[] = [
       {
-        color: 'red',
+        ...BASE_Y_ANNOTATION,
         value,
-        showValue: true,
-        label: {
-          text: 'label',
-          show: true,
-        },
       },
     ];
 
@@ -260,13 +242,8 @@ describe('getValueAndText formattedText', () => {
     const expectedDisplayValue = '1.0e+10';
     const yAnnotations: YAnnotation[] = [
       {
-        color: 'red',
+        ...BASE_Y_ANNOTATION,
         value,
-        showValue: true,
-        label: {
-          text: 'label',
-          show: true,
-        },
       },
     ];
 
@@ -285,13 +262,8 @@ describe('getValueAndText formattedText', () => {
     const expectedDisplayValue = '0.001';
     const yAnnotations: YAnnotation[] = [
       {
-        color: 'red',
+        ...BASE_Y_ANNOTATION,
         value,
-        showValue: true,
-        label: {
-          text: 'label',
-          show: true,
-        },
       },
     ];
 
@@ -309,13 +281,8 @@ describe('getValueAndText formattedText', () => {
     const expectedDisplayValue = '0.987';
     const yAnnotations: YAnnotation[] = [
       {
-        color: 'red',
+        ...BASE_Y_ANNOTATION,
         value,
-        showValue: true,
-        label: {
-          text: 'label',
-          show: true,
-        },
       },
     ];
 
@@ -334,13 +301,8 @@ describe('getValueAndText formattedText', () => {
     const expectedDisplayValue = '12345';
     const yAnnotations: YAnnotation[] = [
       {
-        color: 'red',
+        ...BASE_Y_ANNOTATION,
         value,
-        showValue: true,
-        label: {
-          text: 'label',
-          show: true,
-        },
       },
     ];
 
@@ -359,13 +321,8 @@ describe('getValueAndText formattedText', () => {
     const expectedDisplayValue = '0.234';
     const yAnnotations: YAnnotation[] = [
       {
-        color: 'red',
+        ...BASE_Y_ANNOTATION,
         value,
-        showValue: true,
-        label: {
-          text: 'label',
-          show: true,
-        },
       },
     ];
 
