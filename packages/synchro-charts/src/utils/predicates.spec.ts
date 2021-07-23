@@ -167,6 +167,6 @@ describe('isMinimalStaticViewPort', () => {
       end: new Date(),
     };
 
-    expect(isMinimalStaticViewport(viewport)).toBeFalse();
+    expect(isMinimalStaticViewport(viewport)).toBeTrue();
   });
 });
