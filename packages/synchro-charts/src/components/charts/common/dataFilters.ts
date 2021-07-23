@@ -1,7 +1,7 @@
 import { bisector } from 'd3-array';
 
 import { DataPoint, MinimalViewPortConfig, Primitive } from '../../../utils/dataTypes';
-import { isMinimalStaticViewPort } from '../../../utils/predicates';
+import { isMinimalStaticViewport } from '../../../utils/predicates';
 import { parseDuration } from '../../../utils/time';
 
 // By doing the mapping to a date within the bisector
@@ -31,10 +31,10 @@ export const getVisibleData = <T extends Primitive>(
   // to fully render the data correctly.
   includeBoundaryPoints: boolean = true
 ): DataPoint<T>[] => {
-  const start: Date = isMinimalStaticViewPort(viewport)
+  const start: Date = isMinimalStaticViewport(viewport)
     ? new Date(viewport.start)
     : new Date(Date.now() - parseDuration(viewport.duration));
-  const end: Date = isMinimalStaticViewPort(viewport) ? new Date(viewport.end) : new Date();
+  const end: Date = isMinimalStaticViewport(viewport) ? new Date(viewport.end) : new Date();
 
   // If there is no data
   if (data.length === 0) {

@@ -6,7 +6,7 @@ import { Annotations, ChartConfig, Threshold } from '../charts/common/types';
 import { webGLRenderer } from '../sc-webgl-context/webglContext';
 import { constructTableData, Row } from './constructTableData';
 import { viewportEndDate, viewportStartDate } from '../../utils/viewPort';
-import { isMinimalStaticViewPort } from '../../utils/predicates';
+import { isMinimalStaticViewport } from '../../utils/predicates';
 import { parseDuration } from '../../utils/time';
 
 const MSG =
@@ -31,7 +31,7 @@ export class ScTable implements ChartConfig {
   /** Active Viewport */
   @State() start: Date = viewportStartDate(this.viewport);
   @State() end: Date = viewportEndDate(this.viewport);
-  @State() duration?: number = !isMinimalStaticViewPort(this.viewport)
+  @State() duration?: number = !isMinimalStaticViewport(this.viewport)
     ? parseDuration(this.viewport.duration)
     : undefined;
 
@@ -39,7 +39,7 @@ export class ScTable implements ChartConfig {
   onViewPortChange(newViewPort: MinimalViewPortConfig) {
     this.onUpdate({
       ...newViewPort,
-      duration: !isMinimalStaticViewPort(newViewPort) ? parseDuration(newViewPort.duration) : undefined,
+      duration: !isMinimalStaticViewport(newViewPort) ? parseDuration(newViewPort.duration) : undefined,
       start: viewportStartDate(this.viewport),
       end: viewportEndDate(this.viewport),
     });

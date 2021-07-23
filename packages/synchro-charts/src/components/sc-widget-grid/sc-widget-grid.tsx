@@ -12,7 +12,7 @@ import { viewportEndDate, viewportStartDate } from '../../utils/viewPort';
 import { Annotations, ChartConfig, Threshold, WidgetConfigurationUpdate } from '../charts/common/types';
 import { LabelsConfig } from '../common/types';
 import { DATA_ALIGNMENT } from '../charts/common/constants';
-import { isMinimalStaticViewPort } from '../../utils/predicates';
+import { isMinimalStaticViewport } from '../../utils/predicates';
 import { parseDuration } from '../../utils/time';
 import { getDataStreamForEventing } from '../charts/common';
 
@@ -61,7 +61,7 @@ export class ScWidgetGrid implements ChartConfig {
   /** Active Viewport */
   @State() start: Date = viewportStartDate(this.viewport);
   @State() end: Date = viewportEndDate(this.viewport);
-  @State() duration?: number = !isMinimalStaticViewPort(this.viewport)
+  @State() duration?: number = !isMinimalStaticViewport(this.viewport)
     ? parseDuration(this.viewport.duration)
     : undefined;
 
@@ -81,7 +81,7 @@ export class ScWidgetGrid implements ChartConfig {
   onViewPortChange(newViewPort: MinimalViewPortConfig) {
     this.onUpdate({
       ...newViewPort,
-      duration: !isMinimalStaticViewPort(newViewPort) ? parseDuration(newViewPort.duration) : undefined,
+      duration: !isMinimalStaticViewport(newViewPort) ? parseDuration(newViewPort.duration) : undefined,
       start: viewportStartDate(this.viewport),
       end: viewportEndDate(this.viewport),
     });
@@ -155,7 +155,7 @@ export class ScWidgetGrid implements ChartConfig {
   getBreachedThreshold = (point: DataPoint | undefined, dataStream: DataStream): Threshold | undefined =>
     breachedThreshold({
       value: point && point.y,
-      date: isMinimalStaticViewPort(this.viewport) ? new Date(this.viewport.end) : new Date(),
+      date: isMinimalStaticViewport(this.viewport) ? new Date(this.viewport.end) : new Date(),
       dataStreams: this.dataStreams,
       dataStream,
       thresholds: getThresholds(this.annotations),

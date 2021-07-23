@@ -1,7 +1,7 @@
 import { Component, h, Prop } from '@stencil/core';
 import parse from 'parse-duration';
 import { MinimalViewPortConfig } from '../../utils/dataTypes';
-import { isMinimalStaticViewPort } from '../../utils/predicates';
+import { isMinimalStaticViewport } from '../../utils/predicates';
 import { isValidDate } from './validator/dateValidator';
 
 /**
@@ -21,14 +21,14 @@ export class ScValidator {
   validateViewport = () => {
     if (this.viewport != null) {
       if (
-        isMinimalStaticViewPort(this.viewport) &&
+        isMinimalStaticViewport(this.viewport) &&
         (!isValidDate(this.viewport.start) || !isValidDate(this.viewport.end))
       ) {
         throw new Error(`Unable to parse start date: '${this.viewport.start}' and/or end date: '${this.viewport.end}'`);
       }
 
       if (
-        !isMinimalStaticViewPort(this.viewport) &&
+        !isMinimalStaticViewport(this.viewport) &&
         this.viewport.duration === 'string' &&
         parse(this.viewport.duration, 'ms') == null
       ) {

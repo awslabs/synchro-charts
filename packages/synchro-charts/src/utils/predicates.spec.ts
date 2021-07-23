@@ -4,7 +4,7 @@ import {
   isNumberDataStream,
   isSupportedDataType,
   isValid,
-  isMinimalStaticViewPort,
+  isMinimalStaticViewport,
 } from './predicates';
 import { DataStream, DataStreamInfo, MinimalLiveViewport, MinimalStaticViewport } from './dataTypes';
 import { DataType } from './dataConstants';
@@ -156,7 +156,7 @@ describe('isMinimalStaticViewPort', () => {
       duration: 1000,
     };
 
-    expect(isMinimalStaticViewPort(viewport)).toBeFalse();
+    expect(isMinimalStaticViewport(viewport)).toBeFalse();
   });
 
   it('returns true when the viewport is minimal static viewport config', () => {
@@ -167,6 +167,6 @@ describe('isMinimalStaticViewPort', () => {
       end: new Date(),
     };
 
-    expect(isMinimalStaticViewPort(viewport)).toBeFalse();
+    expect(isMinimalStaticViewport(viewport)).toBeFalse();
   });
 });
