@@ -1,6 +1,5 @@
 import { Component, h, Prop, State } from '@stencil/core';
 
-import { pointBisector } from '../common/dataFilters';
 import { DataStream, SizeConfig, ViewPort } from '../../../utils/dataTypes';
 import { DATA_ALIGNMENT } from '../common/constants';
 import {
@@ -11,22 +10,27 @@ import {
   getResolution,
   HeatValueMap,
 } from './heatmapUtil';
+import { pointBisector } from '../common/dataFilters';
 import { BUCKET_COUNT } from './heatmapConstants';
 
 const TOOLTIP_ROW_HEIGHT = 21;
 const TOOLTIP_EMPTY_HEIGHT = 71;
 const X_OFFSET = 8;
 
+/**
+ * The parent tooltip container, listens for events to ensure tooltip renders at the correct position at the correct time.
+ */
 @Component({
   tag: 'sc-heatmap-tooltip',
-  styleUrl: 'heatmapTooltip.css',
+  styleUrl: 'sc-heatmap-tooltip.css',
   shadow: false,
 })
 export class ScHeatmapTooltip {
   @Prop() size!: SizeConfig;
   @Prop() dataContainer!: HTMLElement;
-  @Prop() viewport!: ViewPort;
   @Prop() dataStreams!: DataStream[];
+  @Prop() viewport!: ViewPort;
+  @Prop() maxDurationFromDate?: number; // milliseconds
 
   /**
    * If we are drawing data from the data timestamp to timestamp + resolution
@@ -40,6 +44,7 @@ export class ScHeatmapTooltip {
    * CSS Top property for the tooltip container
    */
   @Prop() top: number;
+  @Prop() sortPoints: boolean = true;
 
   @State() selectedXBucket: undefined | Date[];
   @State() selectedYBucket?: number[];
@@ -92,8 +97,11 @@ export class ScHeatmapTooltip {
     const resolution = getResolution(this.viewport);
     const [lowerXBucketBound, upperXBucketBound] = this.selectedXBucket;
     this.dataStreams.forEach((dataStream, index) => {
-      const startIndex = Math.max(pointBisector.left(dataStream.data, lowerXBucketBound) - 1, 0);
-      const endIndex = Math.min(pointBisector.right(dataStream.data, upperXBucketBound), dataStream.data.length - 1);
+      const startIndex = Math.max(pointBisector.left(dataStream.data, lowerXBucketBound.getTime()) - 1, 0);
+      const endIndex = Math.min(
+        pointBisector.right(dataStream.data, upperXBucketBound.getTime() + 1),
+        dataStream.data.length - 1
+      );
       newDataStream[index] = { ...dataStream, data: dataStream.data.slice(startIndex, endIndex + 1) };
     });
     this.heatValues = calcHeatValues({
@@ -101,6 +109,7 @@ export class ScHeatmapTooltip {
       dataStreams: newDataStream,
       resolution,
       viewport: this.viewport,
+      bucketCount: BUCKET_COUNT,
     });
   };
 
@@ -126,19 +135,8 @@ export class ScHeatmapTooltip {
     this.selectedXBucket = undefined;
   };
 
-  getBucketCount = (selectedXBucket: Date, yValue: number): number => {
-    if (!this.heatValues) {
-      return 0;
-    }
-    const resolution = getResolution(this.viewport);
-    const xAxisBucketStart = calculateXBucketStart({ xValue: selectedXBucket.getTime(), xAxisBucketRange: resolution });
-    const { yMin, yMax } = this.viewport;
-    const bucketIndex = calculateBucketIndex({ yValue, yMax, yMin });
-    return this.heatValues[xAxisBucketStart][bucketIndex].totalCount;
-  };
-
   getBucketString = (selectedYBucket: number[]): string => {
-    return `${selectedYBucket[0].toString()} - ${selectedYBucket[1].toString()}`;
+    return `${selectedYBucket[0].toFixed(2)} - ${selectedYBucket[1].toFixed(2)}`;
   };
 
   getTooltipPosition = (viewport, size): undefined | { x: number; y: number } => {
@@ -147,7 +145,7 @@ export class ScHeatmapTooltip {
     }
     const { start, end, yMin, yMax } = viewport;
     const { width, height } = size;
-    const selectedXBucketStartMS = this.selectedXBucket[0].getTime();
+    const selectedXBucketStartMS = this.selectedXBucket[1].getTime();
 
     const viewportDuration = end.getTime() - start.getTime();
     const datePositionRatio = (selectedXBucketStartMS - start.getTime()) / viewportDuration;
@@ -173,7 +171,12 @@ export class ScHeatmapTooltip {
 
     const selectedXBucketMS = this.selectedXBucket[0].getTime();
     const { yMin, yMax } = this.viewport;
-    const bucketIndex = calculateBucketIndex({ yValue: this.selectedYBucket[1], yMax, yMin });
+    const bucketIndex = calculateBucketIndex({
+      yValue: this.selectedYBucket[0],
+      yMax,
+      yMin,
+      bucketCount: BUCKET_COUNT,
+    });
 
     // if chosen date isn't in heatValues then there's no data to be displayed
     if (this.heatValues[selectedXBucketMS] === undefined) {
@@ -219,7 +222,7 @@ export class ScHeatmapTooltip {
             <small class={{ 'value awsui-util-d-b': true }} style={{ color: '#000' }}>
               {this.getBucketString(this.selectedYBucket)}
             </small>
-            <small class={{ 'awsui-util-d-b': true, 'awsui-util-mb-s': true }}>Total count:</small>
+            <small class={{ 'awsui-util-d-b': true }}>Total count:</small>
             <small class={{ 'value awsui-util-d-b': true }} style={{ color: '#000' }}>
               {this.heatValues[selectedXBucketMS][bucketIndex].totalCount}
             </small>
