@@ -86,7 +86,7 @@ const updateMesh = ({
 
   Object.keys(heatValues).forEach((xAxisBucketStart: string) => {
     Object.keys(heatValues[+xAxisBucketStart]).forEach((bucketIndex: string) => {
-      bucket.array[positionIndex] = toClipSpace(+xAxisBucketStart);
+      bucket.array[positionIndex] = toClipSpace(+xAxisBucketStart + resolution);
       bucket.array[positionIndex + 1] = yMin + +bucketIndex * ((yMax - yMin) / BUCKET_COUNT);
 
       const [r, g, b] = getBucketColor(
