@@ -346,8 +346,7 @@ describe('update bucket mesh', () => {
       toClipSpace,
       hasDataChanged: true,
       viewport: VIEW_PORT,
-      hasYRangeChanged: true,
-      hasXRangeChanged: false,
+      shouldRerender: true,
     });
     expect(mesh.count).toEqual(1);
     expect(mesh.material.uniforms.width.value).toBeGreaterThan(0);
@@ -385,8 +384,7 @@ describe('update bucket mesh', () => {
       toClipSpace,
       hasDataChanged: true,
       viewport: VIEW_PORT,
-      hasYRangeChanged: true,
-      hasXRangeChanged: false,
+      shouldRerender: true,
     });
     expect(mesh.count).toEqual(0);
 
@@ -422,8 +420,7 @@ describe('update bucket mesh', () => {
       toClipSpace,
       hasDataChanged: true,
       viewport: VIEW_PORT,
-      hasYRangeChanged: true,
-      hasXRangeChanged: false,
+      shouldRerender: true,
     });
     expect(mesh.count).toEqual(3);
 
@@ -481,8 +478,7 @@ describe('update bucket mesh', () => {
       toClipSpace,
       hasDataChanged: true,
       viewport,
-      hasYRangeChanged: true,
-      hasXRangeChanged: false,
+      shouldRerender: true,
     });
     expect(mesh.count).toEqual(1);
 
@@ -539,8 +535,7 @@ describe('update bucket mesh', () => {
       toClipSpace,
       hasDataChanged: true,
       viewport: newViewport,
-      hasYRangeChanged: true,
-      hasXRangeChanged: false,
+      shouldRerender: true,
     });
 
     const newResolution = getResolution(newViewport);
@@ -578,8 +573,7 @@ describe('update bucket mesh', () => {
       toClipSpace,
       hasDataChanged: false,
       viewport: VIEW_PORT,
-      hasYRangeChanged: false,
-      hasXRangeChanged: false,
+      shouldRerender: false,
     });
     expect(mesh.count).toEqual(1);
   });

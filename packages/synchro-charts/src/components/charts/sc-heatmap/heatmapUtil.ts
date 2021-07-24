@@ -192,36 +192,22 @@ export const displayDate = (date: Date, resolution: number, { start, end }: { st
   })}`;
 };
 
-export const yShouldRerender = ({
-  prevYMin,
-  prevYMax,
-  newYMin,
-  newYMax,
+export const shouldRerenderOnViewportChange = ({
+  oldViewport,
+  newViewport,
 }: {
-  prevYMin: number;
-  prevYMax: number;
-  newYMin: number;
-  newYMax: number;
+  oldViewport: ViewPort;
+  newViewport: ViewPort;
 }): boolean => {
+  const { yMin: prevYMin, yMax: prevYMax, start: prevStart, end: prevEnd } = oldViewport;
+  const { yMin: newYMin, yMax: newYMax, start: newStart, end: newEnd } = newViewport;
+
   const prevYRange = prevYMax - prevYMin;
   const yBoundary = (prevYRange / BUCKET_COUNT) * Y_RANGE_BOUNDARY;
   if (Math.abs(prevYMin - newYMin) > yBoundary || Math.abs(prevYMax - newYMax) > yBoundary) {
     return true;
   }
-  return false;
-};
 
-export const xShouldRerender = ({
-  prevStart,
-  prevEnd,
-  newStart,
-  newEnd,
-}: {
-  prevStart: Date;
-  prevEnd: Date;
-  newStart: Date;
-  newEnd: Date;
-}): boolean => {
   const prevXBucketRange = getResolution({ start: prevStart, end: prevEnd });
   const newXBucketRange = getResolution({ start: newStart, end: newEnd });
   if (prevXBucketRange !== newXBucketRange) {

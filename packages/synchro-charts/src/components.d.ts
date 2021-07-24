@@ -101,7 +101,6 @@ export namespace Components {
     }
     interface ScHeatmap {
         "alarms"?: AlarmsConfig;
-        "annotations": Annotations;
         "axis"?: Axis.Options;
         /**
           * Memory Management
@@ -121,7 +120,6 @@ export namespace Components {
         "requestData"?: RequestDataFn;
         "scale"?: ScaleConfig;
         "size"?: MinimalSizeConfig;
-        "trends": Trend[];
         "viewport": MinimalViewPortConfig;
         "widgetId": string;
     }
@@ -526,6 +524,7 @@ export namespace Components {
           * Optionally provided callback to initiate a request for data. Used to ensure gestures emit events for request data.
          */
         "requestData"?: RequestDataFn;
+        "shouldRerenderOnViewportChange"?: ({ oldViewport, newViewport }) => boolean;
         "size": SizePositionConfig;
         "supportString": boolean;
         "tooltip": (props: Tooltip.Props) => HTMLElement;
@@ -533,9 +532,7 @@ export namespace Components {
         "updateChartScene": ChartSceneUpdater;
         "viewport": MinimalViewPortConfig;
         "visualizesAlarms": boolean;
-        "xShouldRerender"?: ({ prevStart, prevEnd, newStart, newEnd }) => boolean;
         "yRangeStartFromZero": boolean;
-        "yShouldRerender"?: ({ prevYMin, prevYMax, newYMin, newYMax }) => boolean;
     }
     interface ScWebglChartAnnotations {
     }
@@ -1538,7 +1535,6 @@ declare namespace LocalJSX {
     }
     interface ScHeatmap {
         "alarms"?: AlarmsConfig;
-        "annotations"?: Annotations;
         "axis"?: Axis.Options;
         /**
           * Memory Management
@@ -1558,7 +1554,6 @@ declare namespace LocalJSX {
         "requestData"?: RequestDataFn;
         "scale"?: ScaleConfig;
         "size"?: MinimalSizeConfig;
-        "trends"?: Trend[];
         "viewport"?: MinimalViewPortConfig;
         "widgetId": string;
     }
@@ -1969,6 +1964,7 @@ declare namespace LocalJSX {
           * Optionally provided callback to initiate a request for data. Used to ensure gestures emit events for request data.
          */
         "requestData"?: RequestDataFn;
+        "shouldRerenderOnViewportChange"?: ({ oldViewport, newViewport }) => boolean;
         "size": SizePositionConfig;
         "supportString"?: boolean;
         "tooltip"?: (props: Tooltip.Props) => HTMLElement;
@@ -1976,9 +1972,7 @@ declare namespace LocalJSX {
         "updateChartScene": ChartSceneUpdater;
         "viewport": MinimalViewPortConfig;
         "visualizesAlarms"?: boolean;
-        "xShouldRerender"?: ({ prevStart, prevEnd, newStart, newEnd }) => boolean;
         "yRangeStartFromZero"?: boolean;
-        "yShouldRerender"?: ({ prevYMin, prevYMax, newYMin, newYMax }) => boolean;
     }
     interface ScWebglChartAnnotations {
     }

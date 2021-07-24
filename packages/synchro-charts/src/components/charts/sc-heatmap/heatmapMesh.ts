@@ -185,19 +185,17 @@ export const updateBucketMesh = ({
   dataStreams,
   toClipSpace,
   hasDataChanged,
-  hasYRangeChanged = false,
-  hasXRangeChanged = false,
+  shouldRerender = false,
   viewport,
 }: {
   buckets: HeatmapBucketMesh;
   dataStreams: DataStream[];
   toClipSpace: (time: number) => number;
   hasDataChanged: boolean;
-  hasYRangeChanged: boolean;
-  hasXRangeChanged: boolean;
+  shouldRerender: boolean;
   viewport: ViewPort;
 }) => {
-  if (hasDataChanged || hasYRangeChanged || hasXRangeChanged) {
+  if (hasDataChanged || shouldRerender) {
     const resolution = getResolution(viewport);
     // eslint-disable-next-line no-param-reassign
     buckets.material.uniforms.width.value = getUniformWidth(dataStreams, toClipSpace, resolution);

@@ -92,8 +92,7 @@ export class ScWebglBaseChart {
   @Prop() visualizesAlarms: boolean;
   @Prop() displaysError: boolean = true;
   @Prop() alarms?: AlarmsConfig;
-  @Prop() yShouldRerender?: ({ prevYMin, prevYMax, newYMin, newYMax }) => boolean;
-  @Prop() xShouldRerender?: ({ prevStart, prevEnd, newStart, newEnd }) => boolean;
+  @Prop() shouldRerenderOnViewportChange?: ({ oldViewport, newViewport }) => boolean;
 
   /** if false, base chart will not display an empty state message when there is no data present. */
   @Prop() displaysNoDataPresentMsg?: boolean;
@@ -241,9 +240,14 @@ export class ScWebglBaseChart {
           hasDataChanged: false,
           hasSizeChanged: false,
           hasAnnotationChanged: false,
-          hasYRangeChanged: true,
-          hasXRangeChanged: false,
+          shouldRerender: false,
         });
+      }
+      if (
+        this.shouldRerenderOnViewportChange &&
+        this.shouldRerenderOnViewportChange({ oldViewport: oldViewPort, newViewport: newViewPort })
+      ) {
+        this.onUpdate({ start: this.start, end: this.end }, false, false, false, true);
       }
     }
   }
@@ -338,11 +342,12 @@ export class ScWebglBaseChart {
 
   handleCameraEvent = ({ start, end }: { start: Date; end: Date }) => {
     if (this.scene) {
+      const oldViewport: ViewPort = { yMin: this.yMin, yMax: this.yMax, start, end };
       if (
-        this.xShouldRerender &&
-        this.xShouldRerender({ prevStart: this.start, prevEnd: this.end, newStart: start, newEnd: end })
+        this.shouldRerenderOnViewportChange &&
+        this.shouldRerenderOnViewportChange({ oldViewport, newViewport: this.activeViewPort() })
       ) {
-        this.onUpdate({ start, end }, false, false, false, false, true);
+        this.onUpdate({ start, end }, false, false, false, true);
       }
       // Update Camera
       webGLRenderer.updateViewPorts({ start, end, manager: this.scene });
@@ -379,7 +384,11 @@ export class ScWebglBaseChart {
     this.yMin = this.viewport.yMin != null ? this.viewport.yMin : yMin;
     this.yMax = this.viewport.yMax != null ? this.viewport.yMax : yMax;
 
-    if (this.yShouldRerender && this.yShouldRerender({ prevYMin, prevYMax, newYMin: this.yMin, newYMax: this.yMax })) {
+    const oldViewport: ViewPort = { yMin: prevYMin, yMax: prevYMax, start: this.start, end: this.end };
+    if (
+      this.shouldRerenderOnViewportChange &&
+      this.shouldRerenderOnViewportChange({ oldViewport, newViewport: this.activeViewPort() })
+    ) {
       this.onUpdate(this.activeViewPort(), false, false, false, true);
     }
 
@@ -488,8 +497,7 @@ export class ScWebglBaseChart {
     hasDataChanged: boolean = false,
     hasSizeChanged: boolean = false,
     hasAnnotationChanged: boolean = false,
-    hasYRangeChanged: boolean = false,
-    hasXRangeChanged: boolean = false
+    shouldRerender: boolean = false
   ) => {
     /**
      * Failure Handling
@@ -523,7 +531,7 @@ export class ScWebglBaseChart {
     this.start = start;
     this.end = end;
 
-    if (!this.supportString && !hasYRangeChanged) {
+    if (!this.supportString && !shouldRerender) {
       this.updateYRange();
     }
 
@@ -532,8 +540,7 @@ export class ScWebglBaseChart {
       hasDataChanged,
       hasSizeChanged,
       hasAnnotationChanged,
-      hasYRangeChanged,
-      hasXRangeChanged,
+      shouldRerender,
     });
 
     // settings to utilize in all feature updates.
@@ -613,14 +620,12 @@ export class ScWebglBaseChart {
     hasDataChanged,
     hasSizeChanged,
     hasAnnotationChanged,
-    hasYRangeChanged = false,
-    hasXRangeChanged = false,
+    shouldRerender,
   }: {
     hasDataChanged: boolean;
     hasSizeChanged: boolean;
     hasAnnotationChanged: boolean;
-    hasYRangeChanged: boolean;
-    hasXRangeChanged: boolean;
+    shouldRerender: boolean;
   }) {
     if (this.scene) {
       if (hasSizeChanged) {
@@ -641,8 +646,7 @@ export class ScWebglBaseChart {
         thresholds: this.thresholds(),
         hasSizeChanged,
         hasDataChanged,
-        hasYRangeChanged,
-        hasXRangeChanged,
+        shouldRerender,
         hasAnnotationChanged,
       });
 
