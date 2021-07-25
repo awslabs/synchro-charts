@@ -162,7 +162,7 @@ const createRandomDataStream = (
   return dataStreams;
 };
 
-it.only('demo', () => {
+it.skip('demo', () => {
   const dataStreams = createRandomDataStream(100, 6, 40);
   visitDynamicWidget(cy, {
     componentTag: 'sc-heatmap',

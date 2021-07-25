@@ -39,9 +39,6 @@ export const calculateXBucketStart = ({
   xValue: number;
   xAxisBucketRange: number;
 }): number => {
-  if (xAxisBucketRange === SECOND_IN_MS) {
-    return xValue;
-  }
   return Math.floor(xValue / xAxisBucketRange) * xAxisBucketRange;
 };
 
