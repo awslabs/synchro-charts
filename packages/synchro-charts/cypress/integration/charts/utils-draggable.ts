@@ -1,5 +1,7 @@
 /// <reference types="cypress" />
 
+import {SECOND_IN_MS} from "../../../src/utils/time";
+
 export function moveHandle(selector: string, x: number, y: number) {
   cy.window().then(win => {
     cy.get(selector).trigger('mousedown', { which: 1, button: 0, force: true, view: win });
@@ -26,6 +28,6 @@ export function moveHandleWithPause(selector: string, x: number, y: number) {
     cy.get(selector).trigger('mousedown', { which: 1, button: 0, force: true, view: win });
     cy.get(selector)
       .trigger('mousemove', { clientX: x, clientY: y, force: true, view: win })
-      .wait(500);
+      .wait(SECOND_IN_MS);
   });
 }
