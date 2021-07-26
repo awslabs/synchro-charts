@@ -3,7 +3,7 @@ import { SearchQueryParams } from '../../../../src/testing/dynamicWidgetUtils/te
 import { Threshold, XAnnotation } from '../../../../src/components/charts/common/types';
 import { COMPARISON_OPERATOR, DataType } from '../../../../src/constants';
 import { DataPoint } from '../../../../src/utils/dataTypes';
-import { moveHandle, moveHandleFilter, moveHandlWithPause } from '../utils-draggable';
+import { moveHandle, moveHandleFilter, moveHandleWithPause } from '../utils-draggable';
 import { Y_THRESHOLD, Y_ANNOTATION, X_ANNOTATION } from '../../../../src/testing/test-routes/charts/constants';
 import {
   DRAGGABLE_HANDLE_SELECTOR,
@@ -159,7 +159,7 @@ it('draggable annotation rescales axis in positive direction', () => {
     },
   });
   cy.waitForChart();
-  moveHandlWithPause(DRAGGABLE_HANDLE_SELECTOR, 0, -500);
+  moveHandleWithPause(DRAGGABLE_HANDLE_SELECTOR, 0, -500);
 
   cy.get('g.axis.y-axis > g.tick').should('have.length', 17);
   cy.get('g.axis.y-axis > g.tick > text')
@@ -179,7 +179,7 @@ it('draggable annotation rescales axis in negative direction', () => {
     },
   });
   cy.waitForChart();
-  moveHandlWithPause(DRAGGABLE_HANDLE_SELECTOR, 0, 1000);
+  moveHandleWithPause(DRAGGABLE_HANDLE_SELECTOR, 0, 1000);
 
   cy.get('g.axis.y-axis > g.tick').should('have.length', 10);
   cy.get('g.axis.y-axis > g.tick > text')

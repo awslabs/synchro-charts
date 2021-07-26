@@ -21,7 +21,7 @@ export function moveHandleFilter(selector: string, filter: string, x: number, y:
   });
 }
 
-export function moveHandlWithPause(selector: string, x: number, y: number) {
+export function moveHandleWithPause(selector: string, x: number, y: number) {
   cy.window().then(win => {
     cy.get(selector).trigger('mousedown', { which: 1, button: 0, force: true, view: win });
     cy.get(selector)

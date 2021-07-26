@@ -15,7 +15,7 @@ import {
   LINE_SELECTOR,
   TEXT_VALUE_SELECTOR,
 } from '../../../../src/components/charts/common/annotations/YAnnotations/YAnnotations';
-import { moveHandle, moveHandleFilter, moveHandlWithPause } from '../utils-draggable';
+import { moveHandle, moveHandleFilter, moveHandleWithPause } from '../utils-draggable';
 
 const timelineParams: Partial<SearchQueryParams> = {
   componentTag: 'sc-bar-chart',
@@ -66,7 +66,7 @@ it('draggable annotation rescales axis in positive direction', () => {
     },
   });
   cy.waitForChart();
-  moveHandlWithPause(DRAGGABLE_HANDLE_SELECTOR, 0, -500);
+  moveHandleWithPause(DRAGGABLE_HANDLE_SELECTOR, 0, -500);
 
   cy.get('g.axis.y-axis > g.tick').should('have.length', 17);
   cy.get('g.axis.y-axis > g.tick > text')
@@ -86,7 +86,7 @@ it('draggable annotation rescales axis in negative direction', () => {
     },
   });
   cy.waitForChart();
-  moveHandlWithPause(DRAGGABLE_HANDLE_SELECTOR, 0, 1000);
+  moveHandleWithPause(DRAGGABLE_HANDLE_SELECTOR, 0, 1000);
 
   cy.get('g.axis.y-axis > g.tick').should('have.length', 9);
   cy.get('g.axis.y-axis > g.tick > text')

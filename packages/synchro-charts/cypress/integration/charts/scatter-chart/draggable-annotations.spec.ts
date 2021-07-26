@@ -9,7 +9,7 @@ import {
 } from '../../../../src/components/charts/common/annotations/YAnnotations/YAnnotations';
 import { DataPoint } from '../../../../src/utils/dataTypes';
 import { X_ANNOTATION, Y_THRESHOLD, Y_ANNOTATION } from '../../../../src/testing/test-routes/charts/constants';
-import { moveHandle, moveHandleFilter, moveHandlWithPause } from '../utils-draggable';
+import { moveHandle, moveHandleFilter, moveHandleWithPause } from '../utils-draggable';
 
 const X_MIN = new Date(1998, 0, 0);
 const X_MAX = new Date(2001, 0, 1);
@@ -100,7 +100,7 @@ it('draggable annotation rescales axis in positive direction', () => {
     },
   });
   cy.waitForChart();
-  moveHandlWithPause(DRAGGABLE_HANDLE_SELECTOR, 0, -500);
+  moveHandleWithPause(DRAGGABLE_HANDLE_SELECTOR, 0, -500);
 
   cy.get('g.axis.y-axis > g.tick').should('have.length', 17);
   cy.get('g.axis.y-axis > g.tick > text')
@@ -120,7 +120,7 @@ it('draggable annotation rescales axis in negative direction', () => {
     },
   });
   cy.waitForChart();
-  moveHandlWithPause(DRAGGABLE_HANDLE_SELECTOR, 0, 1000);
+  moveHandleWithPause(DRAGGABLE_HANDLE_SELECTOR, 0, 1000);
 
   cy.get('g.axis.y-axis > g.tick').should('have.length', 10);
   cy.get('g.axis.y-axis > g.tick > text')
