@@ -133,7 +133,7 @@ export class ScWidgetGrid implements ChartConfig {
    */
   onWidgetUpdated() {
     // Construct the config update with the new names specified.
-    this.dataStreams.map(dataStream => {
+    this.dataStreams = this.dataStreams.map(dataStream => {
       const nameValue = this.names.find(({ id: nameId }) => dataStream.id === nameId);
       const name = nameValue != null ? nameValue.name : dataStream.name;
       return {
@@ -141,7 +141,6 @@ export class ScWidgetGrid implements ChartConfig {
         name,
       };
     });
-
     this.emitUpdatedWidgetConfiguration();
   }
 

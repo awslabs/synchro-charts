@@ -69,7 +69,7 @@ export class ScStatusTimelineOverlay {
    */
   onWidgetUpdated() {
     // Construct the config update with the new names specified.
-    this.dataStreams.map(info => {
+    this.dataStreams = this.dataStreams.map(info => {
       const nameValue = this.names.find(({ id: nameId }) => info.id === nameId);
       const name = nameValue != null ? nameValue.name : info.name;
       return {

@@ -181,7 +181,7 @@ export class ScWebglBaseChart {
    * data stream.
    */
   updateDataStreamName = ({ streamId, name }: { streamId: string; name: string }) => {
-    this.dataStreams.map(dataStream => {
+    this.dataStreams = this.dataStreams.map(dataStream => {
       return {
         ...dataStream,
         name: dataStream.id === streamId ? name : dataStream.name,
