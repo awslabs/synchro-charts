@@ -1,15 +1,16 @@
 import { clipSpaceConversion } from '../sc-webgl-base-chart/clipSpaceConversion';
 import { bucketMesh, updateBucketMesh, COLOR_PALETTE } from './heatmapMesh';
 import { BUCKET_COUNT } from './heatmapConstants';
-import { calculateXBucketStart, calculateBucketIndex, getResolution } from './heatmapUtil';
+import { calculateXBucketStart, calculateBucketIndex, getXBucketRange } from './heatmapUtil';
 import { getBucketMargin, getXBucketWidth } from './displayLogic';
 import { getDistanceFromDuration } from '../common/getDistanceFromDuration';
 import { DataType } from '../../../utils/dataConstants';
 import { MONTH_IN_MS } from '../../../utils/time';
 import { DataPoint, DataStream, ViewPort } from '../../../utils/dataTypes';
+import { getX } from '../common/annotations/XAnnotations/utils';
 
 const VIEW_PORT: ViewPort = { start: new Date(2000, 0, 0), end: new Date(2000, 0, 1), yMin: 0, yMax: 500 };
-const RESOLUTION = getResolution(VIEW_PORT);
+const X_BUCKET_RANGE = getXBucketRange(VIEW_PORT);
 const BUCKET_HEIGHT = VIEW_PORT.yMax / 10;
 const toClipSpace = clipSpaceConversion(VIEW_PORT);
 
@@ -20,9 +21,9 @@ const DATA_POINT_1: DataPoint = { x: new Date(2000, 0, 0, 1).getTime(), y: 200 }
 const DATA_POINT_2: DataPoint = { x: new Date(2000, 0, 0, 4).getTime(), y: 300 };
 const DATA_POINT_3: DataPoint = { x: new Date(2000, 0, 1, 1).getTime(), y: 400 };
 
-const DATA_POINT_1_X_BUCKET = calculateXBucketStart({ xValue: DATA_POINT_1.x, xAxisBucketRange: RESOLUTION });
-const DATA_POINT_2_X_BUCKET = calculateXBucketStart({ xValue: DATA_POINT_2.x, xAxisBucketRange: RESOLUTION });
-const DATA_POINT_3_X_BUCKET = calculateXBucketStart({ xValue: DATA_POINT_3.x, xAxisBucketRange: RESOLUTION });
+const DATA_POINT_1_X_BUCKET = calculateXBucketStart({ xValue: DATA_POINT_1.x, xBucketRange: X_BUCKET_RANGE });
+const DATA_POINT_2_X_BUCKET = calculateXBucketStart({ xValue: DATA_POINT_2.x, xBucketRange: X_BUCKET_RANGE });
+const DATA_POINT_3_X_BUCKET = calculateXBucketStart({ xValue: DATA_POINT_3.x, xBucketRange: X_BUCKET_RANGE });
 
 const DATA_POINT_1_Y_BUCKET = calculateBucketIndex({
   yValue: DATA_POINT_1.y as number,
@@ -123,7 +124,7 @@ describe('create bucket mesh', () => {
       yMin: 0,
       yMax: 500,
     };
-    const resolution = getResolution(viewport);
+    const xBucketRange = getXBucketRange(viewport);
     const mesh = bucketMesh({
       dataStreams: [
         {
@@ -142,7 +143,7 @@ describe('create bucket mesh', () => {
 
     expect(mesh.count).toEqual(1);
 
-    expect(mesh.geometry.attributes.bucket.array[0]).toBe(toClipSpace(DATA_POINT_1_X_BUCKET + resolution));
+    expect(mesh.geometry.attributes.bucket.array[0]).toBe(toClipSpace(DATA_POINT_1_X_BUCKET + xBucketRange));
     expect(mesh.geometry.attributes.bucket.array[1]).toBe(BUCKET_HEIGHT * DATA_POINT_1_Y_BUCKET);
 
     expect(mesh.geometry.attributes.color.array[0]).toBeCloseTo(COLOR_PALETTE.r[7], -1);
@@ -168,10 +169,10 @@ describe('create bucket mesh', () => {
     });
     expect(mesh.count).toEqual(2);
 
-    expect(mesh.geometry.attributes.bucket.array[0]).toBe(toClipSpace(DATA_POINT_1_X_BUCKET + RESOLUTION));
+    expect(mesh.geometry.attributes.bucket.array[0]).toBe(toClipSpace(DATA_POINT_1_X_BUCKET + X_BUCKET_RANGE));
     expect(mesh.geometry.attributes.bucket.array[1]).toBe(BUCKET_HEIGHT * DATA_POINT_1_Y_BUCKET);
 
-    expect(mesh.geometry.attributes.bucket.array[2]).toBe(toClipSpace(DATA_POINT_2_X_BUCKET + RESOLUTION));
+    expect(mesh.geometry.attributes.bucket.array[2]).toBe(toClipSpace(DATA_POINT_2_X_BUCKET + X_BUCKET_RANGE));
     expect(mesh.geometry.attributes.bucket.array[3]).toBe(BUCKET_HEIGHT * DATA_POINT_2_Y_BUCKET);
 
     expect(mesh.geometry.attributes.color.array[0]).toBeCloseTo(COLOR_PALETTE.r[0], -1);
@@ -211,22 +212,22 @@ describe('create bucket mesh', () => {
 
     const width = getXBucketWidth({
       toClipSpace,
-      resolution: RESOLUTION,
+      xBucketRange: X_BUCKET_RANGE,
     });
 
-    expect(getDistanceFromDuration(toClipSpace, RESOLUTION) - getBucketMargin(toClipSpace, RESOLUTION)).toEqual(width);
+    expect(getDistanceFromDuration(toClipSpace, X_BUCKET_RANGE) - getBucketMargin(toClipSpace, X_BUCKET_RANGE)).toEqual(width);
     expect(mesh.count).toEqual(3);
 
     // Check for stream 1 bucket 1
-    expect(mesh.geometry.attributes.bucket.array[0]).toBe(toClipSpace(DATA_POINT_1_X_BUCKET + RESOLUTION));
+    expect(mesh.geometry.attributes.bucket.array[0]).toBe(toClipSpace(DATA_POINT_1_X_BUCKET + X_BUCKET_RANGE));
     expect(mesh.geometry.attributes.bucket.array[1]).toBe(BUCKET_HEIGHT * DATA_POINT_1_Y_BUCKET);
 
     // Check for stream 1 bucket 2
-    expect(mesh.geometry.attributes.bucket.array[2]).toBe(toClipSpace(DATA_POINT_2_X_BUCKET + RESOLUTION));
+    expect(mesh.geometry.attributes.bucket.array[2]).toBe(toClipSpace(DATA_POINT_2_X_BUCKET + X_BUCKET_RANGE));
     expect(mesh.geometry.attributes.bucket.array[3]).toBe(BUCKET_HEIGHT * DATA_POINT_2_Y_BUCKET);
 
     // Check for stream 2 bucket 1, bucket 1 same as stream 1 bucket 2
-    expect(mesh.geometry.attributes.bucket.array[4]).toBe(toClipSpace(DATA_POINT_3_X_BUCKET + RESOLUTION));
+    expect(mesh.geometry.attributes.bucket.array[4]).toBe(toClipSpace(DATA_POINT_3_X_BUCKET + X_BUCKET_RANGE));
     expect(mesh.geometry.attributes.bucket.array[5]).toBe(BUCKET_HEIGHT * DATA_POINT_3_Y_BUCKET);
 
     // Data stream buckets are all lightest opacity
@@ -279,22 +280,22 @@ describe('create bucket mesh', () => {
 
     const width = getXBucketWidth({
       toClipSpace,
-      resolution: RESOLUTION,
+      xBucketRange: X_BUCKET_RANGE,
     });
 
-    expect(getDistanceFromDuration(toClipSpace, RESOLUTION) - getBucketMargin(toClipSpace, RESOLUTION)).toEqual(width);
+    expect(getDistanceFromDuration(toClipSpace, X_BUCKET_RANGE) - getBucketMargin(toClipSpace, X_BUCKET_RANGE)).toEqual(width);
     expect(mesh.count).toEqual(3);
 
     // Check for data point 1
-    expect(mesh.geometry.attributes.bucket.array[0]).toBe(toClipSpace(DATA_POINT_1_X_BUCKET + RESOLUTION));
+    expect(mesh.geometry.attributes.bucket.array[0]).toBe(toClipSpace(DATA_POINT_1_X_BUCKET + X_BUCKET_RANGE));
     expect(mesh.geometry.attributes.bucket.array[1]).toBe(BUCKET_HEIGHT * DATA_POINT_1_Y_BUCKET);
 
     // Check for data point 2
-    expect(mesh.geometry.attributes.bucket.array[2]).toBe(toClipSpace(DATA_POINT_2_X_BUCKET + RESOLUTION));
+    expect(mesh.geometry.attributes.bucket.array[2]).toBe(toClipSpace(DATA_POINT_2_X_BUCKET + X_BUCKET_RANGE));
     expect(mesh.geometry.attributes.bucket.array[3]).toBe(BUCKET_HEIGHT * DATA_POINT_2_Y_BUCKET);
 
     // Check for data point 3
-    expect(mesh.geometry.attributes.bucket.array[4]).toBe(toClipSpace(DATA_POINT_3_X_BUCKET + RESOLUTION));
+    expect(mesh.geometry.attributes.bucket.array[4]).toBe(toClipSpace(DATA_POINT_3_X_BUCKET + X_BUCKET_RANGE));
     expect(mesh.geometry.attributes.bucket.array[5]).toBe(BUCKET_HEIGHT * DATA_POINT_3_Y_BUCKET);
 
     // only 3 buckets, 4th should be empty
@@ -352,7 +353,7 @@ describe('update bucket mesh', () => {
     expect(mesh.count).toEqual(1);
     expect(mesh.material.uniforms.width.value).toBeGreaterThan(0);
 
-    expect(mesh.geometry.attributes.bucket.array[0]).toBe(toClipSpace(DATA_POINT_1_X_BUCKET + RESOLUTION));
+    expect(mesh.geometry.attributes.bucket.array[0]).toBe(toClipSpace(DATA_POINT_1_X_BUCKET + X_BUCKET_RANGE));
     expect(mesh.geometry.attributes.bucket.array[1]).toBe(BUCKET_HEIGHT * DATA_POINT_1_Y_BUCKET);
 
     expect(mesh.geometry.attributes.color.array[0]).toBeDefined();
@@ -425,13 +426,13 @@ describe('update bucket mesh', () => {
     });
     expect(mesh.count).toEqual(3);
 
-    expect(mesh.geometry.attributes.bucket.array[0]).toBe(toClipSpace(DATA_POINT_1_X_BUCKET + RESOLUTION));
+    expect(mesh.geometry.attributes.bucket.array[0]).toBe(toClipSpace(DATA_POINT_1_X_BUCKET + X_BUCKET_RANGE));
     expect(mesh.geometry.attributes.bucket.array[1]).toBe(BUCKET_HEIGHT * DATA_POINT_1_Y_BUCKET);
 
-    expect(mesh.geometry.attributes.bucket.array[2]).toBe(toClipSpace(DATA_POINT_2_X_BUCKET + RESOLUTION));
+    expect(mesh.geometry.attributes.bucket.array[2]).toBe(toClipSpace(DATA_POINT_2_X_BUCKET + X_BUCKET_RANGE));
     expect(mesh.geometry.attributes.bucket.array[3]).toBe(BUCKET_HEIGHT * DATA_POINT_2_Y_BUCKET);
 
-    expect(mesh.geometry.attributes.bucket.array[4]).toBe(toClipSpace(DATA_POINT_3_X_BUCKET + RESOLUTION));
+    expect(mesh.geometry.attributes.bucket.array[4]).toBe(toClipSpace(DATA_POINT_3_X_BUCKET + X_BUCKET_RANGE));
     expect(mesh.geometry.attributes.bucket.array[5]).toBe(BUCKET_HEIGHT * DATA_POINT_3_Y_BUCKET);
   });
 
@@ -499,10 +500,10 @@ describe('update bucket mesh', () => {
         dataType: DataType.NUMBER,
       },
     ];
-    const resolution = getResolution(VIEW_PORT);
+    const xBucketRange = getXBucketRange(VIEW_PORT);
     const oldWidth = getXBucketWidth({
       toClipSpace,
-      resolution,
+      xBucketRange,
     });
     const mesh = bucketMesh({
       dataStreams: DATA_STREAM_TEMP,
@@ -539,10 +540,10 @@ describe('update bucket mesh', () => {
       shouldRerender: true,
     });
 
-    const newResolution = getResolution(newViewport);
+    const newXBucketRange = getXBucketRange(newViewport);
     const newWidth = getXBucketWidth({
       toClipSpace,
-      resolution: newResolution,
+      xBucketRange: newXBucketRange,
     });
     expect(mesh.count).toEqual(1);
     expect(mesh.material.uniforms.width.value).toBe(newWidth);

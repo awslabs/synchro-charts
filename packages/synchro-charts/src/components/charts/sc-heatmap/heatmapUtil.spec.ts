@@ -11,7 +11,7 @@ const VIEWPORT: ViewPort = {
   yMax: 100,
 };
 
-const RESOLUTION: number = MONTH_IN_MS;
+const X_BUCKET_RANGE: number = MONTH_IN_MS;
 const START_TIME = VIEWPORT.start.getTime();
 
 const DATA_POINT_1: DataPoint = { x: START_TIME, y: Math.random() * 100 };
@@ -26,7 +26,7 @@ const DATA_SET_2 = [DATA_POINT_3, DATA_POINT_4, DATA_POINT_5];
 const DATASTREAM_1 = {
   id: 'data-stream-1',
   name: 'some name 1',
-  resolution: RESOLUTION,
+  resolution: X_BUCKET_RANGE,
   data: DATA_SET_1,
   dataType: DataType.NUMBER,
 };
@@ -34,24 +34,24 @@ const DATASTREAM_1 = {
 const DATASTREAM_2 = {
   id: 'data-stream-2',
   name: 'some name 2',
-  resolution: RESOLUTION,
+  resolution: X_BUCKET_RANGE,
   data: DATA_SET_2,
   dataType: DataType.NUMBER,
 };
 
-const START_TIME_EPOCH = calculateXBucketStart({ xValue: DATA_POINT_1.x, xAxisBucketRange: MONTH_IN_MS });
-const START_TIME_EPOCH_1 = calculateXBucketStart({ xValue: START_TIME + MONTH_IN_MS, xAxisBucketRange: MONTH_IN_MS });
+const START_TIME_EPOCH = calculateXBucketStart({ xValue: DATA_POINT_1.x, xBucketRange: MONTH_IN_MS });
+const START_TIME_EPOCH_1 = calculateXBucketStart({ xValue: START_TIME + MONTH_IN_MS, xBucketRange: MONTH_IN_MS });
 const START_TIME_EPOCH_2 = calculateXBucketStart({
   xValue: START_TIME + MONTH_IN_MS * 2,
-  xAxisBucketRange: MONTH_IN_MS,
+  xBucketRange: MONTH_IN_MS,
 });
 const START_TIME_EPOCH_5 = calculateXBucketStart({
   xValue: START_TIME + MONTH_IN_MS * 5,
-  xAxisBucketRange: MONTH_IN_MS,
+  xBucketRange: MONTH_IN_MS,
 });
 const START_TIME_EPOCH_10 = calculateXBucketStart({
   xValue: START_TIME + MONTH_IN_MS * 10,
-  xAxisBucketRange: MONTH_IN_MS,
+  xBucketRange: MONTH_IN_MS,
 });
 
 describe.each`
@@ -69,13 +69,13 @@ describe.each`
 });
 
 describe.each`
-  xValue                          | xAxisBucketRange | bucketRangeStart
+  xValue                          | xBucketRange | bucketRangeStart
   ${START_TIME}                   | ${MONTH_IN_MS}   | ${1620000000000}
   ${START_TIME + MONTH_IN_MS * 2} | ${MONTH_IN_MS}   | ${1625184000000}
   ${START_TIME + MONTH_IN_MS * 5} | ${MONTH_IN_MS}   | ${1632960000000}
-`('calculateXBucketStart', ({ xValue, xAxisBucketRange, bucketRangeStart }) => {
+`('calculateXBucketStart', ({ xValue, xBucketRange, bucketRangeStart }) => {
   test(`bucket range start for ${xValue}`, () => {
-    expect(calculateXBucketStart({ xValue, xAxisBucketRange })).toBe(bucketRangeStart);
+    expect(calculateXBucketStart({ xValue, xBucketRange })).toBe(bucketRangeStart);
   });
 });
 
@@ -172,7 +172,7 @@ describe('calcHeatValues', () => {
     const newHeatValue = calcHeatValues({
       oldHeatValue: {},
       dataStreams,
-      resolution: RESOLUTION,
+      xBucketRange: X_BUCKET_RANGE,
       viewport: VIEWPORT,
       bucketCount: BUCKET_COUNT,
     });
@@ -188,7 +188,7 @@ describe('calcHeatValues', () => {
     const DATASTREAM = {
       id: 'data-stream-1',
       name: 'some name 1',
-      resolution: RESOLUTION,
+      resolution: X_BUCKET_RANGE,
       data: DATA_SET_1,
       dataType: DataType.STRING,
     };
@@ -196,7 +196,7 @@ describe('calcHeatValues', () => {
     const newHeatValue = calcHeatValues({
       oldHeatValue: {},
       dataStreams,
-      resolution: RESOLUTION,
+      xBucketRange: X_BUCKET_RANGE,
       viewport: VIEWPORT,
       bucketCount: BUCKET_COUNT,
     });

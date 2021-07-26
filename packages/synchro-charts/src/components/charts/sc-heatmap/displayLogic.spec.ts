@@ -15,7 +15,7 @@ describe('getXBucketWidth', () => {
   it('width of the bar is in between the view port', () => {
     const barWidth = getXBucketWidth({
       toClipSpace,
-      resolution: MONTH_IN_MS,
+      xBucketRange: MONTH_IN_MS,
     });
     expect(barWidth).toBeGreaterThanOrEqual(toClipSpace(VIEW_PORT.start.getTime()));
     expect(barWidth).toBeLessThanOrEqual(toClipSpace(VIEW_PORT.end.getTime()));

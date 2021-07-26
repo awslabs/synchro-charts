@@ -26,20 +26,14 @@ export const calculateBucketIndex = ({
   bucketCount: number;
 }): number => {
   // if a point is 0 then put it in the first bucket instead of zeroth
-  if (yValue === 0 && yMin === 0) {
+  if (yValue === yMin) {
     return 1;
   }
   return Math.abs(Math.ceil(((yValue - yMin) / (yMax - yMin)) * bucketCount));
 };
 
-export const calculateXBucketStart = ({
-  xValue,
-  xAxisBucketRange,
-}: {
-  xValue: number;
-  xAxisBucketRange: number;
-}): number => {
-  return Math.floor(xValue / xAxisBucketRange) * xAxisBucketRange;
+export const calculateXBucketStart = ({ xValue, xBucketRange }: { xValue: number; xBucketRange: number }): number => {
+  return Math.floor(xValue / xBucketRange) * xBucketRange;
 };
 
 /**
@@ -80,25 +74,23 @@ export const addCount = ({
 export const calcHeatValues = ({
   oldHeatValue = {},
   dataStreams,
-  resolution,
+  xBucketRange,
   viewport,
   bucketCount,
 }: {
   oldHeatValue: HeatValueMap;
   dataStreams: DataStream[];
-  resolution: number;
+  xBucketRange: number;
   viewport: ViewPort;
   bucketCount: number;
 }) => {
-  // if resolution is 0 then set the XAxisBucketRange to be 1 second
-  const xAxisBucketRange = resolution === 0 ? SECOND_IN_MS : resolution;
   const { yMax, yMin } = viewport;
   return dataStreams.reduce(function reduceDataStream(newHeatValue, dataStream) {
     if (dataStream.dataType !== DataType.NUMBER) {
       return {};
     }
     return dataStream.data.reduce(function reduceData(tempHeatValue, currPoint) {
-      const xBucketRangeStart = calculateXBucketStart({ xValue: currPoint.x, xAxisBucketRange });
+      const xBucketRangeStart = calculateXBucketStart({ xValue: currPoint.x, xBucketRange });
       const bucketIndex = calculateBucketIndex({
         yValue: currPoint.y as number, // checked in line 85 if the data value is number
         yMax,
@@ -110,7 +102,7 @@ export const calcHeatValues = ({
   }, oldHeatValue);
 };
 
-export const getResolution = ({ start, end }: { start: Date; end: Date }): number => {
+export const getXBucketRange = ({ start, end }: { start: Date; end: Date }): number => {
   const duration = end.getTime() - start.getTime();
   if (duration > (CHANGE_RESOLUTION + 1) * DAY_IN_MS) {
     return DAY_IN_MS;
@@ -124,10 +116,10 @@ export const getResolution = ({ start, end }: { start: Date; end: Date }): numbe
   return SECOND_IN_MS;
 };
 
-export const displayDate = (date: Date, resolution: number, { start, end }: { start: Date; end: Date }): string => {
+export const displayDate = (date: Date, xBucketRange: number, { start, end }: { start: Date; end: Date }): string => {
   const viewportDurationMS = end.getTime() - start.getTime();
-  const xBucketRangeStart = new Date(calculateXBucketStart({ xValue: date.getTime(), xAxisBucketRange: resolution }));
-  const xBucketRangeEnd = new Date(xBucketRangeStart.getTime() + resolution);
+  const xBucketRangeStart = new Date(calculateXBucketStart({ xValue: date.getTime(), xBucketRange }));
+  const xBucketRangeEnd = new Date(xBucketRangeStart.getTime() + xBucketRange);
   if (viewportDurationMS < MINUTE_IN_MS) {
     return `${xBucketRangeStart.toLocaleString('en-US', {
       minute: 'numeric',
@@ -205,8 +197,8 @@ export const shouldRerenderOnViewportChange = ({
     return true;
   }
 
-  const prevXBucketRange = getResolution({ start: prevStart, end: prevEnd });
-  const newXBucketRange = getResolution({ start: newStart, end: newEnd });
+  const prevXBucketRange = getXBucketRange({ start: prevStart, end: prevEnd });
+  const newXBucketRange = getXBucketRange({ start: newStart, end: newEnd });
   if (prevXBucketRange !== newXBucketRange) {
     return true;
   }

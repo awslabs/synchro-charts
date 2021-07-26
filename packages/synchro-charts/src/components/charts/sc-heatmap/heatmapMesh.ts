@@ -14,7 +14,7 @@ import bucketFrag from './heatmap.frag';
 import { WriteableBufferAttribute, WriteableInstancedBufferAttribute } from '../../sc-webgl-context/types';
 import { numDataPoints } from '../sc-webgl-base-chart/utils';
 import { getXBucketWidth, getSequential, getBucketColor, getYBucketHeight } from './displayLogic';
-import { HeatValueMap, calcHeatValues, getResolution } from './heatmapUtil';
+import { HeatValueMap, getXBucketRange } from './heatmapUtil';
 import { BUCKET_COUNT } from './heatmapConstants';
 import { DataStream, Primitive, ViewPort } from '../../../utils/dataTypes';
 import { SECOND_IN_MS } from '../../../utils/time';
@@ -44,31 +44,18 @@ const NUM_COLOR_COMPONENTS = 3; // (r, g, b)
 
 export const COLOR_PALETTE = getSequential();
 
-const getUniformWidth = <T extends Primitive>(
-  dataStreams: DataStream<T>[],
-  toClipSpace: (time: number) => number,
-  resolution: number
-): number => {
-  if (dataStreams.length === 0) {
-    return 0;
-  }
-
-  return getXBucketWidth({
-    toClipSpace,
-    resolution,
-  });
-};
-
 const updateMesh = ({
   dataStreams,
   mesh,
   toClipSpace,
   viewport,
+  heatValues,
 }: {
   dataStreams: DataStream[];
   mesh: HeatmapBucketMesh;
   toClipSpace: (time: number) => number;
   viewport: ViewPort;
+  heatValues: HeatValueMap;
 }) => {
   // Set the number of instances of the buckets are to be rendered.
   const { geometry } = mesh;
@@ -76,23 +63,20 @@ const updateMesh = ({
   const { yMin, yMax } = viewport;
   let positionIndex = 0;
   let colorIndex = 0;
+  let totalNumBuckets = 0;
 
-  const resolution = getResolution(viewport);
-
-  const heatValues: HeatValueMap =
-    dataStreams.length !== 0
-      ? calcHeatValues({ oldHeatValue: {}, dataStreams, resolution, viewport, bucketCount: BUCKET_COUNT })
-      : {};
+  const xBucketRange = getXBucketRange(viewport);
 
   Object.keys(heatValues).forEach((xAxisBucketStart: string) => {
-    Object.keys(heatValues[+xAxisBucketStart]).forEach((bucketIndex: string) => {
-      bucket.array[positionIndex] = toClipSpace(+xAxisBucketStart + resolution);
+    totalNumBuckets += Object.keys(heatValues[xAxisBucketStart]).length;
+    Object.keys(heatValues[xAxisBucketStart]).forEach((bucketIndex: string) => {
+      bucket.array[positionIndex] = toClipSpace(+xAxisBucketStart + xBucketRange);
       bucket.array[positionIndex + 1] = yMin + +bucketIndex * ((yMax - yMin) / BUCKET_COUNT);
 
       const [r, g, b] = getBucketColor(
         COLOR_PALETTE,
-        heatValues[+xAxisBucketStart][+bucketIndex].totalCount,
-        (resolution / SECOND_IN_MS) * dataStreams.length
+        heatValues[xAxisBucketStart][bucketIndex].totalCount,
+        (xBucketRange / SECOND_IN_MS) * dataStreams.length
       );
       color.array[colorIndex] = r;
       color.array[colorIndex + 1] = g;
@@ -103,7 +87,7 @@ const updateMesh = ({
     });
   });
   // eslint-disable-next-line no-param-reassign
-  mesh.count = colorIndex / 3;
+  mesh.count = totalNumBuckets;
   bucket.needsUpdate = true;
   color.needsUpdate = true;
 };
@@ -134,16 +118,18 @@ export const bucketMesh = ({
   bufferFactor,
   minBufferSize,
   viewport,
+  heatValues,
 }: {
   dataStreams: DataStream[];
   toClipSpace: (time: number) => number;
   bufferFactor: number;
   minBufferSize: number;
   viewport: ViewPort;
+  heatValues: HeatValueMap;
 }) => {
   const instGeo = (new InstancedBufferGeometry() as unknown) as BucketBufferGeometry;
   const bufferSize = Math.max(minBufferSize, numDataPoints(dataStreams) * bufferFactor);
-  const resolution = getResolution(viewport);
+  const xBucketRange = getXBucketRange(viewport);
 
   // Create and populate geometry
   initializeGeometry(instGeo, bufferSize);
@@ -163,7 +149,13 @@ export const bucketMesh = ({
     transparent: false,
     uniforms: {
       width: {
-        value: getUniformWidth(dataStreams, toClipSpace, resolution),
+        value:
+          dataStreams.length !== 0
+            ? getXBucketWidth({
+                toClipSpace,
+                xBucketRange,
+              })
+            : 0,
       },
       bucketHeight: {
         value: getYBucketHeight(viewport),
@@ -172,7 +164,7 @@ export const bucketMesh = ({
   });
 
   const mesh = <HeatmapBucketMesh>new InstancedMesh(instGeo, heatmapMaterial, bufferSize);
-  updateMesh({ dataStreams, mesh, toClipSpace, viewport });
+  updateMesh({ dataStreams, mesh, toClipSpace, viewport, heatValues });
 
   // Prevent bounding sphere from being called
   mesh.frustumCulled = false;
@@ -187,6 +179,7 @@ export const updateBucketMesh = ({
   hasDataChanged,
   shouldRerender = false,
   viewport,
+  heatValues,
 }: {
   buckets: HeatmapBucketMesh;
   dataStreams: DataStream[];
@@ -194,13 +187,20 @@ export const updateBucketMesh = ({
   hasDataChanged: boolean;
   shouldRerender: boolean;
   viewport: ViewPort;
+  heatValues: HeatValueMap;
 }) => {
   if (hasDataChanged || shouldRerender) {
-    const resolution = getResolution(viewport);
+    const xBucketRange = getXBucketRange(viewport);
     // eslint-disable-next-line no-param-reassign
-    buckets.material.uniforms.width.value = getUniformWidth(dataStreams, toClipSpace, resolution);
+    buckets.material.uniforms.width.value =
+      dataStreams.length !== 0
+        ? getXBucketWidth({
+            toClipSpace,
+            xBucketRange,
+          })
+        : 0;
     // eslint-disable-next-line no-param-reassign
     buckets.material.uniforms.bucketHeight.value = getYBucketHeight(viewport);
-    updateMesh({ dataStreams, mesh: buckets, toClipSpace, viewport });
+    updateMesh({ dataStreams, mesh: buckets, toClipSpace, viewport, heatValues });
   }
 };
