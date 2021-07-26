@@ -176,7 +176,7 @@ it('non-Editable annotation is not draggable', () => {
   });
 });
 
-it.only('annotation with hidden value is draggable', () => {
+it('annotation with hidden value is draggable', () => {
   visitDynamicWidget(cy, {
     ...timelineParams,
     annotations: {
