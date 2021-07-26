@@ -1,4 +1,4 @@
-import { Component, h, Prop } from '@stencil/core';
+import { Component, Prop } from '@stencil/core';
 import parse from 'parse-duration';
 import { MinimalViewPortConfig } from '../../utils/dataTypes';
 import { isMinimalStaticViewport } from '../../utils/predicates';

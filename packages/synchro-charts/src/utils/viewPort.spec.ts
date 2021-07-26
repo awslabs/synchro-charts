@@ -22,7 +22,7 @@ describe('viewportStart', () => {
 describe('viewportEnd', () => {
   it('returns end date if one is present', () => {
     const END = new Date(2000, 0, 0);
-    expect(viewportEndDate({ start: new Date, end: END })).toStrictEqual(END);
+    expect(viewportEndDate({ start: new Date(), end: END })).toStrictEqual(END);
   });
 
   it('returns end date when only the duration is present', () => {

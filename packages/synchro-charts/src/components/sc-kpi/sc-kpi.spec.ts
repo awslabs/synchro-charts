@@ -18,7 +18,7 @@ import {
 } from '../../testing/__mocks__/mockWidgetProperties';
 import { ScWidgetGrid } from '../sc-widget-grid/sc-widget-grid';
 import { ScGridTooltip } from '../sc-widget-grid/sc-grid-tooltip';
-import {DataPoint, MinimalLiveViewport} from '../../utils/dataTypes';
+import { DataPoint, MinimalLiveViewport } from '../../utils/dataTypes';
 
 const VIEWPORT = {
   ...DEFAULT_CHART_CONFIG.viewport,

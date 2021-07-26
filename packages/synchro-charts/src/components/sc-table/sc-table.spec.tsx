@@ -1,14 +1,7 @@
 import { newSpecPage } from '@stencil/core/testing';
 
 import { Components } from '../../components.d';
-import {
-  DataPoint,
-  DataStream,
-  DataStreamInfo,
-  MinimalLiveViewport,
-  MinimalStaticViewport,
-  TableColumn
-} from '../../utils/dataTypes';
+import { DataPoint, DataStream, DataStreamInfo, MinimalLiveViewport, TableColumn } from '../../utils/dataTypes';
 import { MINUTE_IN_MS } from '../../utils/time';
 import { CustomHTMLElement } from '../../utils/types';
 import { DEFAULT_CHART_CONFIG } from '../charts/sc-webgl-base-chart/chartDefaults';

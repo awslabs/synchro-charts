@@ -38,7 +38,7 @@ import { getNumberAnnotations, isThreshold } from '../common/annotations/utils';
 import { renderTrendLines } from '../common/trends/renderTrendLines';
 import { Trend, TrendResult } from '../common/trends/types';
 import { renderAxis } from './renderAxis';
-import {parseDuration, SECOND_IN_MS} from '../../../utils/time';
+import { parseDuration, SECOND_IN_MS } from '../../../utils/time';
 import { getAllTrendResults } from '../common/trends/trendAnalysis';
 import { getVisibleData } from '../common/dataFilters';
 import { getYRange } from '../common/getYRange';

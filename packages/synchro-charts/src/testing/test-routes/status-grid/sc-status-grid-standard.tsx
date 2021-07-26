@@ -1,6 +1,6 @@
 import { Component, h } from '@stencil/core';
 import { MONTH_IN_MS, YEAR_IN_MS } from '../../../utils/time';
-import {DataStream, MinimalViewPortConfig} from '../../../utils/dataTypes';
+import { DataStream, MinimalViewPortConfig } from '../../../utils/dataTypes';
 import { testCaseParameters } from './testCaseParameters';
 import { DataType } from '../../../utils/dataConstants';
 
