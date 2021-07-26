@@ -1,7 +1,7 @@
 import { Annotation, Annotations, AnnotationValue, XAnnotation, YAnnotation } from '../types';
 import { renderXAnnotations, removeXAnnotations } from './XAnnotations/XAnnotations';
 import { renderYAnnotations, removeYAnnotations } from './YAnnotations/YAnnotations';
-import { ViewPort } from '../../../../utils/dataTypes';
+import { DataStream, ViewPort } from '../../../../utils/dataTypes';
 import { draggable } from './draggableAnnotations';
 
 export type RenderAnnotationsOptions = {
@@ -17,7 +17,7 @@ export type RenderAnnotationsOptions = {
     hasAnnotationChanged: boolean
   ) => void;
   activeViewPort: () => ViewPort;
-  emitUpdatedWidgetConfiguration: () => void;
+  emitUpdatedWidgetConfiguration: (dataStreams: DataStream[] | undefined) => void;
 };
 
 type AnnotationPredicate = (annotation: Annotation<AnnotationValue>) => boolean;

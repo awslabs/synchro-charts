@@ -7,6 +7,7 @@ import { NameValue, updateName } from '../../../sc-data-stream-name/helper';
 import { getDataPoints } from '../../../../utils/getDataPoints';
 
 import { DATA_ALIGNMENT, StatusIcon } from '../../common/constants';
+import { getPartialDataStream } from '../../common';
 
 const SMUDGE_WIDTH_PX = 1; // We slice off a tiny bit of width to prevent some pixels showing under antialiasing
 
@@ -32,7 +33,7 @@ export class ScStatusTimelineOverlay {
   /**
    * Emit the current widget configuration
    */
-  emitUpdatedWidgetConfiguration = () => {
+  emitUpdatedWidgetConfiguration = (dataStreams: DataStream[] | undefined) => {
     const configUpdate: WidgetConfigurationUpdate = {
       movement: undefined,
       scale: undefined,
@@ -41,22 +42,7 @@ export class ScStatusTimelineOverlay {
       annotations: undefined, // thresholds here are not the same as annotations?
       axis: undefined,
       widgetId: this.widgetId,
-      dataStreams: this.dataStreams.map(dataStream => {
-        return {
-          id: dataStream.id,
-          name: dataStream.name,
-          detailedName: dataStream.detailedName,
-          color: dataStream.color,
-          unit: dataStream.unit,
-          dataType: dataStream.dataType,
-          streamType: dataStream.streamType,
-          associatedStreams: dataStream.associatedStreams,
-          isLoading: dataStream.isLoading,
-          isRefreshing: dataStream.isRefreshing,
-          error: dataStream.error,
-          resolution: dataStream.resolution,
-        };
-      }),
+      dataStreams: dataStreams ? getPartialDataStream(dataStreams) : this.dataStreams,
     };
     this.widgetUpdated.emit(configUpdate);
   };
@@ -69,7 +55,7 @@ export class ScStatusTimelineOverlay {
    */
   onWidgetUpdated() {
     // Construct the config update with the new names specified.
-    this.dataStreams = this.dataStreams.map(info => {
+    const updatedDataStreams = this.dataStreams.map(info => {
       const nameValue = this.names.find(({ id: nameId }) => info.id === nameId);
       const name = nameValue != null ? nameValue.name : info.name;
       return {
@@ -78,7 +64,7 @@ export class ScStatusTimelineOverlay {
       };
     });
 
-    this.emitUpdatedWidgetConfiguration();
+    this.emitUpdatedWidgetConfiguration(updatedDataStreams);
   }
 
   onChangeLabel = ({ streamId, name }: { streamId: string; name: string }): void => {

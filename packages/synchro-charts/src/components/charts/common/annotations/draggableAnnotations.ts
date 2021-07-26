@@ -1,7 +1,7 @@
 import { select, event } from 'd3-selection';
 import { drag } from 'd3-drag';
 import { YAnnotation } from '../types';
-import { ViewPort } from '../../../../utils/dataTypes';
+import { DataStream, ViewPort } from '../../../../utils/dataTypes';
 import { DRAGGABLE_HANDLE_SELECTOR } from './YAnnotations/YAnnotations';
 
 export type DraggableAnnotationsOptions = {
@@ -15,7 +15,7 @@ export type DraggableAnnotationsOptions = {
     hasAnnotationChanged: boolean
   ) => void;
   activeViewPort: () => ViewPort;
-  emitUpdatedWidgetConfiguration: () => void;
+  emitUpdatedWidgetConfiguration: (dataStreams: DataStream[] | undefined) => void;
 };
 
 /**
@@ -101,7 +101,7 @@ export const draggable = ({
           }
           select(this).classed('active', false);
           /** emit event updating annotation on mouse up */
-          emitUpdatedWidgetConfiguration();
+          emitUpdatedWidgetConfiguration(undefined);
         }
       }) as any
   );

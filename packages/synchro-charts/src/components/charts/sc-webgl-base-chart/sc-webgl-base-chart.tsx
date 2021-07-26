@@ -48,6 +48,7 @@ import { EmptyStatus } from './EmptyStatus';
 import { getDataPoints } from '../../../utils/getDataPoints';
 import { StreamType } from '../../../utils/dataConstants';
 import { LEGEND_POSITION } from '../common/constants';
+import { getPartialDataStream } from '../common';
 
 const MIN_WIDTH = 50;
 const MIN_HEIGHT = 50;
@@ -145,7 +146,7 @@ export class ScWebglBaseChart {
   /**
    * Emit the current widget configuration
    */
-  emitUpdatedWidgetConfiguration = () => {
+  emitUpdatedWidgetConfiguration = (dataStreams: DataStream[] | undefined) => {
     const configUpdate: WidgetConfigurationUpdate = {
       movement: undefined,
       scale: undefined,
@@ -154,22 +155,7 @@ export class ScWebglBaseChart {
       annotations: this.annotations,
       axis: this.axis,
       widgetId: this.configId,
-      dataStreams: this.dataStreams.map(dataStream => {
-        return {
-          id: dataStream.id,
-          name: dataStream.name,
-          detailedName: dataStream.detailedName,
-          color: dataStream.color,
-          unit: dataStream.unit,
-          dataType: dataStream.dataType,
-          streamType: dataStream.streamType,
-          associatedStreams: dataStream.associatedStreams,
-          isLoading: dataStream.isLoading,
-          isRefreshing: dataStream.isRefreshing,
-          error: dataStream.error,
-          resolution: dataStream.resolution,
-        };
-      }),
+      dataStreams: dataStreams ? getPartialDataStream(dataStreams) : this.dataStreams,
     };
     this.widgetUpdated.emit(configUpdate);
   };
@@ -181,13 +167,13 @@ export class ScWebglBaseChart {
    * data stream.
    */
   updateDataStreamName = ({ streamId, name }: { streamId: string; name: string }) => {
-    this.dataStreams = this.dataStreams.map(dataStream => {
+    const updatedDataStreams = this.dataStreams.map(dataStream => {
       return {
         ...dataStream,
         name: dataStream.id === streamId ? name : dataStream.name,
       };
     });
-    this.emitUpdatedWidgetConfiguration();
+    this.emitUpdatedWidgetConfiguration(updatedDataStreams);
   };
 
   onDateRangeChange = throttle(

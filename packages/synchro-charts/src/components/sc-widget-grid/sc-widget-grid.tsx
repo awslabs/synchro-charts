@@ -12,6 +12,7 @@ import { viewportEndDate, viewportStartDate } from '../../utils/viewPort';
 import { Annotations, ChartConfig, Threshold, WidgetConfigurationUpdate } from '../charts/common/types';
 import { LabelsConfig } from '../common/types';
 import { DATA_ALIGNMENT } from '../charts/common/constants';
+import { getPartialDataStream } from '../charts/common';
 
 const MSG =
   'This visualization displays only live data. Choose a live time frame to display data in this visualization.';
@@ -96,7 +97,7 @@ export class ScWidgetGrid implements ChartConfig {
   /**
    * Emit the current widget configuration
    */
-  emitUpdatedWidgetConfiguration = () => {
+  emitUpdatedWidgetConfiguration = (dataStreams: DataStream[] | undefined) => {
     const configUpdate: WidgetConfigurationUpdate = {
       movement: undefined,
       scale: undefined,
@@ -105,22 +106,7 @@ export class ScWidgetGrid implements ChartConfig {
       annotations: this.annotations,
       axis: undefined,
       widgetId: this.widgetId,
-      dataStreams: this.dataStreams.map(dataStream => {
-        return {
-          id: dataStream.id,
-          name: dataStream.name,
-          detailedName: dataStream.detailedName,
-          color: dataStream.color,
-          unit: dataStream.unit,
-          dataType: dataStream.dataType,
-          streamType: dataStream.streamType,
-          associatedStreams: dataStream.associatedStreams,
-          isLoading: dataStream.isLoading,
-          isRefreshing: dataStream.isRefreshing,
-          error: dataStream.error,
-          resolution: dataStream.resolution,
-        };
-      }),
+      dataStreams: dataStreams ? getPartialDataStream(dataStreams) : this.dataStreams,
     };
     this.widgetUpdated.emit(configUpdate);
   };
@@ -133,7 +119,7 @@ export class ScWidgetGrid implements ChartConfig {
    */
   onWidgetUpdated() {
     // Construct the config update with the new names specified.
-    this.dataStreams = this.dataStreams.map(dataStream => {
+    const updatedDataStreams = this.dataStreams.map(dataStream => {
       const nameValue = this.names.find(({ id: nameId }) => dataStream.id === nameId);
       const name = nameValue != null ? nameValue.name : dataStream.name;
       return {
@@ -141,7 +127,7 @@ export class ScWidgetGrid implements ChartConfig {
         name,
       };
     });
-    this.emitUpdatedWidgetConfiguration();
+    this.emitUpdatedWidgetConfiguration(updatedDataStreams);
   }
 
   onChangeLabel = ({ streamId, name }: { streamId: string; name: string }): void => {
