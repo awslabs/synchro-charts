@@ -12,7 +12,6 @@ import { Axis, ChartConfig, LayoutConfig, LegendConfig, MovementConfig, ScaleCon
 import { chartScene, updateChartScene } from '../sc-bar-chart/chartScene';
 import { DEFAULT_CHART_CONFIG } from '../sc-webgl-base-chart/chartDefaults';
 import { RectScrollFixed } from '../../../utils/types';
-import { DATA_ALIGNMENT } from '../common/constants';
 import { HeatValueMap } from './heatmapUtil';
 
 // The initial size of buffers. The larger this is, the more memory allocated up front per chart.
@@ -21,15 +20,7 @@ import { HeatValueMap } from './heatmapUtil';
 const DEFAULT_MIN_BUFFER_SIZE = 1000;
 const DEFAULT_BUFFER_FACTOR = 2;
 
-const tooltip = (props: Tooltip.Props) => (
-  <sc-heatmap-tooltip
-    size={props.size}
-    dataStreams={props.dataStreams}
-    viewport={props.viewport}
-    dataContainer={props.dataContainer}
-    dataAlignment={DATA_ALIGNMENT.EITHER}
-  />
-);
+const tooltip = (props: Tooltip.Props) => <sc-heatmap-tooltip {...props} />;
 
 @Component({
   tag: 'sc-heatmap',
