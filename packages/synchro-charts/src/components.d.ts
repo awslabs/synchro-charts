@@ -127,6 +127,19 @@ export namespace Components {
         "viewport": MinimalViewPortConfig;
         "widgetId": string;
     }
+    interface ScHeatmapLegend {
+        "config": LegendConfig;
+        "dataStreams": DataStream[];
+        "isEditing": boolean;
+        "isLoading": boolean;
+        "showDataStreamColor": boolean;
+        "supportString": boolean;
+        "thresholds": Threshold[];
+        "trendResults": TrendResult[];
+        "updateDataStreamName": ({ streamId, name }: { streamId: string; name: string }) => void;
+        "viewport": ViewPort;
+        "visualizesAlarms": boolean;
+    }
     interface ScHeatmapTooltip {
         /**
           * If we are drawing data from the data timestamp to timestamp + resolution we want the tooltip to align on the left side  Otherwise we are drawing the data from timestamp - resolution to timestamp then we want the tooltip to align on the right side
@@ -734,6 +747,12 @@ declare global {
     var HTMLScHeatmapElement: {
         prototype: HTMLScHeatmapElement;
         new (): HTMLScHeatmapElement;
+    };
+    interface HTMLScHeatmapLegendElement extends Components.ScHeatmapLegend, HTMLStencilElement {
+    }
+    var HTMLScHeatmapLegendElement: {
+        prototype: HTMLScHeatmapLegendElement;
+        new (): HTMLScHeatmapLegendElement;
     };
     interface HTMLScHeatmapTooltipElement extends Components.ScHeatmapTooltip, HTMLStencilElement {
     }
@@ -1353,6 +1372,7 @@ declare global {
         "sc-grid": HTMLScGridElement;
         "sc-grid-tooltip": HTMLScGridTooltipElement;
         "sc-heatmap": HTMLScHeatmapElement;
+        "sc-heatmap-legend": HTMLScHeatmapLegendElement;
         "sc-heatmap-tooltip": HTMLScHeatmapTooltipElement;
         "sc-help-tooltip": HTMLScHelpTooltipElement;
         "sc-kpi": HTMLScKpiElement;
@@ -1565,6 +1585,19 @@ declare namespace LocalJSX {
          */
         "viewport"?: MinimalViewPortConfig;
         "widgetId": string;
+    }
+    interface ScHeatmapLegend {
+        "config": LegendConfig;
+        "dataStreams": DataStream[];
+        "isEditing"?: boolean;
+        "isLoading": boolean;
+        "showDataStreamColor": boolean;
+        "supportString"?: boolean;
+        "thresholds": Threshold[];
+        "trendResults"?: TrendResult[];
+        "updateDataStreamName": ({ streamId, name }: { streamId: string; name: string }) => void;
+        "viewport": ViewPort;
+        "visualizesAlarms": boolean;
     }
     interface ScHeatmapTooltip {
         /**
@@ -2095,6 +2128,7 @@ declare namespace LocalJSX {
         "sc-grid": ScGrid;
         "sc-grid-tooltip": ScGridTooltip;
         "sc-heatmap": ScHeatmap;
+        "sc-heatmap-legend": ScHeatmapLegend;
         "sc-heatmap-tooltip": ScHeatmapTooltip;
         "sc-help-tooltip": ScHelpTooltip;
         "sc-kpi": ScKpi;
@@ -2218,6 +2252,7 @@ declare module "@stencil/core" {
             "sc-grid": LocalJSX.ScGrid & JSXBase.HTMLAttributes<HTMLScGridElement>;
             "sc-grid-tooltip": LocalJSX.ScGridTooltip & JSXBase.HTMLAttributes<HTMLScGridTooltipElement>;
             "sc-heatmap": LocalJSX.ScHeatmap & JSXBase.HTMLAttributes<HTMLScHeatmapElement>;
+            "sc-heatmap-legend": LocalJSX.ScHeatmapLegend & JSXBase.HTMLAttributes<HTMLScHeatmapLegendElement>;
             "sc-heatmap-tooltip": LocalJSX.ScHeatmapTooltip & JSXBase.HTMLAttributes<HTMLScHeatmapTooltipElement>;
             "sc-help-tooltip": LocalJSX.ScHelpTooltip & JSXBase.HTMLAttributes<HTMLScHelpTooltipElement>;
             "sc-kpi": LocalJSX.ScKpi & JSXBase.HTMLAttributes<HTMLScKpiElement>;
