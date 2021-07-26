@@ -9,7 +9,7 @@ import {
 } from '../../../../src/components/charts/common/annotations/YAnnotations/YAnnotations';
 import { DataPoint } from '../../../../src/utils/dataTypes';
 import { X_ANNOTATION, Y_THRESHOLD, Y_ANNOTATION } from '../../../../src/testing/test-routes/charts/constants';
-import { moveHandle, moveHandleFilter, moveHandlWithPause } from '../utils-draggable.spec';
+import { moveHandle, moveHandleFilter, moveHandlWithPause } from '../utils-draggable';
 
 const X_MIN = new Date(1998, 0, 0);
 const X_MAX = new Date(2001, 0, 1);

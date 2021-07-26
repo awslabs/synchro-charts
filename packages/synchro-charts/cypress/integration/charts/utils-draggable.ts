@@ -1,3 +1,5 @@
+/// <reference types="cypress" />
+
 export function moveHandle(selector: string, x: number, y: number) {
   cy.window().then(win => {
     cy.get(selector).trigger('mousedown', { which: 1, button: 0, force: true, view: win });

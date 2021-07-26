@@ -9,7 +9,6 @@
   "retries": { "openMode": 0, "runMode": 2 },
   "ignoreTestFiles": [
     "**/__snapshots__/*",
-    "**/__image_snapshots__/*",
-    "**/utils-draggable.spec.ts"
+    "**/__image_snapshots__/*"
   ]
 }

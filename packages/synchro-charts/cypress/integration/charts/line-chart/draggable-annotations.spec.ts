@@ -3,7 +3,7 @@ import { SearchQueryParams } from '../../../../src/testing/dynamicWidgetUtils/te
 import { Threshold, XAnnotation } from '../../../../src/components/charts/common/types';
 import { COMPARISON_OPERATOR, DataType } from '../../../../src/constants';
 import { DataPoint } from '../../../../src/utils/dataTypes';
-import { moveHandle, moveHandleFilter, moveHandlWithPause } from '../utils-draggable.spec';
+import { moveHandle, moveHandleFilter, moveHandlWithPause } from '../utils-draggable';
 import { Y_THRESHOLD, Y_ANNOTATION, X_ANNOTATION } from '../../../../src/testing/test-routes/charts/constants';
 import {
   DRAGGABLE_HANDLE_SELECTOR,

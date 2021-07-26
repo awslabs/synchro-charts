@@ -15,7 +15,7 @@ import {
   LINE_SELECTOR,
   TEXT_VALUE_SELECTOR,
 } from '../../../../src/components/charts/common/annotations/YAnnotations/YAnnotations';
-import { moveHandle, moveHandleFilter, moveHandlWithPause } from '../utils-draggable.spec';
+import { moveHandle, moveHandleFilter, moveHandlWithPause } from '../utils-draggable';
 
 const timelineParams: Partial<SearchQueryParams> = {
   componentTag: 'sc-bar-chart',
