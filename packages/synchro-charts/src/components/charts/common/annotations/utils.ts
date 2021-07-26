@@ -38,7 +38,7 @@ export const getNumberAnnotations = (annotations: Annotations): Annotations => {
   };
 };
 
-const makeFormattedValueString = (thresholdValue: number): string => {
+const formatValueString = (thresholdValue: number): string => {
   const upperLimit = 99999;
   const lowerBound = 0.001;
   const digits = 5;
@@ -64,16 +64,16 @@ const valueDisplayText = ({
   value,
   resolution,
   viewport,
-  formattedText,
+  formatText,
 }: {
   value: AnnotationValue;
   resolution: number;
   viewport: ViewPort;
-  formattedText: boolean;
+  formatText: boolean;
 }): string => {
   if (typeof value === 'number') {
-    if (formattedText) {
-      return makeFormattedValueString(value);
+    if (formatText) {
+      return formatValueString(value);
     }
     return value.toString();
   }
@@ -99,7 +99,7 @@ export const getValueAndText = ({
   viewport: ViewPort;
 }): string => {
   const valueText = annotation.showValue
-    ? valueDisplayText({ value: annotation.value, resolution, viewport, formattedText: false })
+    ? valueDisplayText({ value: annotation.value, resolution, viewport, formatText: false })
     : null;
   const labelText = annotation.label && annotation.label.show ? annotation.label.text : null;
 
@@ -153,15 +153,15 @@ export const getValueText = ({
   annotation,
   resolution,
   viewport,
-  formattedText,
+  formatText,
 }: {
   annotation: Annotation<AnnotationValue>;
   resolution: number;
   viewport: ViewPort;
-  formattedText: boolean;
+  formatText: boolean;
 }): string => {
   const valueText = annotation.showValue
-    ? valueDisplayText({ value: annotation.value, resolution, viewport, formattedText })
+    ? valueDisplayText({ value: annotation.value, resolution, viewport, formatText })
     : null;
 
   if (valueText) {

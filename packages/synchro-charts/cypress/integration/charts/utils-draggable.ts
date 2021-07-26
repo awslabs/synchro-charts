@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-import {SECOND_IN_MS} from "../../../src/utils/time";
+import { SECOND_IN_MS } from '../../../src/utils/time';
 
 export function moveHandle(selector: string, x: number, y: number) {
   cy.window().then(win => {

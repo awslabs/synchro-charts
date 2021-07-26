@@ -106,7 +106,7 @@ export const renderYAnnotations = ({
     .attr('x', width + Y_ANNOTATION_TEXT_LEFT_PADDING)
     .attr('text-anchor', 'start')
     .attr('y', getYAnnotationValueTextY)
-    .text(annotation => getValueText({ annotation, resolution, viewport, formattedText: true }))
+    .text(annotation => getValueText({ annotation, resolution, viewport, formatText: true }))
     .style('user-select', 'none')
     .style('pointer-events', 'none')
     .style('fill', getColor);
@@ -168,7 +168,7 @@ export const renderYAnnotations = ({
     .attr('display', getValueTextVisibility)
     .attr('y', getYAnnotationValueTextY)
     .attr('x', width + Y_ANNOTATION_TEXT_LEFT_PADDING)
-    .text(annotation => getValueText({ annotation, resolution, viewport, formattedText: true }))
+    .text(annotation => getValueText({ annotation, resolution, viewport, formatText: true }))
     .style('fill', getColor);
 
   /** Update Label Text */

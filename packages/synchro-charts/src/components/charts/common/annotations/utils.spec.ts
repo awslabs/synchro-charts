@@ -62,7 +62,7 @@ describe('getValueAndText and getValueAndTextVisibility', () => {
       annotation: yAnnotations[0],
       resolution: 1000,
       viewport: VIEWPORT,
-      formattedText: false,
+      formatText: false,
     });
     expect(valueText).toBe(value.toString());
 
@@ -145,7 +145,7 @@ describe('getValueAndText and getValueAndTextVisibility', () => {
       annotation: yAnnotations[0],
       resolution: 1000,
       viewport: VIEWPORT,
-      formattedText: false,
+      formatText: false,
     });
 
     expect(valueText).toBeEmpty();
@@ -191,7 +191,7 @@ describe('getValueAndText formattedText', () => {
       annotation: yAnnotations[0],
       resolution: 1000,
       viewport: VIEWPORT,
-      formattedText: true,
+      formatText: true,
     });
 
     expect(valueText).toBe(expectedDisplayValue);
@@ -211,7 +211,7 @@ describe('getValueAndText formattedText', () => {
       annotation: yAnnotations[0],
       resolution: 1000,
       viewport: VIEWPORT,
-      formattedText: true,
+      formatText: true,
     });
 
     expect(valueText).toBe(expectedDisplayValue);
@@ -231,7 +231,7 @@ describe('getValueAndText formattedText', () => {
       annotation: yAnnotations[0],
       resolution: 1000,
       viewport: VIEWPORT,
-      formattedText: true,
+      formatText: true,
     });
 
     expect(valueText).toBe(expectedDisplayValue);
@@ -251,7 +251,7 @@ describe('getValueAndText formattedText', () => {
       annotation: yAnnotations[0],
       resolution: 1000,
       viewport: VIEWPORT,
-      formattedText: true,
+      formatText: true,
     });
 
     expect(valueText).toBe(expectedDisplayValue);
@@ -271,7 +271,7 @@ describe('getValueAndText formattedText', () => {
       annotation: yAnnotations[0],
       resolution: 1000,
       viewport: VIEWPORT,
-      formattedText: true,
+      formatText: true,
     });
     expect(valueText).toBe(expectedDisplayValue);
   });
@@ -290,7 +290,7 @@ describe('getValueAndText formattedText', () => {
       annotation: yAnnotations[0],
       resolution: 1000,
       viewport: VIEWPORT,
-      formattedText: true,
+      formatText: true,
     });
 
     expect(valueText).toBe(expectedDisplayValue);
@@ -310,7 +310,7 @@ describe('getValueAndText formattedText', () => {
       annotation: yAnnotations[0],
       resolution: 1000,
       viewport: VIEWPORT,
-      formattedText: true,
+      formatText: true,
     });
 
     expect(valueText).toBe(expectedDisplayValue);
@@ -330,7 +330,7 @@ describe('getValueAndText formattedText', () => {
       annotation: yAnnotations[0],
       resolution: 1000,
       viewport: VIEWPORT,
-      formattedText: true,
+      formatText: true,
     });
 
     expect(valueText).toBe(expectedDisplayValue);
