@@ -29,7 +29,7 @@ export const calculateBucketIndex = ({
   if (yValue === yMin) {
     return 1;
   }
-  return Math.abs(Math.ceil(((yValue - yMin) / (yMax - yMin)) * bucketCount));
+  return Math.abs(Math.floor(((yValue - yMin) / (yMax - yMin)) * bucketCount));
 };
 
 export const calculateXBucketStart = ({ xValue, xBucketRange }: { xValue: number; xBucketRange: number }): number => {
