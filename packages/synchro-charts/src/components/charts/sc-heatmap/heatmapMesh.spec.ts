@@ -1,7 +1,7 @@
 import { clipSpaceConversion } from '../sc-webgl-base-chart/clipSpaceConversion';
 import { bucketMesh, updateBucketMesh, COLOR_PALETTE } from './heatmapMesh';
 import { BUCKET_COUNT } from './heatmapConstants';
-import { calculateXBucketStart, calculateBucketIndex, getXBucketRange } from './heatmapUtil';
+import { calculateXBucketStart, calculateBucketIndex, getXBucketRange, calcHeatValues, HeatValueMap } from './heatmapUtil';
 import { getBucketMargin, getXBucketWidth } from './displayLogic';
 import { getDistanceFromDuration } from '../common/getDistanceFromDuration';
 import { DataType } from '../../../utils/dataConstants';
@@ -54,6 +54,9 @@ const DATA_STREAMS: DataStream[] = [
   },
 ];
 
+const HEAT_VALUES: HeatValueMap = calcHeatValues({ oldHeatValue: {}, dataStreams: DATA_STREAMS, xBucketRange: X_BUCKET_RANGE, viewport: VIEW_PORT, bucketCount: BUCKET_COUNT })
+
+
 describe('create bucket mesh', () => {
   it('sets the width uniform', () => {
     const mesh = bucketMesh({
@@ -62,6 +65,7 @@ describe('create bucket mesh', () => {
       minBufferSize: MIN_BUFFER_SIZE,
       bufferFactor: BUFFER_FACTOR,
       viewport: VIEW_PORT,
+      heatValues: HEAT_VALUES,
     });
 
     expect(mesh.material.uniforms.width.value).toBeGreaterThan(0);
@@ -75,6 +79,7 @@ describe('create bucket mesh', () => {
       minBufferSize: MIN_BUFFER_SIZE,
       bufferFactor: BUFFER_FACTOR,
       viewport: VIEW_PORT,
+      heatValues: {},
     });
     expect(mesh.count).toEqual(0);
 
@@ -89,6 +94,7 @@ describe('create bucket mesh', () => {
       minBufferSize: 1,
       bufferFactor: 1,
       viewport: VIEW_PORT,
+      heatValues: HEAT_VALUES,
     });
     expect(mesh.count).toEqual(3);
 
@@ -124,21 +130,24 @@ describe('create bucket mesh', () => {
       yMin: 0,
       yMax: 500,
     };
+    const dataStreams = [
+      {
+        id: 'data-stream',
+        name: 'some name',
+        resolution: 0,
+        data: [DATA_POINT_1],
+        dataType: DataType.NUMBER,
+      },
+    ];
     const xBucketRange = getXBucketRange(viewport);
+    const heatValues = calcHeatValues({ oldHeatValue: {}, dataStreams, xBucketRange: xBucketRange, viewport, bucketCount: BUCKET_COUNT })
     const mesh = bucketMesh({
-      dataStreams: [
-        {
-          id: 'data-stream',
-          name: 'some name',
-          resolution: 0,
-          data: [DATA_POINT_1],
-          dataType: DataType.NUMBER,
-        },
-      ],
+      dataStreams,
       toClipSpace,
       minBufferSize: MIN_BUFFER_SIZE,
       bufferFactor: BUFFER_FACTOR,
       viewport,
+      heatValues,
     });
 
     expect(mesh.count).toEqual(1);
@@ -152,20 +161,23 @@ describe('create bucket mesh', () => {
   });
 
   it('draws two buckets with two point data set', () => {
+    const dataStreams = [
+      {
+        id: 'data-stream',
+        name: 'some name',
+        resolution: 0,
+        data: [DATA_POINT_1, DATA_POINT_2],
+        dataType: DataType.NUMBER,
+      },
+    ]
+    const heatValues = calcHeatValues({ oldHeatValue: {}, dataStreams, xBucketRange: X_BUCKET_RANGE, viewport: VIEW_PORT, bucketCount: BUCKET_COUNT })
     const mesh = bucketMesh({
-      dataStreams: [
-        {
-          id: 'data-stream',
-          name: 'some name',
-          resolution: 0,
-          data: [DATA_POINT_1, DATA_POINT_2],
-          dataType: DataType.NUMBER,
-        },
-      ],
+      dataStreams,
       toClipSpace,
       minBufferSize: MIN_BUFFER_SIZE,
       bufferFactor: BUFFER_FACTOR,
       viewport: VIEW_PORT,
+      heatValues
     });
     expect(mesh.count).toEqual(2);
 
@@ -183,142 +195,6 @@ describe('create bucket mesh', () => {
     expect(mesh.geometry.attributes.color.array[4]).toBeCloseTo(COLOR_PALETTE.g[0], -1);
     expect(mesh.geometry.attributes.color.array[5]).toBeCloseTo(COLOR_PALETTE.b[0], -1);
   });
-
-  it('draws three buckets for two separated data streams with two data points in each data stream', () => {
-    const mesh = bucketMesh({
-      dataStreams: [
-        {
-          id: 'data-stream-1',
-          color: 'red',
-          name: 'some name',
-          resolution: 0,
-          data: [DATA_POINT_1, DATA_POINT_2],
-          dataType: DataType.NUMBER,
-        },
-        {
-          id: 'data-stream-2',
-          color: 'blue',
-          name: 'some name',
-          resolution: 0,
-          data: [DATA_POINT_2, DATA_POINT_3],
-          dataType: DataType.NUMBER,
-        },
-      ],
-      minBufferSize: 100,
-      bufferFactor: 2,
-      toClipSpace,
-      viewport: VIEW_PORT,
-    });
-
-    const width = getXBucketWidth({
-      toClipSpace,
-      xBucketRange: X_BUCKET_RANGE,
-    });
-
-    expect(getDistanceFromDuration(toClipSpace, X_BUCKET_RANGE) - getBucketMargin(toClipSpace, X_BUCKET_RANGE)).toEqual(width);
-    expect(mesh.count).toEqual(3);
-
-    // Check for stream 1 bucket 1
-    expect(mesh.geometry.attributes.bucket.array[0]).toBe(toClipSpace(DATA_POINT_1_X_BUCKET + X_BUCKET_RANGE));
-    expect(mesh.geometry.attributes.bucket.array[1]).toBe(BUCKET_HEIGHT * DATA_POINT_1_Y_BUCKET);
-
-    // Check for stream 1 bucket 2
-    expect(mesh.geometry.attributes.bucket.array[2]).toBe(toClipSpace(DATA_POINT_2_X_BUCKET + X_BUCKET_RANGE));
-    expect(mesh.geometry.attributes.bucket.array[3]).toBe(BUCKET_HEIGHT * DATA_POINT_2_Y_BUCKET);
-
-    // Check for stream 2 bucket 1, bucket 1 same as stream 1 bucket 2
-    expect(mesh.geometry.attributes.bucket.array[4]).toBe(toClipSpace(DATA_POINT_3_X_BUCKET + X_BUCKET_RANGE));
-    expect(mesh.geometry.attributes.bucket.array[5]).toBe(BUCKET_HEIGHT * DATA_POINT_3_Y_BUCKET);
-
-    // Data stream buckets are all lightest opacity
-    expect(mesh.geometry.attributes.color.array[0]).toBeCloseTo(COLOR_PALETTE.r[0], -1);
-    expect(mesh.geometry.attributes.color.array[1]).toBeCloseTo(COLOR_PALETTE.g[0], -1);
-    expect(mesh.geometry.attributes.color.array[2]).toBeCloseTo(COLOR_PALETTE.b[0], -1);
-
-    expect(mesh.geometry.attributes.color.array[3]).toBeCloseTo(COLOR_PALETTE.r[0], -1);
-    expect(mesh.geometry.attributes.color.array[4]).toBeCloseTo(COLOR_PALETTE.g[0], -1);
-    expect(mesh.geometry.attributes.color.array[5]).toBeCloseTo(COLOR_PALETTE.b[0], -1);
-
-    expect(mesh.geometry.attributes.color.array[6]).toBeCloseTo(COLOR_PALETTE.r[0], -1);
-    expect(mesh.geometry.attributes.color.array[7]).toBeCloseTo(COLOR_PALETTE.g[0], -1);
-    expect(mesh.geometry.attributes.color.array[8]).toBeCloseTo(COLOR_PALETTE.b[0], -1);
-  });
-
-  it('draws three buckets for three separated data streams with two data points in first and last data stream and one data point in the second data stream ', () => {
-    const dataType = DataType.NUMBER;
-    const mesh = bucketMesh({
-      dataStreams: [
-        {
-          id: 'data-stream-1',
-          color: 'red',
-          name: 'some name',
-          resolution: 0,
-          data: [DATA_POINT_1, DATA_POINT_2],
-          dataType,
-        },
-        {
-          id: 'data-stream-2',
-          color: 'blue',
-          name: 'some name',
-          resolution: 0,
-          data: [DATA_POINT_1],
-          dataType,
-        },
-        {
-          id: 'data-stream-3',
-          name: 'some name',
-          resolution: 0,
-          data: [DATA_POINT_2, DATA_POINT_3],
-          dataType,
-        },
-      ],
-      minBufferSize: 100,
-      bufferFactor: 2,
-      toClipSpace,
-      viewport: VIEW_PORT,
-    });
-
-    const width = getXBucketWidth({
-      toClipSpace,
-      xBucketRange: X_BUCKET_RANGE,
-    });
-
-    expect(getDistanceFromDuration(toClipSpace, X_BUCKET_RANGE) - getBucketMargin(toClipSpace, X_BUCKET_RANGE)).toEqual(width);
-    expect(mesh.count).toEqual(3);
-
-    // Check for data point 1
-    expect(mesh.geometry.attributes.bucket.array[0]).toBe(toClipSpace(DATA_POINT_1_X_BUCKET + X_BUCKET_RANGE));
-    expect(mesh.geometry.attributes.bucket.array[1]).toBe(BUCKET_HEIGHT * DATA_POINT_1_Y_BUCKET);
-
-    // Check for data point 2
-    expect(mesh.geometry.attributes.bucket.array[2]).toBe(toClipSpace(DATA_POINT_2_X_BUCKET + X_BUCKET_RANGE));
-    expect(mesh.geometry.attributes.bucket.array[3]).toBe(BUCKET_HEIGHT * DATA_POINT_2_Y_BUCKET);
-
-    // Check for data point 3
-    expect(mesh.geometry.attributes.bucket.array[4]).toBe(toClipSpace(DATA_POINT_3_X_BUCKET + X_BUCKET_RANGE));
-    expect(mesh.geometry.attributes.bucket.array[5]).toBe(BUCKET_HEIGHT * DATA_POINT_3_Y_BUCKET);
-
-    // only 3 buckets, 4th should be empty
-    expect(mesh.geometry.attributes.bucket.array[6]).toBe(0);
-    expect(mesh.geometry.attributes.bucket.array[7]).toBe(0);
-
-    expect(mesh.geometry.attributes.color.array[0]).toBeDefined();
-    expect(mesh.geometry.attributes.color.array[1]).toBeDefined();
-    expect(mesh.geometry.attributes.color.array[2]).toBeDefined();
-
-    expect(mesh.geometry.attributes.color.array[3]).toBeDefined();
-    expect(mesh.geometry.attributes.color.array[4]).toBeDefined();
-    expect(mesh.geometry.attributes.color.array[5]).toBeDefined();
-
-    expect(mesh.geometry.attributes.color.array[6]).toBeDefined();
-    expect(mesh.geometry.attributes.color.array[7]).toBeDefined();
-    expect(mesh.geometry.attributes.color.array[8]).toBeDefined();
-
-    // only 3 buckets, 4th bucket should be empty
-    expect(mesh.geometry.attributes.color.array[0]).toBeCloseTo(COLOR_PALETTE.r[0], -1);
-    expect(mesh.geometry.attributes.color.array[1]).toBeCloseTo(COLOR_PALETTE.g[0], -1);
-    expect(mesh.geometry.attributes.color.array[2]).toBeCloseTo(COLOR_PALETTE.b[0], -1);
-  });
 });
 
 describe('update bucket mesh', () => {
@@ -332,16 +208,19 @@ describe('update bucket mesh', () => {
         dataType: DataType.NUMBER,
       },
     ];
+    const heatValues = calcHeatValues({ oldHeatValue: {}, dataStreams: [], xBucketRange: X_BUCKET_RANGE, viewport: VIEW_PORT, bucketCount: BUCKET_COUNT })
     const mesh = bucketMesh({
       dataStreams: [],
       toClipSpace,
       minBufferSize: MIN_BUFFER_SIZE,
       bufferFactor: BUFFER_FACTOR,
       viewport: VIEW_PORT,
+      heatValues,
     });
     expect(mesh.count).toEqual(0);
     expect(mesh.material.uniforms.width.value).toEqual(0);
 
+    const newHeatValues = calcHeatValues({ oldHeatValue: {}, dataStreams: DATA_STREAM_TEMP, xBucketRange: X_BUCKET_RANGE, viewport: VIEW_PORT, bucketCount: BUCKET_COUNT })
     updateBucketMesh({
       buckets: mesh,
       dataStreams: DATA_STREAM_TEMP,
@@ -349,6 +228,7 @@ describe('update bucket mesh', () => {
       hasDataChanged: true,
       viewport: VIEW_PORT,
       shouldRerender: true,
+      heatValues: newHeatValues,
     });
     expect(mesh.count).toEqual(1);
     expect(mesh.material.uniforms.width.value).toBeGreaterThan(0);
@@ -371,12 +251,14 @@ describe('update bucket mesh', () => {
         dataType: DataType.NUMBER,
       },
     ];
+    const heatValues = calcHeatValues({ oldHeatValue: {}, dataStreams: DATA_STREAM_TEMP, xBucketRange: X_BUCKET_RANGE, viewport: VIEW_PORT, bucketCount: BUCKET_COUNT })
     const mesh = bucketMesh({
       dataStreams: DATA_STREAM_TEMP,
       toClipSpace,
       minBufferSize: MIN_BUFFER_SIZE,
       bufferFactor: BUFFER_FACTOR,
       viewport: VIEW_PORT,
+      heatValues,
     });
     expect(mesh.count).toEqual(2);
 
@@ -387,6 +269,7 @@ describe('update bucket mesh', () => {
       hasDataChanged: true,
       viewport: VIEW_PORT,
       shouldRerender: true,
+      heatValues: {},
     });
     expect(mesh.count).toEqual(0);
 
@@ -407,12 +290,15 @@ describe('update bucket mesh', () => {
         dataType: DataType.NUMBER,
       },
     ];
+    const heatValues = calcHeatValues({ oldHeatValue: {}, dataStreams: DATA_STREAM_TEMP, xBucketRange: X_BUCKET_RANGE, viewport: VIEW_PORT, bucketCount: BUCKET_COUNT })
+
     const mesh = bucketMesh({
       dataStreams: DATA_STREAM_TEMP,
       toClipSpace,
       minBufferSize: MIN_BUFFER_SIZE,
       bufferFactor: BUFFER_FACTOR,
       viewport: VIEW_PORT,
+      heatValues,
     });
     expect(mesh.count).toEqual(2);
 
@@ -423,6 +309,7 @@ describe('update bucket mesh', () => {
       hasDataChanged: true,
       viewport: VIEW_PORT,
       shouldRerender: true,
+      heatValues: HEAT_VALUES,
     });
     expect(mesh.count).toEqual(3);
 
@@ -434,60 +321,6 @@ describe('update bucket mesh', () => {
 
     expect(mesh.geometry.attributes.bucket.array[4]).toBe(toClipSpace(DATA_POINT_3_X_BUCKET + X_BUCKET_RANGE));
     expect(mesh.geometry.attributes.bucket.array[5]).toBe(BUCKET_HEIGHT * DATA_POINT_3_Y_BUCKET);
-  });
-
-  it('updates the color of the bucket', () => {
-    const viewport: ViewPort = {
-      duration: 1000,
-      start: new Date(2000, 0, 0),
-      end: new Date(2000, 0, 0, 0, 0, 10),
-      yMin: 0,
-      yMax: 500,
-    };
-    const DATA_STREAM_TEMP_1: DataStream = {
-      id: 'data-stream',
-      color: 'black',
-      name: 'data-stream-name',
-      resolution: 0,
-      data: [DATA_POINT_1],
-      dataType: DataType.NUMBER,
-    };
-    const DATA_STREAM_TEMP_2: DataStream = {
-      id: 'data-stream',
-      color: 'black',
-      name: 'data-stream-name',
-      resolution: 0,
-      data: [],
-      dataType: DataType.NUMBER,
-    };
-    const mesh = bucketMesh({
-      dataStreams: [DATA_STREAM_TEMP_1],
-      toClipSpace,
-      minBufferSize: MIN_BUFFER_SIZE,
-      bufferFactor: BUFFER_FACTOR,
-      viewport,
-    });
-    expect(mesh.count).toEqual(1);
-
-    // Old bucket Colors
-    expect(mesh.geometry.attributes.color.array[0]).toBeCloseTo(COLOR_PALETTE.r[7], -1);
-    expect(mesh.geometry.attributes.color.array[1]).toBeCloseTo(COLOR_PALETTE.g[7], -1);
-    expect(mesh.geometry.attributes.color.array[2]).toBeCloseTo(COLOR_PALETTE.b[7], -1);
-
-    updateBucketMesh({
-      buckets: mesh,
-      dataStreams: [DATA_STREAM_TEMP_1, DATA_STREAM_TEMP_2],
-      toClipSpace,
-      hasDataChanged: true,
-      viewport,
-      shouldRerender: true,
-    });
-    expect(mesh.count).toEqual(1);
-
-    // New bucket Colors
-    expect(mesh.geometry.attributes.color.array[0]).toBe(COLOR_PALETTE.r[4]);
-    expect(mesh.geometry.attributes.color.array[1]).toBe(COLOR_PALETTE.g[4]);
-    expect(mesh.geometry.attributes.color.array[2]).toBe(COLOR_PALETTE.b[4]);
   });
 
   it('updates the width of the bucket based on resolution of the data', () => {
@@ -505,12 +338,14 @@ describe('update bucket mesh', () => {
       toClipSpace,
       xBucketRange,
     });
+    const heatValues = calcHeatValues({ oldHeatValue: {}, dataStreams: DATA_STREAM_TEMP, xBucketRange: X_BUCKET_RANGE, viewport: VIEW_PORT, bucketCount: BUCKET_COUNT })
     const mesh = bucketMesh({
       dataStreams: DATA_STREAM_TEMP,
       toClipSpace,
       minBufferSize: MIN_BUFFER_SIZE,
       bufferFactor: BUFFER_FACTOR,
       viewport: VIEW_PORT,
+      heatValues,
     });
     expect(mesh.count).toEqual(1);
     expect(mesh.material.uniforms.width.value).toBe(oldWidth);
@@ -531,6 +366,7 @@ describe('update bucket mesh', () => {
         dataType: DataType.NUMBER,
       },
     ];
+    const newHeatValues = calcHeatValues({ oldHeatValue: {}, dataStreams: DATA_STREAM_TEMP_2, xBucketRange: X_BUCKET_RANGE, viewport: VIEW_PORT, bucketCount: BUCKET_COUNT })
     updateBucketMesh({
       buckets: mesh,
       dataStreams: DATA_STREAM_TEMP_2,
@@ -538,6 +374,7 @@ describe('update bucket mesh', () => {
       hasDataChanged: true,
       viewport: newViewport,
       shouldRerender: true,
+      heatValues: newHeatValues,
     });
 
     const newXBucketRange = getXBucketRange(newViewport);
@@ -560,12 +397,14 @@ describe('update bucket mesh', () => {
         dataType: DataType.NUMBER,
       },
     ];
+    const heatValues = calcHeatValues({ oldHeatValue: {}, dataStreams: DATA_STREAM_TEMP, xBucketRange: X_BUCKET_RANGE, viewport: VIEW_PORT, bucketCount: BUCKET_COUNT })
     const mesh = bucketMesh({
       dataStreams: DATA_STREAM_TEMP,
       toClipSpace,
       minBufferSize: MIN_BUFFER_SIZE,
       bufferFactor: BUFFER_FACTOR,
       viewport: VIEW_PORT,
+      heatValues,
     });
     expect(mesh.count).toEqual(1);
 
@@ -576,6 +415,7 @@ describe('update bucket mesh', () => {
       hasDataChanged: false,
       viewport: VIEW_PORT,
       shouldRerender: false,
+      heatValues,
     });
     expect(mesh.count).toEqual(1);
   });

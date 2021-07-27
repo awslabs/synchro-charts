@@ -1,7 +1,7 @@
 import { DataType } from '../../../utils/dataConstants';
 import { DataPoint, DataStream, ViewPort } from '../../../utils/dataTypes';
-import { calculateBucketIndex, HeatValueMap, addCount, calcHeatValues, calculateXBucketStart } from './heatmapUtil';
-import { MONTH_IN_MS } from '../../../utils/time';
+import { calculateBucketIndex, HeatValueMap, addCount, calcHeatValues, calculateXBucketStart, getXBucketRange } from './heatmapUtil';
+import { DAY_IN_MS, displayDate, HOUR_IN_MS, MINUTE_IN_MS, MONTH_IN_MS, SECOND_IN_MS } from '../../../utils/time';
 import { BUCKET_COUNT } from './heatmapConstants';
 
 const VIEWPORT: ViewPort = {
@@ -203,3 +203,26 @@ describe('calcHeatValues', () => {
     expect(newHeatValue).toEqual({});
   });
 });
+
+describe.each`
+  start                                        | end                                | xBucketRange
+  ${new Date(2000, 0, 0, 0)}                   | ${new Date(2000, 0, 0, 0, 0, 1)}   | ${SECOND_IN_MS}
+  ${new Date(2000, 0, 0, 0)}                   | ${new Date(2000, 0, 0, 0, 3)}      | ${MINUTE_IN_MS}
+  ${new Date(2000, 0, 0, 0)}                   | ${new Date(2000, 0, 0, 3)}         | ${HOUR_IN_MS}
+  ${new Date(2000, 0, 0, 0)}                   | ${new Date(2000, 0, 4)}            | ${DAY_IN_MS}
+  ${new Date(2000, 0, 0, 0)}                   | ${new Date(2000, 5, 0)}            | ${MONTH_IN_MS}
+`('getXBucketRange', ({ start, end, xBucketRange }) => {
+  test(`x bucket range for start: ${start}`, () => {
+    expect(getXBucketRange({ start, end})).toBe(xBucketRange);
+  });
+});
+
+describe('displayDate', () => {
+  it('returns date range in mm/dd hh', () => {
+    const xBucketStart = new Date(2000, 0, 0);
+    const xBucketEnd = new Date(2000, 0, 4);
+    const start = new Date(2000, 0, 0);
+    const end = new Date(2000, 0, 10);
+    expect(displayDate([xBucketStart, xBucketEnd], {start, end}));
+  })
+})

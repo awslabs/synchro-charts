@@ -1,5 +1,5 @@
 import { DataStream, ViewPort } from '../../../utils/dataTypes';
-import { SECOND_IN_MS, MINUTE_IN_MS, HOUR_IN_MS, DAY_IN_MS } from '../../../utils/time';
+import { SECOND_IN_MS, MINUTE_IN_MS, HOUR_IN_MS, DAY_IN_MS, MONTH_IN_MS, YEAR_IN_MS } from '../../../utils/time';
 import { DataType } from '../../../utils/dataConstants';
 import { BUCKET_COUNT, CHANGE_RESOLUTION, Y_RANGE_BOUNDARY } from './heatmapConstants';
 
@@ -104,6 +104,12 @@ export const calcHeatValues = ({
 
 export const getXBucketRange = ({ start, end }: { start: Date; end: Date }): number => {
   const duration = end.getTime() - start.getTime();
+  if (duration > YEAR_IN_MS) {
+    return YEAR_IN_MS;
+  }
+  if (duration > (CHANGE_RESOLUTION + 1) * 30 * DAY_IN_MS) {
+    return MONTH_IN_MS;
+  }
   if (duration > (CHANGE_RESOLUTION + 1) * DAY_IN_MS) {
     return DAY_IN_MS;
   }
@@ -116,10 +122,9 @@ export const getXBucketRange = ({ start, end }: { start: Date; end: Date }): num
   return SECOND_IN_MS;
 };
 
-export const displayDate = (date: Date, xBucketRange: number, { start, end }: { start: Date; end: Date }): string => {
+export const displayDate = (dates: Date[], { start, end }: { start: Date; end: Date }): string => {
   const viewportDurationMS = end.getTime() - start.getTime();
-  const xBucketRangeStart = new Date(calculateXBucketStart({ xValue: date.getTime(), xBucketRange }));
-  const xBucketRangeEnd = new Date(xBucketRangeStart.getTime() + xBucketRange);
+  const [xBucketRangeStart, xBucketRangeEnd] = dates;
   if (viewportDurationMS < MINUTE_IN_MS) {
     return `${xBucketRangeStart.toLocaleString('en-US', {
       minute: 'numeric',

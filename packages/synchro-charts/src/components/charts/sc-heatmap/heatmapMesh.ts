@@ -16,7 +16,7 @@ import { numDataPoints } from '../sc-webgl-base-chart/utils';
 import { getXBucketWidth, getSequential, getBucketColor, getYBucketHeight } from './displayLogic';
 import { HeatValueMap, getXBucketRange } from './heatmapUtil';
 import { BUCKET_COUNT } from './heatmapConstants';
-import { DataStream, Primitive, ViewPort } from '../../../utils/dataTypes';
+import { DataStream, ViewPort } from '../../../utils/dataTypes';
 import { SECOND_IN_MS } from '../../../utils/time';
 
 type BucketBufferGeometry = BufferGeometry & {
