@@ -48,6 +48,7 @@ import { EmptyStatus } from './EmptyStatus';
 import { getDataPoints } from '../../../utils/getDataPoints';
 import { StreamType } from '../../../utils/dataConstants';
 import { LEGEND_POSITION } from '../common/constants';
+import { getDataStreamForEventing } from '../common';
 
 const MIN_WIDTH = 50;
 const MIN_HEIGHT = 50;
@@ -143,23 +144,36 @@ export class ScWebglBaseChart {
   };
 
   /**
+   * Emit the current widget configuration
+   */
+  emitUpdatedWidgetConfiguration = (dataStreams?: DataStream[]): void => {
+    const configUpdate: WidgetConfigurationUpdate = {
+      movement: undefined,
+      scale: undefined,
+      layout: undefined,
+      legend: this.legend,
+      annotations: this.annotations,
+      axis: this.axis,
+      widgetId: this.configId,
+      dataStreams: dataStreams ? getDataStreamForEventing(dataStreams) : this.dataStreams,
+    };
+    this.widgetUpdated.emit(configUpdate);
+  };
+
+  /**
    * On Widget Updated - Persist `DataStreamInfo`
    *
    * Emits an event which persists the current `NameValue[]` state into the
    * data stream.
    */
   updateDataStreamName = ({ streamId, name }: { streamId: string; name: string }) => {
-    // Construct the config update with the new names specified.
-    const configUpdate: WidgetConfigurationUpdate = {
-      widgetId: this.configId,
-      dataStreams: this.dataStreams.map(dataStream => {
-        return {
-          id: dataStream.id,
-          name: dataStream.id === streamId ? name : dataStream.name,
-        };
-      }),
-    };
-    this.widgetUpdated.emit(configUpdate);
+    const updatedDataStreams = this.dataStreams.map(dataStream => {
+      return {
+        ...dataStream,
+        name: dataStream.id === streamId ? name : dataStream.name,
+      };
+    });
+    this.emitUpdatedWidgetConfiguration(updatedDataStreams);
   };
 
   onDateRangeChange = throttle(
@@ -543,6 +557,9 @@ export class ScWebglBaseChart {
         // TODO: Revisit this.
         // If no data streams are present we will fallback to a resolution of 0, i.e. 'raw' data
         resolution: this.dataStreams[0] ? this.dataStreams[0].resolution : 0,
+        onUpdate: this.onUpdate,
+        activeViewPort: this.activeViewPort,
+        emitUpdatedWidgetConfiguration: this.emitUpdatedWidgetConfiguration,
       });
     }
 

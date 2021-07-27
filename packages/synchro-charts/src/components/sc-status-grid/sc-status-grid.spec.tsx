@@ -233,11 +233,43 @@ it('should dispatch widgetUpdated with data stream updates when label changed', 
   expect(spy).toHaveBeenCalled();
   expect(spy.mock.calls[0][0].detail).toEqual(
     expect.objectContaining({
+      annotations: undefined,
+      axis: undefined,
       dataStreams: [
-        { id: NUMBER_STREAM.id, name: newName },
-        { id: STRING_STREAM.id, name: STRING_STREAM.name },
+        {
+          associatedStreams: undefined,
+          color: 'black',
+          dataType: 'NUMBER',
+          detailedName: undefined,
+          error: undefined,
+          id: NUMBER_STREAM.id,
+          isLoading: undefined,
+          isRefreshing: undefined,
+          name: newName,
+          resolution: 0,
+          streamType: undefined,
+          unit: undefined,
+        },
+        {
+          associatedStreams: undefined,
+          color: 'red',
+          dataType: 'STRING',
+          detailedName: undefined,
+          error: undefined,
+          id: STRING_STREAM.id,
+          isLoading: undefined,
+          isRefreshing: undefined,
+          name: STRING_STREAM.name,
+          resolution: 0,
+          streamType: undefined,
+          unit: undefined,
+        },
       ],
-      widgetId: WIDGET_ID,
+      layout: undefined,
+      legend: undefined,
+      movement: undefined,
+      scale: undefined,
+      widgetId: 'test-widget-it',
     })
   );
 });
