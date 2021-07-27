@@ -12,7 +12,7 @@ import { viewportEndDate, viewportStartDate } from '../../utils/viewPort';
 import { Annotations, ChartConfig, Threshold, WidgetConfigurationUpdate } from '../charts/common/types';
 import { LabelsConfig } from '../common/types';
 import { DATA_ALIGNMENT } from '../charts/common/constants';
-import { getPartialDataStream } from '../charts/common';
+import { getDataStreamForEventing } from '../charts/common';
 
 const MSG =
   'This visualization displays only live data. Choose a live time frame to display data in this visualization.';
@@ -97,7 +97,7 @@ export class ScWidgetGrid implements ChartConfig {
   /**
    * Emit the current widget configuration
    */
-  emitUpdatedWidgetConfiguration = (dataStreams?: DataStream[]) => {
+  emitUpdatedWidgetConfiguration = (dataStreams?: DataStream[]): void => {
     const configUpdate: WidgetConfigurationUpdate = {
       movement: undefined,
       scale: undefined,
@@ -106,7 +106,7 @@ export class ScWidgetGrid implements ChartConfig {
       annotations: this.annotations,
       axis: undefined,
       widgetId: this.widgetId,
-      dataStreams: dataStreams ? getPartialDataStream(dataStreams) : this.dataStreams,
+      dataStreams: dataStreams ? getDataStreamForEventing(dataStreams) : this.dataStreams,
     };
     this.widgetUpdated.emit(configUpdate);
   };

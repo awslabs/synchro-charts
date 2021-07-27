@@ -7,7 +7,7 @@ import { NameValue, updateName } from '../../../sc-data-stream-name/helper';
 import { getDataPoints } from '../../../../utils/getDataPoints';
 
 import { DATA_ALIGNMENT, StatusIcon } from '../../common/constants';
-import { getPartialDataStream } from '../../common';
+import { getDataStreamForEventing } from '../../common';
 
 const SMUDGE_WIDTH_PX = 1; // We slice off a tiny bit of width to prevent some pixels showing under antialiasing
 
@@ -33,7 +33,7 @@ export class ScStatusTimelineOverlay {
   /**
    * Emit the current widget configuration
    */
-  emitUpdatedWidgetConfiguration = (dataStreams?: DataStream[]) => {
+  emitUpdatedWidgetConfiguration = (dataStreams?: DataStream[]): void => {
     const configUpdate: WidgetConfigurationUpdate = {
       movement: undefined,
       scale: undefined,
@@ -42,7 +42,7 @@ export class ScStatusTimelineOverlay {
       annotations: undefined, // thresholds here are not the same as annotations?
       axis: undefined,
       widgetId: this.widgetId,
-      dataStreams: dataStreams ? getPartialDataStream(dataStreams) : this.dataStreams,
+      dataStreams: dataStreams ? getDataStreamForEventing(dataStreams) : this.dataStreams,
     };
     this.widgetUpdated.emit(configUpdate);
   };

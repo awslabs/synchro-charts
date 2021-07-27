@@ -48,7 +48,7 @@ import { EmptyStatus } from './EmptyStatus';
 import { getDataPoints } from '../../../utils/getDataPoints';
 import { StreamType } from '../../../utils/dataConstants';
 import { LEGEND_POSITION } from '../common/constants';
-import { getPartialDataStream } from '../common';
+import { getDataStreamForEventing } from '../common';
 
 const MIN_WIDTH = 50;
 const MIN_HEIGHT = 50;
@@ -146,7 +146,7 @@ export class ScWebglBaseChart {
   /**
    * Emit the current widget configuration
    */
-  emitUpdatedWidgetConfiguration = (dataStreams?: DataStream[]) => {
+  emitUpdatedWidgetConfiguration = (dataStreams?: DataStream[]): void => {
     const configUpdate: WidgetConfigurationUpdate = {
       movement: undefined,
       scale: undefined,
@@ -155,7 +155,7 @@ export class ScWebglBaseChart {
       annotations: this.annotations,
       axis: this.axis,
       widgetId: this.configId,
-      dataStreams: dataStreams ? getPartialDataStream(dataStreams) : this.dataStreams,
+      dataStreams: dataStreams ? getDataStreamForEventing(dataStreams) : this.dataStreams,
     };
     this.widgetUpdated.emit(configUpdate);
   };
