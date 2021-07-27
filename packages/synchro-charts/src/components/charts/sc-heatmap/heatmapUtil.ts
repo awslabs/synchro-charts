@@ -25,7 +25,7 @@ export const calculateBucketIndex = ({
   yMin: number;
   bucketCount: number;
 }): number => {
-  // if a point is 0 then put it in the first bucket instead of zeroth
+  // if a point is equal to yMin then put it in the first bucket instead of zeroth
   if (yValue === yMin) {
     return 1;
   }

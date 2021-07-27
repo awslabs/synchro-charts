@@ -1,5 +1,5 @@
 import { clipSpaceConversion } from '../sc-webgl-base-chart/clipSpaceConversion';
-import { HeatmapColorPalette, getXBucketWidth, getBucketColor, getSequential } from './displayLogic';
+import { HeatmapColorPalette, getXBucketWidth, getBucketColor, getSequential, getYBucketHeight } from './displayLogic';
 import { NUM_OF_COLORS_SEQUENTIAL } from './heatmapConstants';
 import { MONTH_IN_MS, DAY_IN_MS } from '../../../utils/time';
 
@@ -19,6 +19,18 @@ describe('getXBucketWidth', () => {
     });
     expect(barWidth).toBeGreaterThanOrEqual(toClipSpace(VIEW_PORT.start.getTime()));
     expect(barWidth).toBeLessThanOrEqual(toClipSpace(VIEW_PORT.end.getTime()));
+  });
+});
+
+describe.each`
+  yMin    | yMax   | yBucketHeight
+  ${0}    | ${100} | ${9.33}
+  ${0}    | ${50}  | ${4.66}
+  ${-20}  | ${40}  | ${5.6}
+  ${-100} | ${0}   | ${9.33}
+`('getYBucketHeight', ({ yMin, yMax, yBucketHeight }) => {
+  test(`y bucket height for yMin: ${yMin} and yMax: ${yMax}`, () => {
+    expect(getYBucketHeight({ ...VIEW_PORT, yMin, yMax })).toBeCloseTo(yBucketHeight, 0);
   });
 });
 

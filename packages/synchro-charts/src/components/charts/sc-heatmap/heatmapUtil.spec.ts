@@ -71,6 +71,9 @@ describe.each`
   ${12}  | ${15}  | ${5}  | ${10}       | ${7}
   ${-4}  | ${5}   | ${-5} | ${10}       | ${1}
   ${4}   | ${5}   | ${-5} | ${10}       | ${9}
+  ${0}   | ${10}  | ${0}  | ${10}       | ${1}
+  ${10}  | ${10}  | ${0}  | ${10}       | ${10}
+  ${-5}  | ${5}   | ${-5} | ${10}       | ${1}
 `('calculateBucketIndex', ({ yValue, yMax, yMin, bucketCount, bucketIndex }) => {
   test(`bucket index for ${yValue} with yMax: ${yMax} and yMin: ${yMin}`, () => {
     expect(calculateBucketIndex({ yValue, yMax, yMin, bucketCount })).toBe(bucketIndex);
