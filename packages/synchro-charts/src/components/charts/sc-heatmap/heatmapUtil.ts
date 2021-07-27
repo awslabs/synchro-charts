@@ -24,17 +24,10 @@ export const calculateBucketIndex = ({
   yMax: number;
   yMin: number;
   bucketCount: number;
-}): number => {
-  // if a point is equal to yMin then put it in the first bucket instead of zeroth
-  if (yValue === yMin) {
-    return 1;
-  }
-  return Math.abs(Math.floor(((yValue - yMin) / (yMax - yMin)) * bucketCount));
-};
+}): number => Math.abs(Math.floor(((yValue - yMin) / (yMax - yMin)) * bucketCount));
 
-export const calculateXBucketStart = ({ xValue, xBucketRange }: { xValue: number; xBucketRange: number }): number => {
-  return Math.floor(xValue / xBucketRange) * xBucketRange;
-};
+export const calculateXBucketStart = ({ xValue, xBucketRange }: { xValue: number; xBucketRange: number }): number =>
+  Math.floor(xValue / xBucketRange) * xBucketRange;
 
 /**
  * Keeps track of the total number of data points within a point's respective bucket and

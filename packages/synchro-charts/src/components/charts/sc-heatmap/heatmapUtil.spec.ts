@@ -66,14 +66,14 @@ const START_TIME_EPOCH_10 = calculateXBucketStart({
 describe.each`
   yValue | yMax   | yMin  | bucketCount | bucketIndex
   ${100} | ${100} | ${0}  | ${10}       | ${10}
-  ${62}  | ${100} | ${0}  | ${10}       | ${7}
+  ${62}  | ${100} | ${0}  | ${10}       | ${6}
   ${10}  | ${15}  | ${5}  | ${10}       | ${5}
   ${12}  | ${15}  | ${5}  | ${10}       | ${7}
   ${-4}  | ${5}   | ${-5} | ${10}       | ${1}
   ${4}   | ${5}   | ${-5} | ${10}       | ${9}
-  ${0}   | ${10}  | ${0}  | ${10}       | ${1}
+  ${0}   | ${10}  | ${0}  | ${10}       | ${0}
   ${10}  | ${10}  | ${0}  | ${10}       | ${10}
-  ${-5}  | ${5}   | ${-5} | ${10}       | ${1}
+  ${-5}  | ${5}   | ${-5} | ${10}       | ${0}
 `('calculateBucketIndex', ({ yValue, yMax, yMin, bucketCount, bucketIndex }) => {
   test(`bucket index for ${yValue} with yMax: ${yMax} and yMin: ${yMin}`, () => {
     expect(calculateBucketIndex({ yValue, yMax, yMin, bucketCount })).toBe(bucketIndex);

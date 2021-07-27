@@ -81,7 +81,7 @@ describe('heatmap', () => {
     cy.matchImageSnapshotOnCI();
   });
 
-  it('renders 5 buckets from 2 datastreams', () => {
+  it('renders 4 buckets from 2 datastreams', () => {
     visitDynamicWidget(cy, {
       componentTag: 'sc-heatmap',
       viewportStart: START,
@@ -94,26 +94,26 @@ describe('heatmap', () => {
     cy.matchImageSnapshotOnCI();
   });
 
-  it('renders 1 negative bucket', () => {
-    visitDynamicWidget(cy, {
-      componentTag: 'sc-heatmap',
-      viewportStart: START,
-      viewportEnd: END,
-      dataStreams: [
-        {
-          ...DATA_STREAM_1,
-          data: [
-            {
-              x: new Date(2000, 0, 0, 0, 0, 45).getTime(),
-              y: -40,
-            },
-          ],
-        },
-      ],
-    });
+  // it('renders 1 negative bucket', () => {
+  //   visitDynamicWidget(cy, {
+  //     componentTag: 'sc-heatmap',
+  //     viewportStart: START,
+  //     viewportEnd: END,
+  //     dataStreams: [
+  //       {
+  //         ...DATA_STREAM_1,
+  //         data: [
+  //           {
+  //             x: new Date(2000, 0, 0, 0, 0, 45).getTime(),
+  //             y: -40,
+  //           },
+  //         ],
+  //       },
+  //     ],
+  //   });
 
-    cy.waitForChart();
+  //   cy.waitForChart();
 
-    cy.matchImageSnapshotOnCI();
-  });
+  //   cy.matchImageSnapshotOnCI();
+  // });
 });
