@@ -8,7 +8,7 @@ import { NO_VALUE_PRESENT } from '../common/terms';
  */
 export const Value = ({ isEnabled = true, value, unit }: { isEnabled?: boolean; value?: Primitive; unit?: string }) => {
   if (!isEnabled || value == null) {
-    return NO_VALUE_PRESENT;
+    return <span data-testid="no-value-present">{NO_VALUE_PRESENT}</span>;
   }
 
   if (typeof value === 'number') {
