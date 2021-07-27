@@ -4,6 +4,7 @@ import { DataType } from '../../../utils/dataConstants';
 import { CHANGE_RESOLUTION } from './heatmapConstants';
 
 export type HeatValueMap = {
+  maximumCount: number;
   [xBucketRangeStart: number]: {
     [bucketIndex: number]: {
       totalCount: number;
@@ -34,7 +35,7 @@ export const calculateXBucketStart = ({ xValue, xBucketRange }: { xValue: number
  * datastream name.
  */
 export const addCount = ({
-  heatValue = {},
+  heatValue = { maximumCount: 0 },
   xBucketRangeStart,
   bucketIndex,
   dataStreamId,
@@ -45,7 +46,7 @@ export const addCount = ({
   dataStreamId: string;
 }): HeatValueMap => {
   if (!dataStreamId) {
-    return {};
+    return { maximumCount: 0 };
   }
   const newHeatValue: HeatValueMap = heatValue;
   newHeatValue[xBucketRangeStart] = heatValue[xBucketRangeStart] ?? {};
@@ -57,6 +58,10 @@ export const addCount = ({
     heatValue[xBucketRangeStart][bucketIndex].streamCount[dataStreamId] ?? 0;
   newHeatValue[xBucketRangeStart][bucketIndex].streamCount[dataStreamId] += 1;
   newHeatValue[xBucketRangeStart][bucketIndex].totalCount += 1;
+  newHeatValue.maximumCount = Math.max(
+    newHeatValue[xBucketRangeStart][bucketIndex].totalCount,
+    newHeatValue.maximumCount
+  );
   return heatValue;
 };
 
@@ -65,7 +70,7 @@ export const addCount = ({
  * returns updated HeatValueMap with the aggregated data from the dataStreams.
  */
 export const calcHeatValues = ({
-  oldHeatValue = {},
+  oldHeatValue = { maximumCount: 0 },
   dataStreams,
   xBucketRange,
   viewport,
@@ -80,7 +85,7 @@ export const calcHeatValues = ({
   const { yMax, yMin } = viewport;
   return dataStreams.reduce(function reduceDataStream(newHeatValue, dataStream) {
     if (dataStream.dataType !== DataType.NUMBER) {
-      return {};
+      return { maximumCount: 0 };
     }
     return dataStream.data.reduce(function reduceData(tempHeatValue, currPoint) {
       const xBucketRangeStart = calculateXBucketStart({ xValue: currPoint.x, xBucketRange });
