@@ -33,7 +33,7 @@ export class ScStatusTimelineOverlay {
   /**
    * Emit the current widget configuration
    */
-  emitUpdatedWidgetConfiguration = (dataStreams: DataStream[] | undefined) => {
+  emitUpdatedWidgetConfiguration = (dataStreams?: DataStream[]) => {
     const configUpdate: WidgetConfigurationUpdate = {
       movement: undefined,
       scale: undefined,

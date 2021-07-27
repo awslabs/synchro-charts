@@ -17,7 +17,7 @@ export type RenderAnnotationsOptions = {
     hasAnnotationChanged: boolean
   ) => void;
   activeViewPort: () => ViewPort;
-  emitUpdatedWidgetConfiguration: (dataStreams: DataStream[] | undefined) => void;
+  emitUpdatedWidgetConfiguration: (dataStreams?: DataStream[]) => void;
 };
 
 type AnnotationPredicate = (annotation: Annotation<AnnotationValue>) => boolean;

@@ -15,7 +15,7 @@ export type DraggableAnnotationsOptions = {
     hasAnnotationChanged: boolean
   ) => void;
   activeViewPort: () => ViewPort;
-  emitUpdatedWidgetConfiguration: (dataStreams: DataStream[] | undefined) => void;
+  emitUpdatedWidgetConfiguration: (dataStreams?: DataStream[]) => void;
 };
 
 /**
@@ -101,7 +101,7 @@ export const draggable = ({
           }
           select(this).classed('active', false);
           /** emit event updating annotation on mouse up */
-          emitUpdatedWidgetConfiguration(undefined);
+          emitUpdatedWidgetConfiguration();
         }
       }) as any
   );
