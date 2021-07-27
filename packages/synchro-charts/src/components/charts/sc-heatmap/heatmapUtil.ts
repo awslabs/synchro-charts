@@ -1,7 +1,7 @@
 import { DataStream, ViewPort } from '../../../utils/dataTypes';
 import { SECOND_IN_MS, MINUTE_IN_MS, HOUR_IN_MS, DAY_IN_MS, MONTH_IN_MS, YEAR_IN_MS } from '../../../utils/time';
 import { DataType } from '../../../utils/dataConstants';
-import { BUCKET_COUNT, CHANGE_RESOLUTION, Y_RANGE_BOUNDARY } from './heatmapConstants';
+import { CHANGE_RESOLUTION } from './heatmapConstants';
 
 export type HeatValueMap = {
   [xBucketRangeStart: number]: {
@@ -196,9 +196,7 @@ export const shouldRerenderOnViewportChange = ({
   const { yMin: prevYMin, yMax: prevYMax, start: prevStart, end: prevEnd } = oldViewport;
   const { yMin: newYMin, yMax: newYMax, start: newStart, end: newEnd } = newViewport;
 
-  const prevYRange = prevYMax - prevYMin;
-  const yBoundary = (prevYRange / BUCKET_COUNT) * Y_RANGE_BOUNDARY;
-  if (Math.abs(prevYMin - newYMin) > yBoundary || Math.abs(prevYMax - newYMax) > yBoundary) {
+  if (prevYMin !== newYMin || prevYMax !== newYMax) {
     return true;
   }
 

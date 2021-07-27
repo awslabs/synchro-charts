@@ -14,7 +14,7 @@ const TEST_DATA_POINT: DataPoint<number>[] = Array.from({ length: 7 }, (_, index
 
 const CHART_SIZE = { width: 200, height: 200 };
 
-describe('buckets', () => {
+describe('chartScene', () => {
   it('increases buffer size when number of data points surpasses min buffer size', () => {
     const container = document.createElement('div');
     const scene = chartScene({
@@ -53,6 +53,7 @@ describe('buckets', () => {
       thresholds: [],
       hasAnnotationChanged: false,
       hasSizeChanged: false,
+      shouldRerender: true,
     });
 
     // since buffers have resized, a new scene with a new id should be created.

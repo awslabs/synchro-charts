@@ -100,7 +100,6 @@ export namespace Components {
         "title": string;
     }
     interface ScHeatmap {
-        "alarms"?: AlarmsConfig;
         "axis"?: Axis.Options;
         /**
           * Memory Management
@@ -1511,7 +1510,6 @@ declare namespace LocalJSX {
         "title"?: string;
     }
     interface ScHeatmap {
-        "alarms"?: AlarmsConfig;
         "axis"?: Axis.Options;
         /**
           * Memory Management

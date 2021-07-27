@@ -1,7 +1,6 @@
 import { Component, h, Prop } from '@stencil/core';
 
 import {
-  AlarmsConfig,
   DataStream,
   MessageOverrides,
   MinimalSizeConfig,
@@ -38,12 +37,10 @@ export class ScHeatmap implements ChartConfig {
   @Prop() size?: MinimalSizeConfig;
   @Prop() widgetId!: string;
   @Prop() dataStreams!: DataStream[];
-  @Prop() alarms?: AlarmsConfig;
   @Prop() gestures: boolean = true;
-  @Prop() requestData?: RequestDataFn;
+  @Prop() requestData?: RequestDataFn; // must pass in raw data
   @Prop() axis?: Axis.Options;
   @Prop() messageOverrides?: MessageOverrides;
-  // @Prop() heatValues: HeatValueMap;
   /** Status */
   @Prop() isEditing: boolean = false;
   /** Memory Management */
@@ -69,7 +66,6 @@ export class ScHeatmap implements ChartConfig {
               ...size,
             }}
             dataStreams={this.dataStreams}
-            alarms={this.alarms}
             viewport={this.viewport}
             minBufferSize={this.minBufferSize}
             bufferFactor={this.bufferFactor}

@@ -1,7 +1,16 @@
 import { DataType } from '../../../utils/dataConstants';
 import { DataPoint, DataStream, ViewPort } from '../../../utils/dataTypes';
-import { calculateBucketIndex, HeatValueMap, addCount, calcHeatValues, calculateXBucketStart, getXBucketRange } from './heatmapUtil';
-import { DAY_IN_MS, displayDate, HOUR_IN_MS, MINUTE_IN_MS, MONTH_IN_MS, SECOND_IN_MS } from '../../../utils/time';
+import {
+  calculateBucketIndex,
+  HeatValueMap,
+  addCount,
+  calcHeatValues,
+  calculateXBucketStart,
+  getXBucketRange,
+  displayDate,
+  shouldRerenderOnViewportChange,
+} from './heatmapUtil';
+import { DAY_IN_MS, HOUR_IN_MS, MINUTE_IN_MS, MONTH_IN_MS, SECOND_IN_MS } from '../../../utils/time';
 import { BUCKET_COUNT } from './heatmapConstants';
 
 const VIEWPORT: ViewPort = {
@@ -69,10 +78,10 @@ describe.each`
 });
 
 describe.each`
-  xValue                          | xBucketRange | bucketRangeStart
-  ${START_TIME}                   | ${MONTH_IN_MS}   | ${1620000000000}
-  ${START_TIME + MONTH_IN_MS * 2} | ${MONTH_IN_MS}   | ${1625184000000}
-  ${START_TIME + MONTH_IN_MS * 5} | ${MONTH_IN_MS}   | ${1632960000000}
+  xValue                          | xBucketRange   | bucketRangeStart
+  ${START_TIME}                   | ${MONTH_IN_MS} | ${1620000000000}
+  ${START_TIME + MONTH_IN_MS * 2} | ${MONTH_IN_MS} | ${1625184000000}
+  ${START_TIME + MONTH_IN_MS * 5} | ${MONTH_IN_MS} | ${1632960000000}
 `('calculateXBucketStart', ({ xValue, xBucketRange, bucketRangeStart }) => {
   test(`bucket range start for ${xValue}`, () => {
     expect(calculateXBucketStart({ xValue, xBucketRange })).toBe(bucketRangeStart);
@@ -205,24 +214,44 @@ describe('calcHeatValues', () => {
 });
 
 describe.each`
-  start                                        | end                                | xBucketRange
-  ${new Date(2000, 0, 0, 0)}                   | ${new Date(2000, 0, 0, 0, 0, 1)}   | ${SECOND_IN_MS}
-  ${new Date(2000, 0, 0, 0)}                   | ${new Date(2000, 0, 0, 0, 3)}      | ${MINUTE_IN_MS}
-  ${new Date(2000, 0, 0, 0)}                   | ${new Date(2000, 0, 0, 3)}         | ${HOUR_IN_MS}
-  ${new Date(2000, 0, 0, 0)}                   | ${new Date(2000, 0, 4)}            | ${DAY_IN_MS}
-  ${new Date(2000, 0, 0, 0)}                   | ${new Date(2000, 5, 0)}            | ${MONTH_IN_MS}
+  start                      | end                              | xBucketRange
+  ${new Date(2000, 0, 0, 0)} | ${new Date(2000, 0, 0, 0, 0, 1)} | ${SECOND_IN_MS}
+  ${new Date(2000, 0, 0, 0)} | ${new Date(2000, 0, 0, 0, 3)}    | ${MINUTE_IN_MS}
+  ${new Date(2000, 0, 0, 0)} | ${new Date(2000, 0, 0, 3)}       | ${HOUR_IN_MS}
+  ${new Date(2000, 0, 0, 0)} | ${new Date(2000, 0, 4)}          | ${DAY_IN_MS}
+  ${new Date(2000, 0, 0, 0)} | ${new Date(2000, 5, 0)}          | ${MONTH_IN_MS}
 `('getXBucketRange', ({ start, end, xBucketRange }) => {
-  test(`x bucket range for start: ${start}`, () => {
-    expect(getXBucketRange({ start, end})).toBe(xBucketRange);
+  test(`x bucket range for start: ${start} and end: ${end}`, () => {
+    expect(getXBucketRange({ start, end })).toBe(xBucketRange);
   });
 });
 
 describe('displayDate', () => {
-  it('returns date range in mm/dd hh', () => {
-    const xBucketStart = new Date(2000, 0, 0);
-    const xBucketEnd = new Date(2000, 0, 4);
+  it('returns date range in month, date, year', () => {
+    const dates = [new Date(2000, 0, 0), new Date(2000, 0, 4)];
     const start = new Date(2000, 0, 0);
     const end = new Date(2000, 0, 10);
-    expect(displayDate([xBucketStart, xBucketEnd], {start, end}));
-  })
-})
+    expect(displayDate(dates, { start, end })).toEqual('12/31/1999 - 1/4/2000');
+  });
+
+  it('returns date range in month, day, hour', () => {
+    const dates = [new Date(2000, 0, 0), new Date(2000, 0, 4)];
+    const start = new Date(2000, 0, 0);
+    const end = new Date(2000, 0, 5);
+    expect(displayDate(dates, { start, end })).toEqual('12/31, 12 AM - 1/4, 12 AM');
+  });
+});
+
+describe('shouldRerenderOnViewportChange', () => {
+  it('returns true on viewport yMin/Max change', () => {
+    const oldViewport: ViewPort = { yMax: 100, yMin: 0, start: new Date(), end: new Date() };
+    const newViewport: ViewPort = { yMax: 90, yMin: 0, start: new Date(), end: new Date() };
+    expect(shouldRerenderOnViewportChange({ oldViewport, newViewport })).toBeTrue();
+  });
+
+  it('returns true on x bucket range change', () => {
+    const oldViewport: ViewPort = { yMax: 100, yMin: 0, start: new Date(2000, 0, 0), end: new Date(2000, 0, 0, 0, 1) };
+    const newViewport: ViewPort = { yMax: 100, yMin: 0, start: new Date(2000, 0, 0), end: new Date(2000, 0, 1) };
+    expect(shouldRerenderOnViewportChange({ oldViewport, newViewport })).toBeTrue();
+  });
+});
