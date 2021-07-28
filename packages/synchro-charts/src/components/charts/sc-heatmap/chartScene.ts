@@ -22,8 +22,14 @@ const numBuckets = (heatValues: HeatValueMap): number => {
 const getHeatValue = ({ viewport, dataStreams }: { viewport: ViewPort; dataStreams: DataStream[] }) => {
   const xBucketRange = getXBucketRange(viewport);
   return dataStreams.length !== 0
-    ? calcHeatValues({ oldHeatValue: {}, dataStreams, xBucketRange, viewport, bucketCount: BUCKET_COUNT })
-    : {};
+    ? calcHeatValues({
+        oldHeatValues: { maxHeatValue: 0, minHeatValue: Infinity },
+        dataStreams,
+        xBucketRange,
+        viewport,
+        bucketCount: BUCKET_COUNT,
+      })
+    : { maxHeatValue: 0, minHeatValue: Infinity };
 };
 
 export const chartScene: ChartSceneCreator = ({

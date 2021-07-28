@@ -17,7 +17,6 @@ import { getXBucketWidth, getSequential, getBucketColor, getYBucketHeight } from
 import { HeatValueMap, getXBucketRange } from './heatmapUtil';
 import { BUCKET_COUNT } from './heatmapConstants';
 import { DataStream, ViewPort } from '../../../utils/dataTypes';
-import { SECOND_IN_MS } from '../../../utils/time';
 
 type BucketBufferGeometry = BufferGeometry & {
   attributes: {
@@ -45,13 +44,11 @@ const NUM_COLOR_COMPONENTS = 3; // (r, g, b)
 export const COLOR_PALETTE = getSequential();
 
 const updateMesh = ({
-  dataStreams,
   mesh,
   toClipSpace,
   viewport,
   heatValues,
 }: {
-  dataStreams: DataStream[];
   mesh: HeatmapBucketMesh;
   toClipSpace: (time: number) => number;
   viewport: ViewPort;
@@ -73,10 +70,11 @@ const updateMesh = ({
       bucket.array[positionIndex] = toClipSpace(+xAxisBucketStart + xBucketRange);
       bucket.array[positionIndex + 1] = yMin + +bucketIndex * ((yMax - yMin) / BUCKET_COUNT);
 
+      console.log(heatValues);
       const [r, g, b] = getBucketColor(
         COLOR_PALETTE,
-        heatValues[xAxisBucketStart][bucketIndex].totalCount,
-        (xBucketRange / SECOND_IN_MS) * dataStreams.length
+        heatValues[xAxisBucketStart][bucketIndex].bucketHeatValue,
+        heatValues.maxHeatValue - heatValues.minHeatValue + 1
       );
       color.array[colorIndex] = r;
       color.array[colorIndex + 1] = g;
@@ -164,7 +162,7 @@ export const bucketMesh = ({
   });
 
   const mesh = <HeatmapBucketMesh>new InstancedMesh(instGeo, heatmapMaterial, bufferSize);
-  updateMesh({ dataStreams, mesh, toClipSpace, viewport, heatValues });
+  updateMesh({ mesh, toClipSpace, viewport, heatValues });
 
   // Prevent bounding sphere from being called
   mesh.frustumCulled = false;
@@ -201,6 +199,6 @@ export const updateBucketMesh = ({
         : 0;
     // eslint-disable-next-line no-param-reassign
     buckets.material.uniforms.bucketHeight.value = getYBucketHeight(viewport);
-    updateMesh({ dataStreams, mesh: buckets, toClipSpace, viewport, heatValues });
+    updateMesh({ mesh: buckets, toClipSpace, viewport, heatValues });
   }
 };

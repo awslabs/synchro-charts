@@ -89,7 +89,7 @@ export const getBucketColor = (
   countInBucket: number,
   totalPossiblePoints: number
 ): number[] => {
-  if (countInBucket >= totalPossiblePoints) {
+  if (countInBucket === totalPossiblePoints) {
     return [
       colorArray.r[NUM_OF_COLORS_SEQUENTIAL - 1],
       colorArray.g[NUM_OF_COLORS_SEQUENTIAL - 1],
@@ -97,5 +97,7 @@ export const getBucketColor = (
     ];
   }
   const index = Math.floor((countInBucket / totalPossiblePoints) * NUM_OF_COLORS_SEQUENTIAL);
+  console.log(totalPossiblePoints);
+  console.log(index);
   return [colorArray.r[index], colorArray.g[index], colorArray.b[index]];
 };

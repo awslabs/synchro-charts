@@ -36,12 +36,12 @@ export const calculateXBucketStart = ({ xValue, xBucketRange }: { xValue: number
  * datastream name.
  */
 export const addCount = ({
-  heatValue = { maxHeatValue: 0, minHeatValue: Infinity },
+  heatValues = { maxHeatValue: 0, minHeatValue: Infinity },
   xBucketRangeStart,
   bucketIndex,
   dataStreamId,
 }: {
-  heatValue: HeatValueMap;
+  heatValues: HeatValueMap;
   xBucketRangeStart: number;
   bucketIndex: number;
   dataStreamId: string;
@@ -49,33 +49,37 @@ export const addCount = ({
   if (!dataStreamId) {
     return { maxHeatValue: 0, minHeatValue: 0 };
   }
-  const newHeatValue: HeatValueMap = heatValue;
-  newHeatValue[xBucketRangeStart] = heatValue[xBucketRangeStart] ?? {};
-  newHeatValue[xBucketRangeStart][bucketIndex] = heatValue[xBucketRangeStart][bucketIndex] ?? {
-    totalCount: 0,
+  const newHeatValues: HeatValueMap = heatValues;
+  newHeatValues[xBucketRangeStart] = heatValues[xBucketRangeStart] ?? {};
+  newHeatValues[xBucketRangeStart][bucketIndex] = heatValues[xBucketRangeStart][bucketIndex] ?? {
+    bucketHeatValue: 0,
     streamCount: {},
   };
-  newHeatValue[xBucketRangeStart][bucketIndex].streamCount[dataStreamId] =
-    heatValue[xBucketRangeStart][bucketIndex].streamCount[dataStreamId] ?? 0;
-  newHeatValue[xBucketRangeStart][bucketIndex].streamCount[dataStreamId] += 1;
-  newHeatValue[xBucketRangeStart][bucketIndex].bucketHeatValue += 1;
-  newHeatValue.maxHeatValue = Math.max(
-    newHeatValue.maxHeatValue,
-    newHeatValue[xBucketRangeStart][bucketIndex].bucketHeatValue
-  );
-  return heatValue;
+  newHeatValues[xBucketRangeStart][bucketIndex].streamCount[dataStreamId] =
+    heatValues[xBucketRangeStart][bucketIndex].streamCount[dataStreamId] ?? 0;
+  newHeatValues[xBucketRangeStart][bucketIndex].streamCount[dataStreamId] += 1;
+  newHeatValues[xBucketRangeStart][bucketIndex].bucketHeatValue += 1;
+  return heatValues;
 };
 
-export const calculateMinHeatValue = (heatValue: HeatValueMap): HeatValueMap => {
-  const newHeatValue: HeatValueMap = heatValue;
-  Object.keys(newHeatValue).forEach((xAxisBucketStart: string) => {
-    Object.keys(newHeatValue[xAxisBucketStart]).forEach((bucketIndex: string) => {
-      newHeatValue.minHeatValue = Math.min(
-        newHeatValue.minHeatValue,
-        newHeatValue[xAxisBucketStart][bucketIndex].bucketHeatValue
+/**
+ * Iterates through the heatValue and finds the minimum and maximum heat value out of all the buckets.
+ */
+export const calculateMinMaxHeatValue = (heatValues: HeatValueMap): HeatValueMap => {
+  const newHeatValues: HeatValueMap = heatValues;
+  Object.keys(newHeatValues).forEach((xAxisBucketStart: string) => {
+    Object.keys(newHeatValues[xAxisBucketStart]).forEach((bucketIndex: string) => {
+      newHeatValues.minHeatValue = Math.min(
+        newHeatValues.minHeatValue,
+        newHeatValues[xAxisBucketStart][bucketIndex].bucketHeatValue
+      );
+      newHeatValues.maxHeatValue = Math.max(
+        newHeatValues.maxHeatValue,
+        newHeatValues[xAxisBucketStart][bucketIndex].bucketHeatValue
       );
     });
   });
+  return newHeatValues;
 };
 
 /**
@@ -83,25 +87,25 @@ export const calculateMinHeatValue = (heatValue: HeatValueMap): HeatValueMap => 
  * returns updated HeatValueMap with the aggregated data from the dataStreams.
  */
 export const calcHeatValues = ({
-  oldHeatValue = { maxHeatValue: 0, minHeatValue: Infinity },
+  oldHeatValues = { maxHeatValue: 0, minHeatValue: Infinity },
   dataStreams,
   xBucketRange,
   viewport,
   bucketCount,
 }: {
-  oldHeatValue: HeatValueMap;
+  oldHeatValues: HeatValueMap;
   dataStreams: DataStream[];
   xBucketRange: number;
   viewport: ViewPort;
   bucketCount: number;
 }) => {
   const { yMax, yMin } = viewport;
-  return calculateMinHeatValue(
-    dataStreams.reduce(function reduceDataStream(newHeatValue, dataStream) {
+  return calculateMinMaxHeatValue(
+    dataStreams.reduce(function reduceDataStream(newHeatValues, dataStream) {
       if (dataStream.dataType !== DataType.NUMBER) {
         return { maxHeatValue: 0, minHeatValue: Infinity };
       }
-      return dataStream.data.reduce(function reduceData(tempHeatValue, currPoint) {
+      return dataStream.data.reduce(function reduceData(tempHeatValues, currPoint) {
         const xBucketRangeStart = calculateXBucketStart({ xValue: currPoint.x, xBucketRange });
         const bucketIndex = calculateBucketIndex({
           yValue: currPoint.y as number, // checked in line 85 if the data value is number
@@ -109,9 +113,9 @@ export const calcHeatValues = ({
           yMin,
           bucketCount,
         });
-        return addCount({ heatValue: tempHeatValue, xBucketRangeStart, bucketIndex, dataStreamId: dataStream.id });
-      }, newHeatValue);
-    }, oldHeatValue)
+        return addCount({ heatValues: tempHeatValues, xBucketRangeStart, bucketIndex, dataStreamId: dataStream.id });
+      }, newHeatValues);
+    }, oldHeatValues)
   );
 };
 
