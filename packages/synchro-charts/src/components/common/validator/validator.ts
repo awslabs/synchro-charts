@@ -1,7 +1,7 @@
 import parse from 'parse-duration';
-import { isMinimalStaticViewport } from '../../utils/predicates';
-import { isValidDate } from './validator/dateValidator';
-import { ChartConfig } from '../charts/common/types';
+import { isMinimalStaticViewport } from '../../../utils/predicates';
+import { isValidDate } from './dateValidator';
+import { ChartConfig } from '../../charts/common/types';
 
 export const validate = ({ viewport }: Partial<ChartConfig>): void => {
   // skips if viewport is undefine
@@ -12,7 +12,7 @@ export const validate = ({ viewport }: Partial<ChartConfig>): void => {
 
     if (
       !isMinimalStaticViewport(viewport) &&
-      viewport.duration === 'string' &&
+      typeof viewport.duration === 'string' &&
       parse(viewport.duration, 'ms') == null
     ) {
       throw new Error(`Unable to parse duration: '${viewport.duration}'`);
