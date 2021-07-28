@@ -106,11 +106,13 @@
     "lodash.throttle": "^4.1.1",
     "lodash.uniq": "^4.5.0",
     "lodash.uniqby": "^4.7.0",
+    "parse-duration": "^1.0.0",
     "redux": "^4.0.4",
     "redux-thunk": "^2.3.0",
     "resize-observer-polyfill": "^1.5.1",
     "three": "^0.112.1",
     "tippy.js": "^5.2.0",
-    "uuid": "^3.3.2"
+    "uuid": "^3.3.2",
+    "validator": "^13.6.0"
   }
 }

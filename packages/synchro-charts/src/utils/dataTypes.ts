@@ -90,13 +90,7 @@ export interface SizePositionConfig extends SizeConfig {
   bottom: number;
 }
 
-export interface MinimalViewPortConfig {
-  start?: Date;
-  end?: Date;
-
-  // include to specify that a widget is in live mode. in milliseconds.
-  duration?: number;
-
+interface MinimalViewportConfigBase {
   // The identifier for the viewport group which the widget will belong to. All widgets within a viewport group
   // will have their viewports 'synced' to the same value, i.e. if you pan on one chart, all charts within
   // the viewport group will view the same data.
@@ -111,22 +105,34 @@ export interface MinimalViewPortConfig {
   lastUpdatedBy?: string;
 }
 
+export interface MinimalStaticViewport extends MinimalViewportConfigBase {
+  start: Date | string;
+  end: Date | string;
+}
+
+export interface MinimalLiveViewport extends MinimalViewportConfigBase {
+  // include to specify that a widget is in live mode. in milliseconds.
+  duration: number | string;
+}
+
+export type MinimalViewPortConfig = MinimalStaticViewport | MinimalLiveViewport;
+
 /**
  * View Port
  *
  * The view port defines the domain and range of the data of which we would like to visualize/analyze.
  */
-export interface ViewPortConfig extends MinimalViewPortConfig {
+export type ViewPortConfig = MinimalViewPortConfig & {
   yMin: number;
   yMax: number;
-}
+};
 
-export interface ViewPort extends MinimalViewPortConfig {
+export type ViewPort = MinimalViewPortConfig & {
   start: Date;
   end: Date;
   yMin: number;
   yMax: number;
-}
+};
 
 /**
  * Alarms Configuration

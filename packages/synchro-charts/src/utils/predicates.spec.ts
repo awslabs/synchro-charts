@@ -1,5 +1,12 @@
-import { isNumber, isDefined, isNumberDataStream, isSupportedDataType, isValid } from './predicates';
-import { DataStream, DataStreamInfo } from './dataTypes';
+import {
+  isNumber,
+  isDefined,
+  isNumberDataStream,
+  isSupportedDataType,
+  isValid,
+  isMinimalStaticViewport,
+} from './predicates';
+import { DataStream, DataStreamInfo, MinimalLiveViewport, MinimalStaticViewport } from './dataTypes';
 import { DataType } from './dataConstants';
 
 describe('isDefined', () => {
@@ -138,5 +145,28 @@ describe('isNumber', () => {
     test(`${value}) is  ${expected ? '' : 'not '}a number`, () => {
       expect(isNumber(value)).toBe(expected);
     });
+  });
+});
+
+describe('isMinimalStaticViewPort', () => {
+  it('returns false when the viewport is minimal live viewport config', () => {
+    const viewport: MinimalLiveViewport = {
+      yMin: 0,
+      yMax: 10,
+      duration: 1000,
+    };
+
+    expect(isMinimalStaticViewport(viewport)).toBeFalse();
+  });
+
+  it('returns true when the viewport is minimal static viewport config', () => {
+    const viewport: MinimalStaticViewport = {
+      yMin: 0,
+      yMax: 10,
+      start: new Date(),
+      end: new Date(),
+    };
+
+    expect(isMinimalStaticViewport(viewport)).toBeTrue();
   });
 });
