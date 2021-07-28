@@ -18,6 +18,16 @@ import { VIEWPORT } from '../testUtil';
 import { highestPriorityThreshold, thresholdAppliesToDataStream } from './breachedThreshold';
 import { COMPARISON_OPERATOR } from '../constants';
 
+const BASE_Y_ANNOTATION: YAnnotation = {
+  color: 'red',
+  value: 30,
+  showValue: true,
+  label: {
+    text: 'label',
+    show: true,
+  },
+};
+
 describe('getValueAndText and getValueAndTextVisibility', () => {
   it('returns a text from annotation', () => {
     const annotationLabelText = 'new label';
@@ -43,13 +53,8 @@ describe('getValueAndText and getValueAndTextVisibility', () => {
     const value = 50;
     const yAnnotations: YAnnotation[] = [
       {
-        color: 'red',
+        ...BASE_Y_ANNOTATION,
         value,
-        showValue: true,
-        label: {
-          text: 'label',
-          show: true,
-        },
       },
     ];
 
@@ -57,6 +62,7 @@ describe('getValueAndText and getValueAndTextVisibility', () => {
       annotation: yAnnotations[0],
       resolution: 1000,
       viewport: VIEWPORT,
+      formatText: false,
     });
     expect(valueText).toBe(value.toString());
 
@@ -69,13 +75,8 @@ describe('getValueAndText and getValueAndTextVisibility', () => {
     const label = 'label';
     const yAnnotations: YAnnotation[] = [
       {
-        color: 'red',
+        ...BASE_Y_ANNOTATION,
         value,
-        showValue: true,
-        label: {
-          text: label,
-          show: true,
-        },
       },
     ];
     const valueAndText = getValueAndText({
@@ -95,13 +96,9 @@ describe('getValueAndText and getValueAndTextVisibility', () => {
     const label = 'label';
     const yAnnotations: YAnnotation[] = [
       {
-        color: 'red',
+        ...BASE_Y_ANNOTATION,
         value,
         showValue: false,
-        label: {
-          text: label,
-          show: true,
-        },
       },
     ];
     const valueAndText = getValueAndText({
@@ -148,6 +145,7 @@ describe('getValueAndText and getValueAndTextVisibility', () => {
       annotation: yAnnotations[0],
       resolution: 1000,
       viewport: VIEWPORT,
+      formatText: false,
     });
 
     expect(valueText).toBeEmpty();
@@ -174,6 +172,168 @@ describe('getValueAndText and getValueAndTextVisibility', () => {
 
     const displayMode = getLabelTextVisibility(yAnnotations[0]);
     expect(displayMode).toEqual('none');
+  });
+});
+
+describe('getValueAndText formattedText', () => {
+  it('returns rounded exponential value for very small numbers - edge', () => {
+    const value = 0.000000156;
+    const expectedDisplayValue = '1.6e-7';
+
+    const yAnnotations: YAnnotation[] = [
+      {
+        ...BASE_Y_ANNOTATION,
+        value,
+      },
+    ];
+
+    const valueText = getValueText({
+      annotation: yAnnotations[0],
+      resolution: 1000,
+      viewport: VIEWPORT,
+      formatText: true,
+    });
+
+    expect(valueText).toBe(expectedDisplayValue);
+  });
+
+  it('returns rounded exponential value for very small numbers - edge', () => {
+    const value = 0.0009987;
+    const expectedDisplayValue = '1.0e-3';
+    const yAnnotations: YAnnotation[] = [
+      {
+        ...BASE_Y_ANNOTATION,
+        value,
+      },
+    ];
+
+    const valueText = getValueText({
+      annotation: yAnnotations[0],
+      resolution: 1000,
+      viewport: VIEWPORT,
+      formatText: true,
+    });
+
+    expect(valueText).toBe(expectedDisplayValue);
+  });
+
+  it('returns rounded exponential value for very large numbers - edge', () => {
+    const value = 199999;
+    const expectedDisplayValue = '2.0e+5';
+    const yAnnotations: YAnnotation[] = [
+      {
+        ...BASE_Y_ANNOTATION,
+        value,
+      },
+    ];
+
+    const valueText = getValueText({
+      annotation: yAnnotations[0],
+      resolution: 1000,
+      viewport: VIEWPORT,
+      formatText: true,
+    });
+
+    expect(valueText).toBe(expectedDisplayValue);
+  });
+
+  it('returns rounded exponential value for very large numbers', () => {
+    const value = 9987654321;
+    const expectedDisplayValue = '1.0e+10';
+    const yAnnotations: YAnnotation[] = [
+      {
+        ...BASE_Y_ANNOTATION,
+        value,
+      },
+    ];
+
+    const valueText = getValueText({
+      annotation: yAnnotations[0],
+      resolution: 1000,
+      viewport: VIEWPORT,
+      formatText: true,
+    });
+
+    expect(valueText).toBe(expectedDisplayValue);
+  });
+
+  it('returns truncated value for small numbers - edge', () => {
+    const value = 0.0012345;
+    const expectedDisplayValue = '0.001';
+    const yAnnotations: YAnnotation[] = [
+      {
+        ...BASE_Y_ANNOTATION,
+        value,
+      },
+    ];
+
+    const valueText = getValueText({
+      annotation: yAnnotations[0],
+      resolution: 1000,
+      viewport: VIEWPORT,
+      formatText: true,
+    });
+    expect(valueText).toBe(expectedDisplayValue);
+  });
+
+  it('returns truncated value for small numbers', () => {
+    const value = 0.98765;
+    const expectedDisplayValue = '0.987';
+    const yAnnotations: YAnnotation[] = [
+      {
+        ...BASE_Y_ANNOTATION,
+        value,
+      },
+    ];
+
+    const valueText = getValueText({
+      annotation: yAnnotations[0],
+      resolution: 1000,
+      viewport: VIEWPORT,
+      formatText: true,
+    });
+
+    expect(valueText).toBe(expectedDisplayValue);
+  });
+
+  it('returns truncated value for large decimal values in range', () => {
+    const value = 12345.6789;
+    const expectedDisplayValue = '12345';
+    const yAnnotations: YAnnotation[] = [
+      {
+        ...BASE_Y_ANNOTATION,
+        value,
+      },
+    ];
+
+    const valueText = getValueText({
+      annotation: yAnnotations[0],
+      resolution: 1000,
+      viewport: VIEWPORT,
+      formatText: true,
+    });
+
+    expect(valueText).toBe(expectedDisplayValue);
+  });
+
+  it('returns truncated value for small decimal values in range', () => {
+    const value = 0.23456789;
+    const expectedDisplayValue = '0.234';
+    const yAnnotations: YAnnotation[] = [
+      {
+        ...BASE_Y_ANNOTATION,
+        value,
+      },
+    ];
+
+    const valueText = getValueText({
+      annotation: yAnnotations[0],
+      resolution: 1000,
+      viewport: VIEWPORT,
+      formatText: true,
+    });
+
+    expect(valueText).toBe(expectedDisplayValue);
   });
 });
 

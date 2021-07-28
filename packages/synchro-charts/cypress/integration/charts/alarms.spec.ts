@@ -5,6 +5,7 @@ import { MINUTE_IN_MS, SECOND_IN_MS } from '../../../src/utils/time';
 import {
   CHART_TOOLTIP_SELECTOR,
   CHART_VIZ_CONTAINER_SELECTOR,
+  NO_VALUE_PRESENT_SELECTOR,
   STATUS_TIMELINE_OVERLAY_ROW_SELECTOR,
   visitDynamicWidget,
 } from '../../../src/testing/selectors';
@@ -80,25 +81,65 @@ describe('when provided alarm data through a `dynamic-widget`', () => {
 
   describe('widgets determine whether to visualize alarm data or not', () => {
     describe('kpi', () => {
-      it('visualizes that an associated alarm stream is in alarm', () => {
+      it('displays property when alarm stream present but has no data', () => {
         visitDynamicWidget(cy, {
           componentTag: 'sc-kpi',
-          dataStreams: [NUMERICAL_ALARM_STREAM, PROPERTY_STREAM],
+          dataStreams: [{ ...NUMERICAL_ALARM_STREAM, data: [] }, PROPERTY_STREAM],
           annotations: { y: [ALARM_THRESHOLD] },
           duration: MINUTE_IN_MS,
           viewportStart,
           viewportEnd,
         });
 
+        cy.get('sc-kpi')
+          .contains('15 mph')
+          .should('be.visible');
+
+        cy.get('sc-chart-icon').should('not.exist');
+        cy.get('sc-kpi')
+          .get(NO_VALUE_PRESENT_SELECTOR)
+          .should('not.exist');
+
+        cy.matchImageSnapshotOnCI();
+      });
+
+      it('visualizes that an associated alarm stream is in alarm', () => {
+        visitDynamicWidget(cy, {
+          componentTag: 'sc-kpi',
+          dataStreams: [NUMERICAL_ALARM_STREAM, PROPERTY_STREAM],
+          annotations: { y: [ALARM_THRESHOLD] },
+          duration: MINUTE_IN_MS,
+        });
+
         cy.get('sc-chart-icon').should('be.visible');
         cy.get('sc-chart-icon').should('have.length', 1);
 
-        // Expect to see both cells to convey an alarmed status
         cy.matchImageSnapshotOnCI();
       });
     });
 
     describe('status-grid', () => {
+      it('displays as empty when alarm is empty but property stream is not', () => {
+        visitDynamicWidget(cy, {
+          componentTag: 'sc-status-grid',
+          dataStreams: [{ ...NUMERICAL_ALARM_STREAM, data: [] }, PROPERTY_STREAM],
+          annotations: { y: [ALARM_THRESHOLD] },
+          duration: MINUTE_IN_MS,
+          viewportStart,
+          viewportEnd,
+        });
+
+        cy.get('sc-status-grid')
+          .contains('Value: 15 mph')
+          .should('be.visible');
+
+        cy.get('sc-status-grid')
+          .get(NO_VALUE_PRESENT_SELECTOR)
+          .should('be.visible');
+
+        cy.matchImageSnapshotOnCI();
+      });
+
       it('visualizes that an associated alarm stream is in alarm', () => {
         visitDynamicWidget(cy, {
           componentTag: 'sc-status-grid',

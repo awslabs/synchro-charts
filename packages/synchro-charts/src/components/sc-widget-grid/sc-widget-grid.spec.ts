@@ -6,7 +6,7 @@ import { DATA_STREAMS } from '../charts/common/tests/chart/constants';
 import { DEFAULT_CHART_CONFIG } from '../charts/sc-webgl-base-chart/chartDefaults';
 import { update } from '../charts/common/tests/merge';
 import { ScWidgetGrid } from './sc-widget-grid';
-import { DataPoint, MinimalViewPortConfig } from '../../utils/dataTypes';
+import { DataPoint, MinimalStaticViewport, MinimalViewPortConfig } from '../../utils/dataTypes';
 import { DAY_IN_MS, MINUTE_IN_MS } from '../../utils/time';
 import { CellOptions, RenderCell } from './types';
 import {
@@ -23,7 +23,8 @@ const mockCurrentTime = (mockedDate: Date) => {
 };
 
 const VIEWPORT: MinimalViewPortConfig = {
-  ...DEFAULT_CHART_CONFIG.viewport,
+  yMin: DEFAULT_CHART_CONFIG.viewport.yMin,
+  yMax: DEFAULT_CHART_CONFIG.viewport.yMax,
   duration: MINUTE_IN_MS,
 };
 
@@ -94,11 +95,13 @@ describe('when enabled', () => {
 
 describe('updating the viewport', () => {
   it('updates the viewport and renders a cell with the data point that was previously outside of the viewport', async () => {
-    const laterDate = new Date(VIEWPORT.end!.getTime() + MINUTE_IN_MS);
+    const laterDate = new Date(
+      ((DEFAULT_CHART_CONFIG.viewport as MinimalStaticViewport).end as Date).getTime() + MINUTE_IN_MS
+    );
     const SOME_LATER_POINT: DataPoint<number> = { y: 111, x: laterDate.getTime() };
 
     const { renderCell, widgetGrid, page } = await widgetGridSpecPage({
-      viewport: VIEWPORT,
+      viewport: DEFAULT_CHART_CONFIG.viewport,
       dataStreams: [
         {
           ...DATA_STREAM,
@@ -115,7 +118,7 @@ describe('updating the viewport', () => {
 
     update(widgetGrid, {
       viewport: {
-        ...VIEWPORT,
+        ...DEFAULT_CHART_CONFIG.viewport,
         end: laterDate,
       },
     });
@@ -155,42 +158,17 @@ describe('updating the viewport', () => {
     );
   });
 
-  it('updates the viewport based on duration and a start date', async () => {
+  it('updates the viewport based on a start date and end date', async () => {
     const { renderCell, widgetGrid, page } = await widgetGridSpecPage({
       viewport: VIEWPORT,
     });
 
     const startDate = new Date(2000, 0, 0);
+    const endDate = new Date(2000, 1, 0);
 
     update(widgetGrid, {
       viewport: {
-        duration: DAY_IN_MS,
         start: startDate,
-      },
-    });
-
-    await page.waitForChanges();
-
-    expect(renderCell).toHaveBeenLastCalledWith(
-      expect.objectContaining({
-        viewport: {
-          start: startDate,
-          end: new Date(startDate.getTime() + DAY_IN_MS),
-        },
-      })
-    );
-  });
-
-  it('updates the viewport based on duration and a end date', async () => {
-    const { renderCell, widgetGrid, page } = await widgetGridSpecPage({
-      viewport: VIEWPORT,
-    });
-
-    const endDate = new Date(2000, 0, 0);
-
-    update(widgetGrid, {
-      viewport: {
-        duration: DAY_IN_MS,
         end: endDate,
       },
     });
@@ -200,7 +178,7 @@ describe('updating the viewport', () => {
     expect(renderCell).toHaveBeenLastCalledWith(
       expect.objectContaining({
         viewport: {
-          start: new Date(endDate.getTime() - DAY_IN_MS),
+          start: startDate,
           end: endDate,
         },
       })
@@ -209,10 +187,17 @@ describe('updating the viewport', () => {
 });
 
 describe('live time frame', () => {
-  const POINT: DataPoint<number> = { x: (VIEWPORT.end as Date).getTime(), y: 100 };
-  const STRING_POINT: DataPoint<string> = { x: (VIEWPORT.end as Date).getTime(), y: 'im a string!' };
+  const POINT: DataPoint<number> = {
+    x: ((DEFAULT_CHART_CONFIG.viewport as MinimalStaticViewport).end as Date).getTime(),
+    y: 100,
+  };
+  const STRING_POINT: DataPoint<string> = {
+    x: ((DEFAULT_CHART_CONFIG.viewport as MinimalStaticViewport).end as Date).getTime(),
+    y: 'im a string!',
+  };
 
   it('does render cell with string data', async () => {
+    mockCurrentTime((DEFAULT_CHART_CONFIG.viewport as MinimalStaticViewport).end as Date);
     const stream = { ...STRING_STREAM_1, data: [STRING_POINT] };
     const { renderCell } = await widgetGridSpecPage({
       dataStreams: [stream],
@@ -251,7 +236,12 @@ describe('live time frame', () => {
     const stream = {
       ...DATA_STREAM,
       // Shift point to be one minute past the end of the viewport
-      data: [{ ...POINT, x: (VIEWPORT.end as Date).getTime() + MINUTE_IN_MS }],
+      data: [
+        {
+          ...POINT,
+          x: ((DEFAULT_CHART_CONFIG.viewport as MinimalStaticViewport).end as Date).getTime() + MINUTE_IN_MS,
+        },
+      ],
     };
 
     const { renderCell } = await widgetGridSpecPage({
@@ -377,8 +367,7 @@ describe('live time frame', () => {
 
 describe('historical time frame', () => {
   const NON_LIVE_VIEWPORT: MinimalViewPortConfig = {
-    ...VIEWPORT,
-    duration: undefined,
+    ...DEFAULT_CHART_CONFIG.viewport,
   };
 
   it('renders cell as disabled', async () => {

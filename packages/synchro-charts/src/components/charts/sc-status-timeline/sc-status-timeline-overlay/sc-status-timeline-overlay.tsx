@@ -7,6 +7,7 @@ import { NameValue, updateName } from '../../../sc-data-stream-name/helper';
 import { getDataPoints } from '../../../../utils/getDataPoints';
 
 import { DATA_ALIGNMENT, StatusIcon } from '../../common/constants';
+import { getDataStreamForEventing } from '../../common';
 
 const SMUDGE_WIDTH_PX = 1; // We slice off a tiny bit of width to prevent some pixels showing under antialiasing
 
@@ -30,26 +31,40 @@ export class ScStatusTimelineOverlay {
   widgetUpdated: EventEmitter<WidgetConfigurationUpdate>;
 
   /**
+   * Emit the current widget configuration
+   */
+  emitUpdatedWidgetConfiguration = (dataStreams?: DataStream[]): void => {
+    const configUpdate: WidgetConfigurationUpdate = {
+      movement: undefined,
+      scale: undefined,
+      layout: undefined,
+      legend: undefined,
+      annotations: undefined, // thresholds here are not the same as annotations?
+      axis: undefined,
+      widgetId: this.widgetId,
+      dataStreams: dataStreams ? getDataStreamForEventing(dataStreams) : this.dataStreams,
+    };
+    this.widgetUpdated.emit(configUpdate);
+  };
+
+  /**
    * On Widget Updated - Persist `DataStreamInfo`
    *
    * Emits an event which persists the current `NameValue[]` state into the
    * data stream info.
    */
   onWidgetUpdated() {
-    const { widgetId, dataStreams } = this;
     // Construct the config update with the new names specified.
-    const configUpdate: WidgetConfigurationUpdate = {
-      widgetId,
-      dataStreams: dataStreams.map(info => {
-        const nameValue = this.names.find(({ id: nameId }) => info.id === nameId);
-        const name = nameValue != null ? nameValue.name : info.name;
-        return {
-          id: info.id,
-          name,
-        };
-      }),
-    };
-    this.widgetUpdated.emit(configUpdate);
+    const updatedDataStreams = this.dataStreams.map(info => {
+      const nameValue = this.names.find(({ id: nameId }) => info.id === nameId);
+      const name = nameValue != null ? nameValue.name : info.name;
+      return {
+        ...info,
+        name,
+      };
+    });
+
+    this.emitUpdatedWidgetConfiguration(updatedDataStreams);
   }
 
   onChangeLabel = ({ streamId, name }: { streamId: string; name: string }): void => {
