@@ -1,7 +1,7 @@
 import { DataStream, ViewPort } from '../../../utils/dataTypes';
 import { SECOND_IN_MS, MINUTE_IN_MS, HOUR_IN_MS, DAY_IN_MS, MONTH_IN_MS, YEAR_IN_MS } from '../../../utils/time';
 import { DataType } from '../../../utils/dataConstants';
-import { CHANGE_X_BUCKET_RANGE_BOUNDARY } from './heatmapConstants';
+import { CHANGE_X_BUCKET_RANGE_AT } from './heatmapConstants';
 
 export type HeatValueMap = {
   maxHeatValue: number;
@@ -123,13 +123,13 @@ export const getXBucketRange = ({ start, end }: { start: Date; end: Date }): num
   if (duration > 90 * DAY_IN_MS) {
     return MONTH_IN_MS;
   }
-  if (duration > CHANGE_X_BUCKET_RANGE_BOUNDARY * 2 * DAY_IN_MS) {
+  if (duration > CHANGE_X_BUCKET_RANGE_AT * 2 * DAY_IN_MS) {
     return DAY_IN_MS;
   }
-  if (duration > CHANGE_X_BUCKET_RANGE_BOUNDARY * HOUR_IN_MS) {
+  if (duration > CHANGE_X_BUCKET_RANGE_AT * HOUR_IN_MS) {
     return HOUR_IN_MS;
   }
-  if (duration > CHANGE_X_BUCKET_RANGE_BOUNDARY * MINUTE_IN_MS) {
+  if (duration > CHANGE_X_BUCKET_RANGE_AT * MINUTE_IN_MS) {
     return MINUTE_IN_MS;
   }
   return SECOND_IN_MS;
