@@ -1,4 +1,4 @@
-import { validate } from './validator';
+import { validate } from './validate';
 
 it('is valid with an undefined viewport', () => expect(() => validate({ viewport: undefined })).not.toThrowError());
 

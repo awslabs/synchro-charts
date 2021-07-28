@@ -1,4 +1,4 @@
-import { isValidDate } from './dateValidator';
+import { isValidDate } from './isValidDate';
 
 it('returns true when its a date object', () => {
   expect(isValidDate(new Date())).toBeTrue();

@@ -1,6 +1,6 @@
 import parse from 'parse-duration';
 import { isMinimalStaticViewport } from '../../../utils/predicates';
-import { isValidDate } from './dateValidator';
+import { isValidDate } from './isValidDate';
 import { ChartConfig } from '../../charts/common/types';
 
 export const validate = ({ viewport }: Partial<ChartConfig>): void => {
