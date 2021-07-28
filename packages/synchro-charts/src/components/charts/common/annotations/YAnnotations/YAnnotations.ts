@@ -4,7 +4,6 @@ import { ANNOTATION_FONT_SIZE, ANNOTATION_STROKE_WIDTH } from '../constants';
 import { getY } from './utils';
 import { getText, getColor, getValueText, getLabelTextVisibility, getValueTextVisibility } from '../utils';
 import { ViewPort } from '../../../../../utils/dataTypes';
-import { Y_ANNOTATION } from '../../../../../testing/test-routes/charts/constants';
 
 const PADDING = 5;
 const Y_ANNOTATION_TEXT_PADDING = 3;
@@ -53,7 +52,6 @@ export const renderYAnnotationsEditable = ({
       height,
       viewport,
     });
-  // TODO update getYPosition with CACHING!
 
   const getYHandleWidth = (yAnnotation: YAnnotation): number =>
     getValueTextVisibility(yAnnotation) === 'inline' ? HANDLE_WIDTH : SMALL_HANDLE_WIDTH;
@@ -62,6 +60,7 @@ export const renderYAnnotationsEditable = ({
     getValueTextVisibility(yAnnotation) === 'inline'
       ? width + DRAGGABLE_LINE_OFFSET_X + DRAGGABLE_LINE_SEPARATION
       : width + SMALL_DRAGGABLE_LINE_OFFSET_X + DRAGGABLE_LINE_SEPARATION;
+
   const getDraggableLineOneX = (yAnnotation: YAnnotation): number =>
     getValueTextVisibility(yAnnotation) === 'inline'
       ? width + DRAGGABLE_LINE_OFFSET_X
@@ -69,8 +68,10 @@ export const renderYAnnotationsEditable = ({
 
   const getYAnnotationHandleY = (yAnnotation: YAnnotation): number => getYPosition(yAnnotation) + HANDLE_OFFSET_Y;
 
-  /** --------------------------- TYPE TWO ----------------------------------- */
-  /** Not Editable Annotations */
+  const getGroupPosition = (yAnnotation: YAnnotation): string => {
+    return `translate(0, ${getYPosition(yAnnotation)})`;
+  };
+
   const annotationSelectionEditable = select(container)
     .selectAll(ANNOTATION_GROUP_SELECTOR_EDITABLE)
     .data(yAnnotations.filter(annotation => annotation.isEditable));
@@ -102,11 +103,6 @@ export const renderYAnnotationsEditable = ({
     .attr('x', width + HANDLE_OFFSET_X)
     .attr('width', getYHandleWidth)
     .style('stroke', getColor);
-
-  const getGroupPosition = (yAnnotation: YAnnotation): string => {
-    const yValue = getYPosition(yAnnotation);
-    return `translate(0, ${yValue})`;
-  };
 
   /** Create Sub Group for all elements except drag handle */
   const handleGroup = annotationGroupEDITABLE
@@ -234,11 +230,9 @@ export const renderYAnnotations = ({
       viewport,
     });
 
-  // TODO can improve the performance of getYPosition by caching the results between runs
-
-  const getYAnnotationValueTextY = (yAnnotation: YAnnotation): number =>
-    getYPosition(yAnnotation) + Y_ANNOTATION_TEXT_PADDING;
-  const getYAnnotationTextY = (yAnnotation: YAnnotation): number => getYPosition(yAnnotation) - PADDING;
+  const getGroupPosition = (yAnnotation: YAnnotation): string => {
+    return `translate(0, ${getYPosition(yAnnotation)})`;
+  };
 
   /** Not Editable Annotations */
   const annotationSelectionNotEditable = select(container)
@@ -246,56 +240,58 @@ export const renderYAnnotations = ({
     .data(yAnnotations.filter(annotation => !annotation.isEditable));
 
   /** Add group for all elements */
-  const annotationGroupNE = annotationSelectionNotEditable
+  const annotationGroup = annotationSelectionNotEditable
     .enter()
     .append('g')
-    .attr('transform', 'translate(0,0)')
+    .attr('transform', getGroupPosition)
     .attr('class', 'y-annotation');
 
   /** Create Line */
-  annotationGroupNE
+  annotationGroup
     .append('line')
     .attr('class', 'y-line')
     .attr('x1', 0)
     .attr('x2', width)
-    .attr('y1', getYPosition)
-    .attr('y2', getYPosition)
+    .attr('y1', 0)
+    .attr('y2', 0)
     .style('stroke', getColor)
     .style('stroke-width', ANNOTATION_STROKE_WIDTH);
 
   /** Create Value Text */
-  annotationGroupNE
+  annotationGroup
     .append('text')
     .attr('display', getValueTextVisibility)
     .attr('font-size', ANNOTATION_FONT_SIZE)
     .attr('class', 'y-value-text')
     .attr('x', width + Y_ANNOTATION_TEXT_LEFT_PADDING)
     .attr('text-anchor', 'start')
-    .attr('y', getYAnnotationValueTextY)
+    .attr('y', Y_ANNOTATION_TEXT_PADDING)
     .text(annotation => getValueText({ annotation, resolution, viewport, formatText: true }))
     .style('user-select', 'none')
     .style('pointer-events', 'none')
     .style('fill', getColor);
 
   /** Create Label Text */
-  annotationGroupNE
+  annotationGroup
     .append('text')
     .attr('display', getLabelTextVisibility)
     .attr('font-size', ANNOTATION_FONT_SIZE)
     .attr('class', 'y-text')
     .attr('x', width - PADDING)
     .attr('text-anchor', 'end')
-    .attr('y', getYAnnotationTextY)
+    .attr('y', -PADDING)
     .text(getText)
     .style('user-select', 'none')
     .style('pointer-events', 'none')
     .style('fill', getColor);
 
+  /** Update Group Position */
+  annotationSelectionNotEditable.attr('transform', getGroupPosition);
+
   /** Update Threshold Value Text */
   annotationSelectionNotEditable
     .select(TEXT_VALUE_SELECTOR)
     .attr('display', getValueTextVisibility)
-    .attr('y', getYAnnotationValueTextY)
     .attr('x', width + Y_ANNOTATION_TEXT_LEFT_PADDING)
     .text(annotation => getValueText({ annotation, resolution, viewport, formatText: true }))
     .style('fill', getColor);
@@ -305,7 +301,6 @@ export const renderYAnnotations = ({
     .select(TEXT_SELECTOR)
     .attr('display', getLabelTextVisibility)
     .attr('x', width - PADDING)
-    .attr('y', getYAnnotationTextY)
     .text(getText)
     .style('fill', getColor);
 
@@ -313,8 +308,6 @@ export const renderYAnnotations = ({
   annotationSelectionNotEditable
     .select(LINE_SELECTOR)
     .attr('x2', width)
-    .attr('y1', getYPosition)
-    .attr('y2', getYPosition)
     .style('stroke', getColor);
 
   /** Exit */
