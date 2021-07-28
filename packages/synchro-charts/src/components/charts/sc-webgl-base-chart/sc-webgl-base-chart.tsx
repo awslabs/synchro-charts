@@ -92,6 +92,7 @@ export class ScWebglBaseChart {
   @Prop() visualizesAlarms: boolean;
   @Prop() displaysError: boolean = true;
   @Prop() alarms?: AlarmsConfig;
+  @Prop() shouldRerenderOnViewportChange?: ({ oldViewport, newViewport }) => boolean;
 
   /** if false, base chart will not display an empty state message when there is no data present. */
   @Prop() displaysNoDataPresentMsg?: boolean;
@@ -208,6 +209,7 @@ export class ScWebglBaseChart {
         /** Update active viewport. */
         this.yMin = newViewPort.yMin;
         this.yMax = newViewPort.yMax;
+
         /** Apply Changes */
         this.applyYRangeChanges();
       }
@@ -238,7 +240,14 @@ export class ScWebglBaseChart {
           hasDataChanged: false,
           hasSizeChanged: false,
           hasAnnotationChanged: false,
+          shouldRerender: false,
         });
+      }
+      if (
+        this.shouldRerenderOnViewportChange &&
+        this.shouldRerenderOnViewportChange({ oldViewport: oldViewPort, newViewport: newViewPort })
+      ) {
+        this.onUpdate({ start: this.start, end: this.end }, false, false, false, true);
       }
     }
   }
@@ -333,6 +342,13 @@ export class ScWebglBaseChart {
 
   handleCameraEvent = ({ start, end }: { start: Date; end: Date }) => {
     if (this.scene) {
+      const oldViewport: ViewPort = { yMin: this.yMin, yMax: this.yMax, start, end };
+      if (
+        this.shouldRerenderOnViewportChange &&
+        this.shouldRerenderOnViewportChange({ oldViewport, newViewport: this.activeViewPort() })
+      ) {
+        this.onUpdate({ start, end }, false, false, false, true);
+      }
       // Update Camera
       webGLRenderer.updateViewPorts({ start, end, manager: this.scene });
 
@@ -361,9 +377,20 @@ export class ScWebglBaseChart {
       startFromZero: this.yRangeStartFromZero,
     });
 
+    const prevYMin = this.yMin;
+    const prevYMax = this.yMax;
+
     /** Update active viewport. */
     this.yMin = this.viewport.yMin != null ? this.viewport.yMin : yMin;
     this.yMax = this.viewport.yMax != null ? this.viewport.yMax : yMax;
+
+    const oldViewport: ViewPort = { yMin: prevYMin, yMax: prevYMax, start: this.start, end: this.end };
+    if (
+      this.shouldRerenderOnViewportChange &&
+      this.shouldRerenderOnViewportChange({ oldViewport, newViewport: this.activeViewPort() })
+    ) {
+      this.onUpdate(this.activeViewPort(), false, false, false, true);
+    }
 
     this.applyYRangeChanges();
   };
@@ -469,7 +496,8 @@ export class ScWebglBaseChart {
     { start, end }: { start: Date; end: Date },
     hasDataChanged: boolean = false,
     hasSizeChanged: boolean = false,
-    hasAnnotationChanged: boolean = false
+    hasAnnotationChanged: boolean = false,
+    shouldRerender: boolean = false
   ) => {
     /**
      * Failure Handling
@@ -503,12 +531,17 @@ export class ScWebglBaseChart {
     this.start = start;
     this.end = end;
 
-    if (!this.supportString) {
+    if (!this.supportString && !shouldRerender) {
       this.updateYRange();
     }
 
     // Render chart scene
-    this.updateAndRegisterChartScene({ hasDataChanged, hasSizeChanged, hasAnnotationChanged });
+    this.updateAndRegisterChartScene({
+      hasDataChanged,
+      hasSizeChanged,
+      hasAnnotationChanged,
+      shouldRerender,
+    });
 
     // settings to utilize in all feature updates.
     const viewport = this.activeViewPort();
@@ -587,16 +620,17 @@ export class ScWebglBaseChart {
     hasDataChanged,
     hasSizeChanged,
     hasAnnotationChanged,
+    shouldRerender,
   }: {
     hasDataChanged: boolean;
     hasSizeChanged: boolean;
     hasAnnotationChanged: boolean;
+    shouldRerender: boolean;
   }) {
     if (this.scene) {
       if (hasSizeChanged) {
         this.setChartRenderingPosition();
       }
-
       const container = this.getDataContainer();
       const updatedScene = this.updateChartScene({
         scene: this.scene,
@@ -612,6 +646,7 @@ export class ScWebglBaseChart {
         thresholds: this.thresholds(),
         hasSizeChanged,
         hasDataChanged,
+        shouldRerender,
         hasAnnotationChanged,
       });
 

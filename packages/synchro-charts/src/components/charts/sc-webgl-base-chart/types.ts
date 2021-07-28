@@ -53,6 +53,7 @@ export type ChartSceneUpdater = (options: {
   hasDataChanged: boolean;
   hasAnnotationChanged: boolean;
   hasSizeChanged: boolean;
+  shouldRerender?: boolean;
   // Lifecycle method to be called every time there is any visual changes to be rendered, i.e. viewport changes, data changes, etc.
   onUpdate?: ({ start, end }: { start: Date; end: Date }) => void;
 }) => ChartScene;
