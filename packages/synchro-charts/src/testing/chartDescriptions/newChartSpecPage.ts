@@ -58,7 +58,7 @@ export const newChartSpecPage = (tagName: string): ChartSpecPage => async props 
     widgetId: 'default-id',
     gestures: true,
     viewport: VIEWPORT,
-    legend: {
+    legendConfig: {
       position: LEGEND_POSITION.BOTTOM,
       width: 300,
     },

@@ -71,7 +71,7 @@ const newChartSpecPage = async (props: Partial<Components.ScWebglBaseChart>) => 
     bufferFactor: 2,
     minBufferSize: 200,
     configId: 'config-id',
-    legend: {
+    legendConfig: {
       position: LEGEND_POSITION.BOTTOM,
       width: 300,
     },
@@ -98,7 +98,7 @@ const newChartSpecPage = async (props: Partial<Components.ScWebglBaseChart>) => 
 describe('legend', () => {
   it('renders a legend with provided with a legend config', async () => {
     const { chart } = await newChartSpecPage({
-      legend: {
+      legendConfig: {
         position: LEGEND_POSITION.BOTTOM,
         width: 200,
       },
@@ -110,7 +110,7 @@ describe('legend', () => {
 
   it('passes down isEditing when it is true', async () => {
     const { chart } = await newChartSpecPage({
-      legend: {
+      legendConfig: {
         position: LEGEND_POSITION.BOTTOM,
         width: 200,
       },
@@ -123,7 +123,7 @@ describe('legend', () => {
 
   it('passes down view port', async () => {
     const { chart } = await newChartSpecPage({
-      legend: {
+      legendConfig: {
         position: LEGEND_POSITION.BOTTOM,
         width: 200,
       },

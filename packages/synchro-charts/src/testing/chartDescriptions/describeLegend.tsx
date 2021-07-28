@@ -8,7 +8,7 @@ export const describeLegend = (newChartSpecPage: ChartSpecPage) => {
   describe('legend', () => {
     it('renders a legend when provided with a legend config', async () => {
       const { chart } = await newChartSpecPage({
-        legend: {
+        legendConfig: {
           position: LEGEND_POSITION.BOTTOM,
           width: 200,
         },
@@ -20,7 +20,7 @@ export const describeLegend = (newChartSpecPage: ChartSpecPage) => {
 
     it('passes down isEditing when it is true', async () => {
       const { chart } = await newChartSpecPage({
-        legend: {
+        legendConfig: {
           position: LEGEND_POSITION.BOTTOM,
           width: 200,
         },
@@ -33,7 +33,7 @@ export const describeLegend = (newChartSpecPage: ChartSpecPage) => {
 
     it('passes down view port', async () => {
       const { chart } = await newChartSpecPage({
-        legend: {
+        legendConfig: {
           position: LEGEND_POSITION.BOTTOM,
           width: 200,
         },
@@ -64,7 +64,7 @@ export const describeLegend = (newChartSpecPage: ChartSpecPage) => {
 
       const { chart } = await newChartSpecPage({
         annotations: { y: THRESHOLDS },
-        legend: {
+        legendConfig: {
           position: LEGEND_POSITION.BOTTOM,
           width: 200,
         },

@@ -6,7 +6,7 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { AlarmsConfig, DataPoint, DataStream, DataStreamInfo, MessageOverrides, MinimalSizeConfig, MinimalViewPortConfig, Primitive, RequestDataFn, SizeConfig, SizePositionConfig, TableColumn, ViewPort, ViewPortConfig } from "./utils/dataTypes";
-import { Annotations, Axis, LayoutConfig, LegendConfig, MovementConfig, ScaleConfig, Threshold, Tooltip, WidgetConfigurationUpdate } from "./components/charts/common/types";
+import { Annotations, Axis, LayoutConfig, Legend, LegendConfig, MovementConfig, ScaleConfig, Threshold, Tooltip, WidgetConfigurationUpdate } from "./components/charts/common/types";
 import { Trend, TrendResult } from "./components/charts/common/trends/types";
 import { DATA_ALIGNMENT, StatusIcon } from "./components/charts/common/constants";
 import { POINT_TYPE } from "./components/charts/sc-webgl-base-chart/activePoints";
@@ -39,7 +39,7 @@ export namespace Components {
          */
         "isEditing": boolean;
         "layout"?: LayoutConfig;
-        "legend"?: LegendConfig;
+        "legendConfig"?: LegendConfig;
         "messageOverrides"?: MessageOverrides;
         "minBufferSize": number;
         "movement"?: MovementConfig;
@@ -173,7 +173,7 @@ export namespace Components {
          */
         "isEditing": boolean;
         "layout"?: LayoutConfig;
-        "legend"?: LegendConfig;
+        "legendConfig"?: LegendConfig;
         "messageOverrides"?: MessageOverrides;
         "minBufferSize": number;
         "movement"?: MovementConfig;
@@ -216,7 +216,7 @@ export namespace Components {
          */
         "isEditing": boolean;
         "layout"?: LayoutConfig;
-        "legend"?: LegendConfig;
+        "legendConfig"?: LegendConfig;
         "messageOverrides"?: MessageOverrides;
         "minBufferSize": number;
         "movement"?: MovementConfig;
@@ -473,7 +473,8 @@ export namespace Components {
         "displaysNoDataPresentMsg"?: boolean;
         "gestures": boolean;
         "isEditing": boolean;
-        "legend": LegendConfig;
+        "legend"?: (props: Legend.Props) => HTMLElement;
+        "legendConfig": LegendConfig;
         "messageOverrides"?: MessageOverrides;
         "minBufferSize": number;
         /**
@@ -1418,7 +1419,7 @@ declare namespace LocalJSX {
          */
         "isEditing"?: boolean;
         "layout"?: LayoutConfig;
-        "legend"?: LegendConfig;
+        "legendConfig"?: LegendConfig;
         "messageOverrides"?: MessageOverrides;
         "minBufferSize"?: number;
         "movement"?: MovementConfig;
@@ -1552,7 +1553,7 @@ declare namespace LocalJSX {
          */
         "isEditing"?: boolean;
         "layout"?: LayoutConfig;
-        "legend"?: LegendConfig;
+        "legendConfig"?: LegendConfig;
         "messageOverrides"?: MessageOverrides;
         "minBufferSize"?: number;
         "movement"?: MovementConfig;
@@ -1595,7 +1596,7 @@ declare namespace LocalJSX {
          */
         "isEditing"?: boolean;
         "layout"?: LayoutConfig;
-        "legend"?: LegendConfig;
+        "legendConfig"?: LegendConfig;
         "messageOverrides"?: MessageOverrides;
         "minBufferSize"?: number;
         "movement"?: MovementConfig;
@@ -1853,7 +1854,8 @@ declare namespace LocalJSX {
         "displaysNoDataPresentMsg"?: boolean;
         "gestures": boolean;
         "isEditing"?: boolean;
-        "legend"?: LegendConfig;
+        "legend"?: (props: Legend.Props) => HTMLElement;
+        "legendConfig"?: LegendConfig;
         "messageOverrides"?: MessageOverrides;
         "minBufferSize": number;
         /**

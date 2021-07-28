@@ -12,6 +12,7 @@ import {
   Axis,
   ChartConfig,
   LayoutConfig,
+  Legend,
   LegendConfig,
   MovementConfig,
   ScaleConfig,
@@ -33,6 +34,7 @@ const tooltip = (props: Tooltip.Props) => (
   <sc-tooltip {...props} visualizesAlarms={false} supportString={false} dataAlignment={DATA_ALIGNMENT.EITHER} />
 );
 
+const legend = (props: Legend.Props) => <sc-legend {...props} />;
 @Component({
   tag: 'sc-line-chart',
   shadow: false,
@@ -43,7 +45,7 @@ export class ScLineChart implements ChartConfig {
   @Prop() movement?: MovementConfig;
   @Prop() scale?: ScaleConfig;
   @Prop() layout?: LayoutConfig;
-  @Prop() legend?: LegendConfig;
+  @Prop() legendConfig?: LegendConfig;
   @Prop() size?: MinimalSizeConfig;
   @Prop() widgetId!: string;
   @Prop() dataStreams!: DataStream[];
@@ -72,7 +74,8 @@ export class ScLineChart implements ChartConfig {
             gestures={this.gestures}
             configId={this.widgetId}
             requestData={this.requestData}
-            legend={this.legend}
+            legendConfig={this.legendConfig}
+            legend={legend}
             annotations={this.annotations}
             trends={this.trends}
             updateChartScene={updateChartScene}

@@ -1,4 +1,4 @@
-import { ChartConfig } from '../../components/charts/common/types';
+import { ChartConfig, Legend } from '../../components/charts/common/types';
 import { getPalette, PalletScheme } from '../../components/charts/common/palettes';
 import { DEFAULT_CHART_CONFIG } from '../../components/charts/sc-webgl-base-chart/chartDefaults';
 import { DataStreamInfo } from '../../utils/dataTypes';
@@ -25,7 +25,7 @@ const infos: DataStreamInfo[] = [
 // @ts-ignore
 export const TESTING_GROUND_CHART_CONFIG: ChartConfig & { dataStreamInfo: DataStreamInfo[] } = {
   widgetId: 'fake-id',
-  legend: DEFAULT_CHART_CONFIG.legend,
+  legendConfig: DEFAULT_CHART_CONFIG.legendConfig,
   viewport: {
     start: new Date(1998, 0, 0),
     end: new Date(2000, 0, 1),

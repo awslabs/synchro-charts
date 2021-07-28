@@ -43,7 +43,7 @@ export const DEFAULT_CHART_CONFIG: BaseChartConfig = {
     yScaleSide: 'left',
   },
   dataStreams: [],
-  legend: {
+  legendConfig: {
     position: LEGEND_POSITION.BOTTOM,
     width: 170,
   },
