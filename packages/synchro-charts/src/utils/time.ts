@@ -1,3 +1,5 @@
+import parse from 'parse-duration';
+
 export const SECOND_IN_MS = 1000;
 export const MINUTE_IN_MS = 60 * SECOND_IN_MS;
 export const HOUR_IN_MS = 60 * MINUTE_IN_MS;
@@ -137,4 +139,15 @@ export const displayDate = (date: Date, resolution: number, { start, end }: { st
     month: 'numeric',
     day: 'numeric',
   });
+};
+
+export const parseDuration = (duration: number | string): number => {
+  if (typeof duration === 'number') {
+    return duration;
+  }
+
+  const parsedTime = parse(duration, 'ms');
+
+  // if duration is a string but we cannot parse it, we default to 10 mins.
+  return parsedTime != null ? parsedTime : 10 * MINUTE_IN_MS;
 };

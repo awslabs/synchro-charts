@@ -517,6 +517,8 @@ export namespace Components {
         "visualizesAlarms": boolean;
         "yRangeStartFromZero": boolean;
     }
+    interface ScWebglChartAnnotationEditable {
+    }
     interface ScWebglChartAnnotations {
     }
     interface ScWebglChartAnnotationsAlwaysInViewport {
@@ -1078,6 +1080,12 @@ declare global {
         prototype: HTMLScWebglBaseChartElement;
         new (): HTMLScWebglBaseChartElement;
     };
+    interface HTMLScWebglChartAnnotationEditableElement extends Components.ScWebglChartAnnotationEditable, HTMLStencilElement {
+    }
+    var HTMLScWebglChartAnnotationEditableElement: {
+        prototype: HTMLScWebglChartAnnotationEditableElement;
+        new (): HTMLScWebglChartAnnotationEditableElement;
+    };
     interface HTMLScWebglChartAnnotationsElement extends Components.ScWebglChartAnnotations, HTMLStencilElement {
     }
     var HTMLScWebglChartAnnotationsElement: {
@@ -1385,6 +1393,7 @@ declare global {
         "sc-webgl-bar-chart-threshold-coloration-multiple-thresholds": HTMLScWebglBarChartThresholdColorationMultipleThresholdsElement;
         "sc-webgl-bar-chart-threshold-no-coloration": HTMLScWebglBarChartThresholdNoColorationElement;
         "sc-webgl-base-chart": HTMLScWebglBaseChartElement;
+        "sc-webgl-chart-annotation-editable": HTMLScWebglChartAnnotationEditableElement;
         "sc-webgl-chart-annotations": HTMLScWebglChartAnnotationsElement;
         "sc-webgl-chart-annotations-always-in-viewport": HTMLScWebglChartAnnotationsAlwaysInViewportElement;
         "sc-webgl-chart-axis": HTMLScWebglChartAxisElement;
@@ -1933,6 +1942,8 @@ declare namespace LocalJSX {
         "visualizesAlarms"?: boolean;
         "yRangeStartFromZero"?: boolean;
     }
+    interface ScWebglChartAnnotationEditable {
+    }
     interface ScWebglChartAnnotations {
     }
     interface ScWebglChartAnnotationsAlwaysInViewport {
@@ -2104,6 +2115,7 @@ declare namespace LocalJSX {
         "sc-webgl-bar-chart-threshold-coloration-multiple-thresholds": ScWebglBarChartThresholdColorationMultipleThresholds;
         "sc-webgl-bar-chart-threshold-no-coloration": ScWebglBarChartThresholdNoColoration;
         "sc-webgl-base-chart": ScWebglBaseChart;
+        "sc-webgl-chart-annotation-editable": ScWebglChartAnnotationEditable;
         "sc-webgl-chart-annotations": ScWebglChartAnnotations;
         "sc-webgl-chart-annotations-always-in-viewport": ScWebglChartAnnotationsAlwaysInViewport;
         "sc-webgl-chart-axis": ScWebglChartAxis;
@@ -2226,6 +2238,7 @@ declare module "@stencil/core" {
             "sc-webgl-bar-chart-threshold-coloration-multiple-thresholds": LocalJSX.ScWebglBarChartThresholdColorationMultipleThresholds & JSXBase.HTMLAttributes<HTMLScWebglBarChartThresholdColorationMultipleThresholdsElement>;
             "sc-webgl-bar-chart-threshold-no-coloration": LocalJSX.ScWebglBarChartThresholdNoColoration & JSXBase.HTMLAttributes<HTMLScWebglBarChartThresholdNoColorationElement>;
             "sc-webgl-base-chart": LocalJSX.ScWebglBaseChart & JSXBase.HTMLAttributes<HTMLScWebglBaseChartElement>;
+            "sc-webgl-chart-annotation-editable": LocalJSX.ScWebglChartAnnotationEditable & JSXBase.HTMLAttributes<HTMLScWebglChartAnnotationEditableElement>;
             "sc-webgl-chart-annotations": LocalJSX.ScWebglChartAnnotations & JSXBase.HTMLAttributes<HTMLScWebglChartAnnotationsElement>;
             "sc-webgl-chart-annotations-always-in-viewport": LocalJSX.ScWebglChartAnnotationsAlwaysInViewport & JSXBase.HTMLAttributes<HTMLScWebglChartAnnotationsAlwaysInViewportElement>;
             "sc-webgl-chart-axis": LocalJSX.ScWebglChartAxis & JSXBase.HTMLAttributes<HTMLScWebglChartAxisElement>;

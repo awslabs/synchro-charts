@@ -1,6 +1,6 @@
 import { Component, h } from '@stencil/core';
 import { MONTH_IN_MS, YEAR_IN_MS } from '../../../utils/time';
-import { DataStream } from '../../../utils/dataTypes';
+import { DataStream, MinimalViewPortConfig } from '../../../utils/dataTypes';
 import { testCaseParameters } from './testCaseParameters';
 import { DataType } from '../../../utils/dataConstants';
 
@@ -37,13 +37,16 @@ const data: DataStream[] = new Array(numDataStreams).fill(null).map((_, i) => ({
 export class ScStatusGridStandard {
   render() {
     const annotations = threshold ? { y: [threshold] } : undefined;
+    const viewPort: MinimalViewPortConfig = isEnabled
+      ? { yMin: Y_MIN, yMax: Y_MAX, duration: YEAR_IN_MS }
+      : { start: X_MIN, end: X_MAX, yMin: Y_MIN, yMax: Y_MAX };
     return (
       <sc-status-grid
         widgetId="test-widget"
         labelsConfig={labelsConfig}
         annotations={annotations}
         dataStreams={data}
-        viewport={{ start: X_MIN, end: X_MAX, yMin: Y_MIN, yMax: Y_MAX, duration: isEnabled ? YEAR_IN_MS : undefined }}
+        viewport={viewPort}
         isEditing={isEditing}
       />
     );

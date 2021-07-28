@@ -5,7 +5,7 @@ import { CustomHTMLElement } from '../../utils/types';
 import { DATA_STREAMS } from '../charts/common/tests/chart/constants';
 import { DEFAULT_CHART_CONFIG } from '../charts/sc-webgl-base-chart/chartDefaults';
 import { update } from '../charts/common/tests/merge';
-import { DataStream, DataPoint } from '../../utils/dataTypes';
+import { DataStream, DataPoint, MinimalStaticViewport } from '../../utils/dataTypes';
 import { MINUTE_IN_MS } from '../../utils/time';
 import { ScGrid } from '../sc-grid/sc-grid';
 import { ScStatusGrid } from './sc-status-grid';
@@ -15,7 +15,8 @@ import { ScGridTooltip } from '../sc-widget-grid/sc-grid-tooltip';
 import { DataType, StreamType } from '../../utils/dataConstants';
 
 const VIEWPORT = {
-  ...DEFAULT_CHART_CONFIG.viewport,
+  yMin: DEFAULT_CHART_CONFIG.viewport.yMin,
+  yMax: DEFAULT_CHART_CONFIG.viewport.yMax,
   duration: MINUTE_IN_MS,
 };
 
@@ -109,7 +110,7 @@ describe('when enabled', () => {
 
   it('renders on cell for an alarm plus a property info, when associated', async () => {
     const point: DataPoint<number> = {
-      x: (VIEWPORT.end as Date).getTime(),
+      x: ((DEFAULT_CHART_CONFIG.viewport as MinimalStaticViewport).end as Date).getTime(),
       y: 100,
     };
     const ASSOCIATED_DATA_STREAM: DataStream<number> = {
@@ -185,8 +186,7 @@ describe('alarms', () => {
 describe('when disabled', () => {
   it('renders cell per data stream', async () => {
     const NON_LIVE_VIEWPORT = {
-      ...VIEWPORT,
-      duration: undefined,
+      ...DEFAULT_CHART_CONFIG.viewport,
     };
 
     const { statusGrid } = await statusGridSpecPage({
@@ -199,13 +199,8 @@ describe('when disabled', () => {
   });
 
   it('renders a help icon', async () => {
-    const NON_LIVE_VIEWPORT = {
-      ...VIEWPORT,
-      duration: undefined,
-    };
-
     const { statusGrid } = await statusGridSpecPage({
-      viewport: NON_LIVE_VIEWPORT,
+      viewport: DEFAULT_CHART_CONFIG.viewport,
     });
 
     expect(statusGrid.querySelector('sc-help-tooltip')).not.toBeNull();
@@ -233,11 +228,43 @@ it('should dispatch widgetUpdated with data stream updates when label changed', 
   expect(spy).toHaveBeenCalled();
   expect(spy.mock.calls[0][0].detail).toEqual(
     expect.objectContaining({
+      annotations: undefined,
+      axis: undefined,
       dataStreams: [
-        { id: NUMBER_STREAM.id, name: newName },
-        { id: STRING_STREAM.id, name: STRING_STREAM.name },
+        {
+          associatedStreams: undefined,
+          color: 'black',
+          dataType: 'NUMBER',
+          detailedName: undefined,
+          error: undefined,
+          id: NUMBER_STREAM.id,
+          isLoading: undefined,
+          isRefreshing: undefined,
+          name: newName,
+          resolution: 0,
+          streamType: undefined,
+          unit: undefined,
+        },
+        {
+          associatedStreams: undefined,
+          color: 'red',
+          dataType: 'STRING',
+          detailedName: undefined,
+          error: undefined,
+          id: STRING_STREAM.id,
+          isLoading: undefined,
+          isRefreshing: undefined,
+          name: STRING_STREAM.name,
+          resolution: 0,
+          streamType: undefined,
+          unit: undefined,
+        },
       ],
-      widgetId: WIDGET_ID,
+      layout: undefined,
+      legend: undefined,
+      movement: undefined,
+      scale: undefined,
+      widgetId: 'test-widget-it',
     })
   );
 });

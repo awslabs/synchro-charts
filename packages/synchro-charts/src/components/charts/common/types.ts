@@ -59,8 +59,8 @@ export interface ChartConfig extends BaseConfig {
   messageOverrides?: MessageOverrides;
 }
 
-export type WidgetConfigurationUpdate = Partial<ChartConfig> & {
-  dataStreams?: (Partial<DataStream> & { id: DataStreamId })[];
+export type WidgetConfigurationUpdate = Omit<ChartConfig, 'viewport' | 'messageOverrides'> & {
+  dataStreams: Omit<DataStream, 'data' | 'aggregates'>[];
   widgetId: string;
 };
 

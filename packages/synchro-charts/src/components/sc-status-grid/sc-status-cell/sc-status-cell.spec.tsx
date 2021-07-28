@@ -5,10 +5,10 @@ import { DataPoint, DEFAULT_MESSAGE_OVERRIDES } from '../../../utils/dataTypes';
 import { CustomHTMLElement } from '../../../utils/types';
 import { update } from '../../charts/common/tests/merge';
 import { ScStatusCell } from './sc-status-cell';
-import { NO_VALUE_PRESENT } from '../../common/terms';
 import { ScDataStreamName } from '../../sc-data-stream-name/sc-data-stream-name';
 import { ALARM_STREAM, DATA_STREAM } from '../../../testing/__mocks__/mockWidgetProperties';
 import { StatusIcon } from '../../charts/common/constants';
+import { NO_VALUE_PRESENT_SELECTOR } from '../../../testing/selectors';
 
 const STRING_POINT: DataPoint<string> = {
   x: Date.now(),
@@ -92,16 +92,30 @@ it('renders with empty placeholder when there is no data', async () => {
     propertyPoint: undefined,
   });
 
-  expect(statusCell.innerHTML).toContain(NO_VALUE_PRESENT);
+  expect(statusCell.querySelectorAll(NO_VALUE_PRESENT_SELECTOR)).toHaveLength(1);
+});
+
+it('renders with empty placeholder when there is no data in alarm, but there is data in the property stream', async () => {
+  const { statusCell } = await cellSpecPage({
+    alarmPoint: undefined,
+    alarmStream: ALARM_STREAM,
+    propertyStream: DATA_STREAM,
+    propertyPoint: NUMBER_POINT,
+  });
+
+  expect(statusCell.querySelectorAll(NO_VALUE_PRESENT_SELECTOR)).toHaveLength(1);
 });
 
 it('renders number value with truncated precision', async () => {
   const DECIMAL = 123.345;
   const { statusCell } = await cellSpecPage({
+    alarmStream: ALARM_STREAM,
     alarmPoint: {
       x: Date.now(),
       y: DECIMAL,
     },
+    propertyStream: undefined,
+    propertyPoint: undefined,
   });
 
   expect(statusCell.innerHTML).toContain(Math.round(DECIMAL));
