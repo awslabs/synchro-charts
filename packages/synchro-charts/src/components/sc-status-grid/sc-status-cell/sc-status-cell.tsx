@@ -66,7 +66,7 @@ export class ScStatusCell {
     const somethingIsEmphasized = emphasizeValue || emphasizeNameAndUnit;
 
     const stream = this.alarmStream || this.propertyStream;
-    const point = this.alarmPoint ? this.alarmPoint : this.propertyPoint;
+    const point = this.alarmStream ? this.alarmPoint : this.propertyPoint;
 
     const foregroundColor = highContrastColor(backgroundColor);
     return (

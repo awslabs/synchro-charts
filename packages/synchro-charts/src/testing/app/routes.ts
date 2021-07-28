@@ -186,6 +186,10 @@ export const routes = [
     component: 'sc-webgl-bar-chart-margin',
   },
   {
+    url: '/tests/sc-webgl-chart/annotations/annotation-editable',
+    component: 'sc-webgl-chart-annotation-editable',
+  },
+  {
     url: '/tests/sc-webgl-bar-chart/start-from-zero',
     component: 'sc-webgl-bar-chart-start-from-zero',
   },
