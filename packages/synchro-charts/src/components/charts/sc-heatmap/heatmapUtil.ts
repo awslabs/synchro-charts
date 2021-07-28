@@ -34,12 +34,12 @@ export const calculateXBucketStart = ({ xValue, xBucketRange }: { xValue: number
  * datastream name.
  */
 export const addCount = ({
-  heatValue = {},
+  heatValues = {},
   xBucketRangeStart,
   bucketIndex,
   dataStreamId,
 }: {
-  heatValue: HeatValueMap;
+  heatValues: HeatValueMap;
   xBucketRangeStart: number;
   bucketIndex: number;
   dataStreamId: string;
@@ -47,17 +47,17 @@ export const addCount = ({
   if (!dataStreamId) {
     return {};
   }
-  const newHeatValue: HeatValueMap = heatValue;
-  newHeatValue[xBucketRangeStart] = heatValue[xBucketRangeStart] ?? {};
-  newHeatValue[xBucketRangeStart][bucketIndex] = heatValue[xBucketRangeStart][bucketIndex] ?? {
+  const newHeatValue: HeatValueMap = heatValues;
+  newHeatValue[xBucketRangeStart] = heatValues[xBucketRangeStart] ?? {};
+  newHeatValue[xBucketRangeStart][bucketIndex] = heatValues[xBucketRangeStart][bucketIndex] ?? {
     totalCount: 0,
     streamCount: {},
   };
   newHeatValue[xBucketRangeStart][bucketIndex].streamCount[dataStreamId] =
-    heatValue[xBucketRangeStart][bucketIndex].streamCount[dataStreamId] ?? 0;
+    heatValues[xBucketRangeStart][bucketIndex].streamCount[dataStreamId] ?? 0;
   newHeatValue[xBucketRangeStart][bucketIndex].streamCount[dataStreamId] += 1;
   newHeatValue[xBucketRangeStart][bucketIndex].totalCount += 1;
-  return heatValue;
+  return heatValues;
 };
 
 /**
@@ -65,24 +65,24 @@ export const addCount = ({
  * returns updated HeatValueMap with the aggregated data from the dataStreams.
  */
 export const calcHeatValues = ({
-  oldHeatValue = {},
+  oldHeatValues = {},
   dataStreams,
   xBucketRange,
   viewport,
   bucketCount,
 }: {
-  oldHeatValue: HeatValueMap;
+  oldHeatValues: HeatValueMap;
   dataStreams: DataStream[];
   xBucketRange: number;
   viewport: ViewPort;
   bucketCount: number;
 }) => {
   const { yMax, yMin } = viewport;
-  return dataStreams.reduce(function reduceDataStream(newHeatValue, dataStream) {
+  return dataStreams.reduce(function reduceDataStream(newHeatValues, dataStream) {
     if (dataStream.dataType !== DataType.NUMBER) {
       return {};
     }
-    return dataStream.data.reduce(function reduceData(tempHeatValue, currPoint) {
+    return dataStream.data.reduce(function reduceData(tempHeatValues, currPoint) {
       const xBucketRangeStart = calculateXBucketStart({ xValue: currPoint.x, xBucketRange });
       const bucketIndex = calculateBucketIndex({
         yValue: currPoint.y as number, // checked in line 85 if the data value is number
@@ -90,9 +90,9 @@ export const calcHeatValues = ({
         yMin,
         bucketCount,
       });
-      return addCount({ heatValue: tempHeatValue, xBucketRangeStart, bucketIndex, dataStreamId: dataStream.id });
-    }, newHeatValue);
-  }, oldHeatValue);
+      return addCount({ heatValues: tempHeatValues, xBucketRangeStart, bucketIndex, dataStreamId: dataStream.id });
+    }, newHeatValues);
+  }, oldHeatValues);
 };
 
 export const getXBucketRange = ({ start, end }: { start: Date; end: Date }): number => {
