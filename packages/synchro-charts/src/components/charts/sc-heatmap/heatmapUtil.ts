@@ -195,8 +195,5 @@ export const shouldRerenderOnViewportChange = ({
 
   const prevXBucketRange = getXBucketRange({ start: prevStart, end: prevEnd });
   const newXBucketRange = getXBucketRange({ start: newStart, end: newEnd });
-  if (prevXBucketRange !== newXBucketRange) {
-    return true;
-  }
-  return false;
+  return prevXBucketRange !== newXBucketRange;
 };
