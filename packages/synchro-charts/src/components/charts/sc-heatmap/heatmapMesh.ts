@@ -70,7 +70,6 @@ const updateMesh = ({
       bucket.array[positionIndex] = toClipSpace(+xAxisBucketStart + xBucketRange);
       bucket.array[positionIndex + 1] = yMin + +bucketIndex * ((yMax - yMin) / BUCKET_COUNT);
 
-      console.log(heatValues);
       const [r, g, b] = getBucketColor(
         COLOR_PALETTE,
         heatValues[xAxisBucketStart][bucketIndex].bucketHeatValue,
