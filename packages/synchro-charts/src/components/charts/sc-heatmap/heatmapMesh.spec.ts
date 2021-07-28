@@ -59,7 +59,7 @@ const DATA_STREAMS: DataStream[] = [
 ];
 
 const HEAT_VALUES: HeatValueMap = calcHeatValues({
-  oldHeatValue: {},
+  oldHeatValues: {},
   dataStreams: DATA_STREAMS,
   xBucketRange: X_BUCKET_RANGE,
   viewport: VIEW_PORT,
@@ -150,7 +150,7 @@ describe('create bucket mesh', () => {
     ];
     const xBucketRange = getXBucketRange(viewport);
     const heatValues = calcHeatValues({
-      oldHeatValue: {},
+      oldHeatValues: {},
       dataStreams,
       xBucketRange,
       viewport,
@@ -186,7 +186,7 @@ describe('create bucket mesh', () => {
       },
     ];
     const heatValues = calcHeatValues({
-      oldHeatValue: {},
+      oldHeatValues: {},
       dataStreams,
       xBucketRange: X_BUCKET_RANGE,
       viewport: VIEW_PORT,
@@ -230,7 +230,7 @@ describe('update bucket mesh', () => {
       },
     ];
     const heatValues = calcHeatValues({
-      oldHeatValue: {},
+      oldHeatValues: {},
       dataStreams: [],
       xBucketRange: X_BUCKET_RANGE,
       viewport: VIEW_PORT,
@@ -248,7 +248,7 @@ describe('update bucket mesh', () => {
     expect(mesh.material.uniforms.width.value).toEqual(0);
 
     const newHeatValues = calcHeatValues({
-      oldHeatValue: {},
+      oldHeatValues: {},
       dataStreams: DATA_STREAM_TEMP,
       xBucketRange: X_BUCKET_RANGE,
       viewport: VIEW_PORT,
@@ -285,7 +285,7 @@ describe('update bucket mesh', () => {
       },
     ];
     const heatValues = calcHeatValues({
-      oldHeatValue: {},
+      oldHeatValues: {},
       dataStreams: [],
       xBucketRange: X_BUCKET_RANGE,
       viewport: VIEW_PORT,
@@ -303,7 +303,7 @@ describe('update bucket mesh', () => {
     expect(mesh.material.uniforms.width.value).toEqual(0);
 
     const newHeatValues = calcHeatValues({
-      oldHeatValue: {},
+      oldHeatValues: {},
       dataStreams: DATA_STREAM_TEMP,
       xBucketRange: X_BUCKET_RANGE,
       viewport: VIEW_PORT,
@@ -340,7 +340,7 @@ describe('update bucket mesh', () => {
       },
     ];
     const heatValues = calcHeatValues({
-      oldHeatValue: {},
+      oldHeatValues: {},
       dataStreams: DATA_STREAM_TEMP,
       xBucketRange: X_BUCKET_RANGE,
       viewport: VIEW_PORT,
@@ -385,7 +385,7 @@ describe('update bucket mesh', () => {
       },
     ];
     const heatValues = calcHeatValues({
-      oldHeatValue: {},
+      oldHeatValues: {},
       dataStreams: DATA_STREAM_TEMP,
       xBucketRange: X_BUCKET_RANGE,
       viewport: VIEW_PORT,
@@ -439,7 +439,7 @@ describe('update bucket mesh', () => {
       xBucketRange,
     });
     const heatValues = calcHeatValues({
-      oldHeatValue: {},
+      oldHeatValues: {},
       dataStreams: DATA_STREAM_TEMP,
       xBucketRange: X_BUCKET_RANGE,
       viewport: VIEW_PORT,
@@ -473,7 +473,7 @@ describe('update bucket mesh', () => {
       },
     ];
     const newHeatValues = calcHeatValues({
-      oldHeatValue: {},
+      oldHeatValues: {},
       dataStreams: DATA_STREAM_TEMP_2,
       xBucketRange: X_BUCKET_RANGE,
       viewport: VIEW_PORT,
@@ -510,7 +510,7 @@ describe('update bucket mesh', () => {
       },
     ];
     const heatValues = calcHeatValues({
-      oldHeatValue: {},
+      oldHeatValues: {},
       dataStreams: DATA_STREAM_TEMP,
       xBucketRange: X_BUCKET_RANGE,
       viewport: VIEW_PORT,

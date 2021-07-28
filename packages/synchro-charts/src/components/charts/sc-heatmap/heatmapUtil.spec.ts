@@ -94,7 +94,7 @@ describe.each`
 describe('addCount', () => {
   it('returns aggregated data for one data point', () => {
     const newHeatValue = addCount({
-      heatValue: {},
+      heatValues: {},
       xBucketRangeStart: START_TIME_EPOCH,
       bucketIndex: 1,
       dataStreamId: DATASTREAM_1.id,
@@ -112,39 +112,39 @@ describe('addCount', () => {
   });
 
   it('returns aggregated data for multiple calls with the same heatValueMap object passed in', () => {
-    let heatValue: HeatValueMap = {};
-    heatValue = addCount({
-      heatValue,
+    let heatValues: HeatValueMap = {};
+    heatValues = addCount({
+      heatValues,
       xBucketRangeStart: START_TIME_EPOCH,
       bucketIndex: 1,
       dataStreamId: DATASTREAM_1.id,
     });
-    heatValue = addCount({
-      heatValue,
+    heatValues = addCount({
+      heatValues,
       xBucketRangeStart: START_TIME_EPOCH,
       bucketIndex: 2,
       dataStreamId: DATASTREAM_1.id,
     });
-    heatValue = addCount({
-      heatValue,
+    heatValues = addCount({
+      heatValues,
       xBucketRangeStart: START_TIME_EPOCH_1,
       bucketIndex: 5,
       dataStreamId: DATASTREAM_1.id,
     });
-    heatValue = addCount({
-      heatValue,
+    heatValues = addCount({
+      heatValues,
       xBucketRangeStart: START_TIME_EPOCH,
       bucketIndex: 1,
       dataStreamId: DATASTREAM_2.id,
     });
-    heatValue = addCount({
-      heatValue,
+    heatValues = addCount({
+      heatValues,
       xBucketRangeStart: START_TIME_EPOCH_1,
       bucketIndex: 6,
       dataStreamId: DATASTREAM_2.id,
     });
 
-    expect(heatValue).toEqual({
+    expect(heatValues).toEqual({
       [START_TIME_EPOCH]: {
         1: {
           totalCount: 2,
@@ -182,7 +182,7 @@ describe('calcHeatValues', () => {
   it('returns aggregated data for dataStreams with different x-axis bucket ranges', () => {
     const dataStreams: DataStream[] = [DATASTREAM_1, DATASTREAM_2];
     const newHeatValue = calcHeatValues({
-      oldHeatValue: {},
+      oldHeatValues: {},
       dataStreams,
       xBucketRange: X_BUCKET_RANGE,
       viewport: VIEWPORT,
@@ -206,7 +206,7 @@ describe('calcHeatValues', () => {
     };
     const dataStreams: DataStream[] = [DATASTREAM];
     const newHeatValue = calcHeatValues({
-      oldHeatValue: {},
+      oldHeatValues: {},
       dataStreams,
       xBucketRange: X_BUCKET_RANGE,
       viewport: VIEWPORT,
