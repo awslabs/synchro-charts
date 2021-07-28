@@ -65,8 +65,8 @@ export const getSequential = ({
   let colorArrayIndex = 0;
   for (let i = 0; i < NUM_OF_COLORS_SEQUENTIAL; i += 1) {
     if (i === SEQUENTIAL_BASE_COLOR_INDEX) {
-      colorRatio = 0;
       colorRatioIncrement = 1 / (NUM_OF_COLORS_SEQUENTIAL - SEQUENTIAL_BASE_COLOR_INDEX);
+      colorRatio = colorRatioIncrement;
       colorArrayIndex += 1;
     }
     heatmapColor.r[i] =
