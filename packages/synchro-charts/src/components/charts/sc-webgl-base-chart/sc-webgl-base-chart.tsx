@@ -155,7 +155,7 @@ export class ScWebglBaseChart {
       movement: undefined,
       scale: undefined,
       layout: undefined,
-      legend: this.legend,
+      legendConfig: this.legendConfig,
       annotations: this.annotations,
       axis: this.axis,
       widgetId: this.configId,
