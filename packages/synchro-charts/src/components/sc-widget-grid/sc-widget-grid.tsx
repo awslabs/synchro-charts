@@ -15,6 +15,7 @@ import { DATA_ALIGNMENT } from '../charts/common/constants';
 import { isMinimalStaticViewport } from '../../utils/predicates';
 import { parseDuration } from '../../utils/time';
 import { getDataStreamForEventing } from '../charts/common';
+import { validate } from '../sc-validator/sc-validator';
 
 const MSG =
   'This visualization displays only live data. Choose a live time frame to display data in this visualization.';
@@ -67,6 +68,10 @@ export class ScWidgetGrid implements ChartConfig {
 
   @Event()
   widgetUpdated: EventEmitter<WidgetConfigurationUpdate>;
+
+  componentWillRender() {
+    validate(this);
+  }
 
   componentDidLoad() {
     webGLRenderer.addChartScene({
@@ -176,7 +181,6 @@ export class ScWidgetGrid implements ChartConfig {
     const isMiniVersion = pairs.length > 1;
     return (
       <div class={{ tall: !this.collapseVertically }}>
-        <sc-validator viewport={this.viewport} />
         {!isEnabled && (
           <div class="help-icon-container">
             <sc-help-tooltip message={this.liveModeOnlyMessage} />
