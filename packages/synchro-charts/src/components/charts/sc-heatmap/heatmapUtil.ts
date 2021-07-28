@@ -1,10 +1,9 @@
 import { DataStream, ViewPort } from '../../../utils/dataTypes';
 import { SECOND_IN_MS, MINUTE_IN_MS, HOUR_IN_MS, DAY_IN_MS, MONTH_IN_MS, YEAR_IN_MS } from '../../../utils/time';
 import { DataType } from '../../../utils/dataConstants';
-import { CHANGE_RESOLUTION } from './heatmapConstants';
+import { CHANGE_X_BUCKET_RANGE_BOUNDARY } from './heatmapConstants';
 
 export type HeatValueMap = {
-  maximumCount: number;
   [xBucketRangeStart: number]: {
     [bucketIndex: number]: {
       totalCount: number;
@@ -35,7 +34,7 @@ export const calculateXBucketStart = ({ xValue, xBucketRange }: { xValue: number
  * datastream name.
  */
 export const addCount = ({
-  heatValue = { maximumCount: 0 },
+  heatValue = {},
   xBucketRangeStart,
   bucketIndex,
   dataStreamId,
@@ -46,7 +45,7 @@ export const addCount = ({
   dataStreamId: string;
 }): HeatValueMap => {
   if (!dataStreamId) {
-    return { maximumCount: 0 };
+    return {};
   }
   const newHeatValue: HeatValueMap = heatValue;
   newHeatValue[xBucketRangeStart] = heatValue[xBucketRangeStart] ?? {};
@@ -58,10 +57,6 @@ export const addCount = ({
     heatValue[xBucketRangeStart][bucketIndex].streamCount[dataStreamId] ?? 0;
   newHeatValue[xBucketRangeStart][bucketIndex].streamCount[dataStreamId] += 1;
   newHeatValue[xBucketRangeStart][bucketIndex].totalCount += 1;
-  newHeatValue.maximumCount = Math.max(
-    newHeatValue[xBucketRangeStart][bucketIndex].totalCount,
-    newHeatValue.maximumCount
-  );
   return heatValue;
 };
 
@@ -70,7 +65,7 @@ export const addCount = ({
  * returns updated HeatValueMap with the aggregated data from the dataStreams.
  */
 export const calcHeatValues = ({
-  oldHeatValue = { maximumCount: 0 },
+  oldHeatValue = {},
   dataStreams,
   xBucketRange,
   viewport,
@@ -85,7 +80,7 @@ export const calcHeatValues = ({
   const { yMax, yMin } = viewport;
   return dataStreams.reduce(function reduceDataStream(newHeatValue, dataStream) {
     if (dataStream.dataType !== DataType.NUMBER) {
-      return { maximumCount: 0 };
+      return {};
     }
     return dataStream.data.reduce(function reduceData(tempHeatValue, currPoint) {
       const xBucketRangeStart = calculateXBucketStart({ xValue: currPoint.x, xBucketRange });
@@ -105,16 +100,16 @@ export const getXBucketRange = ({ start, end }: { start: Date; end: Date }): num
   if (duration > YEAR_IN_MS) {
     return YEAR_IN_MS;
   }
-  if (duration > (CHANGE_RESOLUTION + 1) * 30 * DAY_IN_MS) {
+  if (duration > 90 * DAY_IN_MS) {
     return MONTH_IN_MS;
   }
-  if (duration > (CHANGE_RESOLUTION + 1) * DAY_IN_MS) {
+  if (duration > CHANGE_X_BUCKET_RANGE_BOUNDARY * 2 * DAY_IN_MS) {
     return DAY_IN_MS;
   }
-  if (duration > CHANGE_RESOLUTION * HOUR_IN_MS) {
+  if (duration > CHANGE_X_BUCKET_RANGE_BOUNDARY * HOUR_IN_MS) {
     return HOUR_IN_MS;
   }
-  if (duration > CHANGE_RESOLUTION * MINUTE_IN_MS) {
+  if (duration > CHANGE_X_BUCKET_RANGE_BOUNDARY * MINUTE_IN_MS) {
     return MINUTE_IN_MS;
   }
   return SECOND_IN_MS;
