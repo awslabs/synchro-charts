@@ -13,8 +13,6 @@ import { MINUTE_IN_MS } from '../../../../src/utils/time';
 import {
   DRAGGABLE_HANDLE_SELECTOR,
   ELEMENT_GROUP_SELECTOR,
-  LINE_SELECTOR,
-  TEXT_VALUE_SELECTOR,
 } from '../../../../src/components/charts/common/annotations/YAnnotations/YAnnotations';
 import { moveHandle, moveHandleFilter, moveHandleWithPause, parseTransformYValue } from '../utils-draggable';
 

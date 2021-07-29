@@ -77,14 +77,14 @@ export const renderYAnnotationsEditable = ({
     .data(yAnnotations.filter(annotation => annotation.isEditable));
 
   /** Add group for all elements */
-  const annotationGroupEDITABLE = annotationSelectionEditable
+  const annotationGroupEditable = annotationSelectionEditable
     .enter()
     .append('g')
     .attr('transform', 'translate(0,0)')
     .attr('class', 'y-annotation-editable');
 
   /** Create Draggable Annotation Handle Rectangle */
-  annotationGroupEDITABLE
+  annotationGroupEditable
     .append('rect')
     .attr('class', 'y-annotation')
     .attr('width', getYHandleWidth)
@@ -105,7 +105,7 @@ export const renderYAnnotationsEditable = ({
     .style('stroke', getColor);
 
   /** Create Sub Group for all elements except drag handle */
-  const handleGroup = annotationGroupEDITABLE
+  const handleGroup = annotationGroupEditable
     .append('g')
     .attr('transform', getGroupPosition)
     .attr('class', 'y-elements-group');

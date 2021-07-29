@@ -5,8 +5,6 @@ import { COMPARISON_OPERATOR, DataType } from '../../../../src/constants';
 import {
   DRAGGABLE_HANDLE_SELECTOR,
   ELEMENT_GROUP_SELECTOR,
-  LINE_SELECTOR,
-  TEXT_VALUE_SELECTOR,
 } from '../../../../src/components/charts/common/annotations/YAnnotations/YAnnotations';
 import { DataPoint } from '../../../../src/utils/dataTypes';
 import { X_ANNOTATION, Y_THRESHOLD, Y_ANNOTATION } from '../../../../src/testing/test-routes/charts/constants';
