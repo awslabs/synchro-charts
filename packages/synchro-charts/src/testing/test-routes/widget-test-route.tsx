@@ -25,14 +25,6 @@ const {
   tableColumns,
 } = testCaseParameters();
 
-const viewport = {
-  ...DEFAULT_VIEWPORT,
-  start: viewportStart,
-  end: viewportEnd,
-  duration,
-  group: 'some-viewport-group',
-};
-
 const getSize = (value: number | string): { height: number | string; width: number | string } | undefined => {
   if (typeof value === 'string') {
     return undefined;
@@ -66,6 +58,20 @@ export class WidgetTestRoute {
   }
 
   render() {
+    const viewport = {
+      ...DEFAULT_VIEWPORT,
+      start: viewportStart,
+      end: viewportEnd,
+      duration,
+      group: 'some-viewport-group',
+    };
+
+    // live mode
+    if (duration != null) {
+      delete viewport.start;
+      delete viewport.end;
+    }
+
     return (
       <div style={{ width: styleSize(width), height: styleSize(height) }}>
         <this.component

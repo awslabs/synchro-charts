@@ -22,6 +22,7 @@ export const LEGEND_SELECTOR = 'sc-legend';
 // corresponds to the 'no data visualization', and the 'data stream name and value' panel directly above it.
 export const STATUS_TIMELINE_OVERLAY_SELECTOR = 'sc-status-timeline-overlay';
 export const STATUS_TIMELINE_OVERLAY_ROW_SELECTOR = 'sc-status-timeline-overlay-row';
+export const NO_VALUE_PRESENT_SELECTOR = '[data-testid="no-value-present"]';
 
 // Helps prevent DOM shift issues due to `size-provider`
 const SMALL_WAIT = 0.01 * SECOND_IN_MS;
