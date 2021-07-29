@@ -112,7 +112,7 @@ export namespace Components {
          */
         "isEditing": boolean;
         "layout"?: LayoutConfig;
-        "legend"?: LegendConfig;
+        "legendConfig"?: LegendConfig;
         "messageOverrides"?: MessageOverrides;
         "minBufferSize": number;
         "movement"?: MovementConfig;
@@ -1532,7 +1532,7 @@ declare namespace LocalJSX {
          */
         "isEditing"?: boolean;
         "layout"?: LayoutConfig;
-        "legend"?: LegendConfig;
+        "legendConfig"?: LegendConfig;
         "messageOverrides"?: MessageOverrides;
         "minBufferSize"?: number;
         "movement"?: MovementConfig;

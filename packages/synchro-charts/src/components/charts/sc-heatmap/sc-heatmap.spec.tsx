@@ -40,7 +40,7 @@ const heatmap = newChartSpecPage('sc-heatmap');
 describe('legend', () => {
   it('renders a legend when provided with a legend config', async () => {
     const { chart } = await heatmap({
-      legend: {
+      legendConfig: {
         position: LEGEND_POSITION.BOTTOM,
         width: 200,
       },
@@ -52,7 +52,7 @@ describe('legend', () => {
 
   it('passes down isEditing when it is true', async () => {
     const { chart } = await heatmap({
-      legend: {
+      legendConfig: {
         position: LEGEND_POSITION.BOTTOM,
         width: 200,
       },
@@ -65,7 +65,7 @@ describe('legend', () => {
 
   it('passes down view port', async () => {
     const { chart } = await heatmap({
-      legend: {
+      legendConfig: {
         position: LEGEND_POSITION.BOTTOM,
         width: 200,
       },
@@ -249,10 +249,10 @@ describe('properties pass down correctly to chart implementation', () => {
       width: 200,
     };
 
-    const { chart } = await heatmap({ legend: LEGEND });
+    const { chart } = await heatmap({ legendConfig: LEGEND });
     const baseChart = chart.querySelector('sc-webgl-base-chart') as HTMLScWebglBaseChartElement;
 
-    expect(baseChart.legend).toEqual(LEGEND);
+    expect(baseChart.legendConfig).toEqual(LEGEND);
   });
 
   it('sets axis correctly', async () => {

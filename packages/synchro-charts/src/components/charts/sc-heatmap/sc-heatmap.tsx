@@ -7,7 +7,16 @@ import {
   MinimalViewPortConfig,
   RequestDataFn,
 } from '../../../utils/dataTypes';
-import { Axis, ChartConfig, LayoutConfig, LegendConfig, MovementConfig, ScaleConfig, Tooltip } from '../common/types';
+import {
+  Axis,
+  ChartConfig,
+  LayoutConfig,
+  Legend,
+  LegendConfig,
+  MovementConfig,
+  ScaleConfig,
+  Tooltip,
+} from '../common/types';
 import { chartScene, updateChartScene } from './chartScene';
 import { DEFAULT_CHART_CONFIG } from '../sc-webgl-base-chart/chartDefaults';
 import { RectScrollFixed } from '../../../utils/types';
@@ -25,6 +34,8 @@ const heatmapTooltip = (props: Tooltip.Props) => (
   <sc-tooltip {...props} supportString={false} visualizesAlarms={false} dataAlignment={DATA_ALIGNMENT.EITHER} />
 );
 
+const legend = (props: Legend.Props) => <sc-legend {...props} />;
+
 @Component({
   tag: 'sc-heatmap',
   shadow: false,
@@ -34,7 +45,7 @@ export class ScHeatmap implements ChartConfig {
   @Prop() movement?: MovementConfig;
   @Prop() scale?: ScaleConfig;
   @Prop() layout?: LayoutConfig;
-  @Prop() legend?: LegendConfig;
+  @Prop() legendConfig?: LegendConfig;
   @Prop() size?: MinimalSizeConfig;
   @Prop() widgetId!: string;
   @Prop() dataStreams!: DataStream[];
@@ -62,7 +73,8 @@ export class ScHeatmap implements ChartConfig {
             gestures={this.gestures}
             configId={this.widgetId}
             requestData={this.requestData}
-            legend={this.legend}
+            legendConfig={this.legendConfig}
+            legend={legend}
             updateChartScene={updateChartScene}
             createChartScene={chartScene}
             size={{
