@@ -1,11 +1,6 @@
 import { clipSpaceConversion } from '../sc-webgl-base-chart/clipSpaceConversion';
-import {
-  HeatmapColorPalette,
-  getBucketWidth,
-  getBucketColor,
-  getSequential,
-  NUM_OF_COLORS_SEQUENTIAL,
-} from './displayLogic';
+import { HeatmapColorPalette, getXBucketWidth, getBucketColor, getSequential, getYBucketHeight } from './displayLogic';
+import { NUM_OF_COLORS_SEQUENTIAL } from './heatmapConstants';
 import { MONTH_IN_MS, DAY_IN_MS } from '../../../utils/time';
 
 const VIEW_PORT = { start: new Date(2000, 0), end: new Date(2000, 1, 0), yMin: 0, yMax: 100 };
@@ -16,15 +11,26 @@ const TOTAL_NUM_POINTS_MIN = DAY_IN_MS / 1000;
 const THREE_DATA_STREAM = 3;
 const TOTAL_POSSIBLE_POINT = TOTAL_NUM_POINTS_MIN * THREE_DATA_STREAM;
 
-describe('getBucketWidth', () => {
+describe('getXBucketWidth', () => {
   it('width of the bar is in between the view port', () => {
-    const barWidth = getBucketWidth({
-      numDataStreams: 1,
+    const barWidth = getXBucketWidth({
       toClipSpace,
-      resolution: MONTH_IN_MS,
+      xBucketRange: MONTH_IN_MS,
     });
     expect(barWidth).toBeGreaterThanOrEqual(toClipSpace(VIEW_PORT.start.getTime()));
     expect(barWidth).toBeLessThanOrEqual(toClipSpace(VIEW_PORT.end.getTime()));
+  });
+});
+
+describe.each`
+  yMin    | yMax   | yBucketHeight
+  ${0}    | ${100} | ${9.33}
+  ${0}    | ${50}  | ${4.66}
+  ${-20}  | ${40}  | ${5.6}
+  ${-100} | ${0}   | ${9.33}
+`('getYBucketHeight', ({ yMin, yMax, yBucketHeight }) => {
+  test(`y bucket height for yMin: ${yMin} and yMax: ${yMax}`, () => {
+    expect(getYBucketHeight({ ...VIEW_PORT, yMin, yMax })).toBeCloseTo(yBucketHeight, 0);
   });
 });
 

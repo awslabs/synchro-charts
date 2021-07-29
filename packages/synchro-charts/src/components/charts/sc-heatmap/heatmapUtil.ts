@@ -1,8 +1,7 @@
 import { DataStream, ViewPort } from '../../../utils/dataTypes';
-import { SECOND_IN_MS } from '../../../utils/time';
+import { SECOND_IN_MS, MINUTE_IN_MS, HOUR_IN_MS, DAY_IN_MS, MONTH_IN_MS, YEAR_IN_MS } from '../../../utils/time';
 import { DataType } from '../../../utils/dataConstants';
-
-const NUM_OF_BUCKETS = 10;
+import { CHANGE_X_BUCKET_RANGE_AT } from './heatmapConstants';
 
 export type HeatValueMap = {
   [xBucketRangeStart: number]: {
@@ -25,27 +24,22 @@ export const calculateBucketIndex = ({
   yMax: number;
   yMin: number;
   bucketCount: number;
-}): number => Math.ceil(((yValue - yMin) / (yMax - yMin)) * bucketCount);
+}): number => Math.abs(Math.floor(((yValue - yMin) / (yMax - yMin)) * bucketCount));
 
-export const calculateXBucketStart = ({
-  xValue,
-  xAxisBucketRange,
-}: {
-  xValue: number;
-  xAxisBucketRange: number;
-}): number => Math.floor(xValue / xAxisBucketRange) * xAxisBucketRange;
+export const calculateXBucketStart = ({ xValue, xBucketRange }: { xValue: number; xBucketRange: number }): number =>
+  Math.floor(xValue / xBucketRange) * xBucketRange;
 
 /**
  * Keeps track of the total number of data points within a point's respective bucket and
  * datastream name.
  */
 export const addCount = ({
-  heatValue = {},
+  heatValues = {},
   xBucketRangeStart,
   bucketIndex,
   dataStreamId,
 }: {
-  heatValue: HeatValueMap;
+  heatValues: HeatValueMap;
   xBucketRangeStart: number;
   bucketIndex: number;
   dataStreamId: string;
@@ -53,17 +47,17 @@ export const addCount = ({
   if (!dataStreamId) {
     return {};
   }
-  const newHeatValue = heatValue;
-  newHeatValue[xBucketRangeStart] = heatValue[xBucketRangeStart] ?? {};
-  newHeatValue[xBucketRangeStart][bucketIndex] = heatValue[xBucketRangeStart][bucketIndex] ?? {
+  const newHeatValue: HeatValueMap = heatValues;
+  newHeatValue[xBucketRangeStart] = heatValues[xBucketRangeStart] ?? {};
+  newHeatValue[xBucketRangeStart][bucketIndex] = heatValues[xBucketRangeStart][bucketIndex] ?? {
     totalCount: 0,
     streamCount: {},
   };
   newHeatValue[xBucketRangeStart][bucketIndex].streamCount[dataStreamId] =
-    heatValue[xBucketRangeStart][bucketIndex].streamCount[dataStreamId] ?? 0;
+    heatValues[xBucketRangeStart][bucketIndex].streamCount[dataStreamId] ?? 0;
   newHeatValue[xBucketRangeStart][bucketIndex].streamCount[dataStreamId] += 1;
   newHeatValue[xBucketRangeStart][bucketIndex].totalCount += 1;
-  return newHeatValue;
+  return heatValues;
 };
 
 /**
@@ -71,32 +65,135 @@ export const addCount = ({
  * returns updated HeatValueMap with the aggregated data from the dataStreams.
  */
 export const calcHeatValues = ({
-  oldHeatValue = {},
+  oldHeatValues = {},
   dataStreams,
-  resolution,
+  xBucketRange,
   viewport,
+  bucketCount,
 }: {
-  oldHeatValue: HeatValueMap;
+  oldHeatValues: HeatValueMap;
   dataStreams: DataStream[];
-  resolution: number;
+  xBucketRange: number;
   viewport: ViewPort;
+  bucketCount: number;
 }) => {
-  if (dataStreams[0].dataType !== DataType.NUMBER) {
-    return {};
-  }
-  // if resolution is 0 then set the XAxisBucketRange to be 1 second
-  const xAxisBucketRange = resolution === 0 ? SECOND_IN_MS : resolution;
   const { yMax, yMin } = viewport;
-  return dataStreams.reduce(function reduceDataStream(newHeatValue, dataStream) {
-    return dataStream.data.reduce(function reduceData(tempHeatValue, currPoint) {
-      const xBucketRangeStart = calculateXBucketStart({ xValue: currPoint.x, xAxisBucketRange });
+  return dataStreams.reduce(function reduceDataStream(newHeatValues, dataStream) {
+    if (dataStream.dataType !== DataType.NUMBER) {
+      return {};
+    }
+    return dataStream.data.reduce(function reduceData(tempHeatValues, currPoint) {
+      const xBucketRangeStart = calculateXBucketStart({ xValue: currPoint.x, xBucketRange });
       const bucketIndex = calculateBucketIndex({
         yValue: currPoint.y as number, // checked in line 85 if the data value is number
         yMax,
         yMin,
-        bucketCount: NUM_OF_BUCKETS,
+        bucketCount,
       });
-      return addCount({ heatValue: tempHeatValue, xBucketRangeStart, bucketIndex, dataStreamId: dataStream.id });
-    }, newHeatValue);
-  }, oldHeatValue);
+      return addCount({ heatValues: tempHeatValues, xBucketRangeStart, bucketIndex, dataStreamId: dataStream.id });
+    }, newHeatValues);
+  }, oldHeatValues);
+};
+
+export const getXBucketRange = ({ start, end }: { start: Date; end: Date }): number => {
+  const duration = end.getTime() - start.getTime();
+  if (duration > YEAR_IN_MS) {
+    return YEAR_IN_MS;
+  }
+  if (duration > 90 * DAY_IN_MS) {
+    return MONTH_IN_MS;
+  }
+  if (duration > CHANGE_X_BUCKET_RANGE_AT * 2 * DAY_IN_MS) {
+    return DAY_IN_MS;
+  }
+  if (duration > CHANGE_X_BUCKET_RANGE_AT * HOUR_IN_MS) {
+    return HOUR_IN_MS;
+  }
+  if (duration > CHANGE_X_BUCKET_RANGE_AT * MINUTE_IN_MS) {
+    return MINUTE_IN_MS;
+  }
+  return SECOND_IN_MS;
+};
+
+export const displayDate = (dates: Date[], { start, end }: { start: Date; end: Date }): string => {
+  const viewportDurationMS = end.getTime() - start.getTime();
+  const [xBucketRangeStart, xBucketRangeEnd] = dates;
+  if (viewportDurationMS < MINUTE_IN_MS) {
+    return `${xBucketRangeStart.toLocaleString('en-US', {
+      minute: 'numeric',
+      second: 'numeric',
+    })} - ${xBucketRangeEnd.toLocaleString('en-US', {
+      minute: 'numeric',
+      second: 'numeric',
+    })}`;
+  }
+
+  if (viewportDurationMS <= 10 * MINUTE_IN_MS) {
+    return `${xBucketRangeStart.toLocaleString('en-US', {
+      hour: 'numeric',
+      minute: 'numeric',
+      second: 'numeric',
+      hour12: true,
+    })} - ${xBucketRangeEnd.toLocaleString('en-US', {
+      hour: 'numeric',
+      minute: 'numeric',
+      second: 'numeric',
+      hour12: true,
+    })}`;
+  }
+
+  if (viewportDurationMS <= HOUR_IN_MS) {
+    return `${xBucketRangeStart.toLocaleString('en-US', {
+      hour: 'numeric',
+      minute: 'numeric',
+      hour12: true,
+    })} - ${xBucketRangeEnd.toLocaleString('en-US', {
+      hour: 'numeric',
+      minute: 'numeric',
+      hour12: true,
+    })}`;
+  }
+
+  if (viewportDurationMS <= 7 * DAY_IN_MS) {
+    return `${xBucketRangeStart.toLocaleString('en-US', {
+      month: 'numeric',
+      hour: 'numeric',
+      day: 'numeric',
+      hour12: true,
+    })} - ${xBucketRangeEnd.toLocaleString('en-US', {
+      month: 'numeric',
+      hour: 'numeric',
+      day: 'numeric',
+      hour12: true,
+    })}`;
+  }
+
+  return `${xBucketRangeStart.toLocaleString('en-US', {
+    year: 'numeric',
+    month: 'numeric',
+    day: 'numeric',
+  })} - ${xBucketRangeEnd.toLocaleString('en-US', {
+    year: 'numeric',
+    month: 'numeric',
+    day: 'numeric',
+  })}`;
+};
+
+export const shouldRerenderOnViewportChange = ({
+  oldViewport,
+  newViewport,
+}: {
+  oldViewport: ViewPort;
+  newViewport: ViewPort;
+}): boolean => {
+  const { yMin: prevYMin, yMax: prevYMax, start: prevStart, end: prevEnd } = oldViewport;
+  const { yMin: newYMin, yMax: newYMax, start: newStart, end: newEnd } = newViewport;
+
+  if (prevYMin !== newYMin || prevYMax !== newYMax) {
+    return true;
+  }
+
+  const prevXBucketRange = getXBucketRange({ start: prevStart, end: prevEnd });
+  const newXBucketRange = getXBucketRange({ start: newStart, end: newEnd });
+  return prevXBucketRange !== newXBucketRange;
 };
