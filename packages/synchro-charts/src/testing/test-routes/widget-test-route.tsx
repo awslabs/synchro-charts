@@ -21,7 +21,7 @@ const {
   isEditing,
   dataStreams,
   gestures,
-  legend,
+  legendConfig,
   tableColumns,
 } = testCaseParameters();
 
@@ -80,7 +80,7 @@ export class WidgetTestRoute {
           isEditing={isEditing}
           alarms={alarms}
           viewport={viewport}
-          legend={legend}
+          legendConfig={legendConfig}
           size={getSize(width)}
           axis={axis}
           tableColumns={tableColumns}

@@ -166,7 +166,7 @@ describe('line chart', () => {
     cy.matchImageSnapshotOnCI();
   });
 
-  it.only('renders single point with a legend present', () => {
+  it('renders single point with a legend present', () => {
     cy.visit(`${root}/standard-with-legend`);
     const DATA_STREAM_NAME = 'test stream';
     const DATA_POINT_Y = '2500';

@@ -39,7 +39,7 @@ const LOADING_STREAM: DataStream<number> = {
   isLoading: true,
 };
 
-const newChartSpecPage = async (props: Partial<Components.ScWebglBaseChart>) => {
+const newChartSpecPage = async (chartProps: Partial<Components.ScWebglBaseChart>) => {
   const page = await newSpecPage({
     components: [ScWebglBaseChart, ScGestureHandler, ScWebglAxis, ScErrorBadge],
     html: '<div></div>',
@@ -75,6 +75,7 @@ const newChartSpecPage = async (props: Partial<Components.ScWebglBaseChart>) => 
       position: LEGEND_POSITION.BOTTOM,
       width: 300,
     },
+    legend: props => <sc-legend {...props} />,
     isEditing: false,
     annotations: {
       x: [],
@@ -89,7 +90,7 @@ const newChartSpecPage = async (props: Partial<Components.ScWebglBaseChart>) => 
       <sc-tooltip {...rest} dataAlignment={DATA_ALIGNMENT.RIGHT} visualizesAlarms={visualizesAlarms} supportString />
     ),
   };
-  update(chart, { ...defaultProps, ...props });
+  update(chart, { ...defaultProps, ...chartProps });
   page.body.appendChild(chart);
   await page.waitForChanges();
   return { page, chart };

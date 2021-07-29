@@ -86,7 +86,7 @@ export class ScWebglBaseChart {
   @Prop() bufferFactor!: number;
   @Prop() minBufferSize!: number;
   @Prop() legendConfig: LegendConfig;
-  @Prop() legend?: (props: Legend.Props) => HTMLElement = (props: Legend.Props) => <sc-legend {...props} />;
+  @Prop() legend?: (props: Legend.Props) => HTMLElement = props => <sc-legend {...props} />;
   @Prop() annotations: Annotations = {};
   @Prop() trends: Trend[] = [];
   @Prop() supportString: boolean;
