@@ -99,17 +99,28 @@ export namespace Components {
         "propertyPoint"?: DataPoint;
         "title": string;
     }
-    interface ScHeatmapTooltip {
-        "dataContainer": HTMLElement;
-        "dataStreams": DataStream[];
-        "maxDurationFromDate"?: number;
-        "size": SizeConfig;
-        "sortPoints": boolean;
+    interface ScHeatmap {
+        "axis"?: Axis.Options;
         /**
-          * CSS Top property for the tooltip container
+          * Memory Management
          */
-        "top": number;
-        "viewport": ViewPort;
+        "bufferFactor": number;
+        "dataStreams": DataStream[];
+        "gestures": boolean;
+        /**
+          * Status
+         */
+        "isEditing": boolean;
+        "layout"?: LayoutConfig;
+        "legend"?: LegendConfig;
+        "messageOverrides"?: MessageOverrides;
+        "minBufferSize": number;
+        "movement"?: MovementConfig;
+        "requestData"?: RequestDataFn;
+        "scale"?: ScaleConfig;
+        "size"?: MinimalSizeConfig;
+        "viewport": MinimalViewPortConfig;
+        "widgetId": string;
     }
     interface ScHelpTooltip {
         "message": string;
@@ -497,6 +508,7 @@ export namespace Components {
           * Optionally provided callback to initiate a request for data. Used to ensure gestures emit events for request data.
          */
         "requestData"?: RequestDataFn;
+        "shouldRerenderOnViewportChange"?: ({ oldViewport, newViewport }) => boolean;
         "size": SizePositionConfig;
         "supportString": boolean;
         "tooltip": (props: Tooltip.Props) => HTMLElement;
@@ -697,11 +709,11 @@ declare global {
         prototype: HTMLScGridTooltipElement;
         new (): HTMLScGridTooltipElement;
     };
-    interface HTMLScHeatmapTooltipElement extends Components.ScHeatmapTooltip, HTMLStencilElement {
+    interface HTMLScHeatmapElement extends Components.ScHeatmap, HTMLStencilElement {
     }
-    var HTMLScHeatmapTooltipElement: {
-        prototype: HTMLScHeatmapTooltipElement;
-        new (): HTMLScHeatmapTooltipElement;
+    var HTMLScHeatmapElement: {
+        prototype: HTMLScHeatmapElement;
+        new (): HTMLScHeatmapElement;
     };
     interface HTMLScHelpTooltipElement extends Components.ScHelpTooltip, HTMLStencilElement {
     }
@@ -1320,7 +1332,7 @@ declare global {
         "sc-gesture-handler": HTMLScGestureHandlerElement;
         "sc-grid": HTMLScGridElement;
         "sc-grid-tooltip": HTMLScGridTooltipElement;
-        "sc-heatmap-tooltip": HTMLScHeatmapTooltipElement;
+        "sc-heatmap": HTMLScHeatmapElement;
         "sc-help-tooltip": HTMLScHelpTooltipElement;
         "sc-kpi": HTMLScKpiElement;
         "sc-kpi-base": HTMLScKpiBaseElement;
@@ -1507,17 +1519,28 @@ declare namespace LocalJSX {
         "propertyPoint"?: DataPoint;
         "title"?: string;
     }
-    interface ScHeatmapTooltip {
-        "dataContainer": HTMLElement;
-        "dataStreams": DataStream[];
-        "maxDurationFromDate"?: number;
-        "size": SizeConfig;
-        "sortPoints"?: boolean;
+    interface ScHeatmap {
+        "axis"?: Axis.Options;
         /**
-          * CSS Top property for the tooltip container
+          * Memory Management
          */
-        "top"?: number;
-        "viewport": ViewPort;
+        "bufferFactor"?: number;
+        "dataStreams": DataStream[];
+        "gestures"?: boolean;
+        /**
+          * Status
+         */
+        "isEditing"?: boolean;
+        "layout"?: LayoutConfig;
+        "legend"?: LegendConfig;
+        "messageOverrides"?: MessageOverrides;
+        "minBufferSize"?: number;
+        "movement"?: MovementConfig;
+        "requestData"?: RequestDataFn;
+        "scale"?: ScaleConfig;
+        "size"?: MinimalSizeConfig;
+        "viewport"?: MinimalViewPortConfig;
+        "widgetId": string;
     }
     interface ScHelpTooltip {
         "message": string;
@@ -1911,6 +1934,7 @@ declare namespace LocalJSX {
           * Optionally provided callback to initiate a request for data. Used to ensure gestures emit events for request data.
          */
         "requestData"?: RequestDataFn;
+        "shouldRerenderOnViewportChange"?: ({ oldViewport, newViewport }) => boolean;
         "size": SizePositionConfig;
         "supportString"?: boolean;
         "tooltip"?: (props: Tooltip.Props) => HTMLElement;
@@ -2031,7 +2055,7 @@ declare namespace LocalJSX {
         "sc-gesture-handler": ScGestureHandler;
         "sc-grid": ScGrid;
         "sc-grid-tooltip": ScGridTooltip;
-        "sc-heatmap-tooltip": ScHeatmapTooltip;
+        "sc-heatmap": ScHeatmap;
         "sc-help-tooltip": ScHelpTooltip;
         "sc-kpi": ScKpi;
         "sc-kpi-base": ScKpiBase;
@@ -2154,7 +2178,7 @@ declare module "@stencil/core" {
             "sc-gesture-handler": LocalJSX.ScGestureHandler & JSXBase.HTMLAttributes<HTMLScGestureHandlerElement>;
             "sc-grid": LocalJSX.ScGrid & JSXBase.HTMLAttributes<HTMLScGridElement>;
             "sc-grid-tooltip": LocalJSX.ScGridTooltip & JSXBase.HTMLAttributes<HTMLScGridTooltipElement>;
-            "sc-heatmap-tooltip": LocalJSX.ScHeatmapTooltip & JSXBase.HTMLAttributes<HTMLScHeatmapTooltipElement>;
+            "sc-heatmap": LocalJSX.ScHeatmap & JSXBase.HTMLAttributes<HTMLScHeatmapElement>;
             "sc-help-tooltip": LocalJSX.ScHelpTooltip & JSXBase.HTMLAttributes<HTMLScHelpTooltipElement>;
             "sc-kpi": LocalJSX.ScKpi & JSXBase.HTMLAttributes<HTMLScKpiElement>;
             "sc-kpi-base": LocalJSX.ScKpiBase & JSXBase.HTMLAttributes<HTMLScKpiBaseElement>;

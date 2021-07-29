@@ -11,6 +11,7 @@ import { CustomHTMLElement } from '../../utils/types';
 import { LEGEND_POSITION } from '../..';
 import { update } from '../../components/charts/common/tests/merge';
 import { ScBarChart } from '../../components/charts/sc-bar-chart/sc-bar-chart';
+import { ScHeatmap } from '../../components/charts/sc-heatmap/sc-heatmap';
 import { ScScatterChart } from '../../components/charts/sc-scatter-chart/sc-scatter-chart';
 import { ScStatusTimeline } from '../../components/charts/sc-status-timeline/sc-status-timeline';
 import { ScWebglAxis } from '../../components/charts/sc-webgl-base-chart/sc-webgl-axis';
@@ -40,6 +41,7 @@ export const newChartSpecPage = (tagName: string): ChartSpecPage => async props 
       ScGestureHandler,
       ScLineChart,
       ScBarChart,
+      ScHeatmap,
       ScScatterChart,
       ScStatusTimeline,
       ScSizeProvider,
