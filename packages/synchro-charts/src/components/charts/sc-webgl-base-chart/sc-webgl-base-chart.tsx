@@ -756,10 +756,8 @@ export class ScWebglBaseChart {
       visualizesAlarms: this.visualizesAlarms,
     });
 
-  renderLegend = (shouldDisplayAsLoading: any, thresholds: Threshold[], showDataStreamColor: boolean) => {
-    console.log(this.legend);
-    console.log(this.legendConfig);
-    return this.legend !== undefined
+  renderLegend = (shouldDisplayAsLoading: any, thresholds: Threshold[], showDataStreamColor: boolean) =>
+    this.legend !== undefined
       ? this.legend({
           config: this.legendConfig,
           dataStreams: this.dataStreams,
@@ -774,7 +772,6 @@ export class ScWebglBaseChart {
           showDataStreamColor,
         })
       : null;
-  }
 
   render() {
     const chartSizeConfig = this.chartSizeConfig();
