@@ -3,9 +3,9 @@ import { WebGLRenderer } from 'three';
 import { ChartScene } from './types';
 import { ClipSpaceRect, ClipSpaceRectMap } from '../common/webGLPositioning';
 import { RectScrollFixed } from '../../utils/types';
-import { ViewportHandler } from '../sc-viewport-handler/viewPortHandler';
+import { ViewportHandler } from '../viewportHandler/viewportHandler';
 import { isValid } from '../../utils/predicates';
-import { ViewPortManager } from '../sc-viewport-handler/types';
+import { ViewPortManager } from '../viewportHandler/types';
 
 const isChartScene = isValid((v: Partial<ChartScene>) => v.camera != null);
 

@@ -1,5 +1,5 @@
 import { BufferAttribute, InstancedBufferAttribute, OrthographicCamera, Scene } from 'three';
-import { ViewPortManager } from '../sc-viewport-handler/types';
+import { ViewPortManager } from '../viewportHandler/types';
 
 // TypedArrays are mutable, but typescript made the choice
 // to mark them as readonly due to standard usecases only required read.

@@ -7,8 +7,8 @@ import { constructTableData, Row } from './constructTableData';
 import { viewportEndDate, viewportStartDate } from '../../utils/viewPort';
 import { isMinimalStaticViewport } from '../../utils/predicates';
 import { parseDuration } from '../../utils/time';
-import { ViewportHandler } from '../sc-viewport-handler/viewPortHandler';
-import { ViewPortManager } from '../sc-viewport-handler/types';
+import { ViewportHandler } from '../viewportHandler/viewportHandler';
+import { ViewPortManager } from '../viewportHandler/types';
 
 const MSG =
   'This visualization displays only live data. Choose a live time frame to display data in this visualization.';
