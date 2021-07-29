@@ -78,6 +78,7 @@ export const draggable = ({
         /** Drag Event */
         const annotationDragged = yAnnotation as YAnnotation;
         if (annotationDragged.isEditable) {
+          // this if statement is technically not needed but serves as a backup in case client-side DOM is modified
           const { y: yPos } = event as { y: number };
           annotationDragged.value = calculateNewThreshold({ yPos, viewport, size });
           const axisRescale = needAxisRescale({ annotationValue: annotationDragged.value, viewport });

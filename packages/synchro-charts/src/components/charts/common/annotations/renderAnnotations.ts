@@ -74,7 +74,7 @@ export const renderAnnotations = ({
   });
 
   /**
-   * Y Annotations Editable
+   * Y Annotations Editable (Draggable)
    */
   renderYAnnotationsEditable({
     container,

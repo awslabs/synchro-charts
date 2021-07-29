@@ -69,7 +69,7 @@ export const renderYAnnotationsEditable = ({
   const getYAnnotationHandleY = (yAnnotation: YAnnotation): number => getYPosition(yAnnotation) + HANDLE_OFFSET_Y;
 
   const getGroupPosition = (yAnnotation: YAnnotation): string => {
-    return `translate(0, ${getYPosition(yAnnotation)})`;
+    return `translate(0,${getYPosition(yAnnotation)})`;
   };
 
   const annotationSelectionEditable = select(container)
@@ -231,7 +231,7 @@ export const renderYAnnotations = ({
     });
 
   const getGroupPosition = (yAnnotation: YAnnotation): string => {
-    return `translate(0, ${getYPosition(yAnnotation)})`;
+    return `translate(0,${getYPosition(yAnnotation)})`;
   };
 
   /** Not Editable Annotations */
