@@ -3,11 +3,12 @@ import { DataStream, MessageOverrides, MinimalViewPortConfig, TableColumn } from
 import { isThreshold } from '../charts/common/annotations/utils';
 import { Trend } from '../charts/common/trends/types';
 import { Annotations, ChartConfig, Threshold } from '../charts/common/types';
-import { webGLRenderer } from '../sc-webgl-context/webglContext';
 import { constructTableData, Row } from './constructTableData';
 import { viewportEndDate, viewportStartDate } from '../../utils/viewPort';
 import { isMinimalStaticViewport } from '../../utils/predicates';
 import { parseDuration } from '../../utils/time';
+import { ViewportHandler } from '../sc-viewport-handler/viewPortHandler';
+import { ViewPortManager } from '../sc-viewport-handler/types';
 
 const MSG =
   'This visualization displays only live data. Choose a live time frame to display data in this visualization.';
@@ -35,6 +36,8 @@ export class ScTable implements ChartConfig {
     ? parseDuration(this.viewport.duration)
     : undefined;
 
+  private viewportGroups: ViewportHandler<ViewPortManager> = new ViewportHandler();
+
   @Watch('viewport')
   onViewPortChange(newViewPort: MinimalViewPortConfig) {
     this.onUpdate({
@@ -53,17 +56,16 @@ export class ScTable implements ChartConfig {
   };
 
   componentDidLoad() {
-    webGLRenderer.addChartScene({
+    this.viewportGroups.add({
       id: this.widgetId,
       viewportGroup: this.viewport.group,
-      dispose: () => {},
       updateViewPort: this.onUpdate,
     });
   }
 
   disconnectedCallback() {
     // necessary to make sure that the allocated memory is released, and nothing is incorrectly rendered.
-    webGLRenderer.removeChartScene(this.widgetId);
+    this.viewportGroups.remove(this.widgetId);
   }
 
   getThresholds = (): Threshold[] =>
