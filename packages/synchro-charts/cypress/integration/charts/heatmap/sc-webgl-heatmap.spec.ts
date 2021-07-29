@@ -44,6 +44,10 @@ const DATA_STREAM_2: DataStream = {
       y: 100,
     },
     {
+      x: new Date(2000, 0, 0, 0, 0, 45).getTime(),
+      y: 100,
+    },
+    {
       x: new Date(2000, 0, 0, 0, 0, 50).getTime(),
       y: 50,
     },
@@ -55,7 +59,7 @@ beforeEach(() => {
 });
 
 describe('heatmap', () => {
-  it('renders 2 buckets with lightest opacity', () => {
+  it('renders 2 buckets with different opacities', () => {
     visitDynamicWidget(cy, {
       componentTag: 'sc-heatmap',
       viewportStart: new Date(START.getTime() - 1.5 * MINUTE_IN_MS),
