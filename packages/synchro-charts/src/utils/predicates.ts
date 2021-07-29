@@ -25,7 +25,7 @@
  * type guards.
  *
  */
-import { DataStream } from './dataTypes';
+import { DataStream, MinimalStaticViewport, MinimalViewPortConfig } from './dataTypes';
 import { DataType } from './dataConstants';
 
 export const isDefined = <T>(value: T | null | undefined): value is T => value != null;
@@ -40,3 +40,6 @@ export const isNumberDataStream = (stream: DataStream): stream is DataStream<num
   stream.dataType === DataType.NUMBER;
 
 export const isNumber = <T>(val: T | number): val is number => typeof val === 'number';
+
+export const isMinimalStaticViewport = (viewport: MinimalViewPortConfig): viewport is MinimalStaticViewport =>
+  'start' in viewport;

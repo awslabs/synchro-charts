@@ -3,6 +3,7 @@ import { Component, h, Prop } from '@stencil/core';
 import { DataStream, MessageOverrides, MinimalViewPortConfig } from '../../utils/dataTypes';
 import { RenderCell } from '../sc-widget-grid/types';
 import { Annotations, ChartConfig } from '../charts/common/types';
+import { validate } from '../common/validator/validate';
 
 const MSG =
   'This visualization displays only live data. Choose a live time frame to display data in this visualization.';
@@ -22,6 +23,10 @@ export class ScKpi implements ChartConfig {
   @Prop() liveModeOnlyMessage: string = MSG;
   @Prop() isEditing: boolean = false;
   @Prop() messageOverrides: MessageOverrides = {};
+
+  componentWillRender() {
+    validate(this);
+  }
 
   render() {
     const { viewport, widgetId, dataStreams, annotations, liveModeOnlyMessage, isEditing, messageOverrides } = this;

@@ -68,42 +68,41 @@ export const draggable = ({
   thresholdGroup.call(
     drag()
       .on('start', function dragStarted(yAnnotation: unknown) {
-        if ((yAnnotation as YAnnotation).isEditable) {
-          select(this)
-            .raise()
-            .classed('active', true);
+        if (!(yAnnotation as YAnnotation).isEditable) {
+          return;
         }
+        select(this)
+          .raise()
+          .classed('active', true);
       })
       .on('drag', function handleDragged(yAnnotation: unknown) {
         /** Drag Event */
         const annotationDragged = yAnnotation as YAnnotation;
-        if (annotationDragged.isEditable) {
-          // this if statement is technically not needed but serves as a backup in case client-side DOM is modified
-          const { y: yPos } = event as { y: number };
-          annotationDragged.value = calculateNewThreshold({ yPos, viewport, size });
-          const axisRescale = needAxisRescale({ annotationValue: annotationDragged.value, viewport });
-          if (axisRescale) {
-            onUpdate(activeViewPort(), false, axisRescale, true);
-          } else {
-            onUpdate(viewport, false, axisRescale, true);
-          }
+        if (!annotationDragged.isEditable) {
+          return;
         }
+
+        const { y: yPos } = event as { y: number };
+        annotationDragged.value = calculateNewThreshold({ yPos, viewport, size });
+        const axisRescale = needAxisRescale({ annotationValue: annotationDragged.value, viewport });
+
+        onUpdate(axisRescale ? activeViewPort() : viewport, false, axisRescale, true);
       })
       .on('end', function dragEnded(yAnnotation: unknown) {
         const annotationDragged = yAnnotation as YAnnotation;
-        if (annotationDragged.isEditable) {
-          const { y: yPos } = event as { y: number };
-          annotationDragged.value = calculateNewThreshold({ yPos, viewport, size });
-          const axisRescale = needAxisRescale({ annotationValue: annotationDragged.value, viewport });
-          if (axisRescale) {
-            onUpdate(activeViewPort(), false, axisRescale, true);
-          } else {
-            onUpdate(viewport, false, axisRescale, true);
-          }
-          select(this).classed('active', false);
-          /** emit event updating annotation on mouse up */
-          emitUpdatedWidgetConfiguration();
+        if (!annotationDragged.isEditable) {
+          return;
         }
+
+        const { y: yPos } = event as { y: number };
+        annotationDragged.value = calculateNewThreshold({ yPos, viewport, size });
+        const axisRescale = needAxisRescale({ annotationValue: annotationDragged.value, viewport });
+
+        onUpdate(axisRescale ? activeViewPort() : viewport, false, axisRescale, true);
+
+        select(this).classed('active', false);
+        /** emit event updating annotation on mouse up */
+        emitUpdatedWidgetConfiguration();
       }) as any
   );
 };

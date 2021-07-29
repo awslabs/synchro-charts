@@ -1,6 +1,6 @@
 import { Component, h } from '@stencil/core';
 import { MONTH_IN_MS, YEAR_IN_MS } from '../../../utils/time';
-import { DataStream, Primitive } from '../../../utils/dataTypes';
+import { DataStream, MinimalViewPortConfig, Primitive } from '../../../utils/dataTypes';
 import { isNumeric } from '../../../utils/number';
 import { DataType } from '../../../utils/dataConstants';
 
@@ -58,12 +58,9 @@ const dataStreams: DataStream<Primitive>[] = new Array(numCharts).fill(null).map
 })
 export class ScKpiStandard {
   render() {
-    return (
-      <sc-kpi
-        widgetId="test-widget"
-        dataStreams={dataStreams}
-        viewport={{ start: X_MIN, end: X_MAX, yMin: Y_MIN, yMax: Y_MAX, duration: isEnabled ? YEAR_IN_MS : undefined }}
-      />
-    );
+    const viewPort: MinimalViewPortConfig = isEnabled
+      ? { yMin: Y_MIN, yMax: Y_MAX, duration: YEAR_IN_MS }
+      : { start: X_MIN, end: X_MAX, yMin: Y_MIN, yMax: Y_MAX };
+    return <sc-kpi widgetId="test-widget" dataStreams={dataStreams} viewport={viewPort} />;
   }
 }
