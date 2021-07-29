@@ -1,4 +1,4 @@
-import { ChartConfig, Legend } from '../../components/charts/common/types';
+import { ChartConfig } from '../../components/charts/common/types';
 import { getPalette, PalletScheme } from '../../components/charts/common/palettes';
 import { DEFAULT_CHART_CONFIG } from '../../components/charts/sc-webgl-base-chart/chartDefaults';
 import { DataStreamInfo } from '../../utils/dataTypes';
