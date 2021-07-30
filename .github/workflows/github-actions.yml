@@ -46,7 +46,7 @@ jobs:
       # after the test run completes
       # store videos and any screenshots
       - uses: actions/upload-artifact@v1
-        if: always()
+        if: failure()
         with:
           name: cypress-screenshots
           path: packages/synchro-charts/cypress/screenshots
@@ -56,7 +56,7 @@ jobs:
           name: cypress-videos
           path: packages/synchro-charts/cypress/videos
       - uses: actions/upload-artifact@v1
-        if: failure()
+        if: always()
         with:
           name: cypress-snapshots
           path: packages/synchro-charts/cypress/snapshots
