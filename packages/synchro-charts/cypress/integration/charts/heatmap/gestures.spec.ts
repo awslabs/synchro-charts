@@ -32,8 +32,6 @@ it('moves viewport when gestures are applied', () => {
   cy.get(CHART_VIZ_CONTAINER_SELECTOR).dblclick('center');
 
   cy.contains(OLD_X_AXIS_TICK).should('not.exist');
-
-  cy.matchImageSnapshotOnCI();
 });
 
 it('does not move viewport when gestures are not applied', () => {
