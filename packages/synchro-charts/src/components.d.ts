@@ -126,8 +126,10 @@ export namespace Components {
         "config": LegendConfig;
         "dataStreams": DataStream[];
         "isEditing": boolean;
+        "isLoading": boolean;
         "supportString": boolean;
         "updateDataStreamName": ({ streamId, name }: { streamId: string; name: string }) => void;
+        "viewport": ViewPort;
     }
     interface ScHelpTooltip {
         "message": string;
@@ -1559,8 +1561,10 @@ declare namespace LocalJSX {
         "config": LegendConfig;
         "dataStreams": DataStream[];
         "isEditing"?: boolean;
+        "isLoading"?: boolean;
         "supportString"?: boolean;
         "updateDataStreamName": ({ streamId, name }: { streamId: string; name: string }) => void;
+        "viewport"?: ViewPort;
     }
     interface ScHelpTooltip {
         "message": string;

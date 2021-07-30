@@ -2,7 +2,7 @@ sc-heatmap-legend .legend-container {
   display: flex;
   flex-wrap: wrap;
   overflow-y: scroll;
-  overflow-x: hidden;
+  overflow-x: scroll;
 
   /* Hide scrollbar for IE and Edge */
   -ms-overflow-style: none;
@@ -17,7 +17,7 @@ sc-heatmap-legend .legend-container::-webkit-scrollbar {
 }
 
 sc-heatmap-legend {
-  --color-container-width: 30px;
+  --color-container-width: 240px;
 
   /* prevents the stream info from hijacking scroll when element is focused */
   overflow: hidden;
@@ -25,6 +25,15 @@ sc-heatmap-legend {
   margin-right: var(--margin-small);
   color: var(--secondary-font-color);
   padding-right: var(--margin-small);
+}
+
+sc-heatmap-legend .label {
+  width: 200px;
+  color: #989898;
+}
+
+sc-heatmap-legend .label .font {
+  font-size: 12px;
 }
 
 sc-heatmap-legend .legend-row-container {
@@ -37,12 +46,12 @@ sc-heatmap-legend .legend-value {
   align-items: center;
 }
 
-sc-heatmap-legend .color-container {
+sc-heatmap-legend .color-bar-container {
+  position: absolute;
   display: flex;
   flex-direction: column-reverse;
   width: var(--color-container-width);
-  height: 20px;
-  padding-top: 11px;
+  margin-top: 40px;
 }
 
 sc-heatmap-legend .spinner-container {
@@ -51,7 +60,24 @@ sc-heatmap-legend .spinner-container {
 }
 
 sc-heatmap-legend .bar {
+  position: relative;
+  height: 20px;
   width: var(--color-container-width);
+}
+
+sc-heatmap-legend .min-heat-values {
+  position: absolute;
+  color: #989898;
+  margin-top: 50px;
+  font-size: 10px;
+}
+
+sc-heatmap-legend .max-heat-values {
+  position: absolute;
+  color: #989898;
+  margin-top: 50px;
+  margin-left: 230px;
+  font-size: 10px;
 }
 
 sc-heatmap-legend .info {

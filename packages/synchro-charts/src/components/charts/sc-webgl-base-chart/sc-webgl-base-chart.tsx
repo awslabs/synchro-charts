@@ -803,18 +803,13 @@ export class ScWebglBaseChart {
         </DataContainer>
         {this.legend && (
           <ChartLegendContainer config={this.legend} legendHeight={LEGEND_HEIGHT} size={chartSizeConfig}>
-            <sc-legend
+            <sc-heatmap-legend
               config={this.legend}
               dataStreams={this.dataStreams}
-              visualizesAlarms={this.visualizesAlarms}
               updateDataStreamName={this.updateDataStreamName}
               viewport={this.activeViewPort()}
               isEditing={this.isEditing}
               isLoading={shouldDisplayAsLoading}
-              thresholds={thresholds}
-              supportString={this.supportString}
-              trendResults={this.trendResults}
-              showDataStreamColor={showDataStreamColor}
             />
           </ChartLegendContainer>
         )}
