@@ -122,6 +122,16 @@ export namespace Components {
         "viewport": MinimalViewPortConfig;
         "widgetId": string;
     }
+    interface ScHeatmapTooltip {
+        "dataContainer": HTMLElement;
+        "dataStreams": DataStream[];
+        "size": SizeConfig;
+        /**
+          * CSS Top property for the tooltip container
+         */
+        "top": number;
+        "viewport": ViewPort;
+    }
     interface ScHelpTooltip {
         "message": string;
     }
@@ -713,6 +723,12 @@ declare global {
     var HTMLScHeatmapElement: {
         prototype: HTMLScHeatmapElement;
         new (): HTMLScHeatmapElement;
+    };
+    interface HTMLScHeatmapTooltipElement extends Components.ScHeatmapTooltip, HTMLStencilElement {
+    }
+    var HTMLScHeatmapTooltipElement: {
+        prototype: HTMLScHeatmapTooltipElement;
+        new (): HTMLScHeatmapTooltipElement;
     };
     interface HTMLScHelpTooltipElement extends Components.ScHelpTooltip, HTMLStencilElement {
     }
@@ -1332,6 +1348,7 @@ declare global {
         "sc-grid": HTMLScGridElement;
         "sc-grid-tooltip": HTMLScGridTooltipElement;
         "sc-heatmap": HTMLScHeatmapElement;
+        "sc-heatmap-tooltip": HTMLScHeatmapTooltipElement;
         "sc-help-tooltip": HTMLScHelpTooltipElement;
         "sc-kpi": HTMLScKpiElement;
         "sc-kpi-base": HTMLScKpiBaseElement;
@@ -1540,6 +1557,16 @@ declare namespace LocalJSX {
         "size"?: MinimalSizeConfig;
         "viewport"?: MinimalViewPortConfig;
         "widgetId": string;
+    }
+    interface ScHeatmapTooltip {
+        "dataContainer": HTMLElement;
+        "dataStreams": DataStream[];
+        "size": SizeConfig;
+        /**
+          * CSS Top property for the tooltip container
+         */
+        "top"?: number;
+        "viewport": ViewPort;
     }
     interface ScHelpTooltip {
         "message": string;
@@ -2054,6 +2081,7 @@ declare namespace LocalJSX {
         "sc-grid": ScGrid;
         "sc-grid-tooltip": ScGridTooltip;
         "sc-heatmap": ScHeatmap;
+        "sc-heatmap-tooltip": ScHeatmapTooltip;
         "sc-help-tooltip": ScHelpTooltip;
         "sc-kpi": ScKpi;
         "sc-kpi-base": ScKpiBase;
@@ -2177,6 +2205,7 @@ declare module "@stencil/core" {
             "sc-grid": LocalJSX.ScGrid & JSXBase.HTMLAttributes<HTMLScGridElement>;
             "sc-grid-tooltip": LocalJSX.ScGridTooltip & JSXBase.HTMLAttributes<HTMLScGridTooltipElement>;
             "sc-heatmap": LocalJSX.ScHeatmap & JSXBase.HTMLAttributes<HTMLScHeatmapElement>;
+            "sc-heatmap-tooltip": LocalJSX.ScHeatmapTooltip & JSXBase.HTMLAttributes<HTMLScHeatmapTooltipElement>;
             "sc-help-tooltip": LocalJSX.ScHelpTooltip & JSXBase.HTMLAttributes<HTMLScHelpTooltipElement>;
             "sc-kpi": LocalJSX.ScKpi & JSXBase.HTMLAttributes<HTMLScKpiElement>;
             "sc-kpi-base": LocalJSX.ScKpiBase & JSXBase.HTMLAttributes<HTMLScKpiBaseElement>;
