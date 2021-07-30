@@ -63,7 +63,7 @@ beforeEach(() => {
 });
 
 describe('heatmap', () => {
-  it('renders 2 buckets with different opacities', () => {
+  it('renders 3 buckets with different opacities', () => {
     visitDynamicWidget(cy, {
       componentTag: 'sc-heatmap',
       viewportStart: new Date(START.getTime() - 1.5 * MINUTE_IN_MS),
