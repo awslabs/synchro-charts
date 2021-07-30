@@ -29,6 +29,10 @@ const DATA_STREAM_1: DataStream = {
       x: new Date(2000, 0, 0, 0, 0, 50).getTime(),
       y: 40,
     },
+    {
+      x: new Date(2000, 0, 0, 0, 0, 50).getTime(),
+      y: 50,
+    },
   ],
 };
 
@@ -72,7 +76,7 @@ describe('heatmap', () => {
     cy.matchImageSnapshotOnCI();
   });
 
-  it('renders 3 buckets with darkest opacity from 1 datastream', () => {
+  it('renders 4 buckets with darkest opacity from 1 datastream', () => {
     visitDynamicWidget(cy, {
       componentTag: 'sc-heatmap',
       viewportStart: START,
