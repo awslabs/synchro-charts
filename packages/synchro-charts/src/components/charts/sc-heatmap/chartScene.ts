@@ -23,7 +23,6 @@ const getHeatValue = ({ viewport, dataStreams }: { viewport: ViewPort; dataStrea
   const xBucketRange = getXBucketRange(viewport);
   return dataStreams.length !== 0
     ? calcHeatValues({
-        oldHeatValues: { maxHeatValue: 0, minHeatValue: Infinity },
         dataStreams,
         xBucketRange,
         viewport,

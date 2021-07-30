@@ -36,7 +36,7 @@ export const calculateXBucketStart = ({ xValue, xBucketRange }: { xValue: number
  * datastream name.
  */
 export const addCount = ({
-  heatValues = { maxHeatValue: 0, minHeatValue: Infinity },
+  heatValues,
   xBucketRangeStart,
   bucketIndex,
   dataStreamId,
@@ -67,16 +67,10 @@ export const addCount = ({
  */
 export const calculateMinMaxHeatValue = (heatValues: HeatValueMap): HeatValueMap => {
   const newHeatValues: HeatValueMap = heatValues;
-  Object.keys(newHeatValues).forEach((xAxisBucketStart: string) => {
-    Object.keys(newHeatValues[xAxisBucketStart]).forEach((bucketIndex: string) => {
-      newHeatValues.minHeatValue = Math.min(
-        newHeatValues.minHeatValue,
-        newHeatValues[xAxisBucketStart][bucketIndex].bucketHeatValue
-      );
-      newHeatValues.maxHeatValue = Math.max(
-        newHeatValues.maxHeatValue,
-        newHeatValues[xAxisBucketStart][bucketIndex].bucketHeatValue
-      );
+  Object.values(newHeatValues).forEach(xBucket => {
+    Object.values(xBucket).forEach(bucket => {
+      newHeatValues.minHeatValue = Math.min(newHeatValues.minHeatValue, bucket.bucketHeatValue);
+      newHeatValues.maxHeatValue = Math.max(newHeatValues.maxHeatValue, bucket.bucketHeatValue);
     });
   });
   return newHeatValues;
@@ -93,7 +87,7 @@ export const calcHeatValues = ({
   viewport,
   bucketCount,
 }: {
-  oldHeatValues: HeatValueMap;
+  oldHeatValues?: HeatValueMap;
   dataStreams: DataStream[];
   xBucketRange: number;
   viewport: ViewPort;
@@ -103,7 +97,7 @@ export const calcHeatValues = ({
   return calculateMinMaxHeatValue(
     dataStreams.reduce(function reduceDataStream(newHeatValues, dataStream) {
       if (dataStream.dataType !== DataType.NUMBER) {
-        return { maxHeatValue: 0, minHeatValue: Infinity };
+        return newHeatValues; // TODO: handle other data types
       }
       return dataStream.data.reduce(function reduceData(tempHeatValues, currPoint) {
         const xBucketRangeStart = calculateXBucketStart({ xValue: currPoint.x, xBucketRange });

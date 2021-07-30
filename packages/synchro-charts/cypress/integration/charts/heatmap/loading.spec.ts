@@ -8,4 +8,6 @@ it('renders spinner', () => {
   });
 
   cy.get(LOADING_SPINNER_SELECTOR).should('be.visible');
+  
+  cy.matchImageSnapshotOnCI();
 });

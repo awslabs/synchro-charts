@@ -32,6 +32,8 @@ it('moves viewport when gestures are applied', () => {
   cy.get(CHART_VIZ_CONTAINER_SELECTOR).dblclick('center');
 
   cy.contains(OLD_X_AXIS_TICK).should('not.exist');
+
+  cy.matchImageSnapshotOnCI();
 });
 
 it('does not move viewport when gestures are not applied', () => {
@@ -55,6 +57,8 @@ it('does not move viewport when gestures are not applied', () => {
   cy.get(CHART_VIZ_CONTAINER_SELECTOR).dblclick('center');
 
   cy.contains(OLD_X_AXIS_TICK).should('be.visible');
+
+  cy.matchImageSnapshotOnCI();
 });
 
 it('adjusts y range as data in the view changes', () => {
@@ -74,4 +78,6 @@ it('adjusts y range as data in the view changes', () => {
   // Y range has updated, and the y axis no longer contains the previous y value, since the y range has updated.
   cy.wait(TIME_FOR_GESTURE_TO_COMPLETE);
   cy.contains(EXISTING_Y_VALUE).should('not.exist');
+
+  cy.matchImageSnapshotOnCI();
 });

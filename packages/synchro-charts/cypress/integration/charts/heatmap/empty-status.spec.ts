@@ -17,6 +17,8 @@ describe('empty status checks', () => {
     cy.contains(messageOverrides.noDataStreamsPresentSubHeader).should('be.visible');
 
     cy.get(CHART_VIZ_CONTAINER_SELECTOR).matchImageSnapshotOnCI();
+
+    cy.matchImageSnapshotOnCI();
   });
 
   it('renders the "no data present" messaging when no data preset', () => {
@@ -32,5 +34,7 @@ describe('empty status checks', () => {
     cy.contains(messageOverrides.noDataPresentSubHeader).should('be.visible');
 
     cy.get(CHART_VIZ_CONTAINER_SELECTOR).matchImageSnapshotOnCI();
+
+    cy.matchImageSnapshotOnCI();
   });
 });

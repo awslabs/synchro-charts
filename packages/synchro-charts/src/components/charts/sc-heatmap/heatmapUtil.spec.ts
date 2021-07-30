@@ -9,6 +9,7 @@ import {
   getXBucketRange,
   displayDate,
   shouldRerenderOnViewportChange,
+  calculateMinMaxHeatValue,
 } from './heatmapUtil';
 import { DAY_IN_MS, HOUR_IN_MS, MINUTE_IN_MS, MONTH_IN_MS, SECOND_IN_MS } from '../../../utils/time';
 import { BUCKET_COUNT } from './heatmapConstants';
@@ -182,11 +183,33 @@ describe('addCount', () => {
   });
 });
 
+describe('calculateMinMaxHeatValue', () => {
+  it('has a maxHeatValue of 92 and minHeatValue of 34', () => {
+    const heatValues = {
+      minHeatValue: Infinity,
+      maxHeatValue: 0,
+      1620000000000: {
+        1: { bucketHeatValue: 92, streamCount: {} },
+        2: { bucketHeatValue: 39, streamCount: {} },
+      },
+      1622592000000: {
+        5: { bucketHeatValue: 34, streamCount: {} },
+        6: { bucketHeatValue: 35, streamCount: {} },
+      },
+    };
+    expect(calculateMinMaxHeatValue(heatValues)).toEqual({
+      '1620000000000': { '1': { bucketHeatValue: 92, streamCount: {} }, '2': { bucketHeatValue: 39, streamCount: {} } },
+      '1622592000000': { '5': { bucketHeatValue: 34, streamCount: {} }, '6': { bucketHeatValue: 35, streamCount: {} } },
+      maxHeatValue: 92,
+      minHeatValue: 34,
+    });
+  });
+});
+
 describe('calcHeatValues', () => {
   it('returns aggregated data for dataStreams with different x-axis bucket ranges', () => {
     const dataStreams: DataStream[] = [DATASTREAM_1, DATASTREAM_2];
     const newHeatValues = calcHeatValues({
-      oldHeatValues: { maxHeatValue: 0, minHeatValue: Infinity },
       dataStreams,
       xBucketRange: X_BUCKET_RANGE,
       viewport: VIEWPORT,
@@ -212,7 +235,6 @@ describe('calcHeatValues', () => {
     };
     const dataStreams: DataStream[] = [DATASTREAM];
     const newHeatValues = calcHeatValues({
-      oldHeatValues: { maxHeatValue: 0, minHeatValue: Infinity },
       dataStreams,
       xBucketRange: X_BUCKET_RANGE,
       viewport: VIEWPORT,
@@ -255,12 +277,12 @@ describe('shouldRerenderOnViewportChange', () => {
   it('returns true on viewport yMin/Max change', () => {
     const oldViewport: ViewPort = { yMax: 100, yMin: 0, start: new Date(), end: new Date() };
     const newViewport: ViewPort = { yMax: 90, yMin: 0, start: new Date(), end: new Date() };
-    expect(shouldRerenderOnViewportChange({ oldViewport, newViewport })).toBeTrue();
+    expect(shouldRerenderOnViewportChange({ oldViewport, newViewport })).toBe(true);
   });
 
   it('returns true on x bucket range change', () => {
     const oldViewport: ViewPort = { yMax: 100, yMin: 0, start: new Date(2000, 0, 0), end: new Date(2000, 0, 0, 0, 1) };
     const newViewport: ViewPort = { yMax: 100, yMin: 0, start: new Date(2000, 0, 0), end: new Date(2000, 0, 1) };
-    expect(shouldRerenderOnViewportChange({ oldViewport, newViewport })).toBeTrue();
+    expect(shouldRerenderOnViewportChange({ oldViewport, newViewport })).toBe(true);
   });
 });

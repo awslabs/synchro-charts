@@ -13,4 +13,6 @@ it('displays error when there is an error', () => {
 
   cy.get(ERROR_SYMBOL_SELECTOR).should('be.visible');
   cy.get(CHART_VIZ_CONTAINER_SELECTOR).matchImageSnapshotOnCI();
+
+  cy.matchImageSnapshotOnCI();
 });
