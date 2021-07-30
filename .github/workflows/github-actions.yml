@@ -39,7 +39,7 @@ jobs:
       - name: cypress run
         uses: cypress-io/github-action@v2
         with:
-          start: yarn start --env updateSnapshots=true
+          start: yarn start
           wait-on: 'http://localhost:3333'
           command: yarn test:cypress
           working-directory: packages/synchro-charts
@@ -56,7 +56,7 @@ jobs:
           name: cypress-videos
           path: packages/synchro-charts/cypress/videos
       - uses: actions/upload-artifact@v1
-        if: always()
+        if: failure()
         with:
           name: cypress-snapshots
           path: packages/synchro-charts/cypress/snapshots
