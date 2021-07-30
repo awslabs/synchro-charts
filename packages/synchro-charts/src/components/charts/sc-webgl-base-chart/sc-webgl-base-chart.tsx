@@ -273,7 +273,7 @@ export class ScWebglBaseChart {
   }
 
   @Watch('size')
-  @Watch('legend')
+  @Watch('legendConfig')
   onSizeChange(newProp: SizeConfig | LegendConfig, oldProp: SizeConfig | LegendConfig) {
     // NOTE: Change of legend can effect sizing
     if (!isEqual(newProp, oldProp)) {

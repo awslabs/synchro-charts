@@ -12,7 +12,6 @@ import {
   Axis,
   ChartConfig,
   LayoutConfig,
-  Legend,
   LegendConfig,
   MovementConfig,
   ScaleConfig,
@@ -34,8 +33,6 @@ const DEFAULT_BUFFER_FACTOR = 2;
 const tooltip = (props: Tooltip.Props) => (
   <sc-tooltip {...props} visualizesAlarms={false} supportString={false} dataAlignment={DATA_ALIGNMENT.EITHER} />
 );
-
-const legend = (props: Legend.Props) => <sc-legend {...props} />;
 @Component({
   tag: 'sc-scatter-chart',
   shadow: false,
@@ -79,7 +76,6 @@ export class ScScatterChart implements ChartConfig {
             configId={this.widgetId}
             requestData={this.requestData}
             legendConfig={this.legendConfig}
-            legend={legend}
             annotations={this.annotations}
             trends={this.trends}
             updateChartScene={updateChartScene}
