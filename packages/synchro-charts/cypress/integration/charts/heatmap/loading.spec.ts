@@ -9,5 +9,5 @@ it('renders spinner', () => {
 
   cy.get(LOADING_SPINNER_SELECTOR).should('be.visible');
 
-  cy.matchImageSnapshotOnCI();
+  cy.matchImageSnapshotOnCI({ customDiffConfig: { threshold: 0.3 } });
 });

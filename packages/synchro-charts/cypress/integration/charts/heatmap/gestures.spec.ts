@@ -58,7 +58,7 @@ it('does not move viewport when gestures are not applied', () => {
 
   cy.contains(OLD_X_AXIS_TICK).should('be.visible');
 
-  cy.matchImageSnapshotOnCI();
+  cy.matchImageSnapshotOnCI({ customDiffConfig: { threshold: 0.3 } });
 });
 
 it('adjusts y range as data in the view changes', () => {
@@ -79,5 +79,5 @@ it('adjusts y range as data in the view changes', () => {
   cy.wait(TIME_FOR_GESTURE_TO_COMPLETE);
   cy.contains(EXISTING_Y_VALUE).should('not.exist');
 
-  cy.matchImageSnapshotOnCI();
+  cy.matchImageSnapshotOnCI({ customDiffConfig: { threshold: 0.3 } });
 });
