@@ -59,7 +59,6 @@ const DATA_STREAMS: DataStream[] = [
 ];
 
 const HEAT_VALUES: HeatValueMap = calcHeatValues({
-  oldHeatValues: {},
   dataStreams: DATA_STREAMS,
   xBucketRange: X_BUCKET_RANGE,
   viewport: VIEW_PORT,
@@ -88,7 +87,7 @@ describe('create bucket mesh', () => {
       minBufferSize: MIN_BUFFER_SIZE,
       bufferFactor: BUFFER_FACTOR,
       viewport: VIEW_PORT,
-      heatValues: {},
+      heatValues: { maxHeatValue: 0, minHeatValue: 0 },
     });
     expect(mesh.count).toEqual(0);
 
@@ -97,13 +96,23 @@ describe('create bucket mesh', () => {
   });
 
   it('increase buffer size when there are more buckets than the minimum buffer size', () => {
+    const tempHeatValues = calcHeatValues({
+      dataStreams: DATA_STREAMS,
+      xBucketRange: X_BUCKET_RANGE,
+      viewport: VIEW_PORT,
+      bucketCount: BUCKET_COUNT,
+    });
+
+    // change these manually to get lighter opacity bucket
+    tempHeatValues.minHeatValue = 1;
+    tempHeatValues.maxHeatValue = 100;
     const mesh = bucketMesh({
       dataStreams: DATA_STREAMS,
       toClipSpace,
       minBufferSize: 1,
       bufferFactor: 1,
       viewport: VIEW_PORT,
-      heatValues: HEAT_VALUES,
+      heatValues: tempHeatValues,
     });
     expect(mesh.count).toEqual(3);
 
@@ -150,7 +159,6 @@ describe('create bucket mesh', () => {
     ];
     const xBucketRange = getXBucketRange(viewport);
     const heatValues = calcHeatValues({
-      oldHeatValues: {},
       dataStreams,
       xBucketRange,
       viewport,
@@ -186,7 +194,6 @@ describe('create bucket mesh', () => {
       },
     ];
     const heatValues = calcHeatValues({
-      oldHeatValues: {},
       dataStreams,
       xBucketRange: X_BUCKET_RANGE,
       viewport: VIEW_PORT,
@@ -208,13 +215,13 @@ describe('create bucket mesh', () => {
     expect(mesh.geometry.attributes.bucket.array[2]).toBe(toClipSpace(DATA_POINT_2_X_BUCKET + X_BUCKET_RANGE));
     expect(mesh.geometry.attributes.bucket.array[3]).toBe(BUCKET_HEIGHT * DATA_POINT_2_Y_BUCKET);
 
-    expect(mesh.geometry.attributes.color.array[0]).toBeCloseTo(COLOR_PALETTE.r[0], -1);
-    expect(mesh.geometry.attributes.color.array[1]).toBeCloseTo(COLOR_PALETTE.g[0], -1);
-    expect(mesh.geometry.attributes.color.array[2]).toBeCloseTo(COLOR_PALETTE.b[0], -1);
+    expect(mesh.geometry.attributes.color.array[0]).toBeCloseTo(COLOR_PALETTE.r[7], -1);
+    expect(mesh.geometry.attributes.color.array[1]).toBeCloseTo(COLOR_PALETTE.g[7], -1);
+    expect(mesh.geometry.attributes.color.array[2]).toBeCloseTo(COLOR_PALETTE.b[7], -1);
 
-    expect(mesh.geometry.attributes.color.array[3]).toBeCloseTo(COLOR_PALETTE.r[0], -1);
-    expect(mesh.geometry.attributes.color.array[4]).toBeCloseTo(COLOR_PALETTE.g[0], -1);
-    expect(mesh.geometry.attributes.color.array[5]).toBeCloseTo(COLOR_PALETTE.b[0], -1);
+    expect(mesh.geometry.attributes.color.array[3]).toBeCloseTo(COLOR_PALETTE.r[7], -1);
+    expect(mesh.geometry.attributes.color.array[4]).toBeCloseTo(COLOR_PALETTE.g[7], -1);
+    expect(mesh.geometry.attributes.color.array[5]).toBeCloseTo(COLOR_PALETTE.b[7], -1);
   });
 });
 
@@ -230,7 +237,6 @@ describe('update bucket mesh', () => {
       },
     ];
     const heatValues = calcHeatValues({
-      oldHeatValues: {},
       dataStreams: [],
       xBucketRange: X_BUCKET_RANGE,
       viewport: VIEW_PORT,
@@ -248,7 +254,6 @@ describe('update bucket mesh', () => {
     expect(mesh.material.uniforms.width.value).toEqual(0);
 
     const newHeatValues = calcHeatValues({
-      oldHeatValues: {},
       dataStreams: DATA_STREAM_TEMP,
       xBucketRange: X_BUCKET_RANGE,
       viewport: VIEW_PORT,
@@ -285,7 +290,6 @@ describe('update bucket mesh', () => {
       },
     ];
     const heatValues = calcHeatValues({
-      oldHeatValues: {},
       dataStreams: [],
       xBucketRange: X_BUCKET_RANGE,
       viewport: VIEW_PORT,
@@ -303,7 +307,6 @@ describe('update bucket mesh', () => {
     expect(mesh.material.uniforms.width.value).toEqual(0);
 
     const newHeatValues = calcHeatValues({
-      oldHeatValues: {},
       dataStreams: DATA_STREAM_TEMP,
       xBucketRange: X_BUCKET_RANGE,
       viewport: VIEW_PORT,
@@ -340,7 +343,6 @@ describe('update bucket mesh', () => {
       },
     ];
     const heatValues = calcHeatValues({
-      oldHeatValues: {},
       dataStreams: DATA_STREAM_TEMP,
       xBucketRange: X_BUCKET_RANGE,
       viewport: VIEW_PORT,
@@ -363,7 +365,7 @@ describe('update bucket mesh', () => {
       hasDataChanged: true,
       viewport: VIEW_PORT,
       shouldRerender: true,
-      heatValues: {},
+      heatValues: { maxHeatValue: 0, minHeatValue: Infinity },
     });
     expect(mesh.count).toEqual(0);
 
@@ -385,7 +387,6 @@ describe('update bucket mesh', () => {
       },
     ];
     const heatValues = calcHeatValues({
-      oldHeatValues: {},
       dataStreams: DATA_STREAM_TEMP,
       xBucketRange: X_BUCKET_RANGE,
       viewport: VIEW_PORT,
@@ -439,7 +440,6 @@ describe('update bucket mesh', () => {
       xBucketRange,
     });
     const heatValues = calcHeatValues({
-      oldHeatValues: {},
       dataStreams: DATA_STREAM_TEMP,
       xBucketRange: X_BUCKET_RANGE,
       viewport: VIEW_PORT,
@@ -473,7 +473,6 @@ describe('update bucket mesh', () => {
       },
     ];
     const newHeatValues = calcHeatValues({
-      oldHeatValues: {},
       dataStreams: DATA_STREAM_TEMP_2,
       xBucketRange: X_BUCKET_RANGE,
       viewport: VIEW_PORT,
@@ -510,7 +509,6 @@ describe('update bucket mesh', () => {
       },
     ];
     const heatValues = calcHeatValues({
-      oldHeatValues: {},
       dataStreams: DATA_STREAM_TEMP,
       xBucketRange: X_BUCKET_RANGE,
       viewport: VIEW_PORT,
