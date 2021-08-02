@@ -9,6 +9,7 @@ import {
   getXBucketRange,
   displayDate,
   shouldRerenderOnViewportChange,
+  calculateMinMaxHeatValue,
 } from './heatmapUtil';
 import { DAY_IN_MS, HOUR_IN_MS, MINUTE_IN_MS, MONTH_IN_MS, SECOND_IN_MS } from '../../../utils/time';
 import { BUCKET_COUNT } from './heatmapConstants';
@@ -94,15 +95,17 @@ describe.each`
 describe('addCount', () => {
   it('returns aggregated data for one data point', () => {
     const newHeatValue = addCount({
-      heatValues: {},
+      heatValues: { maxHeatValue: 0, minHeatValue: Infinity },
       xBucketRangeStart: START_TIME_EPOCH,
       bucketIndex: 1,
       dataStreamId: DATASTREAM_1.id,
     });
     expect(newHeatValue).toEqual({
+      maxHeatValue: 0,
+      minHeatValue: Infinity,
       [START_TIME_EPOCH]: {
         1: {
-          totalCount: 1,
+          bucketHeatValue: 1,
           streamCount: {
             [DATASTREAM_1.id]: 1,
           },
@@ -112,7 +115,7 @@ describe('addCount', () => {
   });
 
   it('returns aggregated data for multiple calls with the same heatValueMap object passed in', () => {
-    let heatValues: HeatValueMap = {};
+    let heatValues: HeatValueMap = { maxHeatValue: 0, minHeatValue: Infinity };
     heatValues = addCount({
       heatValues,
       xBucketRangeStart: START_TIME_EPOCH,
@@ -145,16 +148,18 @@ describe('addCount', () => {
     });
 
     expect(heatValues).toEqual({
+      minHeatValue: Infinity,
+      maxHeatValue: 0,
       [START_TIME_EPOCH]: {
         1: {
-          totalCount: 2,
+          bucketHeatValue: 2,
           streamCount: {
             [DATASTREAM_1.id]: 1,
             [DATASTREAM_2.id]: 1,
           },
         },
         2: {
-          totalCount: 1,
+          bucketHeatValue: 1,
           streamCount: {
             [DATASTREAM_1.id]: 1,
           },
@@ -162,13 +167,13 @@ describe('addCount', () => {
       },
       [START_TIME_EPOCH_1]: {
         5: {
-          totalCount: 1,
+          bucketHeatValue: 1,
           streamCount: {
             [DATASTREAM_1.id]: 1,
           },
         },
         6: {
-          totalCount: 1,
+          bucketHeatValue: 1,
           streamCount: {
             [DATASTREAM_2.id]: 1,
           },
@@ -178,17 +183,41 @@ describe('addCount', () => {
   });
 });
 
+describe('calculateMinMaxHeatValue', () => {
+  it('has a maxHeatValue of 92 and minHeatValue of 34', () => {
+    const heatValues = {
+      minHeatValue: Infinity,
+      maxHeatValue: 0,
+      1620000000000: {
+        1: { bucketHeatValue: 92, streamCount: {} },
+        2: { bucketHeatValue: 39, streamCount: {} },
+      },
+      1622592000000: {
+        5: { bucketHeatValue: 34, streamCount: {} },
+        6: { bucketHeatValue: 35, streamCount: {} },
+      },
+    };
+    expect(calculateMinMaxHeatValue(heatValues)).toEqual({
+      '1620000000000': { '1': { bucketHeatValue: 92, streamCount: {} }, '2': { bucketHeatValue: 39, streamCount: {} } },
+      '1622592000000': { '5': { bucketHeatValue: 34, streamCount: {} }, '6': { bucketHeatValue: 35, streamCount: {} } },
+      maxHeatValue: 92,
+      minHeatValue: 34,
+    });
+  });
+});
+
 describe('calcHeatValues', () => {
   it('returns aggregated data for dataStreams with different x-axis bucket ranges', () => {
     const dataStreams: DataStream[] = [DATASTREAM_1, DATASTREAM_2];
-    const newHeatValue = calcHeatValues({
-      oldHeatValues: {},
+    const newHeatValues = calcHeatValues({
       dataStreams,
       xBucketRange: X_BUCKET_RANGE,
       viewport: VIEWPORT,
       bucketCount: BUCKET_COUNT,
     });
-    expect(newHeatValue).toEqual({
+    expect(newHeatValues).toEqual({
+      minHeatValue: 1,
+      maxHeatValue: 2,
       [START_TIME_EPOCH]: expect.any(Object),
       [START_TIME_EPOCH_2]: expect.any(Object),
       [START_TIME_EPOCH_5]: expect.any(Object),
@@ -205,14 +234,13 @@ describe('calcHeatValues', () => {
       dataType: DataType.STRING,
     };
     const dataStreams: DataStream[] = [DATASTREAM];
-    const newHeatValue = calcHeatValues({
-      oldHeatValues: {},
+    const newHeatValues = calcHeatValues({
       dataStreams,
       xBucketRange: X_BUCKET_RANGE,
       viewport: VIEWPORT,
       bucketCount: BUCKET_COUNT,
     });
-    expect(newHeatValue).toEqual({});
+    expect(newHeatValues).toEqual({ maxHeatValue: 0, minHeatValue: Infinity });
   });
 });
 
@@ -249,12 +277,12 @@ describe('shouldRerenderOnViewportChange', () => {
   it('returns true on viewport yMin/Max change', () => {
     const oldViewport: ViewPort = { yMax: 100, yMin: 0, start: new Date(), end: new Date() };
     const newViewport: ViewPort = { yMax: 90, yMin: 0, start: new Date(), end: new Date() };
-    expect(shouldRerenderOnViewportChange({ oldViewport, newViewport })).toBeTrue();
+    expect(shouldRerenderOnViewportChange({ oldViewport, newViewport })).toBe(true);
   });
 
   it('returns true on x bucket range change', () => {
     const oldViewport: ViewPort = { yMax: 100, yMin: 0, start: new Date(2000, 0, 0), end: new Date(2000, 0, 0, 0, 1) };
     const newViewport: ViewPort = { yMax: 100, yMin: 0, start: new Date(2000, 0, 0), end: new Date(2000, 0, 1) };
-    expect(shouldRerenderOnViewportChange({ oldViewport, newViewport })).toBeTrue();
+    expect(shouldRerenderOnViewportChange({ oldViewport, newViewport })).toBe(true);
   });
 });
