@@ -7,7 +7,16 @@ import {
   MinimalViewPortConfig,
   RequestDataFn,
 } from '../../../utils/dataTypes';
-import { Axis, ChartConfig, LayoutConfig, LegendConfig, MovementConfig, ScaleConfig, Tooltip } from '../common/types';
+import {
+  Axis,
+  ChartConfig,
+  LayoutConfig,
+  Legend,
+  LegendConfig,
+  MovementConfig,
+  ScaleConfig,
+  Tooltip,
+} from '../common/types';
 import { chartScene, updateChartScene } from './chartScene';
 import { DEFAULT_CHART_CONFIG } from '../sc-webgl-base-chart/chartDefaults';
 import { RectScrollFixed } from '../../../utils/types';
@@ -24,6 +33,8 @@ const DEFAULT_BUFFER_FACTOR = 2;
 const heatmapTooltip = (props: Tooltip.Props) => (
   <sc-tooltip {...props} supportString={false} visualizesAlarms={false} dataAlignment={DATA_ALIGNMENT.EITHER} />
 );
+
+const heatmapLegend = (props: Legend.Props) => <sc-heatmap-legend {...props} />;
 
 @Component({
   tag: 'sc-heatmap',
@@ -63,6 +74,7 @@ export class ScHeatmap implements ChartConfig {
             configId={this.widgetId}
             requestData={this.requestData}
             legend={this.legend}
+            legendComponent={heatmapLegend}
             updateChartScene={updateChartScene}
             createChartScene={chartScene}
             size={{
@@ -76,7 +88,7 @@ export class ScHeatmap implements ChartConfig {
             bufferFactor={this.bufferFactor}
             isEditing={this.isEditing}
             yRangeStartFromZero
-            tooltip={heatmapTooltip}
+            tooltipComponent={heatmapTooltip}
             supportString={false}
             visualizesAlarms={false}
             messageOverrides={this.messageOverrides}
