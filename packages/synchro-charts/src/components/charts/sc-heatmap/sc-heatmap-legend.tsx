@@ -1,10 +1,10 @@
 import { Component, h, Prop, State } from '@stencil/core';
 import { LegendConfig } from '../common/types';
 import { LEGEND_POSITION } from '../common/constants';
-import { DataStream, STREAM_ICON_STROKE_WIDTH, ViewPort } from '../../../utils/dataTypes';
+import { DataStream, ViewPort } from '../../../utils/dataTypes';
 import { COLOR_PALETTE } from './heatmapMesh';
-import { calcHeatValues, getXBucketRange } from './heatmapUtil';
-import { BUCKET_COUNT } from './heatmapConstants';
+import { calcHeatValues, getXBucketRange, HeatValueMap } from './heatmapUtil';
+import { BUCKET_COUNT, NUM_OF_COLORS_SEQUENTIAL } from './heatmapConstants';
 
 // Styling to control the height of the gap between the stream-name and the unit
 // const EDIT_MODE_STYLE: StencilCSSProperty = {
@@ -23,18 +23,8 @@ export class ScLegend {
   @Prop() config!: LegendConfig;
   @Prop() viewport: ViewPort;
   @Prop() dataStreams!: DataStream[];
-  @Prop() updateDataStreamName!: ({ streamId, name }: { streamId: string; name: string }) => void;
-  @Prop() isEditing: boolean = false;
   @Prop() isLoading: boolean;
-  @Prop() supportString: boolean;
-  @State() streamId: string = '';
-
-  updateName = (name: string) => {
-    this.updateDataStreamName({
-      streamId: this.streamId,
-      name,
-    });
-  };
+  @State() heatValues: HeatValueMap;
 
   componentToHex = (color: number) => {
     const hex = color.toString(16).split('.')[0];
@@ -44,73 +34,48 @@ export class ScLegend {
     return hex.length === 1 ? `0${hex}` : hex;
   };
 
-  rgbToHex(r: number, g: number, b: number) {
+  rgbToHex = (r: number, g: number, b: number) => {
     return `#${this.componentToHex(r)}${this.componentToHex(g)}${this.componentToHex(b)}`;
   }
 
-  getLegendBars = () => {
-    return (
-      <div>
-        <svg class="bar">
-          <g>
-            <path
-              stroke={this.rgbToHex(COLOR_PALETTE.r[0], COLOR_PALETTE.g[0], COLOR_PALETTE.b[0])}
-              stroke-linecap="square"
-              stroke-width={STREAM_ICON_STROKE_WIDTH * 4}
-              d="M 0 0 H 240"
-            />
-            <path
-              stroke={this.rgbToHex(COLOR_PALETTE.r[1], COLOR_PALETTE.g[1], COLOR_PALETTE.b[1])}
-              stroke-linecap="square"
-              stroke-width={STREAM_ICON_STROKE_WIDTH * 4}
-              d="M 30 0 H 240"
-            />
-            <path
-              stroke={this.rgbToHex(COLOR_PALETTE.r[2], COLOR_PALETTE.g[2], COLOR_PALETTE.b[2])}
-              stroke-linecap="square"
-              stroke-width={STREAM_ICON_STROKE_WIDTH * 4}
-              d="M 60 0 H 240"
-            />
-            <path
-              stroke={this.rgbToHex(COLOR_PALETTE.r[3], COLOR_PALETTE.g[3], COLOR_PALETTE.b[3])}
-              stroke-linecap="square"
-              stroke-width={STREAM_ICON_STROKE_WIDTH * 4}
-              d="M 90 0 H 240"
-            />
-            <path
-              stroke={this.rgbToHex(COLOR_PALETTE.r[4], COLOR_PALETTE.g[4], COLOR_PALETTE.b[4])}
-              stroke-linecap="square"
-              stroke-width={STREAM_ICON_STROKE_WIDTH * 4}
-              d="M 120 0 H 240"
-            />
-            <path
-              stroke={this.rgbToHex(COLOR_PALETTE.r[5], COLOR_PALETTE.g[5], COLOR_PALETTE.b[5])}
-              stroke-linecap="square"
-              stroke-width={STREAM_ICON_STROKE_WIDTH * 4}
-              d="M 150 0 H 240"
-            />
-            <path
-              stroke={this.rgbToHex(COLOR_PALETTE.r[6], COLOR_PALETTE.g[6], COLOR_PALETTE.b[6])}
-              stroke-linecap="square"
-              stroke-width={STREAM_ICON_STROKE_WIDTH * 4}
-              d="M 180 0 H 240"
-            />
-            <path
-              stroke={this.rgbToHex(COLOR_PALETTE.r[7], COLOR_PALETTE.g[7], COLOR_PALETTE.b[7])}
-              stroke-linecap="square"
-              stroke-width={STREAM_ICON_STROKE_WIDTH * 4}
-              d="M 210 0 H 240"
-            />
-          </g>
-        </svg>
-      </div>
-    );
+  getBar = () => {
+    const barArray = new Array(NUM_OF_COLORS_SEQUENTIAL);
+    let currentBarX = 0;
+    let currentBarNumber = 1;
+    for (let i = 0; i < NUM_OF_COLORS_SEQUENTIAL; i += 1) {
+      if (currentBarX >= 240 || currentBarNumber === 8) {
+        return barArray;
+      }
+      const { minHeatValue, maxHeatValue } = this.heatValues;
+      const heatValueRange = maxHeatValue - minHeatValue + 1;
+      const numOfBars = Math.min(heatValueRange, NUM_OF_COLORS_SEQUENTIAL);
+      const barLength = 240 / numOfBars;
+
+      const colorIndex = Math.floor((currentBarNumber / numOfBars) * NUM_OF_COLORS_SEQUENTIAL) - 1;
+      const pathD = `M ${currentBarX} 0 H 240`;
+
+      currentBarX += barLength;
+      currentBarNumber += 1;
+      barArray[i] = (
+        <path
+          stroke={this.rgbToHex(COLOR_PALETTE.r[colorIndex], COLOR_PALETTE.g[colorIndex], COLOR_PALETTE.b[colorIndex])}
+          stroke-linecap="square"
+          stroke-width={20}
+          d={pathD}
+        />
+      );
+    }
+    return barArray;
   };
 
   render() {
     this.config.position = LEGEND_POSITION.BOTTOM;
     const xBucketRange = getXBucketRange(this.viewport);
-    const heatValues = calcHeatValues({
+    if (this.dataStreams.length === 0) {
+      return null;
+    }
+
+    this.heatValues = calcHeatValues({
       oldHeatValues: {},
       dataStreams: this.dataStreams,
       xBucketRange,
@@ -118,11 +83,11 @@ export class ScLegend {
       bucketCount: BUCKET_COUNT,
     });
     return (
-      <div class="legend-container" style={{ flexDirection: 'unset' }}>
+      <div class="legend-container">
         <div class="label">
-          <p class="font">Number of data points</p>
+          <p>Number of data points</p>
           <svg>
-            <path stroke="#989898" stroke-dasharray="" stroke-linecap="square" stroke-width={2} d="M 0 0 H 150" />
+            <path stroke="#989898" stroke-linecap="square" stroke-width={2} d="M 0 0 H 150" />
           </svg>
         </div>
         <div class="color-bar-container">
@@ -131,11 +96,21 @@ export class ScLegend {
               <sc-loading-spinner dark size={12} />
             </div>
           ) : (
-            this.getLegendBars()
+            <div>
+              <svg class="bar">
+                <g>{this.getBar()}</g>
+              </svg>
+            </div>
           )}
         </div>
-        <div class="min-heat-values">1</div>
-        <div class="max-heat-values">10</div>
+        {!this.isLoading && (
+          <div class="heat-values">
+            <div class="min-heat-values">
+              {this.heatValues.minHeatValue === this.heatValues.maxHeatValue ? 0 : this.heatValues.minHeatValue}
+            </div>
+            <div class="max-heat-values">{this.heatValues.maxHeatValue}</div>
+          </div>
+        )}
       </div>
     );
   }

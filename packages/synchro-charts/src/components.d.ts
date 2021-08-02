@@ -125,10 +125,7 @@ export namespace Components {
     interface ScHeatmapLegend {
         "config": LegendConfig;
         "dataStreams": DataStream[];
-        "isEditing": boolean;
         "isLoading": boolean;
-        "supportString": boolean;
-        "updateDataStreamName": ({ streamId, name }: { streamId: string; name: string }) => void;
         "viewport": ViewPort;
     }
     interface ScHelpTooltip {
@@ -1560,10 +1557,7 @@ declare namespace LocalJSX {
     interface ScHeatmapLegend {
         "config": LegendConfig;
         "dataStreams": DataStream[];
-        "isEditing"?: boolean;
         "isLoading"?: boolean;
-        "supportString"?: boolean;
-        "updateDataStreamName": ({ streamId, name }: { streamId: string; name: string }) => void;
         "viewport"?: ViewPort;
     }
     interface ScHelpTooltip {
