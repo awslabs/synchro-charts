@@ -36,15 +36,15 @@ export class ScLegend {
 
   rgbToHex = (r: number, g: number, b: number) => {
     return `#${this.componentToHex(r)}${this.componentToHex(g)}${this.componentToHex(b)}`;
-  }
+  };
 
   getBar = () => {
     const barArray = new Array(NUM_OF_COLORS_SEQUENTIAL);
     let currentBarX = 0;
     let currentBarNumber = 1;
-    for (let i = 0; i < NUM_OF_COLORS_SEQUENTIAL; i += 1) {
+    return barArray.reduce(currentIndex => {
       if (currentBarX >= 240 || currentBarNumber === 8) {
-        return barArray;
+        return;
       }
       const { minHeatValue, maxHeatValue } = this.heatValues;
       const heatValueRange = maxHeatValue - minHeatValue + 1;
@@ -56,7 +56,7 @@ export class ScLegend {
 
       currentBarX += barLength;
       currentBarNumber += 1;
-      barArray[i] = (
+      barArray[currentIndex] = (
         <path
           stroke={this.rgbToHex(COLOR_PALETTE.r[colorIndex], COLOR_PALETTE.g[colorIndex], COLOR_PALETTE.b[colorIndex])}
           stroke-linecap="square"
@@ -64,8 +64,7 @@ export class ScLegend {
           d={pathD}
         />
       );
-    }
-    return barArray;
+    });
   };
 
   render() {
@@ -76,7 +75,6 @@ export class ScLegend {
     }
 
     this.heatValues = calcHeatValues({
-      oldHeatValues: {},
       dataStreams: this.dataStreams,
       xBucketRange,
       viewport: this.viewport,
