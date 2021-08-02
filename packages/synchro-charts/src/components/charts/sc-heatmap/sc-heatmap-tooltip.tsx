@@ -208,13 +208,13 @@ export class ScHeatmapTooltip {
           <div class="awsui-util-shadow awsui-util-p-s">
             <small class={{ 'awsui-util-d-b': true }}>{displayDate(this.selectedXBucket, this.viewport)}</small>
             <small class={{ 'awsui-util-d-b': true }}>Bucket range:</small>
-            <small class={{ 'value awsui-util-d-b': true }} style={{ color: '#000' }}>
+            <span class={{ 'value awsui-util-d-b': true }} data-testid="tooltip-buckets" style={{ color: '#000' }}>
               {this.getBucketString(this.selectedYBucket)}
-            </small>
+            </span>
             <small class={{ 'awsui-util-d-b': true }}>Total count:</small>
-            <small class={{ 'value awsui-util-d-b': true }} style={{ color: '#000' }}>
+            <span class={{ 'value awsui-util-d-b': true }} data-testid="tooltip-heat-value" style={{ color: '#000' }}>
               {this.heatValues[selectedXBucketMS][bucketIndex].totalCount}
-            </small>
+            </span>
           </div>
         </div>
       </div>

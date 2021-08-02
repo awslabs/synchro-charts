@@ -35,3 +35,7 @@ sc-heatmap-tooltip .tooltip-line {
   background-color: var(--selection-color);
   opacity: var(--selection-opacity);
 }
+
+sc-heatmap-tooltip .value {
+  font-size: 12px;
+}
