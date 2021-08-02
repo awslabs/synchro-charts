@@ -138,7 +138,7 @@ describe('legend', () => {
 
   it.only('should render with custom legend', async () => {
     const { chart, page } = await newChartSpecPage({
-      renderLegend: props => <div class="custom-test-legend" {...props} />
+      renderLegend: props => <div class="custom-test-legend" {...props} />,
     });
 
     await page.waitForChanges();
