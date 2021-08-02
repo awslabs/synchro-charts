@@ -93,7 +93,7 @@ export class ScBarChart implements ChartConfig {
             bufferFactor={this.bufferFactor}
             isEditing={this.isEditing}
             yRangeStartFromZero
-            tooltipComponent={tooltip}
+            renderTooltip={tooltip}
             supportString={false}
             visualizesAlarms={false}
             messageOverrides={this.messageOverrides}

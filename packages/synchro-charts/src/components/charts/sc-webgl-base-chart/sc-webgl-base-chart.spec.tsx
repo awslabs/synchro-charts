@@ -75,7 +75,7 @@ const newChartSpecPage = async (chartProps: Partial<Components.ScWebglBaseChart>
       position: LEGEND_POSITION.BOTTOM,
       width: 300,
     },
-    legendComponent: props => <sc-legend {...props} />,
+    renderLegend: props => <sc-legend {...props} />,
     isEditing: false,
     annotations: {
       x: [],
@@ -86,7 +86,7 @@ const newChartSpecPage = async (chartProps: Partial<Components.ScWebglBaseChart>
     },
     messageOverrides: undefined,
     trends: [],
-    tooltipComponent: ({ visualizesAlarms = defaultProps.visualizesAlarms, ...rest }) => (
+    renderTooltip: ({ visualizesAlarms = defaultProps.visualizesAlarms, ...rest }) => (
       <sc-tooltip {...rest} dataAlignment={DATA_ALIGNMENT.RIGHT} visualizesAlarms={visualizesAlarms} supportString />
     ),
   };
@@ -134,6 +134,17 @@ describe('legend', () => {
     const legend = chart.querySelector('sc-legend') as HTMLScLegendElement;
 
     expect(legend.viewport).toEqual(VIEWPORT);
+  });
+
+  it.only('should render with custom legend', async () => {
+    const { chart, page } = await newChartSpecPage({
+      renderLegend: props => <div class="custom-test-legend" {...props} />
+    });
+
+    await page.waitForChanges();
+
+    const tooltip = chart.querySelector('.custom-test-legend');
+    expect(tooltip).not.toBeNull();
   });
 });
 
@@ -651,7 +662,7 @@ describe('axis', () => {
 describe('tooltip', () => {
   it('should render with custom tooltip', async () => {
     const { chart, page } = await newChartSpecPage({
-      tooltipComponent: props => <div class="custom-test-tooltip" {...props} />,
+      renderTooltip: props => <div class="custom-test-tooltip" {...props} />,
     });
 
     await page.waitForChanges();

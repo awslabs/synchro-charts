@@ -76,7 +76,7 @@ export class ScHeatmap implements ChartConfig {
             bufferFactor={this.bufferFactor}
             isEditing={this.isEditing}
             yRangeStartFromZero
-            tooltipComponent={heatmapTooltip}
+            renderTooltip={heatmapTooltip}
             supportString={false}
             visualizesAlarms={false}
             messageOverrides={this.messageOverrides}

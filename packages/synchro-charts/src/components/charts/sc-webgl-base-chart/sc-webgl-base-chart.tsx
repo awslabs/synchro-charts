@@ -86,12 +86,12 @@ export class ScWebglBaseChart {
   @Prop() bufferFactor!: number;
   @Prop() minBufferSize!: number;
   @Prop() legend: LegendConfig;
-  @Prop() legendComponent: (props: Legend.Props) => HTMLElement = props => <sc-legend {...props} />;
+  @Prop() renderLegend: (props: Legend.Props) => HTMLElement = props => <sc-legend {...props} />;
   @Prop() annotations: Annotations = {};
   @Prop() trends: Trend[] = [];
   @Prop() supportString: boolean;
   @Prop() axis?: Axis.Options;
-  @Prop() tooltipComponent: (props: Tooltip.Props) => HTMLElement;
+  @Prop() renderTooltip: (props: Tooltip.Props) => HTMLElement;
   @Prop() visualizesAlarms: boolean;
   @Prop() displaysError: boolean = true;
   @Prop() alarms?: AlarmsConfig;
@@ -744,8 +744,8 @@ export class ScWebglBaseChart {
     };
   };
 
-  renderTooltip = (marginLeft: number, marginTop: number, thresholds: Threshold[]) =>
-    this.tooltipComponent({
+  renderTooltipComponent = (marginLeft: number, marginTop: number, thresholds: Threshold[]) =>
+    this.renderTooltip({
       size: this.chartSizeConfig(),
       style: { marginLeft: `${marginLeft}px`, marginTop: `${marginTop}px` },
       dataStreams: this.dataStreams,
@@ -756,7 +756,7 @@ export class ScWebglBaseChart {
       visualizesAlarms: this.visualizesAlarms,
     });
 
-  renderLegend = ({
+  renderLegendComponent = ({
     isLoading,
     thresholds,
     showDataStreamColor,
@@ -765,7 +765,7 @@ export class ScWebglBaseChart {
     thresholds: Threshold[];
     showDataStreamColor: boolean;
   }) =>
-    this.legendComponent({
+    this.renderLegend({
       config: this.legend,
       dataStreams: this.dataStreams,
       visualizesAlarms: this.visualizesAlarms,
@@ -828,11 +828,11 @@ export class ScWebglBaseChart {
         </DataContainer>
         {this.legend && (
           <ChartLegendContainer config={this.legend} legendHeight={LEGEND_HEIGHT} size={chartSizeConfig}>
-            {this.renderLegend({ isLoading: shouldDisplayAsLoading, thresholds, showDataStreamColor })}
+            {this.renderLegendComponent({ isLoading: shouldDisplayAsLoading, thresholds, showDataStreamColor })}
           </ChartLegendContainer>
         )}
       </div>,
-      this.isMounted && this.renderTooltip(marginLeft, marginTop, thresholds),
+      this.isMounted && this.renderTooltipComponent(marginLeft, marginTop, thresholds),
       <svg
         class="threshold-container"
         width={chartSizeConfig.width + marginRight}

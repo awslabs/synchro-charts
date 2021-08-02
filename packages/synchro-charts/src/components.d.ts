@@ -497,13 +497,14 @@ export namespace Components {
         "gestures": boolean;
         "isEditing": boolean;
         "legend": LegendConfig;
-        "legendComponent": (props: Legend.Props) => HTMLElement;
         "messageOverrides"?: MessageOverrides;
         "minBufferSize": number;
         /**
           * Optionally hooks to integrate custom logic into the base chart
          */
         "onUpdateLifeCycle"?: (viewport: ViewPortConfig) => void;
+        "renderLegend": (props: Legend.Props) => HTMLElement;
+        "renderTooltip": (props: Tooltip.Props) => HTMLElement;
         /**
           * Optionally provided callback to initiate a request for data. Used to ensure gestures emit events for request data.
          */
@@ -511,7 +512,6 @@ export namespace Components {
         "shouldRerenderOnViewportChange"?: ({ oldViewport, newViewport }) => boolean;
         "size": SizePositionConfig;
         "supportString": boolean;
-        "tooltipComponent": (props: Tooltip.Props) => HTMLElement;
         "trends": Trend[];
         "updateChartScene": ChartSceneUpdater;
         "viewport": MinimalViewPortConfig;
@@ -1918,7 +1918,6 @@ declare namespace LocalJSX {
         "gestures": boolean;
         "isEditing"?: boolean;
         "legend"?: LegendConfig;
-        "legendComponent"?: (props: Legend.Props) => HTMLElement;
         "messageOverrides"?: MessageOverrides;
         "minBufferSize": number;
         /**
@@ -1930,6 +1929,8 @@ declare namespace LocalJSX {
          */
         "onUpdateLifeCycle"?: (viewport: ViewPortConfig) => void;
         "onWidgetUpdated"?: (event: CustomEvent<WidgetConfigurationUpdate>) => void;
+        "renderLegend"?: (props: Legend.Props) => HTMLElement;
+        "renderTooltip"?: (props: Tooltip.Props) => HTMLElement;
         /**
           * Optionally provided callback to initiate a request for data. Used to ensure gestures emit events for request data.
          */
@@ -1937,7 +1938,6 @@ declare namespace LocalJSX {
         "shouldRerenderOnViewportChange"?: ({ oldViewport, newViewport }) => boolean;
         "size": SizePositionConfig;
         "supportString"?: boolean;
-        "tooltipComponent"?: (props: Tooltip.Props) => HTMLElement;
         "trends"?: Trend[];
         "updateChartScene": ChartSceneUpdater;
         "viewport": MinimalViewPortConfig;
