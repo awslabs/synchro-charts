@@ -25,7 +25,7 @@ const infos: DataStreamInfo[] = [
 // @ts-ignore
 export const TESTING_GROUND_CHART_CONFIG: ChartConfig & { dataStreamInfo: DataStreamInfo[] } = {
   widgetId: 'fake-id',
-  legendConfig: DEFAULT_CHART_CONFIG.legendConfig,
+  legend: DEFAULT_CHART_CONFIG.legend,
   viewport: {
     start: new Date(1998, 0, 0),
     end: new Date(2000, 0, 1),

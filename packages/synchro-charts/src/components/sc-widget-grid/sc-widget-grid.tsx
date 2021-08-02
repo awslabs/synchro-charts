@@ -112,7 +112,7 @@ export class ScWidgetGrid implements ChartConfig {
       movement: undefined,
       scale: undefined,
       layout: undefined,
-      legendConfig: undefined,
+      legend: undefined,
       annotations: this.annotations,
       axis: undefined,
       widgetId: this.widgetId,

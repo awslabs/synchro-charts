@@ -44,7 +44,7 @@ export class ScBarChart implements ChartConfig {
   @Prop() movement?: MovementConfig;
   @Prop() scale?: ScaleConfig;
   @Prop() layout?: LayoutConfig;
-  @Prop() legendConfig?: LegendConfig;
+  @Prop() legend?: LegendConfig;
   @Prop() size?: MinimalSizeConfig;
   @Prop() widgetId!: string;
   @Prop() dataStreams!: DataStream[];
@@ -76,7 +76,7 @@ export class ScBarChart implements ChartConfig {
             gestures={this.gestures}
             configId={this.widgetId}
             requestData={this.requestData}
-            legendConfig={this.legendConfig}
+            legend={this.legend}
             annotations={this.annotations}
             trends={this.trends}
             updateChartScene={updateChartScene}
@@ -93,7 +93,7 @@ export class ScBarChart implements ChartConfig {
             bufferFactor={this.bufferFactor}
             isEditing={this.isEditing}
             yRangeStartFromZero
-            tooltip={tooltip}
+            tooltipComponent={tooltip}
             supportString={false}
             visualizesAlarms={false}
             messageOverrides={this.messageOverrides}

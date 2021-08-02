@@ -34,7 +34,7 @@ export class ScHeatmap implements ChartConfig {
   @Prop() movement?: MovementConfig;
   @Prop() scale?: ScaleConfig;
   @Prop() layout?: LayoutConfig;
-  @Prop() legendConfig?: LegendConfig;
+  @Prop() legend?: LegendConfig;
   @Prop() size?: MinimalSizeConfig;
   @Prop() widgetId!: string;
   @Prop() dataStreams!: DataStream[];
@@ -62,7 +62,7 @@ export class ScHeatmap implements ChartConfig {
             gestures={this.gestures}
             configId={this.widgetId}
             requestData={this.requestData}
-            legendConfig={this.legendConfig}
+            legend={this.legend}
             updateChartScene={updateChartScene}
             createChartScene={chartScene}
             size={{
@@ -76,7 +76,7 @@ export class ScHeatmap implements ChartConfig {
             bufferFactor={this.bufferFactor}
             isEditing={this.isEditing}
             yRangeStartFromZero
-            tooltip={heatmapTooltip}
+            tooltipComponent={heatmapTooltip}
             supportString={false}
             visualizesAlarms={false}
             messageOverrides={this.messageOverrides}

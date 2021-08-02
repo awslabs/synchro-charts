@@ -14,7 +14,7 @@ export type SearchQueryParams = {
   viewportStart: Date;
   viewportEnd: Date;
   componentTag: string;
-  legendConfig: LegendConfig;
+  legend: LegendConfig;
   isEditing: boolean;
   gestures: boolean;
   dataStreamInfos: DataStreamInfo[];
@@ -65,7 +65,7 @@ export const constructSearchQuery = ({
   asyncDataStreams,
   alarms,
   dataStreamInfos,
-  legendConfig,
+  legend,
   tableColumns,
   annotations,
   messageOverrides,
@@ -78,7 +78,7 @@ export const constructSearchQuery = ({
   queryString.stringify({
     // manually serialize fields that require it.
     annotations: annotations && JSON.stringify(annotations),
-    legendConfig: legendConfig && JSON.stringify(legendConfig),
+    legend: legend && JSON.stringify(legend),
     dataStreamInfos: dataStreamInfos && JSON.stringify(dataStreamInfos),
     dataStreams: dataStreams && JSON.stringify(dataStreams),
     asyncDataStreams: asyncDataStreams && JSON.stringify(asyncDataStreams),
@@ -116,7 +116,7 @@ export const testCaseParameters = (): SearchQueryParams => {
     delayBeforeDataLoads: query.delayBeforeDataLoads != null ? JSON.parse(query.delayBeforeDataLoads) : 0,
     dataStreamInfos: query.dataStreamInfos != null ? JSON.parse(query.dataStreamInfos) : [],
     tableColumns: query.tableColumns != null ? JSON.parse(query.tableColumns) : [],
-    legendConfig: query.legendConfig != null ? JSON.parse(query.legendConfig) : LEGEND, // set this to undefined
+    legend: query.legend != null ? JSON.parse(query.legend) : LEGEND, // set this to undefined
     messageOverrides: query.messageOverrides != null ? JSON.parse(query.messageOverrides) : undefined,
     componentTag: query.componentTag != null ? query.componentTag : 'sc-line-chart',
     // deserialize fields that require it.

@@ -71,11 +71,11 @@ const newChartSpecPage = async (chartProps: Partial<Components.ScWebglBaseChart>
     bufferFactor: 2,
     minBufferSize: 200,
     configId: 'config-id',
-    legendConfig: {
+    legend: {
       position: LEGEND_POSITION.BOTTOM,
       width: 300,
     },
-    legend: props => <sc-legend {...props} />,
+    legendComponent: props => <sc-legend {...props} />,
     isEditing: false,
     annotations: {
       x: [],
@@ -86,7 +86,7 @@ const newChartSpecPage = async (chartProps: Partial<Components.ScWebglBaseChart>
     },
     messageOverrides: undefined,
     trends: [],
-    tooltip: ({ visualizesAlarms = defaultProps.visualizesAlarms, ...rest }) => (
+    tooltipComponent: ({ visualizesAlarms = defaultProps.visualizesAlarms, ...rest }) => (
       <sc-tooltip {...rest} dataAlignment={DATA_ALIGNMENT.RIGHT} visualizesAlarms={visualizesAlarms} supportString />
     ),
   };
@@ -99,7 +99,7 @@ const newChartSpecPage = async (chartProps: Partial<Components.ScWebglBaseChart>
 describe('legend', () => {
   it('renders a legend with provided with a legend config', async () => {
     const { chart } = await newChartSpecPage({
-      legendConfig: {
+      legend: {
         position: LEGEND_POSITION.BOTTOM,
         width: 200,
       },
@@ -111,7 +111,7 @@ describe('legend', () => {
 
   it('passes down isEditing when it is true', async () => {
     const { chart } = await newChartSpecPage({
-      legendConfig: {
+      legend: {
         position: LEGEND_POSITION.BOTTOM,
         width: 200,
       },
@@ -124,7 +124,7 @@ describe('legend', () => {
 
   it('passes down view port', async () => {
     const { chart } = await newChartSpecPage({
-      legendConfig: {
+      legend: {
         position: LEGEND_POSITION.BOTTOM,
         width: 200,
       },
@@ -651,7 +651,7 @@ describe('axis', () => {
 describe('tooltip', () => {
   it('should render with custom tooltip', async () => {
     const { chart, page } = await newChartSpecPage({
-      tooltip: props => <div class="custom-test-tooltip" {...props} />,
+      tooltipComponent: props => <div class="custom-test-tooltip" {...props} />,
     });
 
     await page.waitForChanges();

@@ -53,7 +53,7 @@ export interface ChartConfig extends BaseConfig {
   movement?: MovementConfig;
   scale?: ScaleConfig;
   layout?: LayoutConfig;
-  legendConfig?: LegendConfig;
+  legend?: LegendConfig;
   annotations?: Annotations;
   axis?: Axis.Options;
   messageOverrides?: MessageOverrides;

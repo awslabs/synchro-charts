@@ -38,7 +38,7 @@ export class ScWebglChartStandardWithLegendOnRight {
             height: 500,
             width: 500,
           }}
-          legendConfig={{
+          legend={{
             width: 100,
             position: LEGEND_POSITION.RIGHT,
           }}

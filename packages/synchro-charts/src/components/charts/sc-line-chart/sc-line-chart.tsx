@@ -43,7 +43,7 @@ export class ScLineChart implements ChartConfig {
   @Prop() movement?: MovementConfig;
   @Prop() scale?: ScaleConfig;
   @Prop() layout?: LayoutConfig;
-  @Prop() legendConfig?: LegendConfig;
+  @Prop() legend?: LegendConfig;
   @Prop() size?: MinimalSizeConfig;
   @Prop() widgetId!: string;
   @Prop() dataStreams!: DataStream[];
@@ -76,7 +76,7 @@ export class ScLineChart implements ChartConfig {
             gestures={this.gestures}
             configId={this.widgetId}
             requestData={this.requestData}
-            legendConfig={this.legendConfig}
+            legend={this.legend}
             annotations={this.annotations}
             trends={this.trends}
             updateChartScene={updateChartScene}
@@ -91,7 +91,7 @@ export class ScLineChart implements ChartConfig {
             minBufferSize={this.minBufferSize}
             bufferFactor={this.bufferFactor}
             isEditing={this.isEditing}
-            tooltip={tooltip}
+            tooltipComponent={tooltip}
             supportString={false}
             visualizesAlarms={false}
             messageOverrides={this.messageOverrides}

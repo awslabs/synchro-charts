@@ -85,13 +85,13 @@ export class ScWebglBaseChart {
   @Prop() configId!: string;
   @Prop() bufferFactor!: number;
   @Prop() minBufferSize!: number;
-  @Prop() legendConfig: LegendConfig;
-  @Prop() legend?: (props: Legend.Props) => HTMLElement = props => <sc-legend {...props} />;
+  @Prop() legend: LegendConfig;
+  @Prop() legendComponent: (props: Legend.Props) => HTMLElement = props => <sc-legend {...props} />;
   @Prop() annotations: Annotations = {};
   @Prop() trends: Trend[] = [];
   @Prop() supportString: boolean;
   @Prop() axis?: Axis.Options;
-  @Prop() tooltip: (props: Tooltip.Props) => HTMLElement;
+  @Prop() tooltipComponent: (props: Tooltip.Props) => HTMLElement;
   @Prop() visualizesAlarms: boolean;
   @Prop() displaysError: boolean = true;
   @Prop() alarms?: AlarmsConfig;
@@ -156,7 +156,7 @@ export class ScWebglBaseChart {
       movement: undefined,
       scale: undefined,
       layout: undefined,
-      legendConfig: this.legendConfig,
+      legend: this.legend,
       annotations: this.annotations,
       axis: this.axis,
       widgetId: this.configId,
@@ -273,7 +273,7 @@ export class ScWebglBaseChart {
   }
 
   @Watch('size')
-  @Watch('legendConfig')
+  @Watch('legend')
   onSizeChange(newProp: SizeConfig | LegendConfig, oldProp: SizeConfig | LegendConfig) {
     // NOTE: Change of legend can effect sizing
     if (!isEqual(newProp, oldProp)) {
@@ -321,13 +321,13 @@ export class ScWebglBaseChart {
     const { marginTop, marginBottom, marginLeft, marginRight, height, width } = size;
     const chartHeight = height - marginBottom - marginTop;
 
-    const isRightLegend = this.legendConfig && this.legendConfig.position === LEGEND_POSITION.RIGHT;
-    const isBottomLegend = this.legendConfig && this.legendConfig.position === LEGEND_POSITION.BOTTOM;
+    const isRightLegend = this.legend && this.legend.position === LEGEND_POSITION.RIGHT;
+    const isBottomLegend = this.legend && this.legend.position === LEGEND_POSITION.BOTTOM;
 
     return {
       ...size,
       width: Math.max(
-        width - marginLeft - marginRight - (isRightLegend ? (this.legendConfig as LegendConfig).width : 0),
+        width - marginLeft - marginRight - (isRightLegend ? (this.legend as LegendConfig).width : 0),
         MIN_WIDTH
       ),
       height: chartHeight - (isBottomLegend ? LEGEND_HEIGHT : 0),
@@ -745,7 +745,7 @@ export class ScWebglBaseChart {
   };
 
   renderTooltip = (marginLeft: number, marginTop: number, thresholds: Threshold[]) =>
-    this.tooltip({
+    this.tooltipComponent({
       size: this.chartSizeConfig(),
       style: { marginLeft: `${marginLeft}px`, marginTop: `${marginTop}px` },
       dataStreams: this.dataStreams,
@@ -756,22 +756,28 @@ export class ScWebglBaseChart {
       visualizesAlarms: this.visualizesAlarms,
     });
 
-  renderLegend = (shouldDisplayAsLoading: any, thresholds: Threshold[], showDataStreamColor: boolean) =>
-    this.legend !== undefined
-      ? this.legend({
-          config: this.legendConfig,
-          dataStreams: this.dataStreams,
-          visualizesAlarms: this.visualizesAlarms,
-          updateDataStreamName: this.updateDataStreamName,
-          viewport: this.activeViewPort(),
-          isEditing: this.isEditing,
-          isLoading: shouldDisplayAsLoading,
-          thresholds,
-          supportString: this.supportString,
-          trendResults: this.trendResults,
-          showDataStreamColor,
-        })
-      : null;
+  renderLegend = ({
+    isLoading,
+    thresholds,
+    showDataStreamColor,
+  }: {
+    isLoading: boolean;
+    thresholds: Threshold[];
+    showDataStreamColor: boolean;
+  }) =>
+    this.legendComponent({
+      config: this.legend,
+      dataStreams: this.dataStreams,
+      visualizesAlarms: this.visualizesAlarms,
+      updateDataStreamName: this.updateDataStreamName,
+      viewport: this.activeViewPort(),
+      isEditing: this.isEditing,
+      isLoading,
+      thresholds,
+      supportString: this.supportString,
+      trendResults: this.trendResults,
+      showDataStreamColor,
+    });
 
   render() {
     const chartSizeConfig = this.chartSizeConfig();
@@ -795,8 +801,8 @@ export class ScWebglBaseChart {
     const thresholds = this.thresholds();
 
     const showDataStreamColor =
-      this.legendConfig != null && this.legendConfig.showDataStreamColor != null
-        ? this.legendConfig.showDataStreamColor
+      this.legend != null && this.legend.showDataStreamColor != null
+        ? this.legend.showDataStreamColor
         : DEFAULT_SHOW_DATA_STREAM_COLOR;
 
     return [
@@ -820,9 +826,9 @@ export class ScWebglBaseChart {
             />
           )}
         </DataContainer>
-        {this.legendConfig && (
-          <ChartLegendContainer config={this.legendConfig} legendHeight={LEGEND_HEIGHT} size={chartSizeConfig}>
-            {this.renderLegend(shouldDisplayAsLoading, thresholds, showDataStreamColor)}
+        {this.legend && (
+          <ChartLegendContainer config={this.legend} legendHeight={LEGEND_HEIGHT} size={chartSizeConfig}>
+            {this.renderLegend({ isLoading: shouldDisplayAsLoading, thresholds, showDataStreamColor })}
           </ChartLegendContainer>
         )}
       </div>,

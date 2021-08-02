@@ -39,7 +39,7 @@ export namespace Components {
          */
         "isEditing": boolean;
         "layout"?: LayoutConfig;
-        "legendConfig"?: LegendConfig;
+        "legend"?: LegendConfig;
         "messageOverrides"?: MessageOverrides;
         "minBufferSize": number;
         "movement"?: MovementConfig;
@@ -112,7 +112,7 @@ export namespace Components {
          */
         "isEditing": boolean;
         "layout"?: LayoutConfig;
-        "legendConfig"?: LegendConfig;
+        "legend"?: LegendConfig;
         "messageOverrides"?: MessageOverrides;
         "minBufferSize": number;
         "movement"?: MovementConfig;
@@ -196,7 +196,7 @@ export namespace Components {
          */
         "isEditing": boolean;
         "layout"?: LayoutConfig;
-        "legendConfig"?: LegendConfig;
+        "legend"?: LegendConfig;
         "messageOverrides"?: MessageOverrides;
         "minBufferSize": number;
         "movement"?: MovementConfig;
@@ -239,7 +239,7 @@ export namespace Components {
          */
         "isEditing": boolean;
         "layout"?: LayoutConfig;
-        "legendConfig"?: LegendConfig;
+        "legend"?: LegendConfig;
         "messageOverrides"?: MessageOverrides;
         "minBufferSize": number;
         "movement"?: MovementConfig;
@@ -496,8 +496,8 @@ export namespace Components {
         "displaysNoDataPresentMsg"?: boolean;
         "gestures": boolean;
         "isEditing": boolean;
-        "legend"?: (props: Legend.Props) => HTMLElement;
-        "legendConfig": LegendConfig;
+        "legend": LegendConfig;
+        "legendComponent": (props: Legend.Props) => HTMLElement;
         "messageOverrides"?: MessageOverrides;
         "minBufferSize": number;
         /**
@@ -511,7 +511,7 @@ export namespace Components {
         "shouldRerenderOnViewportChange"?: ({ oldViewport, newViewport }) => boolean;
         "size": SizePositionConfig;
         "supportString": boolean;
-        "tooltip": (props: Tooltip.Props) => HTMLElement;
+        "tooltipComponent": (props: Tooltip.Props) => HTMLElement;
         "trends": Trend[];
         "updateChartScene": ChartSceneUpdater;
         "viewport": MinimalViewPortConfig;
@@ -1459,7 +1459,7 @@ declare namespace LocalJSX {
          */
         "isEditing"?: boolean;
         "layout"?: LayoutConfig;
-        "legendConfig"?: LegendConfig;
+        "legend"?: LegendConfig;
         "messageOverrides"?: MessageOverrides;
         "minBufferSize"?: number;
         "movement"?: MovementConfig;
@@ -1532,7 +1532,7 @@ declare namespace LocalJSX {
          */
         "isEditing"?: boolean;
         "layout"?: LayoutConfig;
-        "legendConfig"?: LegendConfig;
+        "legend"?: LegendConfig;
         "messageOverrides"?: MessageOverrides;
         "minBufferSize"?: number;
         "movement"?: MovementConfig;
@@ -1616,7 +1616,7 @@ declare namespace LocalJSX {
          */
         "isEditing"?: boolean;
         "layout"?: LayoutConfig;
-        "legendConfig"?: LegendConfig;
+        "legend"?: LegendConfig;
         "messageOverrides"?: MessageOverrides;
         "minBufferSize"?: number;
         "movement"?: MovementConfig;
@@ -1659,7 +1659,7 @@ declare namespace LocalJSX {
          */
         "isEditing"?: boolean;
         "layout"?: LayoutConfig;
-        "legendConfig"?: LegendConfig;
+        "legend"?: LegendConfig;
         "messageOverrides"?: MessageOverrides;
         "minBufferSize"?: number;
         "movement"?: MovementConfig;
@@ -1917,8 +1917,8 @@ declare namespace LocalJSX {
         "displaysNoDataPresentMsg"?: boolean;
         "gestures": boolean;
         "isEditing"?: boolean;
-        "legend"?: (props: Legend.Props) => HTMLElement;
-        "legendConfig"?: LegendConfig;
+        "legend"?: LegendConfig;
+        "legendComponent"?: (props: Legend.Props) => HTMLElement;
         "messageOverrides"?: MessageOverrides;
         "minBufferSize": number;
         /**
@@ -1937,7 +1937,7 @@ declare namespace LocalJSX {
         "shouldRerenderOnViewportChange"?: ({ oldViewport, newViewport }) => boolean;
         "size": SizePositionConfig;
         "supportString"?: boolean;
-        "tooltip"?: (props: Tooltip.Props) => HTMLElement;
+        "tooltipComponent"?: (props: Tooltip.Props) => HTMLElement;
         "trends"?: Trend[];
         "updateChartScene": ChartSceneUpdater;
         "viewport": MinimalViewPortConfig;

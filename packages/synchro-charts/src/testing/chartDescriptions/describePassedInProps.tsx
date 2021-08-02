@@ -81,10 +81,10 @@ export const describePassedInProps = (newChartSpecPage: ChartSpecPage, disableLi
             width: 200,
           };
 
-          const { chart } = await newChartSpecPage({ legendConfig: LEGEND });
+          const { chart } = await newChartSpecPage({ legend: LEGEND });
           const baseChart = chart.querySelector('sc-webgl-base-chart') as HTMLScWebglBaseChartElement;
 
-          expect(baseChart.legendConfig).toEqual(LEGEND);
+          expect(baseChart.legend).toEqual(LEGEND);
         });
       });
     }

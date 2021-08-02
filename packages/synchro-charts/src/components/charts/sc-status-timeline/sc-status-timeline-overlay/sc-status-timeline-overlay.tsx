@@ -38,7 +38,7 @@ export class ScStatusTimelineOverlay {
       movement: undefined,
       scale: undefined,
       layout: undefined,
-      legendConfig: undefined,
+      legend: undefined,
       annotations: undefined, // thresholds here are not the same as annotations?
       axis: undefined,
       widgetId: this.widgetId,

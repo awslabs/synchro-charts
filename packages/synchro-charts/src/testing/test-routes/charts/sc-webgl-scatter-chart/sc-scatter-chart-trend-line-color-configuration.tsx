@@ -56,7 +56,7 @@ export class ScScatterChartTrendLineColorConfiguration {
             yMin: Y_MIN,
             yMax: Y_MAX,
           }}
-          legendConfig={{
+          legend={{
             position: LEGEND_POSITION.BOTTOM,
             width: 300,
           }}
