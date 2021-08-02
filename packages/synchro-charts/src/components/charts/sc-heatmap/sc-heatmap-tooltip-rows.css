@@ -1,4 +1,4 @@
-sc-heatmap-tooltip {
+sc-heatmap-tooltip-rows {
   --tooltip-size: 8px;
   --tooltip-line-width: 2px;
 
@@ -6,17 +6,17 @@ sc-heatmap-tooltip {
   position: absolute;
 }
 
-sc-heatmap-tooltip small {
+sc-heatmap-tooltip-rows small {
   white-space: nowrap;
 }
 
-sc-heatmap-tooltip .awsui {
+sc-heatmap-tooltip-rows .awsui {
   position: absolute;
   z-index: 20;
   min-width: 90px;
 }
 
-sc-heatmap-tooltip .tooltip-container {
+sc-heatmap-tooltip-rows .tooltip-container {
   background: var(--awsui-color-white);
   position: relative;
   display: inline-block;
@@ -26,7 +26,7 @@ sc-heatmap-tooltip .tooltip-container {
   transition-duration: 120ms;
 }
 
-sc-heatmap-tooltip .tooltip-line {
+sc-heatmap-tooltip-rows .tooltip-line {
   position: relative;
 
   /* This is to offset the tooltip line base on its width. We have a negative here because we want to center the line but DOM renders element from the left to right instead of starting from center. */
@@ -36,6 +36,6 @@ sc-heatmap-tooltip .tooltip-line {
   opacity: var(--selection-opacity);
 }
 
-sc-heatmap-tooltip .value {
+sc-heatmap-tooltip-rows .value {
   font-size: 12px;
 }

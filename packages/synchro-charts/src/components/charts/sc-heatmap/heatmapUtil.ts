@@ -115,9 +115,12 @@ export const getXBucketRange = ({ start, end }: { start: Date; end: Date }): num
   return SECOND_IN_MS;
 };
 
-export const displayDate = (dates: Date[], { start, end }: { start: Date; end: Date }): string => {
+export const displayDate = (
+  dates: { startDate: Date; endDate: Date },
+  { start, end }: { start: Date; end: Date }
+): string => {
   const viewportDurationMS = end.getTime() - start.getTime();
-  const [xBucketRangeStart, xBucketRangeEnd] = dates;
+  const { startDate: xBucketRangeStart, endDate: xBucketRangeEnd } = dates;
   if (viewportDurationMS < MINUTE_IN_MS) {
     return `${xBucketRangeStart.toLocaleString('en-US', {
       minute: 'numeric',
