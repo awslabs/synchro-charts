@@ -21,7 +21,7 @@ export class ScHeatmapTooltip {
 
   @State() selectedXBucket: { startDate: Date; endDate: Date } | undefined;
   @State() selectedYBucket?: { lowerYBucket: number; upperYBucket: number };
-  @State() heatValues?: HeatValueMap = {};
+  @State() heatValues?: HeatValueMap;
 
   componentDidLoad() {
     this.dataContainer.addEventListener('mousemove', this.setselectedXBucket);
@@ -81,7 +81,6 @@ export class ScHeatmapTooltip {
       newDataStream[index] = { ...dataStream, data: dataStream.data.slice(startIndex, endIndex + 1) };
     });
     this.heatValues = calcHeatValues({
-      oldHeatValues: {},
       dataStreams: newDataStream,
       xBucketRange,
       viewport: this.viewport,

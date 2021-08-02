@@ -99,7 +99,7 @@ export class ScTooltipRows {
             </span>
             <small class={{ 'awsui-util-d-b': true }}>Total count:</small>
             <span class={{ 'value awsui-util-d-b': true }} data-testid="tooltip-heat-value" style={{ color: '#000' }}>
-              {this.heatValues[selectedXBucketMS][bucketIndex].totalCount}
+              {this.heatValues[selectedXBucketMS][bucketIndex].bucketHeatValue}
             </span>
           </div>
         </div>
