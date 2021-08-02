@@ -99,7 +99,7 @@ export const calcHeatValues = ({
       return dataStream.data.reduce(function reduceData(tempHeatValues, currPoint) {
         const xBucketRangeStart = calculateXBucketStart({ xValue: currPoint.x, xBucketRange });
         const bucketIndex = calculateBucketIndex({
-          yValue: currPoint.y as number, // checked in line 85 if the data value is number
+          yValue: currPoint.y,
           yMax,
           yMin,
           bucketCount,
