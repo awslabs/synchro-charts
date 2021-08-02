@@ -1,7 +1,7 @@
 import { DataStream, ViewPort } from '../../../utils/dataTypes';
 import { SECOND_IN_MS, MINUTE_IN_MS, HOUR_IN_MS, DAY_IN_MS, MONTH_IN_MS, YEAR_IN_MS } from '../../../utils/time';
-import { DataType } from '../../../utils/dataConstants';
 import { CHANGE_X_BUCKET_RANGE_AT } from './heatmapConstants';
+import { isNumberDataStream } from '../../../utils/predicates';
 
 export type HeatValueMap = {
   maxHeatValue: number;
@@ -47,7 +47,7 @@ export const addCount = ({
   dataStreamId: string;
 }): HeatValueMap => {
   if (!dataStreamId) {
-    return { maxHeatValue: 0, minHeatValue: 0 };
+    return { maxHeatValue: 0, minHeatValue: Infinity };
   }
   const newHeatValues: HeatValueMap = heatValues;
   newHeatValues[xBucketRangeStart] = heatValues[xBucketRangeStart] ?? {};
@@ -95,10 +95,7 @@ export const calcHeatValues = ({
 }) => {
   const { yMax, yMin } = viewport;
   return calculateMinMaxHeatValue(
-    dataStreams.reduce(function reduceDataStream(newHeatValues, dataStream) {
-      if (dataStream.dataType !== DataType.NUMBER) {
-        return newHeatValues; // TODO: handle other data types
-      }
+    dataStreams.filter(isNumberDataStream).reduce(function reduceDataStream(newHeatValues, dataStream) {
       return dataStream.data.reduce(function reduceData(tempHeatValues, currPoint) {
         const xBucketRangeStart = calculateXBucketStart({ xValue: currPoint.x, xBucketRange });
         const bucketIndex = calculateBucketIndex({
