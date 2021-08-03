@@ -3,12 +3,22 @@ import { LineChart, ScatterChart, BarChart } from "@synchro-charts/react";
 
 const DAY_RESOLUTION = 1000 * 60 * 60 * 24; // one day
 const style = { width: '100%' };
+
+const standardAnnotation = {
+  color: 'red',
+  value: 40,
+  showValue: true,
+};
+
+const draggableAnnotation = {
+  color: 'blue',
+  value: 60,
+  showValue: true,
+  isEditable: true, //enables dragging of annotation
+};
+
 const annotations = {
-  y: [{
-    color: 'red',
-    value: 40,
-    showValue: true,
-  }],
+  y: [standardAnnotation, draggableAnnotation],
 };
 const viewport = {
   start: new Date(2000, 0, 0),
@@ -152,4 +162,20 @@ When there are no thresholds, passing in the threshold options will not affect a
        }               
      }}
   />
+```
+
+### Draggable Annotations 
+
+To enable dragging of certain Y Annotations and thresholds as shown above, set `isEditable` of the annotation to `true` (`isEditable` is `false` by default). 
+When an annotation/threshold is dragged to a new value, a [`widgetUpdated`](#/API/Events) event is emitted 
+which contains the updated annotation value along with other properties of the widget. Note that only Y Annotations are 
+draggable at this time.
+
+```jsx static
+const draggableAnnotation = {
+  color: 'blue',
+  value: 60,
+  showValue: true,
+  isEditable: true, //enables dragging of annotation
+};
 ```

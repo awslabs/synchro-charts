@@ -3,13 +3,24 @@ import { LineChart, ScatterChart, BarChart } from "@synchro-charts/react";
 
 const DAY_RESOLUTION = 1000 * 60 * 60 * 24; // one day
 const style = { width: '100%' };
+
+const standardThreshold = {
+  color: '#d13212',
+  value: 40,
+  showValue: true,
+  comparisonOperator: 'GTE',
+};
+
+const draggableThreshold = {
+  color: 'blue',
+  value: 20,
+  showValue: true,
+  comparisonOperator: 'LTE',
+  isEditable: true,
+};
+
 const annotations = {
-  y: [{
-    color: '#d13212',
-    value: 40,
-    showValue: true,
-    comparisonOperator: 'GTE',
-  }],
+  y: [standardThreshold, draggableThreshold],
 };
 const viewport = {
   start: new Date(2000, 0, 0),
@@ -118,13 +129,14 @@ const dataStreams = [{
 
 Threshold allows you quickly visualize if a metric is outside of a pre-defined value by coloring the physical data points on the graph.
 
-
 A threshold is a type of annotation; that is to say, all thresholds are annotations, but not all annotations are thresholds.
 In order to make an annotation become a threshold, the property `comparisonOperator` is needed in the annotation object.
 Unlike an annotation, when a metric passes a threshold, the legend and the tooltip will change to the threshold color.
 
 By default, the thresholds will have coloration enabled. Meaning, when data passes the threshold, it will change to the threshold color.
 **Note: Currently, only y-annotations can become a threshold.**
+
+Like annotations, thresholds can be made draggable by setting `isEditable` to `true`.
 
 
 ### How To Set Up Thresholds

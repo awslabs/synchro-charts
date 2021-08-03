@@ -5,7 +5,11 @@ To communicate any changes triggered from the widgets internally, the widget wil
 
 An event fired when via a widget, the configuration has been altered.
 
-Currently, this event is only fired when titles of a widget are altered.
+Currently, this event is only fired when 
+
+  1. Titles of a widget are altered
+
+  2. Y Annotation or threshold is dragged to a new value 
 
 ### `dateRangeChange`
 
