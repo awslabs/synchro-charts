@@ -197,3 +197,19 @@ export interface ThresholdColorAndIcon {
   color: string | undefined;
   icon: StatusIcon | undefined;
 }
+
+export namespace Legend {
+  export interface Props {
+    config: LegendConfig;
+    dataStreams: DataStream[];
+    visualizesAlarms: boolean;
+    updateDataStreamName: ({ streamId, name }: { streamId: string; name: string }) => void;
+    viewport: ViewPort;
+    isEditing: boolean;
+    isLoading: boolean;
+    thresholds: Threshold[];
+    supportString: boolean;
+    trendResults: TrendResult[];
+    showDataStreamColor: boolean;
+  }
+}
