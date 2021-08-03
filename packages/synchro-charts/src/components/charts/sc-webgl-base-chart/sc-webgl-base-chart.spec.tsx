@@ -39,7 +39,7 @@ const LOADING_STREAM: DataStream<number> = {
   isLoading: true,
 };
 
-const newChartSpecPage = async (props: Partial<Components.ScWebglBaseChart>) => {
+const newChartSpecPage = async (chartProps: Partial<Components.ScWebglBaseChart>) => {
   const page = await newSpecPage({
     components: [ScWebglBaseChart, ScGestureHandler, ScWebglAxis, ScErrorBadge],
     html: '<div></div>',
@@ -75,6 +75,7 @@ const newChartSpecPage = async (props: Partial<Components.ScWebglBaseChart>) => 
       position: LEGEND_POSITION.BOTTOM,
       width: 300,
     },
+    renderLegend: props => <sc-legend {...props} />,
     isEditing: false,
     annotations: {
       x: [],
@@ -85,11 +86,11 @@ const newChartSpecPage = async (props: Partial<Components.ScWebglBaseChart>) => 
     },
     messageOverrides: undefined,
     trends: [],
-    tooltip: ({ visualizesAlarms = defaultProps.visualizesAlarms, ...rest }) => (
+    renderTooltip: ({ visualizesAlarms = defaultProps.visualizesAlarms, ...rest }) => (
       <sc-tooltip {...rest} dataAlignment={DATA_ALIGNMENT.RIGHT} visualizesAlarms={visualizesAlarms} supportString />
     ),
   };
-  update(chart, { ...defaultProps, ...props });
+  update(chart, { ...defaultProps, ...chartProps });
   page.body.appendChild(chart);
   await page.waitForChanges();
   return { page, chart };
@@ -133,6 +134,17 @@ describe('legend', () => {
     const legend = chart.querySelector('sc-legend') as HTMLScLegendElement;
 
     expect(legend.viewport).toEqual(VIEWPORT);
+  });
+
+  it('should render with custom legend', async () => {
+    const { chart, page } = await newChartSpecPage({
+      renderLegend: props => <div class="custom-test-legend" {...props} />,
+    });
+
+    await page.waitForChanges();
+
+    const tooltip = chart.querySelector('.custom-test-legend');
+    expect(tooltip).not.toBeNull();
   });
 });
 
@@ -650,7 +662,7 @@ describe('axis', () => {
 describe('tooltip', () => {
   it('should render with custom tooltip', async () => {
     const { chart, page } = await newChartSpecPage({
-      tooltip: props => <div class="custom-test-tooltip" {...props} />,
+      renderTooltip: props => <div class="custom-test-tooltip" {...props} />,
     });
 
     await page.waitForChanges();

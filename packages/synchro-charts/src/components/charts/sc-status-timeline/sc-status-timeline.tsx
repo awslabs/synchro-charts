@@ -150,7 +150,7 @@ export class ScStatusTimeline implements ChartConfig {
                 minBufferSize={this.minBufferSize}
                 bufferFactor={this.bufferFactor}
                 isEditing={this.isEditing}
-                tooltip={tooltip(this.alarms)}
+                renderTooltip={tooltip(this.alarms)}
                 displaysError={false}
                 supportString
                 visualizesAlarms

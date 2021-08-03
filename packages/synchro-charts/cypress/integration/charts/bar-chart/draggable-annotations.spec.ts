@@ -12,10 +12,9 @@ import { DataType } from '../../../../src/constants';
 import { MINUTE_IN_MS } from '../../../../src/utils/time';
 import {
   DRAGGABLE_HANDLE_SELECTOR,
-  LINE_SELECTOR,
-  TEXT_VALUE_SELECTOR,
+  ELEMENT_GROUP_SELECTOR,
 } from '../../../../src/components/charts/common/annotations/YAnnotations/YAnnotations';
-import { moveHandle, moveHandleFilter, moveHandleWithPause } from '../utils-draggable';
+import { moveHandle, moveHandleFilter, moveHandleWithPause, parseTransformYValue } from '../utils-draggable';
 
 const timelineParams: Partial<SearchQueryParams> = {
   componentTag: 'sc-bar-chart',
@@ -112,35 +111,7 @@ it('non-Editable annotation is not draggable', () => {
   });
   cy.waitForChart();
 
-  cy.get(TEXT_VALUE_SELECTOR)
-    .invoke('attr', 'y')
-    .as('initialY_text');
-
-  cy.get(LINE_SELECTOR)
-    .invoke('attr', 'y1')
-    .as('initialY_line');
-
-  moveHandle(DRAGGABLE_HANDLE_SELECTOR, 0, 200);
-
-  cy.get(TEXT_VALUE_SELECTOR)
-    .invoke('attr', 'y')
-    .as('afterY_text');
-
-  cy.get(LINE_SELECTOR)
-    .invoke('attr', 'y1')
-    .as('afterY_line');
-
-  cy.get('@initialY_text').then(initialY => {
-    cy.get('@afterY_text').then(afterY => {
-      expect(initialY).to.include(afterY);
-    });
-  });
-
-  cy.get('@initialY_line').then(initialY => {
-    cy.get('@afterY_line').then(afterY => {
-      expect(initialY).to.include(afterY);
-    });
-  });
+  cy.get(DRAGGABLE_HANDLE_SELECTOR).should('not.exist');
 });
 
 it('annotation with hidden value is draggable', () => {
@@ -163,9 +134,9 @@ it('annotation with hidden value is draggable', () => {
     .should('be.gte', 349)
     .should('be.lte', 351);
 
-  cy.get(LINE_SELECTOR)
-    .invoke('attr', 'y1')
-    .then(str => parseFloat(str!))
+  cy.get(ELEMENT_GROUP_SELECTOR)
+    .invoke('attr', 'transform')
+    .then(str => parseTransformYValue(str!))
     .should('be.gte', 360)
     .should('be.lte', 362);
 
@@ -177,9 +148,9 @@ it('annotation with hidden value is draggable', () => {
     .should('be.gte', 132)
     .should('be.lte', 134);
 
-  cy.get(LINE_SELECTOR)
-    .invoke('attr', 'y1')
-    .then(str => parseFloat(str!))
+  cy.get(ELEMENT_GROUP_SELECTOR)
+    .invoke('attr', 'transform')
+    .then(str => parseTransformYValue(str!))
     .should('be.gte', 143)
     .should('be.lte', 145);
 });

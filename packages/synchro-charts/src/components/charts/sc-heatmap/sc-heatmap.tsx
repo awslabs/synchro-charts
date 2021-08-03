@@ -74,7 +74,7 @@ export class ScHeatmap implements ChartConfig {
             configId={this.widgetId}
             requestData={this.requestData}
             legend={this.legend}
-            legendComponent={heatmapLegend}
+            renderLegend={heatmapLegend}
             updateChartScene={updateChartScene}
             createChartScene={chartScene}
             size={{
@@ -88,7 +88,7 @@ export class ScHeatmap implements ChartConfig {
             bufferFactor={this.bufferFactor}
             isEditing={this.isEditing}
             yRangeStartFromZero
-            tooltipComponent={heatmapTooltip}
+            renderTooltip={heatmapTooltip}
             supportString={false}
             visualizesAlarms={false}
             messageOverrides={this.messageOverrides}

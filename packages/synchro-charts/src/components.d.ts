@@ -6,7 +6,7 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { AlarmsConfig, DataPoint, DataStream, DataStreamInfo, MessageOverrides, MinimalSizeConfig, MinimalViewPortConfig, Primitive, RequestDataFn, SizeConfig, SizePositionConfig, TableColumn, ViewPort, ViewPortConfig } from "./utils/dataTypes";
-import { Annotations, Axis, LayoutConfig, LegendConfig, MovementConfig, ScaleConfig, Threshold, Tooltip, WidgetConfigurationUpdate } from "./components/charts/common/types";
+import { Annotations, Axis, LayoutConfig, Legend, LegendConfig, MovementConfig, ScaleConfig, Threshold, Tooltip, WidgetConfigurationUpdate } from "./components/charts/common/types";
 import { Trend, TrendResult } from "./components/charts/common/trends/types";
 import { DATA_ALIGNMENT, StatusIcon } from "./components/charts/common/constants";
 import { POINT_TYPE } from "./components/charts/sc-webgl-base-chart/activePoints";
@@ -126,16 +126,6 @@ export namespace Components {
         "config": LegendConfig;
         "dataStreams": DataStream[];
         "isLoading": boolean;
-        "viewport": ViewPort;
-    }
-    interface ScHeatmapTooltip {
-        "dataContainer": HTMLElement;
-        "dataStreams": DataStream[];
-        "size": SizeConfig;
-        /**
-          * CSS Top property for the tooltip container
-         */
-        "top": number;
         "viewport": ViewPort;
     }
     interface ScHelpTooltip {
@@ -519,6 +509,8 @@ export namespace Components {
           * Optionally hooks to integrate custom logic into the base chart
          */
         "onUpdateLifeCycle"?: (viewport: ViewPortConfig) => void;
+        "renderLegend": (props: Legend.Props) => HTMLElement;
+        "renderTooltip": (props: Tooltip.Props) => HTMLElement;
         /**
           * Optionally provided callback to initiate a request for data. Used to ensure gestures emit events for request data.
          */
@@ -526,7 +518,6 @@ export namespace Components {
         "shouldRerenderOnViewportChange"?: ({ oldViewport, newViewport }) => boolean;
         "size": SizePositionConfig;
         "supportString": boolean;
-        "tooltip": (props: Tooltip.Props) => HTMLElement;
         "trends": Trend[];
         "updateChartScene": ChartSceneUpdater;
         "viewport": MinimalViewPortConfig;
@@ -735,12 +726,6 @@ declare global {
     var HTMLScHeatmapLegendElement: {
         prototype: HTMLScHeatmapLegendElement;
         new (): HTMLScHeatmapLegendElement;
-    };
-    interface HTMLScHeatmapTooltipElement extends Components.ScHeatmapTooltip, HTMLStencilElement {
-    }
-    var HTMLScHeatmapTooltipElement: {
-        prototype: HTMLScHeatmapTooltipElement;
-        new (): HTMLScHeatmapTooltipElement;
     };
     interface HTMLScHelpTooltipElement extends Components.ScHelpTooltip, HTMLStencilElement {
     }
@@ -1361,7 +1346,6 @@ declare global {
         "sc-grid-tooltip": HTMLScGridTooltipElement;
         "sc-heatmap": HTMLScHeatmapElement;
         "sc-heatmap-legend": HTMLScHeatmapLegendElement;
-        "sc-heatmap-tooltip": HTMLScHeatmapTooltipElement;
         "sc-help-tooltip": HTMLScHelpTooltipElement;
         "sc-kpi": HTMLScKpiElement;
         "sc-kpi-base": HTMLScKpiBaseElement;
@@ -1576,16 +1560,6 @@ declare namespace LocalJSX {
         "dataStreams": DataStream[];
         "isLoading"?: boolean;
         "viewport"?: ViewPort;
-    }
-    interface ScHeatmapTooltip {
-        "dataContainer": HTMLElement;
-        "dataStreams": DataStream[];
-        "size": SizeConfig;
-        /**
-          * CSS Top property for the tooltip container
-         */
-        "top"?: number;
-        "viewport": ViewPort;
     }
     interface ScHelpTooltip {
         "message": string;
@@ -1974,6 +1948,8 @@ declare namespace LocalJSX {
          */
         "onUpdateLifeCycle"?: (viewport: ViewPortConfig) => void;
         "onWidgetUpdated"?: (event: CustomEvent<WidgetConfigurationUpdate>) => void;
+        "renderLegend"?: (props: Legend.Props) => HTMLElement;
+        "renderTooltip"?: (props: Tooltip.Props) => HTMLElement;
         /**
           * Optionally provided callback to initiate a request for data. Used to ensure gestures emit events for request data.
          */
@@ -1981,7 +1957,6 @@ declare namespace LocalJSX {
         "shouldRerenderOnViewportChange"?: ({ oldViewport, newViewport }) => boolean;
         "size": SizePositionConfig;
         "supportString"?: boolean;
-        "tooltip"?: (props: Tooltip.Props) => HTMLElement;
         "trends"?: Trend[];
         "updateChartScene": ChartSceneUpdater;
         "viewport": MinimalViewPortConfig;
@@ -2101,7 +2076,6 @@ declare namespace LocalJSX {
         "sc-grid-tooltip": ScGridTooltip;
         "sc-heatmap": ScHeatmap;
         "sc-heatmap-legend": ScHeatmapLegend;
-        "sc-heatmap-tooltip": ScHeatmapTooltip;
         "sc-help-tooltip": ScHelpTooltip;
         "sc-kpi": ScKpi;
         "sc-kpi-base": ScKpiBase;
@@ -2226,7 +2200,6 @@ declare module "@stencil/core" {
             "sc-grid-tooltip": LocalJSX.ScGridTooltip & JSXBase.HTMLAttributes<HTMLScGridTooltipElement>;
             "sc-heatmap": LocalJSX.ScHeatmap & JSXBase.HTMLAttributes<HTMLScHeatmapElement>;
             "sc-heatmap-legend": LocalJSX.ScHeatmapLegend & JSXBase.HTMLAttributes<HTMLScHeatmapLegendElement>;
-            "sc-heatmap-tooltip": LocalJSX.ScHeatmapTooltip & JSXBase.HTMLAttributes<HTMLScHeatmapTooltipElement>;
             "sc-help-tooltip": LocalJSX.ScHelpTooltip & JSXBase.HTMLAttributes<HTMLScHelpTooltipElement>;
             "sc-kpi": LocalJSX.ScKpi & JSXBase.HTMLAttributes<HTMLScKpiElement>;
             "sc-kpi-base": LocalJSX.ScKpiBase & JSXBase.HTMLAttributes<HTMLScKpiBaseElement>;
