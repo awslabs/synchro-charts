@@ -136,7 +136,7 @@ describe('legend', () => {
     expect(legend.viewport).toEqual(VIEWPORT);
   });
 
-  it.only('should render with custom legend', async () => {
+  it('should render with custom legend', async () => {
     const { chart, page } = await newChartSpecPage({
       renderLegend: props => <div class="custom-test-legend" {...props} />,
     });
