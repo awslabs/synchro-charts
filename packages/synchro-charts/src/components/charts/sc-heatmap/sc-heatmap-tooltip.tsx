@@ -71,7 +71,7 @@ export class ScHeatmapTooltip {
    * Calculate the heatValues for only the selected x-bucket.
    */
   setHeatValue = () => {
-    if (this.selectedXBucket === undefined) {
+    if (this.selectedXBucket == null) {
       this.heatValues = undefined;
       return;
     }

@@ -26,7 +26,7 @@ export class ScTooltipRows {
   @Prop() heatValues!: HeatValueMap;
 
   getTooltipPosition = (viewport, size): undefined | { x: number; y: number } => {
-    if (this.selectedXBucket === undefined || this.selectedYBucket === undefined) {
+    if (this.selectedXBucket == null || this.selectedYBucket == null) {
       return undefined;
     }
     const { start, end, yMin, yMax } = viewport;
