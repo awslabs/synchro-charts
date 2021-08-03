@@ -19,25 +19,28 @@ export class ScHeatmapTooltip {
   @Prop() viewport!: ViewPort;
   // If false, do not display a tooltip row if there is no associated point.
 
-  @State() selectedXBucket: { startDate: Date; endDate: Date } | undefined;
+  @State() selectedXBucket?: { startDate: Date; endDate: Date };
   @State() selectedYBucket?: { lowerYBucket: number; upperYBucket: number };
   @State() heatValues?: HeatValueMap;
 
   componentDidLoad() {
-    this.dataContainer.addEventListener('mousemove', this.setselectedXBucket);
-    this.dataContainer.addEventListener('mousemove', this.setselectedYBucket);
+    this.dataContainer.addEventListener('mousemove', this.setSelectedXBucket);
+    this.dataContainer.addEventListener('mousemove', this.setSelectedYBucket);
     this.dataContainer.addEventListener('mouseleave', this.hideTooltip);
     this.dataContainer.addEventListener('mousedown', this.hideTooltip, { capture: true });
   }
 
   disconnectedCallback() {
-    this.dataContainer.removeEventListener('mousemove', this.setselectedXBucket);
-    this.dataContainer.removeEventListener('mousemove', this.setselectedYBucket);
+    this.dataContainer.removeEventListener('mousemove', this.setSelectedXBucket);
+    this.dataContainer.removeEventListener('mousemove', this.setSelectedYBucket);
     this.dataContainer.removeEventListener('mouseleave', this.hideTooltip);
     this.dataContainer.removeEventListener('mousedown', this.hideTooltip);
   }
 
-  setselectedXBucket = ({ offsetX, buttons }: MouseEvent) => {
+  /**
+   * Set the selected x-bucket based on the mouse's position.
+   */
+  setSelectedXBucket = ({ offsetX, buttons }: MouseEvent) => {
     const isMouseBeingPressed = buttons > 0;
 
     if (!isMouseBeingPressed && offsetX != null) {
@@ -64,31 +67,37 @@ export class ScHeatmapTooltip {
     }
   };
 
+  /**
+   * Calculate the heatValues for only the selected x-bucket.
+   */
   setHeatValue = () => {
     if (this.selectedXBucket === undefined) {
       this.heatValues = undefined;
       return;
     }
-    const newDataStream: DataStream[] = [];
     const xBucketRange = getXBucketRange(this.viewport);
     const { startDate, endDate } = this.selectedXBucket;
-    this.dataStreams.forEach((dataStream, index) => {
+    const filteredDataStreams = this.dataStreams.map(dataStream => {
       const startIndex = Math.max(pointBisector.left(dataStream.data, startDate.getTime()) - 1, 0);
       const endIndex = Math.min(
         pointBisector.right(dataStream.data, endDate.getTime() + 1),
         dataStream.data.length - 1
       );
-      newDataStream[index] = { ...dataStream, data: dataStream.data.slice(startIndex, endIndex + 1) };
+      return { ...dataStream, data: dataStream.data.slice(startIndex, endIndex + 1) };
     });
+
     this.heatValues = calcHeatValues({
-      dataStreams: newDataStream,
+      dataStreams: filteredDataStreams,
       xBucketRange,
       viewport: this.viewport,
       bucketCount: BUCKET_COUNT,
     });
   };
 
-  setselectedYBucket = ({ offsetY, buttons }: MouseEvent) => {
+  /**
+   *  Set the selected y-bucket based on the mouse's posiition.
+   */
+  setSelectedYBucket = ({ offsetY, buttons }: MouseEvent) => {
     const isMouseBeingPressed = buttons > 0;
 
     if (!isMouseBeingPressed && offsetY != null && BUCKET_COUNT != null) {
@@ -108,7 +117,7 @@ export class ScHeatmapTooltip {
   };
 
   hideTooltip = () => {
-    this.selectedXBucket = undefined;
+    this.selectedYBucket = undefined;
   };
 
   render() {

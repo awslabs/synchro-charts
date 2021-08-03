@@ -62,12 +62,12 @@ export class ScTooltipRows {
     });
 
     // if chosen date isn't in heatValues then there's no data to be displayed
-    if (this.heatValues[selectedXBucketMS] === undefined) {
+    if (this.heatValues[selectedXBucketMS] == null) {
       return null;
     }
 
     // if chosen bucket isn't in heatValues then there's no data to be displayed
-    if (this.heatValues[selectedXBucketMS][bucketIndex] === undefined) {
+    if (this.heatValues[selectedXBucketMS][bucketIndex] == null) {
       return null;
     }
 
@@ -92,13 +92,13 @@ export class ScTooltipRows {
           }}
         >
           <div class="awsui-util-shadow awsui-util-p-s">
-            <small class={{ 'awsui-util-d-b': true }}>{displayDate(this.selectedXBucket, this.viewport)}</small>
-            <small class={{ 'awsui-util-d-b': true }}>Bucket range:</small>
-            <span class={{ 'value awsui-util-d-b': true }} data-testid="tooltip-buckets" style={{ color: '#000' }}>
+            <small class="awsui-util-d-b">{displayDate(this.selectedXBucket, this.viewport)}</small>
+            <small class="awsui-util-d-b">Bucket range:</small>
+            <span class="value awsui-util-d-b" data-testid="tooltip-buckets" style={{ color: '#000' }}>
               {`${this.selectedYBucket.lowerYBucket.toFixed(2)} - ${this.selectedYBucket.upperYBucket.toFixed(2)}`}
             </span>
-            <small class={{ 'awsui-util-d-b': true }}>Total count:</small>
-            <span class={{ 'value awsui-util-d-b': true }} data-testid="tooltip-heat-value" style={{ color: '#000' }}>
+            <small class="awsui-util-d-b">Total count:</small>
+            <span class="value awsui-util-d-b" data-testid="tooltip-heat-value" style={{ color: '#000' }}>
               {this.heatValues[selectedXBucketMS][bucketIndex].bucketHeatValue}
             </span>
           </div>
