@@ -175,165 +175,33 @@ describe('getValueAndText and getValueAndTextVisibility', () => {
   });
 });
 
-describe('getValueAndText formattedText', () => {
-  it('returns rounded exponential value for very small numbers - edge', () => {
-    const value = 0.000000156;
-    const expectedDisplayValue = '1.6e-7';
-
-    const yAnnotations: YAnnotation[] = [
-      {
-        ...BASE_Y_ANNOTATION,
-        value,
-      },
-    ];
-
-    const valueText = getValueText({
-      annotation: yAnnotations[0],
-      resolution: 1000,
-      viewport: VIEWPORT,
-      formatText: true,
+describe('getValueAndText formatText', () => {
+  describe.each`
+    value          | expected
+    ${0.000000156} | ${'1.6e-7'}
+    ${0.0009987}   | ${'1.0e-3'}
+    ${199999}      | ${'2.0e+5'}
+    ${9987654321}  | ${'1.0e+10'}
+    ${0.0012345}   | ${'0.001'}
+    ${0.9876}      | ${'0.987'}
+    ${12345.6789}  | ${'12345'}
+    ${0.23456789}  | ${'0.234'}
+  `('checks if formatText formats large and small numbers correctly', ({ value, expected }) => {
+    test(`Given value of ${value}) we expect the formatted value to be ${expected}`, () => {
+      const yAnnotations: YAnnotation[] = [
+        {
+          ...BASE_Y_ANNOTATION,
+          value,
+        },
+      ];
+      const valueText = getValueText({
+        annotation: yAnnotations[0],
+        resolution: 1000,
+        viewport: VIEWPORT,
+        formatText: true,
+      });
+      expect(valueText).toBe(expected);
     });
-
-    expect(valueText).toBe(expectedDisplayValue);
-  });
-
-  it('returns rounded exponential value for very small numbers - edge', () => {
-    const value = 0.0009987;
-    const expectedDisplayValue = '1.0e-3';
-    const yAnnotations: YAnnotation[] = [
-      {
-        ...BASE_Y_ANNOTATION,
-        value,
-      },
-    ];
-
-    const valueText = getValueText({
-      annotation: yAnnotations[0],
-      resolution: 1000,
-      viewport: VIEWPORT,
-      formatText: true,
-    });
-
-    expect(valueText).toBe(expectedDisplayValue);
-  });
-
-  it('returns rounded exponential value for very large numbers - edge', () => {
-    const value = 199999;
-    const expectedDisplayValue = '2.0e+5';
-    const yAnnotations: YAnnotation[] = [
-      {
-        ...BASE_Y_ANNOTATION,
-        value,
-      },
-    ];
-
-    const valueText = getValueText({
-      annotation: yAnnotations[0],
-      resolution: 1000,
-      viewport: VIEWPORT,
-      formatText: true,
-    });
-
-    expect(valueText).toBe(expectedDisplayValue);
-  });
-
-  it('returns rounded exponential value for very large numbers', () => {
-    const value = 9987654321;
-    const expectedDisplayValue = '1.0e+10';
-    const yAnnotations: YAnnotation[] = [
-      {
-        ...BASE_Y_ANNOTATION,
-        value,
-      },
-    ];
-
-    const valueText = getValueText({
-      annotation: yAnnotations[0],
-      resolution: 1000,
-      viewport: VIEWPORT,
-      formatText: true,
-    });
-
-    expect(valueText).toBe(expectedDisplayValue);
-  });
-
-  it('returns truncated value for small numbers - edge', () => {
-    const value = 0.0012345;
-    const expectedDisplayValue = '0.001';
-    const yAnnotations: YAnnotation[] = [
-      {
-        ...BASE_Y_ANNOTATION,
-        value,
-      },
-    ];
-
-    const valueText = getValueText({
-      annotation: yAnnotations[0],
-      resolution: 1000,
-      viewport: VIEWPORT,
-      formatText: true,
-    });
-    expect(valueText).toBe(expectedDisplayValue);
-  });
-
-  it('returns truncated value for small numbers', () => {
-    const value = 0.98765;
-    const expectedDisplayValue = '0.987';
-    const yAnnotations: YAnnotation[] = [
-      {
-        ...BASE_Y_ANNOTATION,
-        value,
-      },
-    ];
-
-    const valueText = getValueText({
-      annotation: yAnnotations[0],
-      resolution: 1000,
-      viewport: VIEWPORT,
-      formatText: true,
-    });
-
-    expect(valueText).toBe(expectedDisplayValue);
-  });
-
-  it('returns truncated value for large decimal values in range', () => {
-    const value = 12345.6789;
-    const expectedDisplayValue = '12345';
-    const yAnnotations: YAnnotation[] = [
-      {
-        ...BASE_Y_ANNOTATION,
-        value,
-      },
-    ];
-
-    const valueText = getValueText({
-      annotation: yAnnotations[0],
-      resolution: 1000,
-      viewport: VIEWPORT,
-      formatText: true,
-    });
-
-    expect(valueText).toBe(expectedDisplayValue);
-  });
-
-  it('returns truncated value for small decimal values in range', () => {
-    const value = 0.23456789;
-    const expectedDisplayValue = '0.234';
-    const yAnnotations: YAnnotation[] = [
-      {
-        ...BASE_Y_ANNOTATION,
-        value,
-      },
-    ];
-
-    const valueText = getValueText({
-      annotation: yAnnotations[0],
-      resolution: 1000,
-      viewport: VIEWPORT,
-      formatText: true,
-    });
-
-    expect(valueText).toBe(expectedDisplayValue);
   });
 });
 

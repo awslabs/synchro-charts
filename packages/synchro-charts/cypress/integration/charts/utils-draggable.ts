@@ -31,3 +31,9 @@ export function moveHandleWithPause(selector: string, x: number, y: number) {
       .wait(SECOND_IN_MS);
   });
 }
+
+export const parseTransformYValue = (transformValue: string): number => {
+  const digits = transformValue.indexOf(')') - transformValue.indexOf(',') - 1;
+  const yValue = transformValue.substr(transformValue.indexOf(',') + 1, digits);
+  return +yValue;
+};
