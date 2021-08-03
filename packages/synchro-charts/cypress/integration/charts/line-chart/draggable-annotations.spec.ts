@@ -3,12 +3,11 @@ import { SearchQueryParams } from '../../../../src/testing/dynamicWidgetUtils/te
 import { Threshold, XAnnotation } from '../../../../src/components/charts/common/types';
 import { COMPARISON_OPERATOR, DataType } from '../../../../src/constants';
 import { DataPoint } from '../../../../src/utils/dataTypes';
-import { moveHandle, moveHandleFilter, moveHandleWithPause } from '../utils-draggable';
+import { moveHandle, moveHandleFilter, moveHandleWithPause, parseTransformYValue } from '../utils-draggable';
 import { Y_THRESHOLD, Y_ANNOTATION, X_ANNOTATION } from '../../../../src/testing/test-routes/charts/constants';
 import {
   DRAGGABLE_HANDLE_SELECTOR,
-  LINE_SELECTOR,
-  TEXT_VALUE_SELECTOR,
+  ELEMENT_GROUP_SELECTOR,
 } from '../../../../src/components/charts/common/annotations/YAnnotations/YAnnotations';
 
 const X_MIN = new Date(1998, 0, 0);
@@ -80,9 +79,10 @@ it('changing isEditable updates draggable annotations', () => {
   const firstFilter = '[style*="stroke: blue;"]';
   moveHandleFilter(DRAGGABLE_HANDLE_SELECTOR, firstFilter, 0, moveFirst);
 
-  const moveSecond = 150;
   const secondFilter = '[style*="stroke: red;"]';
-  moveHandleFilter(DRAGGABLE_HANDLE_SELECTOR, secondFilter, 0, moveSecond);
+  cy.get(DRAGGABLE_HANDLE_SELECTOR)
+    .filter(secondFilter)
+    .should('not.exist');
 
   const moveThird = -50;
   const thirdFilter = '[style*="stroke: green;"]';
@@ -96,8 +96,12 @@ it('changing isEditable updates draggable annotations', () => {
     new Promise(resolve => {
       cy.document().then(doc => {
         doc.addEventListener('widgetUpdated', resolve);
-        moveHandleFilter(DRAGGABLE_HANDLE_SELECTOR, firstFilter, 0, moveFirst);
-        moveHandleFilter(DRAGGABLE_HANDLE_SELECTOR, thirdFilter, 0, moveThird);
+        cy.get(DRAGGABLE_HANDLE_SELECTOR)
+          .filter(firstFilter)
+          .should('not.exist');
+        cy.get(DRAGGABLE_HANDLE_SELECTOR)
+          .filter(thirdFilter)
+          .should('not.exist');
         moveHandleFilter(DRAGGABLE_HANDLE_SELECTOR, secondFilter, 0, moveFourth);
       });
     })
@@ -116,9 +120,10 @@ it('changing showValue updates draggable annotations', () => {
   const firstFilter = '[style*="stroke: blue;"]';
   moveHandleFilter(DRAGGABLE_HANDLE_SELECTOR, firstFilter, 0, moveFirst);
 
-  const moveSecond = 150;
   const secondFilter = '[style*="stroke: red;"]';
-  moveHandleFilter(DRAGGABLE_HANDLE_SELECTOR, secondFilter, 0, moveSecond);
+  cy.get(DRAGGABLE_HANDLE_SELECTOR)
+    .filter(secondFilter)
+    .should('not.exist');
 
   const moveThird = -50;
   const thirdFilter = '[style*="stroke: green;"]';
@@ -205,35 +210,7 @@ it('non-Editable annotation is not draggable', () => {
   });
   cy.waitForChart();
 
-  cy.get(TEXT_VALUE_SELECTOR)
-    .invoke('attr', 'y')
-    .as('initialY_text');
-
-  cy.get(LINE_SELECTOR)
-    .invoke('attr', 'y1')
-    .as('initialY_line');
-
-  moveHandle(DRAGGABLE_HANDLE_SELECTOR, 0, 200);
-
-  cy.get(TEXT_VALUE_SELECTOR)
-    .invoke('attr', 'y')
-    .as('afterY_text');
-
-  cy.get(LINE_SELECTOR)
-    .invoke('attr', 'y1')
-    .as('afterY_line');
-
-  cy.get('@initialY_text').then(initialY => {
-    cy.get('@afterY_text').then(afterY => {
-      expect(initialY).to.include(afterY);
-    });
-  });
-
-  cy.get('@initialY_line').then(initialY => {
-    cy.get('@afterY_line').then(afterY => {
-      expect(initialY).to.include(afterY);
-    });
-  });
+  cy.get(DRAGGABLE_HANDLE_SELECTOR).should('not.exist');
 });
 
 it('annotation with hidden value is draggable', () => {
@@ -257,9 +234,9 @@ it('annotation with hidden value is draggable', () => {
     .should('be.gte', 281)
     .should('be.lte', 283);
 
-  cy.get(LINE_SELECTOR)
-    .invoke('attr', 'y1')
-    .then(str => parseFloat(str!))
+  cy.get(ELEMENT_GROUP_SELECTOR)
+    .invoke('attr', 'transform')
+    .then(str => parseTransformYValue(str!))
     .should('be.gte', 292)
     .should('be.lte', 294);
 
@@ -271,9 +248,9 @@ it('annotation with hidden value is draggable', () => {
     .should('be.gte', 32)
     .should('be.lte', 34);
 
-  cy.get(LINE_SELECTOR)
-    .invoke('attr', 'y1')
-    .then(str => parseFloat(str!))
+  cy.get(ELEMENT_GROUP_SELECTOR)
+    .invoke('attr', 'transform')
+    .then(str => parseTransformYValue(str!))
     .should('be.gte', 43)
     .should('be.lte', 45);
 });
