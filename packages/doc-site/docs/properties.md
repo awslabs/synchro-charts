@@ -251,7 +251,7 @@
 
     - `id`: string
 
-      (Optional) The id for the annotation which can be set to any string value. This field allows annotations to be identified/distinguished when `WidgetConfigurationUpdate` events are emitted.
+      (Optional) The id for the annotation which can be set to any string value. This field allows annotations to be identified/distinguished when [`widgetUpdated`](#/API/Events) events are emitted.
         
     - `label`: Object
     
@@ -300,12 +300,12 @@
 
       - `id`: string
 
-        (Optional) The id for the annotation which can be set to any string value. This field allows annotations to be identified/distinguished when `WidgetConfigurationUpdate` events are emitted.
+        (Optional) The id for the annotation which can be set to any string value. This field allows annotations to be identified/distinguished when [`widgetUpdated`](#/API/Events) events are emitted.
       
       - `isEditable`: boolean
 
         (Optional) A setting to control whether the annotation is configurable from within the widget. Defaults to false.
-        For example when `isEditable` is true on a line chart, you are able to drag the annotation handle to change the annotation value and emit `WidgetConfigurationUpdate` events reflecting the new annotation.
+        For example when `isEditable` is true on a line chart, you are able to drag the annotation handle to change the annotation value and emit [`widgetUpdated`](#/API/Events) events reflecting the new annotation.
         
       - `label`: Object
       
