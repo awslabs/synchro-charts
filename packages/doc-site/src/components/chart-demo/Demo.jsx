@@ -465,7 +465,7 @@ export class Demo extends React.Component {
                     onChange={this.changeAnnotationColor}
                   />
                 </td>
-                <td style={{ maxWidth: '70px'}}>
+                <td style={{ maxWidth: '80px'}}>
                   <Input
                     {...(this.state.annotationComp !== COMPARISON_OPERATOR.EQUAL && {type: 'number'})}
                     onChange={this.changeAnnotationValue}
@@ -482,7 +482,7 @@ export class Demo extends React.Component {
                     {this.currentDraggableOption()}
                   </ButtonDropdown>
                 </td>
-                <td style={{ maxWidth: '200px'}}>
+                <td style={{ maxWidth: '220px'}}>
                   <Input
                     onChange={this.changeAnnotationLabel}
                     value={this.state.annotationLabel}
