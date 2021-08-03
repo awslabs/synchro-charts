@@ -74,6 +74,17 @@ const COMPARISON_OPTIONS = [
   },
 ];
 
+const DRAGGABLE_OPTIONS = [
+  {
+    id: 'false',
+    text: "Disabled",
+  },
+  {
+    id: 'true',
+    text: "Enabled",
+  },
+];
+
 const CHART_OPTIONS = [
   {
     id: 'lineChart',
@@ -102,6 +113,8 @@ export class Demo extends React.Component {
       annotationColor: '#d13212',
       annotationValue: 0,
       annotationComp: COMPARISON_OPERATOR.LESS_THAN,
+      annotationLabel: undefined,
+      annotationEditable: 'false',
       config: {
         ...TESTING_GROUND_CHART_CONFIG,
         viewport: {
@@ -122,6 +135,20 @@ export class Demo extends React.Component {
 
   get config () {
     return this.state.config;
+  }
+
+  _handleDragEvent = event => {
+    this.setState({
+      annotations: event.srcElement.annotations
+    });
+  };
+
+  componentDidMount() {
+    document.body.addEventListener('widgetUpdated', this._handleDragEvent)
+  }
+
+  componentWillUnmount() {
+    document.body.removeEventListener('widgetUpdated', this._handleDragEvent);
   }
 
   addStream = () => {
@@ -198,14 +225,30 @@ export class Demo extends React.Component {
     }
   };
 
+  changeAnnotationLabel = (event) => {
+    if (event != null && event.detail != null) {
+      this.setState({
+        annotationLabel: event.detail.value,
+      });
+    }
+  };
+
   saveThreshold = () => {
-    const {annotationColor,annotationValue, annotationComp } = this.state;
+    const {annotationColor,annotationValue, annotationComp, annotationEditable, annotationLabel } = this.state;
     const threshold = {
       color: annotationColor,
       value: annotationValue,
       showValue: true,
       comparisonOperator: annotationComp,
+      isEditable: (annotationEditable === 'true'),
     };
+
+    if (annotationLabel !== undefined) {
+      threshold.label = {
+        text: annotationLabel,
+        show: true,
+      };
+    }
 
     this.setState({
       annotations: {
@@ -213,6 +256,8 @@ export class Demo extends React.Component {
         y: [...(this.state.annotations.y || []), threshold],
       },
       annotationValue: 0,
+      isEditable: 'false',
+      annotationLabel: undefined,
     });
   };
 
@@ -220,6 +265,14 @@ export class Demo extends React.Component {
     if (event != null && event.detail != null) {
       this.setState({
         annotationColor: event.detail.value,
+      })
+    }
+  };
+
+  changeAnnotationEditable = (event) => {
+    if (event != null && event.detail != null) {
+      this.setState({
+        annotationEditable: event.detail.id,
       })
     }
   };
@@ -332,11 +385,23 @@ export class Demo extends React.Component {
     return COMPARISON_OPTIONS;
   }
 
+  draggableOptions = () => {
+    return DRAGGABLE_OPTIONS;
+  }
+
   currentComparatorOption = () => {
     const { annotationComp } = this.state;
 
     return COMPARISON_OPTIONS.find(item => item.id === annotationComp).text;
   }
+
+  currentDraggableOption = () => {
+    const { annotationEditable } = this.state;
+
+    return DRAGGABLE_OPTIONS.find(item => item.id === annotationEditable).text;
+  }
+
+
 
   render() {
     const ChartName = components[this.state.componentTag];
@@ -389,6 +454,8 @@ export class Demo extends React.Component {
                 <th>Color</th>
                 <th>Value</th>
                 <th>Comparator</th>
+                <th>Draggable</th>
+                <th>Label (Optional)</th>
               </tr>
               <tr>
                 <td>
@@ -398,7 +465,7 @@ export class Demo extends React.Component {
                     onChange={this.changeAnnotationColor}
                   />
                 </td>
-                <td style={{ maxWidth: '80px'}}>
+                <td style={{ maxWidth: '70px'}}>
                   <Input
                     {...(this.state.annotationComp !== COMPARISON_OPERATOR.EQUAL && {type: 'number'})}
                     onChange={this.changeAnnotationValue}
@@ -409,6 +476,17 @@ export class Demo extends React.Component {
                   <ButtonDropdown items={this.comparatorOptions()} onItemClick={this.changeAnnotationComparator}>
                     {this.currentComparatorOption()}
                   </ButtonDropdown>
+                </td>
+                <td>
+                  <ButtonDropdown items={this.draggableOptions()} onItemClick={this.changeAnnotationEditable}>
+                    {this.currentDraggableOption()}
+                  </ButtonDropdown>
+                </td>
+                <td style={{ maxWidth: '200px'}}>
+                  <Input
+                    onChange={this.changeAnnotationLabel}
+                    value={this.state.annotationLabel}
+                  />
                 </td>
                 <td>
                   <Button onClick={this.saveThreshold} disabled={this.doesThresholdExist()}>
@@ -423,7 +501,9 @@ export class Demo extends React.Component {
               })}
             </table>
           </div>
-          <div>
+        </div>
+        <div className="configurations">
+        <div>
             <h2>Trends</h2>
             <table className="configuration-table">
               <tr>
@@ -464,7 +544,8 @@ export class Demo extends React.Component {
               })}
             </table>
           </div>
-          </div>
+        </div>
+
       </div>
     )
   }
