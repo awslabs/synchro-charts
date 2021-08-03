@@ -34,7 +34,7 @@ const title = ({ alarm, property }: { alarm?: DataStream; property?: DataStream 
 /**
  * A generic parent container which can be utilized to construct a variety of 'grid-like' components.
  *
- * This copmonent allows construction of widgets, by simply constructing the display cell via the `renderCell` method.gt
+ * This component allows construction of widgets, by simply constructing the display cell via the `renderCell` method.gt
  */
 @Component({
   tag: 'sc-widget-grid',

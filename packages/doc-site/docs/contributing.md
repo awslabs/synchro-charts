@@ -1,7 +1,5 @@
-We welcome all kinds of contribution from the community!
-
 Important things to know when building a new component:
-1. Use `viewportHandler` to sync up with all the other componenet in order to provide the synchronization feature.
+1. Use `viewportHandler` to sync up with all the other component in order to provide the synchronization feature.
    - A good example to follow is the `sc-table` component.
 ```js static
   componentDidLoad() {
@@ -9,6 +7,6 @@ Important things to know when building a new component:
   }
   
   disconnectedCallback() {
-    this.viewportGroups.remove(); // clean up
+    this.viewportGroups.remove(widgetId); // clean up
   }
 ```
