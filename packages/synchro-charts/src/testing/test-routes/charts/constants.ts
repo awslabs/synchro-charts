@@ -21,6 +21,7 @@ export const Y_THRESHOLD: Threshold<number> = {
   },
   showValue: true,
   color: 'blue',
+  id: 'blue-y-threshold',
 };
 
 export const Y_ANNOTATION: YAnnotation = {
@@ -32,6 +33,7 @@ export const Y_ANNOTATION: YAnnotation = {
   },
   showValue: true,
   color: 'green',
+  id: 'green-y-annotation',
 };
 
 export const X_ANNOTATION: XAnnotation = {
@@ -42,6 +44,7 @@ export const X_ANNOTATION: XAnnotation = {
   },
   showValue: true,
   color: 'purple',
+  id: 'purple-x-annotation',
 };
 
 // test data point dead center of the viewport

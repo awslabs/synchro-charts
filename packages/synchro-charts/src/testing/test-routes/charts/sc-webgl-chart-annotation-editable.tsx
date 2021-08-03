@@ -37,6 +37,7 @@ const Y_THRESHOLD: Threshold<number> = {
   },
   showValue: true,
   color: 'blue',
+  id: 'blue-threshold',
 };
 
 const Y_ANNOTATION: YAnnotation = {
@@ -48,6 +49,7 @@ const Y_ANNOTATION: YAnnotation = {
   },
   showValue: true,
   color: 'green',
+  id: 'green-anotation',
 };
 
 @Component({
@@ -112,14 +114,23 @@ export class ScWebglChartAnnotationRescaling {
                 },
               ],
               y: [
-                { ...Y_ANNOTATION, isEditable: !this.isEditableValue, showValue: this.isShowValue },
-                { ...Y_THRESHOLD, isEditable: !this.isEditableValue, showValue: !this.isShowValue },
+                {
+                  ...Y_ANNOTATION,
+                  isEditable: !this.isEditableValue,
+                  showValue: this.isShowValue,
+                },
+                {
+                  ...Y_THRESHOLD,
+                  isEditable: !this.isEditableValue,
+                  showValue: !this.isShowValue,
+                },
                 {
                   ...Y_ANNOTATION,
                   isEditable: this.isEditableValue,
                   value: 2300,
                   color: 'red',
                   showValue: this.isShowValue,
+                  id: 'red-annotation',
                 },
               ],
             }}
