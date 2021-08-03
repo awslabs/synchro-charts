@@ -29,6 +29,10 @@ const DATA_STREAM_1: DataStream = {
       x: new Date(2000, 0, 0, 0, 0, 50).getTime(),
       y: 40,
     },
+    {
+      x: new Date(2000, 0, 0, 0, 0, 50).getTime(),
+      y: 50,
+    },
   ],
 };
 
@@ -39,6 +43,10 @@ const DATA_STREAM_2: DataStream = {
   dataType: DataType.NUMBER,
   resolution: 0,
   data: [
+    {
+      x: new Date(2000, 0, 0, 0, 0, 45).getTime(),
+      y: 100,
+    },
     {
       x: new Date(2000, 0, 0, 0, 0, 45).getTime(),
       y: 100,
@@ -55,7 +63,7 @@ beforeEach(() => {
 });
 
 describe('heatmap', () => {
-  it('renders 2 buckets with lightest opacity', () => {
+  it('renders 3 buckets with different opacities', () => {
     visitDynamicWidget(cy, {
       componentTag: 'sc-heatmap',
       viewportStart: new Date(START.getTime() - 1.5 * MINUTE_IN_MS),
@@ -68,7 +76,7 @@ describe('heatmap', () => {
     cy.matchImageSnapshotOnCI();
   });
 
-  it('renders 3 buckets with darkest opacity from 1 datastream', () => {
+  it('renders 4 buckets with darkest opacity from 1 datastream', () => {
     visitDynamicWidget(cy, {
       componentTag: 'sc-heatmap',
       viewportStart: START,
