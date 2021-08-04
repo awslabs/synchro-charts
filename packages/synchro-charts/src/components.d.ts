@@ -10,6 +10,7 @@ import { Annotations, Axis, LayoutConfig, Legend, LegendConfig, MovementConfig, 
 import { Trend, TrendResult } from "./components/charts/common/trends/types";
 import { DATA_ALIGNMENT, StatusIcon } from "./components/charts/common/constants";
 import { POINT_TYPE } from "./components/charts/sc-webgl-base-chart/activePoints";
+import { HeatValueMap } from "./components/charts/sc-heatmap/heatmapUtil";
 import { RectScrollFixed } from "./utils/types";
 import { LabelsConfig } from "./components/common/types";
 import { Cell, Row } from "./components/sc-table/constructTableData";
@@ -121,6 +122,19 @@ export namespace Components {
         "size"?: MinimalSizeConfig;
         "viewport": MinimalViewPortConfig;
         "widgetId": string;
+    }
+    interface ScHeatmapTooltip {
+        "dataContainer": HTMLElement;
+        "dataStreams": DataStream[];
+        "size": SizeConfig;
+        "viewport": ViewPort;
+    }
+    interface ScHeatmapTooltipRows {
+        "heatValues": HeatValueMap;
+        "selectedXBucket": { startDate: Date; endDate: Date };
+        "selectedYBucket": { lowerYBucket: number; upperYBucket: number };
+        "size": SizeConfig;
+        "viewport": ViewPort;
     }
     interface ScHelpTooltip {
         "message": string;
@@ -714,6 +728,18 @@ declare global {
     var HTMLScHeatmapElement: {
         prototype: HTMLScHeatmapElement;
         new (): HTMLScHeatmapElement;
+    };
+    interface HTMLScHeatmapTooltipElement extends Components.ScHeatmapTooltip, HTMLStencilElement {
+    }
+    var HTMLScHeatmapTooltipElement: {
+        prototype: HTMLScHeatmapTooltipElement;
+        new (): HTMLScHeatmapTooltipElement;
+    };
+    interface HTMLScHeatmapTooltipRowsElement extends Components.ScHeatmapTooltipRows, HTMLStencilElement {
+    }
+    var HTMLScHeatmapTooltipRowsElement: {
+        prototype: HTMLScHeatmapTooltipRowsElement;
+        new (): HTMLScHeatmapTooltipRowsElement;
     };
     interface HTMLScHelpTooltipElement extends Components.ScHelpTooltip, HTMLStencilElement {
     }
@@ -1333,6 +1359,8 @@ declare global {
         "sc-grid": HTMLScGridElement;
         "sc-grid-tooltip": HTMLScGridTooltipElement;
         "sc-heatmap": HTMLScHeatmapElement;
+        "sc-heatmap-tooltip": HTMLScHeatmapTooltipElement;
+        "sc-heatmap-tooltip-rows": HTMLScHeatmapTooltipRowsElement;
         "sc-help-tooltip": HTMLScHelpTooltipElement;
         "sc-kpi": HTMLScKpiElement;
         "sc-kpi-base": HTMLScKpiBaseElement;
@@ -1541,6 +1569,19 @@ declare namespace LocalJSX {
         "size"?: MinimalSizeConfig;
         "viewport"?: MinimalViewPortConfig;
         "widgetId": string;
+    }
+    interface ScHeatmapTooltip {
+        "dataContainer": HTMLElement;
+        "dataStreams": DataStream[];
+        "size": SizeConfig;
+        "viewport": ViewPort;
+    }
+    interface ScHeatmapTooltipRows {
+        "heatValues": HeatValueMap;
+        "selectedXBucket": { startDate: Date; endDate: Date };
+        "selectedYBucket": { lowerYBucket: number; upperYBucket: number };
+        "size": SizeConfig;
+        "viewport": ViewPort;
     }
     interface ScHelpTooltip {
         "message": string;
@@ -2056,6 +2097,8 @@ declare namespace LocalJSX {
         "sc-grid": ScGrid;
         "sc-grid-tooltip": ScGridTooltip;
         "sc-heatmap": ScHeatmap;
+        "sc-heatmap-tooltip": ScHeatmapTooltip;
+        "sc-heatmap-tooltip-rows": ScHeatmapTooltipRows;
         "sc-help-tooltip": ScHelpTooltip;
         "sc-kpi": ScKpi;
         "sc-kpi-base": ScKpiBase;
@@ -2179,6 +2222,8 @@ declare module "@stencil/core" {
             "sc-grid": LocalJSX.ScGrid & JSXBase.HTMLAttributes<HTMLScGridElement>;
             "sc-grid-tooltip": LocalJSX.ScGridTooltip & JSXBase.HTMLAttributes<HTMLScGridTooltipElement>;
             "sc-heatmap": LocalJSX.ScHeatmap & JSXBase.HTMLAttributes<HTMLScHeatmapElement>;
+            "sc-heatmap-tooltip": LocalJSX.ScHeatmapTooltip & JSXBase.HTMLAttributes<HTMLScHeatmapTooltipElement>;
+            "sc-heatmap-tooltip-rows": LocalJSX.ScHeatmapTooltipRows & JSXBase.HTMLAttributes<HTMLScHeatmapTooltipRowsElement>;
             "sc-help-tooltip": LocalJSX.ScHelpTooltip & JSXBase.HTMLAttributes<HTMLScHelpTooltipElement>;
             "sc-kpi": LocalJSX.ScKpi & JSXBase.HTMLAttributes<HTMLScKpiElement>;
             "sc-kpi-base": LocalJSX.ScKpiBase & JSXBase.HTMLAttributes<HTMLScKpiBaseElement>;
