@@ -114,7 +114,6 @@ export class ScLegend {
               <div class="max-heat-values">{this.heatValues.maxHeatValue}</div>
             </div>
           ))}
-        ;
       </div>
     );
   }
