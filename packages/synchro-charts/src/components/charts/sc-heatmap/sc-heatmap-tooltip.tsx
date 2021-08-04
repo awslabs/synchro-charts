@@ -17,7 +17,6 @@ export class ScHeatmapTooltip {
   @Prop() dataContainer!: HTMLElement;
   @Prop() dataStreams!: DataStream[];
   @Prop() viewport!: ViewPort;
-  // If false, do not display a tooltip row if there is no associated point.
 
   @State() selectedXBucket?: { startDate: Date; endDate: Date };
   @State() selectedYBucket?: { lowerYBucket: number; upperYBucket: number };
@@ -44,7 +43,6 @@ export class ScHeatmapTooltip {
     const isMouseBeingPressed = buttons > 0;
 
     if (!isMouseBeingPressed && offsetX != null) {
-      // Determine the date which corresponds with the mouses position.
       const { start, end } = this.viewport;
       const xBucketRange = getXBucketRange(this.viewport);
       const { width } = this.size;
@@ -68,7 +66,7 @@ export class ScHeatmapTooltip {
   };
 
   /**
-   * Calculate the heatValues for only the selected x-bucket.
+   * Calculate the heatValues only for the selected x-bucket.
    */
   setHeatValue = () => {
     if (this.selectedXBucket == null) {

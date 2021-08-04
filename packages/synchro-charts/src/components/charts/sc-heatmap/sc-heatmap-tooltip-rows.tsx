@@ -18,7 +18,7 @@ const X_OFFSET = 8;
   styleUrl: 'sc-heatmap-tooltip-rows.css',
   shadow: false,
 })
-export class ScTooltipRows {
+export class ScHeatmapTooltipRows {
   @Prop() selectedXBucket!: { startDate: Date; endDate: Date };
   @Prop() selectedYBucket!: { lowerYBucket: number; upperYBucket: number };
   @Prop() size!: SizeConfig;
