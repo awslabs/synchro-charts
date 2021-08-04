@@ -72,7 +72,7 @@ const updateMesh = ({
 
       const [r, g, b] = getBucketColor(
         COLOR_PALETTE,
-        heatValues[xAxisBucketStart][bucketIndex].bucketHeatValue - heatValues.minHeatValue,
+        heatValues[xAxisBucketStart][bucketIndex].bucketHeatValue - heatValues.minHeatValue + 1,
         heatValues.maxHeatValue - heatValues.minHeatValue + 1
       );
       color.array[colorIndex] = r;

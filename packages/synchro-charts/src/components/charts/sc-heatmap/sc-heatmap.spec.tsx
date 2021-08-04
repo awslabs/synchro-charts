@@ -46,21 +46,8 @@ describe('legend', () => {
       },
     });
 
-    const legend = chart.querySelector('sc-legend');
+    const legend = chart.querySelector('sc-heatmap-legend');
     expect(legend).toBeDefined();
-  });
-
-  it('passes down isEditing when it is true', async () => {
-    const { chart } = await heatmap({
-      legend: {
-        position: LEGEND_POSITION.BOTTOM,
-        width: 200,
-      },
-      isEditing: true,
-    });
-
-    const legend = chart.querySelector('sc-legend');
-    expect(legend).toHaveAttribute('isEditing');
   });
 
   it('passes down view port', async () => {
@@ -72,7 +59,7 @@ describe('legend', () => {
       viewport: VIEWPORT,
     });
 
-    const legend = chart.querySelector('sc-legend') as HTMLScLegendElement;
+    const legend = chart.querySelector('sc-heatmap-legend') as HTMLScLegendElement;
 
     expect(legend.viewport).toMatchObject({ start: VIEWPORT.start, end: VIEWPORT.end });
   });
@@ -85,7 +72,7 @@ describe('loading status', () => {
     });
 
     const loadingSpinner = chart.querySelector(LOADING_SPINNER_SELECTOR);
-    const legend = chart.querySelector('sc-legend');
+    const legend = chart.querySelector('sc-heatmap-legend');
 
     if (legend) {
       // not all widgets have legends!
@@ -100,7 +87,7 @@ describe('loading status', () => {
     });
 
     const loadingSpinner = chart.querySelector(LOADING_SPINNER_SELECTOR);
-    const legend = chart.querySelector('sc-legend');
+    const legend = chart.querySelector('sc-heatmap-legend');
 
     if (legend) {
       // not all widgets have legends!
@@ -116,7 +103,7 @@ describe('loading status', () => {
 
     const loadingSpinner = chart.querySelector(LOADING_SPINNER_SELECTOR);
 
-    const legend = chart.querySelector('sc-legend');
+    const legend = chart.querySelector('sc-heatmap-legend');
 
     if (legend) {
       // not all widgets have legends!
