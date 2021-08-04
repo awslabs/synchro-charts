@@ -259,14 +259,14 @@ describe.each`
 
 describe('displayDate', () => {
   it('returns date range in month, date, year', () => {
-    const dates = [new Date(2000, 0, 0), new Date(2000, 0, 4)];
+    const dates = { startDate: new Date(2000, 0, 0), endDate: new Date(2000, 0, 4) };
     const start = new Date(2000, 0, 0);
     const end = new Date(2000, 0, 10);
     expect(displayDate(dates, { start, end })).toEqual('12/31/1999 - 1/4/2000');
   });
 
   it('returns date range in month, day, hour', () => {
-    const dates = [new Date(2000, 0, 0), new Date(2000, 0, 4)];
+    const dates = { startDate: new Date(2000, 0, 0), endDate: new Date(2000, 0, 4) };
     const start = new Date(2000, 0, 0);
     const end = new Date(2000, 0, 5);
     expect(displayDate(dates, { start, end })).toEqual('12/31, 12 AM - 1/4, 12 AM');
