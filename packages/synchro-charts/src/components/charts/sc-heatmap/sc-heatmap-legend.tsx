@@ -103,16 +103,18 @@ export class ScLegend {
             </div>
           )}
         </div>
-        {!this.isLoading && this.heatValues.minHeatValue === Infinity ? (
-          <div class="heat-values-empty-data">-</div>
-        ) : (
-          <div class="heat-values">
-            <div class="min-heat-values">
-              {this.heatValues.minHeatValue === this.heatValues.maxHeatValue ? 0 : this.heatValues.minHeatValue}
+        {!this.isLoading &&
+          (this.heatValues.minHeatValue === Infinity ? (
+            <div class="heat-values-empty-data">-</div>
+          ) : (
+            <div class="heat-values">
+              <div class="min-heat-values">
+                {this.heatValues.minHeatValue === this.heatValues.maxHeatValue ? 0 : this.heatValues.minHeatValue}
+              </div>
+              <div class="max-heat-values">{this.heatValues.maxHeatValue}</div>
             </div>
-            <div class="max-heat-values">{this.heatValues.maxHeatValue}</div>
-          </div>
-        )}
+          ))}
+        ;
       </div>
     );
   }
