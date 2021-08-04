@@ -1,4 +1,5 @@
 import { Component, h, Prop, State } from '@stencil/core';
+import { max } from 'd3-array';
 import { LegendConfig } from '../common/types';
 import { LEGEND_POSITION } from '../common/constants';
 import { DataStream, ViewPort } from '../../../utils/dataTypes';
@@ -6,14 +7,8 @@ import { COLOR_PALETTE } from './heatmapMesh';
 import { calcHeatValues, getXBucketRange, HeatValueMap } from './heatmapUtil';
 import { BUCKET_COUNT, NUM_OF_COLORS_SEQUENTIAL } from './heatmapConstants';
 
-// Styling to control the height of the gap between the stream-name and the unit
-// const EDIT_MODE_STYLE: StencilCSSProperty = {
-//   top: '-2px',
-// };
-// const VIEW_MODE_STYLE: StencilCSSProperty = {
-//   top: '-8px',
-// };
-
+// need to change the width of sc-heatmap-legend in CSS file if this is changed
+const WIDTH_OF_LEGEND = 240;
 @Component({
   tag: 'sc-heatmap-legend',
   styleUrl: './sc-heatmap-legend.css',
@@ -39,24 +34,20 @@ export class ScLegend {
   };
 
   getBar = () => {
+    if (this.heatValues == null) {
+      return;
+    }
+    const { minHeatValue, maxHeatValue } = this.heatValues;
+    const heatValueRange = maxHeatValue - minHeatValue + 1;
+    const numOfBars = Math.min(heatValueRange, NUM_OF_COLORS_SEQUENTIAL);
+    const barLength = WIDTH_OF_LEGEND / numOfBars;
     const barArray = new Array(NUM_OF_COLORS_SEQUENTIAL);
     let currentBarX = 0;
-    let currentBarNumber = 1;
-    return barArray.reduce(currentIndex => {
-      if (currentBarX >= 240 || currentBarNumber === 8) {
-        return;
-      }
-      const { minHeatValue, maxHeatValue } = this.heatValues;
-      const heatValueRange = maxHeatValue - minHeatValue + 1;
-      const numOfBars = Math.min(heatValueRange, NUM_OF_COLORS_SEQUENTIAL);
-      const barLength = 240 / numOfBars;
-
-      const colorIndex = Math.floor((currentBarNumber / numOfBars) * NUM_OF_COLORS_SEQUENTIAL) - 1;
-      const pathD = `M ${currentBarX} 0 H 240`;
-
-      currentBarX += barLength;
-      currentBarNumber += 1;
-      barArray[currentIndex] = (
+    let colorIndex = 0;
+    while (currentBarX < WIDTH_OF_LEGEND && colorIndex < barArray.length) {
+      colorIndex = Math.floor((currentBarX / 240) * NUM_OF_COLORS_SEQUENTIAL);
+      const pathD = `M ${currentBarX} 0 H ${WIDTH_OF_LEGEND}`;
+      barArray[colorIndex] = (
         <path
           stroke={this.rgbToHex(COLOR_PALETTE.r[colorIndex], COLOR_PALETTE.g[colorIndex], COLOR_PALETTE.b[colorIndex])}
           stroke-linecap="square"
@@ -64,7 +55,9 @@ export class ScLegend {
           d={pathD}
         />
       );
-    });
+      currentBarX += barLength;
+    }
+    return barArray;
   };
 
   render() {
@@ -80,6 +73,7 @@ export class ScLegend {
       viewport: this.viewport,
       bucketCount: BUCKET_COUNT,
     });
+
     return (
       <div class="legend-container">
         <div class="label">

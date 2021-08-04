@@ -82,13 +82,20 @@ export const getSequential = ({
 
 /**
  * Returns the color of the bucket based on the number of points in the bucket and the
- * total possible number of points that can be in a bucket
+ * total possible number of points that can be in a bucket.
  */
 export const getBucketColor = (
   colorArray: HeatmapColorPalette,
   countInBucket: number,
   totalPossiblePoints: number
 ): number[] => {
-  const index = Math.floor((countInBucket / totalPossiblePoints) * NUM_OF_COLORS_SEQUENTIAL) - 1;
+  if (countInBucket === totalPossiblePoints) {
+    return [
+      colorArray.r[NUM_OF_COLORS_SEQUENTIAL - 1],
+      colorArray.g[NUM_OF_COLORS_SEQUENTIAL - 1],
+      colorArray.b[NUM_OF_COLORS_SEQUENTIAL - 1],
+    ];
+  }
+  const index = Math.floor((countInBucket / totalPossiblePoints) * NUM_OF_COLORS_SEQUENTIAL);
   return [colorArray.r[index], colorArray.g[index], colorArray.b[index]];
 };
