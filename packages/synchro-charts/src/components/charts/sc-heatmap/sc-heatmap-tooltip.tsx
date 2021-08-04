@@ -6,7 +6,7 @@ import { pointBisector } from '../common/dataFilters';
 import { BUCKET_COUNT } from './heatmapConstants';
 
 /**
- * The parent tooltip container, listens for events to ensure tooltip renders at the correct position at the correct time.
+ * The parent tooltip container, listens for events to ensure tooltip renders at the correct position at the correct bucket.
  */
 @Component({
   tag: 'sc-heatmap-tooltip',

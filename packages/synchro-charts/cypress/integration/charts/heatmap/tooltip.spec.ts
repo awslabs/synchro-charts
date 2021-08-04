@@ -52,6 +52,8 @@ describe('heatmap tooltip', () => {
     cy.get('[data-testid="tooltip-heat-value"]')
       .eq(0)
       .should('be.be.visible');
+
+    cy.matchImageSnapshotOnCI();
   });
 
   it('should show tooltip with hours, minutes, seconds', () => {
@@ -81,5 +83,7 @@ describe('heatmap tooltip', () => {
     cy.get('[data-testid="tooltip-heat-value"]')
       .eq(0)
       .should('be.be.visible');
+
+    cy.matchImageSnapshotOnCI();
   });
 });
