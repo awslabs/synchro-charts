@@ -43,11 +43,16 @@ export class ScLegend {
     const barLength = WIDTH_OF_LEGEND / numOfBars;
     const barArray = new Array(NUM_OF_COLORS_SEQUENTIAL);
     let currentBarX = 0;
-    let colorIndex = 0;
-    while (currentBarX < WIDTH_OF_LEGEND && colorIndex < barArray.length) {
-      colorIndex = Math.floor((currentBarX / 240) * NUM_OF_COLORS_SEQUENTIAL);
+    let barIndex = numOfBars === 8 ? 0 : 1;
+    let index = 0;
+    while (currentBarX < WIDTH_OF_LEGEND && index < barArray.length) {
+      const colorIndex = Math.min(
+        Math.floor((barIndex / numOfBars) * NUM_OF_COLORS_SEQUENTIAL),
+        NUM_OF_COLORS_SEQUENTIAL - 1
+      );
       const pathD = `M ${currentBarX} 0 H ${WIDTH_OF_LEGEND}`;
-      barArray[colorIndex] = (
+
+      barArray[index] = (
         <path
           stroke={this.rgbToHex(COLOR_PALETTE.r[colorIndex], COLOR_PALETTE.g[colorIndex], COLOR_PALETTE.b[colorIndex])}
           stroke-linecap="square"
@@ -55,6 +60,9 @@ export class ScLegend {
           d={pathD}
         />
       );
+
+      barIndex += 1;
+      index += 1;
       currentBarX += barLength;
     }
     return barArray;
