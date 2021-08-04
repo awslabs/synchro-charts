@@ -1,11 +1,10 @@
 import { Component, h, Prop, State } from '@stencil/core';
-import { max } from 'd3-array';
 import { LegendConfig } from '../common/types';
-import { LEGEND_POSITION } from '../common/constants';
 import { DataStream, ViewPort } from '../../../utils/dataTypes';
 import { COLOR_PALETTE } from './heatmapMesh';
 import { calcHeatValues, getXBucketRange, HeatValueMap } from './heatmapUtil';
 import { BUCKET_COUNT, NUM_OF_COLORS_SEQUENTIAL } from './heatmapConstants';
+import { LEGEND_POSITION } from '../common/constants';
 
 // need to change the width of sc-heatmap-legend in CSS file if this is changed
 const WIDTH_OF_LEGEND = 240;
@@ -35,7 +34,7 @@ export class ScLegend {
 
   getBar = () => {
     if (this.heatValues == null) {
-      return;
+      return null;
     }
     const { minHeatValue, maxHeatValue } = this.heatValues;
     const heatValueRange = maxHeatValue - minHeatValue + 1;
