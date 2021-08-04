@@ -52,6 +52,12 @@ sc-heatmap-legend .bar {
   width: var(--color-container-width);
 }
 
+sc-heatmap-legend .heat-values-empty-data {
+  position: absolute;
+  margin-top: 30px;
+  font-size: 10px;
+}
+
 sc-heatmap-legend .heat-values {
   position: absolute;
   font-size: 10px;

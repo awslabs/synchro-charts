@@ -8,6 +8,7 @@ import { LEGEND_POSITION } from '../common/constants';
 
 // need to change the width of sc-heatmap-legend in CSS file if this is changed
 const WIDTH_OF_LEGEND = 240;
+
 @Component({
   tag: 'sc-heatmap-legend',
   styleUrl: './sc-heatmap-legend.css',
@@ -33,7 +34,7 @@ export class ScLegend {
   };
 
   getBar = () => {
-    if (this.heatValues == null) {
+    if (this.heatValues == null || this.dataStreams.length === 0 || this.heatValues.minHeatValue === Infinity) {
       return null;
     }
     const { minHeatValue, maxHeatValue } = this.heatValues;
@@ -94,7 +95,9 @@ export class ScLegend {
             </div>
           )}
         </div>
-        {!this.isLoading && (
+        {!this.isLoading && this.heatValues.minHeatValue === Infinity ? (
+          <div class="heat-values-empty-data">-</div>
+        ) : (
           <div class="heat-values">
             <div class="min-heat-values">
               {this.heatValues.minHeatValue === this.heatValues.maxHeatValue ? 0 : this.heatValues.minHeatValue}

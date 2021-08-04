@@ -89,7 +89,7 @@ describe('heatmap', () => {
     cy.matchImageSnapshotOnCI();
   });
 
-  it.only('renders 4 buckets from 2 datastreams', () => {
+  it('renders 4 buckets from 2 datastreams', () => {
     visitDynamicWidget(cy, {
       componentTag: 'sc-heatmap',
       viewportStart: START,

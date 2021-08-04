@@ -5,7 +5,7 @@ import { messageOverrides } from '../../../../src/testing/__mocks__/mockMessgeOv
 const componentTag = 'sc-heatmap';
 
 describe('empty status checks', () => {
-  it('renders the "no streams present" messaging when no streams preset', () => {
+  it('renders the "no streams present" messaging when no streams present', () => {
     visitDynamicWidget(cy, {
       componentTag,
       dataStreams: [],
@@ -19,7 +19,7 @@ describe('empty status checks', () => {
     cy.get(CHART_VIZ_CONTAINER_SELECTOR).matchImageSnapshotOnCI();
   });
 
-  it('renders the "no data present" messaging when no data preset', () => {
+  it('renders the "no data present" messaging when no data present', () => {
     visitDynamicWidget(cy, {
       componentTag,
       dataStreams: [{ ...DATA_STREAM, data: [] }],
