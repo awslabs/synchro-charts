@@ -307,6 +307,11 @@
         (Optional) A setting to control whether the annotation is configurable from within the widget. Defaults to false.
         For example when `isEditable` is true on a line chart, you are able to drag the annotation handle to change the annotation value and emit [`widgetUpdated`](#/API/Events) events reflecting the new annotation.
         
+      - `severity`: number
+  
+        (Optional) Specifies the severity of the threshold being breached. The lower the numerical number, the more importance is attributed to the threshold.
+        The `severity` is used to determine which threshold to indicate as breached when a `DataStream` has multiple thresholds that are breached, simultaneously.
+        
       - `label`: Object
       
         (Optional) a label which can be optionally displayed.
