@@ -20,18 +20,6 @@ export class ScLegend {
   @Prop() dataStreams!: DataStream[];
   @Prop() isLoading: boolean;
 
-  componentToHex = (color: number) => {
-    const hex = color.toString(16).split('.')[0];
-    if (hex === '0') {
-      return '00';
-    }
-    return hex.length === 1 ? `0${hex}` : hex;
-  };
-
-  rgbToHex = (r: number, g: number, b: number) => {
-    return `#${this.componentToHex(r)}${this.componentToHex(g)}${this.componentToHex(b)}`;
-  };
-
   getBar = (heatValues: HeatValueMap, legendWidth: number) => {
     if (heatValues == null || this.dataStreams.length === 0 || heatValues.minHeatValue === Infinity) {
       return null;
@@ -40,11 +28,11 @@ export class ScLegend {
     const heatValueRange = maxHeatValue - minHeatValue + 1;
     const numOfBars = Math.min(heatValueRange, NUM_OF_COLORS_SEQUENTIAL);
     const barLength = legendWidth / numOfBars;
-    const barArray = new Array(NUM_OF_COLORS_SEQUENTIAL);
-    let currentBarX = 0;
+    const barArray = new Array(numOfBars);
     let barIndex = numOfBars === 8 ? 0 : 1;
-    let index = 0;
-    while (currentBarX < legendWidth && index < barArray.length) {
+
+    for (let index = 0; index < barArray.length; index += 1) {
+      const currentBarX = index * barLength;
       const colorIndex = Math.min(
         Math.floor((barIndex / numOfBars) * NUM_OF_COLORS_SEQUENTIAL),
         NUM_OF_COLORS_SEQUENTIAL - 1
@@ -61,18 +49,16 @@ export class ScLegend {
         />
       );
       barIndex += 1;
-      index += 1;
-      currentBarX += barLength;
     }
     return barArray;
   };
 
   render() {
-    const xBucketRange = getXBucketRange(this.viewport);
     if (this.dataStreams.length === 0) {
       return null;
     }
 
+    const xBucketRange = getXBucketRange(this.viewport);
     const heatValues = calcHeatValues({
       dataStreams: this.dataStreams,
       xBucketRange,
@@ -83,6 +69,7 @@ export class ScLegend {
     const legendWidth =
       this.config.position === LEGEND_POSITION.BOTTOM ? LEGEND_WIDTH_HORIZONTAL : LEGEND_WIDTH_VERTICAL;
     const barContainerWidth = `${legendWidth}px`;
+
     return (
       <div class="legend-container">
         <div class="label">
