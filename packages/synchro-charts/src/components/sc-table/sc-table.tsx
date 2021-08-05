@@ -34,7 +34,7 @@ export class ScTable implements ChartConfig {
   @State() end: Date = viewportEndDate(this.viewport);
   @State() duration?: number = !isMinimalStaticViewport(this.viewport)
     ? parseDuration(this.viewport.duration)
-    : undefined;
+    : this.end.getTime() - this.start.getTime();
 
   private viewportGroups: ViewportHandler<ViewPortManager> = new ViewportHandler();
 
@@ -42,7 +42,9 @@ export class ScTable implements ChartConfig {
   onViewPortChange(newViewPort: MinimalViewPortConfig) {
     this.onUpdate({
       ...newViewPort,
-      duration: !isMinimalStaticViewport(newViewPort) ? parseDuration(newViewPort.duration) : undefined,
+      duration: !isMinimalStaticViewport(newViewPort)
+        ? parseDuration(newViewPort.duration)
+        : viewportEndDate(this.viewport).getTime() - viewportStartDate(this.viewport).getTime(),
       start: viewportStartDate(this.viewport),
       end: viewportEndDate(this.viewport),
     });
@@ -52,7 +54,7 @@ export class ScTable implements ChartConfig {
     // Update active viewport
     this.start = start;
     this.end = end;
-    this.duration = duration;
+    this.duration = duration == null ? end.getTime() - start.getTime() : duration;
   };
 
   componentDidLoad() {
