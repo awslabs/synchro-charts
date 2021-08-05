@@ -11,16 +11,8 @@ const standardThreshold = {
   comparisonOperator: 'GTE',
 };
 
-const draggableThreshold = {
-  color: 'blue',
-  value: 20,
-  showValue: true,
-  comparisonOperator: 'LTE',
-  isEditable: true,
-};
-
 const annotations = {
-  y: [standardThreshold, draggableThreshold],
+  y: [standardThreshold],
 };
 const viewport = {
   start: new Date(2000, 0, 0),
@@ -136,9 +128,6 @@ Unlike an annotation, when a metric passes a threshold, the legend and the toolt
 By default, the thresholds will have coloration enabled. Meaning, when data passes the threshold, it will change to the threshold color.
 **Note: Currently, only y-annotations can become a threshold.**
 
-Like annotations, thresholds can be made draggable by setting `isEditable` to `true`.
-
-
 ### How To Set Up Thresholds
 
 By default, annotations are not thresholds. To elevate an Y annotation into a threshold, pass in the `comparisonOperator` property. 
@@ -194,6 +183,153 @@ Alternatively, you may pass in a boolean `false` into the `thresholdOptions` to 
      }}
   />
 ```
+
+### Draggable thresholds
+
+```jsx
+import { LineChart, ScatterChart, BarChart } from "@synchro-charts/react";
+
+const DAY_RESOLUTION = 1000 * 60 * 60 * 24; // one day
+const style = { width: '100%' };
+
+const draggableThresholdTwo = {
+  color: 'red',
+  value: 40,
+  showValue: true,
+  comparisonOperator: 'GTE',
+  isEditable: true,
+};
+
+const draggableThresholdOne = {
+  color: 'blue',
+  value: 18,
+  showValue: true,
+  comparisonOperator: 'LTE',
+  isEditable: true,
+};
+
+const annotations = {
+  y: [draggableThresholdOne, draggableThresholdTwo],
+};
+const viewport = {
+  start: new Date(2000, 0, 0),
+  end: new Date(2001, 0, 0),
+  group: 'threshold',
+};
+const legend = {
+  width: 100,
+  position: 'BOTTOM',
+}
+
+const dataStreams = [{
+  id: 'car-count',
+  dataType: 'NUMBER',
+  color: '#1d8102',
+  name: 'Car Count',
+  resolution: DAY_RESOLUTION, // one day
+  aggregates: {
+    [DAY_RESOLUTION]: [{
+      x: new Date(2000, 1, 0).getTime(),
+      y: 7,
+    }, {
+      x: new Date(2000, 3, 0).getTime(),
+      y: 18,
+    }, {
+      x: new Date(2000, 4, 0).getTime(),
+      y: 11,
+    }, {
+      x: new Date(2000, 5, 0).getTime(),
+      y: 30,
+    }, {
+      x: new Date(2000, 7, 0).getTime(),
+      y: 16,
+    }, {
+      x: new Date(2000, 8, 0).getTime(),
+      y: 26,
+    }, {
+      x: new Date(2000, 10, 0).getTime(),
+      y: 46,
+    }, {
+      x: new Date(2000, 11, 0).getTime(),
+      y: 100,
+    }]
+  }
+}];
+
+<div style={{ display: 'flex', width: '100%', height: '500px' }}>
+  <LineChart
+    style={style}
+    annotations={annotations}
+    widgetId="widget-id"
+    viewport={viewport}
+    legend={legend}
+    dataStreams={dataStreams}
+  />
+  <ScatterChart
+    style={style}
+    annotations={annotations}
+    widgetId="widget-id"
+    viewport={viewport}
+    legend={legend}
+    dataStreams={dataStreams}
+  />
+  <BarChart
+    style={style}
+    annotations={annotations}
+    widgetId="widget-id"
+    viewport={viewport}
+    legend={legend}
+    dataStreams={[{
+      id: 'car-count',
+      dataType: 'NUMBER',
+      resolution: 1000 * 60 * 24 * 60 * 24,
+      color: '#1d8102',
+      aggregates: {
+        [1000 * 60 * 24 * 60 * 24]: [{
+          x: new Date(2000, 1, 0).getTime(),
+          y: 7,
+        }, {
+          x: new Date(2000, 3, 0).getTime(),
+          y: 18,
+        }, {
+          x: new Date(2000, 4, 0).getTime(),
+          y: 11,
+        }, {
+          x: new Date(2000, 5, 0).getTime(),
+          y: 30,
+        }, {
+          x: new Date(2000, 7, 0).getTime(),
+          y: 16,
+        }, {
+          x: new Date(2000, 8, 0).getTime(),
+          y: 26,
+        }, {
+          x: new Date(2000, 10, 0).getTime(),
+          y: 46,
+        }, {
+          x: new Date(2000, 11, 0).getTime(),
+          y: 100,
+        }]
+      }
+    }]}
+  />
+</div>
+```
+
+To enable dragging of thresholds as shown above, set `isEditable` of the threshold to `true` (`isEditable` is `false` by default).
+When a threshold is dragged to a new value, a [`widgetUpdated`](#/API/Events) event is emitted
+which contains the updated threshold value along with other properties of the widget. 
+
+```jsx static
+const draggableThreshold = {
+  color: 'blue',
+  value: 40,
+  showValue: true,
+  comparisonOperator: 'GTE',
+  isEditable: true,
+};
+```
+
 
 ### Threshold breaching/chart coloration logic explained
 

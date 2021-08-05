@@ -77,11 +77,11 @@ const COMPARISON_OPTIONS = [
 const DRAGGABLE_OPTIONS = [
   {
     id: 'false',
-    text: "Disabled",
+    text: 'Disabled',
   },
   {
     id: 'true',
-    text: "Enabled",
+    text: 'Enabled',
   },
 ];
 
@@ -496,7 +496,7 @@ export class Demo extends React.Component {
               </tr>
               {this.getThresholds().map((threshold, i) => {
                 return (
-                  <ThresholdListItem threshold={threshold} thresholdId={i} removeThreshold={this.removeThreshold}/>
+                  <ThresholdListItem threshold={threshold} thresholdId={i} removeThreshold={this.removeThreshold} key={`${threshold.value}---${threshold.comparisonOperator}`}/>
                 );
               })}
             </table>
