@@ -114,7 +114,7 @@ it('non-Editable annotation is not draggable', () => {
   cy.get(DRAGGABLE_HANDLE_SELECTOR).should('not.exist');
 });
 
-it('annotation with hidden value is draggable', () => {
+it.only('annotation with hidden value is draggable', () => {
   visitDynamicWidget(cy, {
     ...timelineParams,
     annotations: {
@@ -145,8 +145,8 @@ it('annotation with hidden value is draggable', () => {
   cy.get(DRAGGABLE_HANDLE_SELECTOR)
     .invoke('attr', 'y')
     .then(str => parseFloat(str!))
-    .should('be.gte', 132)
-    .should('be.lte', 134);
+    .should('be.gte', 150)
+    .should('be.lte', 152);
 
   cy.get(ELEMENT_GROUP_SELECTOR)
     .invoke('attr', 'transform')

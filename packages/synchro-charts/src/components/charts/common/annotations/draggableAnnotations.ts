@@ -65,7 +65,7 @@ export const draggable = ({
 }: DraggableAnnotationsOptions): void => {
   const containerSelection = select(container);
   const thresholdGroup = containerSelection.selectAll(DRAGGABLE_HANDLE_SELECTOR);
-  let draggedPos = -1;
+  let draggedAnnotationValue: number | undefined; // this is necessary to prevent race condition (new annotation value) from occurring during the drag process
   thresholdGroup.call(
     drag()
       .on('start', function dragStarted(yAnnotation: unknown) {
@@ -73,7 +73,7 @@ export const draggable = ({
         if (!annotationDragged.isEditable) {
           return;
         }
-        draggedPos = +annotationDragged.value;
+        draggedAnnotationValue = +annotationDragged.value;
         select(this)
           .raise()
           .classed('active', true);
@@ -87,7 +87,7 @@ export const draggable = ({
         const { y: yPos } = event as { y: number };
         const newValue = calculateNewThreshold({ yPos, viewport, size });
         annotationDragged.value = newValue;
-        draggedPos = newValue;
+        draggedAnnotationValue = newValue;
         const axisRescale = needAxisRescale({ annotationValue: annotationDragged.value, viewport });
 
         onUpdate(axisRescale ? activeViewPort() : viewport, false, axisRescale, true);
@@ -97,8 +97,8 @@ export const draggable = ({
         if (!annotationDragged.isEditable) {
           return;
         }
-        annotationDragged.value = draggedPos;
-        const axisRescale = needAxisRescale({ annotationValue: annotationDragged.value, viewport });
+        annotationDragged.value = draggedAnnotationValue ? (draggedAnnotationValue as number) : annotationDragged.value;
+        const axisRescale = needAxisRescale({ annotationValue: annotationDragged.value as number, viewport });
         onUpdate(axisRescale ? activeViewPort() : viewport, false, axisRescale, true);
 
         select(this).classed('active', false);
