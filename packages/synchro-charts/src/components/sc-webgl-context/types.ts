@@ -1,4 +1,5 @@
 import { BufferAttribute, InstancedBufferAttribute, OrthographicCamera, Scene } from 'three';
+import { ViewPortManager } from '../viewportHandler/types';
 
 // TypedArrays are mutable, but typescript made the choice
 // to mark them as readonly due to standard usecases only required read.
@@ -14,17 +15,6 @@ export interface WriteableBufferAttribute extends BufferAttribute {
 
 export interface WriteableInstancedBufferAttribute extends InstancedBufferAttribute {
   array: MutableArrayLike<number>;
-}
-
-export interface ViewPortManager {
-  id: string;
-  viewportGroup?: string;
-  // Hook which is called with viewport is updated
-  updateViewPort: (viewportUpdate: { start: Date; end: Date }) => void;
-  // Disposes of all all scene, it's geometries, and any materials that are specific to the scene.
-  // Dispose should be called whenever a chart scene is no longer used, otherwise the application
-  // will leak memory
-  dispose: () => void;
 }
 
 export interface ChartScene extends ViewPortManager {

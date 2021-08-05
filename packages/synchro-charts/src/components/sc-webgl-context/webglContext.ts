@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 import { WebGLRenderer } from 'three';
-import { ChartScene, ViewPortManager } from './types';
+import { ChartScene } from './types';
 import { ClipSpaceRect, ClipSpaceRectMap } from '../common/webGLPositioning';
 import { RectScrollFixed } from '../../utils/types';
-import { ViewportHandler } from './viewPortHandler';
+import { ViewportHandler } from '../viewportHandler/viewportHandler';
 import { isValid } from '../../utils/predicates';
+import { ViewPortManager } from '../viewportHandler/types';
 
 const isChartScene = isValid((v: Partial<ChartScene>) => v.camera != null);
 
