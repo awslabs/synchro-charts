@@ -16,7 +16,7 @@ const ThresholdListItem = ({threshold, removeThreshold, thresholdId}) => {
 
   return (
     <tbody>
-    <tr key={`${threshold.value}---${threshold.label}`} className="threshold-list-item-container">
+    <tr className="threshold-list-item-container">
       <td className="color-container">
         <div className="color-block" style={{background: color}}/>
       </td>
