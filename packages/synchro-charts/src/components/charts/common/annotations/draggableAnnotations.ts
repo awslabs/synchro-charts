@@ -69,9 +69,11 @@ export const draggable = ({
   thresholdGroup.call(
     drag()
       .on('start', function dragStarted(yAnnotation: unknown) {
-        if (!(yAnnotation as YAnnotation).isEditable) {
+        const annotationDragged = yAnnotation as YAnnotation;
+        if (!annotationDragged.isEditable) {
           return;
         }
+        draggedPos = +annotationDragged.value;
         select(this)
           .raise()
           .classed('active', true);
@@ -82,7 +84,6 @@ export const draggable = ({
         if (!annotationDragged.isEditable) {
           return;
         }
-
         const { y: yPos } = event as { y: number };
         const newValue = calculateNewThreshold({ yPos, viewport, size });
         annotationDragged.value = newValue;
