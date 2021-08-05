@@ -125,7 +125,7 @@ describe('heatmap', () => {
     cy.matchImageSnapshotOnCI();
   });
 
-  it.only('renders 3 buckets with full legend', () => {
+  it('renders 3 buckets with full legend', () => {
     const viewport: ViewPort = { start: new Date(2000, 0, 0), end: new Date(2000, 0, 1), yMin: 0, yMax: 100 };
     const startTime = viewport.start.getTime();
     const dataStreams = [

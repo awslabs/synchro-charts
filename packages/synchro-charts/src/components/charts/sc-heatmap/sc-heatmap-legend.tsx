@@ -1,4 +1,4 @@
-import { Component, h, Prop, State } from '@stencil/core';
+import { Component, h, Prop } from '@stencil/core';
 import { LegendConfig } from '../common/types';
 import { DataStream, ViewPort } from '../../../utils/dataTypes';
 import { COLOR_PALETTE } from './heatmapMesh';
@@ -6,8 +6,8 @@ import { calcHeatValues, getXBucketRange, HeatValueMap } from './heatmapUtil';
 import { BUCKET_COUNT, NUM_OF_COLORS_SEQUENTIAL } from './heatmapConstants';
 import { LEGEND_POSITION } from '../common/constants';
 
-// need to change the width of sc-heatmap-legend in CSS file if this is changed
-const WIDTH_OF_LEGEND = 240;
+const LEGEND_WIDTH_HORIZONTAL = 240;
+const LEGEND_WIDTH_VERTICAL = 150;
 
 @Component({
   tag: 'sc-heatmap-legend',
@@ -19,7 +19,6 @@ export class ScLegend {
   @Prop() viewport: ViewPort;
   @Prop() dataStreams!: DataStream[];
   @Prop() isLoading: boolean;
-  @State() heatValues: HeatValueMap;
 
   componentToHex = (color: number) => {
     const hex = color.toString(16).split('.')[0];
@@ -33,34 +32,34 @@ export class ScLegend {
     return `#${this.componentToHex(r)}${this.componentToHex(g)}${this.componentToHex(b)}`;
   };
 
-  getBar = () => {
-    if (this.heatValues == null || this.dataStreams.length === 0 || this.heatValues.minHeatValue === Infinity) {
+  getBar = (heatValues: HeatValueMap, legendWidth: number) => {
+    if (heatValues == null || this.dataStreams.length === 0 || heatValues.minHeatValue === Infinity) {
       return null;
     }
-    const { minHeatValue, maxHeatValue } = this.heatValues;
+    const { minHeatValue, maxHeatValue } = heatValues;
     const heatValueRange = maxHeatValue - minHeatValue + 1;
     const numOfBars = Math.min(heatValueRange, NUM_OF_COLORS_SEQUENTIAL);
-    const barLength = WIDTH_OF_LEGEND / numOfBars;
+    const barLength = legendWidth / numOfBars;
     const barArray = new Array(NUM_OF_COLORS_SEQUENTIAL);
     let currentBarX = 0;
     let barIndex = numOfBars === 8 ? 0 : 1;
     let index = 0;
-    while (currentBarX < WIDTH_OF_LEGEND && index < barArray.length) {
+    while (currentBarX < legendWidth && index < barArray.length) {
       const colorIndex = Math.min(
         Math.floor((barIndex / numOfBars) * NUM_OF_COLORS_SEQUENTIAL),
         NUM_OF_COLORS_SEQUENTIAL - 1
       );
-      const pathD = `M ${currentBarX} 0 H ${WIDTH_OF_LEGEND}`;
 
       barArray[index] = (
-        <path
-          stroke={this.rgbToHex(COLOR_PALETTE.r[colorIndex], COLOR_PALETTE.g[colorIndex], COLOR_PALETTE.b[colorIndex])}
-          stroke-linecap="square"
-          stroke-width={20}
-          d={pathD}
+        <rect
+          x={currentBarX}
+          width={barLength}
+          height="10"
+          style={{
+            fill: `rgb(${COLOR_PALETTE.r[colorIndex]},${COLOR_PALETTE.g[colorIndex]},${COLOR_PALETTE.b[colorIndex]})`,
+          }}
         />
       );
-
       barIndex += 1;
       index += 1;
       currentBarX += barLength;
@@ -69,19 +68,21 @@ export class ScLegend {
   };
 
   render() {
-    this.config.position = LEGEND_POSITION.BOTTOM;
     const xBucketRange = getXBucketRange(this.viewport);
     if (this.dataStreams.length === 0) {
       return null;
     }
 
-    this.heatValues = calcHeatValues({
+    const heatValues = calcHeatValues({
       dataStreams: this.dataStreams,
       xBucketRange,
       viewport: this.viewport,
       bucketCount: BUCKET_COUNT,
     });
 
+    const legendWidth =
+      this.config.position === LEGEND_POSITION.BOTTOM ? LEGEND_WIDTH_HORIZONTAL : LEGEND_WIDTH_VERTICAL;
+    const barContainerWidth = `${legendWidth}px`;
     return (
       <div class="legend-container">
         <div class="label">
@@ -97,21 +98,23 @@ export class ScLegend {
             </div>
           ) : (
             <div>
-              <svg class="bar">
-                <g>{this.getBar()}</g>
+              <svg class="bar" style={{ width: barContainerWidth }}>
+                {this.getBar(heatValues, legendWidth)}
               </svg>
             </div>
           )}
         </div>
         {!this.isLoading &&
-          (this.heatValues.minHeatValue === Infinity ? (
+          (heatValues.minHeatValue === Infinity ? (
             <div class="heat-values-empty-data">-</div>
           ) : (
             <div class="heat-values">
               <div class="min-heat-values">
-                {this.heatValues.minHeatValue === this.heatValues.maxHeatValue ? 0 : this.heatValues.minHeatValue}
+                {heatValues.minHeatValue === heatValues.maxHeatValue ? 0 : heatValues.minHeatValue}
               </div>
-              <div class="max-heat-values">{this.heatValues.maxHeatValue}</div>
+              <div class="max-heat-values" style={{ 'margin-left': `${legendWidth - 10}px` }}>
+                {heatValues.maxHeatValue}
+              </div>
             </div>
           ))}
       </div>
