@@ -11,7 +11,6 @@ import { Axis, ChartConfig, LayoutConfig, LegendConfig, MovementConfig, ScaleCon
 import { chartScene, updateChartScene } from './chartScene';
 import { DEFAULT_CHART_CONFIG } from '../sc-webgl-base-chart/chartDefaults';
 import { RectScrollFixed } from '../../../utils/types';
-import { DATA_ALIGNMENT } from '../common/constants';
 import { shouldRerenderOnViewportChange } from './heatmapUtil';
 import { validate } from '../../common/validator/validate';
 
@@ -21,9 +20,7 @@ import { validate } from '../../common/validator/validate';
 const DEFAULT_MIN_BUFFER_SIZE = 1000;
 const DEFAULT_BUFFER_FACTOR = 2;
 
-const heatmapTooltip = (props: Tooltip.Props) => (
-  <sc-tooltip {...props} supportString={false} visualizesAlarms={false} dataAlignment={DATA_ALIGNMENT.EITHER} />
-);
+const heatmapTooltip = (props: Tooltip.Props) => <sc-heatmap-tooltip {...props} />;
 
 @Component({
   tag: 'sc-heatmap',
@@ -76,7 +73,7 @@ export class ScHeatmap implements ChartConfig {
             bufferFactor={this.bufferFactor}
             isEditing={this.isEditing}
             yRangeStartFromZero
-            tooltip={heatmapTooltip}
+            renderTooltip={heatmapTooltip}
             supportString={false}
             visualizesAlarms={false}
             messageOverrides={this.messageOverrides}

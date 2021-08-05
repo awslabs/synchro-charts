@@ -118,6 +118,10 @@ export interface Annotation<T extends AnnotationValue> {
   // configures whether the annotation is editable
   // false or undefined = annotation is not draggable
   isEditable?: boolean;
+
+  // optional id that can be set to identify annotations
+  // for example, this id can be used by an application to identify and update annotations when a widgetConfigurationUpdate is emitted from SynchroCharts
+  id?: string;
 }
 
 /**
@@ -192,4 +196,20 @@ export namespace Tooltip {
 export interface ThresholdColorAndIcon {
   color: string | undefined;
   icon: StatusIcon | undefined;
+}
+
+export namespace Legend {
+  export interface Props {
+    config: LegendConfig;
+    dataStreams: DataStream[];
+    visualizesAlarms: boolean;
+    updateDataStreamName: ({ streamId, name }: { streamId: string; name: string }) => void;
+    viewport: ViewPort;
+    isEditing: boolean;
+    isLoading: boolean;
+    thresholds: Threshold[];
+    supportString: boolean;
+    trendResults: TrendResult[];
+    showDataStreamColor: boolean;
+  }
 }

@@ -33,7 +33,6 @@ const DEFAULT_BUFFER_FACTOR = 2;
 const tooltip = (props: Tooltip.Props) => (
   <sc-tooltip {...props} visualizesAlarms={false} supportString={false} dataAlignment={DATA_ALIGNMENT.EITHER} />
 );
-
 @Component({
   tag: 'sc-line-chart',
   shadow: false,
@@ -92,7 +91,7 @@ export class ScLineChart implements ChartConfig {
             minBufferSize={this.minBufferSize}
             bufferFactor={this.bufferFactor}
             isEditing={this.isEditing}
-            tooltip={tooltip}
+            renderTooltip={tooltip}
             supportString={false}
             visualizesAlarms={false}
             messageOverrides={this.messageOverrides}

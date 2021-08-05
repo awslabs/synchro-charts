@@ -34,7 +34,6 @@ const DEFAULT_BUFFER_FACTOR = 2;
 const tooltip = (props: Tooltip.Props) => (
   <sc-tooltip {...props} visualizesAlarms={false} supportString={false} dataAlignment={DATA_ALIGNMENT.EITHER} />
 );
-
 @Component({
   tag: 'sc-bar-chart',
   shadow: false,
@@ -94,7 +93,7 @@ export class ScBarChart implements ChartConfig {
             bufferFactor={this.bufferFactor}
             isEditing={this.isEditing}
             yRangeStartFromZero
-            tooltip={tooltip}
+            renderTooltip={tooltip}
             supportString={false}
             visualizesAlarms={false}
             messageOverrides={this.messageOverrides}

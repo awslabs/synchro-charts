@@ -76,7 +76,9 @@ describe('construct chart scene', () => {
         toClipSpace: z => z,
       });
       jest.spyOn(chartScene.scene, 'dispose');
-      chartScene.dispose();
+      if (chartScene.dispose != null) {
+        chartScene.dispose();
+      }
       expect(chartScene.scene.dispose).toBeCalled();
     });
 
@@ -96,7 +98,9 @@ describe('construct chart scene', () => {
       jest.spyOn(material, 'dispose');
       jest.spyOn(mesh.geometry, 'dispose');
 
-      chartScene.dispose();
+      if (chartScene.dispose != null) {
+        chartScene.dispose();
+      }
 
       expect(chartScene.scene.dispose).toBeCalled();
       expect(mesh.geometry.dispose).toBeCalled();
@@ -126,7 +130,9 @@ describe('construct chart scene', () => {
       jest.spyOn(points.geometry, 'dispose');
       jest.spyOn(points.material, 'dispose');
 
-      chartScene.dispose();
+      if (chartScene.dispose != null) {
+        chartScene.dispose();
+      }
 
       expect(chartScene.scene.dispose).toBeCalled();
 

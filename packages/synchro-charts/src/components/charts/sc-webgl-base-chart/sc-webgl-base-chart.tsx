@@ -23,6 +23,7 @@ import {
   Threshold,
   ThresholdOptions,
   Tooltip,
+  Legend,
 } from '../common/types';
 
 import { webGLRenderer } from '../../sc-webgl-context/webglContext';
@@ -85,11 +86,12 @@ export class ScWebglBaseChart {
   @Prop() bufferFactor!: number;
   @Prop() minBufferSize!: number;
   @Prop() legend: LegendConfig;
+  @Prop() renderLegend: (props: Legend.Props) => HTMLElement = props => <sc-legend {...props} />;
   @Prop() annotations: Annotations = {};
   @Prop() trends: Trend[] = [];
   @Prop() supportString: boolean;
   @Prop() axis?: Axis.Options;
-  @Prop() tooltip: (props: Tooltip.Props) => HTMLElement;
+  @Prop() renderTooltip: (props: Tooltip.Props) => HTMLElement;
   @Prop() visualizesAlarms: boolean;
   @Prop() displaysError: boolean = true;
   @Prop() alarms?: AlarmsConfig;
@@ -742,8 +744,8 @@ export class ScWebglBaseChart {
     };
   };
 
-  renderTooltip = (marginLeft: number, marginTop: number, thresholds: Threshold[]) =>
-    this.tooltip({
+  renderTooltipComponent = (marginLeft: number, marginTop: number, thresholds: Threshold[]) =>
+    this.renderTooltip({
       size: this.chartSizeConfig(),
       style: { marginLeft: `${marginLeft}px`, marginTop: `${marginTop}px` },
       dataStreams: this.dataStreams,
@@ -752,6 +754,29 @@ export class ScWebglBaseChart {
       thresholds,
       trendResults: this.trendResults,
       visualizesAlarms: this.visualizesAlarms,
+    });
+
+  renderLegendComponent = ({
+    isLoading,
+    thresholds,
+    showDataStreamColor,
+  }: {
+    isLoading: boolean;
+    thresholds: Threshold[];
+    showDataStreamColor: boolean;
+  }) =>
+    this.renderLegend({
+      config: this.legend,
+      dataStreams: this.dataStreams,
+      visualizesAlarms: this.visualizesAlarms,
+      updateDataStreamName: this.updateDataStreamName,
+      viewport: this.activeViewPort(),
+      isEditing: this.isEditing,
+      isLoading,
+      thresholds,
+      supportString: this.supportString,
+      trendResults: this.trendResults,
+      showDataStreamColor,
     });
 
   render() {
@@ -803,23 +828,11 @@ export class ScWebglBaseChart {
         </DataContainer>
         {this.legend && (
           <ChartLegendContainer config={this.legend} legendHeight={LEGEND_HEIGHT} size={chartSizeConfig}>
-            <sc-legend
-              config={this.legend}
-              dataStreams={this.dataStreams}
-              visualizesAlarms={this.visualizesAlarms}
-              updateDataStreamName={this.updateDataStreamName}
-              viewport={this.activeViewPort()}
-              isEditing={this.isEditing}
-              isLoading={shouldDisplayAsLoading}
-              thresholds={thresholds}
-              supportString={this.supportString}
-              trendResults={this.trendResults}
-              showDataStreamColor={showDataStreamColor}
-            />
+            {this.renderLegendComponent({ isLoading: shouldDisplayAsLoading, thresholds, showDataStreamColor })}
           </ChartLegendContainer>
         )}
       </div>,
-      this.isMounted && this.renderTooltip(marginLeft, marginTop, thresholds),
+      this.isMounted && this.renderTooltipComponent(marginLeft, marginTop, thresholds),
       <svg
         class="threshold-container"
         width={chartSizeConfig.width + marginRight}
