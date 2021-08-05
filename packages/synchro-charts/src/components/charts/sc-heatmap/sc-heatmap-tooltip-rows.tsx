@@ -40,7 +40,7 @@ export class ScHeatmapTooltipRows {
 
     const { lowerYBucket, upperYBucket } = this.selectedYBucket;
     const modelY = (lowerYBucket + upperYBucket) / 2;
-    const pixelY = Math.max(height / 4, height * (1 - (modelY - yMin) / (yMax - yMin)));
+    const pixelY = Math.max(0, height * (1 - (modelY - yMin) / (yMax - yMin)));
 
     return { x: pixelX, y: pixelY };
   };
