@@ -245,14 +245,14 @@ it('annotation with hidden value is draggable', () => {
   cy.get(DRAGGABLE_HANDLE_SELECTOR)
     .invoke('attr', 'y')
     .then(str => parseFloat(str!))
-    .should('be.gte', 32)
-    .should('be.lte', 34);
+    .should('be.gte', 34)
+    .should('be.lte', 36);
 
   cy.get(ELEMENT_GROUP_SELECTOR)
     .invoke('attr', 'transform')
     .then(str => parseTransformYValue(str!))
-    .should('be.gte', 43)
-    .should('be.lte', 45);
+    .should('be.gte', 45)
+    .should('be.lte', 47);
 });
 
 it('allows independent dragging of multiple annotations', () => {
