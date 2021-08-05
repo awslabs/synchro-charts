@@ -65,6 +65,7 @@ export const draggable = ({
 }: DraggableAnnotationsOptions): void => {
   const containerSelection = select(container);
   const thresholdGroup = containerSelection.selectAll(DRAGGABLE_HANDLE_SELECTOR);
+  let draggedPos = -1;
   thresholdGroup.call(
     drag()
       .on('start', function dragStarted(yAnnotation: unknown) {
@@ -83,7 +84,9 @@ export const draggable = ({
         }
 
         const { y: yPos } = event as { y: number };
-        annotationDragged.value = calculateNewThreshold({ yPos, viewport, size });
+        const newValue = calculateNewThreshold({ yPos, viewport, size });
+        annotationDragged.value = newValue;
+        draggedPos = newValue;
         const axisRescale = needAxisRescale({ annotationValue: annotationDragged.value, viewport });
 
         onUpdate(axisRescale ? activeViewPort() : viewport, false, axisRescale, true);
@@ -93,11 +96,8 @@ export const draggable = ({
         if (!annotationDragged.isEditable) {
           return;
         }
-
-        const { y: yPos } = event as { y: number };
-        annotationDragged.value = calculateNewThreshold({ yPos, viewport, size });
+        annotationDragged.value = draggedPos;
         const axisRescale = needAxisRescale({ annotationValue: annotationDragged.value, viewport });
-
         onUpdate(axisRescale ? activeViewPort() : viewport, false, axisRescale, true);
 
         select(this).classed('active', false);
