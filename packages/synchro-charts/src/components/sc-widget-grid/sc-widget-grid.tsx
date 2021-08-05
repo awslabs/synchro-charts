@@ -4,7 +4,6 @@ import { DataPoint, DataStream, MessageOverrides, MinimalViewPortConfig, Primiti
 import { NameValue, updateName } from '../sc-data-stream-name/helper';
 import { ActivePoint, activePoints } from '../charts/sc-webgl-base-chart/activePoints';
 import { getThresholds } from '../charts/common/annotations/utils';
-import { webGLRenderer } from '../sc-webgl-context/webglContext';
 import { breachedThreshold } from '../charts/common/annotations/breachedThreshold';
 import { streamPairs } from '../../utils/streamPairs';
 import { RenderCell } from './types';
@@ -16,6 +15,8 @@ import { isMinimalStaticViewport } from '../../utils/predicates';
 import { parseDuration } from '../../utils/time';
 import { getDataStreamForEventing } from '../charts/common';
 import { validate } from '../common/validator/validate';
+import { ViewportHandler } from '../viewportHandler/viewportHandler';
+import { ViewPortManager } from '../viewportHandler/types';
 
 const MSG =
   'This visualization displays only live data. Choose a live time frame to display data in this visualization.';
@@ -33,7 +34,7 @@ const title = ({ alarm, property }: { alarm?: DataStream; property?: DataStream 
 /**
  * A generic parent container which can be utilized to construct a variety of 'grid-like' components.
  *
- * This copmonent allows construction of widgets, by simply constructing the display cell via the `renderCell` method.gt
+ * This component allows construction of widgets, by simply constructing the display cell via the `renderCell` method.gt
  */
 @Component({
   tag: 'sc-widget-grid',
@@ -66,6 +67,8 @@ export class ScWidgetGrid implements ChartConfig {
     ? parseDuration(this.viewport.duration)
     : undefined;
 
+  private viewportGroups: ViewportHandler<ViewPortManager> = new ViewportHandler();
+
   @Event()
   widgetUpdated: EventEmitter<WidgetConfigurationUpdate>;
 
@@ -74,10 +77,9 @@ export class ScWidgetGrid implements ChartConfig {
   }
 
   componentDidLoad() {
-    webGLRenderer.addChartScene({
+    this.viewportGroups.add({
       id: this.widgetId,
       viewportGroup: this.viewport.group,
-      dispose: () => {},
       updateViewPort: this.onUpdate,
     });
   }
@@ -101,7 +103,7 @@ export class ScWidgetGrid implements ChartConfig {
 
   disconnectedCallback() {
     // necessary to make sure that the allocated memory is released, and nothing is incorrectly rendered.
-    webGLRenderer.removeChartScene(this.widgetId);
+    this.viewportGroups.remove(this.widgetId);
   }
 
   /**

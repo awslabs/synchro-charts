@@ -94,6 +94,10 @@ module.exports = {
             ]
         },
         {
+          name: 'Contributing to Synchro Charts',
+          content: 'docs/contributing.md',
+        },
+        {
             name: 'Limitations',
             content: 'docs/limitations.md',
         },

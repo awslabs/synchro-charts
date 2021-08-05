@@ -39,7 +39,7 @@ export class ViewportHandler<T extends ViewPortManager> {
     const v = this.viewportManagers.find(({ id }) => id === managerId);
 
     // Dispose of the chart scene to ensure that the memory is released
-    if (v) {
+    if (v && v.dispose) {
       v.dispose();
     }
 

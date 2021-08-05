@@ -1,6 +1,6 @@
 import uuid from 'uuid/v4';
 
-import { ViewportHandler } from './viewPortHandler';
+import { ViewportHandler } from './viewportHandler';
 import { ViewPortManager } from './types';
 
 const viewportManager = (viewportGroup?: string): ViewPortManager => ({
