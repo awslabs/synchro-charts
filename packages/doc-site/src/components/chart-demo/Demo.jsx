@@ -9,6 +9,8 @@ import {getRandomData} from "./dataUtil";
 import ThresholdListItem from './ThresholdListItem';
 import {isNumeric} from "./util";
 import TrendLineListItem from "./TrendLineListItem";
+import { v4 } from 'uuid';
+
 
 import './Demo.css';
 
@@ -236,6 +238,7 @@ export class Demo extends React.Component {
   saveThreshold = () => {
     const {annotationColor,annotationValue, annotationComp, annotationEditable, annotationLabel } = this.state;
     const threshold = {
+      id: v4(),
       color: annotationColor,
       value: annotationValue,
       showValue: true,
@@ -496,7 +499,7 @@ export class Demo extends React.Component {
               </tr>
               {this.getThresholds().map((threshold, i) => {
                 return (
-                  <ThresholdListItem threshold={threshold} thresholdId={i} removeThreshold={this.removeThreshold} key={`${threshold.value}---${threshold.comparisonOperator}`}/>
+                  <ThresholdListItem threshold={threshold} thresholdId={i} removeThreshold={this.removeThreshold} key={`${threshold.id}`}/>
                 );
               })}
             </table>
