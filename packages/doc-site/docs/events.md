@@ -9,7 +9,7 @@ Currently, this event is only fired when
 
   1. The name of a `dataStream` is updated from within the legend 
 
-  2. A Y Annotation or Threshold is dragged to a new value 
+  2. A y-annotation is dragged to a new value 
 
 ### `dateRangeChange`
 

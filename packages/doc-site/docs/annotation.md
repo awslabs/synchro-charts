@@ -288,7 +288,7 @@ const dataStreams = [{
 
 To enable dragging of Y Annotations as shown above, set `isEditable` of the annotation to `true` (`isEditable` is `false` by default). 
 When an annotation is dragged to a new value, a [`widgetUpdated`](#/API/Events) event is emitted 
-which contains the updated annotation value along with other properties of the widget. Note that only Y Annotations are 
+which contains the updated annotation value along with other properties of the widget. **Note:** only Y Annotations are 
 draggable at this time.
 
 ```jsx static

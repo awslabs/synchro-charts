@@ -322,7 +322,7 @@ which contains the updated threshold value along with other properties of the wi
 
 ```jsx static
 const draggableThreshold = {
-  color: 'blue',
+  color: 'red',
   value: 40,
   showValue: true,
   comparisonOperator: 'GTE',
