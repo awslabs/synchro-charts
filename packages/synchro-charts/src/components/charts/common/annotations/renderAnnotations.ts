@@ -18,6 +18,7 @@ export type RenderAnnotationsOptions = {
   ) => void;
   activeViewPort: () => ViewPort;
   emitUpdatedWidgetConfiguration: (dataStreams?: DataStream[]) => void;
+  startstopDrag: (isDragging: boolean) => void;
 };
 
 type AnnotationPredicate = (annotation: Annotation<AnnotationValue>) => boolean;
@@ -40,6 +41,7 @@ export const renderAnnotations = ({
   onUpdate,
   activeViewPort,
   emitUpdatedWidgetConfiguration,
+  startstopDrag,
 }: RenderAnnotationsOptions) => {
   if (typeof annotations === 'object' && typeof annotations.show === 'boolean' && !annotations.show) {
     removeXAnnotations({ container });
@@ -91,5 +93,6 @@ export const renderAnnotations = ({
     onUpdate,
     activeViewPort,
     emitUpdatedWidgetConfiguration,
+    startstopDrag,
   });
 };

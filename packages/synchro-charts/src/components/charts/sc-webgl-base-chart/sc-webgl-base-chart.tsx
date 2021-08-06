@@ -127,6 +127,17 @@ export class ScWebglBaseChart {
 
   @State() trendResults: TrendResult[] = [];
 
+  /**
+   * Prevent Drag Snapping
+   * TLDR: Need to prevent renderAnnotation in onUpdate from being called when we are in the middle of dragging
+   * probably also need a timeout mechanism?
+   */
+  private isDragging: boolean = false;
+
+  startStopDrag = (isDragging: boolean): void => {
+    this.isDragging = isDragging;
+  };
+
   private scene: ChartScene | null;
   private dataContainer: HTMLDivElement;
   private thresholdContainer: SVGElement;
@@ -289,6 +300,9 @@ export class ScWebglBaseChart {
 
   @Watch('annotations')
   onAnnotationsChange(newProp: Annotations, oldProp: Annotations) {
+    if (this.isDragging) {
+      return;
+    }
     if (!isEqual(newProp, oldProp)) {
       this.onUpdate(this.activeViewPort(), false, false, true);
     }
@@ -599,6 +613,7 @@ export class ScWebglBaseChart {
         onUpdate: this.onUpdate,
         activeViewPort: this.activeViewPort,
         emitUpdatedWidgetConfiguration: this.emitUpdatedWidgetConfiguration,
+        startstopDrag: this.startStopDrag,
       });
     }
 

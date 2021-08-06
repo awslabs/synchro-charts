@@ -16,6 +16,7 @@ export type DraggableAnnotationsOptions = {
   ) => void;
   activeViewPort: () => ViewPort;
   emitUpdatedWidgetConfiguration: (dataStreams?: DataStream[]) => void;
+  startstopDrag: (isDragging: boolean) => void;
 };
 
 /**
@@ -62,6 +63,7 @@ export const draggable = ({
   onUpdate,
   activeViewPort,
   emitUpdatedWidgetConfiguration,
+  startstopDrag,
 }: DraggableAnnotationsOptions): void => {
   const containerSelection = select(container);
   const thresholdGroup = containerSelection.selectAll(DRAGGABLE_HANDLE_SELECTOR);
@@ -73,6 +75,7 @@ export const draggable = ({
         if (!annotationDragged.isEditable) {
           return;
         }
+        startstopDrag(true);
         draggedAnnotationValue = +annotationDragged.value;
         select(this)
           .raise()
@@ -97,6 +100,7 @@ export const draggable = ({
         if (!annotationDragged.isEditable) {
           return;
         }
+        startstopDrag(false);
         annotationDragged.value = draggedAnnotationValue ? (draggedAnnotationValue as number) : annotationDragged.value;
         const axisRescale = needAxisRescale({ annotationValue: annotationDragged.value as number, viewport });
         onUpdate(axisRescale ? activeViewPort() : viewport, false, axisRescale, true);
