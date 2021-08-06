@@ -1,5 +1,5 @@
 import { clipSpaceConversion } from '../sc-webgl-base-chart/clipSpaceConversion';
-import { bucketMesh, updateBucketMesh, COLOR_PALETTE } from './heatmapMesh';
+import { bucketMesh, updateBucketMesh } from './heatmapMesh';
 import { BUCKET_COUNT } from './heatmapConstants';
 import {
   calculateXBucketStart,
@@ -8,7 +8,7 @@ import {
   calcHeatValues,
   HeatValueMap,
 } from './heatmapUtil';
-import { getXBucketWidth } from './displayLogic';
+import { getSequential, getXBucketWidth } from './displayLogic';
 import { DataType } from '../../../utils/dataConstants';
 import { MONTH_IN_MS } from '../../../utils/time';
 import { DataPoint, DataStream, ViewPort } from '../../../utils/dataTypes';
@@ -106,6 +106,7 @@ describe('create bucket mesh', () => {
     // change these manually to get lighter opacity bucket
     tempHeatValues.minHeatValue = 1;
     tempHeatValues.maxHeatValue = 100;
+    const colorPalette = getSequential(tempHeatValues);
     const mesh = bucketMesh({
       dataStreams: DATA_STREAMS,
       toClipSpace,
@@ -127,17 +128,17 @@ describe('create bucket mesh', () => {
     expect(mesh.geometry.attributes.bucket.array[5]).toBeDefined();
 
     // bucket Colors
-    expect(mesh.geometry.attributes.color.array[0]).toBeCloseTo(COLOR_PALETTE.r[0], -1);
-    expect(mesh.geometry.attributes.color.array[1]).toBeCloseTo(COLOR_PALETTE.g[0], -1);
-    expect(mesh.geometry.attributes.color.array[2]).toBeCloseTo(COLOR_PALETTE.b[0], -1);
+    expect(mesh.geometry.attributes.color.array[0]).toBeCloseTo(colorPalette.r[0], -1);
+    expect(mesh.geometry.attributes.color.array[1]).toBeCloseTo(colorPalette.g[0], -1);
+    expect(mesh.geometry.attributes.color.array[2]).toBeCloseTo(colorPalette.b[0], -1);
 
-    expect(mesh.geometry.attributes.color.array[3]).toBeCloseTo(COLOR_PALETTE.r[0], -1);
-    expect(mesh.geometry.attributes.color.array[4]).toBeCloseTo(COLOR_PALETTE.g[0], -1);
-    expect(mesh.geometry.attributes.color.array[5]).toBeCloseTo(COLOR_PALETTE.b[0], -1);
+    expect(mesh.geometry.attributes.color.array[3]).toBeCloseTo(colorPalette.r[0], -1);
+    expect(mesh.geometry.attributes.color.array[4]).toBeCloseTo(colorPalette.g[0], -1);
+    expect(mesh.geometry.attributes.color.array[5]).toBeCloseTo(colorPalette.b[0], -1);
 
-    expect(mesh.geometry.attributes.color.array[6]).toBeCloseTo(COLOR_PALETTE.r[0], -1);
-    expect(mesh.geometry.attributes.color.array[7]).toBeCloseTo(COLOR_PALETTE.g[0], -1);
-    expect(mesh.geometry.attributes.color.array[8]).toBeCloseTo(COLOR_PALETTE.b[0], -1);
+    expect(mesh.geometry.attributes.color.array[6]).toBeCloseTo(colorPalette.r[0], -1);
+    expect(mesh.geometry.attributes.color.array[7]).toBeCloseTo(colorPalette.g[0], -1);
+    expect(mesh.geometry.attributes.color.array[8]).toBeCloseTo(colorPalette.b[0], -1);
   });
 
   it('draws one bucket with darkest opacity', () => {
@@ -164,6 +165,8 @@ describe('create bucket mesh', () => {
       viewport,
       bucketCount: BUCKET_COUNT,
     });
+    const colorPalette = getSequential(heatValues);
+
     const mesh = bucketMesh({
       dataStreams,
       toClipSpace,
@@ -178,9 +181,9 @@ describe('create bucket mesh', () => {
     expect(mesh.geometry.attributes.bucket.array[0]).toBe(toClipSpace(DATA_POINT_1_X_BUCKET + xBucketRange));
     expect(mesh.geometry.attributes.bucket.array[1]).toBe(BUCKET_HEIGHT * DATA_POINT_1_Y_BUCKET);
 
-    expect(mesh.geometry.attributes.color.array[0]).toBeCloseTo(COLOR_PALETTE.r[7], -1);
-    expect(mesh.geometry.attributes.color.array[1]).toBeCloseTo(COLOR_PALETTE.g[7], -1);
-    expect(mesh.geometry.attributes.color.array[2]).toBeCloseTo(COLOR_PALETTE.b[7], -1);
+    expect(mesh.geometry.attributes.color.array[0]).toBeCloseTo(colorPalette.r[0], -1);
+    expect(mesh.geometry.attributes.color.array[1]).toBeCloseTo(colorPalette.g[0], -1);
+    expect(mesh.geometry.attributes.color.array[2]).toBeCloseTo(colorPalette.b[0], -1);
   });
 
   it('draws two buckets with two point data set', () => {
@@ -199,6 +202,8 @@ describe('create bucket mesh', () => {
       viewport: VIEW_PORT,
       bucketCount: BUCKET_COUNT,
     });
+    const colorPalette = getSequential(heatValues);
+
     const mesh = bucketMesh({
       dataStreams,
       toClipSpace,
@@ -215,13 +220,13 @@ describe('create bucket mesh', () => {
     expect(mesh.geometry.attributes.bucket.array[2]).toBe(toClipSpace(DATA_POINT_2_X_BUCKET + X_BUCKET_RANGE));
     expect(mesh.geometry.attributes.bucket.array[3]).toBe(BUCKET_HEIGHT * DATA_POINT_2_Y_BUCKET);
 
-    expect(mesh.geometry.attributes.color.array[0]).toBeCloseTo(COLOR_PALETTE.r[7], -1);
-    expect(mesh.geometry.attributes.color.array[1]).toBeCloseTo(COLOR_PALETTE.g[7], -1);
-    expect(mesh.geometry.attributes.color.array[2]).toBeCloseTo(COLOR_PALETTE.b[7], -1);
+    expect(mesh.geometry.attributes.color.array[0]).toBeCloseTo(colorPalette.r[0], -1);
+    expect(mesh.geometry.attributes.color.array[1]).toBeCloseTo(colorPalette.g[0], -1);
+    expect(mesh.geometry.attributes.color.array[2]).toBeCloseTo(colorPalette.b[0], -1);
 
-    expect(mesh.geometry.attributes.color.array[3]).toBeCloseTo(COLOR_PALETTE.r[7], -1);
-    expect(mesh.geometry.attributes.color.array[4]).toBeCloseTo(COLOR_PALETTE.g[7], -1);
-    expect(mesh.geometry.attributes.color.array[5]).toBeCloseTo(COLOR_PALETTE.b[7], -1);
+    expect(mesh.geometry.attributes.color.array[3]).toBeCloseTo(colorPalette.r[0], -1);
+    expect(mesh.geometry.attributes.color.array[4]).toBeCloseTo(colorPalette.g[0], -1);
+    expect(mesh.geometry.attributes.color.array[5]).toBeCloseTo(colorPalette.b[0], -1);
   });
 });
 

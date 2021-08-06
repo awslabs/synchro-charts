@@ -41,6 +41,9 @@ export interface LegendConfig {
   width: number;
   // Whether the colored bars appear in the legend or not.
   showDataStreamColor?: boolean;
+  legendLabels?: {
+    title: string;
+  };
 }
 
 /**
@@ -197,7 +200,6 @@ export interface ThresholdColorAndIcon {
   color: string | undefined;
   icon: StatusIcon | undefined;
 }
-
 export namespace Legend {
   export interface Props {
     config: LegendConfig;
