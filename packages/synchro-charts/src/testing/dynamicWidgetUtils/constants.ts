@@ -202,4 +202,7 @@ export const ANNOTATIONS: Annotations = { y: thresholds };
 export const LEGEND: LegendConfig = {
   position: LEGEND_POSITION.RIGHT,
   width: 200,
+  legendLabels: {
+    title: 'Number of data points',
+  },
 };

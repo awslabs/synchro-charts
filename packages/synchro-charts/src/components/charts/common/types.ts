@@ -41,6 +41,9 @@ export interface LegendConfig {
   width: number;
   // Whether the colored bars appear in the legend or not.
   showDataStreamColor?: boolean;
+  legendLabels?: {
+    title: string;
+  };
 }
 
 /**

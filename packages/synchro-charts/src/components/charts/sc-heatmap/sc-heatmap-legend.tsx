@@ -48,6 +48,10 @@ export class ScLegend {
       return null;
     }
 
+    if (this.config.legendLabels?.title == null) {
+      return null;
+    }
+
     const xBucketRange = getXBucketRange(this.viewport);
     const heatValues = calcHeatValues({
       dataStreams: this.dataStreams,
@@ -62,8 +66,8 @@ export class ScLegend {
 
     return (
       <div class="legend-container">
-        <div class="label">
-          <p>Number of data points</p>
+        <div class="legend-label">
+          <p>{this.config.legendLabels.title}</p>
           <svg>
             <path stroke="#989898" stroke-linecap="square" stroke-width={2} d="M 0 0 H 150" />
           </svg>

@@ -28,7 +28,7 @@ sc-heatmap-legend {
   padding-right: var(--margin-small);
 }
 
-sc-heatmap-legend .label {
+sc-heatmap-legend .legend-label {
   width: 200px;
   font-size: 14px;
 }

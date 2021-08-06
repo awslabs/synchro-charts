@@ -1,5 +1,5 @@
 /* eslint-disable cypress/no-unnecessary-waiting */
-import { DataType } from '../../../../src/constants';
+import { DataType, LEGEND_POSITION } from '../../../../src/constants';
 import { visitDynamicWidget } from '../../../../src/testing/selectors';
 import { DataStream, ViewPort } from '../../../../src/utils/dataTypes';
 import { MINUTE_IN_MS } from '../../../../src/utils/time';
@@ -158,6 +158,48 @@ describe('heatmap', () => {
       viewportStart: START,
       viewportEnd: END,
       dataStreams,
+    });
+
+    cy.waitForChart();
+
+    cy.matchImageSnapshotOnCI();
+  });
+
+  it('renders 1 negative bucket with full legend on the bottom', () => {
+    const viewport: ViewPort = { start: new Date(2000, 0, 0), end: new Date(2000, 0, 1), yMin: 0, yMax: 100 };
+    const startTime = viewport.start.getTime();
+    const dataStreams = [
+      {
+        id: 'data-stream',
+        name: 'some name',
+        resolution: 0,
+        data: [
+          { x: startTime, y: 100 },
+          { x: startTime, y: 100 },
+          { x: startTime, y: 100 },
+          { x: startTime, y: 100 },
+          { x: startTime, y: 100 },
+          { x: startTime, y: 100 },
+          { x: startTime, y: 100 },
+          { x: startTime, y: 100 },
+          { x: startTime, y: 100 },
+          { x: startTime, y: 10 },
+        ],
+        dataType: DataType.NUMBER,
+      },
+    ];
+    visitDynamicWidget(cy, {
+      componentTag: 'sc-heatmap',
+      viewportStart: START,
+      viewportEnd: END,
+      dataStreams,
+      legend: {
+        position: LEGEND_POSITION.BOTTOM,
+        width: 100,
+        legendLabels: {
+          title: 'Number of data points',
+        },
+      },
     });
 
     cy.waitForChart();

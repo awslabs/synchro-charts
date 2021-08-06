@@ -105,13 +105,12 @@ export const getBucketColor = ({
 }): number[] => {
   const { minHeatValue, maxHeatValue } = heatValues;
   const { bucketHeatValue } = heatValues[xBucket][yBucket];
-  const scaledBucketCount = bucketHeatValue - minHeatValue;
   const heatValueRange = Math.min(maxHeatValue - minHeatValue + 1, MAX_NUM_OF_COLORS_SEQUENTIAL);
   const numOfColors = colorPalette.r.length;
 
   if (bucketHeatValue === maxHeatValue) {
     return [colorPalette.r[numOfColors - 1], colorPalette.g[numOfColors - 1], colorPalette.b[numOfColors - 1]];
   }
-  const index = Math.floor((scaledBucketCount / heatValueRange) * numOfColors);
+  const index = Math.floor(((bucketHeatValue - minHeatValue) / heatValueRange) * numOfColors);
   return [colorPalette.r[index], colorPalette.g[index], colorPalette.b[index]];
 };
