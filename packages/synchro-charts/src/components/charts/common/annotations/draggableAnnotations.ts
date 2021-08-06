@@ -2,7 +2,11 @@ import { select, event } from 'd3-selection';
 import { drag } from 'd3-drag';
 import { YAnnotation } from '../types';
 import { DataStream, ViewPort } from '../../../../utils/dataTypes';
-import { DRAGGABLE_HANDLE_SELECTOR } from './YAnnotations/YAnnotations';
+import {
+  DRAGGABLE_HANDLE_SELECTOR,
+  ANNOTATION_GROUP_SELECTOR_EDITABLE,
+  ANNOTATION_GROUP_SELECTOR,
+} from './YAnnotations/YAnnotations';
 
 export type DraggableAnnotationsOptions = {
   container: SVGElement;
@@ -52,6 +56,9 @@ const needAxisRescale = ({ annotationValue, viewport }: { annotationValue: numbe
   return annotationValue < lowerThreshold || annotationValue > upperThreshold;
 };
 
+const FOCUS_TRANSITION_TIME = 100; // milliseconds of the focus mode transition
+const FOCUS_OPACITY = 0.4;
+
 /**
  * Draggable Thresholds Feature
  */
@@ -74,6 +81,13 @@ export const draggable = ({
         select(this)
           .raise()
           .classed('active', true);
+
+        select(container)
+          .selectAll(`${ANNOTATION_GROUP_SELECTOR_EDITABLE},${ANNOTATION_GROUP_SELECTOR}`)
+          .filter(annotation => annotation !== yAnnotation)
+          .transition()
+          .duration(FOCUS_TRANSITION_TIME)
+          .attr('opacity', FOCUS_OPACITY);
       })
       .on('drag', function handleDragged(yAnnotation: unknown) {
         /** Drag Event */
@@ -101,6 +115,13 @@ export const draggable = ({
         onUpdate(axisRescale ? activeViewPort() : viewport, false, axisRescale, true);
 
         select(this).classed('active', false);
+
+        select(container)
+          .selectAll(`${ANNOTATION_GROUP_SELECTOR_EDITABLE},${ANNOTATION_GROUP_SELECTOR}`)
+          .transition()
+          .duration(FOCUS_TRANSITION_TIME)
+          .attr('opacity', 1);
+
         /** emit event updating annotation on mouse up */
         emitUpdatedWidgetConfiguration();
       }) as any
