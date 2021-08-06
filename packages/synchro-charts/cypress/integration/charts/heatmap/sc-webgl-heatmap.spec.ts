@@ -102,7 +102,7 @@ describe('heatmap', () => {
     cy.matchImageSnapshotOnCI();
   });
 
-  it.only('renders 1 negative bucket', () => {
+  it('renders 1 negative bucket', () => {
     visitDynamicWidget(cy, {
       componentTag: 'sc-heatmap',
       viewportStart: START,
