@@ -165,7 +165,7 @@ describe('heatmap', () => {
     cy.matchImageSnapshotOnCI();
   });
 
-  it('renders 1 negative bucket with full legend on the bottom', () => {
+  it('renders 2 buckets with full legend on the bottom', () => {
     const viewport: ViewPort = { start: new Date(2000, 0, 0), end: new Date(2000, 0, 1), yMin: 0, yMax: 100 };
     const startTime = viewport.start.getTime();
     const dataStreams = [
