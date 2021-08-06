@@ -21,7 +21,7 @@ export class ScLegend {
   @Prop() isLoading: boolean;
 
   getBar = (heatValues: HeatValueMap, legendWidth: number) => {
-    if (this.dataStreams.length === 0 || heatValues.minHeatValue === Infinity) {
+    if (heatValues.minHeatValue === Infinity) {
       return null;
     }
     const colorPalette = getSequential(heatValues);
@@ -62,7 +62,6 @@ export class ScLegend {
 
     const legendWidth =
       this.config.position === LEGEND_POSITION.BOTTOM ? LEGEND_WIDTH_HORIZONTAL : LEGEND_WIDTH_VERTICAL;
-    const barContainerWidth = `${legendWidth}px`;
 
     return (
       <div class="legend-container">
@@ -79,7 +78,7 @@ export class ScLegend {
             </div>
           ) : (
             <div>
-              <svg class="bar" style={{ width: barContainerWidth }}>
+              <svg class="bar" style={{ width: `${legendWidth}px` }}>
                 {this.getBar(heatValues, legendWidth)}
               </svg>
             </div>
