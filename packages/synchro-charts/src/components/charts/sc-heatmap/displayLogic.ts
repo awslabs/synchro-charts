@@ -4,14 +4,14 @@ import { getDistanceFromDuration } from '../common/getDistanceFromDuration';
 
 import {
   HORIZ_MARGIN_FACTOR,
-  NUM_OF_COLORS_SEQUENTIAL,
-  SEQUENTIAL_BASE_COLOR_INDEX,
+  MAX_NUM_OF_COLORS_SEQUENTIAL,
   DEFAULT_SEQUENTIAL_MIN,
   DEFAULT_SEQUENTIAL_MID,
   DEFAULT_SEQUENTIAL_MAX,
   BUCKET_COUNT,
   VERT_MARGIN_FACTOR,
 } from './heatmapConstants';
+import { HeatValueMap } from './heatmapUtil';
 
 export type HeatmapColorPalette = {
   r: number[];
@@ -52,22 +52,30 @@ export const getYBucketHeight = (viewport: ViewPort): number => {
 /**
  * Creates a gradient between the hex code of the min, mid, and max colors.
  */
-export const getSequential = ({
-  colorChoices = [DEFAULT_SEQUENTIAL_MIN, DEFAULT_SEQUENTIAL_MID, DEFAULT_SEQUENTIAL_MAX],
-}: {
-  colorChoices?: string[];
-} = {}): HeatmapColorPalette => {
+export const getSequential = (
+  heatValues: HeatValueMap,
+  colorChoices: string[] = [DEFAULT_SEQUENTIAL_MIN, DEFAULT_SEQUENTIAL_MID, DEFAULT_SEQUENTIAL_MAX]
+): HeatmapColorPalette => {
+  const { minHeatValue, maxHeatValue } = heatValues;
+  const numOfColors = Math.min(maxHeatValue - minHeatValue + 1, MAX_NUM_OF_COLORS_SEQUENTIAL);
   const heatmapColor: HeatmapColorPalette = { r: [], g: [], b: [] };
   const colorRGBArray = colorChoices.map(hexColor => getCSSColorByString(hexColor));
 
-  let colorRatio = 1 / SEQUENTIAL_BASE_COLOR_INDEX;
-  let colorRatioIncrement = 1 / SEQUENTIAL_BASE_COLOR_INDEX;
+  if (minHeatValue === maxHeatValue) {
+    const lastColorIndex = colorRGBArray.length - 1;
+    const [r, g, b] = colorRGBArray[lastColorIndex];
+    return { r: [r], g: [g], b: [b] };
+  }
+
+  const switchColor = Math.ceil(numOfColors / (colorChoices.length - 1));
+  let colorRatio = 1 / switchColor;
+  const colorRatioIncrement = 1 / switchColor;
   let colorArrayIndex = 0;
-  for (let i = 0; i < NUM_OF_COLORS_SEQUENTIAL; i += 1) {
-    if (i === SEQUENTIAL_BASE_COLOR_INDEX) {
-      colorRatioIncrement = 1 / (NUM_OF_COLORS_SEQUENTIAL - SEQUENTIAL_BASE_COLOR_INDEX);
-      colorRatio = colorRatioIncrement;
+
+  for (let i = 0; i < numOfColors; i += 1) {
+    if (i !== 0 && i % switchColor === 0) {
       colorArrayIndex += 1;
+      colorRatio = colorRatioIncrement;
     }
     heatmapColor.r[i] =
       colorRatio * colorRGBArray[colorArrayIndex + 1][0] + (1 - colorRatio) * colorRGBArray[colorArrayIndex][0];
@@ -84,18 +92,26 @@ export const getSequential = ({
  * Returns the color of the bucket based on the number of points in the bucket and the
  * total possible number of points that can be in a bucket.
  */
-export const getBucketColor = (
-  colorArray: HeatmapColorPalette,
-  countInBucket: number,
-  totalPossiblePoints: number
-): number[] => {
-  if (countInBucket === totalPossiblePoints) {
-    return [
-      colorArray.r[NUM_OF_COLORS_SEQUENTIAL - 1],
-      colorArray.g[NUM_OF_COLORS_SEQUENTIAL - 1],
-      colorArray.b[NUM_OF_COLORS_SEQUENTIAL - 1],
-    ];
+export const getBucketColor = ({
+  heatValues,
+  xBucket,
+  yBucket,
+  colorPalette,
+}: {
+  heatValues: HeatValueMap;
+  xBucket: string;
+  yBucket: string;
+  colorPalette: HeatmapColorPalette;
+}): number[] => {
+  const { minHeatValue, maxHeatValue } = heatValues;
+  const { bucketHeatValue } = heatValues[xBucket][yBucket];
+  const scaledBucketCount = bucketHeatValue - minHeatValue;
+  const heatValueRange = Math.min(maxHeatValue - minHeatValue + 1, MAX_NUM_OF_COLORS_SEQUENTIAL);
+  const numOfColors = colorPalette.r.length;
+
+  if (bucketHeatValue === maxHeatValue) {
+    return [colorPalette.r[numOfColors - 1], colorPalette.g[numOfColors - 1], colorPalette.b[numOfColors - 1]];
   }
-  const index = Math.floor((countInBucket / totalPossiblePoints) * NUM_OF_COLORS_SEQUENTIAL);
-  return [colorArray.r[index], colorArray.g[index], colorArray.b[index]];
+  const index = Math.floor((scaledBucketCount / heatValueRange) * numOfColors);
+  return [colorPalette.r[index], colorPalette.g[index], colorPalette.b[index]];
 };

@@ -1,10 +1,10 @@
 import { Component, h, Prop } from '@stencil/core';
 import { LegendConfig } from '../common/types';
 import { DataStream, ViewPort } from '../../../utils/dataTypes';
-import { COLOR_PALETTE } from './heatmapMesh';
 import { calcHeatValues, getXBucketRange, HeatValueMap } from './heatmapUtil';
-import { BUCKET_COUNT, NUM_OF_COLORS_SEQUENTIAL } from './heatmapConstants';
+import { BUCKET_COUNT } from './heatmapConstants';
 import { LEGEND_POSITION } from '../common/constants';
+import { getSequential } from './displayLogic';
 
 const LEGEND_WIDTH_HORIZONTAL = 240;
 const LEGEND_WIDTH_VERTICAL = 150;
@@ -21,36 +21,26 @@ export class ScLegend {
   @Prop() isLoading: boolean;
 
   getBar = (heatValues: HeatValueMap, legendWidth: number) => {
-    if (heatValues == null || this.dataStreams.length === 0 || heatValues.minHeatValue === Infinity) {
+    if (this.dataStreams.length === 0 || heatValues.minHeatValue === Infinity) {
       return null;
     }
-    const { minHeatValue, maxHeatValue } = heatValues;
-    const heatValueRange = maxHeatValue - minHeatValue + 1;
-    const numOfBars = Math.min(heatValueRange, NUM_OF_COLORS_SEQUENTIAL);
+    const colorPalette = getSequential(heatValues);
+    const numOfBars = colorPalette.r.length;
     const barLength = legendWidth / numOfBars;
-    const barArray = new Array(numOfBars);
-    let barIndex = numOfBars === 8 ? 0 : 1;
 
-    for (let index = 0; index < barArray.length; index += 1) {
+    return new Array(numOfBars).fill(null).map((value, index) => {
       const currentBarX = index * barLength;
-      const colorIndex = Math.min(
-        Math.floor((barIndex / numOfBars) * NUM_OF_COLORS_SEQUENTIAL),
-        NUM_OF_COLORS_SEQUENTIAL - 1
-      );
-
-      barArray[index] = (
+      return (
         <rect
           x={currentBarX}
           width={barLength}
           height="10"
           style={{
-            fill: `rgb(${COLOR_PALETTE.r[colorIndex]},${COLOR_PALETTE.g[colorIndex]},${COLOR_PALETTE.b[colorIndex]})`,
+            fill: `rgb(${colorPalette.r[index]},${colorPalette.g[index]},${colorPalette.b[index]})`,
           }}
         />
       );
-      barIndex += 1;
-    }
-    return barArray;
+    });
   };
 
   render() {

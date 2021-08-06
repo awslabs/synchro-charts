@@ -1,15 +1,11 @@
 import { clipSpaceConversion } from '../sc-webgl-base-chart/clipSpaceConversion';
 import { HeatmapColorPalette, getXBucketWidth, getBucketColor, getSequential, getYBucketHeight } from './displayLogic';
-import { NUM_OF_COLORS_SEQUENTIAL } from './heatmapConstants';
-import { MONTH_IN_MS, DAY_IN_MS } from '../../../utils/time';
+import { MONTH_IN_MS } from '../../../utils/time';
+import { HeatValueMap } from './heatmapUtil';
+import { MAX_NUM_OF_COLORS_SEQUENTIAL } from './heatmapConstants';
 
 const VIEW_PORT = { start: new Date(2000, 0), end: new Date(2000, 1, 0), yMin: 0, yMax: 100 };
 const toClipSpace = clipSpaceConversion(VIEW_PORT);
-const COLOR_PALLETE: HeatmapColorPalette = getSequential();
-
-const TOTAL_NUM_POINTS_MIN = DAY_IN_MS / 1000;
-const THREE_DATA_STREAM = 3;
-const TOTAL_POSSIBLE_POINT = TOTAL_NUM_POINTS_MIN * THREE_DATA_STREAM;
 
 describe('getXBucketWidth', () => {
   it('width of the bar is in between the view port', () => {
@@ -35,29 +31,105 @@ describe.each`
 });
 
 describe('getSequential', () => {
-  it('returns a color palette', () => {
-    expect(COLOR_PALLETE.r.length).toBe(NUM_OF_COLORS_SEQUENTIAL);
-    expect(COLOR_PALLETE.g.length).toBe(NUM_OF_COLORS_SEQUENTIAL);
-    expect(COLOR_PALLETE.b.length).toBe(NUM_OF_COLORS_SEQUENTIAL);
+  it('returns a color palette with 1 color', () => {
+    const tempHeatValues: HeatValueMap = { minHeatValue: 1, maxHeatValue: 1 };
+    const colorPalette = getSequential(tempHeatValues);
+    expect(colorPalette.r.length).toBe(1);
+    expect(colorPalette.g.length).toBe(1);
+    expect(colorPalette.b.length).toBe(1);
+  });
+
+  it('returns a color palette with 2 colors', () => {
+    const tempHeatValues: HeatValueMap = { minHeatValue: 1, maxHeatValue: 2 };
+    const colorPalette = getSequential(tempHeatValues);
+    expect(colorPalette.r.length).toBe(2);
+    expect(colorPalette.g.length).toBe(2);
+    expect(colorPalette.b.length).toBe(2);
+  });
+
+  it('returns a color palette with 4 colors', () => {
+    const tempHeatValues: HeatValueMap = { minHeatValue: 1, maxHeatValue: 4 };
+    const colorPalette = getSequential(tempHeatValues);
+    expect(colorPalette.r.length).toBe(4);
+    expect(colorPalette.g.length).toBe(4);
+    expect(colorPalette.b.length).toBe(4);
+  });
+
+  it('returns a color palette with 7 colors', () => {
+    const tempHeatValues: HeatValueMap = { minHeatValue: 1, maxHeatValue: 7 };
+    const colorPalette = getSequential(tempHeatValues);
+    expect(colorPalette.r.length).toBe(7);
+    expect(colorPalette.g.length).toBe(7);
+    expect(colorPalette.b.length).toBe(7);
+  });
+
+  it('returns a color palette with maximum number of colors', () => {
+    const tempHeatValues: HeatValueMap = { minHeatValue: 1, maxHeatValue: 10 };
+    const colorPalette = getSequential(tempHeatValues);
+    expect(colorPalette.r.length).toBe(MAX_NUM_OF_COLORS_SEQUENTIAL);
+    expect(colorPalette.g.length).toBe(MAX_NUM_OF_COLORS_SEQUENTIAL);
+    expect(colorPalette.b.length).toBe(MAX_NUM_OF_COLORS_SEQUENTIAL);
   });
 });
 
 describe('getBucketColor', () => {
   it('returns lowest opacity', () => {
-    const lowestOpacityRGB = [COLOR_PALLETE.r[0], COLOR_PALLETE.g[0], COLOR_PALLETE.b[0]];
-    const rgb = getBucketColor(COLOR_PALLETE, TOTAL_POSSIBLE_POINT / 8 - 1, TOTAL_POSSIBLE_POINT);
+    const tempHeatValues: HeatValueMap = {
+      minHeatValue: 1,
+      maxHeatValue: 10,
+      '123': {
+        '1': {
+          bucketHeatValue: 1,
+          streamCount: {
+            'data-stream-1': 1,
+          },
+        },
+      },
+    };
+    const colorPalette: HeatmapColorPalette = getSequential(tempHeatValues);
+
+    const lowestOpacityRGB = [colorPalette.r[0], colorPalette.g[0], colorPalette.b[0]];
+    const rgb = getBucketColor({ heatValues: tempHeatValues, xBucket: '123', yBucket: '1', colorPalette });
     expect(rgb).toEqual(lowestOpacityRGB);
   });
 
   it('returns middle opacity', () => {
-    const midOpacityRGB = [COLOR_PALLETE.r[4], COLOR_PALLETE.g[4], COLOR_PALLETE.b[4]];
-    const rgb = getBucketColor(COLOR_PALLETE, (TOTAL_POSSIBLE_POINT / 8) * 5 - 1, TOTAL_POSSIBLE_POINT);
+    const tempHeatValues: HeatValueMap = {
+      minHeatValue: 1,
+      maxHeatValue: 9,
+      '123': {
+        '1': {
+          bucketHeatValue: 4,
+          streamCount: {
+            'data-stream-1': 4,
+          },
+        },
+      },
+    };
+    const colorPalette: HeatmapColorPalette = getSequential(tempHeatValues);
+
+    const midOpacityRGB = [colorPalette.r[3], colorPalette.g[3], colorPalette.b[3]];
+    const rgb = getBucketColor({ heatValues: tempHeatValues, xBucket: '123', yBucket: '1', colorPalette });
     expect(rgb).toEqual(midOpacityRGB);
   });
 
   it('returns darkest opacity', () => {
-    const darkestOpacityRGB = [COLOR_PALLETE.r[7], COLOR_PALLETE.g[7], COLOR_PALLETE.b[7]];
-    const rgb = getBucketColor(COLOR_PALLETE, TOTAL_POSSIBLE_POINT, TOTAL_POSSIBLE_POINT);
-    expect(rgb).toEqual(darkestOpacityRGB);
+    const tempHeatValues: HeatValueMap = {
+      minHeatValue: 1,
+      maxHeatValue: 9,
+      '123': {
+        '1': {
+          bucketHeatValue: 9,
+          streamCount: {
+            'data-stream-1': 9,
+          },
+        },
+      },
+    };
+    const colorPalette: HeatmapColorPalette = getSequential(tempHeatValues);
+
+    const midOpacityRGB = [colorPalette.r[7], colorPalette.g[7], colorPalette.b[7]];
+    const rgb = getBucketColor({ heatValues: tempHeatValues, xBucket: '123', yBucket: '1', colorPalette });
+    expect(rgb).toEqual(midOpacityRGB);
   });
 });

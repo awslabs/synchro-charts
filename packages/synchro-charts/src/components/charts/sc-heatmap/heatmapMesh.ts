@@ -41,8 +41,6 @@ export type HeatmapBucketMesh = InstancedMesh & { geometry: BucketBufferGeometry
 export const NUM_POSITION_COMPONENTS = 2; // (x, y)
 const NUM_COLOR_COMPONENTS = 3; // (r, g, b)
 
-export const COLOR_PALETTE = getSequential();
-
 const updateMesh = ({
   mesh,
   toClipSpace,
@@ -62,6 +60,7 @@ const updateMesh = ({
   let colorIndex = 0;
   let totalNumBuckets = 0;
 
+  const colorPalette = getSequential(heatValues);
   const xBucketRange = getXBucketRange(viewport);
 
   Object.keys(heatValues).forEach((xAxisBucketStart: string) => {
@@ -70,11 +69,12 @@ const updateMesh = ({
       bucket.array[positionIndex] = toClipSpace(+xAxisBucketStart + xBucketRange);
       bucket.array[positionIndex + 1] = yMin + +bucketIndex * ((yMax - yMin) / BUCKET_COUNT);
 
-      const [r, g, b] = getBucketColor(
-        COLOR_PALETTE,
-        heatValues[xAxisBucketStart][bucketIndex].bucketHeatValue - heatValues.minHeatValue + 1,
-        heatValues.maxHeatValue - heatValues.minHeatValue + 1
-      );
+      const [r, g, b] = getBucketColor({
+        heatValues,
+        xBucket: xAxisBucketStart,
+        yBucket: bucketIndex,
+        colorPalette,
+      });
       color.array[colorIndex] = r;
       color.array[colorIndex + 1] = g;
       color.array[colorIndex + 2] = b;
