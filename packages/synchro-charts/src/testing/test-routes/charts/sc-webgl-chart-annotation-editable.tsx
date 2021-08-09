@@ -1,8 +1,10 @@
-import { Component, h, State } from '@stencil/core';
-import { Threshold, YAnnotation } from '../../../components/charts/common/types';
+import { Component, h, Listen, State } from '@stencil/core';
+import { Annotations, ChartConfig, Threshold, YAnnotation } from '../../../components/charts/common/types';
 import { COMPARISON_OPERATOR } from '../../../components/charts/common/constants';
 import { DataPoint } from '../../../utils/dataTypes';
 import { DataType } from '../../../utils/dataConstants';
+
+type WidgetUpdatedEvent = CustomEvent<Partial<ChartConfig>>;
 
 const X_MIN = new Date(1998, 0, 0);
 const X_MAX = new Date(2001, 0, 1);
@@ -58,13 +60,81 @@ const Y_ANNOTATION: YAnnotation = {
 export class ScWebglChartAnnotationRescaling {
   @State() isEditableValue: boolean = false;
   @State() isShowValue: boolean = true;
+  @State() annotations: Annotations | undefined = {
+    x: [
+      {
+        value: new Date((X_MAX.getTime() + X_MIN.getTime()) / 2),
+        label: {
+          text: 'here is a x label',
+          show: true,
+        },
+        showValue: true,
+        color: 'purple',
+      },
+    ],
+    y: [
+      {
+        ...Y_ANNOTATION,
+        isEditable: !this.isEditableValue,
+        showValue: this.isShowValue,
+      },
+      {
+        ...Y_THRESHOLD,
+        isEditable: !this.isEditableValue,
+        showValue: !this.isShowValue,
+      },
+      {
+        ...Y_ANNOTATION,
+        isEditable: this.isEditableValue,
+        value: 2300,
+        color: 'red',
+        showValue: this.isShowValue,
+        id: 'red-annotation',
+      },
+    ],
+  };
+
+  @Listen('widgetUpdated')
+  onWidgetUpdated({ detail: configUpdate }: WidgetUpdatedEvent) {
+    this.annotations = configUpdate.annotations;
+    console.log(configUpdate.annotations);
+  }
+
+  componentDidLoad() {
+    setInterval(this.changeValue, 2000);
+  }
+
+  changeValue = () => {
+    console.log('received fake old datastream value (old annotations)');
+    const { y } = this.annotations!;
+    this.annotations = {
+      ...this.annotations,
+      y: (y as YAnnotation[]).map(annotation => {
+        return { ...annotation, value: 3000 };
+      }),
+    };
+    // const oldAnnotations = this.annotations;
+    // this.annotations = oldAnnotations;
+  };
 
   onEditableChange = () => {
-    this.isEditableValue = !this.isEditableValue;
+    const { y } = this.annotations!;
+    this.annotations = {
+      ...this.annotations,
+      y: (y as YAnnotation[]).map(annotation => {
+        return { ...annotation, isEditable: !annotation.isEditable };
+      }),
+    };
   };
 
   onShowValueChange = () => {
-    this.isShowValue = !this.isShowValue;
+    const { y } = this.annotations!;
+    this.annotations = {
+      ...this.annotations,
+      y: (y as YAnnotation[]).map(annotation => {
+        return { ...annotation, showValue: !annotation.showValue };
+      }),
+    };
   };
 
   render() {
@@ -101,39 +171,7 @@ export class ScWebglChartAnnotationRescaling {
                 dataType: DataType.NUMBER,
               },
             ]}
-            annotations={{
-              x: [
-                {
-                  value: new Date((X_MAX.getTime() + X_MIN.getTime()) / 2),
-                  label: {
-                    text: 'here is a x label',
-                    show: true,
-                  },
-                  showValue: true,
-                  color: 'purple',
-                },
-              ],
-              y: [
-                {
-                  ...Y_ANNOTATION,
-                  isEditable: !this.isEditableValue,
-                  showValue: this.isShowValue,
-                },
-                {
-                  ...Y_THRESHOLD,
-                  isEditable: !this.isEditableValue,
-                  showValue: !this.isShowValue,
-                },
-                {
-                  ...Y_ANNOTATION,
-                  isEditable: this.isEditableValue,
-                  value: 2300,
-                  color: 'red',
-                  showValue: this.isShowValue,
-                  id: 'red-annotation',
-                },
-              ],
-            }}
+            annotations={this.annotations}
             viewport={{ start: X_MIN, end: X_MAX }}
             size={{
               height: 1000,

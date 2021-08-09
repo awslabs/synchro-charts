@@ -143,7 +143,7 @@ export class ScWebglBaseChart {
   private thresholdContainer: SVGElement;
   private trendContainer: SVGElement;
   private axisContainer: SVGElement;
-  private axisRenderer = renderAxis();
+  private axisRenderer = renderAxis(); // TODO -ANTHONY TAKE A LOOK AT THIS!
 
   componentDidLoad() {
     this.setupChartScene();
