@@ -56,7 +56,7 @@ const needAxisRescale = ({ annotationValue, viewport }: { annotationValue: numbe
   return annotationValue < lowerThreshold || annotationValue > upperThreshold;
 };
 
-const FOCUS_TRANSITION_TIME = 100; // milliseconds of the focus mode transition
+export const FOCUS_TRANSITION_TIME = 100; // milliseconds of the focus mode transition
 const FOCUS_OPACITY = 0.4;
 
 /**

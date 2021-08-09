@@ -1,6 +1,7 @@
 /// <reference types="cypress" />
 
 import { SECOND_IN_MS } from '../../../src/utils/time';
+import { FOCUS_TRANSITION_TIME } from '../../../src/components/charts/common/annotations/draggableAnnotations';
 
 export function moveHandle(selector: string, x: number, y: number) {
   cy.window().then(win => {
@@ -8,6 +9,7 @@ export function moveHandle(selector: string, x: number, y: number) {
     cy.get(selector)
       .trigger('mousemove', { clientX: x, clientY: y, force: true, view: win })
       .trigger('mouseup', { force: true, view: win });
+    cy.wait(2 * FOCUS_TRANSITION_TIME);
   });
 }
 
@@ -20,6 +22,7 @@ export function moveHandleFilter(selector: string, filter: string, x: number, y:
       .filter(filter)
       .trigger('mousemove', { clientX: x, clientY: y, force: true, view: win })
       .trigger('mouseup', { force: true, view: win });
+    cy.wait(2 * FOCUS_TRANSITION_TIME);
   });
 }
 
