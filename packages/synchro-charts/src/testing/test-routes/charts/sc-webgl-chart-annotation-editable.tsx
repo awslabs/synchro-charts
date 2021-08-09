@@ -54,6 +54,8 @@ const Y_ANNOTATION: YAnnotation = {
   id: 'green-anotation',
 };
 
+let oldAnnotations: Annotations | undefined;
+
 @Component({
   tag: 'sc-webgl-chart-annotation-editable',
 })
@@ -97,10 +99,11 @@ export class ScWebglChartAnnotationRescaling {
   @Listen('widgetUpdated')
   onWidgetUpdated({ detail: configUpdate }: WidgetUpdatedEvent) {
     this.annotations = configUpdate.annotations;
-    console.log(configUpdate.annotations);
+    oldAnnotations = this.annotations;
   }
 
   componentDidLoad() {
+    oldAnnotations = this.annotations;
     setInterval(this.changeValue, 2000);
   }
 
@@ -110,11 +113,12 @@ export class ScWebglChartAnnotationRescaling {
     this.annotations = {
       ...this.annotations,
       y: (y as YAnnotation[]).map(annotation => {
-        return { ...annotation, value: 3000 };
+        return {
+          ...annotation,
+          value: oldAnnotations!.y!.find(oldannotation => oldannotation.id === annotation.id)!.value,
+        };
       }),
     };
-    // const oldAnnotations = this.annotations;
-    // this.annotations = oldAnnotations;
   };
 
   onEditableChange = () => {
