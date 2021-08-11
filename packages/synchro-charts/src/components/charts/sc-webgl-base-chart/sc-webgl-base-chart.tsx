@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, h, Listen, Prop, State, Watch } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
 
 import isEqual from 'lodash.isequal';
 import throttle from 'lodash.throttle';
