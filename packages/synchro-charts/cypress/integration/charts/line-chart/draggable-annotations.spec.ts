@@ -111,7 +111,7 @@ it('changing isEditable updates draggable annotations', () => {
   });
 });
 
-it.only('drags properly without snapping back even if outdated annotation is passed in', () => {
+it('drags properly without snapping back even if outdated annotation is passed in', () => {
   cy.visit(root);
   cy.waitForChart();
 
