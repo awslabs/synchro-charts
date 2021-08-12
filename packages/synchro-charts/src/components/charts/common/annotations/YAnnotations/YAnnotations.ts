@@ -94,15 +94,7 @@ export const renderYAnnotationsEditable = ({
     .style('pointer-events', 'auto')
     .style('stroke', getColor)
     .style('stroke-width', ANNOTATION_STROKE_WIDTH)
-    .style('fill-opacity', 0);
-
-  /** Update Draggable Annotation Handle Rectangle */
-  annotationSelectionEditable
-    .select(DRAGGABLE_HANDLE_SELECTOR)
-    .attr('y', getYAnnotationHandleY)
-    .attr('x', width + HANDLE_OFFSET_X)
-    .attr('width', getYHandleWidth)
-    .style('stroke', getColor);
+    .style('fill', 'white');
 
   /** Create Sub Group for all elements except drag handle */
   const handleGroup = annotationGroupEditable
@@ -205,6 +197,17 @@ export const renderYAnnotationsEditable = ({
     .select(DRAGGABLE_LINE_TWO_SELECTOR)
     .attr('x1', getDraggableLineTwoX)
     .attr('x2', getDraggableLineTwoX);
+
+  /** Update Draggable Annotation Handle Rectangle */
+  annotationSelectionEditable
+    .select(DRAGGABLE_HANDLE_SELECTOR)
+    .attr('y', getYAnnotationHandleY)
+    .attr('x', width + HANDLE_OFFSET_X)
+    .attr('width', getYHandleWidth)
+    .style('stroke', getColor);
+
+  // Note: the order in which we render the elements matters
+  // the draggable handle MUST be rendered first in order to be at the bottom and not cover up any other draggable annotation elements
 
   /** Exit */
   annotationSelectionEditable.exit().remove();
