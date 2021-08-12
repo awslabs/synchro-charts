@@ -141,7 +141,6 @@ export class ScWebglBaseChart {
   componentDidLoad() {
     this.setupChartScene();
     this.isMounted = true;
-    // this.internalAnnotations = this.annotations; // DO NOT update state during componentDidLoad
   }
 
   componentWillLoad() {
@@ -151,7 +150,7 @@ export class ScWebglBaseChart {
   }
 
   componentShouldUpdate() {
-    // must be shouldUpdate otherwise
+    // We must make this dragging check in shouldUpdate
     if (!this.isDragging) {
       this.internalAnnotations = this.annotations;
     }

@@ -104,7 +104,7 @@ export class ScWebglChartAnnotationRescaling {
 
   componentDidLoad() {
     oldAnnotations = this.annotations;
-    setInterval(this.changeValue, 2000);
+    setInterval(this.changeValue, 1000);
   }
 
   changeValue = () => {
