@@ -3,9 +3,13 @@ To communicate any changes triggered from the widgets internally, the widget wil
 
 ### `widgetUpdated`
 
-An event fired when via a widget, the configuration has been altered.
+An event fired when the configuration of a widget is altered.
 
-Currently, this event is only fired when titles of a widget are altered.
+Currently, this event is only fired when 
+
+  1. The name of a `dataStream` is updated from within the legend 
+
+  2. A y-annotation is dragged to a new value 
 
 ### `dateRangeChange`
 
