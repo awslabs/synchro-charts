@@ -98,7 +98,6 @@ export class ScWebglChartAnnotationRescaling {
 
   @Listen('widgetUpdated')
   onWidgetUpdated({ detail: configUpdate }: WidgetUpdatedEvent) {
-    console.log(configUpdate.annotations);
     this.annotations = configUpdate.annotations;
     oldAnnotations = this.annotations;
   }
@@ -109,7 +108,6 @@ export class ScWebglChartAnnotationRescaling {
   }
 
   changeValue = () => {
-    console.log('received fake old datastream value (old annotations)');
     // this.annotations = oldAnnotations; //passed by reference so this doesn't work since draggable will modify oldAnnotations
     // this mimics the seperate annotation state of the app and the SC layer
     const { y } = this.annotations!;
