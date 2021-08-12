@@ -384,14 +384,6 @@ export class Demo extends React.Component {
     return CHART_OPTIONS.find(item => item.id === componentTag).text
   }
 
-  comparatorOptions = () => {
-    return COMPARISON_OPTIONS;
-  }
-
-  draggableOptions = () => {
-    return DRAGGABLE_OPTIONS;
-  }
-
   currentComparatorOption = () => {
     const { annotationComp } = this.state;
 
@@ -403,8 +395,6 @@ export class Demo extends React.Component {
 
     return DRAGGABLE_OPTIONS.find(item => item.id === annotationEditable).text;
   }
-
-
 
   render() {
     const ChartName = components[this.state.componentTag];
@@ -476,12 +466,12 @@ export class Demo extends React.Component {
                   />
                 </td>
                 <td>
-                  <ButtonDropdown items={this.comparatorOptions()} onItemClick={this.changeAnnotationComparator}>
+                  <ButtonDropdown items={COMPARISON_OPTIONS} onItemClick={this.changeAnnotationComparator}>
                     {this.currentComparatorOption()}
                   </ButtonDropdown>
                 </td>
                 <td>
-                  <ButtonDropdown items={this.draggableOptions()} onItemClick={this.changeAnnotationEditable}>
+                  <ButtonDropdown items={DRAGGABLE_OPTIONS} onItemClick={this.changeAnnotationEditable}>
                     {this.currentDraggableOption()}
                   </ButtonDropdown>
                 </td>
