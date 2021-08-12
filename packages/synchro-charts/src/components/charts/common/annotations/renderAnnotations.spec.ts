@@ -44,6 +44,8 @@ const render = (props: Partial<RenderAnnotationsOptions>, page: SpecPage) => {
     onUpdate: () => {},
     activeViewPort: () => VIEWPORT,
     emitUpdatedWidgetConfiguration: () => {},
+    draggable: () => {},
+    startStopDragging: () => {},
   };
 
   renderAnnotations({

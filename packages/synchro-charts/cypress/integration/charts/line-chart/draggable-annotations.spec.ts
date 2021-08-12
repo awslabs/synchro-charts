@@ -9,6 +9,7 @@ import {
   DRAGGABLE_HANDLE_SELECTOR,
   ELEMENT_GROUP_SELECTOR,
 } from '../../../../src/components/charts/common/annotations/YAnnotations/YAnnotations';
+import { FOCUS_TRANSITION_TIME } from '../../../../src/components/charts/common/annotations/draggableAnnotations';
 
 const X_MIN = new Date(1998, 0, 0);
 const X_MAX = new Date(2001, 0, 1);
@@ -107,6 +108,56 @@ it('changing isEditable updates draggable annotations', () => {
     })
   ).then(() => {
     cy.matchImageSnapshotOnCI();
+  });
+});
+
+it('drags properly without snapping back even if outdated annotation is passed in', () => {
+  cy.visit(root);
+  cy.waitForChart();
+
+  const moveThird = 200;
+  const selector = DRAGGABLE_HANDLE_SELECTOR;
+  const waitTime = 3 * 1000; // we wait 3 s which will allow 2 instances of outdated annotations to be passed in
+  const handleFilter = '[style*="stroke: green;"]';
+  const textFilter = '[style*="fill: green;"]';
+
+  cy.window().then(win => {
+    cy.get(selector)
+      .filter(handleFilter)
+      .trigger('mousedown', { which: 1, button: 0, force: true, view: win });
+    cy.get(selector)
+      .filter(handleFilter)
+      .trigger('mousemove', { clientX: 0, clientY: moveThird, force: true, view: win });
+    cy.wait(waitTime);
+
+    cy.matchImageSnapshot(); // also doubles as test for focus mode
+
+    cy.get('g.y-annotation-editable > g.y-elements-group > text.y-value-text')
+      .filter(textFilter)
+      .should('have.text', '3980');
+
+    cy.get(DRAGGABLE_HANDLE_SELECTOR)
+      .filter(handleFilter)
+      .invoke('attr', 'y')
+      .then(str => parseFloat(str!))
+      .should('be.gte', 130)
+      .should('be.lte', 232);
+
+    cy.get(selector)
+      .filter(handleFilter)
+      .trigger('mouseup', { force: true, view: win });
+    cy.wait(2 * FOCUS_TRANSITION_TIME);
+
+    cy.get('g.y-annotation-editable > g.y-elements-group > text.y-value-text')
+      .filter(textFilter)
+      .should('have.text', '3980');
+
+    cy.get(DRAGGABLE_HANDLE_SELECTOR)
+      .filter(handleFilter)
+      .invoke('attr', 'y')
+      .then(str => parseFloat(str!))
+      .should('be.gte', 130)
+      .should('be.lte', 232);
   });
 });
 
@@ -245,14 +296,14 @@ it('annotation with hidden value is draggable', () => {
   cy.get(DRAGGABLE_HANDLE_SELECTOR)
     .invoke('attr', 'y')
     .then(str => parseFloat(str!))
-    .should('be.gte', 32)
-    .should('be.lte', 34);
+    .should('be.gte', 35)
+    .should('be.lte', 37);
 
   cy.get(ELEMENT_GROUP_SELECTOR)
     .invoke('attr', 'transform')
     .then(str => parseTransformYValue(str!))
-    .should('be.gte', 43)
-    .should('be.lte', 45);
+    .should('be.gte', 46)
+    .should('be.lte', 48);
 });
 
 it('allows independent dragging of multiple annotations', () => {

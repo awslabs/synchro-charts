@@ -20,6 +20,7 @@ export type DraggableAnnotationsOptions = {
   ) => void;
   activeViewPort: () => ViewPort;
   emitUpdatedWidgetConfiguration: (dataStreams?: DataStream[]) => void;
+  startStopDragging: (dragState: boolean) => void;
 };
 
 /**
@@ -62,68 +63,81 @@ const FOCUS_OPACITY = 0.4;
 /**
  * Draggable Thresholds Feature
  */
-export const draggable = ({
-  container,
-  viewport,
-  size,
-  onUpdate,
-  activeViewPort,
-  emitUpdatedWidgetConfiguration,
-}: DraggableAnnotationsOptions): void => {
-  const containerSelection = select(container);
-  const thresholdGroup = containerSelection.selectAll(DRAGGABLE_HANDLE_SELECTOR);
-  thresholdGroup.call(
-    drag()
-      .on('start', function dragStarted(yAnnotation: unknown) {
-        if (!(yAnnotation as YAnnotation).isEditable) {
-          return;
-        }
-        select(this)
-          .raise()
-          .classed('active', true);
 
-        select(container)
-          .selectAll(`${ANNOTATION_GROUP_SELECTOR_EDITABLE},${ANNOTATION_GROUP_SELECTOR}`)
-          .filter(annotation => annotation !== yAnnotation)
-          .transition()
-          .duration(FOCUS_TRANSITION_TIME)
-          .attr('opacity', FOCUS_OPACITY);
-      })
-      .on('drag', function handleDragged(yAnnotation: unknown) {
-        /** Drag Event */
-        const annotationDragged = yAnnotation as YAnnotation;
-        if (!annotationDragged.isEditable) {
-          return;
-        }
+export const attachDraggable = () => {
+  let draggedAnnotationValue: number | undefined; // this is necessary to prevent race condition (new annotation value) from occurring during the drag process
 
-        const { y: yPos } = event as { y: number };
-        annotationDragged.value = calculateNewThreshold({ yPos, viewport, size });
-        const axisRescale = needAxisRescale({ annotationValue: annotationDragged.value, viewport });
+  const draggable = ({
+    container,
+    viewport,
+    size,
+    onUpdate,
+    activeViewPort,
+    emitUpdatedWidgetConfiguration,
+    startStopDragging,
+  }: DraggableAnnotationsOptions): void => {
+    const containerSelection = select(container);
+    const thresholdGroup = containerSelection.selectAll(DRAGGABLE_HANDLE_SELECTOR);
+    thresholdGroup.call(
+      drag()
+        .on('start', function dragStarted(yAnnotation: unknown) {
+          const annotationDragged = yAnnotation as YAnnotation;
+          if (!annotationDragged.isEditable) {
+            return;
+          }
+          startStopDragging(true);
+          draggedAnnotationValue = +annotationDragged.value;
+          select(this)
+            .raise()
+            .classed('active', true);
 
-        onUpdate(axisRescale ? activeViewPort() : viewport, false, axisRescale, true);
-      })
-      .on('end', function dragEnded(yAnnotation: unknown) {
-        const annotationDragged = yAnnotation as YAnnotation;
-        if (!annotationDragged.isEditable) {
-          return;
-        }
+          select(container)
+            .selectAll(`${ANNOTATION_GROUP_SELECTOR_EDITABLE},${ANNOTATION_GROUP_SELECTOR}`)
+            .filter(annotation => annotation !== yAnnotation)
+            .transition()
+            .duration(FOCUS_TRANSITION_TIME)
+            .attr('opacity', FOCUS_OPACITY);
+        })
+        .on('drag', function handleDragged(yAnnotation: unknown) {
+          /** Drag Event */
+          const annotationDragged = yAnnotation as YAnnotation;
+          if (!annotationDragged.isEditable) {
+            return;
+          }
 
-        const { y: yPos } = event as { y: number };
-        annotationDragged.value = calculateNewThreshold({ yPos, viewport, size });
-        const axisRescale = needAxisRescale({ annotationValue: annotationDragged.value, viewport });
+          const { y: yPos } = event as { y: number };
+          const draggedValue = calculateNewThreshold({ yPos, viewport, size });
+          annotationDragged.value = draggedValue;
+          draggedAnnotationValue = draggedValue;
+          const axisRescale = needAxisRescale({ annotationValue: annotationDragged.value, viewport });
 
-        onUpdate(axisRescale ? activeViewPort() : viewport, false, axisRescale, true);
+          onUpdate(axisRescale ? activeViewPort() : viewport, false, axisRescale, true);
+        })
+        .on('end', function dragEnded(yAnnotation: unknown) {
+          const annotationDragged = yAnnotation as YAnnotation;
+          if (!annotationDragged.isEditable) {
+            return;
+          }
+          annotationDragged.value = draggedAnnotationValue
+            ? (draggedAnnotationValue as number)
+            : annotationDragged.value;
+          /** emit event updating annotation on mouse up */
+          emitUpdatedWidgetConfiguration();
+          const axisRescale = needAxisRescale({ annotationValue: annotationDragged.value as number, viewport });
+          onUpdate(axisRescale ? activeViewPort() : viewport, false, axisRescale, true);
 
-        select(this).classed('active', false);
+          select(this).classed('active', false);
 
-        select(container)
-          .selectAll(`${ANNOTATION_GROUP_SELECTOR_EDITABLE},${ANNOTATION_GROUP_SELECTOR}`)
-          .transition()
-          .duration(FOCUS_TRANSITION_TIME)
-          .attr('opacity', 1);
+          startStopDragging(false);
 
-        /** emit event updating annotation on mouse up */
-        emitUpdatedWidgetConfiguration();
-      }) as any
-  );
+          select(container)
+            .selectAll(`${ANNOTATION_GROUP_SELECTOR_EDITABLE},${ANNOTATION_GROUP_SELECTOR}`)
+            .transition()
+            .duration(FOCUS_TRANSITION_TIME)
+            .attr('opacity', 1);
+        }) as any
+    );
+  };
+
+  return draggable;
 };

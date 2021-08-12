@@ -50,6 +50,7 @@ import { getDataPoints } from '../../../utils/getDataPoints';
 import { StreamType } from '../../../utils/dataConstants';
 import { LEGEND_POSITION } from '../common/constants';
 import { getDataStreamForEventing } from '../common';
+import { attachDraggable } from '../common/annotations/draggableAnnotations';
 
 const MIN_WIDTH = 50;
 const MIN_HEIGHT = 50;
@@ -133,11 +134,31 @@ export class ScWebglBaseChart {
   private trendContainer: SVGElement;
   private axisContainer: SVGElement;
   private axisRenderer = renderAxis();
+  private draggable = attachDraggable();
+  private isDragging = false;
+  private internalAnnotations: Annotations;
 
   componentDidLoad() {
     this.setupChartScene();
     this.isMounted = true;
   }
+
+  componentWillLoad() {
+    if (!this.isDragging) {
+      this.internalAnnotations = this.annotations;
+    }
+  }
+
+  componentShouldUpdate() {
+    // We must make this dragging check in shouldUpdate
+    if (!this.isDragging) {
+      this.internalAnnotations = this.annotations;
+    }
+  }
+
+  startStopDragging = (dragState: boolean): void => {
+    this.isDragging = dragState;
+  };
 
   getAxisContainer = (): SVGElement => {
     if (!this.axisContainer) {
@@ -157,7 +178,7 @@ export class ScWebglBaseChart {
       scale: undefined,
       layout: undefined,
       legend: this.legend,
-      annotations: this.annotations,
+      annotations: this.internalAnnotations,
       axis: this.axis,
       widgetId: this.configId,
       dataStreams: dataStreams ? getDataStreamForEventing(dataStreams) : this.dataStreams,
@@ -289,7 +310,8 @@ export class ScWebglBaseChart {
 
   @Watch('annotations')
   onAnnotationsChange(newProp: Annotations, oldProp: Annotations) {
-    if (!isEqual(newProp, oldProp)) {
+    if (!isEqual(newProp, oldProp) && !this.isDragging) {
+      this.internalAnnotations = this.annotations; // need to update before onUpdate is triggered
       this.onUpdate(this.activeViewPort(), false, false, true);
     }
   }
@@ -389,7 +411,8 @@ export class ScWebglBaseChart {
       )
       .flat();
 
-    const yAnnotations = (this.annotations && Array.isArray(this.annotations.y) && this.annotations.y) || [];
+    const yAnnotations =
+      (this.internalAnnotations && Array.isArray(this.internalAnnotations.y) && this.internalAnnotations.y) || [];
 
     const { yMin, yMax } = getYRange({
       points: inViewPoints,
@@ -462,15 +485,15 @@ export class ScWebglBaseChart {
   };
 
   thresholds = (): Threshold[] =>
-    this.annotations && this.annotations.y ? this.annotations.y.filter(isThreshold) : [];
+    this.internalAnnotations && this.internalAnnotations.y ? this.internalAnnotations.y.filter(isThreshold) : [];
 
   getThresholdOptions = (): ThresholdOptions => {
     // If user did not pass in any threshold options, we just use default
-    if (this.annotations == null || this.annotations.thresholdOptions == null) {
+    if (this.internalAnnotations == null || this.internalAnnotations.thresholdOptions == null) {
       return DEFAULT_THRESHOLD_OPTIONS;
     }
 
-    const { thresholdOptions } = this.annotations;
+    const { thresholdOptions } = this.internalAnnotations;
     // if threshold option is a type of bool, it means that we either turn on all defaults or
     // disable all defaults.
     if (typeof thresholdOptions === 'boolean') {
@@ -586,7 +609,7 @@ export class ScWebglBaseChart {
      * Currently only supports rendering annotations for number data streams
      */
     if (!this.supportString) {
-      const numberAnnotations = getNumberAnnotations(this.annotations);
+      const numberAnnotations = getNumberAnnotations(this.internalAnnotations);
 
       renderAnnotations({
         container: this.getThresholdContainer(),
@@ -599,6 +622,8 @@ export class ScWebglBaseChart {
         onUpdate: this.onUpdate,
         activeViewPort: this.activeViewPort,
         emitUpdatedWidgetConfiguration: this.emitUpdatedWidgetConfiguration,
+        draggable: this.draggable,
+        startStopDragging: this.startStopDragging,
       });
     }
 
