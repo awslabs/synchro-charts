@@ -94,15 +94,7 @@ export const renderYAnnotationsEditable = ({
     .style('pointer-events', 'auto')
     .style('stroke', getColor)
     .style('stroke-width', ANNOTATION_STROKE_WIDTH)
-    .style('fill-opacity', 0);
-
-  /** Update Draggable Annotation Handle Rectangle */
-  annotationSelectionEditable
-    .select(DRAGGABLE_HANDLE_SELECTOR)
-    .attr('y', getYAnnotationHandleY)
-    .attr('x', width + HANDLE_OFFSET_X)
-    .attr('width', getYHandleWidth)
-    .style('stroke', getColor);
+    .style('fill', 'white');
 
   /** Create Sub Group for all elements except drag handle */
   const handleGroup = annotationGroupEditable
@@ -125,12 +117,12 @@ export const renderYAnnotationsEditable = ({
   handleGroup
     .append('text')
     .attr('display', getValueTextVisibility)
-    .attr('font-size', ANNOTATION_FONT_SIZE)
     .attr('class', 'y-value-text')
     .attr('x', width + Y_ANNOTATION_TEXT_LEFT_PADDING)
     .attr('text-anchor', 'start')
     .attr('y', Y_ANNOTATION_TEXT_PADDING)
     .text(annotation => getValueText({ annotation, resolution, viewport, formatText: true }))
+    .style('font-size', ANNOTATION_FONT_SIZE)
     .style('user-select', 'none')
     .style('pointer-events', 'none')
     .style('fill', getColor);
@@ -139,12 +131,12 @@ export const renderYAnnotationsEditable = ({
   handleGroup
     .append('text')
     .attr('display', getLabelTextVisibility)
-    .attr('font-size', ANNOTATION_FONT_SIZE)
     .attr('class', 'y-text')
     .attr('x', width - PADDING)
     .attr('text-anchor', 'end')
     .attr('y', -PADDING)
     .text(getText)
+    .style('font-size', ANNOTATION_FONT_SIZE)
     .style('user-select', 'none')
     .style('pointer-events', 'none')
     .style('fill', getColor);
@@ -205,6 +197,17 @@ export const renderYAnnotationsEditable = ({
     .select(DRAGGABLE_LINE_TWO_SELECTOR)
     .attr('x1', getDraggableLineTwoX)
     .attr('x2', getDraggableLineTwoX);
+
+  /** Update Draggable Annotation Handle Rectangle */
+  annotationSelectionEditable
+    .select(DRAGGABLE_HANDLE_SELECTOR)
+    .attr('y', getYAnnotationHandleY)
+    .attr('x', width + HANDLE_OFFSET_X)
+    .attr('width', getYHandleWidth)
+    .style('stroke', getColor);
+
+  // Note: the order in which we render the elements matters
+  // the draggable handle MUST be rendered first in order to be at the bottom and not cover up any other draggable annotation elements
 
   /** Exit */
   annotationSelectionEditable.exit().remove();
