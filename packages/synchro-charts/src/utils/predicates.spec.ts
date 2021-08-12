@@ -169,4 +169,24 @@ describe('isMinimalStaticViewPort', () => {
 
     expect(isMinimalStaticViewport(viewport)).toBeTrue();
   });
+
+  it('returns false when the end date is missing', () => {
+    const viewport: Omit<MinimalStaticViewport, 'end'> = {
+      yMin: 0,
+      yMax: 10,
+      start: new Date(),
+    };
+
+    expect(isMinimalStaticViewport((viewport as unknown) as MinimalLiveViewport)).toBeFalse();
+  });
+
+  it('returns false when the start date is missing', () => {
+    const viewport: Omit<MinimalStaticViewport, 'start'> = {
+      yMin: 0,
+      yMax: 10,
+      end: new Date(),
+    };
+
+    expect(isMinimalStaticViewport((viewport as unknown) as MinimalLiveViewport)).toBeFalse();
+  });
 });

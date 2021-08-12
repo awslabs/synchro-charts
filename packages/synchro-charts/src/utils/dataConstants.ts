@@ -14,6 +14,7 @@ export enum DataType {
 export enum StreamType {
   ALARM = 'ALARM',
   ANOMALY = 'ANOMALY',
+  ALARM_THRESHOLD = 'ALARM_THRESHOLD',
 }
 
 export enum TREND_TYPE {

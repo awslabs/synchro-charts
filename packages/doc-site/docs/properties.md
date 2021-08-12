@@ -202,7 +202,8 @@
       Must be one of the following:
 
       - `ALARM`: Alarm data stream type.
-      - `ANOMALY`: Anomaly data string type.
+      - `ANOMALY`: Anomaly data stream type.
+      - `ALARM_THRESHOLD`: Alarm threshold stream type. 
  
 ---
 
