@@ -117,12 +117,12 @@ export const renderYAnnotationsEditable = ({
   handleGroup
     .append('text')
     .attr('display', getValueTextVisibility)
-    .attr('font-size', ANNOTATION_FONT_SIZE)
     .attr('class', 'y-value-text')
     .attr('x', width + Y_ANNOTATION_TEXT_LEFT_PADDING)
     .attr('text-anchor', 'start')
     .attr('y', Y_ANNOTATION_TEXT_PADDING)
     .text(annotation => getValueText({ annotation, resolution, viewport, formatText: true }))
+    .style('font-size', ANNOTATION_FONT_SIZE)
     .style('user-select', 'none')
     .style('pointer-events', 'none')
     .style('fill', getColor);
@@ -131,12 +131,12 @@ export const renderYAnnotationsEditable = ({
   handleGroup
     .append('text')
     .attr('display', getLabelTextVisibility)
-    .attr('font-size', ANNOTATION_FONT_SIZE)
     .attr('class', 'y-text')
     .attr('x', width - PADDING)
     .attr('text-anchor', 'end')
     .attr('y', -PADDING)
     .text(getText)
+    .style('font-size', ANNOTATION_FONT_SIZE)
     .style('user-select', 'none')
     .style('pointer-events', 'none')
     .style('fill', getColor);

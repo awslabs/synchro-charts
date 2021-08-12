@@ -86,9 +86,7 @@ export const attachDraggable = () => {
           }
           startStopDragging(true);
           draggedAnnotationValue = +annotationDragged.value;
-          select(this)
-            .raise()
-            .classed('active', true);
+          select(this).classed('active', true);
 
           select(container)
             .selectAll(`${ANNOTATION_GROUP_SELECTOR_EDITABLE},${ANNOTATION_GROUP_SELECTOR}`)
