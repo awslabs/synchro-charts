@@ -247,7 +247,7 @@ export class ScWebglChartAnnotationRescaling {
             annotations={this.annotations}
             viewport={{ start: X_MIN, end: X_MAX }}
             size={{
-              height: 400,
+              height: 700,
               width: 1000,
             }}
           />
