@@ -42,7 +42,7 @@ const Y_THRESHOLD: Threshold<number> = {
   id: 'blue-threshold',
 };
 
-const Y_ANNOTATION: YAnnotation = {
+const Y_ANNOTATION: Threshold<number> = {
   isEditable: true,
   value: 3200,
   label: {
@@ -52,6 +52,7 @@ const Y_ANNOTATION: YAnnotation = {
   showValue: true,
   color: 'green',
   id: 'green-anotation',
+  comparisonOperator: COMPARISON_OPERATOR.LESS_THAN_EQUAL,
 };
 
 let oldAnnotations: Annotations | undefined;
@@ -179,7 +180,7 @@ export class ScWebglChartAnnotationRescaling {
             annotations={this.annotations}
             viewport={{ start: X_MIN, end: X_MAX }}
             size={{
-              height: 1000,
+              height: 400,
               width: 1000,
             }}
           />

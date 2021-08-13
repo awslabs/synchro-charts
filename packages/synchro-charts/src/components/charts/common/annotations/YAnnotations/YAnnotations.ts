@@ -31,7 +31,9 @@ export const LINE_SELECTOR = 'line.y-line';
 export const DRAGGABLE_HANDLE_SELECTOR = 'rect.y-annotation';
 export const DRAGGABLE_LINE_ONE_SELECTOR = 'line.y-handle-one';
 export const DRAGGABLE_LINE_TWO_SELECTOR = 'line.y-handle-two';
-
+export const GRADIENT_DEF_SELECTOR = 'linearGradient.gradient-def';
+export const GRADIENT_RECT_SELECTOR = 'rect.gradient-annotation';
+export const GRADIENT_STOP_SELECTOR = 'stop.gradient-def';
 export const ELEMENT_GROUP_SELECTOR = 'g.y-elements-group';
 
 export const renderYAnnotationsEditable = ({
@@ -114,8 +116,37 @@ export const renderYAnnotationsEditable = ({
       ? 'inline'
       : 'none';
 
-  const gradientHeight = height / 30;
+  // TODO move the gradient functions to utils
 
+  const getGradientRotation = (yAnnotation: YAnnotation): string => {
+    if (!isYAnnotationThreshold(yAnnotation)) {
+      return 'rotate(0)';
+    }
+    const thresh = yAnnotation as Threshold;
+    if (
+      thresh.comparisonOperator === COMPARISON_OPERATOR.LESS_THAN ||
+      thresh.comparisonOperator === COMPARISON_OPERATOR.LESS_THAN_EQUAL
+    ) {
+      return 'rotate(180)';
+    }
+    return 'rotate(0)';
+  };
+
+  const getGradientX = (yAnnotation: YAnnotation): number => {
+    if (!isYAnnotationThreshold(yAnnotation)) {
+      return 0;
+    }
+    const thresh = yAnnotation as Threshold;
+    if (
+      thresh.comparisonOperator === COMPARISON_OPERATOR.LESS_THAN ||
+      thresh.comparisonOperator === COMPARISON_OPERATOR.LESS_THAN_EQUAL
+    ) {
+      return -width;
+    }
+    return 0;
+  };
+
+  const gradientHeight = height / 25;
   /** Create Defs for Gradient Thresholds */
   if (gradientSupport) {
     const gradientDefs = handleGroup
@@ -124,19 +155,17 @@ export const renderYAnnotationsEditable = ({
       .attr('class', 'gradient-def')
       .attr('gradientTransform', 'rotate(90)')
       .attr('id', getGradientID);
-    // .attr('x1', '0%')
-    // .attr('x2', '0%')
-    // .attr('y1', '0%')
-    // .attr('y2', '100%');
 
     gradientDefs
       .append('stop')
+      .attr('class', 'gradient-def')
       .attr('offset', '0%')
       .style('stop-color', getColor)
       .style('stop-opacity', 0);
 
     gradientDefs
       .append('stop')
+      .attr('class', 'gradient-def')
       .attr('offset', '40%')
       .style('stop-color', getColor)
       .style('stop-opacity', 0.1);
@@ -149,36 +178,6 @@ export const renderYAnnotationsEditable = ({
 
     // NOTE the order of the stops here is VERY IMPORTANT
 
-    // TODO move the gradient functions to utils
-
-    const getGradientRotation = (yAnnotation: YAnnotation): string => {
-      if (!isYAnnotationThreshold(yAnnotation)) {
-        return 'rotate(0)';
-      }
-      const thresh = yAnnotation as Threshold;
-      if (
-        thresh.comparisonOperator === COMPARISON_OPERATOR.LESS_THAN ||
-        thresh.comparisonOperator === COMPARISON_OPERATOR.LESS_THAN_EQUAL
-      ) {
-        return 'rotate(180)';
-      }
-      return 'rotate(0)';
-    };
-
-    const getGradientX = (yAnnotation: YAnnotation): number => {
-      if (!isYAnnotationThreshold(yAnnotation)) {
-        return 0;
-      }
-      const thresh = yAnnotation as Threshold;
-      if (
-        thresh.comparisonOperator === COMPARISON_OPERATOR.LESS_THAN ||
-        thresh.comparisonOperator === COMPARISON_OPERATOR.LESS_THAN_EQUAL
-      ) {
-        return -width;
-      }
-      return 0;
-    };
-
     handleGroup
       .append('rect')
       .attr('display', getGradientVisibility)
@@ -186,7 +185,7 @@ export const renderYAnnotationsEditable = ({
       .attr('width', width)
       .attr('height', gradientHeight)
       .attr('x', getGradientX)
-      .attr('y', -32) // TODO need to change it depending on what it is
+      .attr('y', -gradientHeight)
       .attr('transform', getGradientRotation)
       .style('fill', getGradientRectangleID);
   }
@@ -253,6 +252,23 @@ export const renderYAnnotationsEditable = ({
 
   /** Update Subgroup Elements */
   annotationSelectionEditable.select(ELEMENT_GROUP_SELECTOR).attr('transform', getGroupPosition);
+
+  /** Update Gradients if Supported */
+  if (gradientSupport) {
+    annotationSelectionEditable.select(GRADIENT_DEF_SELECTOR).attr('id', getGradientID);
+
+    annotationSelectionEditable.select(GRADIENT_STOP_SELECTOR).style('stop-color', getColor);
+
+    annotationSelectionEditable
+      .select(GRADIENT_RECT_SELECTOR)
+      .attr('display', getGradientVisibility)
+      .attr('width', width)
+      .attr('height', gradientHeight)
+      .attr('x', getGradientX)
+      .attr('y', -gradientHeight)
+      .attr('transform', getGradientRotation)
+      .style('fill', getGradientRectangleID);
+  }
 
   /** Update Threshold Value Text */
   annotationSelectionEditable
