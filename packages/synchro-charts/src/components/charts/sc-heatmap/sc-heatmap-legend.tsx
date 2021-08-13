@@ -14,7 +14,7 @@ const LEGEND_WIDTH_VERTICAL = 150;
   styleUrl: './sc-heatmap-legend.css',
   shadow: false,
 })
-export class ScLegend {
+export class ScHeatmapLegend {
   @Prop() config!: LegendConfig;
   @Prop() viewport: ViewPort;
   @Prop() dataStreams!: DataStream[];
