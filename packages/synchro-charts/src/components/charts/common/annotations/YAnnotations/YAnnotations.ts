@@ -1,9 +1,10 @@
 import { select } from 'd3-selection';
-import { YAnnotation } from '../../types';
+import { isYAnnotationThreshold, Threshold, YAnnotation } from '../../types';
 import { ANNOTATION_FONT_SIZE, ANNOTATION_STROKE_WIDTH } from '../constants';
 import { getY } from './utils';
-import { getText, getColor, getValueText, getLabelTextVisibility, getValueTextVisibility } from '../utils';
+import { getColor, getLabelTextVisibility, getText, getValueText, getValueTextVisibility } from '../utils';
 import { ViewPort } from '../../../../../utils/dataTypes';
+import { COMPARISON_OPERATOR } from '../../constants';
 
 const PADDING = 5;
 const Y_ANNOTATION_TEXT_PADDING = 3;
@@ -72,6 +73,9 @@ export const renderYAnnotationsEditable = ({
     return `translate(0,${getYPosition(yAnnotation)})`;
   };
 
+  // we only support gradients if all annotations have an id (in order to associate an id with its proper gradient)
+  const gradientSupport = yAnnotations.every(yAnnotation => yAnnotation.id !== undefined);
+
   const annotationSelectionEditable = select(container)
     .selectAll(ANNOTATION_GROUP_SELECTOR_EDITABLE)
     .data(yAnnotations.filter(annotation => annotation.isEditable));
@@ -101,6 +105,91 @@ export const renderYAnnotationsEditable = ({
     .append('g')
     .attr('transform', getGroupPosition)
     .attr('class', 'y-elements-group');
+
+  const getGradientID = (yAnnotation: YAnnotation): string => `${yAnnotation.id}-${yAnnotation.color}`;
+  const getGradientRectangleID = (yAnnotation: YAnnotation): string => `url(#${getGradientID(yAnnotation)})`;
+
+  const getGradientVisibility = (yAnnotation: YAnnotation): string =>
+    isYAnnotationThreshold(yAnnotation) && (yAnnotation as Threshold).comparisonOperator !== COMPARISON_OPERATOR.EQUAL
+      ? 'inline'
+      : 'none';
+
+  const gradientHeight = height / 30;
+
+  /** Create Defs for Gradient Thresholds */
+  if (gradientSupport) {
+    const gradientDefs = handleGroup
+      .append('defs')
+      .append('linearGradient')
+      .attr('class', 'gradient-def')
+      .attr('gradientTransform', 'rotate(90)')
+      .attr('id', getGradientID);
+    // .attr('x1', '0%')
+    // .attr('x2', '0%')
+    // .attr('y1', '0%')
+    // .attr('y2', '100%');
+
+    gradientDefs
+      .append('stop')
+      .attr('offset', '0%')
+      .style('stop-color', getColor)
+      .style('stop-opacity', 0);
+
+    gradientDefs
+      .append('stop')
+      .attr('offset', '40%')
+      .style('stop-color', getColor)
+      .style('stop-opacity', 0.1);
+
+    gradientDefs
+      .append('stop')
+      .attr('offset', '90%')
+      .style('stop-color', getColor)
+      .style('stop-opacity', 0.35);
+
+    // NOTE the order of the stops here is VERY IMPORTANT
+
+    // TODO move the gradient functions to utils
+
+    const getGradientRotation = (yAnnotation: YAnnotation): string => {
+      if (!isYAnnotationThreshold(yAnnotation)) {
+        return 'rotate(0)';
+      }
+      const thresh = yAnnotation as Threshold;
+      if (
+        thresh.comparisonOperator === COMPARISON_OPERATOR.LESS_THAN ||
+        thresh.comparisonOperator === COMPARISON_OPERATOR.LESS_THAN_EQUAL
+      ) {
+        return 'rotate(180)';
+      }
+      return 'rotate(0)';
+    };
+
+    const getGradientX = (yAnnotation: YAnnotation): number => {
+      if (!isYAnnotationThreshold(yAnnotation)) {
+        return 0;
+      }
+      const thresh = yAnnotation as Threshold;
+      if (
+        thresh.comparisonOperator === COMPARISON_OPERATOR.LESS_THAN ||
+        thresh.comparisonOperator === COMPARISON_OPERATOR.LESS_THAN_EQUAL
+      ) {
+        return -width;
+      }
+      return 0;
+    };
+
+    handleGroup
+      .append('rect')
+      .attr('display', getGradientVisibility)
+      .attr('class', 'gradient-annotation')
+      .attr('width', width)
+      .attr('height', gradientHeight)
+      .attr('x', getGradientX)
+      .attr('y', -32) // TODO need to change it depending on what it is
+      .attr('transform', getGradientRotation)
+      .style('fill', getGradientRectangleID);
+  }
 
   /** Create Line */
   handleGroup
