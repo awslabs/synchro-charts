@@ -158,20 +158,21 @@ export const renderYAnnotationsEditable = ({
 
     gradientDefs
       .append('stop')
-      .attr('class', 'gradient-def')
+      .attr('class', 'gradient-def-one')
       .attr('offset', '0%')
       .style('stop-color', getColor)
       .style('stop-opacity', 0);
 
     gradientDefs
       .append('stop')
-      .attr('class', 'gradient-def')
+      .attr('class', 'gradient-def-two')
       .attr('offset', '40%')
       .style('stop-color', getColor)
       .style('stop-opacity', 0.1);
 
     gradientDefs
       .append('stop')
+      .attr('class', 'gradient-def-three')
       .attr('offset', '90%')
       .style('stop-color', getColor)
       .style('stop-opacity', 0.35);
@@ -255,9 +256,12 @@ export const renderYAnnotationsEditable = ({
 
   /** Update Gradients if Supported */
   if (gradientSupport) {
-    annotationSelectionEditable.select(GRADIENT_DEF_SELECTOR).attr('id', getGradientID);
+    const gradSelector = annotationSelectionEditable.select(GRADIENT_DEF_SELECTOR).attr('id', getGradientID);
 
-    annotationSelectionEditable.select(GRADIENT_STOP_SELECTOR).style('stop-color', getColor);
+    // TODO get selectAll to work so we don't have to do this nonesense
+    gradSelector.select(`${GRADIENT_STOP_SELECTOR}-one`).style('stop-color', getColor);
+    gradSelector.select(`${GRADIENT_STOP_SELECTOR}-two`).style('stop-color', getColor);
+    gradSelector.select(`${GRADIENT_STOP_SELECTOR}-three`).style('stop-color', getColor);
 
     annotationSelectionEditable
       .select(GRADIENT_RECT_SELECTOR)
