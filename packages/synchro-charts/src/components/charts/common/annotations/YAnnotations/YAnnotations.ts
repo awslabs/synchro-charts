@@ -4,7 +4,7 @@ import { ANNOTATION_FONT_SIZE, ANNOTATION_STROKE_WIDTH } from '../constants';
 import {
   calculateGradientXOffset,
   getGradientID,
-  getGradientRectangleID,
+  getGradientRectangleFill,
   getGradientRotation,
   getGradientVisibility,
   getY,
@@ -21,7 +21,7 @@ export const HANDLE_OFFSET_Y = -11;
 export const HANDLE_WIDTH = 45;
 export const SMALL_HANDLE_WIDTH = 18;
 const HANDLE_HEIGHT = 20;
-const GRADIENT_HEIGHT_RATIO = 1 / 25; // fraction of overall height
+const GRADIENT_HEIGHT_RATIO = 1 / 20; // fraction of overall height
 
 const DRAGGABLE_LINE_OFFSET_Y = -6;
 const DRAGGABLE_LINE_OFFSET_X = 40;
@@ -66,23 +66,16 @@ const createThresholdGradients = ({
   gradientDefs
     .append('stop')
     .attr('class', 'gradient-def-one')
-    .attr('offset', '2%')
+    .attr('offset', '0%')
     .style('stop-color', getColor)
     .style('stop-opacity', 0);
 
   gradientDefs
     .append('stop')
     .attr('class', 'gradient-def-two')
-    .attr('offset', '45%')
+    .attr('offset', '80%')
     .style('stop-color', getColor)
-    .style('stop-opacity', 0.1);
-
-  gradientDefs
-    .append('stop')
-    .attr('class', 'gradient-def-three')
-    .attr('offset', '90%')
-    .style('stop-color', getColor)
-    .style('stop-opacity', 0.35);
+    .style('stop-opacity', 0.33);
 
   // NOTE the order of the stops here is VERY IMPORTANT
 
@@ -95,7 +88,7 @@ const createThresholdGradients = ({
     .attr('x', getGradientX)
     .attr('y', -gradientHeight)
     .attr('transform', getGradientRotation)
-    .style('fill', getGradientRectangleID);
+    .style('fill', getGradientRectangleFill);
 };
 
 const updateThresholdGradients = ({
@@ -115,7 +108,6 @@ const updateThresholdGradients = ({
 
   gradSelector.select(`${GRADIENT_STOP_SELECTOR}-one`).style('stop-color', getColor);
   gradSelector.select(`${GRADIENT_STOP_SELECTOR}-two`).style('stop-color', getColor);
-  gradSelector.select(`${GRADIENT_STOP_SELECTOR}-three`).style('stop-color', getColor);
 
   elementGroup
     .select(GRADIENT_RECT_SELECTOR)
@@ -125,7 +117,7 @@ const updateThresholdGradients = ({
     .attr('x', getGradientX)
     .attr('y', -gradientHeight)
     .attr('transform', getGradientRotation)
-    .style('fill', getGradientRectangleID);
+    .style('fill', getGradientRectangleFill);
 };
 
 export const renderYAnnotationsEditable = ({

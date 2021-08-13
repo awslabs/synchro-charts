@@ -33,6 +33,23 @@ exports[`x annotation handles rendering updating multiple annotations 1`] = `
 </svg>
 `;
 
+exports[`x annotation has proper annotation grouping structure 1`] = `
+<svg viewBox="0 0 100 50">
+  <g class="x-annotation" transform="translate(0,0)">
+    <line class="x-line" font-size="10" stroke="red" x1="50" x2="50" y1="0" y2="50" style="stroke: red; stroke-width: 1.5;"></line>
+    <text class="x-text" display="inline" font-size="10" x="0" y="-50" style="pointer-events: none; user-select: none; transform: rotate(90deg) translateY(-5px); fill: red;">
+      some text
+    </text>
+  </g>
+  <g class="x-annotation" transform="translate(0,0)">
+    <line class="x-line" font-size="10" x1="99" x2="99" y1="0" y2="50" style="stroke: red; stroke-width: 1.5;"></line>
+    <text class="x-text" display="inline" font-size="10" x="0" y="-99" style="pointer-events: none; user-select: none; transform: rotate(90deg) translateY(-5px); fill: red;">
+      some text
+    </text>
+  </g>
+</svg>
+`;
+
 exports[`x annotation has proper threshold grouping structure 1`] = `
 <svg viewBox="0 0 100 50">
   <g class="x-annotation" transform="translate(0,0)">
@@ -252,6 +269,134 @@ exports[`y annotation updates type of annotation rendered depending on isEditabl
       <line class="y-handle-one" x1="113" x2="113" y1="-6" y2="4" style="stroke: gray; stroke-width: 1;"></line>
       <line class="y-handle-two" x1="115" x2="115" y1="-6" y2="4" style="stroke: gray; stroke-width: 1;"></line>
     </g>
+  </g>
+</svg>
+`;
+
+exports[`y threshold renders correctly 1`] = `
+<svg viewBox="0 0 100 50">
+  <g class="y-annotation" transform="translate(0,25)">
+    <line class="y-line" x1="0" x2="100" y1="0" y2="0" style="stroke: blue; stroke-width: 1.5;"></line>
+    <text class="y-value-text" display="inline" font-size="10" text-anchor="start" x="105" y="3" style="user-select: none; pointer-events: none; fill: blue;">
+      50
+    </text>
+    <text class="y-text" display="inline" font-size="10" text-anchor="end" x="95" y="-5" style="user-select: none; pointer-events: none; fill: blue;">
+      some text
+    </text>
+    <defs>
+      <linearGradient class="gradient-def" gradientTransform="rotate(90)" id="undefined-blue">
+        <stop class="gradient-def-one" offset="2%" style="stop-color: blue; stop-opacity: 0;"></stop>
+        <stop class="gradient-def-two" offset="45%" style="stop-color: blue; stop-opacity: 0.1;"></stop>
+        <stop class="gradient-def-three" offset="90%" style="stop-color: blue; stop-opacity: 0.35;"></stop>
+      </linearGradient>
+    </defs>
+    <rect class="gradient-annotation" display="none" height="2" transform="rotate(0)" width="100" x="0" y="-2" style="fill: none;"></rect>
+  </g>
+</svg>
+`;
+
+exports[`y threshold threshold with gradient has proper grouping structure 1`] = `
+<svg viewBox="0 0 100 50">
+  <g class="y-annotation" transform="translate(0,25)">
+    <line class="y-line" x1="0" x2="100" y1="0" y2="0" style="stroke: blue; stroke-width: 1.5;"></line>
+    <text class="y-value-text" display="inline" font-size="10" text-anchor="start" x="105" y="3" style="user-select: none; pointer-events: none; fill: blue;">
+      50
+    </text>
+    <text class="y-text" display="inline" font-size="10" text-anchor="end" x="95" y="-5" style="user-select: none; pointer-events: none; fill: blue;">
+      some text
+    </text>
+    <defs>
+      <linearGradient class="gradient-def" gradientTransform="rotate(90)" id="undefined-blue">
+        <stop class="gradient-def-one" offset="2%" style="stop-color: blue; stop-opacity: 0;"></stop>
+        <stop class="gradient-def-two" offset="45%" style="stop-color: blue; stop-opacity: 0.1;"></stop>
+        <stop class="gradient-def-three" offset="90%" style="stop-color: blue; stop-opacity: 0.35;"></stop>
+      </linearGradient>
+    </defs>
+    <rect class="gradient-annotation" display="none" height="2" transform="rotate(0)" width="100" x="0" y="-2" style="fill: none;"></rect>
+  </g>
+  <g class="y-annotation-editable" transform="translate(0,0)">
+    <rect class="y-annotation" height="20" width="18" x="101" y="-9" style="pointer-events: auto; stroke: blue; stroke-width: 1.5; fill: white;"></rect>
+    <g class="y-elements-group" transform="translate(0,2)">
+      <line class="y-line" x1="0" x2="100" y1="0" y2="0" style="stroke: blue; stroke-width: 1.5;"></line>
+      <text class="y-value-text" display="none" text-anchor="start" x="105" y="3" style="font-size: 10; user-select: none; pointer-events: none; fill: blue;"></text>
+      <text class="y-text" display="inline" text-anchor="end" x="95" y="-5" style="font-size: 10; user-select: none; pointer-events: none; fill: blue;">
+        some text
+      </text>
+      <defs>
+        <linearGradient class="gradient-def" gradientTransform="rotate(90)" id="undefined-blue">
+          <stop class="gradient-def-one" offset="2%" style="stop-color: blue; stop-opacity: 0;"></stop>
+          <stop class="gradient-def-two" offset="45%" style="stop-color: blue; stop-opacity: 0.1;"></stop>
+          <stop class="gradient-def-three" offset="90%" style="stop-color: blue; stop-opacity: 0.35;"></stop>
+        </linearGradient>
+      </defs>
+      <rect class="gradient-annotation" display="none" height="2" transform="rotate(180)" width="100" x="-100" y="-2" style="fill: none;"></rect>
+      <line class="y-handle-one" x1="113" x2="113" y1="-6" y2="4" style="stroke: gray; stroke-width: 1;"></line>
+      <line class="y-handle-two" x1="115" x2="115" y1="-6" y2="4" style="stroke: gray; stroke-width: 1;"></line>
+    </g>
+  </g>
+</svg>
+`;
+
+exports[`y threshold with gradient has proper grouping structure 1`] = `
+<svg viewBox="0 0 100 50">
+  <g class="y-annotation" transform="translate(0,25)">
+    <line class="y-line" x1="0" x2="100" y1="0" y2="0" style="stroke: blue; stroke-width: 1.5;"></line>
+    <text class="y-value-text" display="inline" font-size="10" text-anchor="start" x="105" y="3" style="user-select: none; pointer-events: none; fill: blue;">
+      50
+    </text>
+    <text class="y-text" display="inline" font-size="10" text-anchor="end" x="95" y="-5" style="user-select: none; pointer-events: none; fill: blue;">
+      some text
+    </text>
+    <defs>
+      <linearGradient class="gradient-def" gradientTransform="rotate(90)" id="threshold-one-blue">
+        <stop class="gradient-def-one" offset="2%" style="stop-color: blue; stop-opacity: 0;"></stop>
+        <stop class="gradient-def-two" offset="45%" style="stop-color: blue; stop-opacity: 0.1;"></stop>
+        <stop class="gradient-def-three" offset="90%" style="stop-color: blue; stop-opacity: 0.35;"></stop>
+      </linearGradient>
+    </defs>
+    <rect class="gradient-annotation" display="none" height="2" transform="rotate(0)" width="100" x="0" y="-2" style="fill: url(#threshold-one-blue);"></rect>
+  </g>
+  <g class="y-annotation-editable" transform="translate(0,0)">
+    <rect class="y-annotation" height="20" width="18" x="101" y="-9" style="pointer-events: auto; stroke: blue; stroke-width: 1.5; fill: white;"></rect>
+    <g class="y-elements-group" transform="translate(0,2)">
+      <line class="y-line" x1="0" x2="100" y1="0" y2="0" style="stroke: blue; stroke-width: 1.5;"></line>
+      <text class="y-value-text" display="none" text-anchor="start" x="105" y="3" style="font-size: 10; user-select: none; pointer-events: none; fill: blue;"></text>
+      <text class="y-text" display="inline" text-anchor="end" x="95" y="-5" style="font-size: 10; user-select: none; pointer-events: none; fill: blue;">
+        some text
+      </text>
+      <defs>
+        <linearGradient class="gradient-def" gradientTransform="rotate(90)" id="threshold-one-blue">
+          <stop class="gradient-def-one" offset="2%" style="stop-color: blue; stop-opacity: 0;"></stop>
+          <stop class="gradient-def-two" offset="45%" style="stop-color: blue; stop-opacity: 0.1;"></stop>
+          <stop class="gradient-def-three" offset="90%" style="stop-color: blue; stop-opacity: 0.35;"></stop>
+        </linearGradient>
+      </defs>
+      <rect class="gradient-annotation" display="none" height="2" transform="rotate(180)" width="100" x="-100" y="-2" style="fill: url(#threshold-one-blue);"></rect>
+      <line class="y-handle-one" x1="113" x2="113" y1="-6" y2="4" style="stroke: gray; stroke-width: 1;"></line>
+      <line class="y-handle-two" x1="115" x2="115" y1="-6" y2="4" style="stroke: gray; stroke-width: 1;"></line>
+    </g>
+  </g>
+</svg>
+`;
+
+exports[`y threshold with gradient renders correctly 1`] = `
+<svg viewBox="0 0 100 50">
+  <g class="y-annotation" transform="translate(0,25)">
+    <line class="y-line" x1="0" x2="100" y1="0" y2="0" style="stroke: blue; stroke-width: 1.5;"></line>
+    <text class="y-value-text" display="inline" font-size="10" text-anchor="start" x="105" y="3" style="user-select: none; pointer-events: none; fill: blue;">
+      50
+    </text>
+    <text class="y-text" display="inline" font-size="10" text-anchor="end" x="95" y="-5" style="user-select: none; pointer-events: none; fill: blue;">
+      some text
+    </text>
+    <defs>
+      <linearGradient class="gradient-def" gradientTransform="rotate(90)" id="threshold-one-blue">
+        <stop class="gradient-def-one" offset="2%" style="stop-color: blue; stop-opacity: 0;"></stop>
+        <stop class="gradient-def-two" offset="45%" style="stop-color: blue; stop-opacity: 0.1;"></stop>
+        <stop class="gradient-def-three" offset="90%" style="stop-color: blue; stop-opacity: 0.35;"></stop>
+      </linearGradient>
+    </defs>
+    <rect class="gradient-annotation" display="inline" height="2" transform="rotate(0)" width="100" x="0" y="-2" style="fill: url(#threshold-one-blue);"></rect>
   </g>
 </svg>
 `;

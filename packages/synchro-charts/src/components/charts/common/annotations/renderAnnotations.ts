@@ -60,8 +60,6 @@ export const renderAnnotations = ({
     (annotations.displayThresholdGradient ? annotations.displayThresholdGradient : false) &&
     yAnnotations.every(yAnnotation => yAnnotation.id !== undefined);
 
-  console.log(enableThresholdGradient);
-
   /**
    * X Annotations
    */

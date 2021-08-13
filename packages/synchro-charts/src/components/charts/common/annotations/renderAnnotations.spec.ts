@@ -3,24 +3,27 @@ import { renderAnnotations, RenderAnnotationsOptions } from './renderAnnotations
 import { YAnnotation } from '../types';
 import { SECOND_IN_MS } from '../../../../utils/time';
 import {
+  ANNOTATION_GROUP_SELECTOR as X_ANNOTATION_GROUP_SELECTOR,
   LINE_SELECTOR as X_LINE_SELECTOR,
   TEXT_SELECTOR as X_TEXT_SELECTOR,
-  ANNOTATION_GROUP_SELECTOR as X_ANNOTATION_GROUP_SELECTOR,
 } from './XAnnotations/XAnnotations';
 import {
-  LINE_SELECTOR as Y_LINE_SELECTOR,
-  TEXT_SELECTOR as Y_TEXT_SELECTOR,
-  TEXT_VALUE_SELECTOR as Y_TEXT_VALUE_SELECTOR,
   ANNOTATION_GROUP_SELECTOR as Y_GROUP_SELECTOR,
   ANNOTATION_GROUP_SELECTOR_EDITABLE as Y_GROUP_EDITABLE_SELECTOR,
   DRAGGABLE_HANDLE_SELECTOR,
-  DRAGGABLE_LINE_TWO_SELECTOR,
   DRAGGABLE_LINE_ONE_SELECTOR,
+  DRAGGABLE_LINE_TWO_SELECTOR,
+  ELEMENT_GROUP_SELECTOR as Y_ELEMENT_GROUP_SELECTOR,
+  GRADIENT_DEF_SELECTOR,
+  GRADIENT_RECT_SELECTOR,
   HANDLE_OFFSET_Y,
   HANDLE_WIDTH,
+  LINE_SELECTOR as Y_LINE_SELECTOR,
   SMALL_HANDLE_WIDTH,
-  ELEMENT_GROUP_SELECTOR as Y_ELEMENT_GROUP_SELECTOR,
+  TEXT_SELECTOR as Y_TEXT_SELECTOR,
+  TEXT_VALUE_SELECTOR as Y_TEXT_VALUE_SELECTOR,
 } from './YAnnotations/YAnnotations';
+import { COMPARISON_OPERATOR } from '../constants';
 
 const VIEWPORT = {
   start: new Date(2000, 0, 0),
@@ -119,6 +122,7 @@ describe('no annotations', () => {
         x: [X_ANNOTATION],
         y: [Y_ANNOTATION],
         show: true,
+        displayThresholdGradient: true,
       },
     });
 
@@ -152,6 +156,7 @@ describe('no annotations', () => {
           x: [X_ANNOTATION],
           y: [Y_ANNOTATION],
           show: false,
+          displayThresholdGradient: true,
         },
       },
       page
@@ -368,7 +373,7 @@ describe('x annotation', () => {
     expect(lineX.getAttribute('y2')).toEqual(SIZE.height.toString());
   });
 
-  it('has proper threshold grouping structure', async () => {
+  it('has proper annotation grouping structure', async () => {
     const { page } = await newAnnotationsPage({
       annotations: {
         x: [X_ANNOTATION],
@@ -783,7 +788,6 @@ describe('y annotation', () => {
         y: [Y_ANNOTATION],
       },
     });
-
     expect(page.body.querySelector('svg')).toMatchSnapshot();
   });
 
@@ -802,6 +806,7 @@ describe('y annotation', () => {
     expect(page.body.querySelectorAll('line')).toBeEmpty();
     expect(page.body.querySelectorAll('rect')).toBeEmpty();
     expect(page.body.querySelectorAll('text')).toBeEmpty();
+    expect(page.body.querySelectorAll(Y_ELEMENT_GROUP_SELECTOR)).toBeEmpty();
   });
 
   it('does not render annotation outside of viewport below yMin', async () => {
@@ -819,6 +824,7 @@ describe('y annotation', () => {
     expect(page.body.querySelectorAll('line')).toBeEmpty();
     expect(page.body.querySelectorAll('rect')).toBeEmpty();
     expect(page.body.querySelectorAll('text')).toBeEmpty();
+    expect(page.body.querySelectorAll(Y_ELEMENT_GROUP_SELECTOR)).toBeEmpty();
   });
 
   it('renders single editable annotation bisecting the viewport', async () => {
@@ -1589,5 +1595,85 @@ describe('y annotation', () => {
     expect(groupYTwo.querySelectorAll(Y_TEXT_SELECTOR)).toHaveLength(1);
     expect(groupYTwo.querySelectorAll(Y_LINE_SELECTOR)).toHaveLength(1);
     expect(groupYTwo.querySelectorAll(Y_TEXT_VALUE_SELECTOR)).toHaveLength(1);
+  });
+});
+
+describe('y threshold with gradient', () => {
+  // for gradient to be enabled, we must enable displayThresholdGradient and each threshold must have an id
+  const Y_THRESHOLD: YAnnotation = {
+    color: 'blue',
+    showValue: true,
+    label: {
+      text: 'some text',
+      show: true,
+    },
+    value: (VIEWPORT.yMax + VIEWPORT.yMin) / 2,
+    comparisonOperator: COMPARISON_OPERATOR.GREATER_THAN,
+    id: 'threshold-one',
+  };
+
+  it('renders correctly', async () => {
+    const { page } = await newAnnotationsPage({
+      annotations: {
+        y: [Y_THRESHOLD],
+        displayThresholdGradient: true,
+      },
+    });
+    expect(page.body.querySelector('svg')).toMatchSnapshot();
+  });
+
+  it('has proper grouping structure', async () => {
+    const { page } = await newAnnotationsPage({
+      annotations: {
+        y: [Y_THRESHOLD],
+        displayThresholdGradient: true,
+      },
+    });
+
+    render(
+      {
+        annotations: {
+          y: [
+            Y_THRESHOLD,
+            {
+              ...Y_THRESHOLD,
+              value: VIEWPORT.yMax - 4,
+              showValue: false,
+              isEditable: true,
+              comparisonOperator: COMPARISON_OPERATOR.LESS_THAN,
+            },
+          ],
+        },
+      },
+      page
+    );
+
+    await page.waitForChanges();
+    expect(page.body.querySelector('svg')).toMatchSnapshot();
+
+    const editableGroupY = page.body.querySelector(Y_GROUP_EDITABLE_SELECTOR) as SVGElement;
+    expect(editableGroupY.childElementCount).toEqual(2);
+
+    const elementGroupY = page.body.querySelector(Y_ELEMENT_GROUP_SELECTOR) as SVGElement;
+    expect(elementGroupY.childElementCount).toEqual(7);
+
+    expect(elementGroupY.querySelectorAll(GRADIENT_DEF_SELECTOR)).toHaveLength(1);
+    expect(elementGroupY.querySelectorAll(GRADIENT_RECT_SELECTOR)).toHaveLength(1);
+
+    const groupY = page.body.querySelector(Y_GROUP_SELECTOR) as SVGElement;
+    expect(groupY.childElementCount).toEqual(7);
+    expect(page.body.querySelector('svg')).toMatchSnapshot();
+  });
+
+  it('renders initial color', async () => {
+    const { page } = await newAnnotationsPage({
+      annotations: {
+        y: [Y_THRESHOLD],
+        displayThresholdGradient: true,
+      },
+    });
+
+    const gradientRect = page.body.querySelector(GRADIENT_RECT_SELECTOR) as SVGLineElement;
+    expect(gradientRect.style.fill).toBe(`url(#${Y_THRESHOLD.id}--${Y_THRESHOLD.color})`);
   });
 });
