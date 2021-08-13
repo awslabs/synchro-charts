@@ -43,8 +43,16 @@ export const calculateGradientXOffset = (yAnnotation: YAnnotation): number => {
   return 0;
 };
 
-export const getGradientVisibility = (yAnnotation: YAnnotation): string =>
-  isYAnnotationThreshold(yAnnotation) && (yAnnotation as Threshold).comparisonOperator !== COMPARISON_OPERATOR.EQUAL
+export const getGradientVisibility = ({
+  yAnnotation,
+  renderThresholdGradient,
+}: {
+  yAnnotation: YAnnotation;
+  renderThresholdGradient: boolean;
+}): string =>
+  renderThresholdGradient &&
+  isYAnnotationThreshold(yAnnotation) &&
+  (yAnnotation as Threshold).comparisonOperator !== COMPARISON_OPERATOR.EQUAL
     ? 'inline'
     : 'none';
 

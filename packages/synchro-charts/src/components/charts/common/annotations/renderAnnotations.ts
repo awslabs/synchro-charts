@@ -55,6 +55,13 @@ export const renderAnnotations = ({
   const xAnnotations: XAnnotation[] = annotations.x == null ? [] : annotations.x.filter(withinViewport(viewport));
   const yAnnotations: YAnnotation[] = annotations.y == null ? [] : annotations.y.filter(withinViewport(viewport));
 
+  // we only support gradients if all annotations have an id (in order to associate an id with its proper gradient)
+  const enableThresholdGradient =
+    (annotations.displayThresholdGradient ? annotations.displayThresholdGradient : false) &&
+    yAnnotations.every(yAnnotation => yAnnotation.id !== undefined);
+
+  console.log(enableThresholdGradient);
+
   /**
    * X Annotations
    */
@@ -75,6 +82,7 @@ export const renderAnnotations = ({
     viewport,
     resolution,
     size,
+    renderThresholdGradient: enableThresholdGradient,
   });
 
   /**
@@ -86,6 +94,7 @@ export const renderAnnotations = ({
     viewport,
     resolution,
     size,
+    renderThresholdGradient: enableThresholdGradient,
   });
 
   draggable({

@@ -60,7 +60,7 @@ let oldAnnotations: Annotations | undefined;
 @Component({
   tag: 'sc-webgl-chart-annotation-editable',
 })
-export class ScWebglChartAnnotationRescaling {
+export class ScWebglChartAnnotationEditable {
   @State() isEditableValue: boolean = false;
   @State() isShowValue: boolean = true;
   @State() annotations: Annotations | undefined = {
@@ -96,6 +96,7 @@ export class ScWebglChartAnnotationRescaling {
         comparisonOperator: undefined,
       },
     ],
+    displayThresholdGradient: true,
   };
 
   @Listen('widgetUpdated')
@@ -121,6 +122,13 @@ export class ScWebglChartAnnotationRescaling {
           value: oldAnnotations!.y!.find(oldannotation => oldannotation.id === annotation.id)!.value,
         };
       }),
+    };
+  };
+
+  enableDisableGradient = () => {
+    this.annotations = {
+      ...this.annotations,
+      displayThresholdGradient: !this.annotations!.displayThresholdGradient,
     };
   };
 
@@ -221,6 +229,11 @@ export class ScWebglChartAnnotationRescaling {
         <div>
           <button id="change-operator" onClick={this.onOperatorChange}>
             Change Operators
+          </button>
+        </div>
+        <div>
+          <button id="change-gradient" onClick={this.enableDisableGradient}>
+            EnableDisable ThresholdGradient
           </button>
         </div>
         <div>

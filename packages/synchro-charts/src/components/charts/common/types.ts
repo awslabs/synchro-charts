@@ -156,6 +156,7 @@ export interface Annotations {
   y?: YAnnotation[];
   thresholdOptions?: ThresholdOptions | boolean;
   colorDataAcrossThresholds?: boolean;
+  displayThresholdGradient?: boolean;
 }
 
 export interface ThresholdBand {
