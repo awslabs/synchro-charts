@@ -2,6 +2,7 @@ import { chartScene, updateChartScene } from './chartScene';
 import { DataPoint } from '../../../utils/dataTypes';
 import { HeatmapBucketMesh } from './heatmapMesh';
 import { DataType } from '../../../utils/dataConstants';
+import { CHART_SIZE } from '../../../testing/test-routes/charts/shaders/chartSize';
 
 const VIEW_PORT = { start: new Date(2000), end: new Date(2001, 0, 0), yMin: 0, yMax: 100 };
 
@@ -11,8 +12,6 @@ const TEST_DATA_POINT: DataPoint<number>[] = Array.from({ length: 7 }, (_, index
     y: 300,
   };
 });
-
-const CHART_SIZE = { width: 200, height: 200 };
 
 describe('chartScene', () => {
   it('increases buffer size when number of data points surpasses min buffer size', () => {

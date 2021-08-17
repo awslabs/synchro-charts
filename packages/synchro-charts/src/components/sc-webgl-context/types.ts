@@ -26,6 +26,8 @@ export interface ChartScene extends ViewPortManager {
   toClipSpace: (time: number) => number;
 }
 
+export type VisualizationProgram = ChartScene;
+
 /**
  * Represents a camera event. Emitted to alter the view port of
  * one or more camera such as panning.

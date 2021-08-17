@@ -2,6 +2,7 @@ import { Vector3 } from 'three';
 import { ChartScene } from './types';
 import { handleCameraEvent } from './handleCameraEvent';
 import { chartScene } from '../charts/sc-line-chart/chartScene';
+import { CHART_SIZE } from '../../testing/test-routes/charts/shaders/chartSize';
 
 // Default Camera Viewport
 const X_MIN = new Date(2000, 0, 0);
@@ -19,7 +20,7 @@ it('updates camera position for associated scene info', () => {
     },
     dataStreams: [],
     container: document.createElement('div'),
-    chartSize: { width: 100, height: 100 },
+    chartSize: CHART_SIZE,
     minBufferSize: 100,
     bufferFactor: 2,
     thresholdOptions: {
@@ -51,7 +52,7 @@ it('updates all cameras x positions', () => {
       },
       dataStreams: [],
       container: document.createElement('div'),
-      chartSize: { width: 100, height: 100 },
+      chartSize: CHART_SIZE,
       minBufferSize: 100,
       bufferFactor: 2,
       thresholdOptions: {
@@ -68,7 +69,7 @@ it('updates all cameras x positions', () => {
       },
       dataStreams: [],
       container: document.createElement('div'),
-      chartSize: { width: 100, height: 100 },
+      chartSize: CHART_SIZE,
       minBufferSize: 100,
       bufferFactor: 2,
       thresholdOptions: {
@@ -106,7 +107,7 @@ it('does not update camera position when there is no associated scene info', () 
       },
       dataStreams: [],
       container: document.createElement('div'),
-      chartSize: { width: 100, height: 100 },
+      chartSize: CHART_SIZE,
       minBufferSize: 100,
       bufferFactor: 2,
       thresholdOptions: {
