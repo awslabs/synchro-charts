@@ -79,23 +79,21 @@ export const renderAnnotations = ({
     size,
   });
 
-  if (!inDragState()) {
-    // annotations are already being updated so this is an unescessary call
-    /**
-     * Y Annotations Editable (Draggable)
-     */
-    renderYAnnotationsEditable({
-      container,
-      yAnnotations,
-      viewport,
-      resolution,
-      size,
-    });
+  /**
+   * Y Annotations Editable (Draggable)
+   */
+  renderYAnnotationsEditable({
+    container,
+    yAnnotations,
+    viewport,
+    resolution,
+    size,
+  });
 
+  if (!inDragState()) {
     // prevents more event listeners from being attached when we drag
     draggable({
       container,
-      viewport,
       size,
       onUpdate,
       activeViewPort,

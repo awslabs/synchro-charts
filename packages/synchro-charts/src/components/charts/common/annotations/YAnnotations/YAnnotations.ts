@@ -68,6 +68,9 @@ export const renderYAnnotationsEditable = ({
 
   const getYAnnotationHandleY = (yAnnotation: YAnnotation): number => getYPosition(yAnnotation) + HANDLE_OFFSET_Y;
 
+  const getValueFontSize = (yAnnotation: YAnnotation): number =>
+    yAnnotation.value < -9999 ? ANNOTATION_FONT_SIZE - 1 : ANNOTATION_FONT_SIZE;
+
   const getGroupPosition = (yAnnotation: YAnnotation): string => {
     return `translate(0,${getYPosition(yAnnotation)})`;
   };
@@ -122,7 +125,7 @@ export const renderYAnnotationsEditable = ({
     .attr('text-anchor', 'start')
     .attr('y', Y_ANNOTATION_TEXT_PADDING)
     .text(annotation => getValueText({ annotation, resolution, viewport, formatText: true }))
-    .style('font-size', ANNOTATION_FONT_SIZE)
+    .style('font-size', getValueFontSize)
     .style('user-select', 'none')
     .style('pointer-events', 'none')
     .style('fill', getColor);
@@ -171,7 +174,8 @@ export const renderYAnnotationsEditable = ({
     .attr('display', getValueTextVisibility)
     .attr('x', width + Y_ANNOTATION_TEXT_LEFT_PADDING)
     .text(annotation => getValueText({ annotation, resolution, viewport, formatText: true }))
-    .style('fill', getColor);
+    .style('fill', getColor)
+    .style('font-size', getValueFontSize);
 
   /** Update Label Text */
   annotationSelectionEditable
