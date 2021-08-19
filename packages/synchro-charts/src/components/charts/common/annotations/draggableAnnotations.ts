@@ -62,7 +62,7 @@ const needAxisRescale = ({ annotationValue, viewport }: { annotationValue: numbe
 
 export const FOCUS_TRANSITION_TIME = 100; // milliseconds of the focus mode transition
 const FOCUS_OPACITY = 0.32; // the opacity of the other handles that are not selected for dragging
-const UPDATE_THROTTLE_MS = 70;
+const UPDATE_THROTTLE_MS = 90;
 
 /**
  * Draggable Thresholds Feature
