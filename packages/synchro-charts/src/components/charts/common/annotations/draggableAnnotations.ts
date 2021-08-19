@@ -1,17 +1,19 @@
 import { select, event } from 'd3-selection';
 import { drag } from 'd3-drag';
+import throttle from 'lodash.throttle';
 import { YAnnotation } from '../types';
 import { DataStream, ViewPort } from '../../../../utils/dataTypes';
 import {
   DRAGGABLE_HANDLE_SELECTOR,
   ANNOTATION_GROUP_SELECTOR_EDITABLE,
   ANNOTATION_GROUP_SELECTOR,
+  renderYAnnotationsEditable,
 } from './YAnnotations/YAnnotations';
 
 export type DraggableAnnotationsOptions = {
   container: SVGElement;
   viewport: ViewPort;
-  size: { height: number };
+  size: { width: number; height: number };
   onUpdate: (
     { start, end }: { start: Date; end: Date },
     hasDataChanged: boolean,
@@ -21,6 +23,8 @@ export type DraggableAnnotationsOptions = {
   activeViewPort: () => ViewPort;
   emitUpdatedWidgetConfiguration: (dataStreams?: DataStream[]) => void;
   startStopDragging: (dragState: boolean) => void;
+  yAnnotations: YAnnotation[];
+  resolution: number;
 };
 
 /**
@@ -59,12 +63,30 @@ const needAxisRescale = ({ annotationValue, viewport }: { annotationValue: numbe
 
 export const FOCUS_TRANSITION_TIME = 100; // milliseconds of the focus mode transition
 const FOCUS_OPACITY = 0.32; // the opacity of the other handles that are not selected for dragging
+const UPDATE_THROTTLE_MS = 80;
 
 /**
  * Draggable Thresholds Feature
  */
 export const attachDraggable = () => {
   let draggedAnnotationValue: number | undefined; // this is necessary to prevent race condition (new annotation value) from occurring during the drag process
+
+  const internalUpdate = throttle(
+    ([onUpdate, viewport, activeViewPort, axisRescale]: [
+      (
+        { start, end }: { start: Date; end: Date },
+        hasDataChanged: boolean,
+        hasSizeChanged: boolean,
+        hasAnnotationChanged: boolean
+      ) => void,
+      { start: Date; end: Date },
+      () => ViewPort,
+      boolean
+    ]) => {
+      onUpdate(axisRescale ? activeViewPort() : viewport, false, axisRescale, true);
+    },
+    UPDATE_THROTTLE_MS
+  );
 
   const draggable = ({
     container,
@@ -74,6 +96,8 @@ export const attachDraggable = () => {
     activeViewPort,
     emitUpdatedWidgetConfiguration,
     startStopDragging,
+    yAnnotations,
+    resolution,
   }: DraggableAnnotationsOptions): void => {
     const containerSelection = select(container);
     const thresholdGroup = containerSelection.selectAll(DRAGGABLE_HANDLE_SELECTOR);
@@ -106,9 +130,18 @@ export const attachDraggable = () => {
           const draggedValue = calculateNewThreshold({ yPos, viewport, size });
           annotationDragged.value = draggedValue;
           draggedAnnotationValue = draggedValue;
-          const axisRescale = needAxisRescale({ annotationValue: annotationDragged.value, viewport });
 
-          onUpdate(axisRescale ? activeViewPort() : viewport, false, axisRescale, true);
+          renderYAnnotationsEditable({
+            container,
+            yAnnotations,
+            viewport,
+            resolution,
+            size,
+          });
+
+          const axisRescale = needAxisRescale({ annotationValue: annotationDragged.value as number, viewport });
+
+          internalUpdate([onUpdate, viewport, activeViewPort, axisRescale]);
         })
         .on('end', function dragEnded(yAnnotation: unknown) {
           const annotationDragged = yAnnotation as YAnnotation;

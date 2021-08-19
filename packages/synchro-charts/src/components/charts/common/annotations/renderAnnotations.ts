@@ -20,6 +20,7 @@ export type RenderAnnotationsOptions = {
   emitUpdatedWidgetConfiguration: (dataStreams?: DataStream[]) => void;
   draggable: (draggableOptions: DraggableAnnotationsOptions) => void;
   startStopDragging: (dragState: boolean) => void;
+  inDragState: () => boolean;
 };
 
 type AnnotationPredicate = (annotation: Annotation<AnnotationValue>) => boolean;
@@ -44,6 +45,7 @@ export const renderAnnotations = ({
   emitUpdatedWidgetConfiguration,
   draggable,
   startStopDragging,
+  inDragState,
 }: RenderAnnotationsOptions) => {
   if (typeof annotations === 'object' && typeof annotations.show === 'boolean' && !annotations.show) {
     removeXAnnotations({ container });
@@ -77,24 +79,30 @@ export const renderAnnotations = ({
     size,
   });
 
-  /**
-   * Y Annotations Editable (Draggable)
-   */
-  renderYAnnotationsEditable({
-    container,
-    yAnnotations,
-    viewport,
-    resolution,
-    size,
-  });
+  if (!inDragState()) {
+    // annotations are already being updated so this is an unescessary call
+    /**
+     * Y Annotations Editable (Draggable)
+     */
+    renderYAnnotationsEditable({
+      container,
+      yAnnotations,
+      viewport,
+      resolution,
+      size,
+    });
 
-  draggable({
-    container,
-    viewport,
-    size,
-    onUpdate,
-    activeViewPort,
-    emitUpdatedWidgetConfiguration,
-    startStopDragging,
-  });
+    // prevents more event listeners from being attached when we drag
+    draggable({
+      container,
+      viewport,
+      size,
+      onUpdate,
+      activeViewPort,
+      emitUpdatedWidgetConfiguration,
+      startStopDragging,
+      yAnnotations,
+      resolution,
+    });
+  }
 };
