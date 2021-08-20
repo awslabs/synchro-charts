@@ -42,4 +42,4 @@ export const isNumberDataStream = (stream: DataStream): stream is DataStream<num
 export const isNumber = <T>(val: T | number): val is number => typeof val === 'number';
 
 export const isMinimalStaticViewport = (viewport: MinimalViewPortConfig): viewport is MinimalStaticViewport =>
-  'start' in viewport;
+  'start' in viewport && 'end' in viewport;
