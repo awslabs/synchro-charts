@@ -34,7 +34,7 @@ const withinViewport = (viewport: ViewPort): AnnotationPredicate => {
   };
 };
 
-let dragListeners;
+let dragHandler; // need to hold onto the dragHandle selector to dispose of it properly to prevent memory leak
 
 export const renderAnnotations = ({
   container,
@@ -82,13 +82,11 @@ export const renderAnnotations = ({
   });
 
   if (!inDragState()) {
-    // dragListeners = dragListeners.remove(); // clear old event listeners
-    // // NOTE - .remove() somehow also removes the axis?!!??
-
+    // do not re-render editable annotations in drag state
     /**
      * Y Annotations Editable (Draggable)
      */
-    dragListeners = renderYAnnotationsEditable({
+    dragHandler = renderYAnnotationsEditable({
       container,
       yAnnotations,
       viewport,
@@ -104,9 +102,8 @@ export const renderAnnotations = ({
       activeViewPort,
       emitUpdatedWidgetConfiguration,
       startStopDragging,
-      yAnnotations,
       resolution,
-      dragHandle: dragListeners,
+      dragHandle: dragHandler,
     });
   }
 };

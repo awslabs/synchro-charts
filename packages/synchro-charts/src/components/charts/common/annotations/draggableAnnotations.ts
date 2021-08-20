@@ -26,7 +26,6 @@ export type DraggableAnnotationsOptions = {
   activeViewPort: () => ViewPort;
   emitUpdatedWidgetConfiguration: (dataStreams?: DataStream[]) => void;
   startStopDragging: (dragState: boolean) => void;
-  yAnnotations: YAnnotation[];
   resolution: number;
   dragHandle: Selection<any, any, any, any>;
 };
@@ -144,7 +143,7 @@ export const attachDraggable = () => {
           annotationDragged.value = draggedValue;
           draggedAnnotationValue = draggedValue;
 
-          // re-rendering of everything except threshold
+          // re-rendering of everything except annotation movement
           const axisRescale = needAxisRescale({ annotationValue: annotationDragged.value as number, viewport });
           if (axisRescale) {
             // prevent the user from dragging off the page

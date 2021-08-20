@@ -45,7 +45,7 @@ export const renderYAnnotationsEditable = ({
   viewport: ViewPort;
   resolution: number;
   size: { width: number; height: number };
-}): Selection<any, any, any, any> => {
+}): Selection<SVGRectElement, YAnnotation, SVGElement, any> => {
   const getYPosition = (annotation: YAnnotation) =>
     getY({
       annotation,
