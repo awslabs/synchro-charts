@@ -1,15 +1,17 @@
 import { select, event, Selection, BaseType } from 'd3-selection';
 import { drag } from 'd3-drag';
 import throttle from 'lodash.throttle';
-import { YAnnotation } from '../types';
+import { Annotation, AnnotationValue, YAnnotation } from '../types';
 import { DataStream, ViewPort } from '../../../../utils/dataTypes';
 import {
   ANNOTATION_GROUP_SELECTOR_EDITABLE,
   ANNOTATION_GROUP_SELECTOR,
   HANDLE_OFFSET_Y,
   ELEMENT_GROUP_SELECTOR,
+  TEXT_VALUE_SELECTOR,
 } from './YAnnotations/YAnnotations';
 import { getY } from './YAnnotations/utils';
+import { getValueText } from './utils';
 
 export type DraggableAnnotationsOptions = {
   container: SVGElement;
@@ -57,8 +59,8 @@ const calculateNewThreshold = ({
 
 const needAxisRescale = ({ annotationValue, viewport }: { annotationValue: number; viewport: ViewPort }): boolean => {
   const { yMax, yMin } = viewport;
-  const lowerThreshold = yMin + 0.02 * (yMax - yMin);
-  const upperThreshold = yMin + 0.98 * (yMax - yMin);
+  const lowerThreshold = yMin + 0.01 * (yMax - yMin);
+  const upperThreshold = yMin + 0.99 * (yMax - yMin);
   return annotationValue < lowerThreshold || annotationValue > upperThreshold;
 };
 
@@ -95,6 +97,7 @@ export const attachDraggable = () => {
     emitUpdatedWidgetConfiguration,
     startStopDragging,
     dragHandle,
+    resolution,
   }: DraggableAnnotationsOptions): void => {
     const { height } = size;
 
@@ -150,10 +153,14 @@ export const attachDraggable = () => {
 
           handle.attr('y', getHandlePosition(annotationDragged, viewport));
 
-          select(container)
+          const elementGroup = select(container)
             .selectAll(`${ELEMENT_GROUP_SELECTOR}`)
             .filter(annotation => annotation === yAnnotation)
             .attr('transform', getGroupPosition(annotationDragged, viewport));
+
+          elementGroup
+            .select(TEXT_VALUE_SELECTOR)
+            .text(getValueText({ annotation: annotationDragged, resolution, viewport, formatText: true }));
         })
         .on('end', function dragEnded(yAnnotation: unknown) {
           const annotationDragged = yAnnotation as YAnnotation;
