@@ -1,7 +1,7 @@
-import { select, event, Selection, BaseType } from 'd3-selection';
+import { select, event, Selection } from 'd3-selection';
 import { drag } from 'd3-drag';
 import throttle from 'lodash.throttle';
-import { Annotation, AnnotationValue, YAnnotation } from '../types';
+import { Annotation, YAnnotation } from '../types';
 import { DataStream, ViewPort } from '../../../../utils/dataTypes';
 import {
   ANNOTATION_GROUP_SELECTOR_EDITABLE,
@@ -150,18 +150,18 @@ export const attachDraggable = () => {
             internalUpdate([onUpdate, viewport]);
           }
 
-          // Update threshold element groups
+          // Update draggable annotation element groups
           select(container)
             .selectAll(ANNOTATION_GROUP_SELECTOR_EDITABLE)
             .selectAll(ELEMENT_GROUP_SELECTOR)
             .attr('transform', annotation => getGroupPosition(annotation as YAnnotation, viewport));
 
-          // Update threshold handles
+          // Update draggable annotation handles
           select(container)
             .selectAll(DRAGGABLE_HANDLE_SELECTOR)
             .attr('y', annotation => getHandlePosition(annotation as YAnnotation, viewport));
 
-          // Update threshold and annotation text values
+          // Update all annotation text values
           select(container)
             .selectAll(`${ANNOTATION_GROUP_SELECTOR_EDITABLE},${ANNOTATION_GROUP_SELECTOR}`)
             .select(TEXT_VALUE_SELECTOR)
@@ -169,7 +169,7 @@ export const attachDraggable = () => {
               getValueText({ annotation: annotation as Annotation<number>, resolution, viewport, formatText: true })
             );
 
-          // Update annotation groups
+          // Update non-draggable annotation groups
           select(container)
             .selectAll(ANNOTATION_GROUP_SELECTOR)
             .attr('transform', annotation => getGroupPosition(annotation as YAnnotation, viewport));

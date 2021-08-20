@@ -1,4 +1,3 @@
-import { BaseType, Selection } from 'd3-selection';
 import { Annotation, Annotations, AnnotationValue, XAnnotation, YAnnotation } from '../types';
 import { renderXAnnotations, removeXAnnotations } from './XAnnotations/XAnnotations';
 import { renderYAnnotations, removeYAnnotations, renderYAnnotationsEditable } from './YAnnotations/YAnnotations';
