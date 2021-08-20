@@ -120,12 +120,16 @@ export const attachDraggable = () => {
           draggedAnnotationValue = +annotationDragged.value;
           select(this).classed('active', true);
 
-          select(container)
+          const otherAnnotations = select(container)
             .selectAll(`${ANNOTATION_GROUP_SELECTOR_EDITABLE},${ANNOTATION_GROUP_SELECTOR}`)
-            .filter(annotation => annotation !== yAnnotation)
-            .transition()
-            .duration(FOCUS_TRANSITION_TIME)
-            .attr('opacity', FOCUS_OPACITY);
+            .filter(annotation => annotation !== yAnnotation);
+
+          if (otherAnnotations.size() > 0) {
+            otherAnnotations
+              .transition()
+              .duration(FOCUS_TRANSITION_TIME)
+              .attr('opacity', FOCUS_OPACITY);
+          }
         })
         .on('drag', function handleDragged(yAnnotation: unknown) {
           /** Drag Event */
@@ -192,11 +196,16 @@ export const attachDraggable = () => {
 
           startStopDragging(false);
 
-          select(container)
+          const otherAnnotations = select(container)
             .selectAll(`${ANNOTATION_GROUP_SELECTOR_EDITABLE},${ANNOTATION_GROUP_SELECTOR}`)
-            .transition()
-            .duration(FOCUS_TRANSITION_TIME)
-            .attr('opacity', 1);
+            .filter(annotation => annotation !== yAnnotation);
+
+          if (otherAnnotations.size() > 0) {
+            otherAnnotations
+              .transition()
+              .duration(FOCUS_TRANSITION_TIME)
+              .attr('opacity', 1);
+          }
         }) as any
     );
   };
