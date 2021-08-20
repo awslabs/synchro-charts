@@ -9,6 +9,7 @@ import {
   HANDLE_OFFSET_Y,
   ELEMENT_GROUP_SELECTOR,
   TEXT_VALUE_SELECTOR,
+  DRAGGABLE_HANDLE_SELECTOR,
 } from './YAnnotations/YAnnotations';
 import { getY } from './YAnnotations/utils';
 import { getValueText } from './utils';
@@ -101,12 +102,12 @@ export const attachDraggable = () => {
   }: DraggableAnnotationsOptions): void => {
     const { height } = size;
 
-    const getGroupPosition = (draggedAnnotation: YAnnotation, viewport: ViewPort): string => {
-      return `translate(0,${getY({ annotation: draggedAnnotation, height, viewport })})`;
+    const getGroupPosition = (annotation: YAnnotation, viewport: ViewPort): string => {
+      return `translate(0,${getY({ annotation, height, viewport })})`;
     };
 
-    const getHandlePosition = (draggedAnnotation: YAnnotation, viewport: ViewPort): number => {
-      return getY({ annotation: draggedAnnotation, height, viewport }) + HANDLE_OFFSET_Y;
+    const getHandlePosition = (annotation: YAnnotation, viewport: ViewPort): number => {
+      return getY({ annotation, height, viewport }) + HANDLE_OFFSET_Y;
     };
     dragHandle.call(
       drag()
@@ -142,25 +143,36 @@ export const attachDraggable = () => {
           // re-rendering of everything except threshold
           const axisRescale = needAxisRescale({ annotationValue: annotationDragged.value as number, viewport });
           if (axisRescale) {
-            console.log('axis rescale');
+            // prevent the user from dragging off the page
             onUpdate(viewport, false, axisRescale, true);
             viewport = activeViewPort();
           } else {
             internalUpdate([onUpdate, viewport]);
           }
 
-          const handle = select(this);
+          // Update threshold element groups
+          select(container)
+            .selectAll(ANNOTATION_GROUP_SELECTOR_EDITABLE)
+            .selectAll(ELEMENT_GROUP_SELECTOR)
+            .attr('transform', annotation => getGroupPosition(annotation as YAnnotation, viewport));
 
-          handle.attr('y', getHandlePosition(annotationDragged, viewport));
+          // Update threshold handles
+          select(container)
+            .selectAll(DRAGGABLE_HANDLE_SELECTOR)
+            .attr('y', annotation => getHandlePosition(annotation as YAnnotation, viewport));
 
-          const elementGroup = select(container)
-            .selectAll(`${ELEMENT_GROUP_SELECTOR}`)
-            .filter(annotation => annotation === yAnnotation)
-            .attr('transform', getGroupPosition(annotationDragged, viewport));
-
-          elementGroup
+          // Update threshold and annotation text values
+          select(container)
+            .selectAll(`${ANNOTATION_GROUP_SELECTOR_EDITABLE},${ANNOTATION_GROUP_SELECTOR}`)
             .select(TEXT_VALUE_SELECTOR)
-            .text(getValueText({ annotation: annotationDragged, resolution, viewport, formatText: true }));
+            .text(annotation =>
+              getValueText({ annotation: annotation as Annotation<number>, resolution, viewport, formatText: true })
+            );
+
+          // Update annotation groups
+          select(container)
+            .selectAll(ANNOTATION_GROUP_SELECTOR)
+            .attr('transform', annotation => getGroupPosition(annotation as YAnnotation, viewport));
         })
         .on('end', function dragEnded(yAnnotation: unknown) {
           const annotationDragged = yAnnotation as YAnnotation;
