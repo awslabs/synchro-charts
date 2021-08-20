@@ -1,4 +1,4 @@
-import { select, event } from 'd3-selection';
+import { select, event, Selection, BaseType } from 'd3-selection';
 import { drag } from 'd3-drag';
 import throttle from 'lodash.throttle';
 import { YAnnotation } from '../types';
@@ -8,7 +8,10 @@ import {
   ANNOTATION_GROUP_SELECTOR_EDITABLE,
   ANNOTATION_GROUP_SELECTOR,
   renderYAnnotationsEditable,
+  HANDLE_OFFSET_Y,
+  ELEMENT_GROUP_SELECTOR,
 } from './YAnnotations/YAnnotations';
+import { getY } from './YAnnotations/utils';
 
 export type DraggableAnnotationsOptions = {
   container: SVGElement;
@@ -24,6 +27,7 @@ export type DraggableAnnotationsOptions = {
   startStopDragging: (dragState: boolean) => void;
   yAnnotations: YAnnotation[];
   resolution: number;
+  dragHandle: Selection<any, any, any, any>;
 };
 
 /**
@@ -94,10 +98,13 @@ export const attachDraggable = () => {
     startStopDragging,
     yAnnotations,
     resolution,
+    dragHandle,
   }: DraggableAnnotationsOptions): void => {
-    const containerSelection = select(container);
-    const thresholdGroup = containerSelection.selectAll(DRAGGABLE_HANDLE_SELECTOR);
-    thresholdGroup.call(
+    const getGroupPosition = (yPos: number): string => {
+      return `translate(0,${yPos})`;
+    };
+
+    dragHandle.call(
       drag()
         .on('start', function dragStarted(yAnnotation: unknown) {
           const annotationDragged = yAnnotation as YAnnotation;
@@ -121,7 +128,6 @@ export const attachDraggable = () => {
           if (!annotationDragged.isEditable) {
             return;
           }
-
           const viewport = activeViewPort();
 
           const { y: yPos } = event as { y: number };
@@ -129,19 +135,30 @@ export const attachDraggable = () => {
           annotationDragged.value = draggedValue;
           draggedAnnotationValue = draggedValue;
 
+          // re-rendering of everything except threshold
           const axisRescale = needAxisRescale({ annotationValue: annotationDragged.value as number, viewport });
           if (axisRescale) {
             onUpdate(viewport, false, axisRescale, true);
           } else {
             internalUpdate([onUpdate, viewport]);
-            renderYAnnotationsEditable({
-              container,
-              yAnnotations,
-              viewport,
-              resolution,
-              size,
-            });
           }
+
+          const handle = select(this);
+
+          handle.attr('y', yPos);
+
+          select(container)
+            .selectAll(`${ELEMENT_GROUP_SELECTOR}`)
+            .filter(annotation => annotation === yAnnotation)
+            .attr('transform', getGroupPosition(yPos));
+
+          // renderYAnnotationsEditable({
+          //   container,
+          //   yAnnotations,
+          //   viewport: axisRescale ? activeViewPort() : viewport,
+          //   resolution,
+          //   size,
+          // });
         })
         .on('end', function dragEnded(yAnnotation: unknown) {
           const annotationDragged = yAnnotation as YAnnotation;

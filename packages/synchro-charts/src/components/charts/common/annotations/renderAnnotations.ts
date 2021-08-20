@@ -1,3 +1,4 @@
+import { BaseType, Selection } from 'd3-selection';
 import { Annotation, Annotations, AnnotationValue, XAnnotation, YAnnotation } from '../types';
 import { renderXAnnotations, removeXAnnotations } from './XAnnotations/XAnnotations';
 import { renderYAnnotations, removeYAnnotations, renderYAnnotationsEditable } from './YAnnotations/YAnnotations';
@@ -33,6 +34,8 @@ const withinViewport = (viewport: ViewPort): AnnotationPredicate => {
     return viewport.start <= value && viewport.end >= value;
   };
 };
+
+let dragListeners;
 
 export const renderAnnotations = ({
   container,
@@ -79,18 +82,21 @@ export const renderAnnotations = ({
     size,
   });
 
-  /**
-   * Y Annotations Editable (Draggable)
-   */
-  renderYAnnotationsEditable({
-    container,
-    yAnnotations,
-    viewport,
-    resolution,
-    size,
-  });
-
   if (!inDragState()) {
+    // dragListeners = dragListeners.remove(); // clear old event listeners
+    // // NOTE - .remove() somehow also removes the axis?!!??
+
+    /**
+     * Y Annotations Editable (Draggable)
+     */
+    dragListeners = renderYAnnotationsEditable({
+      container,
+      yAnnotations,
+      viewport,
+      resolution,
+      size,
+    });
+
     // prevents more event listeners from being attached when we drag
     draggable({
       container,
@@ -101,6 +107,7 @@ export const renderAnnotations = ({
       startStopDragging,
       yAnnotations,
       resolution,
+      dragHandle: dragListeners,
     });
   }
 };

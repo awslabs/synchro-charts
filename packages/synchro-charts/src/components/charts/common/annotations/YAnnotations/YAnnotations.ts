@@ -1,4 +1,4 @@
-import { select } from 'd3-selection';
+import { select, Selection } from 'd3-selection';
 import { YAnnotation } from '../../types';
 import { ANNOTATION_FONT_SIZE, ANNOTATION_STROKE_WIDTH } from '../constants';
 import { getY } from './utils';
@@ -45,7 +45,7 @@ export const renderYAnnotationsEditable = ({
   viewport: ViewPort;
   resolution: number;
   size: { width: number; height: number };
-}) => {
+}): Selection<any, any, any, any> => {
   const getYPosition = (annotation: YAnnotation) =>
     getY({
       annotation,
@@ -87,7 +87,7 @@ export const renderYAnnotationsEditable = ({
     .attr('class', 'y-annotation-editable');
 
   /** Create Draggable Annotation Handle Rectangle */
-  annotationGroupEditable
+  const dragHandle = annotationGroupEditable
     .append('rect')
     .attr('class', 'y-annotation')
     .attr('width', getYHandleWidth)
@@ -215,6 +215,8 @@ export const renderYAnnotationsEditable = ({
 
   /** Exit */
   annotationSelectionEditable.exit().remove();
+
+  return dragHandle;
 };
 
 export const renderYAnnotations = ({
