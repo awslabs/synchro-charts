@@ -4,10 +4,8 @@ import throttle from 'lodash.throttle';
 import { YAnnotation } from '../types';
 import { DataStream, ViewPort } from '../../../../utils/dataTypes';
 import {
-  DRAGGABLE_HANDLE_SELECTOR,
   ANNOTATION_GROUP_SELECTOR_EDITABLE,
   ANNOTATION_GROUP_SELECTOR,
-  renderYAnnotationsEditable,
   HANDLE_OFFSET_Y,
   ELEMENT_GROUP_SELECTOR,
 } from './YAnnotations/YAnnotations';
@@ -96,14 +94,17 @@ export const attachDraggable = () => {
     activeViewPort,
     emitUpdatedWidgetConfiguration,
     startStopDragging,
-    yAnnotations,
-    resolution,
     dragHandle,
   }: DraggableAnnotationsOptions): void => {
-    const getGroupPosition = (yPos: number): string => {
-      return `translate(0,${yPos})`;
+    const { height } = size;
+
+    const getGroupPosition = (draggedAnnotation: YAnnotation, viewport: ViewPort): string => {
+      return `translate(0,${getY({ annotation: draggedAnnotation, height, viewport })})`;
     };
 
+    const getHandlePosition = (draggedAnnotation: YAnnotation, viewport: ViewPort): number => {
+      return getY({ annotation: draggedAnnotation, height, viewport }) + HANDLE_OFFSET_Y;
+    };
     dragHandle.call(
       drag()
         .on('start', function dragStarted(yAnnotation: unknown) {
@@ -128,7 +129,7 @@ export const attachDraggable = () => {
           if (!annotationDragged.isEditable) {
             return;
           }
-          const viewport = activeViewPort();
+          let viewport = activeViewPort();
 
           const { y: yPos } = event as { y: number };
           const draggedValue = calculateNewThreshold({ yPos, viewport, size });
@@ -138,27 +139,21 @@ export const attachDraggable = () => {
           // re-rendering of everything except threshold
           const axisRescale = needAxisRescale({ annotationValue: annotationDragged.value as number, viewport });
           if (axisRescale) {
+            console.log('axis rescale');
             onUpdate(viewport, false, axisRescale, true);
+            viewport = activeViewPort();
           } else {
             internalUpdate([onUpdate, viewport]);
           }
 
           const handle = select(this);
 
-          handle.attr('y', yPos);
+          handle.attr('y', getHandlePosition(annotationDragged, viewport));
 
           select(container)
             .selectAll(`${ELEMENT_GROUP_SELECTOR}`)
             .filter(annotation => annotation === yAnnotation)
-            .attr('transform', getGroupPosition(yPos));
-
-          // renderYAnnotationsEditable({
-          //   container,
-          //   yAnnotations,
-          //   viewport: axisRescale ? activeViewPort() : viewport,
-          //   resolution,
-          //   size,
-          // });
+            .attr('transform', getGroupPosition(annotationDragged, viewport));
         })
         .on('end', function dragEnded(yAnnotation: unknown) {
           const annotationDragged = yAnnotation as YAnnotation;
