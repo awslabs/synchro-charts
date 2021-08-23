@@ -134,7 +134,7 @@ export const renderYAnnotationsEditable = ({
   resolution: number;
   size: { width: number; height: number };
   renderThresholdGradient: boolean;
-}) => {
+}): Selection<SVGRectElement, YAnnotation, SVGElement, any> => {
   const getYPosition = (annotation: YAnnotation) =>
     getY({
       annotation,
@@ -160,6 +160,9 @@ export const renderYAnnotationsEditable = ({
   const getGradientX = (yAnnotation: YAnnotation): number => calculateGradientXOffset(yAnnotation) * width;
   const gradientHeight = height * GRADIENT_HEIGHT_RATIO;
 
+  const getValueFontSize = (yAnnotation: YAnnotation): number =>
+    yAnnotation.value < -9999 ? ANNOTATION_FONT_SIZE - 1 : ANNOTATION_FONT_SIZE;
+
   const getGroupPosition = (yAnnotation: YAnnotation): string => {
     return `translate(0,${getYPosition(yAnnotation)})`;
   };
@@ -177,7 +180,7 @@ export const renderYAnnotationsEditable = ({
     .attr('class', 'y-annotation-editable');
 
   /** Create Draggable Annotation Handle Rectangle */
-  annotationGroupEditable
+  const dragHandle = annotationGroupEditable
     .append('rect')
     .attr('class', 'y-annotation')
     .attr('width', getYHandleWidth)
@@ -215,7 +218,7 @@ export const renderYAnnotationsEditable = ({
     .attr('text-anchor', 'start')
     .attr('y', Y_ANNOTATION_TEXT_PADDING)
     .text(annotation => getValueText({ annotation, resolution, viewport, formatText: true }))
-    .style('font-size', ANNOTATION_FONT_SIZE)
+    .style('font-size', getValueFontSize)
     .style('user-select', 'none')
     .style('pointer-events', 'none')
     .style('fill', getColor);
@@ -282,7 +285,8 @@ export const renderYAnnotationsEditable = ({
     .attr('display', getValueTextVisibility)
     .attr('x', width + Y_ANNOTATION_TEXT_LEFT_PADDING)
     .text(annotation => getValueText({ annotation, resolution, viewport, formatText: true }))
-    .style('fill', getColor);
+    .style('fill', getColor)
+    .style('font-size', getValueFontSize);
 
   /** Update Label Text */
   annotationSelectionEditable
@@ -322,6 +326,8 @@ export const renderYAnnotationsEditable = ({
 
   /** Exit */
   annotationSelectionEditable.exit().remove();
+
+  return dragHandle;
 };
 
 export const renderYAnnotations = ({

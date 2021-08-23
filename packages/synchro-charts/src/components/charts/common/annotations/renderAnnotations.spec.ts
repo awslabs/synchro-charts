@@ -49,6 +49,7 @@ const render = (props: Partial<RenderAnnotationsOptions>, page: SpecPage) => {
     emitUpdatedWidgetConfiguration: () => {},
     draggable: () => {},
     startStopDragging: () => {},
+    inDragState: () => false,
   };
 
   renderAnnotations({

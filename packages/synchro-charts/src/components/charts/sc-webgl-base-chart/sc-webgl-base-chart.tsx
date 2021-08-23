@@ -160,6 +160,10 @@ export class ScWebglBaseChart {
     this.isDragging = dragState;
   };
 
+  inDragState = (): boolean => {
+    return this.isDragging;
+  };
+
   getAxisContainer = (): SVGElement => {
     if (!this.axisContainer) {
       // Grab the svg within `<sc-webgl-axis />` component
@@ -624,6 +628,7 @@ export class ScWebglBaseChart {
         emitUpdatedWidgetConfiguration: this.emitUpdatedWidgetConfiguration,
         draggable: this.draggable,
         startStopDragging: this.startStopDragging,
+        inDragState: this.inDragState,
       });
     }
 
