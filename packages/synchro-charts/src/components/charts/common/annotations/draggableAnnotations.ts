@@ -1,17 +1,22 @@
-import { select, event } from 'd3-selection';
+import { select, event, Selection } from 'd3-selection';
 import { drag } from 'd3-drag';
-import { YAnnotation } from '../types';
+import throttle from 'lodash.throttle';
+import { Annotation, YAnnotation } from '../types';
 import { DataStream, ViewPort } from '../../../../utils/dataTypes';
 import {
-  DRAGGABLE_HANDLE_SELECTOR,
   ANNOTATION_GROUP_SELECTOR_EDITABLE,
   ANNOTATION_GROUP_SELECTOR,
+  HANDLE_OFFSET_Y,
+  ELEMENT_GROUP_SELECTOR,
+  TEXT_VALUE_SELECTOR,
+  DRAGGABLE_HANDLE_SELECTOR,
 } from './YAnnotations/YAnnotations';
+import { getY } from './YAnnotations/utils';
+import { getValueText } from './utils';
 
 export type DraggableAnnotationsOptions = {
   container: SVGElement;
-  viewport: ViewPort;
-  size: { height: number };
+  size: { width: number; height: number };
   onUpdate: (
     { start, end }: { start: Date; end: Date },
     hasDataChanged: boolean,
@@ -21,6 +26,8 @@ export type DraggableAnnotationsOptions = {
   activeViewPort: () => ViewPort;
   emitUpdatedWidgetConfiguration: (dataStreams?: DataStream[]) => void;
   startStopDragging: (dragState: boolean) => void;
+  resolution: number;
+  dragHandle: Selection<any, any, any, any>;
 };
 
 /**
@@ -52,13 +59,14 @@ const calculateNewThreshold = ({
 
 const needAxisRescale = ({ annotationValue, viewport }: { annotationValue: number; viewport: ViewPort }): boolean => {
   const { yMax, yMin } = viewport;
-  const lowerThreshold = yMin + 0.25 * (yMax - yMin);
-  const upperThreshold = yMin + 0.75 * (yMax - yMin);
+  const lowerThreshold = yMin + 0.01 * (yMax - yMin);
+  const upperThreshold = yMin + 0.99 * (yMax - yMin);
   return annotationValue < lowerThreshold || annotationValue > upperThreshold;
 };
 
 export const FOCUS_TRANSITION_TIME = 100; // milliseconds of the focus mode transition
 const FOCUS_OPACITY = 0.32; // the opacity of the other handles that are not selected for dragging
+const UPDATE_THROTTLE_MS = 90;
 
 /**
  * Draggable Thresholds Feature
@@ -66,18 +74,41 @@ const FOCUS_OPACITY = 0.32; // the opacity of the other handles that are not sel
 export const attachDraggable = () => {
   let draggedAnnotationValue: number | undefined; // this is necessary to prevent race condition (new annotation value) from occurring during the drag process
 
+  const internalUpdate = throttle(
+    ([onUpdate, viewport]: [
+      (
+        { start, end }: { start: Date; end: Date },
+        hasDataChanged: boolean,
+        hasSizeChanged: boolean,
+        hasAnnotationChanged: boolean
+      ) => void,
+      { start: Date; end: Date }
+    ]) => {
+      onUpdate(viewport, false, false, true);
+    },
+    UPDATE_THROTTLE_MS
+  );
+
   const draggable = ({
     container,
-    viewport,
     size,
     onUpdate,
     activeViewPort,
     emitUpdatedWidgetConfiguration,
     startStopDragging,
+    dragHandle,
+    resolution,
   }: DraggableAnnotationsOptions): void => {
-    const containerSelection = select(container);
-    const thresholdGroup = containerSelection.selectAll(DRAGGABLE_HANDLE_SELECTOR);
-    thresholdGroup.call(
+    const { height } = size;
+
+    const getGroupPosition = (annotation: YAnnotation, viewport: ViewPort): string => {
+      return `translate(0,${getY({ annotation, height, viewport })})`;
+    };
+
+    const getHandlePosition = (annotation: YAnnotation, viewport: ViewPort): number => {
+      return getY({ annotation, height, viewport }) + HANDLE_OFFSET_Y;
+    };
+    dragHandle.call(
       drag()
         .on('start', function dragStarted(yAnnotation: unknown) {
           const annotationDragged = yAnnotation as YAnnotation;
@@ -88,12 +119,16 @@ export const attachDraggable = () => {
           draggedAnnotationValue = +annotationDragged.value;
           select(this).classed('active', true);
 
-          select(container)
+          const otherAnnotations = select(container)
             .selectAll(`${ANNOTATION_GROUP_SELECTOR_EDITABLE},${ANNOTATION_GROUP_SELECTOR}`)
-            .filter(annotation => annotation !== yAnnotation)
-            .transition()
-            .duration(FOCUS_TRANSITION_TIME)
-            .attr('opacity', FOCUS_OPACITY);
+            .filter(annotation => annotation !== yAnnotation);
+
+          if (otherAnnotations.size() > 0) {
+            otherAnnotations
+              .transition()
+              .duration(FOCUS_TRANSITION_TIME)
+              .attr('opacity', FOCUS_OPACITY);
+          }
         })
         .on('drag', function handleDragged(yAnnotation: unknown) {
           /** Drag Event */
@@ -101,14 +136,46 @@ export const attachDraggable = () => {
           if (!annotationDragged.isEditable) {
             return;
           }
+          let viewport = activeViewPort();
 
           const { y: yPos } = event as { y: number };
           const draggedValue = calculateNewThreshold({ yPos, viewport, size });
           annotationDragged.value = draggedValue;
           draggedAnnotationValue = draggedValue;
-          const axisRescale = needAxisRescale({ annotationValue: annotationDragged.value, viewport });
 
-          onUpdate(axisRescale ? activeViewPort() : viewport, false, axisRescale, true);
+          // re-rendering of everything except annotation movement
+          const axisRescale = needAxisRescale({ annotationValue: annotationDragged.value as number, viewport });
+          if (axisRescale) {
+            // prevent the user from dragging off the page
+            onUpdate(viewport, false, axisRescale, true);
+            viewport = activeViewPort();
+          } else {
+            internalUpdate([onUpdate, viewport]);
+          }
+
+          // Update draggable annotation element groups
+          select(container)
+            .selectAll(ANNOTATION_GROUP_SELECTOR_EDITABLE)
+            .selectAll(ELEMENT_GROUP_SELECTOR)
+            .attr('transform', annotation => getGroupPosition(annotation as YAnnotation, viewport));
+
+          // Update draggable annotation handles
+          select(container)
+            .selectAll(DRAGGABLE_HANDLE_SELECTOR)
+            .attr('y', annotation => getHandlePosition(annotation as YAnnotation, viewport));
+
+          // Update all annotation text values
+          select(container)
+            .selectAll(`${ANNOTATION_GROUP_SELECTOR_EDITABLE},${ANNOTATION_GROUP_SELECTOR}`)
+            .select(TEXT_VALUE_SELECTOR)
+            .text(annotation =>
+              getValueText({ annotation: annotation as Annotation<number>, resolution, viewport, formatText: true })
+            );
+
+          // Update non-draggable annotation groups
+          select(container)
+            .selectAll(ANNOTATION_GROUP_SELECTOR)
+            .attr('transform', annotation => getGroupPosition(annotation as YAnnotation, viewport));
         })
         .on('end', function dragEnded(yAnnotation: unknown) {
           const annotationDragged = yAnnotation as YAnnotation;
@@ -118,20 +185,26 @@ export const attachDraggable = () => {
           annotationDragged.value = draggedAnnotationValue
             ? (draggedAnnotationValue as number)
             : annotationDragged.value;
+          const viewport = activeViewPort();
           /** emit event updating annotation on mouse up */
           emitUpdatedWidgetConfiguration();
           const axisRescale = needAxisRescale({ annotationValue: annotationDragged.value as number, viewport });
-          onUpdate(axisRescale ? activeViewPort() : viewport, false, axisRescale, true);
+          onUpdate(viewport, false, axisRescale, true);
 
           select(this).classed('active', false);
 
           startStopDragging(false);
 
-          select(container)
+          const otherAnnotations = select(container)
             .selectAll(`${ANNOTATION_GROUP_SELECTOR_EDITABLE},${ANNOTATION_GROUP_SELECTOR}`)
-            .transition()
-            .duration(FOCUS_TRANSITION_TIME)
-            .attr('opacity', 1);
+            .filter(annotation => annotation !== yAnnotation);
+
+          if (otherAnnotations.size() > 0) {
+            otherAnnotations
+              .transition()
+              .duration(FOCUS_TRANSITION_TIME)
+              .attr('opacity', 1);
+          }
         }) as any
     );
   };

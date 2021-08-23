@@ -40,12 +40,13 @@ export const getNumberAnnotations = (annotations: Annotations): Annotations => {
 
 const formatValueString = (thresholdValue: number): string => {
   const upperLimit = 99999;
+  const lowerLimit = -9999;
   const lowerBound = 0.001;
   const digits = 5;
   const limit = 4;
 
   // Handle large numbers greater than 5 digits --> exponential
-  if (thresholdValue > upperLimit || thresholdValue < -upperLimit) {
+  if (thresholdValue > upperLimit || thresholdValue < lowerLimit) {
     return thresholdValue.toExponential(digits - limit).toString();
   }
 
