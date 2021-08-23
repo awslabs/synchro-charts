@@ -51,10 +51,7 @@ const calculateNewThreshold = ({
   const yAxisScale = (yMax - yMin) / 1000;
   const decimalDigits = Math.log(yAxisScale) / Math.log(10);
 
-  if (decimalDigits >= 0) {
-    return +newVal.toFixed(0);
-  }
-  return +newVal.toFixed(-decimalDigits);
+  return +newVal.toFixed(decimalDigits >= 0 ? 0 : -decimalDigits);
 };
 
 const needAxisRescale = ({ annotationValue, viewport }: { annotationValue: number; viewport: ViewPort }): boolean => {
@@ -67,6 +64,27 @@ const needAxisRescale = ({ annotationValue, viewport }: { annotationValue: numbe
 export const FOCUS_TRANSITION_TIME = 100; // milliseconds of the focus mode transition
 const FOCUS_OPACITY = 0.32; // the opacity of the other handles that are not selected for dragging
 const UPDATE_THROTTLE_MS = 90;
+
+/**
+ * Given a annotation container, it will mask by change the opacity of all Y annotation that is not
+ * the currentDraggedAnnotation
+ */
+const maskNonDraggedAnnotations = ({
+  on,
+  container,
+  currentDraggedAnnotation,
+}: {
+  on: boolean;
+  container: SVGElement;
+  currentDraggedAnnotation: unknown;
+}): void => {
+  select(container)
+    .selectAll(`${ANNOTATION_GROUP_SELECTOR_EDITABLE},${ANNOTATION_GROUP_SELECTOR}`)
+    .filter(annotation => annotation !== currentDraggedAnnotation)
+    .transition()
+    .duration(FOCUS_TRANSITION_TIME)
+    .attr('opacity', on ? FOCUS_OPACITY : 1);
+};
 
 /**
  * Draggable Thresholds Feature
@@ -110,7 +128,7 @@ export const attachDraggable = () => {
     };
     dragHandle.call(
       drag()
-        .on('start', function dragStarted(yAnnotation: unknown) {
+        .on('start', function dragStarted(yAnnotation) {
           const annotationDragged = yAnnotation as YAnnotation;
           if (!annotationDragged.isEditable) {
             return;
@@ -119,18 +137,13 @@ export const attachDraggable = () => {
           draggedAnnotationValue = +annotationDragged.value;
           select(this).classed('active', true);
 
-          const otherAnnotations = select(container)
-            .selectAll(`${ANNOTATION_GROUP_SELECTOR_EDITABLE},${ANNOTATION_GROUP_SELECTOR}`)
-            .filter(annotation => annotation !== yAnnotation);
-
-          if (otherAnnotations.size() > 0) {
-            otherAnnotations
-              .transition()
-              .duration(FOCUS_TRANSITION_TIME)
-              .attr('opacity', FOCUS_OPACITY);
-          }
+          maskNonDraggedAnnotations({
+            container,
+            on: true,
+            currentDraggedAnnotation: yAnnotation,
+          });
         })
-        .on('drag', function handleDragged(yAnnotation: unknown) {
+        .on('drag', function handleDragged(yAnnotation) {
           /** Drag Event */
           const annotationDragged = yAnnotation as YAnnotation;
           if (!annotationDragged.isEditable) {
@@ -177,14 +190,12 @@ export const attachDraggable = () => {
             .selectAll(ANNOTATION_GROUP_SELECTOR)
             .attr('transform', annotation => getGroupPosition(annotation as YAnnotation, viewport));
         })
-        .on('end', function dragEnded(yAnnotation: unknown) {
+        .on('end', function dragEnded(yAnnotation) {
           const annotationDragged = yAnnotation as YAnnotation;
           if (!annotationDragged.isEditable) {
             return;
           }
-          annotationDragged.value = draggedAnnotationValue
-            ? (draggedAnnotationValue as number)
-            : annotationDragged.value;
+          annotationDragged.value = draggedAnnotationValue != null ? draggedAnnotationValue : annotationDragged.value;
           const viewport = activeViewPort();
           /** emit event updating annotation on mouse up */
           emitUpdatedWidgetConfiguration();
@@ -195,16 +206,11 @@ export const attachDraggable = () => {
 
           startStopDragging(false);
 
-          const otherAnnotations = select(container)
-            .selectAll(`${ANNOTATION_GROUP_SELECTOR_EDITABLE},${ANNOTATION_GROUP_SELECTOR}`)
-            .filter(annotation => annotation !== yAnnotation);
-
-          if (otherAnnotations.size() > 0) {
-            otherAnnotations
-              .transition()
-              .duration(FOCUS_TRANSITION_TIME)
-              .attr('opacity', 1);
-          }
+          maskNonDraggedAnnotations({
+            container,
+            on: false,
+            currentDraggedAnnotation: yAnnotation,
+          });
         }) as any
     );
   };
