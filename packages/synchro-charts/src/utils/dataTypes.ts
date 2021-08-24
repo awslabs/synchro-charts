@@ -35,6 +35,18 @@ export type TableColumn = {
 };
 
 /**
+ * Used to keep track of the aggregate type of a data stream.
+ */
+ export enum AggregateType {
+  AVERAGE = 'average',
+  COUNT = 'count',
+  MAXIMUM = 'maxiumum',
+  MINIMUM = 'minimum',
+  SUM = 'sum',
+  STANDARD_DEVIATION = 'standard deviation',
+}
+
+/**
  * Data Stream Info
  *
  * A view model representation of a data stream.
