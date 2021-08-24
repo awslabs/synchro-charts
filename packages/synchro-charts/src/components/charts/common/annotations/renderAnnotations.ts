@@ -1,6 +1,11 @@
 import { Annotation, Annotations, AnnotationValue, XAnnotation, YAnnotation } from '../types';
 import { renderXAnnotations, removeXAnnotations } from './XAnnotations/XAnnotations';
-import { renderYAnnotations, removeYAnnotations, renderYAnnotationsEditable } from './YAnnotations/YAnnotations';
+import {
+  renderYAnnotations,
+  removeYAnnotations,
+  renderYAnnotationsEditable,
+  renderYAnnotationDefs,
+} from './YAnnotations/YAnnotations';
 import { DataStream, ViewPort } from '../../../../utils/dataTypes';
 import { DraggableAnnotationsOptions } from './draggableAnnotations';
 
@@ -74,6 +79,11 @@ export const renderAnnotations = ({
     resolution,
     size,
   });
+
+  /**
+   * Y Annotation Defs
+   */
+  renderYAnnotationDefs({ container, yAnnotations });
 
   /**
    * Y Annotations

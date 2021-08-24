@@ -56,29 +56,6 @@ const createThresholdGradients = ({
   getGradientX: (yAnnotation: YAnnotation) => number;
   renderThresholdGradient: boolean;
 }): void => {
-  const gradientDefs = elementGroup
-    .append('defs')
-    .append('linearGradient')
-    .attr('class', 'gradient-def')
-    .attr('gradientTransform', 'rotate(90)')
-    .attr('id', getGradientID);
-
-  gradientDefs
-    .append('stop')
-    .attr('class', 'gradient-def-one')
-    .attr('offset', '0%')
-    .style('stop-color', getColor)
-    .style('stop-opacity', 0);
-
-  gradientDefs
-    .append('stop')
-    .attr('class', 'gradient-def-two')
-    .attr('offset', '80%')
-    .style('stop-color', getColor)
-    .style('stop-opacity', 0.33);
-
-  // NOTE the order of the stops here is VERY IMPORTANT
-
   elementGroup
     .append('rect')
     .attr('display', yAnnotation => getGradientVisibility({ yAnnotation, renderThresholdGradient }))
@@ -104,11 +81,6 @@ const updateThresholdGradients = ({
   getGradientX: (yAnnotation: YAnnotation) => number;
   renderThresholdGradient: boolean;
 }): void => {
-  const gradSelector = elementGroup.select(GRADIENT_DEF_SELECTOR).attr('id', getGradientID);
-
-  gradSelector.select(`${GRADIENT_STOP_SELECTOR}-one`).style('stop-color', getColor);
-  gradSelector.select(`${GRADIENT_STOP_SELECTOR}-two`).style('stop-color', getColor);
-
   elementGroup
     .select(GRADIENT_RECT_SELECTOR)
     .attr('display', yAnnotation => getGradientVisibility({ yAnnotation, renderThresholdGradient }))
@@ -118,6 +90,56 @@ const updateThresholdGradients = ({
     .attr('y', -gradientHeight)
     .attr('transform', getGradientRotation)
     .style('fill', getGradientRectangleFill);
+};
+
+export const renderYAnnotationDefs = ({
+  container,
+  yAnnotations,
+}: {
+  container: SVGElement;
+  yAnnotations: YAnnotation[];
+}) => {
+  const annotationDefs = select(container)
+    .selectAll('defs')
+    .data([0]); // only create the defs group once
+
+  annotationDefs.enter().append('defs');
+
+  const gradientDefs = select(container)
+    .select('defs')
+    .selectAll(GRADIENT_DEF_SELECTOR);
+
+  const gradient = gradientDefs
+    .data(yAnnotations)
+    .enter()
+    .append('linearGradient')
+    .attr('class', 'gradient-def')
+    .attr('gradientTransform', 'rotate(90)')
+    .attr('id', getGradientID);
+
+  gradient
+    .append('stop')
+    .attr('class', 'gradient-def-one')
+    .attr('offset', '0%')
+    .style('stop-color', getColor)
+    .style('stop-opacity', 0);
+
+  gradient
+    .append('stop')
+    .attr('class', 'gradient-def-two')
+    .attr('offset', '80%')
+    .style('stop-color', getColor)
+    .style('stop-opacity', 0.33);
+
+  // NOTE the order of the stops here is VERY IMPORTANT
+
+  const gradSelector = gradientDefs.data(yAnnotations).attr('id', getGradientID);
+
+  gradSelector.select(`${GRADIENT_STOP_SELECTOR}-one`).style('stop-color', getColor);
+  gradSelector.select(`${GRADIENT_STOP_SELECTOR}-two`).style('stop-color', getColor);
+
+  annotationDefs.exit().remove();
+  gradientDefs.exit().remove();
 };
 
 export const renderYAnnotationsEditable = ({
