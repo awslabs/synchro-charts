@@ -117,6 +117,9 @@ export const renderYAnnotationDefs = ({
     .attr('gradientTransform', 'rotate(90)')
     .attr('id', getGradientID);
 
+  // TODO filter annotations for only THRESHOLDS (since only thresholds need gradients)
+  // TODO prevent duplicate gradient defs from being created if two thresholds have the same color
+
   gradient
     .append('stop')
     .attr('class', 'gradient-def-one')
