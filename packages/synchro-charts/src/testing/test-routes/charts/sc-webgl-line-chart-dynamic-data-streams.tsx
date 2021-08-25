@@ -1,7 +1,7 @@
 import { Component, h, State } from '@stencil/core';
 import { Y_VALUE } from './constants';
-import { MINUTE_IN_MS } from '../../../utils/time';
-import { DataStream } from '../../../utils/dataTypes';
+import { MINUTE_IN_MS, HOUR_IN_MS } from '../../../utils/time';
+import { DataStream, AggregateType } from '../../../utils/dataTypes';
 import { DataType } from '../../../utils/dataConstants';
 
 // viewport boundaries
@@ -54,18 +54,48 @@ export class ScWebglLineChartDynamicDataStreams {
       ...this.dataStreams,
     ];
   };
-
+  addStream2 = () => {
+    const leftPoint = {
+      x: LEFT_X,
+      y: 5000 * Math.random(),
+    };
+    const middlePoint = {
+      x: MIDDLE_X,
+      y: 5000 * Math.random(),
+    };
+    const rightPoint = {
+      x: RIGHT_X,
+      y: 5000 * Math.random(),
+    };
+    const streamId = `stream-${this.dataStreams.length + 1}`;
+    this.dataStreams = [
+      {
+        id: streamId,
+        color: 'red',
+        name: `${streamId}-name`,
+        aggregates: { [HOUR_IN_MS]: {["maximum"]: [leftPoint, middlePoint, rightPoint] }},
+        data: [],
+        resolution: HOUR_IN_MS,
+        dataType: DataType.NUMBER,
+        aggregateTypes: [AggregateType.MAXIMUM, AggregateType.MINIMUM],
+      },
+      ...this.dataStreams,
+    ];
+  };
   removeStream = () => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [_firstStream, ...restStreams] = this.dataStreams;
     this.dataStreams = restStreams;
   };
-
+  
   render() {
     return (
       <div>
         <button id="add-stream" onClick={this.addStream}>
           Add Stream
+        </button>
+        <button id="add-stream2" onClick={this.addStream2}>
+          Add Random Stream
         </button>
         <button id="remove-stream" onClick={this.removeStream}>
           Remove Stream

@@ -14,6 +14,7 @@ import {
   ViewPortConfig,
   RequestDataFn,
   MessageOverrides,
+  AggregateType,
 } from '../../../utils/dataTypes';
 import {
   Annotations,
@@ -410,8 +411,10 @@ export class ScWebglBaseChart {
     // Filter down the data streams to only contain data within the viewport
     const inViewPoints: DataPoint<number>[] = this.dataStreams
       .filter(isNumberDataStream)
-      .map(stream =>
-        getVisibleData(getDataPoints(stream, stream.resolution), { start: this.start, end: this.end }, false)
+      .map(stream => {
+        const firstAggregateType = stream.aggregateTypes !== undefined ? stream.aggregateTypes[0] : AggregateType.AVERAGE;
+        return getVisibleData(getDataPoints(stream, stream.resolution, firstAggregateType), { start: this.start, end: this.end }, false)
+      }
       )
       .flat();
 
@@ -819,7 +822,8 @@ export class ScWebglBaseChart {
     const hasNoDataStreamsPresent = this.visualizedDataStreams().length === 0;
 
     const hasNoDataPresent = this.visualizedDataStreams().every(stream => {
-      const points = getDataPoints(stream, stream.resolution);
+      const firstAggregateType = stream.aggregateTypes !== undefined ? stream.aggregateTypes[0] : AggregateType.AVERAGE;
+      const points = getDataPoints(stream, stream.resolution, firstAggregateType);
       if (points.length === 0) {
         return true;
       }

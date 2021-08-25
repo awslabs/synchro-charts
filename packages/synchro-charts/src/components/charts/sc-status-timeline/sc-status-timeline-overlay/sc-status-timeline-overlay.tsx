@@ -1,5 +1,5 @@
 import { Component, Event, EventEmitter, h, Prop, State } from '@stencil/core';
-import { DataStream, SizeConfig } from '../../../../utils/dataTypes';
+import { AggregateType, DataStream, SizeConfig } from '../../../../utils/dataTypes';
 import { WidgetConfigurationUpdate, Threshold } from '../../common/types';
 import { breachedThreshold } from '../../common/annotations/breachedThreshold';
 import { closestPoint } from '../../sc-webgl-base-chart/activePoints';
@@ -85,7 +85,8 @@ export class ScStatusTimelineOverlay {
         }}
       >
         {this.dataStreams.map(dataStream => {
-          const point = closestPoint(getDataPoints(dataStream, dataStream.resolution), this.date, DATA_ALIGNMENT.LEFT);
+          const firstAggregateType = dataStream.aggregateTypes !== undefined ? dataStream.aggregateTypes[0] : AggregateType.AVERAGE;
+          const point = closestPoint(getDataPoints(dataStream, dataStream.resolution, firstAggregateType), this.date, DATA_ALIGNMENT.LEFT);
           const value = point ? point.y : undefined;
 
           const threshold = breachedThreshold({

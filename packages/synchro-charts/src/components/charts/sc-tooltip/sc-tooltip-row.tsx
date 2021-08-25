@@ -7,6 +7,7 @@ import {
   STREAM_ICON_STROKE_LINECAP,
   STREAM_ICON_STROKE_WIDTH,
   TREND_ICON_DASH_ARRAY,
+  AggregateType,
 } from '../../../utils/dataTypes';
 import { Value } from '../../value/Value';
 import { getAggregationFrequency } from '../../sc-data-stream-name/helper';
@@ -23,12 +24,16 @@ const AGGREGATED_LEVEL = 'average';
 export class ScTooltipRow {
   @Prop() label!: string;
   @Prop() resolution!: number | undefined;
+  @Prop() aggregateTypes?: AggregateType[] | undefined;
+  @Prop() hasIndexForFirstAggregate?: boolean | undefined;
   @Prop() color!: string;
   @Prop() point!: DataPoint | undefined;
   @Prop() showDataStreamColor!: boolean;
   @Prop() pointType!: POINT_TYPE;
   @Prop() valueColor?: string = baseColor;
   @Prop() icon?: StatusIcon;
+
+  private firstAggregateType = this.aggregateTypes && this.hasIndexForFirstAggregate ? this.aggregateTypes[0] : AggregateType.AVERAGE;
 
   render() {
     const isTrendPoint = this.pointType === POINT_TYPE.TREND;
@@ -57,7 +62,7 @@ export class ScTooltipRow {
         </span>
         {this.resolution != null && (
           <div class="awsui-util-pb-s">
-            <small>{getAggregationFrequency(this.resolution, AGGREGATED_LEVEL)}</small>
+            <small>{getAggregationFrequency(this.resolution, this.firstAggregateType)}</small>
           </div>
         )}
       </div>

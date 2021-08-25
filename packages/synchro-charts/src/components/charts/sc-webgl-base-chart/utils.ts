@@ -2,7 +2,7 @@ import { Mesh, OrthographicCamera, Scene } from 'three';
 import uuid from 'uuid/v4';
 import { ChartScene } from '../../sc-webgl-context/types';
 import { getDataPoints } from '../../../utils/getDataPoints';
-import { DataStream, Primitive, Resolution, ViewPort } from '../../../utils/dataTypes';
+import { AggregateType, DataStream, Primitive, Resolution, ViewPort } from '../../../utils/dataTypes';
 import { getCSSColorByString } from '../common/getCSSColorByString';
 
 /**
@@ -17,7 +17,8 @@ export const vertices = <T extends Primitive>(
   resolution: Resolution
 ): [number, T, number, number, number][] => {
   const [r, g, b] = getCSSColorByString(stream.color || 'black');
-  return getDataPoints(stream, resolution).map(p => [p.x, p.y, r, g, b]);
+  const firstAggregateType = stream.aggregateTypes !== undefined ? stream.aggregateTypes[0] : AggregateType.AVERAGE;
+  return getDataPoints(stream, resolution, firstAggregateType).map(p => [p.x, p.y, r, g, b]);
 };
 
 // The max and minimum z value an entity may have and still be present.
@@ -130,5 +131,10 @@ export const constructChartScene = ({
  *
  * Total data points across all data streams
  */
-export const numDataPoints = <T extends Primitive>(dataStreams: DataStream<T>[]): number =>
-  dataStreams.map(stream => getDataPoints(stream, stream.resolution).length).reduce((total, num) => total + num, 0);
+
+export const numDataPoints = <T extends Primitive>(dataStreams: DataStream<T>[]): number => {
+  return dataStreams.map(stream => {
+    const firstAggregateType = stream.aggregateTypes !== undefined ? stream.aggregateTypes[0] : AggregateType.AVERAGE;
+    return getDataPoints(stream, stream.resolution, firstAggregateType).length;
+  }).reduce((total, num) => total + num, 0);
+}

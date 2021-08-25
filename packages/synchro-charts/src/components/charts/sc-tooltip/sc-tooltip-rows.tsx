@@ -1,7 +1,7 @@
 import { Component, h, Prop } from '@stencil/core';
 
 import uniq from 'lodash.uniq';
-import { DataPoint, DataStream, DataStreamId, SizeConfig, ViewPort } from '../../../utils/dataTypes';
+import { AggregateType, DataPoint, DataStream, DataStreamId, SizeConfig, ViewPort } from '../../../utils/dataTypes';
 import { activePoints, POINT_TYPE } from '../sc-webgl-base-chart/activePoints';
 import { getAggregationFrequency } from '../../sc-data-stream-name/helper';
 import { displayDate } from '../../../utils/time';
@@ -162,6 +162,35 @@ export class ScTooltipRows {
     const minResolution = resolutions.length > 0 ? Math.min(...resolutions) : 0;
     const isCrossResolution = uniq(resolutions).length > 1;
 
+    const aggregateTypesArrays = this.dataStreams.map(({ aggregateTypes }) => aggregateTypes);
+    const firstAggregateInEachArray = aggregateTypesArrays.map(function(array) {
+      if (array !== undefined) {
+        return array[0];
+      }
+      return AggregateType.AVERAGE;
+    })
+    const isCrossAggregate = uniq(firstAggregateInEachArray).length > 1;
+    let firstAggregate = firstAggregateInEachArray[0];
+
+    // If all datastreams have the same aggregate type, check to see 
+    if (!isCrossAggregate && this.dataStreams[0] != undefined) {
+      const res = this.dataStreams[0].resolution;
+      let aggregatedDataHasIndexOnFirstAggregate = true;
+      const aggregate = this.dataStreams[0].aggregateTypes ? this.dataStreams[0].aggregateTypes[0] : AggregateType.AVERAGE;
+      if (this.dataStreams[0].aggregates != undefined && this.dataStreams[0].aggregates[res] != undefined) {
+        const datapoints = this.dataStreams[0].aggregates[res];
+        if (datapoints != undefined && datapoints[aggregate] != undefined) {
+          aggregatedDataHasIndexOnFirstAggregate = true;
+        }
+        if (datapoints != undefined && datapoints[aggregate] == undefined) {
+          aggregatedDataHasIndexOnFirstAggregate = false;
+        }
+      }
+      if (!aggregatedDataHasIndexOnFirstAggregate) {
+        firstAggregate = AggregateType.AVERAGE;
+      }
+    }
+
     const points = this.getTooltipPoints();
     const displayedDate = this.getDisplayedDate(points);
     const position = tooltipPosition({
@@ -206,11 +235,11 @@ export class ScTooltipRows {
             <small class={{ 'awsui-util-d-b': true, 'left-offset': !this.showDataStreamColor }}>
               {displayDate(displayedDate, minResolution, this.viewport)}
             </small>
-            {!isCrossResolution && (
+            {!isCrossResolution && !isCrossAggregate && (
               <small
                 class={{ 'awsui-util-d-b': true, 'awsui-util-mb-s': true, 'left-offset': !this.showDataStreamColor }}
               >
-                {getAggregationFrequency(minResolution, AGGREGATED_LEVEL)}
+                {getAggregationFrequency(minResolution, firstAggregate)}
               </small>
             )}
             {points.map(tooltipPoint => {
@@ -223,6 +252,21 @@ export class ScTooltipRows {
                 console.warn(`No data stream info associated with id ${streamId}`);
                 return null;
               }
+
+              const res = dataStream.resolution;
+              let aggregatedDataHasIndexOnFirstAggregate = true;
+              const aggregate = dataStream.aggregateTypes ? dataStream.aggregateTypes[0] : AggregateType.AVERAGE;
+
+              if (dataStream.aggregates != undefined && dataStream.aggregates[res] != undefined) {
+                const datapoints = dataStream.aggregates[res];
+                if (datapoints != undefined && datapoints[aggregate] != undefined) {
+                  aggregatedDataHasIndexOnFirstAggregate = true;
+                }
+                if (datapoints != undefined && datapoints[aggregate] == undefined) {
+                  aggregatedDataHasIndexOnFirstAggregate = false;
+                }
+              }
+
               const { color: valueColor = undefined, icon = undefined } =
                 (tooltipPoint.point && this.rowsValueColorAndIcon(streamId, tooltipPoint.point, displayedDate)) || {};
 
@@ -231,7 +275,9 @@ export class ScTooltipRows {
                   key={`${tooltipPoint.streamId}-${tooltipPoint.type}`}
                   showDataStreamColor={this.showDataStreamColor}
                   label={tooltipPoint.label || dataStream.name}
-                  resolution={isCrossResolution ? dataStream.resolution : undefined}
+                  hasIndexForFirstAggregate={aggregatedDataHasIndexOnFirstAggregate}
+                  resolution={isCrossResolution || isCrossAggregate ? dataStream.resolution : undefined}
+                  aggregateTypes={isCrossResolution || isCrossAggregate ? dataStream.aggregateTypes : undefined}
                   color={tooltipPoint.color || dataStream.color || 'black'}
                   point={tooltipPoint.point}
                   pointType={tooltipPoint.type}

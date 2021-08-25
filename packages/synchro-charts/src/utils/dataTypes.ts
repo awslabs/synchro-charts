@@ -40,7 +40,7 @@ export type TableColumn = {
  export enum AggregateType {
   AVERAGE = 'average',
   COUNT = 'count',
-  MAXIMUM = 'maxiumum',
+  MAXIMUM = 'maximum',
   MINIMUM = 'minimum',
   SUM = 'sum',
   STANDARD_DEVIATION = 'standard deviation',
@@ -62,6 +62,7 @@ export interface DataStreamInfo {
   detailedName?: string;
   streamType?: StreamType;
   associatedStreams?: StreamAssociation[];
+  aggregateTypes?: AggregateType[];
 }
 
 /**
@@ -236,12 +237,13 @@ export interface DataStream<T extends Primitive = Primitive> extends DataStreamI
 
   // Collection of various aggregates available for the data stream
   aggregates?: {
-    [resolution: number]: DataPoint<T>[] | undefined;
+    [resolution: number]: (DataPoint<T>[] | { [aggregationType: string] : DataPoint<T>[] | undefined } | undefined);
   };
 
   dataType: DataType;
   streamType?: StreamType;
   associatedStreams?: StreamAssociation[];
+  aggregateTypes?: AggregateType[];
   isLoading?: boolean;
   isRefreshing?: boolean;
   error?: string;
