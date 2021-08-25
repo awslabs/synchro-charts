@@ -113,8 +113,10 @@ export const createWebGLRenderer = () => {
   const onScroll = () => {
     if (renderer && canvas) {
       const transform = `translate(${window.scrollX}px, ${window.scrollY}px)`;
-      // eslint-disable-next-line no-param-reassign
-      renderer.domElement.style.transform = transform;
+      if (renderer.domElement.style) {
+        // eslint-disable-next-line no-param-reassign
+        renderer.domElement.style.transform = transform;
+      }
 
       rectMap.updateCanvas();
       fullClearAndRerender();

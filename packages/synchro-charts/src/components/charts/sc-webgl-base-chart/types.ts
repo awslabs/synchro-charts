@@ -1,18 +1,13 @@
-import { AlarmsConfig, DataStream, ViewPort } from '../../../utils/dataTypes';
+import { AlarmsConfig, DataStream, SizeConfig, SizePositionConfig, ViewPort } from '../../../utils/dataTypes';
 import { ChartScene } from '../../sc-webgl-context/types';
 import { Threshold, ThresholdOptions } from '../common/types';
 
-/**
- * Chart Scene Creator
- *
- * Creates a chart scene, which is the scene that threejs utilizes to render
- * the data visualization for a given webgl-based chart.
- */
-export type ChartSceneCreator = (options: {
+export type VisualizationOptions = {
   dataStreams: DataStream[];
   alarms?: AlarmsConfig;
   container: HTMLElement;
-  chartSize: { width: number; height: number };
+  chartSize: SizeConfig;
+  position: SizePositionConfig;
   viewport: ViewPort;
 
   // The minimum number of points the buffer must be able to fit. The smaller this number is, the
@@ -32,7 +27,15 @@ export type ChartSceneCreator = (options: {
 
   // Lifecycle method to be called every time there is any visual changes to be rendered, i.e. viewport changes, data changes, etc.
   onUpdate?: ({ start, end }: { start: Date; end: Date }) => void;
-}) => ChartScene;
+};
+
+/**
+ * Chart Scene Creator
+ *
+ * Creates a chart scene, which is the scene that threejs utilizes to render
+ * the data visualization for a given webgl-based chart.
+ */
+export type ChartSceneCreator = (options: Omit<VisualizationOptions, 'position'>) => ChartScene;
 
 /**
  * Chart Scene Updater
@@ -45,7 +48,7 @@ export type ChartSceneUpdater = (options: {
   alarms?: AlarmsConfig;
   container: HTMLElement;
   viewport: ViewPort;
-  chartSize: { width: number; height: number };
+  chartSize: SizeConfig;
   bufferFactor: number;
   minBufferSize: number;
   thresholdOptions: ThresholdOptions;
@@ -57,3 +60,17 @@ export type ChartSceneUpdater = (options: {
   // Lifecycle method to be called every time there is any visual changes to be rendered, i.e. viewport changes, data changes, etc.
   onUpdate?: ({ start, end }: { start: Date; end: Date }) => void;
 }) => ChartScene;
+
+export type RenderVisualizations = (props: VisualizationOptions, changes?: VisualizationChanges) => void;
+
+export type VisualizationPlugin = { create: ChartSceneCreator; update: ChartSceneUpdater };
+
+export interface PluginRegistry {
+  getPlugin: (visualizationType: string) => VisualizationPlugin;
+}
+
+export type VisualizationChanges = {
+  hasAnnotationChanged: boolean;
+  hasDataChanged: boolean;
+  hasSizeChanged: boolean;
+};

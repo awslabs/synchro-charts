@@ -227,6 +227,11 @@ export interface DataStream<T extends Primitive = Primitive> extends DataStreamI
     [resolution: number]: DataPoint<T>[] | undefined;
   };
 
+  // Allows for multiple visualization types on a single widget, only supported by certain widgets.
+  // For example, if you pass in 'scatter' as the visualization type on a data stream onto a line chart, the
+  // data stream with the 'scatter' visualization type is visualized as a scatter plot within the line chart.
+  visualizationType?: string;
+
   dataType: DataType;
   streamType?: StreamType;
   associatedStreams?: StreamAssociation[];

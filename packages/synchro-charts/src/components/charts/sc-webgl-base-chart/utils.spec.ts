@@ -5,11 +5,7 @@ import { LINE_MESH_INDEX, LineChartLineMesh } from '../sc-line-chart/lineMesh';
 import { POINT_MESH_INDEX } from '../common/meshes/pointMesh';
 import { Timestamp } from '../../../utils/dataTypes';
 import { DataType } from '../../../utils/dataConstants';
-
-const CHART_SIZE = {
-  width: 200,
-  height: 200,
-};
+import { CHART_SIZE } from '../../../testing/test-routes/charts/shaders/chartSize';
 
 describe('construct chart scene', () => {
   const X_MIN = new Date(2000, 0, 0);
