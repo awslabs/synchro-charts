@@ -56,7 +56,9 @@ export const getGradientVisibility = ({
     ? 'inline'
     : 'none';
 
-export const getGradientID = (yAnnotation: YAnnotation): string => `${yAnnotation.id}-${yAnnotation.color}`;
+export const getGradientID = (yAnnotation: YAnnotation): string =>
+  `${yAnnotation.id ? yAnnotation.id : ''}--${yAnnotation.color}`;
+
 export const getGradientRectangleFill = (yAnnotation: YAnnotation): string => {
   if (yAnnotation.id === undefined) {
     return 'none';

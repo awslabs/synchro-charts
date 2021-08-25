@@ -83,7 +83,9 @@ export const renderAnnotations = ({
   /**
    * Y Annotation Defs
    */
-  renderYAnnotationDefs({ container, yAnnotations });
+  if (enableThresholdGradient) {
+    renderYAnnotationDefs({ container, yAnnotations });
+  }
 
   /**
    * Y Annotations

@@ -99,6 +99,8 @@ export const renderYAnnotationDefs = ({
   container: SVGElement;
   yAnnotations: YAnnotation[];
 }) => {
+  // D3 operations are very fast so we can create linearGradients for every annotation regardless of whether its a threshold or not - this simplifies the update
+
   const annotationDefs = select(container)
     .selectAll('defs')
     .data([0]); // only create the defs group once
@@ -116,9 +118,6 @@ export const renderYAnnotationDefs = ({
     .attr('class', 'gradient-def')
     .attr('gradientTransform', 'rotate(90)')
     .attr('id', getGradientID);
-
-  // TODO filter annotations for only THRESHOLDS (since only thresholds need gradients)
-  // TODO prevent duplicate gradient defs from being created if two thresholds have the same color
 
   gradient
     .append('stop')
@@ -411,7 +410,6 @@ export const renderYAnnotations = ({
   annotationGroup
     .append('text')
     .attr('display', getValueTextVisibility)
-    .attr('font-size', ANNOTATION_FONT_SIZE)
     .attr('class', 'y-value-text')
     .attr('x', width + Y_ANNOTATION_TEXT_LEFT_PADDING)
     .attr('text-anchor', 'start')
@@ -419,13 +417,13 @@ export const renderYAnnotations = ({
     .text(annotation => getValueText({ annotation, resolution, viewport, formatText: true }))
     .style('user-select', 'none')
     .style('pointer-events', 'none')
+    .style('font-size', ANNOTATION_FONT_SIZE)
     .style('fill', getColor);
 
   /** Create Label Text */
   annotationGroup
     .append('text')
     .attr('display', getLabelTextVisibility)
-    .attr('font-size', ANNOTATION_FONT_SIZE)
     .attr('class', 'y-text')
     .attr('x', width - PADDING)
     .attr('text-anchor', 'end')
@@ -433,6 +431,7 @@ export const renderYAnnotations = ({
     .text(getText)
     .style('user-select', 'none')
     .style('pointer-events', 'none')
+    .style('font-size', ANNOTATION_FONT_SIZE)
     .style('fill', getColor);
 
   /** Create Gradient Thresholds */
