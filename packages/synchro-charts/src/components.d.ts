@@ -87,7 +87,7 @@ export namespace Components {
     interface ScExpandableInputStandard {
     }
     interface ScGestureHandler {
-        "onDateRangeChange": ({ end, start }: { start: Date; end: Date }) => void;
+        "onDateRangeChange": ({ end, start, stopClock }: { start: Date; end: Date; stopClock?: boolean }) => void;
         "size": SizeConfig;
         "viewport": ViewPort;
     }
@@ -1547,7 +1547,7 @@ declare namespace LocalJSX {
     interface ScExpandableInputStandard {
     }
     interface ScGestureHandler {
-        "onDateRangeChange": ({ end, start }: { start: Date; end: Date }) => void;
+        "onDateRangeChange": ({ end, start, stopClock }: { start: Date; end: Date; stopClock?: boolean }) => void;
         "size": SizeConfig;
         "viewport": ViewPort;
     }

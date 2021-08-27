@@ -245,6 +245,10 @@ export class ScWebglBaseChart {
 
   @Watch('viewport')
   onViewPortChange(newViewPort: ViewPortConfig, oldViewPort: ViewPortConfig) {
+    if (this.scene != null && this.activeViewPort().duration != null) {
+      webGLRenderer.startTick(this.scene, this.activeViewPort().duration);
+    }
+
     if (this.scene && !isEqual(newViewPort, oldViewPort)) {
       const hasYRangeChanged = newViewPort.yMin !== oldViewPort.yMin || newViewPort.yMax !== oldViewPort.yMax;
 
@@ -279,6 +283,7 @@ export class ScWebglBaseChart {
           start: this.start,
           end: this.end,
           manager: this.scene,
+          duration: this.activeViewPort().duration,
           preventPropagation: true,
         });
         this.updateAndRegisterChartScene({
@@ -384,9 +389,10 @@ export class ScWebglBaseChart {
     yMin: this.yMin,
     yMax: this.yMax,
     group: this.viewport.group,
+    duration: !isMinimalStaticViewport(this.viewport) ? parseDuration(this.viewport.duration) : undefined,
   });
 
-  handleCameraEvent = ({ start, end }: { start: Date; end: Date }) => {
+  handleCameraEvent = ({ start, end, stopClock = false }: { start: Date; end: Date; stopClock?: boolean }) => {
     if (this.scene) {
       const oldViewport: ViewPort = { yMin: this.yMin, yMax: this.yMax, start, end };
       if (
@@ -396,7 +402,7 @@ export class ScWebglBaseChart {
         this.onUpdate({ start, end }, false, false, false, true);
       }
       // Update Camera
-      webGLRenderer.updateViewPorts({ start, end, manager: this.scene });
+      webGLRenderer.updateViewPorts({ start, end, stopClock, manager: this.scene });
 
       // Emit date range change to allow other non-webgl based components to sync the new date range
       this.onDateRangeChange([start, end, this.viewport.group]);
@@ -526,7 +532,8 @@ export class ScWebglBaseChart {
       thresholds: this.thresholds(),
     });
 
-    webGLRenderer.addChartScene(this.scene);
+    const { duration } = this.activeViewPort();
+    webGLRenderer.addChartScene(this.scene, duration);
     this.setChartRenderingPosition();
     webGLRenderer.render(this.scene);
     this.onUpdate(this.activeViewPort());
@@ -711,7 +718,8 @@ export class ScWebglBaseChart {
         // Must unregister the previous chart scene and register the new one with webgl
         webGLRenderer.removeChartScene(this.scene.id);
         this.scene = updatedScene;
-        webGLRenderer.addChartScene(updatedScene, false);
+        const { duration } = this.activeViewPort();
+        webGLRenderer.addChartScene(updatedScene, duration, false);
         this.setChartRenderingPosition();
       }
 

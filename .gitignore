@@ -9,3 +9,4 @@ dist
 .husky
 */.idea/*
 .idea
+./packages/*/cypress/videos

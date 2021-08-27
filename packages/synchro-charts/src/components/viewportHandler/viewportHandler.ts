@@ -1,4 +1,5 @@
 import { ViewPortManager } from './types';
+import { SECOND_IN_MS } from '../../utils/time';
 
 /**
  * Handlers the syncing view port across different view port groups.
@@ -13,6 +14,9 @@ export class ViewportHandler<T extends ViewPortManager> {
   private viewportMap: {
     [viewportGroup: string]: { start: Date; end: Date };
   } = {};
+  private viewportLiveId: {
+    [viewportGroup: string]: number;
+  } = {};
 
   managers = (): T[] => {
     // NOTE: Providing new reference to a array to prevent manipulation of the internal array from the outside.
@@ -23,15 +27,55 @@ export class ViewportHandler<T extends ViewPortManager> {
     this.viewportManagers.forEach(({ id }) => this.remove(id));
   };
 
-  add = (v: T, shouldSync = true) => {
-    this.viewportManagers = [...this.viewportManagers, v];
+  startTick = (v: T, duration): void => {
+    const initStart = new Date(new Date().getTime() - duration);
+    const initEnd = new Date();
+    const key = v.viewportGroup != null ? v.viewportGroup : v.id;
+
+    // If we are adding a chart into an existing group
+    // we do nothing because we have one clock for the whole group
+    if (this.viewportLiveId[key] != null) {
+      return;
+    }
+
+    this.viewportMap[key] = { start: initStart, end: initEnd };
+
+    this.viewportLiveId[key] = (setInterval(() => {
+      // shift forward by x amount of time
+      const { start, end } = this.viewportMap[key];
+      const newStart = new Date(start.getTime() + SECOND_IN_MS);
+      const newEnd = new Date(end.getTime() + SECOND_IN_MS);
+
+      this.syncViewPortGroup({
+        start: newStart,
+        end: newEnd,
+        duration,
+        manager: v,
+        stopClock: false,
+      });
+      // TODO: find tune the tick interval.
+    }, SECOND_IN_MS) as unknown) as number;
+  };
+
+  stopTick = (manager: T): void => {
+    const key = manager.viewportGroup != null ? manager.viewportGroup : manager.id;
+    clearInterval(this.viewportLiveId[key]);
+    delete this.viewportLiveId[key];
+  };
+
+  add = ({ manager, duration, shouldSync = true }: { manager: T; duration?: number; shouldSync?: boolean }) => {
+    this.viewportManagers = [...this.viewportManagers, manager];
 
     /**
      * If the added chart scene is part of a view port group, sync it's viewport to
      * the current viewport groups time span.
      */
-    if (v.viewportGroup && this.viewportMap[v.viewportGroup] && shouldSync) {
-      v.updateViewPort(this.viewportMap[v.viewportGroup]);
+    if (manager.viewportGroup && this.viewportMap[manager.viewportGroup] && shouldSync) {
+      manager.updateViewPort(this.viewportMap[manager.viewportGroup]);
+    }
+    // If duration is not null, this means that we want to have live mode
+    if (duration != null) {
+      this.startTick(manager, duration);
     }
   };
 
@@ -58,20 +102,28 @@ export class ViewportHandler<T extends ViewPortManager> {
     start,
     end,
     manager,
+    duration,
+    stopClock = false,
     preventPropagation = false,
   }: {
     start: Date;
     end: Date;
     manager: T;
+    stopClock?: boolean;
+    duration?: number;
     preventPropagation?: boolean;
   }) => {
-    if (manager.viewportGroup) {
-      this.viewportMap[manager.viewportGroup] = { start, end };
+    const key = manager.viewportGroup ? manager.viewportGroup : manager.id;
+    // Either you are in a group or you are a single chart
+    this.viewportMap[key] = { start, end };
+
+    if (stopClock) {
+      this.stopTick(manager);
     }
 
     if (!preventPropagation) {
       const updateViewPort = (v: T) => {
-        v.updateViewPort({ start, end });
+        v.updateViewPort({ start, end, duration });
       };
 
       if (manager.viewportGroup) {

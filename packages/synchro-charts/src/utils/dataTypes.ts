@@ -132,6 +132,7 @@ export type ViewPort = MinimalViewPortConfig & {
   end: Date;
   yMin: number;
   yMax: number;
+  duration?: number;
 };
 
 /**

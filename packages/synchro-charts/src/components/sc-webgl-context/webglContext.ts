@@ -68,9 +68,8 @@ export const createWebGLRenderer = () => {
    * @param shouldSync - determines whether the new scene should sync to the existing view port, or if it
    *                     should instead use the viewport provided with the chart
    */
-  const addChartScene = (v: ViewPortManager, shouldSync = true) => {
-    sceneManager.add(v, shouldSync);
-  };
+  const addChartScene = (v: ViewPortManager, duration?: number, shouldSync = true) =>
+    sceneManager.add({ manager: v, duration, shouldSync });
 
   /**
    * Remove Chart Scene
@@ -207,6 +206,7 @@ export const createWebGLRenderer = () => {
     removeChartScene,
     setChartRect,
     updateViewPorts: sceneManager.syncViewPortGroup,
+    startTick: sceneManager.startTick,
     onResolutionChange,
   };
 };

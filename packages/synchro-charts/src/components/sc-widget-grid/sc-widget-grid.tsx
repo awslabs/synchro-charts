@@ -78,9 +78,12 @@ export class ScWidgetGrid implements ChartConfig {
 
   componentDidLoad() {
     this.viewportGroups.add({
-      id: this.widgetId,
-      viewportGroup: this.viewport.group,
-      updateViewPort: this.onUpdate,
+      manager: {
+        id: this.widgetId,
+        viewportGroup: this.viewport.group,
+        updateViewPort: this.onUpdate,
+      },
+      duration: this.duration,
     });
   }
 
