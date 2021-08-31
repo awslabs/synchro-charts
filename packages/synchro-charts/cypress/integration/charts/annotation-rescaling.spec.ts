@@ -40,6 +40,7 @@ const yThreshold: Threshold<number> = {
   },
   showValue: true,
   color: 'blue',
+  id: 'threshold-one',
 };
 
 const yAnnotation: YAnnotation = {
@@ -51,6 +52,7 @@ const yAnnotation: YAnnotation = {
   },
   showValue: true,
   color: 'green',
+  id: 'y-annotation',
 };
 
 const timelineParams: Partial<SearchQueryParams> = {
@@ -98,8 +100,10 @@ const timelineParams: Partial<SearchQueryParams> = {
         value: 2300,
         comparisonOperator: COMPARISON_OPERATOR.LESS_THAN,
         color: 'red',
+        id: 'threshold-two',
       },
     ],
+    displayThresholdGradient: true,
   },
 };
 

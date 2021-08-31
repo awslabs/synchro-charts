@@ -328,6 +328,7 @@ it('allows independent dragging of multiple annotations', () => {
           color: 'green',
         },
       ],
+      displayThresholdGradient: true,
     },
   });
   cy.waitForChart();

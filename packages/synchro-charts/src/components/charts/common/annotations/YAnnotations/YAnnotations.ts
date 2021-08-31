@@ -38,10 +38,11 @@ export const LINE_SELECTOR = 'line.y-line';
 export const DRAGGABLE_HANDLE_SELECTOR = 'rect.y-annotation';
 export const DRAGGABLE_LINE_ONE_SELECTOR = 'line.y-handle-one';
 export const DRAGGABLE_LINE_TWO_SELECTOR = 'line.y-handle-two';
-export const GRADIENT_DEF_SELECTOR = 'linearGradient.gradient-def';
+export const LINEAR_GRADIENT_SELECTOR = 'linearGradient.y-annotation';
 export const GRADIENT_RECT_SELECTOR = 'rect.gradient-annotation';
-export const GRADIENT_STOP_SELECTOR = 'stop.gradient-def';
+export const GRADIENT_STOP_SELECTOR = 'stop.gradient-y';
 export const ELEMENT_GROUP_SELECTOR = 'g.y-elements-group';
+export const ANNOTATION_DEFS_SELECTOR = 'defs.y-annotations';
 
 const createThresholdGradients = ({
   elementGroup,
@@ -102,33 +103,36 @@ export const renderYAnnotationDefs = ({
   // D3 operations are very fast so we can create linearGradients for every annotation regardless of whether its a threshold or not - this simplifies the update
 
   const annotationDefs = select(container)
-    .selectAll('defs')
+    .selectAll(ANNOTATION_DEFS_SELECTOR)
     .data([0]); // only create the defs group once
 
-  annotationDefs.enter().append('defs');
+  annotationDefs
+    .enter()
+    .append('defs')
+    .attr('class', 'y-annotations');
 
   const gradientDefs = select(container)
-    .select('defs')
-    .selectAll(GRADIENT_DEF_SELECTOR);
+    .select(ANNOTATION_DEFS_SELECTOR)
+    .selectAll(LINEAR_GRADIENT_SELECTOR);
 
   const gradient = gradientDefs
     .data(yAnnotations)
     .enter()
     .append('linearGradient')
-    .attr('class', 'gradient-def')
+    .attr('class', 'y-annotation')
     .attr('gradientTransform', 'rotate(90)')
     .attr('id', getGradientID);
 
   gradient
     .append('stop')
-    .attr('class', 'gradient-def-one')
+    .attr('class', 'gradient-y-one')
     .attr('offset', '0%')
     .style('stop-color', getColor)
     .style('stop-opacity', 0);
 
   gradient
     .append('stop')
-    .attr('class', 'gradient-def-two')
+    .attr('class', 'gradient-y-two')
     .attr('offset', '80%')
     .style('stop-color', getColor)
     .style('stop-opacity', 0.33);
@@ -491,5 +495,9 @@ export const removeYAnnotations = ({ container }: { container: SVGElement }) => 
 
   select(container)
     .selectAll(ANNOTATION_GROUP_SELECTOR_EDITABLE)
+    .remove();
+
+  select(container)
+    .selectAll(ANNOTATION_DEFS_SELECTOR)
     .remove();
 };

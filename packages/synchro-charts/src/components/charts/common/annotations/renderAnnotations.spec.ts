@@ -8,17 +8,19 @@ import {
   TEXT_SELECTOR as X_TEXT_SELECTOR,
 } from './XAnnotations/XAnnotations';
 import {
+  ANNOTATION_DEFS_SELECTOR,
   ANNOTATION_GROUP_SELECTOR as Y_GROUP_SELECTOR,
   ANNOTATION_GROUP_SELECTOR_EDITABLE as Y_GROUP_EDITABLE_SELECTOR,
   DRAGGABLE_HANDLE_SELECTOR,
   DRAGGABLE_LINE_ONE_SELECTOR,
   DRAGGABLE_LINE_TWO_SELECTOR,
   ELEMENT_GROUP_SELECTOR as Y_ELEMENT_GROUP_SELECTOR,
-  GRADIENT_DEF_SELECTOR,
   GRADIENT_RECT_SELECTOR,
+  GRADIENT_STOP_SELECTOR,
   HANDLE_OFFSET_Y,
   HANDLE_WIDTH,
   LINE_SELECTOR as Y_LINE_SELECTOR,
+  LINEAR_GRADIENT_SELECTOR,
   SMALL_HANDLE_WIDTH,
   TEXT_SELECTOR as Y_TEXT_SELECTOR,
   TEXT_VALUE_SELECTOR as Y_TEXT_VALUE_SELECTOR,
@@ -87,6 +89,7 @@ describe('no annotations', () => {
     expect(page.body.querySelectorAll('text')).toBeEmpty();
     expect(page.body.querySelectorAll('rect')).toBeEmpty();
     expect(page.body.querySelectorAll('g')).toBeEmpty();
+    expect(page.body.querySelectorAll('defs')).toBeEmpty();
   });
 
   it('renders no annotations when no annotations provided implicitly', async () => {
@@ -96,6 +99,7 @@ describe('no annotations', () => {
     expect(page.body.querySelectorAll('text')).toBeEmpty();
     expect(page.body.querySelectorAll('rect')).toBeEmpty();
     expect(page.body.querySelectorAll('g')).toBeEmpty();
+    expect(page.body.querySelectorAll('defs')).toBeEmpty();
   });
 
   it('renders no annotations when show changes to false', async () => {
@@ -121,7 +125,12 @@ describe('no annotations', () => {
     const { page } = await newAnnotationsPage({
       annotations: {
         x: [X_ANNOTATION],
-        y: [Y_ANNOTATION],
+        y: [
+          {
+            id: 'annotation',
+            ...Y_ANNOTATION,
+          },
+        ],
         show: true,
         displayThresholdGradient: true,
       },
@@ -138,6 +147,9 @@ describe('no annotations', () => {
     let yAnnotationGroup = page.body.querySelector(`${Y_GROUP_SELECTOR}, ${Y_GROUP_EDITABLE_SELECTOR}`);
     let yElementGroup = page.body.querySelector(Y_ELEMENT_GROUP_SELECTOR);
     let xAnnotationGroup = page.body.querySelector(X_ANNOTATION_GROUP_SELECTOR);
+    let annotationDefs = page.body.querySelector(ANNOTATION_DEFS_SELECTOR);
+    let gradientRect = page.body.querySelector(GRADIENT_RECT_SELECTOR);
+    let linearGradient = page.body.querySelector(LINEAR_GRADIENT_SELECTOR);
 
     expect(xLine).not.toBeNull();
     expect(xText).not.toBeNull();
@@ -150,6 +162,9 @@ describe('no annotations', () => {
     expect(yAnnotationGroup).not.toBeNull();
     expect(xAnnotationGroup).not.toBeNull();
     expect(yElementGroup).not.toBeNull();
+    expect(annotationDefs).not.toBeNull();
+    expect(gradientRect).not.toBeNull();
+    expect(linearGradient).not.toBeNull();
 
     render(
       {
@@ -174,6 +189,9 @@ describe('no annotations', () => {
     yHandleDraggableLineTwo = page.body.querySelector(DRAGGABLE_LINE_TWO_SELECTOR);
     xAnnotationGroup = page.body.querySelector(X_ANNOTATION_GROUP_SELECTOR);
     yElementGroup = page.body.querySelector(Y_ELEMENT_GROUP_SELECTOR);
+    annotationDefs = page.body.querySelector(ANNOTATION_DEFS_SELECTOR);
+    gradientRect = page.body.querySelector(GRADIENT_RECT_SELECTOR);
+    linearGradient = page.body.querySelector(LINEAR_GRADIENT_SELECTOR);
 
     expect(xLine).toBeNull();
     expect(xText).toBeNull();
@@ -186,6 +204,9 @@ describe('no annotations', () => {
     expect(yAnnotationGroup).toBeNull();
     expect(xAnnotationGroup).toBeNull();
     expect(yElementGroup).toBeNull();
+    expect(annotationDefs).toBeNull();
+    expect(gradientRect).toBeNull();
+    expect(linearGradient).toBeNull();
   });
 });
 
@@ -934,19 +955,21 @@ describe('y annotation', () => {
     expect(editableGroupY.querySelectorAll(DRAGGABLE_HANDLE_SELECTOR)).toHaveLength(1);
 
     const elementGroupY = page.body.querySelector(Y_ELEMENT_GROUP_SELECTOR) as SVGElement;
-    expect(elementGroupY.childElementCount).toEqual(5);
+    expect(elementGroupY.childElementCount).toEqual(6);
     expect(elementGroupY.querySelectorAll(Y_TEXT_SELECTOR)).toHaveLength(1);
     expect(elementGroupY.querySelectorAll(Y_LINE_SELECTOR)).toHaveLength(1);
     expect(elementGroupY.querySelectorAll(Y_TEXT_VALUE_SELECTOR)).toHaveLength(1);
     expect(elementGroupY.querySelectorAll(DRAGGABLE_LINE_ONE_SELECTOR)).toHaveLength(1);
     expect(elementGroupY.querySelectorAll(DRAGGABLE_LINE_TWO_SELECTOR)).toHaveLength(1);
+    expect(elementGroupY.querySelectorAll(GRADIENT_RECT_SELECTOR)).toHaveLength(1);
 
     const groupY = page.body.querySelector(Y_GROUP_SELECTOR) as SVGElement;
-    expect(groupY.childElementCount).toEqual(3);
+    expect(groupY.childElementCount).toEqual(4);
     expect(groupY.querySelectorAll(Y_TEXT_SELECTOR)).toHaveLength(1);
     expect(groupY.querySelectorAll(Y_LINE_SELECTOR)).toHaveLength(1);
     expect(groupY.querySelectorAll(Y_TEXT_VALUE_SELECTOR)).toHaveLength(1);
     expect(groupY.querySelectorAll(DRAGGABLE_HANDLE_SELECTOR)).toBeEmpty();
+    expect(groupY.querySelectorAll(GRADIENT_RECT_SELECTOR)).toHaveLength(1);
     expect(page.body.querySelector('svg')).toMatchSnapshot();
   });
 
@@ -1375,6 +1398,7 @@ describe('y annotation', () => {
     expect(page.body.querySelectorAll('line')).toBeEmpty();
     expect(page.body.querySelectorAll('text')).toBeEmpty();
     expect(page.body.querySelectorAll('g')).toBeEmpty();
+    expect(page.body.querySelectorAll('defs')).toBeEmpty();
   });
 
   it('handles rendering updating multiple annotations', async () => {
@@ -1528,7 +1552,7 @@ describe('y annotation', () => {
     expect(editableGroupY.querySelectorAll(DRAGGABLE_HANDLE_SELECTOR)).toHaveLength(1);
 
     const elementGroupY = page.body.querySelector(Y_ELEMENT_GROUP_SELECTOR) as SVGElement;
-    expect(elementGroupY.childElementCount).toEqual(5);
+    expect(elementGroupY.childElementCount).toEqual(6);
     expect(elementGroupY.querySelectorAll(Y_TEXT_SELECTOR)).toHaveLength(1);
     expect(elementGroupY.querySelectorAll(Y_LINE_SELECTOR)).toHaveLength(1);
     expect(elementGroupY.querySelectorAll(Y_TEXT_VALUE_SELECTOR)).toHaveLength(1);
@@ -1536,7 +1560,7 @@ describe('y annotation', () => {
     expect(elementGroupY.querySelectorAll(DRAGGABLE_LINE_TWO_SELECTOR)).toHaveLength(1);
 
     const groupY = page.body.querySelector(Y_GROUP_SELECTOR) as SVGElement;
-    expect(groupY.childElementCount).toEqual(3);
+    expect(groupY.childElementCount).toEqual(4);
     expect(groupY.querySelectorAll(Y_TEXT_SELECTOR)).toHaveLength(1);
     expect(groupY.querySelectorAll(Y_LINE_SELECTOR)).toHaveLength(1);
     expect(groupY.querySelectorAll(Y_TEXT_VALUE_SELECTOR)).toHaveLength(1);
@@ -1592,14 +1616,14 @@ describe('y annotation', () => {
     expect(page.body.querySelectorAll(DRAGGABLE_HANDLE_SELECTOR)).toBeEmpty();
 
     const groupYTwo = page.body.querySelectorAll(Y_GROUP_SELECTOR)[1] as SVGElement;
-    expect(groupYTwo.childElementCount).toEqual(3);
+    expect(groupYTwo.childElementCount).toEqual(4);
     expect(groupYTwo.querySelectorAll(Y_TEXT_SELECTOR)).toHaveLength(1);
     expect(groupYTwo.querySelectorAll(Y_LINE_SELECTOR)).toHaveLength(1);
     expect(groupYTwo.querySelectorAll(Y_TEXT_VALUE_SELECTOR)).toHaveLength(1);
   });
 });
 
-describe('y threshold with gradient', () => {
+describe('y thresholds with gradients', () => {
   // for gradient to be enabled, we must enable displayThresholdGradient and each threshold must have an id
   const Y_THRESHOLD: YAnnotation = {
     color: 'blue',
@@ -1608,7 +1632,7 @@ describe('y threshold with gradient', () => {
       text: 'some text',
       show: true,
     },
-    value: (VIEWPORT.yMax + VIEWPORT.yMin) / 2,
+    value: (VIEWPORT.yMax - VIEWPORT.yMin) / 2 + VIEWPORT.yMin,
     comparisonOperator: COMPARISON_OPERATOR.GREATER_THAN,
     id: 'threshold-one',
   };
@@ -1638,31 +1662,39 @@ describe('y threshold with gradient', () => {
             Y_THRESHOLD,
             {
               ...Y_THRESHOLD,
+              id: 'threshold-two',
               value: VIEWPORT.yMax - 4,
               showValue: false,
               isEditable: true,
               comparisonOperator: COMPARISON_OPERATOR.LESS_THAN,
             },
           ],
+          displayThresholdGradient: true,
         },
       },
       page
     );
 
     await page.waitForChanges();
-    expect(page.body.querySelector('svg')).toMatchSnapshot();
+    expect(page.body.querySelectorAll(ANNOTATION_DEFS_SELECTOR)).toHaveLength(1);
+
+    const gradientDefs = page.body.querySelector(ANNOTATION_DEFS_SELECTOR) as SVGElement;
+    expect(gradientDefs.childElementCount).toEqual(2);
+    expect(gradientDefs.querySelectorAll(LINEAR_GRADIENT_SELECTOR)).toHaveLength(2);
 
     const editableGroupY = page.body.querySelector(Y_GROUP_EDITABLE_SELECTOR) as SVGElement;
     expect(editableGroupY.childElementCount).toEqual(2);
 
     const elementGroupY = page.body.querySelector(Y_ELEMENT_GROUP_SELECTOR) as SVGElement;
-    expect(elementGroupY.childElementCount).toEqual(7);
+    expect(elementGroupY.childElementCount).toEqual(6);
 
-    expect(elementGroupY.querySelectorAll(GRADIENT_DEF_SELECTOR)).toHaveLength(1);
     expect(elementGroupY.querySelectorAll(GRADIENT_RECT_SELECTOR)).toHaveLength(1);
 
     const groupY = page.body.querySelector(Y_GROUP_SELECTOR) as SVGElement;
-    expect(groupY.childElementCount).toEqual(7);
+    expect(groupY.childElementCount).toEqual(4);
+
+    expect(groupY.querySelectorAll(GRADIENT_RECT_SELECTOR)).toHaveLength(1);
+
     expect(page.body.querySelector('svg')).toMatchSnapshot();
   });
 
@@ -1673,8 +1705,240 @@ describe('y threshold with gradient', () => {
         displayThresholdGradient: true,
       },
     });
+    await page.waitForChanges();
 
-    const gradientRect = page.body.querySelector(GRADIENT_RECT_SELECTOR) as SVGLineElement;
+    const linearGradient = page.body.querySelector(LINEAR_GRADIENT_SELECTOR) as SVGElement;
+    const stopOne = linearGradient.querySelector(`${GRADIENT_STOP_SELECTOR}-one`) as SVGStopElement;
+    expect(stopOne.getAttribute('offset')).toBe('0%');
+    expect(stopOne.style.stopColor).toBe('blue');
+    expect(stopOne.style.stopOpacity).toBe('0');
+
+    const stopTwo = linearGradient.querySelector(`${GRADIENT_STOP_SELECTOR}-two`) as SVGStopElement;
+    expect(stopTwo.getAttribute('offset')).toBe('80%');
+    expect(stopTwo.style.stopColor).toBe('blue');
+    expect(stopTwo.style.stopOpacity).toBe('0.33');
+
+    expect(page.body.querySelector('svg')).toMatchSnapshot();
+
+    const gradientRect = page.body.querySelector(GRADIENT_RECT_SELECTOR) as SVGRectElement;
+    expect(gradientRect.getAttribute('display')).toBe('inline');
     expect(gradientRect.style.fill).toBe(`url(#${Y_THRESHOLD.id}--${Y_THRESHOLD.color})`);
+  });
+
+  it('renders updated color', async () => {
+    const { page } = await newAnnotationsPage({
+      annotations: {
+        y: [Y_THRESHOLD],
+        displayThresholdGradient: true,
+      },
+    });
+
+    render(
+      {
+        annotations: {
+          y: [
+            {
+              ...Y_THRESHOLD,
+              color: 'red',
+            },
+          ],
+          displayThresholdGradient: true,
+        },
+      },
+      page
+    );
+    await page.waitForChanges();
+
+    const linearGradient = page.body.querySelector(LINEAR_GRADIENT_SELECTOR) as SVGElement;
+    expect(linearGradient.id).toBe(`${Y_THRESHOLD.id}--red`);
+    const stopOne = linearGradient.querySelector(`${GRADIENT_STOP_SELECTOR}-one`) as SVGStopElement;
+    expect(stopOne.style.stopColor).toBe('red');
+
+    const stopTwo = linearGradient.querySelector(`${GRADIENT_STOP_SELECTOR}-two`) as SVGStopElement;
+    expect(stopTwo.style.stopColor).toBe('red');
+
+    const gradientRect = page.body.querySelector(GRADIENT_RECT_SELECTOR) as SVGRectElement;
+    expect(gradientRect.getAttribute('display')).toBe('inline');
+    expect(gradientRect.style.fill).toBe(`url(#${Y_THRESHOLD.id}--red)`);
+  });
+
+  it('renders different gradients depending on comparisonOperator', async () => {
+    const { page } = await newAnnotationsPage({
+      annotations: {
+        y: [
+          {
+            ...Y_THRESHOLD,
+          },
+          {
+            ...Y_THRESHOLD,
+            comparisonOperator: COMPARISON_OPERATOR.LESS_THAN,
+          },
+        ],
+        displayThresholdGradient: true,
+      },
+    });
+    await page.waitForChanges();
+
+    const gradientRectOne = page.body.querySelectorAll(GRADIENT_RECT_SELECTOR)[0] as SVGRectElement;
+    expect(gradientRectOne.getAttribute('display')).toBe('inline');
+    expect(gradientRectOne.getAttribute('transform')).toBe('rotate(0)');
+    expect(gradientRectOne.style.fill).toBe(`url(#${Y_THRESHOLD.id}--blue)`);
+
+    const gradientRectTwo = page.body.querySelectorAll(GRADIENT_RECT_SELECTOR)[1] as SVGRectElement;
+    expect(gradientRectTwo.getAttribute('transform')).toBe('rotate(180)');
+  });
+
+  it('renders gradients on comparisonOperator update', async () => {
+    const { page } = await newAnnotationsPage({
+      annotations: {
+        y: [
+          {
+            ...Y_THRESHOLD,
+          },
+          {
+            ...Y_THRESHOLD,
+            comparisonOperator: COMPARISON_OPERATOR.LESS_THAN,
+          },
+        ],
+        displayThresholdGradient: true,
+      },
+    });
+    await page.waitForChanges();
+
+    render(
+      {
+        annotations: {
+          y: [
+            {
+              ...Y_THRESHOLD,
+              comparisonOperator: COMPARISON_OPERATOR.LESS_THAN_EQUAL,
+            },
+            {
+              ...Y_THRESHOLD,
+              comparisonOperator: COMPARISON_OPERATOR.GREATER_THAN_EQUAL,
+            },
+          ],
+          displayThresholdGradient: true,
+        },
+      },
+      page
+    );
+    await page.waitForChanges();
+
+    const gradientRectOne = page.body.querySelectorAll(GRADIENT_RECT_SELECTOR)[0] as SVGRectElement;
+    expect(gradientRectOne.getAttribute('transform')).toBe('rotate(180)');
+
+    const gradientRectTwo = page.body.querySelectorAll(GRADIENT_RECT_SELECTOR)[1] as SVGRectElement;
+    expect(gradientRectTwo.getAttribute('transform')).toBe('rotate(0)');
+  });
+
+  it('does not render gradients when displayThresholdGradient is disabled', async () => {
+    const { page } = await newAnnotationsPage({
+      annotations: {
+        y: [Y_THRESHOLD],
+        displayThresholdGradient: true,
+      },
+    });
+    await page.waitForChanges();
+
+    render(
+      {
+        annotations: {
+          y: [Y_THRESHOLD],
+          displayThresholdGradient: false,
+        },
+      },
+      page
+    );
+    await page.waitForChanges();
+
+    const gradientRectOne = page.body.querySelector(GRADIENT_RECT_SELECTOR) as SVGRectElement;
+    expect(gradientRectOne.getAttribute('display')).toBe('none');
+  });
+
+  it('does not render gradients when id is missing ', async () => {
+    const { page } = await newAnnotationsPage({
+      annotations: {
+        y: [
+          {
+            ...Y_THRESHOLD,
+          },
+          {
+            ...Y_THRESHOLD,
+            comparisonOperator: COMPARISON_OPERATOR.LESS_THAN,
+          },
+        ],
+        displayThresholdGradient: true,
+      },
+    });
+    await page.waitForChanges();
+
+    render(
+      {
+        annotations: {
+          y: [
+            {
+              ...Y_THRESHOLD,
+              id: undefined,
+              comparisonOperator: COMPARISON_OPERATOR.LESS_THAN_EQUAL,
+            },
+            {
+              ...Y_THRESHOLD,
+              comparisonOperator: COMPARISON_OPERATOR.GREATER_THAN_EQUAL,
+            },
+          ],
+          displayThresholdGradient: true,
+        },
+      },
+      page
+    );
+    await page.waitForChanges();
+
+    const gradientRectOne = page.body.querySelectorAll(GRADIENT_RECT_SELECTOR)[0] as SVGRectElement;
+    expect(gradientRectOne.getAttribute('display')).toBe('none');
+
+    const gradientRectTwo = page.body.querySelectorAll(GRADIENT_RECT_SELECTOR)[1] as SVGRectElement;
+    expect(gradientRectTwo.getAttribute('display')).toBe('none');
+  });
+
+  it('does not render gradients for non-thresholds (annotations) ', async () => {
+    const { page } = await newAnnotationsPage({
+      annotations: {
+        y: [
+          {
+            ...Y_THRESHOLD,
+          },
+          {
+            ...Y_THRESHOLD,
+            comparisonOperator: undefined,
+          },
+        ],
+        displayThresholdGradient: true,
+      },
+    });
+    await page.waitForChanges();
+
+    const gradientRectOne = page.body.querySelectorAll(GRADIENT_RECT_SELECTOR)[0] as SVGRectElement;
+    expect(gradientRectOne.getAttribute('display')).toBe('inline');
+
+    const gradientRectTwo = page.body.querySelectorAll(GRADIENT_RECT_SELECTOR)[1] as SVGRectElement;
+    expect(gradientRectTwo.getAttribute('display')).toBe('none');
+
+    expect(page.body.querySelector('svg')).toMatchSnapshot();
+  });
+
+  it('deletes gradient when removed', async () => {
+    const { page } = await newAnnotationsPage({
+      annotations: {
+        y: [Y_THRESHOLD],
+      },
+    });
+
+    render({ annotations: {} }, page);
+
+    await page.waitForChanges();
+
+    expect(page.body.querySelectorAll(ANNOTATION_DEFS_SELECTOR)).toBeEmpty();
+    expect(page.body.querySelectorAll('rect')).toBeEmpty();
   });
 });

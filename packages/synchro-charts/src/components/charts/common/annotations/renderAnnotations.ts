@@ -67,6 +67,7 @@ export const renderAnnotations = ({
   // we only support gradients if all annotations have an id (in order to associate an id with its proper gradient)
   const enableThresholdGradient =
     (annotations.displayThresholdGradient ? annotations.displayThresholdGradient : false) &&
+    yAnnotations.length > 0 &&
     yAnnotations.every(yAnnotation => yAnnotation.id !== undefined);
 
   /**
