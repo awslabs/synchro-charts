@@ -392,7 +392,7 @@ export class ScWebglBaseChart {
     duration: !isMinimalStaticViewport(this.viewport) ? parseDuration(this.viewport.duration) : undefined,
   });
 
-  handleCameraEvent = ({ start, end, stopClock = false }: { start: Date; end: Date; stopClock?: boolean }) => {
+  handleCameraEvent = ({ start, end }: { start: Date; end: Date }) => {
     if (this.scene) {
       const oldViewport: ViewPort = { yMin: this.yMin, yMax: this.yMax, start, end };
       if (
@@ -402,7 +402,7 @@ export class ScWebglBaseChart {
         this.onUpdate({ start, end }, false, false, false, true);
       }
       // Update Camera
-      webGLRenderer.updateViewPorts({ start, end, stopClock, manager: this.scene });
+      webGLRenderer.updateViewPorts({ start, end, manager: this.scene });
 
       // Emit date range change to allow other non-webgl based components to sync the new date range
       this.onDateRangeChange([start, end, this.viewport.group]);

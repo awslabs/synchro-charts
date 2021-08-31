@@ -28,7 +28,7 @@ export class ScGestureHandler {
 
   @Prop() size!: SizeConfig;
   @Prop() viewport!: ViewPort;
-  @Prop() onDateRangeChange!: ({ end, start, stopClock }: { start: Date; end: Date; stopClock?: boolean }) => void;
+  @Prop() onDateRangeChange!: ({ end, start }: { start: Date; end: Date }) => void;
 
   @State() start?: number;
   @State() end?: number;
@@ -171,7 +171,7 @@ export class ScGestureHandler {
     const { xScale, yScale } = this.scales();
     this.zoom = new Zoom({ xScale, yScale }, MOVEMENT_CONFIG, this.getZoomContainer);
     this.zoom.on('zoom.base-chart', (start, end) => {
-      this.onDateRangeChange({ start, end, stopClock: true });
+      this.onDateRangeChange({ start, end });
     });
     this.zoom.init();
   }

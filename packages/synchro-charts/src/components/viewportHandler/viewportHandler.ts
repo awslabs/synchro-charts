@@ -51,9 +51,8 @@ export class ViewportHandler<T extends ViewPortManager> {
         end: newEnd,
         duration,
         manager: v,
-        stopClock: false,
       });
-      // TODO: find tune the tick interval.
+      // TODO: fine tune the tick interval.
     }, SECOND_IN_MS) as unknown) as number;
   };
 
@@ -103,13 +102,11 @@ export class ViewportHandler<T extends ViewPortManager> {
     end,
     manager,
     duration,
-    stopClock = false,
     preventPropagation = false,
   }: {
     start: Date;
     end: Date;
     manager: T;
-    stopClock?: boolean;
     duration?: number;
     preventPropagation?: boolean;
   }) => {
@@ -117,7 +114,7 @@ export class ViewportHandler<T extends ViewPortManager> {
     // Either you are in a group or you are a single chart
     this.viewportMap[key] = { start, end };
 
-    if (stopClock) {
+    if (duration == null) {
       this.stopTick(manager);
     }
 
