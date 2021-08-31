@@ -134,14 +134,14 @@ it('drags properly without snapping back even if outdated annotation is passed i
 
     cy.get('g.y-annotation-editable > g.y-elements-group > text.y-value-text')
       .filter(textFilter)
-      .should('have.text', '3980');
+      .should('have.text', '4006');
 
     cy.get(DRAGGABLE_HANDLE_SELECTOR)
       .filter(handleFilter)
       .invoke('attr', 'y')
       .then(str => parseFloat(str!))
-      .should('be.gte', 130)
-      .should('be.lte', 232);
+      .should('be.gte', 79)
+      .should('be.lte', 81);
 
     cy.get(selector)
       .filter(handleFilter)
@@ -150,14 +150,14 @@ it('drags properly without snapping back even if outdated annotation is passed i
 
     cy.get('g.y-annotation-editable > g.y-elements-group > text.y-value-text')
       .filter(textFilter)
-      .should('have.text', '3980');
+      .should('have.text', '4006');
 
     cy.get(DRAGGABLE_HANDLE_SELECTOR)
       .filter(handleFilter)
       .invoke('attr', 'y')
       .then(str => parseFloat(str!))
-      .should('be.gte', 130)
-      .should('be.lte', 232);
+      .should('be.gte', 79)
+      .should('be.lte', 81);
   });
 });
 
