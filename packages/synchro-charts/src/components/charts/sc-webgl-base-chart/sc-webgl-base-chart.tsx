@@ -534,7 +534,7 @@ export class ScWebglBaseChart {
     });
 
     const { duration } = this.activeViewPort();
-    webGLRenderer.addChartScene(this.scene, duration);
+    webGLRenderer.addChartScene({ manager: this.scene, duration });
     this.setChartRenderingPosition();
     webGLRenderer.render(this.scene);
     this.onUpdate(this.activeViewPort());
@@ -720,7 +720,7 @@ export class ScWebglBaseChart {
         webGLRenderer.removeChartScene(this.scene.id);
         this.scene = updatedScene;
         const { duration } = this.activeViewPort();
-        webGLRenderer.addChartScene(updatedScene, duration, false);
+        webGLRenderer.addChartScene({ manager: updatedScene, duration, shouldSync: false });
         this.setChartRenderingPosition();
       }
 

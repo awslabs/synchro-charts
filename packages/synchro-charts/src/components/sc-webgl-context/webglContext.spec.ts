@@ -56,7 +56,7 @@ describe('sync chart scene cameras', () => {
 
     const chartScene1 = createTestChartScene();
 
-    webGLRenderer.addChartScene(chartScene1);
+    webGLRenderer.addChartScene({ manager: chartScene1 });
     webGLRenderer.setChartRect(chartScene1.id, rectScrollFixed(chartScene1.container));
 
     const start = new Date(2000, 0, 0);
@@ -71,8 +71,8 @@ describe('sync chart scene cameras', () => {
     const chartScene1 = createTestChartScene(VIEWPORT_GROUP);
     const chartScene2 = createTestChartScene(VIEWPORT_GROUP);
 
-    webGLRenderer.addChartScene(chartScene1);
-    webGLRenderer.addChartScene(chartScene2);
+    webGLRenderer.addChartScene({ manager: chartScene1 });
+    webGLRenderer.addChartScene({ manager: chartScene2 });
     webGLRenderer.setChartRect(chartScene1.id, rectScrollFixed(chartScene1.container));
     webGLRenderer.setChartRect(chartScene2.id, rectScrollFixed(chartScene2.container));
 
@@ -89,8 +89,8 @@ describe('sync chart scene cameras', () => {
     const chartScene1 = createTestChartScene(VIEWPORT_GROUP);
     const chartScene2 = createTestChartScene(VIEWPORT_GROUP);
 
-    webGLRenderer.addChartScene(chartScene1);
-    webGLRenderer.addChartScene(chartScene2);
+    webGLRenderer.addChartScene({ manager: chartScene1 });
+    webGLRenderer.addChartScene({ manager: chartScene2 });
 
     webGLRenderer.setChartRect(chartScene1.id, rectScrollFixed(chartScene1.container));
     webGLRenderer.setChartRect(chartScene2.id, rectScrollFixed(chartScene2.container));
@@ -112,7 +112,7 @@ describe('disposal of removed chart scene', () => {
     const webGLRenderer = createTestWebglRenderer(testDomRect);
 
     const chartScene = createTestChartScene();
-    webGLRenderer.addChartScene(chartScene);
+    webGLRenderer.addChartScene({ manager: chartScene });
     webGLRenderer.setChartRect(chartScene.id, rectScrollFixed(chartScene.container));
 
     webGLRenderer.removeChartScene(chartScene.id);
@@ -125,8 +125,8 @@ describe('disposal of removed chart scene', () => {
     const chartScene1 = createTestChartScene();
     const chartScene2 = createTestChartScene();
 
-    webGLRenderer.addChartScene(chartScene1);
-    webGLRenderer.addChartScene(chartScene2);
+    webGLRenderer.addChartScene({ manager: chartScene1 });
+    webGLRenderer.addChartScene({ manager: chartScene2 });;
 
     webGLRenderer.setChartRect(chartScene1.id, rectScrollFixed(chartScene1.container));
     webGLRenderer.setChartRect(chartScene2.id, rectScrollFixed(chartScene2.container));
@@ -170,10 +170,10 @@ describe('when not initialized', () => {
   });
 
   it('does not throw error when addChartScene is called', () => {
-    const chartScene1 = createTestChartScene();
+    const chartScene = createTestChartScene();
     const webGLRenderer = createTestWebglRenderer(testDomRect, true);
     expect(() => {
-      webGLRenderer.addChartScene(chartScene1);
+      webGLRenderer.addChartScene({ manager: chartScene });
     }).not.toThrowError();
   });
 });

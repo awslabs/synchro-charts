@@ -53,14 +53,14 @@ export class ScTable implements ChartConfig {
   };
 
   componentDidLoad() {
-    webGLRenderer.addChartScene(
-      {
+    webGLRenderer.addChartScene({
+      manager: {
         id: this.widgetId,
         viewportGroup: this.viewport.group,
         updateViewPort: this.onUpdate,
       },
-      this.duration
-    );
+      duration: this.duration,
+    });
   }
 
   disconnectedCallback() {

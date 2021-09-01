@@ -64,11 +64,18 @@ export const createWebGLRenderer = (viewportHandler: ViewportHandler<ViewPortMan
    * Adds a chart scene to be rendered within the webGL context.
    * Once added, the given `ChartScene` will be part of the animation loop until explicitly removed.
    *
-   * @param shouldSync - determines whether the new scene should sync to the existing view port, or if it
+   * shouldSync - determines whether the new scene should sync to the existing view port, or if it
    *                     should instead use the viewport provided with the chart
    */
-  const addChartScene = (v: ViewPortManager, duration?: number, shouldSync = true) =>
-    viewportHandler.add({ manager: v, duration, shouldSync });
+  const addChartScene = ({
+    manager,
+    duration,
+    shouldSync = true,
+  }: {
+    manager: ViewPortManager;
+    duration?: number;
+    shouldSync?: boolean;
+  }) => viewportHandler.add({ manager, duration, shouldSync });
 
   /**
    * Remove Chart Scene
