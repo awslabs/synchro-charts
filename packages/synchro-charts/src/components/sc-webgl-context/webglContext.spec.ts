@@ -126,7 +126,7 @@ describe('disposal of removed chart scene', () => {
     const chartScene2 = createTestChartScene();
 
     webGLRenderer.addChartScene({ manager: chartScene1 });
-    webGLRenderer.addChartScene({ manager: chartScene2 });;
+    webGLRenderer.addChartScene({ manager: chartScene2 });
 
     webGLRenderer.setChartRect(chartScene1.id, rectScrollFixed(chartScene1.container));
     webGLRenderer.setChartRect(chartScene2.id, rectScrollFixed(chartScene2.container));
