@@ -245,8 +245,16 @@ export class ScWebglBaseChart {
 
   @Watch('viewport')
   onViewPortChange(newViewPort: ViewPortConfig, oldViewPort: ViewPortConfig) {
-    if (this.scene != null && this.activeViewPort().duration != null) {
-      webGLRenderer.startTick(this.scene, this.activeViewPort().duration);
+    const { duration } = this.activeViewPort();
+    if (this.scene != null && duration != null) {
+      // Sync the chart to the new viewport so we dont need to delay the sync by wait for the interval tick
+      webGLRenderer.updateViewPorts({
+        start: new Date(new Date().getTime() - duration),
+        end: new Date(),
+        manager: this.scene,
+        duration,
+      });
+      webGLRenderer.startTick(this.scene, duration);
     }
 
     if (this.scene && !isEqual(newViewPort, oldViewPort)) {

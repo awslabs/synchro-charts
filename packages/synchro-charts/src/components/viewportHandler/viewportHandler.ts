@@ -27,7 +27,7 @@ export class ViewportHandler<T extends ViewPortManager> {
     this.viewportManagers.forEach(({ id }) => this.remove(id));
   };
 
-  startTick = (v: T, duration): void => {
+  startTick = (v: T, duration: number): void => {
     const initStart = new Date(new Date().getTime() - duration);
     const initEnd = new Date();
     const key = v.viewportGroup != null ? v.viewportGroup : v.id;
