@@ -205,6 +205,9 @@ describe('syncing managers', () => {
 });
 
 describe('internal clock', () => {
+  // When adding and creating new viewport with live mode, we make an extra call to ensure that the viewport is synced correctly
+  const LIVE_RENDER_MULTIPLIER = 1;
+
   it('starts the internal clock for a single manager in single viewport group when duration is passed in', () => {
     jest.useFakeTimers();
     const groups = new ViewportHandler();
@@ -216,7 +219,7 @@ describe('internal clock', () => {
 
     const secondsElapsed = 3.8;
     jest.advanceTimersByTime(secondsElapsed * SECOND_IN_MS);
-    expect(manager.updateViewPort).toBeCalledTimes(Math.floor(secondsElapsed));
+    expect(manager.updateViewPort).toBeCalledTimes(Math.floor(secondsElapsed) + LIVE_RENDER_MULTIPLIER);
   });
 
   it('does not start an internal clock for a single manager in viewport group when duration is not passed in', () => {
@@ -246,7 +249,7 @@ describe('internal clock', () => {
 
     const secondsElapsed = 3.8;
     jest.advanceTimersByTime(secondsElapsed * SECOND_IN_MS);
-    expect(manager1.updateViewPort).toBeCalledTimes(Math.floor(secondsElapsed));
+    expect(manager1.updateViewPort).toBeCalledTimes(Math.floor(secondsElapsed) + LIVE_RENDER_MULTIPLIER);
     // manger 2 has to be called 1 more because we had to sync the viewport when it first join
     expect(manager2.updateViewPort).toBeCalledTimes(Math.floor(secondsElapsed) + 1);
   });
@@ -334,7 +337,7 @@ describe('internal clock', () => {
     const secondsElapsed = 3.2;
     jest.advanceTimersByTime(secondsElapsed * SECOND_IN_MS);
 
-    expect(manager1.updateViewPort).toBeCalledTimes(Math.floor(secondsElapsed));
+    expect(manager1.updateViewPort).toBeCalledTimes(Math.floor(secondsElapsed) + LIVE_RENDER_MULTIPLIER);
     expect(manager2.updateViewPort).toBeCalledTimes(0);
   });
 });

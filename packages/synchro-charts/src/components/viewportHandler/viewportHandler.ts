@@ -40,6 +40,14 @@ export class ViewportHandler<T extends ViewPortManager> {
 
     this.viewportMap[key] = { start: initStart, end: initEnd };
 
+    // Sync the chart to the new viewport so we dont need to delay the sync by wait for the interval tick
+    this.syncViewPortGroup({
+      start: initStart,
+      end: initEnd,
+      manager: v,
+      duration,
+    });
+
     this.viewportLiveId[key] = (setInterval(() => {
       // shift forward by x amount of time
       const { start, end } = this.viewportMap[key];

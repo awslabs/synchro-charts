@@ -21,6 +21,8 @@ const mockCurrentTime = (mockedDate: Date) => {
   // @ts-ignore
   Date.now = jest.spyOn(Date, 'now').mockImplementation(() => mockedDate.getTime());
 };
+// When adding and creating new viewport with live mode, we make an extra call to ensure that the viewport is synced correctly
+const LIVE_RENDER_MULTIPLIER = 2;
 
 const VIEWPORT: MinimalViewPortConfig = {
   yMin: DEFAULT_CHART_CONFIG.viewport.yMin,
@@ -69,7 +71,7 @@ describe('when enabled', () => {
       dataStreams: [DATA_STREAM, { ...DATA_STREAM, id: '2' }, { ...DATA_STREAM, id: '3' }],
     });
 
-    expect(renderCell).toBeCalledTimes(3);
+    expect(renderCell).toBeCalledTimes(3 * LIVE_RENDER_MULTIPLIER);
   });
 
   it('renders string cell', async () => {
@@ -77,7 +79,7 @@ describe('when enabled', () => {
       dataStreams: [STRING_STREAM_1],
     });
 
-    expect(renderCell).toBeCalledTimes(1);
+    expect(renderCell).toBeCalledTimes(1 * LIVE_RENDER_MULTIPLIER);
     expect(renderCell).toBeCalledWith(
       expect.objectContaining({
         propertyStream: STRING_STREAM_1,
@@ -203,7 +205,7 @@ describe('live time frame', () => {
       dataStreams: [stream],
     });
 
-    expect(renderCell).toBeCalledTimes(1);
+    expect(renderCell).toBeCalledTimes(1 * LIVE_RENDER_MULTIPLIER);
     expect(renderCell).toBeCalledWith(
       expect.objectContaining({
         propertyPoint: STRING_POINT,
@@ -223,7 +225,7 @@ describe('live time frame', () => {
       dataStreams: [stream],
     });
 
-    expect(renderCell).toBeCalledTimes(1);
+    expect(renderCell).toBeCalledTimes(1 * LIVE_RENDER_MULTIPLIER);
     expect(renderCell).toBeCalledWith(
       expect.objectContaining({
         propertyPoint: POINT,
@@ -248,7 +250,7 @@ describe('live time frame', () => {
       dataStreams: [stream],
     });
 
-    expect(renderCell).toBeCalledTimes(1);
+    expect(renderCell).toBeCalledTimes(1 * LIVE_RENDER_MULTIPLIER);
     expect(renderCell).toBeCalledWith(
       expect.objectContaining({
         propertyPoint: undefined,
@@ -267,7 +269,7 @@ describe('live time frame', () => {
       dataStreams: [stream],
     });
 
-    expect(renderCell).toBeCalledTimes(1);
+    expect(renderCell).toBeCalledTimes(1 * LIVE_RENDER_MULTIPLIER);
     expect(renderCell).toBeCalledWith(
       expect.objectContaining({
         propertyPoint: undefined,
@@ -289,7 +291,7 @@ describe('live time frame', () => {
       dataStreams: [stream],
     });
 
-    expect(renderCell).toBeCalledTimes(1);
+    expect(renderCell).toBeCalledTimes(1 * LIVE_RENDER_MULTIPLIER);
     expect(renderCell).toBeCalledWith(
       expect.objectContaining({
         propertyPoint: undefined,
@@ -312,7 +314,7 @@ describe('live time frame', () => {
       });
 
       // Has only one cell
-      expect(renderCell).toBeCalledTimes(1);
+      expect(renderCell).toBeCalledTimes(1 * LIVE_RENDER_MULTIPLIER);
 
       // Renders a combined property and alarm cell
       expect(renderCell).toBeCalledWith(
@@ -336,7 +338,7 @@ describe('live time frame', () => {
         annotations: { y: [ALARM_THRESHOLD] },
       });
 
-      expect(renderCell).toBeCalledTimes(2);
+      expect(renderCell).toBeCalledTimes(2 * LIVE_RENDER_MULTIPLIER);
 
       /** Property Cell */
       expect(renderCell).toHaveBeenNthCalledWith(
