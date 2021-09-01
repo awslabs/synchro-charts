@@ -7,8 +7,7 @@ import { constructTableData, Row } from './constructTableData';
 import { viewportEndDate, viewportStartDate } from '../../utils/viewPort';
 import { isMinimalStaticViewport } from '../../utils/predicates';
 import { parseDuration } from '../../utils/time';
-import { ViewportHandler } from '../viewportHandler/viewportHandler';
-import { ViewPortManager } from '../viewportHandler/types';
+import { webGLRenderer } from '../sc-webgl-context/webglContext';
 
 const MSG =
   'This visualization displays only live data. Choose a live time frame to display data in this visualization.';
@@ -36,8 +35,6 @@ export class ScTable implements ChartConfig {
     ? parseDuration(this.viewport.duration)
     : undefined;
 
-  private viewportGroups: ViewportHandler<ViewPortManager> = new ViewportHandler();
-
   @Watch('viewport')
   onViewPortChange(newViewPort: MinimalViewPortConfig) {
     this.onUpdate({
@@ -56,19 +53,19 @@ export class ScTable implements ChartConfig {
   };
 
   componentDidLoad() {
-    this.viewportGroups.add({
-      manager: {
+    webGLRenderer.addChartScene(
+      {
         id: this.widgetId,
         viewportGroup: this.viewport.group,
         updateViewPort: this.onUpdate,
       },
-      duration: this.duration,
-    });
+      this.duration
+    );
   }
 
   disconnectedCallback() {
     // necessary to make sure that the allocated memory is released, and nothing is incorrectly rendered.
-    this.viewportGroups.remove(this.widgetId);
+    webGLRenderer.removeChartScene(this.widgetId);
   }
 
   getThresholds = (): Threshold[] =>

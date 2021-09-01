@@ -4,6 +4,7 @@ import { createWebGLRenderer } from './webglContext';
 import { constructChartScene } from '../charts/sc-webgl-base-chart/utils';
 import { VIEWPORT } from '../charts/common/testUtil';
 import { rectScrollFixed } from '../common/webGLPositioning';
+import { ViewportHandler } from '../viewportHandler/viewportHandler';
 
 const testDomRect: DOMRect = {
   height: 500,
@@ -18,7 +19,7 @@ const testDomRect: DOMRect = {
 };
 
 export const createTestWebglRenderer = (domRect: DOMRect, skipInit = false) => {
-  const webGLRenderer = createWebGLRenderer();
+  const webGLRenderer = createWebGLRenderer(new ViewportHandler());
   // @ts-ignore
   const canvas = new HTMLCanvasElement(domRect.width, domRect.height);
   // @ts-ignore

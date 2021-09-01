@@ -34,20 +34,9 @@ export class ViewportHandler<T extends ViewPortManager> {
 
     // If we are adding a chart into an existing group
     // we do nothing because we have one clock for the whole group
-    if (this.viewportLiveId[key] != null) {
+    if (key in this.viewportLiveId) {
       return;
     }
-
-    this.viewportMap[key] = { start: initStart, end: initEnd };
-
-    // Sync the chart to the new viewport so we dont need to delay the sync by wait for the interval tick
-    this.syncViewPortGroup({
-      start: initStart,
-      end: initEnd,
-      manager: v,
-      duration,
-    });
-
     this.viewportLiveId[key] = (setInterval(() => {
       // shift forward by x amount of time
       const { start, end } = this.viewportMap[key];
@@ -62,6 +51,16 @@ export class ViewportHandler<T extends ViewPortManager> {
       });
       // TODO: fine tune the tick interval.
     }, SECOND_IN_MS) as unknown) as number;
+
+    this.viewportMap[key] = { start: initStart, end: initEnd };
+
+    // Sync the chart to the new viewport so we dont need to delay the sync by wait for the interval tick
+    this.syncViewPortGroup({
+      start: initStart,
+      end: initEnd,
+      manager: v,
+      duration,
+    });
   };
 
   stopTick = (manager: T): void => {

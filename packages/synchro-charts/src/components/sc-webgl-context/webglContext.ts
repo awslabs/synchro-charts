@@ -55,9 +55,8 @@ function resizeRendererToDisplaySize(renderer: WebGLRenderer): boolean {
  *
  * Refer to https://stackoverflow.com/questions/59140439/allowing-more-webgl-contexts for additional context.
  */
-export const createWebGLRenderer = () => {
+export const createWebGLRenderer = (viewportHandler: ViewportHandler<ViewPortManager>) => {
   let rectMap: ClipSpaceRectMap;
-  const sceneManager: ViewportHandler<ViewPortManager> = new ViewportHandler();
 
   /**
    * Add Chart Scene
@@ -69,7 +68,7 @@ export const createWebGLRenderer = () => {
    *                     should instead use the viewport provided with the chart
    */
   const addChartScene = (v: ViewPortManager, duration?: number, shouldSync = true) =>
-    sceneManager.add({ manager: v, duration, shouldSync });
+    viewportHandler.add({ manager: v, duration, shouldSync });
 
   /**
    * Remove Chart Scene
@@ -78,7 +77,7 @@ export const createWebGLRenderer = () => {
    */
   const removeChartScene = (chartSceneId: string) => {
     mustBeInitialized();
-    sceneManager.remove(chartSceneId);
+    viewportHandler.remove(chartSceneId);
 
     rectMap.removeChartScene(chartSceneId);
     fullClearAndRerender();
@@ -104,7 +103,7 @@ export const createWebGLRenderer = () => {
       renderer.setScissorTest(true);
 
       // Re-render every chart scene. Necessary since entire canvas has been cleared
-      const chartScenes: ChartScene[] = sceneManager.managers().filter(isChartScene);
+      const chartScenes: ChartScene[] = viewportHandler.managers().filter(isChartScene);
       chartScenes.forEach(render);
     }
   };
@@ -174,7 +173,7 @@ export const createWebGLRenderer = () => {
       renderer.dispose();
     }
 
-    sceneManager.dispose();
+    viewportHandler.dispose();
 
     /** Release event listeners */
     window.removeEventListener('scroll', onScroll);
@@ -205,12 +204,12 @@ export const createWebGLRenderer = () => {
     addChartScene,
     removeChartScene,
     setChartRect,
-    updateViewPorts: sceneManager.syncViewPortGroup,
-    startTick: sceneManager.startTick,
+    updateViewPorts: viewportHandler.syncViewPortGroup,
+    startTick: viewportHandler.startTick,
     onResolutionChange,
   };
 };
 
 // TODO: Rather than exposing this as a singleton, it would be preferred to expose it as
 //  a shared context within a component sub-tree.
-export const webGLRenderer = createWebGLRenderer();
+export const webGLRenderer = createWebGLRenderer(new ViewportHandler());
