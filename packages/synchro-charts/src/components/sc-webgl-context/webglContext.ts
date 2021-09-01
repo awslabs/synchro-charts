@@ -55,9 +55,8 @@ function resizeRendererToDisplaySize(renderer: WebGLRenderer): boolean {
  *
  * Refer to https://stackoverflow.com/questions/59140439/allowing-more-webgl-contexts for additional context.
  */
-export const createWebGLRenderer = () => {
+export const createWebGLRenderer = (viewportHandler: ViewportHandler<ViewPortManager>) => {
   let rectMap: ClipSpaceRectMap;
-  const sceneManager: ViewportHandler<ViewPortManager> = new ViewportHandler();
 
   /**
    * Add Chart Scene
@@ -65,12 +64,18 @@ export const createWebGLRenderer = () => {
    * Adds a chart scene to be rendered within the webGL context.
    * Once added, the given `ChartScene` will be part of the animation loop until explicitly removed.
    *
-   * @param shouldSync - determines whether the new scene should sync to the existing view port, or if it
+   * shouldSync - determines whether the new scene should sync to the existing view port, or if it
    *                     should instead use the viewport provided with the chart
    */
-  const addChartScene = (v: ViewPortManager, shouldSync = true) => {
-    sceneManager.add(v, shouldSync);
-  };
+  const addChartScene = ({
+    manager,
+    duration,
+    shouldSync = true,
+  }: {
+    manager: ViewPortManager;
+    duration?: number;
+    shouldSync?: boolean;
+  }) => viewportHandler.add({ manager, duration, shouldSync });
 
   /**
    * Remove Chart Scene
@@ -79,7 +84,7 @@ export const createWebGLRenderer = () => {
    */
   const removeChartScene = (chartSceneId: string) => {
     mustBeInitialized();
-    sceneManager.remove(chartSceneId);
+    viewportHandler.remove(chartSceneId);
 
     rectMap.removeChartScene(chartSceneId);
     fullClearAndRerender();
@@ -105,7 +110,7 @@ export const createWebGLRenderer = () => {
       renderer.setScissorTest(true);
 
       // Re-render every chart scene. Necessary since entire canvas has been cleared
-      const chartScenes: ChartScene[] = sceneManager.managers().filter(isChartScene);
+      const chartScenes: ChartScene[] = viewportHandler.managers().filter(isChartScene);
       chartScenes.forEach(render);
     }
   };
@@ -175,7 +180,7 @@ export const createWebGLRenderer = () => {
       renderer.dispose();
     }
 
-    sceneManager.dispose();
+    viewportHandler.dispose();
 
     /** Release event listeners */
     window.removeEventListener('scroll', onScroll);
@@ -206,11 +211,12 @@ export const createWebGLRenderer = () => {
     addChartScene,
     removeChartScene,
     setChartRect,
-    updateViewPorts: sceneManager.syncViewPortGroup,
+    updateViewPorts: viewportHandler.syncViewPortGroup,
+    startTick: viewportHandler.startTick,
     onResolutionChange,
   };
 };
 
 // TODO: Rather than exposing this as a singleton, it would be preferred to expose it as
 //  a shared context within a component sub-tree.
-export const webGLRenderer = createWebGLRenderer();
+export const webGLRenderer = createWebGLRenderer(new ViewportHandler());

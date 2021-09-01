@@ -64,7 +64,7 @@ export class ScSingleColoredBar {
       thresholds: [],
     });
 
-    webGLRenderer.addChartScene(scene);
+    webGLRenderer.addChartScene({ manager: scene });
 
     const rect = container.getBoundingClientRect() as DOMRect;
     webGLRenderer.setChartRect(scene.id, { density: 1, ...rect.toJSON() });

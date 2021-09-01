@@ -15,8 +15,7 @@ import { isMinimalStaticViewport } from '../../utils/predicates';
 import { parseDuration } from '../../utils/time';
 import { getDataStreamForEventing } from '../charts/common';
 import { validate } from '../common/validator/validate';
-import { ViewportHandler } from '../viewportHandler/viewportHandler';
-import { ViewPortManager } from '../viewportHandler/types';
+import { webGLRenderer } from '../sc-webgl-context/webglContext';
 
 const MSG =
   'This visualization displays only live data. Choose a live time frame to display data in this visualization.';
@@ -67,8 +66,6 @@ export class ScWidgetGrid implements ChartConfig {
     ? parseDuration(this.viewport.duration)
     : undefined;
 
-  private viewportGroups: ViewportHandler<ViewPortManager> = new ViewportHandler();
-
   @Event()
   widgetUpdated: EventEmitter<WidgetConfigurationUpdate>;
 
@@ -77,10 +74,13 @@ export class ScWidgetGrid implements ChartConfig {
   }
 
   componentDidLoad() {
-    this.viewportGroups.add({
-      id: this.widgetId,
-      viewportGroup: this.viewport.group,
-      updateViewPort: this.onUpdate,
+    webGLRenderer.addChartScene({
+      manager: {
+        id: this.widgetId,
+        viewportGroup: this.viewport.group,
+        updateViewPort: this.onUpdate,
+      },
+      duration: this.duration,
     });
   }
 
@@ -103,7 +103,7 @@ export class ScWidgetGrid implements ChartConfig {
 
   disconnectedCallback() {
     // necessary to make sure that the allocated memory is released, and nothing is incorrectly rendered.
-    this.viewportGroups.remove(this.widgetId);
+    webGLRenderer.removeChartScene(this.widgetId);
   }
 
   /**
