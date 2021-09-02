@@ -93,7 +93,7 @@ const timelineParams: Partial<SearchQueryParams> = {
 
 const root = '/tests/sc-webgl-chart/annotations/annotation-editable';
 
-it('elements are located and correctly positioned/rotated', () => {
+it('correctly positions and rotates the elements', () => {
   visitDynamicWidget(cy, {
     ...timelineParams,
     annotations: {
