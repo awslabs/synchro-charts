@@ -37,14 +37,7 @@ export type TableColumn = {
 /**
  * Used to keep track of the aggregate type of a data stream.
  */
- export enum AggregateType {
-  AVERAGE = 'average',
-  COUNT = 'count',
-  MAXIMUM = 'maximum',
-  MINIMUM = 'minimum',
-  SUM = 'sum',
-  STANDARD_DEVIATION = 'standard deviation',
-}
+ export type AggregateType = "average"|"count"|"maximum"|"minimum"|"sum"|"standard_deviation"|string;
 
 /**
  * Data Stream Info
@@ -190,6 +183,7 @@ export type MessageOverrides = {
   /** no data present - msg displayed when no streams have any data */
   noDataPresentHeader?: string;
   noDataPresentSubHeader?: string;
+  aggregateLabels?: {average: string, sum: string, count: string, maximum: string, minimum: string, standard_deviation: string};
 };
 export const DEFAULT_MESSAGE_OVERRIDES: Required<MessageOverrides> = {
   liveTimeFrameValueLabel: 'Value',
@@ -197,7 +191,8 @@ export const DEFAULT_MESSAGE_OVERRIDES: Required<MessageOverrides> = {
   noDataStreamsPresentHeader: 'No properties or alarms',
   noDataStreamsPresentSubHeader: "This widget doesn't have any properties or alarms.",
   noDataPresentHeader: 'No data',
-  noDataPresentSubHeader: "There's no data to display for this time range.",
+  noDataPresentSubHeader: "There's no data to display for this time range." ,
+  aggregateLabels: {average: 'average', sum: 'sum', count: 'count', maximum: 'maximum', minimum: 'minimum', standard_deviation: 'standard deviation'},
 };
 
 /** SVG Constants */
