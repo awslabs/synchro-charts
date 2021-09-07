@@ -245,11 +245,6 @@ export class ScWebglBaseChart {
 
   @Watch('viewport')
   onViewPortChange(newViewPort: ViewPortConfig, oldViewPort: ViewPortConfig) {
-    const { duration } = this.activeViewPort();
-    if (this.scene != null && duration != null) {
-      webGLRenderer.startTick(this.scene, duration);
-    }
-
     if (this.scene && !isEqual(newViewPort, oldViewPort)) {
       const hasYRangeChanged = newViewPort.yMin !== oldViewPort.yMin || newViewPort.yMax !== oldViewPort.yMax;
 
@@ -300,6 +295,11 @@ export class ScWebglBaseChart {
       ) {
         this.onUpdate({ start: this.start, end: this.end }, false, false, false, true);
       }
+    }
+
+    const { duration } = this.activeViewPort();
+    if (this.scene != null && duration != null) {
+      webGLRenderer.startTick({ manager: this.scene, duration, chartSize: this.chartSizeConfig() });
     }
   }
 
@@ -534,7 +534,7 @@ export class ScWebglBaseChart {
     });
 
     const { duration } = this.activeViewPort();
-    webGLRenderer.addChartScene({ manager: this.scene, duration });
+    webGLRenderer.addChartScene({ manager: this.scene, duration, chartSize: this.chartSizeConfig() });
     this.setChartRenderingPosition();
     webGLRenderer.render(this.scene);
     this.onUpdate(this.activeViewPort());

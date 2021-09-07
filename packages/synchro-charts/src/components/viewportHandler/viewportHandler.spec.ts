@@ -3,6 +3,7 @@ import uuid from 'uuid/v4';
 import { ViewportHandler } from './viewportHandler';
 import { ViewPortManager } from './types';
 import { SECOND_IN_MS } from '../../utils/time';
+import { SizeConfig } from '../../utils/dataTypes';
 
 const viewportManager = (viewportGroup?: string): ViewPortManager => ({
   id: uuid(),
@@ -207,6 +208,14 @@ describe('syncing managers', () => {
 describe('internal clock', () => {
   // When adding and creating new viewport with live mode, we make an extra call to ensure that the viewport is synced correctly
   const LIVE_RENDER_MULTIPLIER = 1;
+  const chartSize: SizeConfig = {
+    width: 10, // for the purpose of this test suite, only width matter
+    height: 1,
+    marginRight: 1,
+    marginLeft: 1,
+    marginTop: 1,
+    marginBottom: 1,
+  };
 
   it('starts the internal clock for a single manager in single viewport group when duration is passed in', () => {
     jest.useFakeTimers();
@@ -215,7 +224,7 @@ describe('internal clock', () => {
     const manager = viewportManager(VIEWPORT_GROUP_1);
 
     /** Create a viewport group and sync it's viewport */
-    groups.add({ manager, duration: 10 * SECOND_IN_MS });
+    groups.add({ manager, duration: 10 * SECOND_IN_MS, chartSize });
 
     const secondsElapsed = 3.8;
     jest.advanceTimersByTime(secondsElapsed * SECOND_IN_MS);
@@ -229,7 +238,7 @@ describe('internal clock', () => {
     const manager = viewportManager(VIEWPORT_GROUP_1);
 
     /** Create a viewport group and sync it's viewport */
-    groups.add({ manager, shouldSync: false });
+    groups.add({ manager, shouldSync: false, chartSize });
 
     const secondsElapsed = 3.8;
     jest.advanceTimersByTime(secondsElapsed * SECOND_IN_MS);
@@ -244,14 +253,15 @@ describe('internal clock', () => {
     const manager2 = viewportManager(VIEWPORT_GROUP_1);
     const duration = 10 * SECOND_IN_MS;
     /** Create a viewport group and sync it's viewport */
-    groups.add({ manager: manager1, duration });
-    groups.add({ manager: manager2, duration });
+    groups.add({ manager: manager1, duration, chartSize });
+    groups.add({ manager: manager2, duration, chartSize });
 
     const secondsElapsed = 3.8;
     jest.advanceTimersByTime(secondsElapsed * SECOND_IN_MS);
-    expect(manager1.updateViewPort).toBeCalledTimes(Math.floor(secondsElapsed) + LIVE_RENDER_MULTIPLIER);
-    // manger 2 has to be called 1 more because we had to sync the viewport when it first join
-    expect(manager2.updateViewPort).toBeCalledTimes(Math.floor(secondsElapsed) + 1);
+    // Added an extra one at the end because when we add manger2, the same viewport group, we sync up manger 1 as well.
+    expect(manager1.updateViewPort).toBeCalledTimes(Math.floor(secondsElapsed) + LIVE_RENDER_MULTIPLIER + 1);
+    // manger 2 has to be called 1 more because we had to sync the viewport when it first join. Add an extra 1 at the end because when adding to an exising group, we sync the newly added manger
+    expect(manager2.updateViewPort).toBeCalledTimes(Math.floor(secondsElapsed) + LIVE_RENDER_MULTIPLIER + 1);
   });
 
   it('stops the internal clock for single manger in a single viewport when the stop tick method is called', () => {
@@ -306,8 +316,8 @@ describe('internal clock', () => {
     const manager2 = viewportManager(VIEWPORT_GROUP_2);
     const duration = 10 * SECOND_IN_MS;
     /** Create a viewport group and sync it's viewport */
-    groups.add({ manager: manager1, duration });
-    groups.add({ manager: manager2, duration });
+    groups.add({ manager: manager1, duration, chartSize });
+    groups.add({ manager: manager2, duration, chartSize });
 
     const secondsElapsed = 3.2;
     jest.advanceTimersByTime(secondsElapsed * SECOND_IN_MS);
@@ -331,13 +341,34 @@ describe('internal clock', () => {
     const manager2 = viewportManager(VIEWPORT_GROUP_2);
     const duration = 10 * SECOND_IN_MS;
     /** Create a viewport group and sync it's viewport */
-    groups.add({ manager: manager1, duration });
-    groups.add({ manager: manager2 });
+    groups.add({ manager: manager1, duration, chartSize });
+    groups.add({ manager: manager2, chartSize });
 
     const secondsElapsed = 3.2;
     jest.advanceTimersByTime(secondsElapsed * SECOND_IN_MS);
 
     expect(manager1.updateViewPort).toBeCalledTimes(Math.floor(secondsElapsed) + LIVE_RENDER_MULTIPLIER);
     expect(manager2.updateViewPort).toBeCalledTimes(0);
+  });
+
+  it('renders more frequently for charts with greater width, given the same duration', () => {
+    jest.useFakeTimers();
+    const groups = new ViewportHandler();
+    const VIEWPORT_GROUP_1 = 'view-port-group-1';
+    const VIEWPORT_GROUP_2 = 'view-port-group-2';
+    const manager1 = viewportManager(VIEWPORT_GROUP_1);
+    const manager2 = viewportManager(VIEWPORT_GROUP_2);
+    const duration = 10 * SECOND_IN_MS;
+    /** Create a viewport group and sync it's viewport */
+    groups.add({ manager: manager1, duration, chartSize: { ...chartSize, width: 100 } });
+    groups.add({ manager: manager2, duration, chartSize: { ...chartSize, width: 5 } });
+
+    const secondsElapsed = 3.2;
+    jest.advanceTimersByTime(secondsElapsed * SECOND_IN_MS);
+
+    // manager 1 renders / ticks more frequently because it has greater width and image fidelity so it needs to
+    // tick more often than manager 2 to show movement.
+    // @ts-ignore
+    expect(manager1.updateViewPort.mock.calls.length).toBeGreaterThan(manager2.updateViewPort.mock.calls.length);
   });
 });
