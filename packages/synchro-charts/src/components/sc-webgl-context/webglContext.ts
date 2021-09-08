@@ -216,6 +216,7 @@ export const createWebGLRenderer = (viewportHandler: ViewportHandler<ViewPortMan
     setChartRect,
     updateViewPorts: viewportHandler.syncViewPortGroup,
     startTick: viewportHandler.startTick,
+    stopTick: viewportHandler.stopTick,
     onResolutionChange,
   };
 };

@@ -1,8 +1,21 @@
 /* eslint-disable import/first */
-jest.mock('../../sc-webgl-context/webglContext');
-
+jest.mock('../../sc-webgl-context/webglContext', () => ({
+  webGLRenderer: {
+    initRendering: jest.fn(),
+    dispose: jest.fn(),
+    render: jest.fn(),
+    addChartScene: jest.fn(),
+    removeChartScene: jest.fn(),
+    setChartRect: jest.fn(),
+    updateViewPorts: jest.fn(),
+    startTick: jest.fn(),
+    stopTick: jest.fn(),
+    onResolutionChange: jest.fn(),
+  },
+}));
 import { newSpecPage } from '@stencil/core/testing';
 import { h } from '@stencil/core';
+import { webGLRenderer } from '../../sc-webgl-context/webglContext';
 import { DataPoint, DataStream, ViewPort } from '../../../utils/dataTypes';
 import { DataType, StreamType } from '../../../utils/dataConstants';
 import { DATA_STREAM, DATA_STREAM_2 } from '../../../testing/__mocks__/mockWidgetProperties';
@@ -167,6 +180,36 @@ describe('chart scene management', () => {
       ],
     },
   ];
+
+  describe('on chart size change', () => {
+    it('restarts the time loop for the current chart', async () => {
+      const { chart, page } = await newChartSpecPage({
+        viewport: {
+          yMin: 0,
+          yMax: 100,
+          duration: 1000,
+        },
+      });
+
+      update(chart, {
+        size: {
+          ...CHART_CONFIG.size,
+          width: 400,
+          height: 300,
+          left: 0,
+          top: 0,
+          x: 0,
+          y: 0,
+          bottom: 300,
+          right: 300,
+        },
+      });
+      await page.waitForChanges();
+
+      expect(webGLRenderer.stopTick).toBeCalledTimes(1);
+      expect(webGLRenderer.startTick).toBeCalledTimes(1);
+    });
+  });
 
   describe('visualizesAlarms', () => {
     const ALARM_DATA_STREAM: DataStream<number> = {

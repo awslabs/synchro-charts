@@ -310,6 +310,14 @@ export class ScWebglBaseChart {
     if (!isEqual(newProp, oldProp)) {
       this.onUpdate(this.activeViewPort(), false, true);
     }
+    // Since internal clocks are depended on width, when we detect a width change, we want to re-start the timer.
+    if (newProp.width != null && newProp.width !== oldProp.width) {
+      const { duration } = this.activeViewPort();
+      if (this.scene != null && duration != null) {
+        webGLRenderer.stopTick({ manager: this.scene });
+        webGLRenderer.startTick({ manager: this.scene, duration, chartSize: this.chartSizeConfig() });
+      }
+    }
   }
 
   @Watch('dataStreams')
