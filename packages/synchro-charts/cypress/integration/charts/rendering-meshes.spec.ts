@@ -1,8 +1,56 @@
 /* eslint-disable cypress/no-unnecessary-waiting */
 import { CHART_SIZE } from '../../../src/testing/test-routes/charts/shaders/chartSize';
 import { SECOND_IN_MS } from '../../../src/utils/time';
+import { visitDynamicWidget } from '../../../src/testing/selectors';
+import { DataType } from '../../../src';
 
 const WAIT_MS = SECOND_IN_MS * 2;
+
+it('renders data to a millisecond level of granularity', () => {
+  const start = new Date(2020, 0, 0);
+  const end = new Date(start.getTime() + 5);
+
+  visitDynamicWidget(cy, {
+    componentTag: 'sc-line-chart',
+    dataStreams: [
+      {
+        id: 'some-data-stream',
+        name: 'granular-data-stream',
+        dataType: DataType.NUMBER,
+        resolution: 0,
+        data: [
+          {
+            x: start.getTime(),
+            y: 1,
+          },
+          {
+            x: start.getTime() + 1,
+            y: 2,
+          },
+          {
+            x: start.getTime() + 2,
+            y: 3,
+          },
+          {
+            x: start.getTime() + 3,
+            y: 4,
+          },
+          {
+            x: start.getTime() + 4,
+            y: 5,
+          },
+        ],
+      },
+    ],
+    viewportStart: start,
+    viewportEnd: end,
+  });
+
+  cy.waitForChart();
+
+  // Should display each point a millisecond apart
+  cy.get('.data-container').matchImageSnapshotOnCI();
+});
 
 describe('bar chart', () => {
   it('renders a single bar', () => {
