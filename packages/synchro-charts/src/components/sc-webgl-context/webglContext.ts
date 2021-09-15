@@ -6,6 +6,7 @@ import { RectScrollFixed } from '../../utils/types';
 import { ViewportHandler } from '../viewportHandler/viewportHandler';
 import { isValid } from '../../utils/predicates';
 import { ViewPortManager } from '../viewportHandler/types';
+import { SizeConfig } from '../../utils/dataTypes';
 
 const isChartScene = isValid((v: Partial<ChartScene>) => v.camera != null);
 
@@ -69,13 +70,15 @@ export const createWebGLRenderer = (viewportHandler: ViewportHandler<ViewPortMan
    */
   const addChartScene = ({
     manager,
+    chartSize,
     duration,
     shouldSync = true,
   }: {
     manager: ViewPortManager;
+    chartSize?: SizeConfig;
     duration?: number;
     shouldSync?: boolean;
-  }) => viewportHandler.add({ manager, duration, shouldSync });
+  }) => viewportHandler.add({ manager, chartSize, duration, shouldSync });
 
   /**
    * Remove Chart Scene
@@ -213,6 +216,7 @@ export const createWebGLRenderer = (viewportHandler: ViewportHandler<ViewPortMan
     setChartRect,
     updateViewPorts: viewportHandler.syncViewPortGroup,
     startTick: viewportHandler.startTick,
+    stopTick: viewportHandler.stopTick,
     onResolutionChange,
   };
 };

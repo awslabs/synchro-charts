@@ -245,11 +245,6 @@ export class ScWebglBaseChart {
 
   @Watch('viewport')
   onViewPortChange(newViewPort: ViewPortConfig, oldViewPort: ViewPortConfig) {
-    const { duration } = this.activeViewPort();
-    if (this.scene != null && duration != null) {
-      webGLRenderer.startTick(this.scene, duration);
-    }
-
     if (this.scene && !isEqual(newViewPort, oldViewPort)) {
       const hasYRangeChanged = newViewPort.yMin !== oldViewPort.yMin || newViewPort.yMax !== oldViewPort.yMax;
 
@@ -301,6 +296,11 @@ export class ScWebglBaseChart {
         this.onUpdate({ start: this.start, end: this.end }, false, false, false, true);
       }
     }
+
+    const { duration } = this.activeViewPort();
+    if (this.scene != null && duration != null) {
+      webGLRenderer.startTick({ manager: this.scene, duration, chartSize: this.chartSizeConfig() });
+    }
   }
 
   @Watch('size')
@@ -309,6 +309,14 @@ export class ScWebglBaseChart {
     // NOTE: Change of legend can effect sizing
     if (!isEqual(newProp, oldProp)) {
       this.onUpdate(this.activeViewPort(), false, true);
+    }
+    // Since internal clocks are depended on width, when we detect a width change, we want to re-start the timer.
+    if (newProp.width != null && newProp.width !== oldProp.width) {
+      const { duration } = this.activeViewPort();
+      if (this.scene != null && duration != null) {
+        webGLRenderer.stopTick({ manager: this.scene });
+        webGLRenderer.startTick({ manager: this.scene, duration, chartSize: this.chartSizeConfig() });
+      }
     }
   }
 
@@ -534,7 +542,7 @@ export class ScWebglBaseChart {
     });
 
     const { duration } = this.activeViewPort();
-    webGLRenderer.addChartScene({ manager: this.scene, duration });
+    webGLRenderer.addChartScene({ manager: this.scene, duration, chartSize: this.chartSizeConfig() });
     this.setChartRenderingPosition();
     webGLRenderer.render(this.scene);
     this.onUpdate(this.activeViewPort());
