@@ -10,12 +10,12 @@
     Specifies the window of data which will be visible within the widget.
     
     - `start`: Date
-    
-        The earliest date within the viewport.
+
+      (Optional) The earliest date within the viewport. Leave blank when viewing live time frames.
         
     - `end`: Date
-    
-        The latest date within the viewport.
+
+      (Optional) The latest date within the viewport. Leave blank when viewing live time frames.
         
     - `yMin`: number
 

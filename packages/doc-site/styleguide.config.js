@@ -71,6 +71,10 @@ module.exports = {
                     exampleMode: 'hide',
                 },
                 {
+                  name: 'Live Mode',
+                  content: 'docs/liveMode.md',
+                },
+                {
                     name: 'Performance',
                     content: 'docs/performance.md',
                     exampleMode: 'hide',
