@@ -635,3 +635,31 @@ const dataStreams = [{
   />
 </div>
 ```
+
+### Threshold severity
+Often with thresholds, we will have multiple thresholds applied to a single data stream. In certain cases, there will be particular thresholds
+which when breached is more important than a different, but also breached threshold.
+
+For example, if you have a warning threshold, and a critical error threshold, we would to ensure that the 'critical error' threshold was displayed as being breached, rather than the 'warning' threshold.
+
+To make the 'critical error' threshold a higher priority, we will utilize the `threshold.severity` property as such:
+
+```js static
+const annotations = {
+  y: [{
+    severity: 1,
+    label: 'critical error',
+    color: 'red',
+    value: 100,
+    comparisonOperator: 'GT',
+  }, {
+    label: 'warning',
+    severity: 2,
+    color: 'orange',
+    value: 50,
+    comparisonOperator: 'GT',
+  }],
+};
+```
+
+Note that if severity is left undefined, any threshold with a defined severity will be considered higher priority.
