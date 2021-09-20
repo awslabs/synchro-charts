@@ -21,22 +21,6 @@ declare namespace jest {
     toBeNearDate<T>(date: Date | string, withinMS: number): Matchers<T, T>;
 
     /**
-     * Use .toBeValidSvgRect to ensure the attributes of a `rect` are all valid
-     *
-     * @param {SVGGElement} el
-     */
-    toBeValidSvgRect<T>(): Matchers<T, T>;
-
-    /**
-     * Use .toNotOverlap to check if two elements overlap each other or not.
-     *
-     * @param {BoundingBox} el1
-     * @param {BoundingBox} el2
-     */
-
-    toNotOverlap<T>(el2: any): Matchers<T, T>;
-
-    /**
      *
      * jest-expected
      *
