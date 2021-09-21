@@ -68,20 +68,6 @@ describe('construct chart scene', () => {
   });
 
   describe('disposal of scene', () => {
-    it('disposes top level scene', () => {
-      const chartScene = constructChartScene({
-        viewport: VIEWPORT,
-        container: document.createElement('div'),
-        scene: new Scene(),
-        toClipSpace: z => z,
-      });
-      jest.spyOn(chartScene.scene, 'dispose');
-      if (chartScene.dispose != null) {
-        chartScene.dispose();
-      }
-      expect(chartScene.scene.dispose).toBeCalled();
-    });
-
     it('disposes of a single mesh correctly', () => {
       const chartScene = constructChartScene({
         viewport: VIEWPORT,
@@ -94,7 +80,6 @@ describe('construct chart scene', () => {
 
       chartScene.scene.add(mesh);
 
-      jest.spyOn(chartScene.scene, 'dispose');
       jest.spyOn(material, 'dispose');
       jest.spyOn(mesh.geometry, 'dispose');
 
@@ -102,7 +87,6 @@ describe('construct chart scene', () => {
         chartScene.dispose();
       }
 
-      expect(chartScene.scene.dispose).toBeCalled();
       expect(mesh.geometry.dispose).toBeCalled();
       expect(material.dispose).toBeCalled();
     });
@@ -124,7 +108,6 @@ describe('construct chart scene', () => {
       const lines = (chartScene.scene.children[LINE_MESH_INDEX] as unknown) as LineChartLineMesh;
       const points = (chartScene.scene.children[POINT_MESH_INDEX] as unknown) as LineChartLineMesh;
 
-      jest.spyOn(chartScene.scene, 'dispose');
       jest.spyOn(lines.geometry, 'dispose');
       jest.spyOn(lines.material, 'dispose');
       jest.spyOn(points.geometry, 'dispose');
@@ -133,8 +116,6 @@ describe('construct chart scene', () => {
       if (chartScene.dispose != null) {
         chartScene.dispose();
       }
-
-      expect(chartScene.scene.dispose).toBeCalled();
 
       expect(lines.geometry.dispose).toBeCalled();
       expect(lines.material.dispose).toBeCalled();
