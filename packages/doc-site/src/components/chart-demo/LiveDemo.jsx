@@ -21,9 +21,8 @@ export const y = (ampl, period, time) => {
   return ampl * Math.sin(2 * Math.PI / period * time);
 }
 
-const DURATION = MINUTE_IN_MS * 3;
+const DURATION = MINUTE_IN_MS;
 const MIN_PERIOD = 0.5 * MINUTE_IN_MS;
-const TIME_FRAME_RATE = SECOND_IN_MS / 15; // 15 FPS
 const DATA_APPEND_RATE = SECOND_IN_MS;
 const AMPLITUDE = 100;
 
@@ -140,25 +139,10 @@ export class LiveDemo extends React.Component {
       alarmStatusStreams,
       isLiveMode: true,
       viewport: {
-        start: new Date (Date.now() - DURATION),
-        end: new Date(),
+        duration: DURATION,
         group: 'Live_demo',
       },
     }
-  }
-
-  enableLiveMode() {
-    setInterval(() => {
-      if (this.state.isLiveMode) {
-        this.setState({
-          viewport: {
-            ...this.state.viewport,
-            start: new Date (Date.now() - DURATION),
-            end: new Date(),
-          },
-        })
-      }
-    }, TIME_FRAME_RATE);
   }
 
   addDataPoints = (x) => {
@@ -185,7 +169,6 @@ export class LiveDemo extends React.Component {
   }
 
   componentDidMount() {
-    this.enableLiveMode();
     this.appendDataPointsPeriodically();
 
     this.liveDemoContainer.current.addEventListener('dateRangeChange', this.onDateRangeChange);
