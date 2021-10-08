@@ -10,7 +10,6 @@ import { Annotations, Axis, LayoutConfig, Legend, LegendConfig, MovementConfig, 
 import { Trend, TrendResult } from "./components/charts/common/trends/types";
 import { DATA_ALIGNMENT, StatusIcon } from "./components/charts/common/constants";
 import { POINT_TYPE } from "./components/charts/sc-webgl-base-chart/activePoints";
-import { HeatValueMap } from "./components/charts/sc-heatmap/heatmapUtil";
 import { RectScrollFixed } from "./utils/types";
 import { LabelsConfig } from "./components/common/types";
 import { Cell, Row } from "./components/sc-table/constructTableData";
@@ -99,48 +98,6 @@ export namespace Components {
         "isEnabled": boolean;
         "propertyPoint"?: DataPoint;
         "title": string;
-    }
-    interface ScHeatmap {
-        "axis"?: Axis.Options;
-        /**
-          * Memory Management
-         */
-        "bufferFactor": number;
-        "dataStreams": DataStream[];
-        "gestures": boolean;
-        /**
-          * Status
-         */
-        "isEditing": boolean;
-        "layout"?: LayoutConfig;
-        "legend"?: LegendConfig;
-        "messageOverrides"?: MessageOverrides;
-        "minBufferSize": number;
-        "movement"?: MovementConfig;
-        "requestData"?: RequestDataFn;
-        "scale"?: ScaleConfig;
-        "size"?: MinimalSizeConfig;
-        "viewport": MinimalViewPortConfig;
-        "widgetId": string;
-    }
-    interface ScHeatmapLegend {
-        "config": LegendConfig;
-        "dataStreams": DataStream[];
-        "isLoading": boolean;
-        "viewport": ViewPort;
-    }
-    interface ScHeatmapTooltip {
-        "dataContainer": HTMLElement;
-        "dataStreams": DataStream[];
-        "size": SizeConfig;
-        "viewport": ViewPort;
-    }
-    interface ScHeatmapTooltipRows {
-        "heatValues": HeatValueMap;
-        "selectedXBucket": { startDate: Date; endDate: Date };
-        "selectedYBucket": { lowerYBucket: number; upperYBucket: number };
-        "size": SizeConfig;
-        "viewport": ViewPort;
     }
     interface ScHelpTooltip {
         "message": string;
@@ -728,30 +685,6 @@ declare global {
     var HTMLScGridTooltipElement: {
         prototype: HTMLScGridTooltipElement;
         new (): HTMLScGridTooltipElement;
-    };
-    interface HTMLScHeatmapElement extends Components.ScHeatmap, HTMLStencilElement {
-    }
-    var HTMLScHeatmapElement: {
-        prototype: HTMLScHeatmapElement;
-        new (): HTMLScHeatmapElement;
-    };
-    interface HTMLScHeatmapLegendElement extends Components.ScHeatmapLegend, HTMLStencilElement {
-    }
-    var HTMLScHeatmapLegendElement: {
-        prototype: HTMLScHeatmapLegendElement;
-        new (): HTMLScHeatmapLegendElement;
-    };
-    interface HTMLScHeatmapTooltipElement extends Components.ScHeatmapTooltip, HTMLStencilElement {
-    }
-    var HTMLScHeatmapTooltipElement: {
-        prototype: HTMLScHeatmapTooltipElement;
-        new (): HTMLScHeatmapTooltipElement;
-    };
-    interface HTMLScHeatmapTooltipRowsElement extends Components.ScHeatmapTooltipRows, HTMLStencilElement {
-    }
-    var HTMLScHeatmapTooltipRowsElement: {
-        prototype: HTMLScHeatmapTooltipRowsElement;
-        new (): HTMLScHeatmapTooltipRowsElement;
     };
     interface HTMLScHelpTooltipElement extends Components.ScHelpTooltip, HTMLStencilElement {
     }
@@ -1370,10 +1303,6 @@ declare global {
         "sc-gesture-handler": HTMLScGestureHandlerElement;
         "sc-grid": HTMLScGridElement;
         "sc-grid-tooltip": HTMLScGridTooltipElement;
-        "sc-heatmap": HTMLScHeatmapElement;
-        "sc-heatmap-legend": HTMLScHeatmapLegendElement;
-        "sc-heatmap-tooltip": HTMLScHeatmapTooltipElement;
-        "sc-heatmap-tooltip-rows": HTMLScHeatmapTooltipRowsElement;
         "sc-help-tooltip": HTMLScHelpTooltipElement;
         "sc-kpi": HTMLScKpiElement;
         "sc-kpi-base": HTMLScKpiBaseElement;
@@ -1559,48 +1488,6 @@ declare namespace LocalJSX {
         "isEnabled"?: boolean;
         "propertyPoint"?: DataPoint;
         "title"?: string;
-    }
-    interface ScHeatmap {
-        "axis"?: Axis.Options;
-        /**
-          * Memory Management
-         */
-        "bufferFactor"?: number;
-        "dataStreams": DataStream[];
-        "gestures"?: boolean;
-        /**
-          * Status
-         */
-        "isEditing"?: boolean;
-        "layout"?: LayoutConfig;
-        "legend"?: LegendConfig;
-        "messageOverrides"?: MessageOverrides;
-        "minBufferSize"?: number;
-        "movement"?: MovementConfig;
-        "requestData"?: RequestDataFn;
-        "scale"?: ScaleConfig;
-        "size"?: MinimalSizeConfig;
-        "viewport"?: MinimalViewPortConfig;
-        "widgetId": string;
-    }
-    interface ScHeatmapLegend {
-        "config": LegendConfig;
-        "dataStreams": DataStream[];
-        "isLoading"?: boolean;
-        "viewport"?: ViewPort;
-    }
-    interface ScHeatmapTooltip {
-        "dataContainer": HTMLElement;
-        "dataStreams": DataStream[];
-        "size": SizeConfig;
-        "viewport": ViewPort;
-    }
-    interface ScHeatmapTooltipRows {
-        "heatValues": HeatValueMap;
-        "selectedXBucket": { startDate: Date; endDate: Date };
-        "selectedYBucket": { lowerYBucket: number; upperYBucket: number };
-        "size": SizeConfig;
-        "viewport": ViewPort;
     }
     interface ScHelpTooltip {
         "message": string;
@@ -2115,10 +2002,6 @@ declare namespace LocalJSX {
         "sc-gesture-handler": ScGestureHandler;
         "sc-grid": ScGrid;
         "sc-grid-tooltip": ScGridTooltip;
-        "sc-heatmap": ScHeatmap;
-        "sc-heatmap-legend": ScHeatmapLegend;
-        "sc-heatmap-tooltip": ScHeatmapTooltip;
-        "sc-heatmap-tooltip-rows": ScHeatmapTooltipRows;
         "sc-help-tooltip": ScHelpTooltip;
         "sc-kpi": ScKpi;
         "sc-kpi-base": ScKpiBase;
@@ -2241,10 +2124,6 @@ declare module "@stencil/core" {
             "sc-gesture-handler": LocalJSX.ScGestureHandler & JSXBase.HTMLAttributes<HTMLScGestureHandlerElement>;
             "sc-grid": LocalJSX.ScGrid & JSXBase.HTMLAttributes<HTMLScGridElement>;
             "sc-grid-tooltip": LocalJSX.ScGridTooltip & JSXBase.HTMLAttributes<HTMLScGridTooltipElement>;
-            "sc-heatmap": LocalJSX.ScHeatmap & JSXBase.HTMLAttributes<HTMLScHeatmapElement>;
-            "sc-heatmap-legend": LocalJSX.ScHeatmapLegend & JSXBase.HTMLAttributes<HTMLScHeatmapLegendElement>;
-            "sc-heatmap-tooltip": LocalJSX.ScHeatmapTooltip & JSXBase.HTMLAttributes<HTMLScHeatmapTooltipElement>;
-            "sc-heatmap-tooltip-rows": LocalJSX.ScHeatmapTooltipRows & JSXBase.HTMLAttributes<HTMLScHeatmapTooltipRowsElement>;
             "sc-help-tooltip": LocalJSX.ScHelpTooltip & JSXBase.HTMLAttributes<HTMLScHelpTooltipElement>;
             "sc-kpi": LocalJSX.ScKpi & JSXBase.HTMLAttributes<HTMLScKpiElement>;
             "sc-kpi-base": LocalJSX.ScKpiBase & JSXBase.HTMLAttributes<HTMLScKpiBaseElement>;
