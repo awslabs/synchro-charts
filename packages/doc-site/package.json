@@ -1,40 +1,40 @@
 {
-    "name": "@synchro-charts/doc-site",
-    "description": "Synchro Charts documentation site",
-    "homepage": "https://synchrocharts.com",
-    "version": "0.1.0",
-    "private": true,
-    "dependencies": {
-        "@awsui/components-react": "^3.0.182",
-        "@synchro-charts/core": "*",
-        "@synchro-charts/react": "*",
-        "react": "^16.13.1",
-        "react-dom": "^16.13.1",
-        "react-scripts": "^3.4.4"
-    },
-    "devDependencies": {
-        "react-styleguidist": "^11.1.6"
-    },
-    "scripts": {
-        "start": "styleguidist server",
-        "build": "styleguidist build && yarn run build:create-docs",
-        "build:create-docs": "rm -rf ../../docs && mkdir ../../docs && cp -R app/* ../../docs",
-        "clean": "rm -rf node_modules && rm -rf build && rm -rf ../../docs",
-        "test": "echo \"INFO: no test specified\"",
-        "release": "echo \"INFO: do nothing for release\"",
-        "prepublishOnly": "npm run release",
-        "publish": "echo \"INFO: doc-site does not publish to npm\""
-    },
-    "browserslist": {
-        "production": [
-            ">0.2%",
-            "not dead",
-            "not op_mini all"
-        ],
-        "development": [
-            "last 1 chrome version",
-            "last 1 firefox version",
-            "last 1 safari version"
-        ]
-    }
+  "name": "@synchro-charts/doc-site",
+  "description": "Synchro Charts documentation site",
+  "homepage": "https://synchrocharts.com",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "@awsui/components-react": "^3.0.182",
+    "@synchro-charts/core": "*",
+    "@synchro-charts/react": "*",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-scripts": "^3.4.4"
+  },
+  "devDependencies": {
+    "react-styleguidist": "^11.1.6"
+  },
+  "scripts": {
+    "start": "styleguidist server",
+    "build": "styleguidist build && yarn run build:create-docs",
+    "build:create-docs": "rm -rf ../../docs && mkdir ../../docs && cp -R app/* ../../docs",
+    "clean": "rm -rf node_modules && rm -rf build && rm -rf ../../docs",
+    "test": "echo \"INFO: no test specified\"",
+    "release": "echo \"INFO: do nothing for release\"",
+    "prepublishOnly": "npm run release",
+    "publish": "echo \"INFO: doc-site does not publish to npm\""
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
 }

@@ -1,6 +1,6 @@
 {
   "name": "synchro-charts",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Time series visualization library",
   "homepage": "https://synchrocharts.com",
   "main": "index.js",
@@ -15,7 +15,8 @@
     "clean": "lerna run clean --concurrency 4",
     "lint:fix": "lerna run fix --stream --concurrency 4",
     "lint": "lerna run lint --stream --concurrency 4",
-    "test": "lerna run test --stream --concurrency 1"
+    "test": "lerna run test --stream --concurrency 1",
+    "pack": "lerna run pack"
   },
   "husky": {
     "hooks": {
