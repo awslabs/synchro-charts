@@ -1,12 +1,17 @@
 {
   "name": "@synchro-charts/react",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "main": "dist/components.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/awslabs/synchro-charts.git"
+  },
   "scripts": {
     "build": "tsc --outDir dist",
     "clean": "rm -rf dist *.tsbuildinfo",
     "release": "yarn build",
-    "prepublish": "yarn run build && yarn run copy-styles"
+    "prepublish": "yarn run build && yarn run copy-styles",
+    "pack": "yarn pack"
   },
   "devDependencies": {
     "@stencil/core": "^1.12.2",

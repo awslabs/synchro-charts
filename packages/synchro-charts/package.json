@@ -1,6 +1,6 @@
 {
   "name": "@synchro-charts/core",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Synchro Charts",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -13,6 +13,10 @@
   "files": [
     "dist/"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/awslabs/synchro-charts.git"
+  },
   "scripts": {
     "build": "stencil build",
     "start": "stencil build --dev --watch --serve",
@@ -33,7 +37,8 @@
     "lint:stylelint": "stylelint 'src/**/*.css' --max-warnings 0",
     "script:generate-perf-report": "node ./src/scripts/formatPerformanceReports.js",
     "release": "yarn clean && npm-run-all -p build test lint",
-    "prepublishOnly": "yarn release"
+    "prepublishOnly": "yarn release",
+    "pack": "yarn pack"
   },
   "devDependencies": {
     "@babel/core": "^7.6.4",
