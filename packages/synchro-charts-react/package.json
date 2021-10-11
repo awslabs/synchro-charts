@@ -21,7 +21,7 @@
     "react-dom": "16.x.x || 17.x.x"
   },
   "dependencies": {
-    "@synchro-charts/core": "^0.1.0"
+    "@synchro-charts/core": "^1.0.0"
   },
   "style": "dist/styles.css",
   "files": [
