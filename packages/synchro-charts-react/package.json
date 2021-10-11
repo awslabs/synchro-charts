@@ -10,6 +10,7 @@
     "build": "tsc --outDir dist",
     "clean": "rm -rf dist *.tsbuildinfo",
     "release": "yarn build",
+    "copy-styles": "cp node_modules/@synchro-charts/core/dist/synchro-charts/synchro-charts.css src/styles.css",
     "prepublish": "yarn run build && yarn run copy-styles",
     "pack": "yarn pack"
   },
