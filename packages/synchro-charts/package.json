@@ -1,7 +1,11 @@
 {
   "name": "@synchro-charts/core",
-  "version": "1.0.0",
   "description": "Synchro Charts",
+  "version": "1.0.2",
+  "author": {
+    "name": "Amazon Web Services",
+    "url": "https://aws.amazon.com/"
+  },
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "es2015": "dist/esm/index.mjs",
@@ -37,6 +41,11 @@
     "lint:stylelint": "stylelint 'src/**/*.css' --max-warnings 0",
     "script:generate-perf-report": "node ./src/scripts/formatPerformanceReports.js",
     "release": "yarn clean && npm-run-all -p build test lint",
+    "copy:license": "cp ../../LICENSE LICENSE",
+    "copy:notice": "cp ../../NOTICE NOTICE",
+    "copy:code-of-conduct": "cp ../../CODE_OF_CONDUCT.md CODE_OF_CONDUCT.md",
+    "copy:contributing": "cp ../../CONTRIBUTING.md CONTRIBUTING.md",
+    "prepack": "yarn run copy:license && yarn run copy:notice && yarn run copy:code-of-conduct && yarn run copy:contributing",
     "prepublishOnly": "yarn release",
     "pack": "yarn pack"
   },
@@ -85,7 +94,6 @@
     "webpack": "^4.41.2",
     "write-file-webpack-plugin": "^4.5.0"
   },
-  "license": "MIT",
   "dependencies": {
     "@stencil/redux": "^0.1.1",
     "@types/d3": "^5.16.4",
@@ -111,5 +119,6 @@
     "tippy.js": "^5.2.0",
     "uuid": "^3.3.2",
     "validator": "^13.6.0"
-  }
+  },
+  "license": "Apache-2.0"
 }
