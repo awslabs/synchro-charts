@@ -106,6 +106,7 @@
     "d3-zoom": "^1.8.3",
     "detect-browser": "^5.0.0",
     "immutability-helper": "^3.0.1",
+    "lodash.clonedeep": "^4.5.0",
     "lodash.isequal": "^4.5.0",
     "lodash.isnumber": "^3.0.3",
     "lodash.round": "^4.0.4",

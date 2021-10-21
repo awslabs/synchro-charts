@@ -22,6 +22,8 @@ export namespace Components {
     }
     interface ScAngledLineSegment {
     }
+    interface ScAnnotationsDraggableMulti {
+    }
     interface ScApp {
     }
     interface ScBarChart {
@@ -607,6 +609,12 @@ declare global {
     var HTMLScAngledLineSegmentElement: {
         prototype: HTMLScAngledLineSegmentElement;
         new (): HTMLScAngledLineSegmentElement;
+    };
+    interface HTMLScAnnotationsDraggableMultiElement extends Components.ScAnnotationsDraggableMulti, HTMLStencilElement {
+    }
+    var HTMLScAnnotationsDraggableMultiElement: {
+        prototype: HTMLScAnnotationsDraggableMultiElement;
+        new (): HTMLScAnnotationsDraggableMultiElement;
     };
     interface HTMLScAppElement extends Components.ScApp, HTMLStencilElement {
     }
@@ -1290,6 +1298,7 @@ declare global {
         "line-chart-viewport-change": HTMLLineChartViewportChangeElement;
         "multiple-statuses": HTMLMultipleStatusesElement;
         "sc-angled-line-segment": HTMLScAngledLineSegmentElement;
+        "sc-annotations-draggable-multi": HTMLScAnnotationsDraggableMultiElement;
         "sc-app": HTMLScAppElement;
         "sc-bar-chart": HTMLScBarChartElement;
         "sc-box": HTMLScBoxElement;
@@ -1411,6 +1420,8 @@ declare namespace LocalJSX {
     interface MultipleStatuses {
     }
     interface ScAngledLineSegment {
+    }
+    interface ScAnnotationsDraggableMulti {
     }
     interface ScApp {
     }
@@ -1989,6 +2000,7 @@ declare namespace LocalJSX {
         "line-chart-viewport-change": LineChartViewportChange;
         "multiple-statuses": MultipleStatuses;
         "sc-angled-line-segment": ScAngledLineSegment;
+        "sc-annotations-draggable-multi": ScAnnotationsDraggableMulti;
         "sc-app": ScApp;
         "sc-bar-chart": ScBarChart;
         "sc-box": ScBox;
@@ -2111,6 +2123,7 @@ declare module "@stencil/core" {
             "line-chart-viewport-change": LocalJSX.LineChartViewportChange & JSXBase.HTMLAttributes<HTMLLineChartViewportChangeElement>;
             "multiple-statuses": LocalJSX.MultipleStatuses & JSXBase.HTMLAttributes<HTMLMultipleStatusesElement>;
             "sc-angled-line-segment": LocalJSX.ScAngledLineSegment & JSXBase.HTMLAttributes<HTMLScAngledLineSegmentElement>;
+            "sc-annotations-draggable-multi": LocalJSX.ScAnnotationsDraggableMulti & JSXBase.HTMLAttributes<HTMLScAnnotationsDraggableMultiElement>;
             "sc-app": LocalJSX.ScApp & JSXBase.HTMLAttributes<HTMLScAppElement>;
             "sc-bar-chart": LocalJSX.ScBarChart & JSXBase.HTMLAttributes<HTMLScBarChartElement>;
             "sc-box": LocalJSX.ScBox & JSXBase.HTMLAttributes<HTMLScBoxElement>;
