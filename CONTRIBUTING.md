@@ -48,6 +48,19 @@ Looking at the existing issues is a great way to find something to contribute on
 
 Please feel free to reach out to the core contributors of Synchro Charts to discuss any ideas further.
 
+## Getting Started
+1. Install the latest version of node `16` from [nodejs.org](https://nodejs.org/en/about/releases/).
+2. Open a terminal.
+3. Install yarn - `npm install --global yarn`.
+4. Make a fork -your own copy- of synchro-charts on your GitHub account, then make a clone -a local copy- on your computer.
+5. Navigate to the root of your fork `cd synchro-charts`.
+6. Install dependencies with `yarn -i`.
+7. Build the project with `yarn build`.
+8. Try running the doc site - `cd packages/doc-site && yarn start`.
+9. Try running synchro-charts - `cd packages/synchro-charts && yarn start`.
+10. Try running tests - `yarn test`.
+11. You're good to go!
+
 ## Code of Conduct
 This project has adopted the [Amazon Open Source Code of Conduct](https://aws.github.io/code-of-conduct).
 For more information see the [Code of Conduct FAQ](https://aws.github.io/code-of-conduct-faq) or contact
