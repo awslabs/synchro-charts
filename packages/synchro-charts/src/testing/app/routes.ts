@@ -190,6 +190,10 @@ export const routes = [
     component: 'sc-webgl-chart-annotation-editable',
   },
   {
+    url: '/tests/sc-webgl-chart/annotations/draggable-multi',
+    component: 'sc-annotations-draggable-multi',
+  },
+  {
     url: '/tests/sc-webgl-bar-chart/start-from-zero',
     component: 'sc-webgl-bar-chart-start-from-zero',
   },
