@@ -18,7 +18,7 @@ const testDomRect: DOMRect = {
   toJSON: () => '{}',
 };
 
-export const createTestWebglRenderer = (domRect: DOMRect, skipInit = false) => {
+export const createTestWebglRenderer = (domRect: DOMRect, skipInit = false, onContextInitialization?: () => void) => {
   const webGLRenderer = createWebGLRenderer(new ViewportHandler());
   // @ts-ignore
   const canvas = new HTMLCanvasElement(domRect.width, domRect.height);
@@ -27,7 +27,7 @@ export const createTestWebglRenderer = (domRect: DOMRect, skipInit = false) => {
   canvas.getBoundingClientRect = () => domRect;
 
   if (!skipInit) {
-    webGLRenderer.initRendering(canvas);
+    webGLRenderer.initRendering(canvas, onContextInitialization);
   }
 
   return webGLRenderer;
@@ -175,5 +175,19 @@ describe('when not initialized', () => {
     expect(() => {
       webGLRenderer.addChartScene({ manager: chartScene });
     }).not.toThrowError();
+  });
+});
+
+describe('on initialization', () => {
+  it('calls custom onContextInitialization if provided', () => {
+    const mockOnContextInitialization = jest.fn();
+    createTestWebglRenderer(testDomRect, false, mockOnContextInitialization);
+    expect(mockOnContextInitialization).toBeCalledTimes(1);
+    expect(mockOnContextInitialization).toBeCalledWith(
+      expect.objectContaining({
+        drawingBufferHeight: 500,
+        drawingBufferWidth: 500,
+      })
+    );
   });
 });

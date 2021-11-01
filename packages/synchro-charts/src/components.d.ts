@@ -532,6 +532,7 @@ export namespace Components {
     interface ScWebglChartTooltipWithMultipleDataStreams {
     }
     interface ScWebglContext {
+        "onContextInitialization": (context: WebGLRenderingContext) => void;
     }
     interface ScWebglLineChartDynamicBuffer {
     }
@@ -1937,6 +1938,7 @@ declare namespace LocalJSX {
     interface ScWebglChartTooltipWithMultipleDataStreams {
     }
     interface ScWebglContext {
+        "onContextInitialization"?: (context: WebGLRenderingContext) => void;
     }
     interface ScWebglLineChartDynamicBuffer {
     }
