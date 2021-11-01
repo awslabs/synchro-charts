@@ -42,6 +42,20 @@ Ensure that the position of the `<sc-webgl-context />` is correct
 
  More information about rendering HTML elements in the correct order within [Mozilla's documentation on stacking context](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Positioning/Understanding_z_index/The_stacking_context)
 
+### Accessing the WebGL Context
+
+It can be useful to have direct access to the underlying WebGL context for purposes such as debugging.
+
+The `<sc-webgl-context />` web component has a functional prop `onContextInitialization` that is called with a `WebGLRenderingContext` after initialization.
+
+```jsx static
+<sc-webgl-context onContextInitialization={(context) => {
+   // your code
+}} />
+```
+
+This callback can be used to, for example, instrument your development environment with tools such as [WebGL Lint](https://github.com/greggman/webgl-lint).
+
 ### Current pitfalls and issues
 
 1. Visualization clips on bottom 16px of screen

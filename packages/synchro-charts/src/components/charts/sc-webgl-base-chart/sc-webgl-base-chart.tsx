@@ -2,6 +2,7 @@ import { Component, Element, Event, EventEmitter, h, Prop, State, Watch } from '
 
 import isEqual from 'lodash.isequal';
 import throttle from 'lodash.throttle';
+import clone from 'lodash.clonedeep';
 
 import {
   AlarmsConfig,
@@ -145,15 +146,13 @@ export class ScWebglBaseChart {
 
   componentWillLoad() {
     if (!this.isDragging) {
-      this.internalAnnotations = this.annotations;
+      this.setInternalAnnotations();
     }
   }
 
-  componentShouldUpdate() {
-    // We must make this dragging check in shouldUpdate
-    if (!this.isDragging) {
-      this.internalAnnotations = this.annotations;
-    }
+  setInternalAnnotations() {
+    // Internal annotations are mutated, so we clone it to prevent altering the inputs.
+    this.internalAnnotations = clone(this.annotations);
   }
 
   startStopDragging = (dragState: boolean): void => {
@@ -329,7 +328,7 @@ export class ScWebglBaseChart {
   @Watch('annotations')
   onAnnotationsChange(newProp: Annotations, oldProp: Annotations) {
     if (!isEqual(newProp, oldProp) && !this.isDragging) {
-      this.internalAnnotations = this.annotations; // need to update before onUpdate is triggered
+      this.setInternalAnnotations();
       this.onUpdate(this.activeViewPort(), false, false, true);
     }
   }

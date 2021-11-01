@@ -1,0 +1,11 @@
+configuration
+cypress
+src
+.eslintignore
+.eslintrc.json
+.gitignore
+.stylelintrc
+CHANGELOG.md
+cypress.json
+stencil.config.ts
+tsconfig.json

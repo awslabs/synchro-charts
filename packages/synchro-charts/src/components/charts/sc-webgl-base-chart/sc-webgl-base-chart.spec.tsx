@@ -103,6 +103,7 @@ const newChartSpecPage = async (chartProps: Partial<Components.ScWebglBaseChart>
       <sc-tooltip {...rest} dataAlignment={DATA_ALIGNMENT.RIGHT} visualizesAlarms={visualizesAlarms} supportString />
     ),
   };
+
   update(chart, { ...defaultProps, ...chartProps });
   page.body.appendChild(chart);
   await page.waitForChanges();

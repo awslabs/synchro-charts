@@ -50,8 +50,6 @@ const dispose = (scene: Scene) => {
       `);
     }
   });
-
-  scene.dispose();
 };
 
 /**

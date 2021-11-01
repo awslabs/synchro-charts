@@ -139,10 +139,15 @@ export const createWebGLRenderer = (viewportHandler: ViewportHandler<ViewPortMan
     }
   };
 
-  const initRendering = (renderCanvas: HTMLCanvasElement) => {
+  const initRendering = (
+    renderCanvas: HTMLCanvasElement,
+    onContextInitialization: (context: WebGLRenderingContext) => void = () => {}
+  ) => {
     rectMap = new ClipSpaceRectMap(renderCanvas);
     canvas = renderCanvas;
     renderer = new WebGLRenderer({ canvas, alpha: true, antialias: true, preserveDrawingBuffer: true });
+
+    onContextInitialization(renderer.getContext());
 
     // Enable scissor test, which allows us to render our visualizations to a subset of the canvas
     // https://threejs.org/docs/#api/en/renderers/WebGLRenderer.setScissor

@@ -53,7 +53,7 @@ const yAnnotation: YAnnotation = {
   color: 'green',
 };
 
-const timelineParams: Partial<SearchQueryParams> = {
+const query: Partial<SearchQueryParams> = {
   componentTag: 'sc-line-chart',
   viewportStart: X_MIN,
   viewportEnd: X_MAX,
@@ -105,7 +105,7 @@ const timelineParams: Partial<SearchQueryParams> = {
 
 it('elements are located and scaled according to viewport size', () => {
   visitDynamicWidget(cy, {
-    ...timelineParams,
+    ...query,
     dataStreams: [],
   });
   cy.waitForChart();
@@ -116,7 +116,7 @@ it('elements are located and scaled according to viewport size', () => {
 
 it('rescales properly with vertical stretch', () => {
   visitDynamicWidget(cy, {
-    ...timelineParams,
+    ...query,
   });
   cy.viewport(baseChartWidth, baseChartHeight);
   cy.waitForChart();
@@ -127,7 +127,7 @@ it('rescales properly with vertical stretch', () => {
 
 it('rescales properly with horizontal stretch', () => {
   visitDynamicWidget(cy, {
-    ...timelineParams,
+    ...query,
   });
   cy.viewport(baseChartWidth, baseChartHeight);
   cy.waitForChart();
@@ -138,7 +138,7 @@ it('rescales properly with horizontal stretch', () => {
 
 it('rescales properly with diagonal stretch', () => {
   visitDynamicWidget(cy, {
-    ...timelineParams,
+    ...query,
   });
   cy.viewport(baseChartWidth, baseChartHeight);
   cy.waitForChart();

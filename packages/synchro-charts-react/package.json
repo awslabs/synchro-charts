@@ -1,12 +1,28 @@
 {
   "name": "@synchro-charts/react",
-  "version": "0.1.0",
+  "description": "Synchro Charts React",
+  "version": "1.0.2",
+  "author": {
+    "name": "Amazon Web Services",
+    "url": "https://aws.amazon.com/"
+  },
   "main": "dist/components.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/awslabs/synchro-charts.git"
+  },
   "scripts": {
     "build": "tsc --outDir dist",
     "clean": "rm -rf dist *.tsbuildinfo",
     "release": "yarn build",
-    "prepublish": "yarn run build && yarn run copy-styles"
+    "copy:styles": "cp ../../node_modules/@synchro-charts/core/dist/synchro-charts/synchro-charts.css dist/styles.css",
+    "copy:license": "cp ../../LICENSE LICENSE",
+    "copy:notice": "cp ../../NOTICE NOTICE",
+    "copy:code-of-conduct": "cp ../../CODE_OF_CONDUCT.md CODE_OF_CONDUCT.md",
+    "copy:contributing": "cp ../../CONTRIBUTING.md CONTRIBUTING.md",
+    "prepack": "yarn run copy:styles && yarn run copy:license && yarn run copy:notice && yarn run copy:code-of-conduct && yarn run copy:contributing",
+    "prepublish": "yarn run build",
+    "pack": "yarn pack"
   },
   "devDependencies": {
     "@stencil/core": "^1.12.2",
@@ -16,8 +32,9 @@
     "react-dom": "16.x.x || 17.x.x"
   },
   "dependencies": {
-    "@synchro-charts/core": "^0.1.0"
+    "@synchro-charts/core": "^1.0.2"
   },
+  "license": "Apache-2.0",
   "style": "dist/styles.css",
   "files": [
     "dist/"
