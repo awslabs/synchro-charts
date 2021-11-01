@@ -1,9 +1,9 @@
 node_modules
-build
+# build
 dist
 
 ## Documentation site build artifacts
-/docs/*
+# /docs/*
 
 ./packages/*/dist
 .husky
