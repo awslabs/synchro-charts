@@ -1,7 +1,7 @@
 {
   "name": "@synchro-charts/react",
   "description": "Synchro Charts React",
-  "version": "1.0.3",
+  "version": "1.0.5",
   "author": {
     "name": "Amazon Web Services",
     "url": "https://aws.amazon.com/"
@@ -32,7 +32,7 @@
     "react-dom": "16.x.x || 17.x.x"
   },
   "dependencies": {
-    "@synchro-charts/core": "^1.0.2"
+    "@synchro-charts/core": "^1.0.3"
   },
   "license": "Apache-2.0",
   "style": "dist/styles.css",
