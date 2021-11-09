@@ -16,12 +16,3 @@ export interface StencilCSSProperty {
 // positioning within the render loop of webGL. This allows us to not have to update `Rects` at every 16ms during
 // scroll events.
 export type RectScrollFixed = Omit<DOMRect, 'toJSON'> & { density: number };
-
-// https://stackoverflow.com/a/51365037
-export type RecursivePartial<T> = {
-  [P in keyof T]?: T[P] extends (infer U)[]
-    ? RecursivePartial<U>[]
-    : T[P] extends object
-    ? RecursivePartial<T[P]>
-    : T[P];
-};
