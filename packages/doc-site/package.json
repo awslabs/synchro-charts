@@ -2,7 +2,7 @@
   "name": "@synchro-charts/doc-site",
   "description": "Synchro Charts documentation site",
   "homepage": "https://synchrocharts.com",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "private": true,
   "dependencies": {
     "@awsui/components-react": "^3.0.182",

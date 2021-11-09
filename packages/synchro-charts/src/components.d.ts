@@ -261,7 +261,7 @@ export namespace Components {
         /**
           * Size overrides. these will take precident over any auto-calculated sizing
          */
-        "size"?: Size;
+        "size"?: MinimalSizeConfig;
     }
     interface ScSizeProviderStandard {
     }
@@ -1661,7 +1661,7 @@ declare namespace LocalJSX {
         /**
           * Size overrides. these will take precident over any auto-calculated sizing
          */
-        "size"?: Size;
+        "size"?: MinimalSizeConfig;
     }
     interface ScSizeProviderStandard {
     }

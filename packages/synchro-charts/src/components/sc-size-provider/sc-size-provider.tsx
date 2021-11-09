@@ -5,11 +5,7 @@ import { rectScrollFixed } from '../common/webGLPositioning';
 import { RectScrollFixed } from '../../utils/types';
 import { renderChild } from './renderChild';
 import { webGLRenderer } from '../sc-webgl-context/webglContext';
-
-type Size = {
-  width: number;
-  height: number;
-};
+import { MinimalSizeConfig } from '../../utils/dataTypes';
 
 /**
  * The rate at which the layout will update for graphics projected onto some element.
@@ -31,7 +27,7 @@ export class ScSizeProvider {
   @Prop() renderFunc!: (rect: RectScrollFixed) => void;
 
   /** Size overrides. these will take precident over any auto-calculated sizing */
-  @Prop() size?: Size;
+  @Prop() size?: MinimalSizeConfig;
 
   /** The DOM Elements size as computed by the observer. corrected on resolution changes. */
   @State() computedSize: { width: number; height: number } | null = null;
