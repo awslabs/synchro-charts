@@ -1,7 +1,7 @@
 {
     "packages": ["packages/*"],
     "npmClient": "yarn",
-    "version": "independent",
+    "version": "1.0.6",
     "useWorkspaces": true,
     "nohoist": ["parcel-bundler"]
   }

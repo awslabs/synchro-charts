@@ -1,0 +1,23 @@
+name: Deploy Documentation Site
+on: [push]
+jobs:
+  deploy-documentation-site:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 'lts/*'
+
+      - name: Install and Build
+        run: |
+          yarn install
+          yarn build
+
+      - name: Publish
+        run: yarn publishToNpm
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
