@@ -1,4 +1,4 @@
-name: Deploy Documentation Site
+name: NPM Publish
 on: [push]
 jobs:
   deploy-documentation-site:
