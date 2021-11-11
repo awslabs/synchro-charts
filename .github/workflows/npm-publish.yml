@@ -1,7 +1,7 @@
 name: NPM Publish
 on: [push]
 jobs:
-  deploy-documentation-site:
+  publish-to-npm:
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout
