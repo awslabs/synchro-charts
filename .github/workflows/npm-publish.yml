@@ -13,9 +13,6 @@ jobs:
           node-version: 'lts/*'
           registry-url: 'https://registry.npmjs.org'
 
-      - name: Setup Yarn
-        run: cp -r /home/runner/work/_temp/.npmrc /home/runner/work/_temp/.yarnrc
-
       - name: Install and Build
         run: |
           yarn install
