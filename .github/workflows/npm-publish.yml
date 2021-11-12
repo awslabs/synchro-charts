@@ -11,6 +11,7 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 'lts/*'
+          registry-url: 'https://registry.npmjs.org'
 
       - name: Install and Build
         run: |
@@ -20,7 +21,6 @@ jobs:
       - name: Publish
         run: npm whoami
         env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }} 
 
 
