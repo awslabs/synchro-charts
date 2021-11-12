@@ -30,7 +30,7 @@
     "clean": "rm -rf dist && rm -rf screenshot",
     "test": "npm-run-all -p test:unit-test test:typescript",
     "test:dev": "npm-run-all test test:integ",
-    "test:unit-test": "TZ=UTC stencil test --spec",
+    "test:unit-test": "TZ=UTC stencil test --spec --coverage",
     "test:cypress": "cypress run",
     "test:cypress-dev": "cypress open --env disableSnapshotTests=true",
     "test:typescript": "tsc --noEmit",
