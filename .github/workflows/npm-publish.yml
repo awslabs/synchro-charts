@@ -19,6 +19,4 @@ jobs:
           yarn build
 
       - name: Publish
-        run: yarn publishToNpm
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: yarn config list --verbose
