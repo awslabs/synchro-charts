@@ -13,6 +13,11 @@ jobs:
           node-version: 'lts/*'
           registry-url: 'https://registry.npmjs.org'
 
+      - name: Setup Yarn
+        uses: borales/actions-yarn@v2.3.0
+        with:
+          auth-token: ${{ secrets.NPM_TOKEN }}
+
       - name: Install and Build
         run: |
           yarn install
