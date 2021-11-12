@@ -43,7 +43,7 @@
     "lint:eslint": "eslint --ext .js,.ts,.tsx ./ --max-warnings 0",
     "lint:stylelint": "stylelint 'src/**/*.css' --max-warnings 0",
     "script:generate-perf-report": "node ./src/scripts/formatPerformanceReports.js",
-    "release": "yarn clean && npm-run-all -p build test lint",
+    "release": "yarn clean && yarn build && npm run test && yarn lint",
     "copy:license": "cp ../../LICENSE LICENSE",
     "copy:notice": "cp ../../NOTICE NOTICE",
     "copy:code-of-conduct": "cp ../../CODE_OF_CONDUCT.md CODE_OF_CONDUCT.md",
