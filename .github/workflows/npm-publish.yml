@@ -20,7 +20,7 @@ jobs:
 
       - name: Publish
         run: |
-          npm whoami
+          yarn npm whoami
           yarn publishToNpm
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
