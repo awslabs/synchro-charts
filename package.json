@@ -21,7 +21,7 @@
     "versionup:patch": "lerna version patch --conventional-commits --no-push --no-git-tag-version --yes",
     "versionup:minor": "lerna version minor --conventional-commits --no-push --no-git-tag-version --yes",
     "versionup:major": "lerna version major --conventional-commits --no-push --no-git-tag-version --yes",
-    "publishToNpm": "lerna publish from-package --yes"
+    "publishToNpm": "yarn workspaces foreach --no-private npm publish"
   },
   "husky": {
     "hooks": {
