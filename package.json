@@ -20,7 +20,7 @@
     "versionup:patch": "lerna version patch --conventional-commits --no-push --no-git-tag-version --yes",
     "versionup:minor": "lerna version minor --conventional-commits --no-push --no-git-tag-version --yes",
     "versionup:major": "lerna version major --conventional-commits --no-push --no-git-tag-version --yes",
-    "publishToNpm": "lerna publish --yes"
+    "publishToNpm": "lerna publish from-package --yes"
   },
   "husky": {
     "hooks": {
