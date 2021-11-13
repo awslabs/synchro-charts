@@ -4,7 +4,7 @@ import { DataType, StreamType } from './dataConstants';
  * Types which represent the data and data streams.
  */
 
-export type Primitive = string | number;
+export type Primitive = string | number | Object;
 
 export type Timestamp = number;
 

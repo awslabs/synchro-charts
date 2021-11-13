@@ -2,6 +2,7 @@ export enum DataType {
   NUMBER = 'NUMBER',
   STRING = 'STRING',
   BOOLEAN = 'BOOLEAN',
+  OBJECT = 'OBJECT'
 }
 
 /**
