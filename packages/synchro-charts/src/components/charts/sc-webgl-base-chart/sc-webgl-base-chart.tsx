@@ -299,6 +299,7 @@ export class ScWebglBaseChart {
 
     const { duration } = this.activeViewPort();
     if (this.scene != null && duration != null) {
+      webGLRenderer.stopTick({ manager: this.scene });
       webGLRenderer.startTick({ manager: this.scene, duration, chartSize: this.chartSizeConfig() });
     }
   }
