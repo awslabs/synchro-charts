@@ -15,21 +15,38 @@ const WIDE_VIEWPORT: MinimalViewPortConfig = {
   group: VIEWPORT_GROUP,
 };
 
+const FIVE_MINUTE_VIEWPORT: MinimalViewPortConfig = {
+  duration: '5m',
+};
+
+const THIRTY_MINUTE_VIEWPORT: MinimalViewPortConfig = {
+  duration: '30m',
+};
+
 @Component({
   tag: 'line-chart-viewport-change',
 })
 export class LineChartViewportChange {
   @State() viewport: MinimalViewPortConfig = NARROW_VIEWPORT;
 
-  toggleViewPort = () => {
-    this.viewport = this.viewport !== NARROW_VIEWPORT ? NARROW_VIEWPORT : WIDE_VIEWPORT;
+  setViewPort = viewport => {
+    this.viewport = viewport;
   };
 
   render() {
     return (
       <div>
-        <button id="toggle-view-port" onClick={this.toggleViewPort}>
-          use {this.viewport === NARROW_VIEWPORT ? 'wide' : 'narrow'} viewport
+        <button id="toggle-narrow-view-port" onClick={() => this.setViewPort(NARROW_VIEWPORT)}>
+          use narrow viewport
+        </button>
+        <button id="toggle-wide-view-port" onClick={() => this.setViewPort(WIDE_VIEWPORT)}>
+          use wide viewport
+        </button>
+        <button id="toggle-five-minute-view-port" onClick={() => this.setViewPort(FIVE_MINUTE_VIEWPORT)}>
+          use 5 minute viewport
+        </button>
+        <button id="toggle-thirty-moinute-view-port" onClick={() => this.setViewPort(THIRTY_MINUTE_VIEWPORT)}>
+          use 30 minute viewport
         </button>
         <br />
         <br />

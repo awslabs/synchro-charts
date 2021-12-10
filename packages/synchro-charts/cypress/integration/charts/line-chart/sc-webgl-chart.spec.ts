@@ -282,8 +282,6 @@ describe('view port updating', () => {
   const NARROW_VIEWPORT_X_AXIS_LABEL = '12 PM'; // A label which renders when viewing the 'narrow' view port
   const WIDE_VIEWPORT_X_AXIS_LABEL = 'July'; // A label which renders when viewing the 'wide' view port
 
-  const TOGGLE_VIEWPORT_SELECTOR = '#toggle-view-port';
-
   /**
    * This ensures that when a new 'chart scene' is generated, it will still take the new viewport passed in the update.
    *
@@ -300,7 +298,7 @@ describe('view port updating', () => {
       cy.contains(WIDE_VIEWPORT_X_AXIS_LABEL).should('not.exist');
 
       /** Update viewport to wide viewport */
-      cy.get(TOGGLE_VIEWPORT_SELECTOR).click();
+      cy.get('#toggle-wide-view-port').click();
 
       /** First view port update is registered */
       cy.contains(NARROW_VIEWPORT_X_AXIS_LABEL).should('not.exist');
@@ -314,16 +312,30 @@ describe('view port updating', () => {
       cy.contains(NARROW_VIEWPORT_X_AXIS_LABEL).should('exist');
 
       /** Update viewport to wide viewport */
-      cy.get(TOGGLE_VIEWPORT_SELECTOR).click();
+      cy.get('#toggle-wide-view-port').click();
 
       /** First view port update is registered */
       cy.contains(NARROW_VIEWPORT_X_AXIS_LABEL).should('not.exist');
 
       /** Revert to original, narrow view port. This also triggers the creation of a new chart scene. */
-      cy.get(TOGGLE_VIEWPORT_SELECTOR).click();
+      cy.get('#toggle-narrow-view-port').click();
 
       /** Second view port update is registered */
       cy.contains(NARROW_VIEWPORT_X_AXIS_LABEL).should('exist');
+    });
+
+    it('takes new viewport when updated to a duration-based viewport', () => {
+      cy.visit(VIEWPORT_CHANGE_URL);
+
+      /** Has initially loaded */
+      cy.contains(NARROW_VIEWPORT_X_AXIS_LABEL).should('exist');
+
+      /** Update viewport to five minute duration viewport */
+      cy.get('#toggle-five-minute-view-port').click();
+
+      /** Neither narrow or wide labels should be available on duration-based viewports */
+      cy.contains(NARROW_VIEWPORT_X_AXIS_LABEL).should('not.exist');
+      cy.contains(WIDE_VIEWPORT_X_AXIS_LABEL).should('not.exist');
     });
   });
 });

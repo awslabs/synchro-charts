@@ -163,6 +163,10 @@ describe('legend', () => {
 });
 
 describe('chart scene management', () => {
+  beforeEach(() => {
+    jest.resetAllMocks();
+  });
+
   const BUFFER_FACTOR = 2;
   const MIN_BUFFER_SIZE = 100;
   const DATA_STREAMS = [
@@ -209,6 +213,67 @@ describe('chart scene management', () => {
 
       expect(webGLRenderer.stopTick).toBeCalledTimes(1);
       expect(webGLRenderer.startTick).toBeCalledTimes(1);
+    });
+  });
+
+  describe('on viewport change', () => {
+    it('restarts the time loop for the current chart when duration is changed', async () => {
+      const { chart, page } = await newChartSpecPage({
+        viewport: {
+          duration: 1000,
+        },
+      });
+
+      update(chart, {
+        viewport: {
+          duration: '5m',
+        },
+      });
+
+      await page.waitForChanges();
+
+      expect(webGLRenderer.stopTick).toBeCalledTimes(1);
+      expect(webGLRenderer.startTick).toBeCalledTimes(1);
+    });
+
+    it('restarts the time loop for the current chart when viewport is changed from static to live', async () => {
+      const { chart, page } = await newChartSpecPage({
+        viewport: {
+          start: new Date(2000, 0, 0),
+          end: new Date(2000, 0, 1),
+        },
+      });
+
+      update(chart, {
+        viewport: {
+          duration: '5m',
+        },
+      });
+
+      await page.waitForChanges();
+
+      expect(webGLRenderer.stopTick).toBeCalledTimes(1);
+      expect(webGLRenderer.startTick).toBeCalledTimes(1);
+    });
+
+    it('does not adjust time loop for the current chart when viewport is changed from live to static', async () => {
+      const { chart, page } = await newChartSpecPage({
+        viewport: {
+          duration: '5m',
+        },
+      });
+
+      update(chart, {
+        viewport: {
+          start: new Date(2000, 0, 0),
+          end: new Date(2000, 0, 1),
+        },
+      });
+
+      await page.waitForChanges();
+
+      expect(webGLRenderer.stopTick).toBeCalledTimes(0);
+      expect(webGLRenderer.startTick).toBeCalledTimes(0);
     });
   });
 
