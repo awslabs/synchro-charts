@@ -5,4 +5,4 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 1.0.7 (2021-12-14)
 
-**Note:** Version bump only for package @synchro-charts/react
+**Note:** Version bump only for package @synchro-charts/doc-site
