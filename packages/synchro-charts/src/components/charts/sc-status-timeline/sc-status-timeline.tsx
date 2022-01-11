@@ -1,4 +1,4 @@
-import { Component, h, Prop } from '@stencil/core';
+import { Component, h, Prop, State, Watch } from '@stencil/core';
 
 import {
   AlarmsConfig,
@@ -63,6 +63,12 @@ const tooltip = (alarms?: AlarmsConfig) => (props: Tooltip.Props) => {
   );
 };
 
+const getComponentViewport = (viewport: MinimalViewPortConfig): MinimalViewPortConfig => ({
+  ...viewport,
+  yMin: 0,
+  yMax: HEIGHT,
+});
+
 @Component({
   tag: 'sc-status-timeline',
   styleUrl: './sc-status-timeline.css',
@@ -84,6 +90,8 @@ export class ScStatusTimeline implements ChartConfig {
   @Prop() messageOverrides?: MessageOverrides;
   @Prop() alarms?: AlarmsConfig;
 
+  @State() componentViewport: MinimalViewPortConfig;
+
   /** Status */
   @Prop() isEditing: boolean = false;
   /** Memory Management */
@@ -100,6 +108,15 @@ export class ScStatusTimeline implements ChartConfig {
 
   componentWillRender() {
     validate(this);
+  }
+
+  componentWillLoad() {
+    this.componentViewport = getComponentViewport(this.viewport);
+  }
+
+  @Watch('viewport')
+  onViewportChange() {
+    this.componentViewport = getComponentViewport(this.viewport);
   }
 
   render() {
@@ -142,11 +159,7 @@ export class ScStatusTimeline implements ChartConfig {
                 size={chartSize}
                 dataStreams={this.dataStreams}
                 alarms={this.alarms}
-                viewport={{
-                  ...this.viewport,
-                  yMin: 0,
-                  yMax: HEIGHT,
-                }}
+                viewport={this.componentViewport}
                 minBufferSize={this.minBufferSize}
                 bufferFactor={this.bufferFactor}
                 isEditing={this.isEditing}
