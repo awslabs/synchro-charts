@@ -162,9 +162,6 @@ export interface BaseConfig {
   size?: MinimalSizeConfig;
 }
 
-// To be removed. do not use.
-// Maps a data stream to it's associated error message, if there is one.
-export type ErrorMap = { [dataStreamId: string]: string | undefined };
 /**
  * Messages which can be customized. i.e. for internationalization, or business domain specific jargon.
  */
