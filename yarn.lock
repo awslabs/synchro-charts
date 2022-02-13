@@ -5654,11 +5654,6 @@ conventional-recommended-bump@^6.1.0:
     meow "^8.0.0"
     q "^1.5.1"
 
-convert-array-to-csv@^1.0.11:
-  version "1.0.12"
-  resolved "https://registry.yarnpkg.com/convert-array-to-csv/-/convert-array-to-csv-1.0.12.tgz#d61438251a89794633569abff22fff039cacfd12"
-  integrity sha512-1PcSrmuJ+IhwTQ76ivWdMrQmM68gLbyaM44aXUIfbyPehvzPHdsv4iJh5yZtDN/G1zIhECsQMvzLpGxh2+pmkA==
-
 convert-source-map@1.7.0:
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/convert-source-map/-/convert-source-map-1.7.0.tgz#17a2cb882d7f77d3490585e2ce6c524424a3a442"
