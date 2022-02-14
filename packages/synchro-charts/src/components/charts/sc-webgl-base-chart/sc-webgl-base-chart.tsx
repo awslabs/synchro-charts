@@ -97,7 +97,13 @@ export class ScWebglBaseChart {
   @Prop() visualizesAlarms: boolean;
   @Prop() displaysError: boolean = true;
   @Prop() alarms?: AlarmsConfig;
-  @Prop() shouldRerenderOnViewportChange?: ({ oldViewport, newViewport }) => boolean;
+  @Prop() shouldRerenderOnViewportChange?: ({
+    oldViewport,
+    newViewport,
+  }: {
+    oldViewport: MinimalViewPortConfig;
+    newViewport: MinimalViewPortConfig;
+  }) => boolean;
 
   /** if false, base chart will not display an empty state message when there is no data present. */
   @Prop() displaysNoDataPresentMsg?: boolean;

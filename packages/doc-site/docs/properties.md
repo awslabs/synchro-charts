@@ -127,13 +127,13 @@
     Raw data (non-aggregated) for the stream. Note that once `resolution` is greater than 0, then it will switch from
     reading the data from this `data` property to reading the data from the `aggregates` property.
   
-    - `x`: Date
+    - `x`: number
     
-      Represents the point in time at which the data point was measured.
+      Represents the point in time at which the data point was measured, in milliseconds since January 1, 1970 00:00:00 UTC, with leap seconds ignored. 
     
-    - `y`: number
+    - `y`: number or string or boolean 
     
-      The value measured within the data point.
+      The value measured within the data point. Type depends on the data streams `dataType`.
   
   - `resolution`: number
   
@@ -142,7 +142,7 @@
     
   - `dataType`: string
   
-    The type of data contained within this stream. Must match it's respective `dataStreamInfo`. Must be one of the following:
+    The type of data contained within this stream. Must be one of the following:
     - `NUMBER`: numerical data, such as `12.0`
     - `STRING`: string data, such as categorical data `"OK"`, `"WARNING"`, etc.
     - `BOOLEAN`: boolean data, such as `true` and `false`.
@@ -159,7 +159,7 @@
     - `resolution` (key): number
       The resolution (in milliseconds) of the data.
       
-      - data point(value): DataPoint[]
+      - data point (value): DataPoint[]
         The data points that are associated to this resolution.
         
   - `detailedName`: string
