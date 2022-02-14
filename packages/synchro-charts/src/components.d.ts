@@ -488,7 +488,13 @@ export namespace Components {
           * Optionally provided callback to initiate a request for data. Used to ensure gestures emit events for request data.
          */
         "requestData"?: RequestDataFn;
-        "shouldRerenderOnViewportChange"?: ({ oldViewport, newViewport }) => boolean;
+        "shouldRerenderOnViewportChange"?: ({
+    oldViewport,
+    newViewport,
+  }: {
+    oldViewport: MinimalViewPortConfig;
+    newViewport: MinimalViewPortConfig;
+  }) => boolean;
         "size": SizePositionConfig;
         "supportString": boolean;
         "trends": Trend[];
@@ -1894,7 +1900,13 @@ declare namespace LocalJSX {
           * Optionally provided callback to initiate a request for data. Used to ensure gestures emit events for request data.
          */
         "requestData"?: RequestDataFn;
-        "shouldRerenderOnViewportChange"?: ({ oldViewport, newViewport }) => boolean;
+        "shouldRerenderOnViewportChange"?: ({
+    oldViewport,
+    newViewport,
+  }: {
+    oldViewport: MinimalViewPortConfig;
+    newViewport: MinimalViewPortConfig;
+  }) => boolean;
         "size": SizePositionConfig;
         "supportString"?: boolean;
         "trends"?: Trend[];
