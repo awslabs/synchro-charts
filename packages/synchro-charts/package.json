@@ -1,7 +1,7 @@
 {
   "name": "@synchro-charts/core",
   "description": "Synchro Charts",
-  "version": "1.0.8",
+  "version": "1.1.0",
   "publishConfig": {
     "access": "public"
   },
@@ -42,7 +42,6 @@
     "lint:fix-stylelint": "stylelint 'src/**/*.css' --fix",
     "lint:eslint": "eslint --ext .js,.ts,.tsx ./ --max-warnings 0",
     "lint:stylelint": "stylelint 'src/**/*.css' --max-warnings 0",
-    "script:generate-perf-report": "node ./src/scripts/formatPerformanceReports.js",
     "release": "yarn clean && npm-run-all -p build test lint",
     "copy:license": "cp ../../LICENSE LICENSE",
     "copy:notice": "cp ../../NOTICE NOTICE",
@@ -75,7 +74,6 @@
     "babel-loader": "^8.0.6",
     "color": "^3.1.2",
     "color-string": "^1.5.3",
-    "convert-array-to-csv": "^1.0.11",
     "copy-webpack-plugin": "^5.0.4",
     "cypress": "^6.3.0",
     "cypress-image-snapshot": "^4.0.1",

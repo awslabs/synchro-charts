@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 1.1.0 (2022-2-13)
+
+### Bug Fixes
+
+* Ensure that while utilizing live mode, when the browser isn't in focus, upon return to the browser focus that live mode will ensure that you are still viewing the current time frame.
+
 ## 1.0.8 (2022-01-11)
 
 

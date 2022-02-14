@@ -15,7 +15,7 @@ export class ViewportHandler<T extends ViewPortManager> {
     [viewportGroup: string]: { start: Date; end: Date };
   } = {};
   private viewportLiveId: {
-    [managerId: string]: { start: Date; end: Date; intervalId?: number; viewportGroup?: string };
+    [managerId: string]: { intervalId?: number; viewportGroup?: string };
   } = {};
 
   managers = (): T[] => {
@@ -47,20 +47,13 @@ export class ViewportHandler<T extends ViewPortManager> {
     }
 
     this.viewportLiveId[liveIdKey] = {
-      start: initStart,
-      end: initEnd,
       viewportGroup: manager.viewportGroup,
     };
     this.viewportLiveId[liveIdKey].intervalId = (setInterval(() => {
-      // shift forward by x amount of time
-      // Create new start and end
-      const { start, end } = this.viewportLiveId[liveIdKey];
-      const newStart = new Date(start.getTime() + tickRate);
-      const newEnd = new Date(end.getTime() + tickRate);
+      const newStart = new Date(Date.now() - duration);
+      const newEnd = new Date();
 
       // Sets the new start and end in the viewport live id for the current manager
-      this.viewportLiveId[liveIdKey].start = newStart;
-      this.viewportLiveId[liveIdKey].end = newEnd;
       this.viewportMap[viewPortMapKey] = { start: newStart, end: newEnd };
       // Have manager update its own viewport
       manager.updateViewPort({ start: newStart, end: newEnd, duration });
