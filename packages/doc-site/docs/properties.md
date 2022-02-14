@@ -142,7 +142,99 @@
     
   - `dataType`: string
   
-    The type of data contained within this stream. Must match it's respective `dataStreamInfo`. Must be one of the following:
+    The type of data contained within this stream. Must be one of the following:
+    - `NUMBER`: numerical data, such as `12.0`
+    - `STRING`: string data, such as categorical data `"OK"`, `"WARNING"`, etc.
+    - `BOOLEAN`: boolean data, such as `true` and `false`.
+
+  - `name`: string
+
+    A name by which to refer to the data stream. Utilized in the legend.
+  
+  - `aggregates`: Object
+    
+    (Optional) A map of resolution (in milliseconds) to its associated data points. The `resolution` in the `datastream`
+    is a key in the `aggregates` object and must match to one of them in order to visualize the data stream on the visualizations.
+
+    - `resolution` (key): number
+      The resolution (in milliseconds) of the data.
+      
+      - data point(value): DataPoint[]
+        The data points that are associated to this resolution.
+        
+  - `detailedName`: string
+
+    (Optional) A more detailed name for the associated data stream, shown while hovering over the data stream information within the legend.
+
+  - `unit`: string
+
+    (Optional) The measurement unit of the y-values contained within the associated data stream, e.g. "m/s", "count".
+    Utilized within the legend, etc. to give information about the data.
+
+  - `color`: string
+
+    (Optional) A CSS color string, e.g. "#5e87b5" or "red".
+    
+  - `isLoading`: boolean
+  
+    (Optional) Whether the data stream has never fetched data previously, and is currently fetching data. Defaults to false.
+    
+  - `isRefreshing`: boolean
+  
+     (Optional) Whether the data stream is currently fetching data, regardless of whether it has fetched data previously. Defaults to false.
+     
+  - `error`: string
+  
+    (Optional) A readable human error message if the data source this data stream is associated to has an error.
+  
+  - `associatedDataStreams`: Object[]
+    
+    (Optional) Data streams that are associated alarms of the data streams.
+
+    - `id`: string
+
+      The unique identifier for the data stream that is associated.
+  
+    - `streamType`: string 
+      
+      The data stream type for the associated data stream.
+
+      Must be one of the following:
+
+      - `ALARM`: Alarm data stream type.
+      - `ANOMALY`: Anomaly data stream type.
+      - `ALARM_THRESHOLD`: Alarm threshold stream type. 
+- `dataStreams`: Object[]
+
+  A collection of data streams, each representing a single data set.
+  
+  Each data stream contains the following information:
+
+  - `id`: string
+  
+    A unique identifier for a given data stream.
+  
+  - `data`: Object[]
+
+    Raw data (non-aggregated) for the stream. Note that once `resolution` is greater than 0, then it will switch from
+    reading the data from this `data` property to reading the data from the `aggregates` property.
+  
+    - `x`: Date
+    
+      Represents the point in time at which the data point was measured.
+    
+    - `y`: number
+    
+      The value measured within the data point.
+  
+  - `resolution`: number
+  
+    The resolution, in milliseconds, at which the data should be aggregated.
+    To display raw data, set the resolution to 0.
+    
+  - `dataType`: string
+  
+    The type of data contained within this stream. Must be one of the following:
     - `NUMBER`: numerical data, such as `12.0`
     - `STRING`: string data, such as categorical data `"OK"`, `"WARNING"`, etc.
     - `BOOLEAN`: boolean data, such as `true` and `false`.
