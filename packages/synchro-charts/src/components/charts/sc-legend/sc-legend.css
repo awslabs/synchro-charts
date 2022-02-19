@@ -1,6 +1,7 @@
 sc-legend .legend-container {
   display: flex;
   flex-wrap: wrap;
+  font-size: var(--font-size-1);
   overflow-y: scroll;
   overflow-x: hidden;
 

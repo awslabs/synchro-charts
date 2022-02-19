@@ -35,7 +35,7 @@ export class LineChartViewportChange {
 
   render() {
     return (
-      <div>
+      <div class="synchro-chart-tests">
         <button id="toggle-narrow-view-port" onClick={() => this.setViewPort(NARROW_VIEWPORT)}>
           use narrow viewport
         </button>

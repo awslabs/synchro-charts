@@ -35,7 +35,7 @@ export class ScWebglBarChartStartFromZero {
 
   render() {
     return (
-      <div>
+      <div class="synchro-chart-tests">
         <button id="change-data-direction" onClick={this.changeDataDirection}>
           Change Data Direction
         </button>

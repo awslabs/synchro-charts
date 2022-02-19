@@ -18,7 +18,7 @@ const EDIT_MODE_STYLE: StencilCSSProperty = {
   top: '-2px',
 };
 const VIEW_MODE_STYLE: StencilCSSProperty = {
-  top: '-8px',
+  top: '-11px',
 };
 
 @Component({

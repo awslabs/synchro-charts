@@ -13,7 +13,7 @@ export class ScSizeProviderStandard {
 
   render() {
     return (
-      <div style={{ width: '2000px', height: '2000px' }}>
+      <div class="synchro-chart-tests" style={{ width: '2000px', height: '2000px' }}>
         <div>
           <button id="shift-right" onClick={this.onShiftRight}>
             Shift Right

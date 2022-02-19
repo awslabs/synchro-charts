@@ -2,11 +2,6 @@ import { SECOND_IN_MS } from '../../src/utils/time';
 
 const root = '/tests/sc-webgl-chart';
 
-const snapshotOptions = {
-  failureThreshold: 1.2,
-  failureThresholdType: 'percent',
-};
-
 const addChartToFront = (cy: Cypress.cy) => {
   cy.get('#add-chart-to-front').click();
 };
@@ -39,7 +34,7 @@ it('renders data on canvas', () => {
   addChartToFront(cy);
   cy.get('.data-container').should('be.visible');
 
-  cy.matchImageSnapshotOnCI(snapshotOptions);
+  cy.matchImageSnapshotOnCI();
 });
 
 it('shifts visualized data to the right', () => {
@@ -50,7 +45,7 @@ it('shifts visualized data to the right', () => {
 
   cy.wait(0.5 * SECOND_IN_MS);
 
-  cy.matchImageSnapshotOnCI(snapshotOptions);
+  cy.matchImageSnapshotOnCI();
 });
 
 it('shifts visualized data to the left', () => {
@@ -62,7 +57,7 @@ it('shifts visualized data to the left', () => {
 
   cy.wait(0.5 * SECOND_IN_MS);
 
-  cy.matchImageSnapshotOnCI(snapshotOptions);
+  cy.matchImageSnapshotOnCI();
 });
 
 it('clears canvas when a single chart is unmounted', () => {
@@ -74,7 +69,7 @@ it('clears canvas when a single chart is unmounted', () => {
 
   cy.wait(0.5 * SECOND_IN_MS);
 
-  cy.matchImageSnapshotOnCI(snapshotOptions);
+  cy.matchImageSnapshotOnCI();
 });
 
 it('with two charts, removing the back chart should clean up the canvas', () => {
@@ -86,7 +81,7 @@ it('with two charts, removing the back chart should clean up the canvas', () => 
 
   cy.wait(0.5 * SECOND_IN_MS);
 
-  cy.matchImageSnapshotOnCI(snapshotOptions);
+  cy.matchImageSnapshotOnCI();
 });
 
 it('with two charts, removing the front chart should clean up the canvas', () => {
@@ -98,5 +93,5 @@ it('with two charts, removing the front chart should clean up the canvas', () =>
 
   cy.wait(0.5 * SECOND_IN_MS);
 
-  cy.matchImageSnapshotOnCI(snapshotOptions);
+  cy.matchImageSnapshotOnCI();
 });

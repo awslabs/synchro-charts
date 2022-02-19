@@ -10,10 +10,6 @@ export const routes = [
     component: 'testing-ground',
   },
   {
-    url: '/demo',
-    component: 'synchro-demo',
-  },
-  {
     url: '/tests/kpi',
     component: 'sc-kpi-standard',
   },

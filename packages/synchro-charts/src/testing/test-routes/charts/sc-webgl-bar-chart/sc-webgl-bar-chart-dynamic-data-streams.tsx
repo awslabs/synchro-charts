@@ -76,7 +76,7 @@ export class ScWebglBarChartDynamicDataStreams {
 
   render() {
     return (
-      <div>
+      <div class="synchro-chart-tests">
         <button id="add-stream" onClick={this.addStream}>
           Add Stream
         </button>

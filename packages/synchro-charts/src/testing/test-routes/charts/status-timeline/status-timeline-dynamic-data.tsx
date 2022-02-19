@@ -35,7 +35,7 @@ export class StatusTimelineDynamicData {
 
   render() {
     return (
-      <div>
+      <div class="synchro-chart-tests">
         <button id="add-data-point" onClick={this.addDataPoint}>
           Add Data Point
         </button>
