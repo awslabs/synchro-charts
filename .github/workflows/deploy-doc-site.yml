@@ -1,5 +1,8 @@
 name: Deploy Documentation Site
-on: [push]
+on:
+  push:
+    branches:
+      - main
 jobs:
   deploy-documentation-site:
     runs-on: ubuntu-20.04
