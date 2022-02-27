@@ -78,7 +78,7 @@ describe('syncing managers', () => {
     expect(manager2.updateViewPort).toBeCalledWith({ start: START, end: END });
   });
 
-  it('does not update any managers when propagate event is true', () => {
+  it('always updates any managers when syncViewPortGroup is called', () => {
     const groups = new ViewportHandler();
 
     const START = new Date(2000, 0, 0);
@@ -92,10 +92,10 @@ describe('syncing managers', () => {
     groups.add({ manager: manager2 });
 
     /** Sync the view port group of the first manager */
-    groups.syncViewPortGroup({ start: START, end: END, manager: manager1, preventPropagation: true });
+    groups.syncViewPortGroup({ start: START, end: END, manager: manager1 });
 
-    expect(manager1.updateViewPort).not.toBeCalled();
-    expect(manager2.updateViewPort).not.toBeCalled();
+    expect(manager1.updateViewPort).toBeCalled();
+    expect(manager2.updateViewPort).toBeCalled();
   });
 
   it('does not update manager not in same view port group', () => {

@@ -285,7 +285,6 @@ export class ScWebglBaseChart {
           end: this.end,
           manager: this.scene,
           duration: this.activeViewPort().duration,
-          preventPropagation: true,
         });
         this.updateAndRegisterChartScene({
           hasDataChanged: false,

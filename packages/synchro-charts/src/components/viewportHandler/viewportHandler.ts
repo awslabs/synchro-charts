@@ -135,7 +135,6 @@ export class ViewportHandler<T extends ViewPortManager> {
    * Sync all viewports sharing the group of the given chart scene, to have their viewport being at `start`,
    * and ending at `end`.
    *
-   * preventPropagation - if true, then we sync all viewports to the provided viewport. Otherwise it only updates the handlers internal state.
    * manager - the manager which is the source of this syncing
    */
   syncViewPortGroup = ({
@@ -143,13 +142,11 @@ export class ViewportHandler<T extends ViewPortManager> {
     end,
     manager,
     duration,
-    preventPropagation = false,
   }: {
     start: Date;
     end: Date;
     manager: T;
     duration?: number;
-    preventPropagation?: boolean;
   }) => {
     const key = manager.viewportGroup ? manager.viewportGroup : manager.id;
     // Either you are in a group or you are a single chart
@@ -159,24 +156,22 @@ export class ViewportHandler<T extends ViewPortManager> {
       this.stopTick({ manager, viewportGroup: manager.viewportGroup });
     }
 
-    if (!preventPropagation) {
-      const updateViewPort = (v: T) => {
-        v.updateViewPort({ start, end, duration });
-      };
+    const updateViewPort = (v: T) => {
+      v.updateViewPort({ start, end, duration });
+    };
 
-      if (manager.viewportGroup) {
-        /** Get all of the groups which belong within the viewport group */
-        const managers = this.viewportManagers.filter(({ viewportGroup: group }) => manager.viewportGroup === group);
+    if (manager.viewportGroup) {
+      /** Get all of the groups which belong within the viewport group */
+      const managers = this.viewportManagers.filter(({ viewportGroup: group }) => manager.viewportGroup === group);
 
-        /**  Sync all of the chart scenes within the viewport group. */
-        managers.forEach(updateViewPort);
-      } else {
-        /**
-         * No view port group defined, so only update the camera associated with the
-         * scene which emitted the event (no syncing of other charts.)
-         */
-        updateViewPort(manager);
-      }
+      /**  Sync all of the chart scenes within the viewport group. */
+      managers.forEach(updateViewPort);
+    } else {
+      /**
+       * No view port group defined, so only update the camera associated with the
+       * scene which emitted the event (no syncing of other charts.)
+       */
+      updateViewPort(manager);
     }
   };
 }
