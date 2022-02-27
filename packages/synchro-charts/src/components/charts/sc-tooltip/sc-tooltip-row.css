@@ -1,4 +1,6 @@
 sc-tooltip-row {
+  font-size: var(--font-size-1);
+
   --bar-size: 18px;
 }
 

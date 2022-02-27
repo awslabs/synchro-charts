@@ -49,7 +49,7 @@ export class ScWebglBarChartFastViewport {
 
   render() {
     return (
-      <div>
+      <div class="synchro-chart-tests">
         <button id="change-viewport" onClick={this.changeViewport}>
           Change Viewport
         </button>

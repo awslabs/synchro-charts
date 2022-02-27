@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2.0.0 (2022-2-21)
+
+### Bug Fixes
+
+* Major css fix, this release removes font-size for the HTML element as it fixes the base unit for the styles which may requires consumers to override this rule.
+
 ## 1.1.0 (2022-2-13)
 
 ### Bug Fixes

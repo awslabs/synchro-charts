@@ -11,7 +11,7 @@ sc-legend-row {
 
 sc-legend-row .legend-row-container {
   display: flex;
-  margin-left: 0.8rem;
+  margin-left: 8px;
 }
 
 sc-legend-row .legend-value {

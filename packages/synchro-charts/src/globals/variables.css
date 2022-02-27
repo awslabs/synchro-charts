@@ -20,13 +20,14 @@
   --font-weight-regular: 400;
   --font-weight-normal: 500;
   --font-weight-bold: 700;
-  --font-size-6: 44px;
-  --font-size-5: 28px;
-  --font-size-4: 24px;
-  --font-size-3: 18px;
-  --font-size-2: 16px;
-  --font-size-1: 14px;
-  --font-size-0: 12px;
+  --font-size-base: 10px;
+  --font-size-6: calc(var(--font-size-base) * 4.4);
+  --font-size-5: calc(var(--font-size-base) * 2.8);
+  --font-size-4: calc(var(--font-size-base) * 2.4);
+  --font-size-3: calc(var(--font-size-base) * 1.8);
+  --font-size-2: calc(var(--font-size-base) * 1.6);
+  --font-size-1: calc(var(--font-size-base) * 1.4);
+  --font-size-0: calc(var(--font-size-base) * 1.2);
   --line-height-6: 50px;
   --line-height-5: 40px;
   --line-height-4: 20px;
@@ -34,11 +35,6 @@
   --line-height-2: 18px;
   --line-height-1: 16px;
   --line-height-0: 14px;
-
-  /** DO NOT USE **/
-  --font-size-base: 1.4rem;
-  --font-size-small: calc(var(--font-size-base) * 0.875);
-  --font-size-large: calc(var(--font-size-base) * 1.25);
 
   /* Colors */
   --polaris-light-gray: #687078;

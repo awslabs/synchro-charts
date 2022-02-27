@@ -144,7 +144,7 @@ export class ScWebglChartAnnotationRescaling {
 
   render() {
     return (
-      <div style={{ width: '1000px', height: '1000px' }}>
+      <div class="synchro-chart-tests" style={{ width: '1000px', height: '1000px' }}>
         <div>
           <button id="change-editable" onClick={this.onEditableChange}>
             Change Editable

@@ -1,5 +1,10 @@
 import { STATUS_TIMELINE_OVERLAY_SELECTOR, waitForChart } from '../../src/testing/selectors';
 
+const defaultSnapshotOptions = {
+  failureThreshold: 1.2,
+  failureThresholdType: 'percent',
+};
+
 export const addChartCommands = () => {
   Cypress.Commands.add('waitForChart', () => waitForChart(cy));
 
@@ -14,9 +19,9 @@ export const addChartCommands = () => {
     (subject, nameOrOptions?: string | Object) => {
       if (!Cypress.env('disableSnapshotTests')) {
         if (subject) {
-          cy.wrap(subject).matchImageSnapshot(nameOrOptions);
+          cy.wrap(subject).matchImageSnapshot(nameOrOptions || defaultSnapshotOptions);
         } else {
-          cy.matchImageSnapshot(nameOrOptions);
+          cy.matchImageSnapshot(nameOrOptions || defaultSnapshotOptions);
         }
       }
     }

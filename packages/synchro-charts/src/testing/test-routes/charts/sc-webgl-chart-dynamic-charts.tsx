@@ -110,7 +110,7 @@ export class ScWebglChartStandard {
 
   render() {
     return (
-      <div>
+      <div class="synchro-chart-tests">
         <button id="shift-right" onClick={this.shiftRight}>
           Shift Right
         </button>
