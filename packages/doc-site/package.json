@@ -10,10 +10,10 @@
     "@synchro-charts/react": "^2.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "^3.4.4"
+    "react-scripts": "^5.0.0"
   },
   "devDependencies": {
-    "react-styleguidist": "^11.1.6"
+    "react-styleguidist": "^11.2.0"
   },
   "scripts": {
     "start": "styleguidist server",
