@@ -26,12 +26,16 @@ export type StreamAssociation = {
 /**
  * Utilized for the `table` component, to map data-streams to cells.
  */
+
+// An undefined cell will be empty.
+export type Cell = DataStreamId | { content: string } | { dataStreamId: DataStreamId } | undefined;
+
 export type TableColumn = {
   header: string; // table header
   // The rows which make up this column, the first entry being the first index of the array.
   // If multiple columns are placed together with different number of rows, the rows 'below' the last row
   // on the 'shorter' columns will all just be empty cells.
-  rows: (DataStreamId | undefined)[]; // undefined rows will be 'empty' grid cells
+  rows: Cell[];
 };
 
 /**

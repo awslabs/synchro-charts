@@ -12,7 +12,7 @@ import { DATA_ALIGNMENT, StatusIcon } from "./components/charts/common/constants
 import { POINT_TYPE } from "./components/charts/sc-webgl-base-chart/activePoints";
 import { RectScrollFixed } from "./utils/types";
 import { LabelsConfig } from "./components/common/types";
-import { Cell, Row } from "./components/sc-table/constructTableData";
+import { DisplayCell, Row } from "./components/sc-table/constructTableData";
 import { ChartSceneCreator, ChartSceneUpdater } from "./components/charts/sc-webgl-base-chart/types";
 import { RenderCell } from "./components/sc-widget-grid/types";
 export namespace Components {
@@ -364,7 +364,7 @@ export namespace Components {
         "rows": Row[];
     }
     interface ScTableCell {
-        "cell": Cell | undefined;
+        "cell": DisplayCell | undefined;
     }
     interface ScThresholdLegend {
         "thresholds": Threshold[];
@@ -1771,7 +1771,7 @@ declare namespace LocalJSX {
         "rows": Row[];
     }
     interface ScTableCell {
-        "cell": Cell | undefined;
+        "cell": DisplayCell | undefined;
     }
     interface ScThresholdLegend {
         "thresholds": Threshold[];

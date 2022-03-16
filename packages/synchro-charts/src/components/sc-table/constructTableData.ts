@@ -1,42 +1,67 @@
-import { DataStream, Primitive, TableColumn } from '../../utils/dataTypes';
+import { Cell, DataStream, TableColumn } from '../../utils/dataTypes';
 import { breachedThreshold } from '../charts/common/annotations/breachedThreshold';
 import { Threshold } from '../charts/common/types';
 import { StatusIcon } from '../charts/common/constants';
 import { getDataPoints } from '../../utils/getDataPoints';
 
-export interface Cell {
-  dataStream?: DataStream<Primitive>;
+export interface DisplayCell {
+  error?: string;
+  isLoading?: boolean;
+  content?: string;
   color?: string;
   icon?: StatusIcon;
 }
 
 // A collection of cells across each column header
 export interface Row {
-  [columnHeader: string]: Cell | undefined;
+  [columnHeader: string]: DisplayCell | undefined;
 }
 
-export const cell = (
+const getDataStreamIdFromCell = (cell: Cell): string | undefined => {
+  if (typeof cell === 'string') {
+    return cell;
+  }
+  return cell != null && 'dataStreamId' in cell ? cell.dataStreamId : undefined;
+};
+
+const getValueFromCell = (cell: Cell, dataStreams: DataStream[]): number | string | undefined => {
+  const dataStreamId = getDataStreamIdFromCell(cell);
+  if (dataStreamId != null) {
+    const stream = dataStreams.find(({ id }) => id === dataStreamId);
+    const points = stream ? getDataPoints(stream, stream.resolution) : [];
+    return points[points.length - 1] && points[points.length - 1].y;
+  }
+  return typeof cell === 'object' && 'content' in cell ? cell.content : undefined;
+};
+
+export const getDisplayCell = (
   thresholds: Threshold[],
   date: Date,
   dataStreams: DataStream[],
-  dataStreamId: string | undefined
-): Cell => {
-  const stream = dataStreams.find(({ id }) => id === dataStreamId);
-  const points = stream ? getDataPoints(stream, stream.resolution) : [];
-  const value = points[points.length - 1] && points[points.length - 1].y;
+  cell: Cell
+): DisplayCell => {
+  const value = getValueFromCell(cell, dataStreams);
+  const dataStreamId = getDataStreamIdFromCell(cell);
+  const dataStream = dataStreams.find(({ id }) => dataStreamId === id);
 
   const threshold =
-    stream &&
+    dataStream &&
     breachedThreshold({
       value,
       date,
       dataStreams,
-      dataStream: stream,
+      dataStream,
       thresholds,
     });
 
   const { color, icon } = threshold || {};
-  return { dataStream: stream, color, icon };
+  return {
+    content: value != null ? value.toString() : undefined,
+    color,
+    icon,
+    error: dataStream != null ? dataStream.error : undefined,
+    isLoading: dataStream != null ? dataStream.isLoading : undefined,
+  };
 };
 
 /**
@@ -57,11 +82,10 @@ export const constructTableData = ({
   const table: Row[] = [];
 
   // eslint-disable-next-line no-plusplus
-  for (let r = 0; r < numRows; r++) {
+  for (let rowIndex = 0; rowIndex < numRows; rowIndex++) {
     const row: Row = {};
     tableColumns.forEach(column => {
-      const dataStreamId = column.rows[r] || undefined;
-      row[column.header] = cell(thresholds, date, dataStreams, dataStreamId);
+      row[column.header] = getDisplayCell(thresholds, date, dataStreams, column.rows[rowIndex]);
     });
     table.push(row);
   }

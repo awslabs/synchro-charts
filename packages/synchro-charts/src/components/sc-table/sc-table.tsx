@@ -3,7 +3,7 @@ import { DataStream, MessageOverrides, MinimalViewPortConfig, TableColumn } from
 import { isThreshold } from '../charts/common/annotations/utils';
 import { Trend } from '../charts/common/trends/types';
 import { Annotations, ChartConfig, Threshold } from '../charts/common/types';
-import { constructTableData, Row } from './constructTableData';
+import { constructTableData } from './constructTableData';
 import { viewportEndDate, viewportStartDate } from '../../utils/viewPort';
 import { isMinimalStaticViewport } from '../../utils/predicates';
 import { parseDuration } from '../../utils/time';
@@ -72,13 +72,13 @@ export class ScTable implements ChartConfig {
     this.annotations && this.annotations.y ? this.annotations.y.filter(isThreshold) : [];
 
   render() {
-    const rows: Row[] = constructTableData({
+    const isEnabled = this.duration != null;
+    const rows = constructTableData({
       tableColumns: this.tableColumns,
       dataStreams: this.dataStreams,
       thresholds: this.getThresholds(),
       date: this.end,
     });
-    const isEnabled = this.duration != null;
 
     return (
       <sc-table-base

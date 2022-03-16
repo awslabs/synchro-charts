@@ -14,14 +14,13 @@ export const ScTableRows = ({
 }) => {
   return rows.length ? (
     <tbody>
-      {rows.map(row => (
+      {rows.map((row, j) => (
         <tr>
           {columns.map((column, i) => {
-            const cell = row[column.header];
-            const key = cell && cell.dataStream ? `${cell.dataStream.id}-${i}` : `empty-${i}`;
+            const key = `${i}-${j}`;
             return (
-              <td key={key} id={`cell-${column.header}`}>
-                <sc-table-cell cell={cell} />
+              <td key={key} id={`cell-${column.header}-${i}-${j}`}>
+                <sc-table-cell cell={row[column.header]} />
               </td>
             );
           })}

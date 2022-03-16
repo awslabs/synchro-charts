@@ -5,38 +5,19 @@ import { CustomHTMLElement } from '../../../utils/types';
 import { ScTableBase } from './sc-table-base';
 import { update } from '../../charts/common/tests/merge';
 import { Row } from '../constructTableData';
-import { DataType } from '../../../utils/dataConstants';
 import { StatusIcon } from '../../charts/common/constants';
 
 // this is mock output that get thrown out of `constructTableData` utility
 const mockRows: Row[] = [
   {
     Rule: {
-      dataStream: {
-        id: 'rule-cell-id-1',
-        name: 'rule',
-        data: [{ x: new Date('1999-12-31T08:00:00.000Z').getTime(), y: 'y < 30' }],
-        resolution: 0,
-        dataType: DataType.STRING,
-      },
+      content: 'y < 30',
     },
     Severity: {
-      dataStream: {
-        id: 'severity-cell-id-1',
-        name: 'severity',
-        data: [{ x: new Date('1999-12-31T08:00:00.000Z').getTime(), y: 3 }],
-        resolution: 0,
-        dataType: DataType.NUMBER,
-      },
+      content: '3',
     },
     Alarm: {
-      dataStream: {
-        id: 'alarm-cell-id-1',
-        name: 'alarm',
-        data: [{ x: new Date('1999-12-31T08:00:00.000Z').getTime(), y: 'NORMAL' }],
-        resolution: 0,
-        dataType: DataType.NUMBER,
-      },
+      content: 'NORMAL',
       color: 'green',
       icon: StatusIcon.NORMAL,
     },

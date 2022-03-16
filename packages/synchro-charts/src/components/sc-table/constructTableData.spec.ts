@@ -1,4 +1,4 @@
-import { constructTableData, cell, formatLiveModeOnlyMessage } from './constructTableData';
+import { constructTableData, formatLiveModeOnlyMessage, getDisplayCell } from './constructTableData';
 import { DataPoint, DataStream, TableColumn } from '../../utils/dataTypes';
 import { Threshold } from '../charts/common/types';
 import { DataType } from '../../utils/dataConstants';
@@ -74,158 +74,233 @@ const tableData = constructTableData({
 
 const columnHeader = Object.values(tableColumn).map(el => el.header);
 
-it('construct Table data', () => {
-  expect(tableData).toHaveLength(1);
-  expect(Object.keys(tableData[0])).toHaveLength(3);
-  expect(tableData[0]).toHaveProperty(columnHeader[0]);
-  expect(tableData[0]).toHaveProperty(columnHeader[1]);
-  expect(tableData[0]).toHaveProperty(columnHeader[2]);
-  expect(Object.values(tableData[0])).toHaveLength(3);
-  expect(tableData[0].Rule).toHaveProperty('dataStream', DATA_STREAMS[0]);
-  expect(tableData[0].Rule).toHaveProperty('color', undefined);
-  expect(tableData[0].Rule).toHaveProperty('icon', undefined);
-});
-
-it('construct Table data with mismatching rows', () => {
-  const rows = constructTableData({
-    tableColumns: [
-      { header: 'Rule', rows: [] },
-      { header: 'Severity', rows: [undefined, undefined] },
-    ],
-    dataStreams: [],
-    thresholds: [],
-    date: new Date(),
+describe('constructTableData', () => {
+  it('construct Table data', () => {
+    expect(tableData).toHaveLength(1);
+    expect(Object.keys(tableData[0])).toHaveLength(3);
+    expect(tableData[0]).toHaveProperty(columnHeader[0]);
+    expect(tableData[0]).toHaveProperty(columnHeader[1]);
+    expect(tableData[0]).toHaveProperty(columnHeader[2]);
+    expect(Object.values(tableData[0])).toHaveLength(3);
+    expect(tableData[0].Rule).toHaveProperty('content', 'y < 30');
+    expect(tableData[0].Rule).toHaveProperty('color', undefined);
+    expect(tableData[0].Rule).toHaveProperty('icon', undefined);
   });
 
-  expect(rows).toHaveLength(2); // second column has two rows
-  expect(rows).toEqual([
-    { Rule: { dataStream: undefined }, Severity: { dataStream: undefined } },
-    { Rule: { dataStream: undefined }, Severity: { dataStream: undefined } },
-  ]);
-});
+  it('construct Table data with mismatching rows', () => {
+    const rows = constructTableData({
+      tableColumns: [
+        { header: 'Rule', rows: [] },
+        { header: 'Severity', rows: [undefined, undefined] },
+      ],
+      dataStreams: [],
+      thresholds: [],
+      date: new Date(),
+    });
 
-it('construct Table data with no rows', () => {
-  const rows = constructTableData({
-    tableColumns: [
-      { header: 'Rule', rows: [] },
-      { header: 'Severity', rows: [] },
-      { header: 'Alarm', rows: [] },
-    ],
-    dataStreams: [],
-    thresholds: [],
-    date: new Date(),
+    expect(rows).toHaveLength(2); // second column has two rows
+    expect(rows).toEqual([
+      { Rule: { dataStream: undefined }, Severity: { dataStream: undefined } },
+      { Rule: { dataStream: undefined }, Severity: { dataStream: undefined } },
+    ]);
   });
 
-  expect(rows).toBeEmpty();
-});
+  it('construct Table data with no rows', () => {
+    const rows = constructTableData({
+      tableColumns: [
+        { header: 'Rule', rows: [] },
+        { header: 'Severity', rows: [] },
+        { header: 'Alarm', rows: [] },
+      ],
+      dataStreams: [],
+      thresholds: [],
+      date: new Date(),
+    });
 
-it('construct Table data with no data but has data streams', () => {
-  const tableMock = constructTableData({
-    tableColumns: [
-      { header: 'Rule', rows: ['rule-cell-id-1'] },
-      { header: 'Severity', rows: ['invalid-stream-id'] }, // invalid stream id
-      { header: 'Alarm', rows: ['alarm-cell-id-1'] },
-    ],
-    dataStreams: DATA_STREAMS.map(s => ({ ...s, data: [] })),
-    thresholds: [],
-    date: new Date(),
+    expect(rows).toBeEmpty();
   });
 
-  expect(tableMock).toHaveLength(1);
+  it('creates rows from hard coded content in table columns', () => {
+    const rows = constructTableData({
+      tableColumns: [
+        {
+          header: 'column1',
+          rows: [{ content: 'cell1' }, { content: 'cell2' }],
+        },
+      ],
+      dataStreams: [],
+      thresholds: [],
+      date: new Date(),
+    });
 
-  expect(tableMock[0]).toEqual(
-    expect.objectContaining({
-      Rule: expect.objectContaining({
-        dataStream: expect.objectContaining({
-          data: [],
+    expect(rows).toEqual([
+      {
+        column1: {
+          content: 'cell1',
+          error: undefined,
+          isLoading: undefined,
+          icon: undefined,
+          color: undefined,
+        },
+      },
+      {
+        column1: {
+          content: 'cell2',
+          error: undefined,
+          isLoading: undefined,
+          icon: undefined,
+          color: undefined,
+        },
+      },
+    ]);
+  });
+
+  it('returns cell with error when data stream contains error', () => {
+    const rows = constructTableData({
+      tableColumns: [{ header: 'column', rows: ['some-id'] }],
+      dataStreams: [
+        { id: 'some-id', resolution: 0, name: 'data-stream', data: [], error: 'my-error', dataType: DataType.STRING },
+      ],
+      thresholds: [],
+      date: new Date(),
+    });
+
+    expect(rows[0]).toEqual(
+      expect.objectContaining({
+        column: expect.objectContaining({
+          error: 'my-error',
         }),
-      }),
-      Severity: expect.objectContaining({
-        dataStream: undefined,
-      }),
-      Alarm: expect.objectContaining({
-        dataStream: expect.objectContaining({
-          data: [],
+      })
+    );
+  });
+
+  it('returns cell as loading when data stream is loading', () => {
+    const rows = constructTableData({
+      tableColumns: [{ header: 'column', rows: ['some-id'] }],
+      dataStreams: [
+        { id: 'some-id', resolution: 0, name: 'data-stream', data: [], isLoading: true, dataType: DataType.STRING },
+      ],
+      thresholds: [],
+      date: new Date(),
+    });
+
+    expect(rows[0]).toEqual(
+      expect.objectContaining({
+        column: expect.objectContaining({
+          isLoading: true,
         }),
-      }),
-    })
-  );
-});
-
-it('construct Table data with missing row dataStream', () => {
-  const tableMock = constructTableData({
-    tableColumns: [
-      { header: 'Rule', rows: ['rule-cell-id-1'] },
-      { header: 'Severity', rows: [''] },
-      { header: 'Alarm', rows: ['alarm-cell-id-1'] },
-    ],
-    dataStreams: DATA_STREAMS,
-    thresholds: [],
-    date: new Date(),
-  });
-  expect(tableMock).toHaveLength(1);
-  expect(Object.keys(tableMock[0])).toHaveLength(3);
-  expect(tableMock[0]).toHaveProperty(columnHeader[0]);
-  expect(tableMock[0]).toHaveProperty(columnHeader[1]);
-  expect(tableMock[0]).toHaveProperty(columnHeader[2]);
-  expect(Object.values(tableMock[0])).toHaveLength(3);
-  expect(tableMock[0].Rule).toHaveProperty('dataStream', DATA_STREAMS[0]);
-  expect(tableMock[0].Rule).toHaveProperty('color', undefined);
-  expect(tableMock[0].Rule).toHaveProperty('icon', undefined);
-  expect(tableMock[0].Severity).toBeEmpty();
-});
-
-it('construct table with no datastream', () => {
-  const tableMock = constructTableData({
-    tableColumns: tableColumn,
-    dataStreams: [],
-    thresholds: [],
-    date: new Date(),
+      })
+    );
   });
 
-  expect(tableMock).toHaveLength(1);
-  expect(Object.keys(tableMock[0])).toHaveLength(3);
-  expect(tableMock[0]).toHaveProperty(columnHeader[0]);
-  expect(tableMock[0]).toHaveProperty(columnHeader[1]);
-  expect(tableMock[0]).toHaveProperty(columnHeader[2]);
-  expect(Object.values(tableMock[0])).toHaveLength(3);
-  expect(tableMock[0].Rule).toBeEmpty();
-  expect(tableMock[0].Severity).toBeEmpty();
-  expect(tableMock[0].Alarm).toBeEmpty();
+  it('construct Table data with no data but has data streams', () => {
+    const rows = constructTableData({
+      tableColumns: [
+        { header: 'Rule', rows: ['rule-cell-id-1'] },
+        { header: 'Severity', rows: ['invalid-stream-id'] }, // invalid stream id
+        { header: 'Alarm', rows: ['alarm-cell-id-1'] },
+      ],
+      dataStreams: DATA_STREAMS.map(s => ({ ...s, data: [] })),
+      thresholds: [],
+      date: new Date(),
+    });
+
+    expect(rows).toHaveLength(1);
+
+    expect(rows[0]).toEqual(
+      expect.objectContaining({
+        Rule: expect.objectContaining({
+          content: undefined,
+        }),
+        Severity: expect.objectContaining({
+          content: undefined,
+        }),
+        Alarm: expect.objectContaining({
+          content: undefined,
+        }),
+      })
+    );
+  });
+
+  it('construct Table data with missing row dataStream', () => {
+    const rows = constructTableData({
+      tableColumns: [
+        { header: 'Rule', rows: ['rule-cell-id-1'] },
+        { header: 'Severity', rows: [''] },
+        { header: 'Alarm', rows: ['alarm-cell-id-1'] },
+      ],
+      dataStreams: DATA_STREAMS,
+      thresholds: [],
+      date: new Date(),
+    });
+    expect(rows).toHaveLength(1);
+    expect(Object.keys(rows[0])).toHaveLength(3);
+    expect(rows[0]).toHaveProperty(columnHeader[0]);
+    expect(rows[0]).toHaveProperty(columnHeader[1]);
+    expect(rows[0]).toHaveProperty(columnHeader[2]);
+    expect(Object.values(rows[0])).toHaveLength(3);
+    expect(rows[0].Rule).toHaveProperty('content', 'y < 30');
+    expect(rows[0].Rule).toHaveProperty('color', undefined);
+    expect(rows[0].Rule).toHaveProperty('icon', undefined);
+    expect(rows[0].Severity).toBeEmpty();
+  });
+
+  it('construct table with no datastream', () => {
+    const rows = constructTableData({
+      tableColumns: tableColumn,
+      dataStreams: [],
+      thresholds: [],
+      date: new Date(),
+    });
+
+    expect(rows).toHaveLength(1);
+    expect(Object.keys(rows[0])).toHaveLength(3);
+    expect(rows[0]).toHaveProperty(columnHeader[0]);
+    expect(rows[0]).toHaveProperty(columnHeader[1]);
+    expect(rows[0]).toHaveProperty(columnHeader[2]);
+    expect(Object.values(rows[0])).toHaveLength(3);
+    expect(rows[0].Rule).toBeEmpty();
+    expect(rows[0].Severity).toBeEmpty();
+    expect(rows[0].Alarm).toBeEmpty();
+  });
 });
 
-it('construct table cell use latest value for threshold breach', () => {
-  const tableCell = cell([ACTIVE_THRESHOLD, DISABLED_THRESHOLD], new Date(), [STREAM], STREAM.id);
+describe('getDisplayCell', () => {
+  it('construct table cell use latest value for threshold breach', () => {
+    const tableCell = getDisplayCell([ACTIVE_THRESHOLD, DISABLED_THRESHOLD], new Date(), [STREAM], STREAM.id);
 
-  expect(tableCell.color).toEqual(DISABLED_THRESHOLD.color);
+    expect(tableCell.color).toEqual(DISABLED_THRESHOLD.color);
 
-  const LATEST_POINT: DataPoint<string> = {
-    x: new Date(2000, 0, 1).getTime(),
-    y: 'Active',
-  };
-  const moreRecentDataPoint = cell(
-    [ACTIVE_THRESHOLD, DISABLED_THRESHOLD],
-    new Date(),
-    [{ ...STREAM, data: [...STREAM.data, LATEST_POINT] }],
-    STREAM.id
-  );
+    const LATEST_POINT: DataPoint<string> = {
+      x: new Date(2000, 0, 1).getTime(),
+      y: 'Active',
+    };
+    const moreRecentDataPoint = getDisplayCell(
+      [ACTIVE_THRESHOLD, DISABLED_THRESHOLD],
+      new Date(),
+      [{ ...STREAM, data: [...STREAM.data, LATEST_POINT] }],
+      STREAM.id
+    );
 
-  expect(moreRecentDataPoint.color).toEqual(ACTIVE_THRESHOLD.color);
+    expect(moreRecentDataPoint.color).toEqual(ACTIVE_THRESHOLD.color);
+  });
 });
 
-it('formatLiveModeOnlyMessage with multiple sentence makes first sentence header', () => {
-  const HEADER = 'Header';
-  const SUB_HEADER = 'Subheader.';
-  const { msgHeader, msgSubHeader } = formatLiveModeOnlyMessage(`${HEADER}. ${SUB_HEADER}`);
+describe('formatLiveModeOnlyMessage', () => {
+  it('returns first sentance as header when provided multiple sentances', () => {
+    const FIRST_SENTANCE = 'Header';
+    const SECOND_SENTANCE = 'sub-header';
+    const { msgHeader, msgSubHeader } = formatLiveModeOnlyMessage(`${FIRST_SENTANCE}. ${SECOND_SENTANCE}`);
 
-  expect(msgHeader).toEqual(HEADER);
-  expect(msgSubHeader).toEqual(SUB_HEADER);
-});
+    expect(msgHeader).toEqual(FIRST_SENTANCE);
+    expect(msgSubHeader).toEqual(SECOND_SENTANCE);
+  });
 
-it('formatLiveModeOnlyMessage with one sentence makes it header', () => {
-  const HEADER = 'Header';
-  const { msgHeader, msgSubHeader } = formatLiveModeOnlyMessage(`${HEADER}`);
+  it('returns no sub header when only provided one sentance', () => {
+    const HEADER = 'Header';
+    const { msgHeader, msgSubHeader } = formatLiveModeOnlyMessage(`${HEADER}`);
 
-  expect(msgHeader).toEqual(HEADER);
-  expect(msgSubHeader).toBeEmpty();
+    expect(msgHeader).toEqual(HEADER);
+    expect(msgSubHeader).toBeEmpty();
+  });
 });
