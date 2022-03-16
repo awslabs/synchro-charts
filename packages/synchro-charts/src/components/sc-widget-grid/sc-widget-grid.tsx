@@ -153,7 +153,7 @@ export class ScWidgetGrid implements ChartConfig {
         start: this.start,
         end: this.end,
       },
-      dataStreams: this.rawData(),
+      dataStreams: this.dataStreams,
       selectedDate: this.end,
       allowMultipleDates: true,
       dataAlignment: DATA_ALIGNMENT.EITHER,
@@ -167,12 +167,6 @@ export class ScWidgetGrid implements ChartConfig {
       dataStream,
       thresholds: getThresholds(this.annotations),
     });
-
-  /**
-   * return all the raw data, that is, data that has no form of aggregation ran upon it. The data represents some
-   * measurement, at a given point in time.
-   */
-  rawData = (): DataStream[] => this.dataStreams.filter(({ resolution }) => resolution === 0);
 
   render() {
     const isEnabled = this.duration != null;
@@ -205,7 +199,7 @@ export class ScWidgetGrid implements ChartConfig {
             const threshold =
               pointToEvaluateOn && infoToEvaluateOn && this.getBreachedThreshold(pointToEvaluateOn, infoToEvaluateOn);
 
-            const alarmStream = alarm && this.rawData().find(s => s.id === alarm.id);
+            const alarmStream = alarm && this.dataStreams.find(s => s.id === alarm.id);
             const primaryStream = alarm ? alarmStream : property;
 
             return (

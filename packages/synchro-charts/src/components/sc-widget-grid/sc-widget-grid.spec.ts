@@ -186,7 +186,7 @@ describe('updating the viewport', () => {
   });
 });
 
-describe('live time frame', () => {
+describe('viewport with duration', () => {
   const POINT: DataPoint<number> = {
     x: ((DEFAULT_CHART_CONFIG.viewport as MinimalStaticViewport).end as Date).getTime(),
     y: 100,
@@ -392,5 +392,40 @@ describe('historical time frame', () => {
     });
 
     expect(widgetGrid.querySelector('sc-help-tooltip')).not.toBeNull();
+  });
+});
+
+describe('aggregated data', () => {
+  const POINT: DataPoint<number> = {
+    x: ((DEFAULT_CHART_CONFIG.viewport as MinimalStaticViewport).end as Date).getTime(),
+    y: 100,
+  };
+
+  it('displays aggregated data when resolution is available', async () => {
+    const { renderCell } = await widgetGridSpecPage({
+      viewport: DEFAULT_CHART_CONFIG.viewport,
+      dataStreams: [{ ...DATA_STREAM, aggregates: { [MINUTE_IN_MS]: [POINT] }, resolution: MINUTE_IN_MS }],
+    });
+
+    expect(renderCell).toBeCalledTimes(1);
+    expect(renderCell).toBeCalledWith(
+      expect.objectContaining({
+        propertyPoint: POINT,
+      } as Partial<CellOptions>)
+    );
+  });
+
+  it('does not display data when only aggregated data is available and the resolution is 0', async () => {
+    const { renderCell } = await widgetGridSpecPage({
+      viewport: DEFAULT_CHART_CONFIG.viewport,
+      dataStreams: [{ ...DATA_STREAM, aggregates: { [MINUTE_IN_MS]: [POINT] }, resolution: 0 }],
+    });
+
+    expect(renderCell).toBeCalledTimes(1);
+    expect(renderCell).toBeCalledWith(
+      expect.objectContaining({
+        propertyPoint: undefined,
+      } as Partial<CellOptions>)
+    );
   });
 });
