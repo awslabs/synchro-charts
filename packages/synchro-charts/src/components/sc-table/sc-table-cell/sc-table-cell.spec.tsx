@@ -10,6 +10,7 @@ import { NO_VALUE_PRESENT } from '../../common/terms';
 import { ScErrorBadge } from '../../sc-error-badge/sc-error-badge';
 import { ScChartIcon } from '../../charts/chart-icon/sc-chart-icon';
 import { DataType } from '../../../utils/dataConstants';
+import { MINUTE_IN_MS } from '../../../utils/time';
 
 // this is mock output that passed down from `sc-table-base`
 const CELL: Cell = {
@@ -47,6 +48,25 @@ it('renders cell value', async () => {
   const { cell } = await cellSpecPage();
 
   expect(cell.innerHTML).toContain('y &lt; 30');
+});
+
+it('renders aggregated data', async () => {
+  const Y_VALUE = 1232.2;
+  const { cell } = await cellSpecPage({
+    cell: {
+      dataStream: {
+        id: 'some-id',
+        color: 'black',
+        name: 'name',
+        data: [],
+        dataType: DataType.NUMBER,
+        resolution: MINUTE_IN_MS,
+        aggregates: { [MINUTE_IN_MS]: [{ x: Date.now(), y: Y_VALUE }] },
+      },
+    },
+  });
+
+  expect(cell.innerHTML).toContain(Y_VALUE);
 });
 
 it('indicates no data is present when a data stream is present but with no data', async () => {

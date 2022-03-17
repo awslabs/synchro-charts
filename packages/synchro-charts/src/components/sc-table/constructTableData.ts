@@ -2,6 +2,7 @@ import { DataStream, Primitive, TableColumn } from '../../utils/dataTypes';
 import { breachedThreshold } from '../charts/common/annotations/breachedThreshold';
 import { Threshold } from '../charts/common/types';
 import { StatusIcon } from '../charts/common/constants';
+import { getDataPoints } from '../../utils/getDataPoints';
 
 export interface Cell {
   dataStream?: DataStream<Primitive>;
@@ -21,7 +22,8 @@ export const cell = (
   dataStreamId: string | undefined
 ): Cell => {
   const stream = dataStreams.find(({ id }) => id === dataStreamId);
-  const value = stream && stream.data[stream.data.length - 1] && stream.data[stream.data.length - 1].y;
+  const points = stream ? getDataPoints(stream, stream.resolution) : [];
+  const value = points[points.length - 1] && points[points.length - 1].y;
 
   const threshold =
     stream &&

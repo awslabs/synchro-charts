@@ -1,5 +1,5 @@
 import { constructTableData, cell, formatLiveModeOnlyMessage } from './constructTableData';
-import { DataPoint, DataStream, Primitive, TableColumn } from '../../utils/dataTypes';
+import { DataPoint, DataStream, TableColumn } from '../../utils/dataTypes';
 import { Threshold } from '../charts/common/types';
 import { DataType } from '../../utils/dataConstants';
 import { COMPARISON_OPERATOR } from '../charts/common/constants';
@@ -9,7 +9,7 @@ const tableColumn: TableColumn[] = [
   { header: 'Severity', rows: ['severity-cell-id-1'] },
   { header: 'Alarm', rows: ['alarm-cell-id-1'] },
 ];
-const DATA_STREAMS: DataStream<Primitive>[] = [
+const DATA_STREAMS: DataStream[] = [
   {
     id: 'rule-cell-id-1',
     name: 'rule',
