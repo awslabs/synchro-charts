@@ -13,7 +13,6 @@ import {
   SizePositionConfig,
   ViewPort,
   ViewPortConfig,
-  RequestDataFn,
   MessageOverrides,
 } from '../../../utils/dataTypes';
 import {
@@ -40,7 +39,7 @@ import { getNumberAnnotations, isThreshold } from '../common/annotations/utils';
 import { renderTrendLines } from '../common/trends/renderTrendLines';
 import { Trend, TrendResult } from '../common/trends/types';
 import { renderAxis } from './renderAxis';
-import { parseDuration, SECOND_IN_MS } from '../../../utils/time';
+import { parseDuration } from '../../../utils/time';
 import { getAllTrendResults } from '../common/trends/trendAnalysis';
 import { getVisibleData } from '../common/dataFilters';
 import { getYRange } from '../common/getYRange';
@@ -52,12 +51,12 @@ import { StreamType } from '../../../utils/dataConstants';
 import { LEGEND_POSITION } from '../common/constants';
 import { getDataStreamForEventing } from '../common';
 import { attachDraggable } from '../common/annotations/draggableAnnotations';
+import { DATE_RANGE_EMIT_EVENT_MS } from '../../common/constants';
 
 const MIN_WIDTH = 50;
 const MIN_HEIGHT = 50;
 
 const LEGEND_HEIGHT = 100;
-const DATE_RANGE_EMIT_EVENT_MS = 0.5 * SECOND_IN_MS;
 
 const DEFAULT_SHOW_DATA_STREAM_COLOR = true;
 
@@ -107,9 +106,6 @@ export class ScWebglBaseChart {
 
   /** if false, base chart will not display an empty state message when there is no data present. */
   @Prop() displaysNoDataPresentMsg?: boolean;
-
-  /** Optionally provided callback to initiate a request for data. Used to ensure gestures emit events for request data. */
-  @Prop() requestData?: RequestDataFn;
 
   /** Optionally hooks to integrate custom logic into the base chart */
   @Prop() onUpdateLifeCycle?: (viewport: ViewPortConfig) => void;
@@ -214,18 +210,6 @@ export class ScWebglBaseChart {
   onDateRangeChange = throttle(
     ([start, end, from]: [Date, Date, string | undefined]) => {
       this.dateRangeChange.emit([start, end, from]);
-
-      /**
-       * Ensure that data is present for the requested range.
-       */
-      if (this.requestData) {
-        setTimeout(() => {
-          if (this.requestData) {
-            // NOTE: This is fired in a separate tick to prevent it from being render blocking.
-            this.requestData({ start, end });
-          }
-        }, 0);
-      }
     },
     DATE_RANGE_EMIT_EVENT_MS,
     {
@@ -263,36 +247,34 @@ export class ScWebglBaseChart {
       }
 
       // All charts are correctly synced.
-      const manuallyAppliedViewPortChange = newViewPort.lastUpdatedBy == null;
-      if (manuallyAppliedViewPortChange) {
-        /** Update active viewport */
-        this.start = isMinimalStaticViewport(newViewPort)
-          ? new Date(newViewPort.start)
-          : new Date(Date.now() - parseDuration(newViewPort.duration));
-        this.end = isMinimalStaticViewport(newViewPort) ? new Date(newViewPort.end) : new Date();
+      /** Update active viewport */
+      this.start = isMinimalStaticViewport(newViewPort)
+        ? new Date(newViewPort.start)
+        : new Date(Date.now() - parseDuration(newViewPort.duration));
+      this.end = isMinimalStaticViewport(newViewPort) ? new Date(newViewPort.end) : new Date();
 
-        /**
-         * Updates viewport to the active viewport
-         */
-        this.scene.updateViewPort(this.activeViewPort());
+      /**
+       * Updates viewport to the active viewport
+       */
+      this.scene.updateViewPort(this.activeViewPort());
 
-        /** Re-render scene */
-        // This is a necessary call to ensure that the view port group is correctly set.
-        // If `updateViewPorts` is **not** called, `updateAndRegisterChartScene` in an edge case may
-        // re-create the chart resources, and set the new viewport equal to the view port groups stale viewport.
-        webGLRenderer.updateViewPorts({
-          start: this.start,
-          end: this.end,
-          manager: this.scene,
-          duration: this.activeViewPort().duration,
-        });
-        this.updateAndRegisterChartScene({
-          hasDataChanged: false,
-          hasSizeChanged: false,
-          hasAnnotationChanged: false,
-          shouldRerender: false,
-        });
-      }
+      /** Re-render scene */
+      // This is a necessary call to ensure that the view port group is correctly set.
+      // If `updateViewPorts` is **not** called, `updateAndRegisterChartScene` in an edge case may
+      // re-create the chart resources, and set the new viewport equal to the view port groups stale viewport.
+      webGLRenderer.updateViewPorts({
+        start: this.start,
+        end: this.end,
+        manager: this.scene,
+        duration: this.activeViewPort().duration,
+      });
+      this.updateAndRegisterChartScene({
+        hasDataChanged: false,
+        hasSizeChanged: false,
+        hasAnnotationChanged: false,
+        shouldRerender: false,
+      });
+
       if (
         this.shouldRerenderOnViewportChange &&
         this.shouldRerenderOnViewportChange({ oldViewport: oldViewPort, newViewport: newViewPort })
@@ -417,9 +399,6 @@ export class ScWebglBaseChart {
       }
       // Update Camera
       webGLRenderer.updateViewPorts({ start, end, manager: this.scene });
-
-      // Emit date range change to allow other non-webgl based components to sync the new date range
-      this.onDateRangeChange([start, end, this.viewport.group]);
     }
   };
 
@@ -562,11 +541,17 @@ export class ScWebglBaseChart {
    */
   onUpdate = (
     { start, end }: { start: Date; end: Date },
+
     hasDataChanged: boolean = false,
     hasSizeChanged: boolean = false,
     hasAnnotationChanged: boolean = false,
     shouldRerender: boolean = false
   ) => {
+    const hasViewPortChanged = this.start.getTime() !== start.getTime() || this.end.getTime() !== end.getTime();
+    if (hasViewPortChanged) {
+      this.onDateRangeChange([start, end, this.viewport.group]);
+    }
+
     /**
      * Failure Handling
      */

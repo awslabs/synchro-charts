@@ -7,7 +7,6 @@ import {
   MinimalSizeConfig,
   MinimalViewPortConfig,
   SizeConfig,
-  RequestDataFn,
 } from '../../../utils/dataTypes';
 import {
   Annotations,
@@ -85,7 +84,6 @@ export class ScStatusTimeline implements ChartConfig {
   @Prop() widgetId!: string;
   @Prop() dataStreams!: DataStream[];
   @Prop() annotations?: Annotations;
-  @Prop() requestData?: RequestDataFn;
   @Prop() axis?: Axis.Options;
   @Prop() messageOverrides?: MessageOverrides;
   @Prop() alarms?: AlarmsConfig;
@@ -146,7 +144,6 @@ export class ScStatusTimeline implements ChartConfig {
                 }}
                 gestures={this.gestures}
                 configId={this.widgetId}
-                requestData={this.requestData}
                 annotations={{
                   ...this.annotations,
                   show: false,

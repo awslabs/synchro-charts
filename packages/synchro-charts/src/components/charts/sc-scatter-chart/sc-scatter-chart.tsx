@@ -5,7 +5,6 @@ import {
   MessageOverrides,
   MinimalSizeConfig,
   MinimalViewPortConfig,
-  RequestDataFn,
 } from '../../../utils/dataTypes';
 import {
   Annotations,
@@ -51,7 +50,6 @@ export class ScScatterChart implements ChartConfig {
   @Prop() gestures: boolean = true;
   @Prop() annotations: Annotations;
   @Prop() trends: Trend[];
-  @Prop() requestData?: RequestDataFn;
   @Prop() axis?: Axis.Options;
   @Prop() messageOverrides?: MessageOverrides;
 
@@ -74,7 +72,6 @@ export class ScScatterChart implements ChartConfig {
             axis={this.axis}
             gestures={this.gestures}
             configId={this.widgetId}
-            requestData={this.requestData}
             legend={this.legend}
             annotations={this.annotations}
             trends={this.trends}
