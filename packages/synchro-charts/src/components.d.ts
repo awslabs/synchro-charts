@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { AlarmsConfig, DataPoint, DataStream, DataStreamInfo, MessageOverrides, MinimalSizeConfig, MinimalViewPortConfig, Primitive, RequestDataFn, SizeConfig, SizePositionConfig, TableColumn, ViewPort, ViewPortConfig } from "./utils/dataTypes";
+import { AlarmsConfig, DataPoint, DataStream, DataStreamInfo, MessageOverrides, MinimalSizeConfig, MinimalViewPortConfig, Primitive, SizeConfig, SizePositionConfig, TableColumn, ViewPort, ViewPortConfig } from "./utils/dataTypes";
 import { Annotations, Axis, LayoutConfig, Legend, LegendConfig, MovementConfig, ScaleConfig, Threshold, Tooltip, WidgetConfigurationUpdate } from "./components/charts/common/types";
 import { Trend, TrendResult } from "./components/charts/common/trends/types";
 import { DATA_ALIGNMENT, StatusIcon } from "./components/charts/common/constants";
@@ -45,7 +45,6 @@ export namespace Components {
         "messageOverrides"?: MessageOverrides;
         "minBufferSize": number;
         "movement"?: MovementConfig;
-        "requestData"?: RequestDataFn;
         "scale"?: ScaleConfig;
         "size"?: MinimalSizeConfig;
         "trends": Trend[];
@@ -179,7 +178,6 @@ export namespace Components {
         "messageOverrides"?: MessageOverrides;
         "minBufferSize": number;
         "movement"?: MovementConfig;
-        "requestData"?: RequestDataFn;
         "scale"?: ScaleConfig;
         "size"?: MinimalSizeConfig;
         "trends": Trend[];
@@ -222,7 +220,6 @@ export namespace Components {
         "messageOverrides"?: MessageOverrides;
         "minBufferSize": number;
         "movement"?: MovementConfig;
-        "requestData"?: RequestDataFn;
         "scale"?: ScaleConfig;
         "size"?: MinimalSizeConfig;
         "trends": Trend[];
@@ -312,7 +309,6 @@ export namespace Components {
         "messageOverrides"?: MessageOverrides;
         "minBufferSize": number;
         "movement"?: MovementConfig;
-        "requestData"?: RequestDataFn;
         "scale"?: ScaleConfig;
         "size"?: MinimalSizeConfig;
         /**
@@ -484,10 +480,6 @@ export namespace Components {
         "onUpdateLifeCycle"?: (viewport: ViewPortConfig) => void;
         "renderLegend": (props: Legend.Props) => HTMLElement;
         "renderTooltip": (props: Tooltip.Props) => HTMLElement;
-        /**
-          * Optionally provided callback to initiate a request for data. Used to ensure gestures emit events for request data.
-         */
-        "requestData"?: RequestDataFn;
         "shouldRerenderOnViewportChange"?: ({
     oldViewport,
     newViewport,
@@ -1451,7 +1443,6 @@ declare namespace LocalJSX {
         "messageOverrides"?: MessageOverrides;
         "minBufferSize"?: number;
         "movement"?: MovementConfig;
-        "requestData"?: RequestDataFn;
         "scale"?: ScaleConfig;
         "size"?: MinimalSizeConfig;
         "trends"?: Trend[];
@@ -1585,7 +1576,6 @@ declare namespace LocalJSX {
         "messageOverrides"?: MessageOverrides;
         "minBufferSize"?: number;
         "movement"?: MovementConfig;
-        "requestData"?: RequestDataFn;
         "scale"?: ScaleConfig;
         "size"?: MinimalSizeConfig;
         "trends"?: Trend[];
@@ -1628,7 +1618,6 @@ declare namespace LocalJSX {
         "messageOverrides"?: MessageOverrides;
         "minBufferSize"?: number;
         "movement"?: MovementConfig;
-        "requestData"?: RequestDataFn;
         "scale"?: ScaleConfig;
         "size"?: MinimalSizeConfig;
         "trends"?: Trend[];
@@ -1718,7 +1707,6 @@ declare namespace LocalJSX {
         "messageOverrides"?: MessageOverrides;
         "minBufferSize"?: number;
         "movement"?: MovementConfig;
-        "requestData"?: RequestDataFn;
         "scale"?: ScaleConfig;
         "size"?: MinimalSizeConfig;
         /**
@@ -1755,6 +1743,10 @@ declare namespace LocalJSX {
         "dataStreams": DataStream[];
         "liveModeOnlyMessage"?: string;
         "messageOverrides"?: MessageOverrides;
+        /**
+          * On view port date range change, this component emits a `dateRangeChange` event. This allows other data visualization components to sync to the same date range.
+         */
+        "onDateRangeChange"?: (event: CustomEvent<[Date, Date, string | undefined]>) => void;
         /**
           * Table column values
          */
@@ -1896,10 +1888,6 @@ declare namespace LocalJSX {
         "onWidgetUpdated"?: (event: CustomEvent<WidgetConfigurationUpdate>) => void;
         "renderLegend"?: (props: Legend.Props) => HTMLElement;
         "renderTooltip"?: (props: Tooltip.Props) => HTMLElement;
-        /**
-          * Optionally provided callback to initiate a request for data. Used to ensure gestures emit events for request data.
-         */
-        "requestData"?: RequestDataFn;
         "shouldRerenderOnViewportChange"?: ({
     oldViewport,
     newViewport,
@@ -1969,6 +1957,10 @@ declare namespace LocalJSX {
         "labelsConfig"?: LabelsConfig;
         "liveModeOnlyMessage"?: string;
         "messageOverrides"?: MessageOverrides;
+        /**
+          * On view port date range change, this component emits a `dateRangeChange` event. This allows other data visualization components to sync to the same date range.
+         */
+        "onDateRangeChange"?: (event: CustomEvent<[Date, Date, string | undefined]>) => void;
         "onWidgetUpdated"?: (event: CustomEvent<WidgetConfigurationUpdate>) => void;
         "renderCell"?: RenderCell;
         "viewport"?: MinimalViewPortConfig;

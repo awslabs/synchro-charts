@@ -245,5 +245,3 @@ export interface DataStream<T extends Primitive = Primitive> extends DataStreamI
  * a single point in time (which is an interval of time with a duration of zero).
  */
 export type Resolution = number;
-
-export type RequestDataFn = ({ start, end }: { start: Date; end: Date }) => void;

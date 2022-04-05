@@ -140,16 +140,5 @@ export const describePassedInProps = (newChartSpecPage: ChartSpecPage, disableLi
         expect(baseChart.axis).toEqual(AXIS);
       });
     });
-
-    describe('request data', () => {
-      it('sets the requested data', async () => {
-        const requestData = jest.fn();
-
-        const { chart } = await newChartSpecPage({ requestData });
-        const baseChart = chart.querySelector('sc-webgl-base-chart') as HTMLScWebglBaseChartElement;
-
-        expect(baseChart.requestData).toBe(requestData);
-      });
-    });
   });
 };

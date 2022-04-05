@@ -1,5 +1,6 @@
 import { Component, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
 
+import throttle from 'lodash.throttle';
 import { DataPoint, DataStream, MessageOverrides, MinimalViewPortConfig, Primitive } from '../../utils/dataTypes';
 import { NameValue, updateName } from '../sc-data-stream-name/helper';
 import { ActivePoint, activePoints } from '../charts/sc-webgl-base-chart/activePoints';
@@ -16,6 +17,7 @@ import { parseDuration } from '../../utils/time';
 import { getDataStreamForEventing } from '../charts/common';
 import { validate } from '../common/validator/validate';
 import { webGLRenderer } from '../sc-webgl-context/webglContext';
+import { DATE_RANGE_EMIT_EVENT_MS } from '../common/constants';
 
 const MSG =
   'This visualization displays only live data. Choose a live time frame to display data in this visualization.';
@@ -45,6 +47,12 @@ export class ScWidgetGrid implements ChartConfig {
 
   @Prop() collapseVertically: boolean = true;
 
+  /**
+   * On view port date range change, this component emits a `dateRangeChange` event.
+   * This allows other data visualization components to sync to the same date range.
+   */
+  @Event() dateRangeChange: EventEmitter<[Date, Date, string | undefined]>;
+
   /** Chart API */
   @Prop() labelsConfig?: LabelsConfig;
   @Prop() viewport: MinimalViewPortConfig;
@@ -73,6 +81,17 @@ export class ScWidgetGrid implements ChartConfig {
     validate(this);
   }
 
+  onDateRangeChange = throttle(
+    ([start, end, from]: [Date, Date, string | undefined]) => {
+      this.dateRangeChange.emit([start, end, from]);
+    },
+    DATE_RANGE_EMIT_EVENT_MS,
+    {
+      leading: true,
+      trailing: true,
+    }
+  );
+
   componentDidLoad() {
     webGLRenderer.addChartScene({
       manager: {
@@ -95,6 +114,12 @@ export class ScWidgetGrid implements ChartConfig {
   }
 
   onUpdate = ({ start, end, duration }: { start: Date; end: Date; duration?: number }) => {
+    const hasViewPortChanged =
+      viewportStartDate(this.viewport).getTime() !== start.getTime() ||
+      viewportEndDate(this.viewport).getTime() !== end.getTime();
+    if (hasViewPortChanged) {
+      this.onDateRangeChange([start, end, this.viewport.group]);
+    }
     // Update active viewport
     this.start = start;
     this.end = end;

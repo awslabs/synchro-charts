@@ -3,6 +3,7 @@ import { Value } from '../../value/Value';
 import { Cell } from '../constructTableData';
 import { StatusIcon } from '../../charts/common/constants';
 import { Primitive } from '../../../utils/dataTypes';
+import { getDataPoints } from '../../../utils/getDataPoints';
 
 @Component({
   tag: 'sc-table-cell',
@@ -19,12 +20,14 @@ export class ScTableCell {
   value = (): Primitive | undefined => {
     const { dataStream = undefined } = this.cell || {};
 
-    if (dataStream == null || dataStream.data.length === 0) {
+    const points = dataStream ? getDataPoints(dataStream, dataStream.resolution) : [];
+
+    if (points.length === 0) {
       return undefined;
     }
 
     // data is sorted chronological, from old to more recent - making this the latest value.
-    return dataStream.data[dataStream.data.length - 1].y;
+    return points[points.length - 1].y;
   };
 
   render() {

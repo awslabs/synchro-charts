@@ -1,4 +1,5 @@
-import { Component, h, Prop, State, Watch } from '@stencil/core';
+import { Component, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
+import throttle from 'lodash.throttle';
 import { DataStream, MessageOverrides, MinimalViewPortConfig, TableColumn } from '../../utils/dataTypes';
 import { isThreshold } from '../charts/common/annotations/utils';
 import { Trend } from '../charts/common/trends/types';
@@ -8,6 +9,7 @@ import { viewportEndDate, viewportStartDate } from '../../utils/viewPort';
 import { isMinimalStaticViewport } from '../../utils/predicates';
 import { parseDuration } from '../../utils/time';
 import { webGLRenderer } from '../sc-webgl-context/webglContext';
+import { DATE_RANGE_EMIT_EVENT_MS } from '../common/constants';
 
 const MSG =
   'This visualization displays only live data. Choose a live time frame to display data in this visualization.';
@@ -17,6 +19,12 @@ const MSG =
   shadow: false,
 })
 export class ScTable implements ChartConfig {
+  /**
+   * On view port date range change, this component emits a `dateRangeChange` event.
+   * This allows other data visualization components to sync to the same date range.
+   */
+  @Event() dateRangeChange: EventEmitter<[Date, Date, string | undefined]>;
+
   @Prop() viewport: MinimalViewPortConfig;
   @Prop() widgetId!: string;
   @Prop() dataStreams!: DataStream[];
@@ -46,11 +54,28 @@ export class ScTable implements ChartConfig {
   }
 
   onUpdate = ({ start, end, duration }: { start: Date; end: Date; duration?: number }) => {
+    const hasViewPortChanged =
+      viewportStartDate(this.viewport).getTime() !== start.getTime() ||
+      viewportEndDate(this.viewport).getTime() !== end.getTime();
+    if (hasViewPortChanged) {
+      this.onDateRangeChange([start, end, this.viewport.group]);
+    }
     // Update active viewport
     this.start = start;
     this.end = end;
     this.duration = duration;
   };
+
+  onDateRangeChange = throttle(
+    ([start, end, from]: [Date, Date, string | undefined]) => {
+      this.dateRangeChange.emit([start, end, from]);
+    },
+    DATE_RANGE_EMIT_EVENT_MS,
+    {
+      leading: true,
+      trailing: true,
+    }
+  );
 
   componentDidLoad() {
     webGLRenderer.addChartScene({

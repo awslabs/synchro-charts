@@ -1,7 +1,7 @@
 {
   "name": "@synchro-charts/react",
   "description": "Synchro Charts React",
-  "version": "3.1.0",
+  "version": "4.0.0",
   "publishConfig": {
     "access": "public"
   },

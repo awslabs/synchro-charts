@@ -5,7 +5,6 @@ import {
   MessageOverrides,
   MinimalSizeConfig,
   MinimalViewPortConfig,
-  RequestDataFn,
 } from '../../../utils/dataTypes';
 import {
   Annotations,
@@ -51,7 +50,6 @@ export class ScLineChart implements ChartConfig {
   @Prop() gestures: boolean = true;
   @Prop() annotations: Annotations;
   @Prop() trends: Trend[];
-  @Prop() requestData?: RequestDataFn;
   @Prop() axis?: Axis.Options;
   @Prop() messageOverrides?: MessageOverrides;
 
@@ -75,7 +73,6 @@ export class ScLineChart implements ChartConfig {
             alarms={this.alarms}
             gestures={this.gestures}
             configId={this.widgetId}
-            requestData={this.requestData}
             legend={this.legend}
             annotations={this.annotations}
             trends={this.trends}
