@@ -1,6 +1,11 @@
 import { Annotation, Annotations, AnnotationValue, XAnnotation, YAnnotation } from '../types';
 import { renderXAnnotations, removeXAnnotations } from './XAnnotations/XAnnotations';
-import { renderYAnnotations, removeYAnnotations, renderYAnnotationsEditable } from './YAnnotations/YAnnotations';
+import {
+  renderYAnnotations,
+  removeYAnnotations,
+  renderYAnnotationsEditable,
+  renderYAnnotationDefs,
+} from './YAnnotations/YAnnotations';
 import { DataStream, ViewPort } from '../../../../utils/dataTypes';
 import { DraggableAnnotationsOptions } from './draggableAnnotations';
 
@@ -59,6 +64,12 @@ export const renderAnnotations = ({
   const xAnnotations: XAnnotation[] = annotations.x == null ? [] : annotations.x.filter(withinViewport(viewport));
   const yAnnotations: YAnnotation[] = annotations.y == null ? [] : annotations.y.filter(withinViewport(viewport));
 
+  // we only support gradients if all annotations have an id (in order to associate an id with its proper gradient)
+  const enableThresholdGradient =
+    (annotations.displayThresholdGradient ? annotations.displayThresholdGradient : false) &&
+    yAnnotations.length > 0 &&
+    yAnnotations.every(yAnnotation => yAnnotation.id !== undefined);
+
   /**
    * X Annotations
    */
@@ -71,6 +82,13 @@ export const renderAnnotations = ({
   });
 
   /**
+   * Y Annotation Defs
+   */
+  if (enableThresholdGradient) {
+    renderYAnnotationDefs({ container, yAnnotations });
+  }
+
+  /**
    * Y Annotations
    */
   renderYAnnotations({
@@ -79,6 +97,7 @@ export const renderAnnotations = ({
     viewport,
     resolution,
     size,
+    renderThresholdGradient: enableThresholdGradient,
   });
 
   if (!inDragState()) {
@@ -92,6 +111,7 @@ export const renderAnnotations = ({
       viewport,
       resolution,
       size,
+      renderThresholdGradient: enableThresholdGradient,
     });
 
     // prevents more event listeners from being attached when we drag

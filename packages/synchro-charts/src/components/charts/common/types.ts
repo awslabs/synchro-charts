@@ -146,12 +146,17 @@ export type XAnnotation = Annotation<Date>;
 
 export type YAnnotation = Annotation<number | string> | Threshold;
 
+export function isYAnnotationThreshold(yAnnotation: any): boolean {
+  return yAnnotation.comparisonOperator !== undefined;
+}
+
 export interface Annotations {
   show?: boolean;
   x?: XAnnotation[];
   y?: YAnnotation[];
   thresholdOptions?: ThresholdOptions | boolean;
   colorDataAcrossThresholds?: boolean;
+  displayThresholdGradient?: boolean;
 }
 
 export interface ThresholdBand {

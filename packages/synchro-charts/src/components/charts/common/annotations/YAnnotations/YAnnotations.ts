@@ -1,8 +1,15 @@
-import { select, Selection } from 'd3-selection';
+import { BaseType, select, Selection } from 'd3-selection';
 import { YAnnotation } from '../../types';
 import { ANNOTATION_FONT_SIZE, ANNOTATION_STROKE_WIDTH } from '../constants';
-import { getY } from './utils';
-import { getText, getColor, getValueText, getLabelTextVisibility, getValueTextVisibility } from '../utils';
+import {
+  calculateGradientXOffset,
+  getGradientID,
+  getGradientRectangleFill,
+  getGradientRotation,
+  getGradientVisibility,
+  getY,
+} from './utils';
+import { getColor, getLabelTextVisibility, getText, getValueText, getValueTextVisibility } from '../utils';
 import { ViewPort } from '../../../../../utils/dataTypes';
 
 const PADDING = 5;
@@ -14,6 +21,7 @@ export const HANDLE_OFFSET_Y = -11;
 export const HANDLE_WIDTH = 45;
 export const SMALL_HANDLE_WIDTH = 18;
 const HANDLE_HEIGHT = 20;
+const GRADIENT_HEIGHT_RATIO = 1 / 20; // fraction of overall height
 
 const DRAGGABLE_LINE_OFFSET_Y = -6;
 const DRAGGABLE_LINE_OFFSET_X = 40;
@@ -30,8 +38,115 @@ export const LINE_SELECTOR = 'line.y-line';
 export const DRAGGABLE_HANDLE_SELECTOR = 'rect.y-annotation';
 export const DRAGGABLE_LINE_ONE_SELECTOR = 'line.y-handle-one';
 export const DRAGGABLE_LINE_TWO_SELECTOR = 'line.y-handle-two';
-
+export const LINEAR_GRADIENT_SELECTOR = 'linearGradient.y-annotation';
+export const GRADIENT_RECT_SELECTOR = 'rect.gradient-annotation';
+export const GRADIENT_STOP_SELECTOR = 'stop.gradient-y';
 export const ELEMENT_GROUP_SELECTOR = 'g.y-elements-group';
+export const ANNOTATION_DEFS_SELECTOR = 'defs.y-annotations';
+
+const createThresholdGradients = ({
+  elementGroup,
+  width,
+  gradientHeight,
+  getGradientX,
+  renderThresholdGradient,
+}: {
+  elementGroup: Selection<SVGGElement, YAnnotation, SVGElement, unknown>;
+  width: number;
+  gradientHeight: number;
+  getGradientX: (yAnnotation: YAnnotation) => number;
+  renderThresholdGradient: boolean;
+}): void => {
+  elementGroup
+    .append('rect')
+    .attr('display', yAnnotation => getGradientVisibility({ yAnnotation, renderThresholdGradient }))
+    .attr('class', 'gradient-annotation')
+    .attr('width', width)
+    .attr('height', gradientHeight)
+    .attr('x', getGradientX)
+    .attr('y', -gradientHeight)
+    .attr('transform', getGradientRotation)
+    .style('fill', getGradientRectangleFill);
+};
+
+const updateThresholdGradients = ({
+  elementGroup,
+  width,
+  gradientHeight,
+  getGradientX,
+  renderThresholdGradient,
+}: {
+  elementGroup: Selection<BaseType, YAnnotation, SVGElement, unknown>;
+  width: number;
+  gradientHeight: number;
+  getGradientX: (yAnnotation: YAnnotation) => number;
+  renderThresholdGradient: boolean;
+}): void => {
+  elementGroup
+    .select(GRADIENT_RECT_SELECTOR)
+    .attr('display', yAnnotation => getGradientVisibility({ yAnnotation, renderThresholdGradient }))
+    .attr('width', width)
+    .attr('height', gradientHeight)
+    .attr('x', getGradientX)
+    .attr('y', -gradientHeight)
+    .attr('transform', getGradientRotation)
+    .style('fill', getGradientRectangleFill);
+};
+
+export const renderYAnnotationDefs = ({
+  container,
+  yAnnotations,
+}: {
+  container: SVGElement;
+  yAnnotations: YAnnotation[];
+}) => {
+  // D3 operations are very fast so we can create linearGradients for every annotation regardless of whether its a threshold or not - this simplifies the update
+
+  const annotationDefs = select(container)
+    .selectAll(ANNOTATION_DEFS_SELECTOR)
+    .data([0]); // only create the defs group once
+
+  annotationDefs
+    .enter()
+    .append('defs')
+    .attr('class', 'y-annotations');
+
+  const gradientDefs = select(container)
+    .select(ANNOTATION_DEFS_SELECTOR)
+    .selectAll(LINEAR_GRADIENT_SELECTOR);
+
+  const gradient = gradientDefs
+    .data(yAnnotations)
+    .enter()
+    .append('linearGradient')
+    .attr('class', 'y-annotation')
+    .attr('gradientTransform', 'rotate(90)')
+    .attr('id', getGradientID);
+
+  gradient
+    .append('stop')
+    .attr('class', 'gradient-y-one')
+    .attr('offset', '0%')
+    .style('stop-color', getColor)
+    .style('stop-opacity', 0);
+
+  gradient
+    .append('stop')
+    .attr('class', 'gradient-y-two')
+    .attr('offset', '80%')
+    .style('stop-color', getColor)
+    .style('stop-opacity', 0.33);
+
+  // NOTE the order of the stops here is VERY IMPORTANT
+
+  const gradSelector = gradientDefs.data(yAnnotations).attr('id', getGradientID);
+
+  gradSelector.select(`${GRADIENT_STOP_SELECTOR}-one`).style('stop-color', getColor);
+  gradSelector.select(`${GRADIENT_STOP_SELECTOR}-two`).style('stop-color', getColor);
+
+  annotationDefs.exit().remove();
+  gradientDefs.exit().remove();
+};
 
 export const renderYAnnotationsEditable = ({
   container,
@@ -39,12 +154,14 @@ export const renderYAnnotationsEditable = ({
   viewport,
   resolution,
   size: { width, height },
+  renderThresholdGradient,
 }: {
   container: SVGElement;
   yAnnotations: YAnnotation[];
   viewport: ViewPort;
   resolution: number;
   size: { width: number; height: number };
+  renderThresholdGradient: boolean;
 }): Selection<SVGRectElement, YAnnotation, SVGElement, any> => {
   const getYPosition = (annotation: YAnnotation) =>
     getY({
@@ -68,6 +185,9 @@ export const renderYAnnotationsEditable = ({
 
   const getYAnnotationHandleY = (yAnnotation: YAnnotation): number => getYPosition(yAnnotation) + HANDLE_OFFSET_Y;
 
+  const getGradientX = (yAnnotation: YAnnotation): number => calculateGradientXOffset(yAnnotation) * width;
+  const gradientHeight = height * GRADIENT_HEIGHT_RATIO;
+
   const getValueFontSize = (yAnnotation: YAnnotation): number =>
     yAnnotation.value < -9999 ? ANNOTATION_FONT_SIZE - 1 : ANNOTATION_FONT_SIZE;
 
@@ -75,6 +195,7 @@ export const renderYAnnotationsEditable = ({
     return `translate(0,${getYPosition(yAnnotation)})`;
   };
 
+  /** Create Editable Annotations (Draggable) */
   const annotationSelectionEditable = select(container)
     .selectAll(ANNOTATION_GROUP_SELECTOR_EDITABLE)
     .data(yAnnotations.filter(annotation => annotation.isEditable));
@@ -144,6 +265,15 @@ export const renderYAnnotationsEditable = ({
     .style('pointer-events', 'none')
     .style('fill', getColor);
 
+  /** Create Gradient Thresholds */
+  createThresholdGradients({
+    elementGroup: handleGroup,
+    width,
+    gradientHeight,
+    getGradientX,
+    renderThresholdGradient,
+  });
+
   /** Create lines for draggable annotation handle */
   handleGroup
     .append('line')
@@ -165,8 +295,17 @@ export const renderYAnnotationsEditable = ({
     .style('stroke', 'gray')
     .style('stroke-width', DRAGGABLE_LINE_STROKE);
 
-  /** Update Subgroup Elements */
+  /** Update Subgroup Elements Position */
   annotationSelectionEditable.select(ELEMENT_GROUP_SELECTOR).attr('transform', getGroupPosition);
+
+  /** Update Gradients if Supported */
+  updateThresholdGradients({
+    elementGroup: annotationSelectionEditable,
+    width,
+    gradientHeight,
+    getGradientX,
+    renderThresholdGradient,
+  });
 
   /** Update Threshold Value Text */
   annotationSelectionEditable
@@ -225,12 +364,14 @@ export const renderYAnnotations = ({
   viewport,
   resolution,
   size: { width, height },
+  renderThresholdGradient,
 }: {
   container: SVGElement;
   yAnnotations: YAnnotation[];
   viewport: ViewPort;
   resolution: number;
   size: { width: number; height: number };
+  renderThresholdGradient: boolean;
 }) => {
   const getYPosition = (annotation: YAnnotation) =>
     getY({
@@ -242,6 +383,9 @@ export const renderYAnnotations = ({
   const getGroupPosition = (yAnnotation: YAnnotation): string => {
     return `translate(0,${getYPosition(yAnnotation)})`;
   };
+
+  const getGradientX = (yAnnotation: YAnnotation): number => calculateGradientXOffset(yAnnotation) * width;
+  const gradientHeight = height * GRADIENT_HEIGHT_RATIO;
 
   /** Not Editable Annotations */
   const annotationSelectionNotEditable = select(container)
@@ -270,7 +414,6 @@ export const renderYAnnotations = ({
   annotationGroup
     .append('text')
     .attr('display', getValueTextVisibility)
-    .attr('font-size', ANNOTATION_FONT_SIZE)
     .attr('class', 'y-value-text')
     .attr('x', width + Y_ANNOTATION_TEXT_LEFT_PADDING)
     .attr('text-anchor', 'start')
@@ -278,13 +421,13 @@ export const renderYAnnotations = ({
     .text(annotation => getValueText({ annotation, resolution, viewport, formatText: true }))
     .style('user-select', 'none')
     .style('pointer-events', 'none')
+    .style('font-size', ANNOTATION_FONT_SIZE)
     .style('fill', getColor);
 
   /** Create Label Text */
   annotationGroup
     .append('text')
     .attr('display', getLabelTextVisibility)
-    .attr('font-size', ANNOTATION_FONT_SIZE)
     .attr('class', 'y-text')
     .attr('x', width - PADDING)
     .attr('text-anchor', 'end')
@@ -292,10 +435,29 @@ export const renderYAnnotations = ({
     .text(getText)
     .style('user-select', 'none')
     .style('pointer-events', 'none')
+    .style('font-size', ANNOTATION_FONT_SIZE)
     .style('fill', getColor);
+
+  /** Create Gradient Thresholds */
+  createThresholdGradients({
+    elementGroup: annotationGroup,
+    width,
+    gradientHeight,
+    getGradientX,
+    renderThresholdGradient,
+  });
 
   /** Update Group Position */
   annotationSelectionNotEditable.attr('transform', getGroupPosition);
+
+  /** Update Gradients if Supported */
+  updateThresholdGradients({
+    elementGroup: annotationSelectionNotEditable,
+    width,
+    gradientHeight,
+    getGradientX,
+    renderThresholdGradient,
+  });
 
   /** Update Threshold Value Text */
   annotationSelectionNotEditable
@@ -333,5 +495,9 @@ export const removeYAnnotations = ({ container }: { container: SVGElement }) => 
 
   select(container)
     .selectAll(ANNOTATION_GROUP_SELECTOR_EDITABLE)
+    .remove();
+
+  select(container)
+    .selectAll(ANNOTATION_DEFS_SELECTOR)
     .remove();
 };

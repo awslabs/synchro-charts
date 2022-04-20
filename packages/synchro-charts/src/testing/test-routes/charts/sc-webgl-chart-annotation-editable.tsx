@@ -42,7 +42,7 @@ const Y_THRESHOLD: Threshold<number> = {
   id: 'blue-threshold',
 };
 
-const Y_ANNOTATION: YAnnotation = {
+const Y_ANNOTATION: Threshold<number> = {
   isEditable: true,
   value: 3200,
   label: {
@@ -51,7 +51,8 @@ const Y_ANNOTATION: YAnnotation = {
   },
   showValue: true,
   color: 'green',
-  id: 'green-anotation',
+  id: 'green-threshold',
+  comparisonOperator: COMPARISON_OPERATOR.LESS_THAN_EQUAL,
 };
 
 let oldAnnotations: Annotations | undefined;
@@ -59,7 +60,7 @@ let oldAnnotations: Annotations | undefined;
 @Component({
   tag: 'sc-webgl-chart-annotation-editable',
 })
-export class ScWebglChartAnnotationRescaling {
+export class ScWebglChartAnnotationEditable {
   @State() isEditableValue: boolean = false;
   @State() isShowValue: boolean = true;
   @State() annotations: Annotations | undefined = {
@@ -92,8 +93,10 @@ export class ScWebglChartAnnotationRescaling {
         color: 'red',
         showValue: this.isShowValue,
         id: 'red-annotation',
+        comparisonOperator: undefined,
       },
     ],
+    displayThresholdGradient: true,
   };
 
   @Listen('widgetUpdated')
@@ -117,6 +120,69 @@ export class ScWebglChartAnnotationRescaling {
         return {
           ...annotation,
           value: oldAnnotations!.y!.find(oldannotation => oldannotation.id === annotation.id)!.value,
+        };
+      }),
+    };
+  };
+
+  enableDisableGradient = () => {
+    this.annotations = {
+      ...this.annotations,
+      displayThresholdGradient: !this.annotations!.displayThresholdGradient,
+    };
+  };
+
+  onColorChange = () => {
+    const newColors = [
+      {
+        id: 'red-annotation',
+        color: 'orange',
+      },
+      {
+        id: 'blue-threshold',
+        color: 'purple',
+      },
+      {
+        id: 'green-threshold',
+        color: 'black',
+      },
+    ];
+
+    const { y } = this.annotations!;
+    this.annotations = {
+      ...this.annotations,
+      y: (y as YAnnotation[]).map(annotation => {
+        return {
+          ...annotation,
+          color: newColors.find(color => color.id === annotation.id)!.color,
+        };
+      }),
+    };
+  };
+
+  onOperatorChange = () => {
+    const newColors = [
+      {
+        id: 'red-annotation',
+        comparisonOperator: COMPARISON_OPERATOR.LESS_THAN,
+      },
+      {
+        id: 'blue-threshold',
+        comparisonOperator: COMPARISON_OPERATOR.EQUAL,
+      },
+      {
+        id: 'green-threshold',
+        comparisonOperator: COMPARISON_OPERATOR.GREATER_THAN_EQUAL,
+      },
+    ];
+
+    const { y } = this.annotations!;
+    this.annotations = {
+      ...this.annotations,
+      y: (y as YAnnotation[]).map(annotation => {
+        return {
+          ...annotation,
+          comparisonOperator: newColors.find(color => color.id === annotation.id)!.comparisonOperator,
         };
       }),
     };
@@ -151,8 +217,23 @@ export class ScWebglChartAnnotationRescaling {
           </button>
         </div>
         <div>
+          <button id="change-color" onClick={this.onColorChange}>
+            Change Color
+          </button>
+        </div>
+        <div>
           <button id="change-showvalue" onClick={this.onShowValueChange}>
             Change Show Value
+          </button>
+        </div>
+        <div>
+          <button id="change-operator" onClick={this.onOperatorChange}>
+            Change Operators
+          </button>
+        </div>
+        <div>
+          <button id="change-gradient" onClick={this.enableDisableGradient}>
+            EnableDisable ThresholdGradient
           </button>
         </div>
         <div>
@@ -179,7 +260,7 @@ export class ScWebglChartAnnotationRescaling {
             annotations={this.annotations}
             viewport={{ start: X_MIN, end: X_MAX }}
             size={{
-              height: 1000,
+              height: 700,
               width: 1000,
             }}
           />
