@@ -187,7 +187,7 @@
   
     (Optional) A readable human error message if the data source this data stream is associated to has an error.
   
-  - `associatedDataStreams`: Object[]
+  - `associatedStreams`: Object[]
     
     (Optional) Data streams that are associated alarms of the data streams.
 
