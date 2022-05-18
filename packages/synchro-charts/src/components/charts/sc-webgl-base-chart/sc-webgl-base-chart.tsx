@@ -718,7 +718,12 @@ export class ScWebglBaseChart {
         webGLRenderer.removeChartScene(this.scene.id);
         this.scene = updatedScene;
         const { duration } = this.activeViewPort();
-        webGLRenderer.addChartScene({ manager: updatedScene, duration, shouldSync: false });
+        webGLRenderer.addChartScene({
+          manager: updatedScene,
+          duration,
+          shouldSync: false,
+          chartSize: this.chartSizeConfig(),
+        });
         this.setChartRenderingPosition();
       }
 
