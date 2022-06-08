@@ -1,5 +1,5 @@
 import { pointBisector, getDataBeforeDate } from '../common/dataFilters';
-import { DataPoint, DataStream, Primitive } from '../../../utils/dataTypes';
+import { AggregateType, DataPoint, DataStream, Primitive } from '../../../utils/dataTypes';
 import { sortTooltipPoints } from '../sc-tooltip/sort';
 import { getDataPoints } from '../../../utils/getDataPoints';
 import { DATA_ALIGNMENT } from '../common/constants';
@@ -111,10 +111,13 @@ export const activePoints = <T extends Primitive>({
   dataAlignment: DATA_ALIGNMENT;
   maxDurationFromDate?: number; // if no max distance present, then no max distance filter is applied on selected points
 }): ActivePoint<T>[] => {
-  const dataStreamUtilizedData = dataStreams.map(stream => ({
-    streamId: stream.id,
-    dataPoints: getDataBeforeDate(getDataPoints(stream, stream.resolution), viewport.end),
-  }));
+  const dataStreamUtilizedData = dataStreams.map(stream => {
+    const firstAggregateType = stream.aggregateTypes !== undefined ? stream.aggregateTypes[0] : AggregateType.AVERAGE;
+    return {
+      streamId: stream.id,
+      dataPoints: getDataBeforeDate(getDataPoints(stream, stream.resolution, firstAggregateType), viewport.end),
+    }
+  });
   const selectedTimestamp = selectedDate.getTime();
 
   // Find the closest point to the selected date for each stream

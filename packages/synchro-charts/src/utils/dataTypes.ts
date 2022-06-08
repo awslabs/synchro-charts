@@ -35,6 +35,11 @@ export type TableColumn = {
 };
 
 /**
+ * Used to keep track of the aggregate type of a data stream.
+ */
+ export type AggregateType = "average"|"count"|"maximum"|"minimum"|"sum"|"standard_deviation"|string;
+
+/**
  * Data Stream Info
  *
  * A view model representation of a data stream.
@@ -50,6 +55,7 @@ export interface DataStreamInfo {
   detailedName?: string;
   streamType?: StreamType;
   associatedStreams?: StreamAssociation[];
+  aggregateTypes?: AggregateType[];
 }
 
 /**
@@ -175,6 +181,7 @@ export type MessageOverrides = {
   /** no data present - msg displayed when no streams have any data */
   noDataPresentHeader?: string;
   noDataPresentSubHeader?: string;
+  aggregateLabels?: {average: string, sum: string, count: string, maximum: string, minimum: string, standard_deviation: string};
 };
 export const DEFAULT_MESSAGE_OVERRIDES: Required<MessageOverrides> = {
   liveTimeFrameValueLabel: 'Value',
@@ -182,7 +189,8 @@ export const DEFAULT_MESSAGE_OVERRIDES: Required<MessageOverrides> = {
   noDataStreamsPresentHeader: 'No properties or alarms',
   noDataStreamsPresentSubHeader: "This widget doesn't have any properties or alarms.",
   noDataPresentHeader: 'No data',
-  noDataPresentSubHeader: "There's no data to display for this time range.",
+  noDataPresentSubHeader: "There's no data to display for this time range." ,
+  aggregateLabels: {average: 'average', sum: 'sum', count: 'count', maximum: 'maximum', minimum: 'minimum', standard_deviation: 'standard deviation'},
 };
 
 /** SVG Constants */
@@ -222,12 +230,13 @@ export interface DataStream<T extends Primitive = Primitive> extends DataStreamI
 
   // Collection of various aggregates available for the data stream
   aggregates?: {
-    [resolution: number]: DataPoint<T>[] | undefined;
+    [resolution: number]: (DataPoint<T>[] | { [aggregationType: string] : DataPoint<T>[] | undefined } | undefined);
   };
 
   dataType: DataType;
   streamType?: StreamType;
   associatedStreams?: StreamAssociation[];
+  aggregateTypes?: AggregateType[];
   isLoading?: boolean;
   isRefreshing?: boolean;
   error?: string;
