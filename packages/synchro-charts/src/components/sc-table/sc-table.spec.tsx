@@ -295,7 +295,9 @@ describe('rendering', () => {
       dataStreams: [],
       tableColumns: TABLE_COLUMNS,
       viewport: NON_LIVE_VIEWPORT,
-      liveModeOnlyMessage: LIVE_MODE_MSG,
+      messageOverrides: {
+        liveModeOnlyMessage: LIVE_MODE_MSG,
+      },
     });
 
     const headers = table.querySelectorAll('th');

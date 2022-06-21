@@ -55,8 +55,9 @@ const tableBaseSpecPage = async (propOverrides: Partial<Components.ScTableBase> 
     rows: mockRows,
     columns: [],
     isEnabled: true,
-    liveModeOnlyMessage: 'liveModeOnlyMessage',
-    messageOverrides: {},
+    messageOverrides: {
+      liveModeOnlyMessage: 'liveModeOnlyMessage',
+    },
     ...propOverrides,
   };
 

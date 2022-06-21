@@ -15,9 +15,6 @@ const renderCell: RenderCell = ({ labelsConfig, ...rest }: CellOptions) => (
   <sc-status-cell labelsConfig={{ ...DEFAULT_LABELS_CONFIG, ...labelsConfig }} {...rest} />
 );
 
-const MSG =
-  'This visualization displays only live data. Choose a live time frame to display data in this visualization.';
-
 @Component({
   tag: 'sc-status-grid',
   shadow: false,
@@ -29,21 +26,11 @@ export class ScStatusGrid implements ChartConfig {
   @Prop() widgetId!: string;
   @Prop() dataStreams!: DataStream[];
   @Prop() annotations: Annotations;
-  @Prop() liveModeOnlyMessage: string = MSG;
   @Prop() isEditing: boolean = false;
   @Prop() messageOverrides: MessageOverrides = {};
 
   render() {
-    const {
-      viewport,
-      widgetId,
-      dataStreams,
-      annotations,
-      liveModeOnlyMessage,
-      isEditing,
-      messageOverrides,
-      labelsConfig,
-    } = this;
+    const { viewport, widgetId, dataStreams, annotations, isEditing, messageOverrides, labelsConfig } = this;
     return (
       <sc-widget-grid
         labelsConfig={labelsConfig}
@@ -51,7 +38,6 @@ export class ScStatusGrid implements ChartConfig {
         widgetId={widgetId}
         dataStreams={dataStreams}
         annotations={annotations}
-        liveModeOnlyMessage={liveModeOnlyMessage}
         isEditing={isEditing}
         messageOverrides={messageOverrides}
         renderCell={renderCell}

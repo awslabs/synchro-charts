@@ -11,9 +11,6 @@ import { parseDuration } from '../../utils/time';
 import { webGLRenderer } from '../sc-webgl-context/webglContext';
 import { DATE_RANGE_EMIT_EVENT_MS } from '../common/constants';
 
-const MSG =
-  'This visualization displays only live data. Choose a live time frame to display data in this visualization.';
-
 @Component({
   tag: 'sc-table',
   shadow: false,
@@ -30,7 +27,6 @@ export class ScTable implements ChartConfig {
   @Prop() dataStreams!: DataStream[];
   @Prop() annotations: Annotations;
   @Prop() trends: Trend[];
-  @Prop() liveModeOnlyMessage: string = MSG;
   @Prop() messageOverrides: MessageOverrides = {};
 
   /** Table column values */
@@ -110,7 +106,6 @@ export class ScTable implements ChartConfig {
         columns={this.tableColumns}
         rows={rows}
         isEnabled={isEnabled}
-        liveModeOnlyMessage={this.liveModeOnlyMessage}
         messageOverrides={this.messageOverrides}
       />
     );

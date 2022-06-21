@@ -40,8 +40,9 @@ const widgetGridSpecPage = async (propOverrides: Partial<Components.ScWidgetGrid
   const widgetGrid = page.doc.createElement('sc-widget-grid') as CustomHTMLElement<Components.ScWidgetGrid>;
   const props: Components.ScStatusGrid = {
     annotations: {},
-    messageOverrides: {},
-    liveModeOnlyMessage: 'liveModeOnlyMessage',
+    messageOverrides: {
+      liveModeOnlyMessage: 'liveModeOnlyMessage',
+    },
     labelsConfig: {},
     widgetId: 'sc-status-grid-widget-id',
     isEditing: false,
