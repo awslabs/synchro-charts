@@ -16,7 +16,7 @@ export class ScTableBase {
 
   render() {
     const { msgHeader, msgSubHeader } = formatLiveModeOnlyMessage(
-      this.messageOverrides?.liveModeOnlyMessage ?? DEFAULT_MESSAGE_OVERRIDES.liveModeOnlyMessage
+      this.messageOverrides?.liveModeOnly ?? DEFAULT_MESSAGE_OVERRIDES.liveModeOnly
     );
     return (
       <div class="awsui container">

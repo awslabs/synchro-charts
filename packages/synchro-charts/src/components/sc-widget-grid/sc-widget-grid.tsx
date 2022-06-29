@@ -207,9 +207,7 @@ export class ScWidgetGrid implements ChartConfig {
       <div class={{ tall: !this.collapseVertically }}>
         {!isEnabled && (
           <div class="help-icon-container">
-            <sc-help-tooltip
-              message={this.messageOverrides?.liveModeOnlyMessage ?? DEFAULT_MESSAGE_OVERRIDES.liveModeOnlyMessage}
-            />
+            <sc-help-tooltip message={this.messageOverrides?.liveModeOnly ?? DEFAULT_MESSAGE_OVERRIDES.liveModeOnly} />
           </div>
         )}
         <sc-grid>

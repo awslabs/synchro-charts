@@ -90,7 +90,7 @@ export class WidgetTestRoute {
           /** TODO: Port these over to the message overrides */
           invalidTagErrorHeader="invalidComponentTag.header"
           invalidTagErrorSubheader="invalidComponentTag.subheader"
-          liveModeOnlyMessage="invalidWidgetForHistoricalData.content"
+          liveModeOnly="invalidWidgetForHistoricalData.content"
         />
         <sc-webgl-context />
       </div>

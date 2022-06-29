@@ -56,7 +56,7 @@ const tableBaseSpecPage = async (propOverrides: Partial<Components.ScTableBase> 
     columns: [],
     isEnabled: true,
     messageOverrides: {
-      liveModeOnlyMessage: 'liveModeOnlyMessage',
+      liveModeOnly: 'liveModeOnly',
     },
     ...propOverrides,
   };

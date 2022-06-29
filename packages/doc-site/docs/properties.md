@@ -351,3 +351,39 @@
     The type of trend line to apply against the data. Must be equal to one of the following strings:
     
     - `linear-regression`: Least-squares linear regression algorithm to determine the line of best fit against the data.
+
+---
+
+- `messageOverrides`: Object
+
+    (Optional) Messages which can be customized. i.e. for internationalization, or business domain specific jargon.
+
+    MessageOverrides contains the following properties:
+
+    - `liveTimeFrameValueLabel`: string
+
+      value label utilized in some widgets
+
+    - `historicalTimeFrameValueLabel`: string
+
+      value label utilized in some widgets
+
+    - `noDataStreamsPresentHeader`: string
+      
+      message displayed when there are no data streams present
+
+    - `noDataStreamsPresentSubHeader`: string
+
+      message displayed when there are no data streams present
+
+    - `noDataPresentHeader`: string
+
+      message displayed when no streams have any data
+
+    - `noDataPresentSubHeader`: string
+
+      message displayed when no streams have any data
+
+    - `liveModeOnly`: string
+
+      message displayed when visualization displays only live data
