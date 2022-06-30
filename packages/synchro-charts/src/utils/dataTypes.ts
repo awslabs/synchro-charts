@@ -175,6 +175,7 @@ export type MessageOverrides = {
   /** no data present - msg displayed when no streams have any data */
   noDataPresentHeader?: string;
   noDataPresentSubHeader?: string;
+  liveModeOnly?: string;
 };
 export const DEFAULT_MESSAGE_OVERRIDES: Required<MessageOverrides> = {
   liveTimeFrameValueLabel: 'Value',
@@ -183,6 +184,8 @@ export const DEFAULT_MESSAGE_OVERRIDES: Required<MessageOverrides> = {
   noDataStreamsPresentSubHeader: "This widget doesn't have any properties or alarms.",
   noDataPresentHeader: 'No data',
   noDataPresentSubHeader: "There's no data to display for this time range.",
+  liveModeOnly:
+    'This visualization displays only live data. Choose a live time frame to display data in this visualization.',
 };
 
 /** SVG Constants */

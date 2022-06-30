@@ -286,16 +286,18 @@ describe('rendering', () => {
     expect(table.querySelector('.disable-status')).not.toBeNull();
   });
 
-  it('while in a historical time frame, only display `liveModeOnlyMessage` for disable status', async () => {
+  it('while in a historical time frame, only display `liveModeOnly` for disable status', async () => {
     const NON_LIVE_VIEWPORT = {
       ...DEFAULT_CHART_CONFIG.viewport,
     };
-    const LIVE_MODE_MSG = 'liveModeOnlyMessage';
+    const LIVE_MODE_MSG = 'liveModeOnly';
     const { table } = await tableSpecPage({
       dataStreams: [],
       tableColumns: TABLE_COLUMNS,
       viewport: NON_LIVE_VIEWPORT,
-      liveModeOnlyMessage: LIVE_MODE_MSG,
+      messageOverrides: {
+        liveModeOnly: LIVE_MODE_MSG,
+      },
     });
 
     const headers = table.querySelectorAll('th');
@@ -304,7 +306,7 @@ describe('rendering', () => {
 
     const disableStatus = table.querySelector('.disable-status') as HTMLElement;
     expect(disableStatus).not.toBeNull();
-    expect(disableStatus.innerText).toEqual('liveModeOnlyMessage');
+    expect(disableStatus.innerText).toEqual('liveModeOnly');
   });
 
   it('table with no datastreamInfo shows only table header and empty status', async () => {

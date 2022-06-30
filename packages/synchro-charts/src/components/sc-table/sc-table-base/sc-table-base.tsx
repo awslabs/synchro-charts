@@ -1,7 +1,7 @@
 import { Component, h, Prop } from '@stencil/core';
 import { formatLiveModeOnlyMessage, Row } from '../constructTableData';
 import { ScTableRows } from '../sc-table-row/sc-table-row';
-import { MessageOverrides, TableColumn } from '../../../utils/dataTypes';
+import { DEFAULT_MESSAGE_OVERRIDES, MessageOverrides, TableColumn } from '../../../utils/dataTypes';
 
 @Component({
   tag: 'sc-table-base',
@@ -12,11 +12,12 @@ export class ScTableBase {
   @Prop() columns!: TableColumn[];
   @Prop() rows!: Row[];
   @Prop() isEnabled!: boolean;
-  @Prop() liveModeOnlyMessage: string;
   @Prop() messageOverrides!: MessageOverrides;
 
   render() {
-    const { msgHeader, msgSubHeader } = formatLiveModeOnlyMessage(this.liveModeOnlyMessage);
+    const { msgHeader, msgSubHeader } = formatLiveModeOnlyMessage(
+      this.messageOverrides?.liveModeOnly ?? DEFAULT_MESSAGE_OVERRIDES.liveModeOnly
+    );
     return (
       <div class="awsui container">
         <table role="table">

@@ -107,7 +107,6 @@ export namespace Components {
         "annotations": Annotations;
         "dataStreams": DataStream[];
         "isEditing": boolean;
-        "liveModeOnlyMessage": string;
         "messageOverrides": MessageOverrides;
         "viewport": MinimalViewPortConfig;
         "widgetId": string;
@@ -284,7 +283,6 @@ export namespace Components {
           * Status Grid Specific configuration
          */
         "labelsConfig": LabelsConfig;
-        "liveModeOnlyMessage": string;
         "messageOverrides": MessageOverrides;
         "viewport": MinimalViewPortConfig;
         "widgetId": string;
@@ -342,7 +340,6 @@ export namespace Components {
     interface ScTable {
         "annotations": Annotations;
         "dataStreams": DataStream[];
-        "liveModeOnlyMessage": string;
         "messageOverrides": MessageOverrides;
         /**
           * Table column values
@@ -355,7 +352,6 @@ export namespace Components {
     interface ScTableBase {
         "columns": TableColumn[];
         "isEnabled": boolean;
-        "liveModeOnlyMessage": string;
         "messageOverrides": MessageOverrides;
         "rows": Row[];
     }
@@ -547,7 +543,6 @@ export namespace Components {
           * Chart API
          */
         "labelsConfig"?: LabelsConfig;
-        "liveModeOnlyMessage": string;
         "messageOverrides": MessageOverrides;
         "renderCell": RenderCell;
         "viewport": MinimalViewPortConfig;
@@ -1505,7 +1500,6 @@ declare namespace LocalJSX {
         "annotations"?: Annotations;
         "dataStreams": DataStream[];
         "isEditing"?: boolean;
-        "liveModeOnlyMessage"?: string;
         "messageOverrides"?: MessageOverrides;
         "viewport"?: MinimalViewPortConfig;
         "widgetId": string;
@@ -1682,7 +1676,6 @@ declare namespace LocalJSX {
           * Status Grid Specific configuration
          */
         "labelsConfig"?: LabelsConfig;
-        "liveModeOnlyMessage"?: string;
         "messageOverrides"?: MessageOverrides;
         "viewport"?: MinimalViewPortConfig;
         "widgetId": string;
@@ -1741,7 +1734,6 @@ declare namespace LocalJSX {
     interface ScTable {
         "annotations"?: Annotations;
         "dataStreams": DataStream[];
-        "liveModeOnlyMessage"?: string;
         "messageOverrides"?: MessageOverrides;
         /**
           * On view port date range change, this component emits a `dateRangeChange` event. This allows other data visualization components to sync to the same date range.
@@ -1758,7 +1750,6 @@ declare namespace LocalJSX {
     interface ScTableBase {
         "columns": TableColumn[];
         "isEnabled": boolean;
-        "liveModeOnlyMessage"?: string;
         "messageOverrides": MessageOverrides;
         "rows": Row[];
     }
@@ -1955,7 +1946,6 @@ declare namespace LocalJSX {
           * Chart API
          */
         "labelsConfig"?: LabelsConfig;
-        "liveModeOnlyMessage"?: string;
         "messageOverrides"?: MessageOverrides;
         /**
           * On view port date range change, this component emits a `dateRangeChange` event. This allows other data visualization components to sync to the same date range.

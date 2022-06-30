@@ -5,9 +5,6 @@ import { RenderCell } from '../sc-widget-grid/types';
 import { Annotations, ChartConfig } from '../charts/common/types';
 import { validate } from '../common/validator/validate';
 
-const MSG =
-  'This visualization displays only live data. Choose a live time frame to display data in this visualization.';
-
 const renderCell: RenderCell = props => <sc-kpi-base {...props} />;
 
 @Component({
@@ -20,7 +17,6 @@ export class ScKpi implements ChartConfig {
   @Prop() widgetId!: string;
   @Prop() dataStreams!: DataStream[];
   @Prop() annotations: Annotations;
-  @Prop() liveModeOnlyMessage: string = MSG;
   @Prop() isEditing: boolean = false;
   @Prop() messageOverrides: MessageOverrides = {};
 
@@ -29,14 +25,13 @@ export class ScKpi implements ChartConfig {
   }
 
   render() {
-    const { viewport, widgetId, dataStreams, annotations, liveModeOnlyMessage, isEditing, messageOverrides } = this;
+    const { viewport, widgetId, dataStreams, annotations, isEditing, messageOverrides } = this;
     return (
       <sc-widget-grid
         viewport={viewport}
         widgetId={widgetId}
         dataStreams={dataStreams}
         annotations={annotations}
-        liveModeOnlyMessage={liveModeOnlyMessage}
         isEditing={isEditing}
         messageOverrides={messageOverrides}
         renderCell={renderCell}

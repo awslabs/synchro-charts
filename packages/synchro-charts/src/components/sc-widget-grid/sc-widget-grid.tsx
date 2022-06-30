@@ -1,7 +1,14 @@
 import { Component, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
 
 import throttle from 'lodash.throttle';
-import { DataPoint, DataStream, MessageOverrides, MinimalViewPortConfig, Primitive } from '../../utils/dataTypes';
+import {
+  DataPoint,
+  DataStream,
+  DEFAULT_MESSAGE_OVERRIDES,
+  MessageOverrides,
+  MinimalViewPortConfig,
+  Primitive,
+} from '../../utils/dataTypes';
 import { NameValue, updateName } from '../sc-data-stream-name/helper';
 import { ActivePoint, activePoints } from '../charts/sc-webgl-base-chart/activePoints';
 import { getThresholds } from '../charts/common/annotations/utils';
@@ -18,9 +25,6 @@ import { getDataStreamForEventing } from '../charts/common';
 import { validate } from '../common/validator/validate';
 import { webGLRenderer } from '../sc-webgl-context/webglContext';
 import { DATE_RANGE_EMIT_EVENT_MS } from '../common/constants';
-
-const MSG =
-  'This visualization displays only live data. Choose a live time frame to display data in this visualization.';
 
 const title = ({ alarm, property }: { alarm?: DataStream; property?: DataStream }): string => {
   if (property) {
@@ -62,7 +66,6 @@ export class ScWidgetGrid implements ChartConfig {
   @Prop() isEditing: boolean = false;
 
   @Prop() messageOverrides: MessageOverrides = {};
-  @Prop() liveModeOnlyMessage: string = MSG;
 
   /** Widget data stream names */
   @State() names: NameValue[] = [];
@@ -204,7 +207,7 @@ export class ScWidgetGrid implements ChartConfig {
       <div class={{ tall: !this.collapseVertically }}>
         {!isEnabled && (
           <div class="help-icon-container">
-            <sc-help-tooltip message={this.liveModeOnlyMessage} />
+            <sc-help-tooltip message={this.messageOverrides?.liveModeOnly ?? DEFAULT_MESSAGE_OVERRIDES.liveModeOnly} />
           </div>
         )}
         <sc-grid>
