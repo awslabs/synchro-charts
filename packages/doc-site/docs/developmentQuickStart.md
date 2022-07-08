@@ -1,7 +1,7 @@
 ## Environment Setup
 Synchro Charts runs on node and uses yarn for package management. Specific versions are required in order to keep builds working with the current monorepo tooling.
 
-- Node: any `v16` or higher
+- Node: any `v14` or higher
 - Yarn: any `v1`, but not `v2` or higher
 
 ## Building Synchro Charts
