@@ -106,6 +106,10 @@ module.exports = {
       content: 'docs/contributing.md',
     },
     {
+      name: 'Development Quick Start',
+      content: 'docs/developmentQuickStart.md',
+    },
+    {
       name: 'Limitations',
       content: 'docs/limitations.md',
     },
