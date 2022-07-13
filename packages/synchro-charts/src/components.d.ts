@@ -78,6 +78,26 @@ export namespace Components {
         "pointType"?: POINT_TYPE;
     }
     interface ScDial {
+        "annotations": Annotations;
+        "dataStreams": DataStream[];
+        "isEditing": boolean;
+        "messageOverrides": MessageOverrides;
+        "viewport": MinimalViewPortConfig;
+        "widgetId": string;
+    }
+    interface ScDialBase {
+        "alarmPoint"?: DataPoint<Primitive>;
+        "alarmStream"?: DataStream;
+        "breachedThreshold"?: Threshold;
+        "isLoading"?: boolean;
+        "miniVersion": boolean;
+        "propertyPoint"?: DataPoint<Primitive>;
+        "propertyStream"?: DataStream;
+        "trendStream": DataStream | undefined;
+        "valueColor"?: string;
+        "viewport": MinimalViewPortConfig;
+    }
+    interface ScDialStandard {
     }
     interface ScErrorBadge {
     }
@@ -659,6 +679,18 @@ declare global {
     var HTMLScDialElement: {
         prototype: HTMLScDialElement;
         new (): HTMLScDialElement;
+    };
+    interface HTMLScDialBaseElement extends Components.ScDialBase, HTMLStencilElement {
+    }
+    var HTMLScDialBaseElement: {
+        prototype: HTMLScDialBaseElement;
+        new (): HTMLScDialBaseElement;
+    };
+    interface HTMLScDialStandardElement extends Components.ScDialStandard, HTMLStencilElement {
+    }
+    var HTMLScDialStandardElement: {
+        prototype: HTMLScDialStandardElement;
+        new (): HTMLScDialStandardElement;
     };
     interface HTMLScErrorBadgeElement extends Components.ScErrorBadge, HTMLStencilElement {
     }
@@ -1309,6 +1341,8 @@ declare global {
         "sc-circle-point-shaders": HTMLScCirclePointShadersElement;
         "sc-data-stream-name": HTMLScDataStreamNameElement;
         "sc-dial": HTMLScDialElement;
+        "sc-dial-base": HTMLScDialBaseElement;
+        "sc-dial-standard": HTMLScDialStandardElement;
         "sc-error-badge": HTMLScErrorBadgeElement;
         "sc-expandable-input": HTMLScExpandableInputElement;
         "sc-expandable-input-standard": HTMLScExpandableInputStandardElement;
@@ -1480,6 +1514,26 @@ declare namespace LocalJSX {
         "pointType"?: POINT_TYPE;
     }
     interface ScDial {
+        "annotations"?: Annotations;
+        "dataStreams": DataStream[];
+        "isEditing"?: boolean;
+        "messageOverrides"?: MessageOverrides;
+        "viewport"?: MinimalViewPortConfig;
+        "widgetId": string;
+    }
+    interface ScDialBase {
+        "alarmPoint"?: DataPoint<Primitive>;
+        "alarmStream"?: DataStream;
+        "breachedThreshold"?: Threshold;
+        "isLoading"?: boolean;
+        "miniVersion": boolean;
+        "propertyPoint"?: DataPoint<Primitive>;
+        "propertyStream"?: DataStream;
+        "trendStream": DataStream | undefined;
+        "valueColor"?: string;
+        "viewport"?: MinimalViewPortConfig;
+    }
+    interface ScDialStandard {
     }
     interface ScErrorBadge {
     }
@@ -2016,6 +2070,8 @@ declare namespace LocalJSX {
         "sc-circle-point-shaders": ScCirclePointShaders;
         "sc-data-stream-name": ScDataStreamName;
         "sc-dial": ScDial;
+        "sc-dial-base": ScDialBase;
+        "sc-dial-standard": ScDialStandard;
         "sc-error-badge": ScErrorBadge;
         "sc-expandable-input": ScExpandableInput;
         "sc-expandable-input-standard": ScExpandableInputStandard;
@@ -2140,6 +2196,8 @@ declare module "@stencil/core" {
             "sc-circle-point-shaders": LocalJSX.ScCirclePointShaders & JSXBase.HTMLAttributes<HTMLScCirclePointShadersElement>;
             "sc-data-stream-name": LocalJSX.ScDataStreamName & JSXBase.HTMLAttributes<HTMLScDataStreamNameElement>;
             "sc-dial": LocalJSX.ScDial & JSXBase.HTMLAttributes<HTMLScDialElement>;
+            "sc-dial-base": LocalJSX.ScDialBase & JSXBase.HTMLAttributes<HTMLScDialBaseElement>;
+            "sc-dial-standard": LocalJSX.ScDialStandard & JSXBase.HTMLAttributes<HTMLScDialStandardElement>;
             "sc-error-badge": LocalJSX.ScErrorBadge & JSXBase.HTMLAttributes<HTMLScErrorBadgeElement>;
             "sc-expandable-input": LocalJSX.ScExpandableInput & JSXBase.HTMLAttributes<HTMLScExpandableInputElement>;
             "sc-expandable-input-standard": LocalJSX.ScExpandableInputStandard & JSXBase.HTMLAttributes<HTMLScExpandableInputStandardElement>;

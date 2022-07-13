@@ -1,18 +1,18 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { ScDial } from '../sc-dial';
+import { ScDialBase } from './sc-dial-base';
 
-describe('sc-dial', () => {
+describe('sc-dial-base', () => {
   it('renders', async () => {
     const page = await newSpecPage({
-      components: [ScDial],
-      html: `<sc-dial></sc-dial>`,
+      components: [ScDialBase],
+      html: '<sc-dial-base></sc-dial-base>',
     });
     expect(page.root).toEqualHtml(`
-      <sc-dial>
+      <sc-dial-base>
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>
-      </sc-dial>
+      </sc-dial-base>
     `);
   });
 });

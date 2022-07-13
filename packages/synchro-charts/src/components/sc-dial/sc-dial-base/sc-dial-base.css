@@ -1,0 +1,34 @@
+.sc-dial-container {
+  display: block;
+  margin-top: 10px;
+}
+
+svg {
+  /* transform:rotate(270deg) */
+}
+
+circle {
+  -webkit-transition: stroke-dasharray 800ms;
+  transition: stroke-dasharray 800ms;
+}
+
+sc-dial-base .wrapper {
+  overflow: hidden;
+  display: grid;
+
+  /* icon width */
+  grid-template-columns: 36px auto;
+  grid-template-rows: auto auto;
+}
+
+sc-dial-base .main {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+sc-dial-base .loading-dial {
+  position: absolute;
+  top: -10px;
+}
+
