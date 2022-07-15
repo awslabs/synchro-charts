@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { AlarmsConfig, DataPoint, DataStream, DataStreamInfo, MessageOverrides, MinimalSizeConfig, MinimalViewPortConfig, Primitive, SizeConfig, SizePositionConfig, TableColumn, ViewPort, ViewPortConfig } from "./utils/dataTypes";
+import { AlarmsConfig, DataPoint, DataStream, DataStreamInfo, MessageOverrides, MinimalSizeConfig, MinimalViewPortConfig, Primitive, SizeConfig, SizePositionConfig, StreamAssociation, TableColumn, ViewPort, ViewPortConfig } from "./utils/dataTypes";
 import { Annotations, Axis, LayoutConfig, Legend, LegendConfig, MovementConfig, ScaleConfig, Threshold, Tooltip, WidgetConfigurationUpdate } from "./components/charts/common/types";
 import { Trend, TrendResult } from "./components/charts/common/trends/types";
 import { DATA_ALIGNMENT, StatusIcon } from "./components/charts/common/constants";
@@ -79,23 +79,20 @@ export namespace Components {
     }
     interface ScDial {
         "annotations": Annotations;
-        "dataStreams": DataStream[];
-        "isEditing": boolean;
+        "associatedStreams": StreamAssociation[];
+        "dataStream": DataStream;
         "messageOverrides": MessageOverrides;
-        "viewport": MinimalViewPortConfig;
+        "viewport": ViewPortConfig;
         "widgetId": string;
     }
     interface ScDialBase {
-        "alarmPoint"?: DataPoint<Primitive>;
         "alarmStream"?: DataStream;
         "breachedThreshold"?: Threshold;
         "isLoading"?: boolean;
-        "miniVersion": boolean;
         "propertyPoint"?: DataPoint<Primitive>;
         "propertyStream"?: DataStream;
-        "trendStream": DataStream | undefined;
         "valueColor"?: string;
-        "viewport": MinimalViewPortConfig;
+        "viewport": ViewPortConfig;
     }
     interface ScDialStandard {
     }
@@ -1515,23 +1512,21 @@ declare namespace LocalJSX {
     }
     interface ScDial {
         "annotations"?: Annotations;
-        "dataStreams": DataStream[];
-        "isEditing"?: boolean;
+        "associatedStreams"?: StreamAssociation[];
+        "dataStream": DataStream;
         "messageOverrides"?: MessageOverrides;
-        "viewport"?: MinimalViewPortConfig;
+        "onWidgetUpdated"?: (event: CustomEvent<WidgetConfigurationUpdate>) => void;
+        "viewport"?: ViewPortConfig;
         "widgetId": string;
     }
     interface ScDialBase {
-        "alarmPoint"?: DataPoint<Primitive>;
         "alarmStream"?: DataStream;
         "breachedThreshold"?: Threshold;
         "isLoading"?: boolean;
-        "miniVersion": boolean;
         "propertyPoint"?: DataPoint<Primitive>;
         "propertyStream"?: DataStream;
-        "trendStream": DataStream | undefined;
         "valueColor"?: string;
-        "viewport"?: MinimalViewPortConfig;
+        "viewport"?: ViewPortConfig;
     }
     interface ScDialStandard {
     }

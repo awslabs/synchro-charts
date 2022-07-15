@@ -9,6 +9,7 @@ import {
   MessageOverrides,
   MinimalViewPortConfig,
   SizeConfig,
+  StreamAssociation,
   ViewPort,
   ViewPortConfig,
 } from '../../../utils/dataTypes';
@@ -59,6 +60,15 @@ export interface ChartConfig extends BaseConfig {
   legend?: LegendConfig;
   annotations?: Annotations;
   axis?: Axis.Options;
+  messageOverrides?: MessageOverrides;
+}
+
+export interface DialConfig extends BaseConfig {
+  viewport: ViewPortConfig;
+  widgetId: string;
+  dataStream: DataStream;
+  associatedStreams: StreamAssociation[];
+  annotations?: Annotations;
   messageOverrides?: MessageOverrides;
 }
 

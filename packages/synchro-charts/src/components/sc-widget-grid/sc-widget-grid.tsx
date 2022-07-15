@@ -247,7 +247,7 @@ export class ScWidgetGrid implements ChartConfig {
                   alarmPoint,
                   breachedThreshold: threshold,
                   isEditing: this.isEditing,
-                  viewport: { start: this.start, end: this.end, yMin: this.viewport.yMin, yMax: this.viewport.yMax },
+                  viewport: { start: this.start, end: this.end },
                   miniVersion: isMiniVersion,
                   onChangeLabel: this.onChangeLabel,
                   messageOverrides: this.messageOverrides,

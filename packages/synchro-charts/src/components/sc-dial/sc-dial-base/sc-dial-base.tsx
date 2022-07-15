@@ -1,14 +1,13 @@
 import { Component, h, Prop } from '@stencil/core';
-import { DataPoint, DataStream, MinimalViewPortConfig, Primitive } from '../../../utils/dataTypes';
+import { DataPoint, DataStream, Primitive, ViewPortConfig } from '../../../utils/dataTypes';
+import { round } from '../../../utils/number';
 import { isNumberDataStream } from '../../../utils/predicates';
 import { getIcons } from '../../charts/common/annotations/iconUtils';
 import { Threshold } from '../../charts/common/types';
 import { NO_VALUE_PRESENT } from '../../common/terms';
 import { sizeContent, StatusProgress } from './util';
 
-const FONT_SIZE = 24;
 const MINI_FONT_SIZE = 32;
-const ICON_SHRINK_FACTOR = 0.7;
 
 @Component({
   tag: 'sc-dial-base',
@@ -16,49 +15,47 @@ const ICON_SHRINK_FACTOR = 0.7;
   shadow: true,
 })
 export class ScDialBase {
-  @Prop() viewport: MinimalViewPortConfig;
+  @Prop() viewport: ViewPortConfig;
   @Prop() breachedThreshold?: Threshold;
-  @Prop() miniVersion!: boolean;
   @Prop() valueColor?: string; // css color string
-  @Prop() trendStream!: DataStream | undefined;
 
   @Prop() alarmStream?: DataStream;
-  @Prop() alarmPoint?: DataPoint<Primitive>;
 
   @Prop() propertyStream?: DataStream;
   @Prop() propertyPoint?: DataPoint<Primitive>;
 
   @Prop() isLoading?: boolean = false;
 
-  fontSize = (): number => (this.miniVersion ? MINI_FONT_SIZE : FONT_SIZE);
-
-  iconSize = (): number => this.fontSize() * ICON_SHRINK_FACTOR;
+  getColorByPercent = (percent: number) => {
+    // eslint-disable-next-line no-nested-ternary
+    return percent < 0.3333
+      ? StatusProgress.CRITICAL
+      : percent < 0.6667
+      ? StatusProgress.WARNING
+      : StatusProgress.NORMAL;
+  };
 
   render() {
     const icon = this.breachedThreshold ? this.breachedThreshold.icon : undefined;
     const { yMin = 0, yMax = 0 } = this.viewport;
     const propertyStream = this.propertyStream ? isNumberDataStream(this.propertyStream) && this.propertyStream : null;
-    const point = propertyStream ? this.propertyPoint : this.alarmPoint;
+    const point = propertyStream ? this.propertyPoint : null;
     const error = propertyStream ? propertyStream.error : 'Only numbers are supported';
 
     const percent = point ? (point.y as number) / (yMax - yMin) : 0;
-    const labelColor = icon
-      ? this.valueColor ||
-        // eslint-disable-next-line no-nested-ternary
-        (percent < 0.3333 ? StatusProgress.CRITICAL : percent < 0.6667 ? StatusProgress.WARNING : StatusProgress.NORMAL)
-      : StatusProgress.PRIMARYTEXT;
+    const labelColor = this.valueColor || this.getColorByPercent(percent);
     const left = 760 * (1 - percent);
     const right = 760 - left;
-    const stream = propertyStream || this.alarmStream;
+    const stream = propertyStream;
     const size = sizeContent.XL;
 
     return (
-      <div class={{ wrapper: true, large: !this.miniVersion }}>
-        <div class={{ main: true, large: !this.miniVersion }}>
+      <div class={{ wrapper: true, large: false }}>
+        <div class={{ main: true, large: false }}>
           {this.isLoading ? (
             <div
-              class={{ main: true, large: !this.miniVersion }}
-              style={{ height: `${this.fontSize()}px`, width: `${this.fontSize()}px` }}
+              class={{ main: true, large: false }}
+              style={{ height: `${MINI_FONT_SIZE}px`, width: `${MINI_FONT_SIZE}px` }}
             >
               <svg width="276" height="276" viewBox="0 0 276 276">
                 <symbol id="sym-octagon" stroke="black" viewBox="0 0 200 200">
@@ -144,7 +141,7 @@ export class ScDialBase {
                     cy="138"
                     r="121"
                     stroke-width="34"
-                    stroke={icon ? labelColor : StatusProgress.BLUE}
+                    stroke={labelColor || StatusProgress.BLUE}
                     fill="none"
                     stroke-dasharray={percent === 1 ? `${right} ${left}` : `${right - 2} ${left + 2}`}
                     transform="matrix(1,0,0,1,0,0)"
@@ -154,9 +151,9 @@ export class ScDialBase {
 
                 {point ? (
                   <text x="142" y="140" font-size={size.value} text-anchor="middle">
-                    <tspan dy={!stream?.unit ? 0 : 10}>
-                      {stream?.unit ? point?.y : (percent * 100).toFixed(0)}
-                      <tspan font-size={size.unit}>{stream?.unit || '%'}</tspan>
+                    <tspan dy={stream && !stream.unit ? 0 : 10}>
+                      {stream && stream.unit ? round(point?.y as number) : round(percent * 100)}
+                      <tspan font-size={size.unit}>{(stream && stream.unit) || '%'}</tspan>
                     </tspan>
                   </text>
                 ) : (
@@ -166,8 +163,14 @@ export class ScDialBase {
                 )}
 
                 {stream && !stream.unit ? (
-                  <text x={icon ? '152' : '140'} y="184" font-size={size.label} text-anchor="middle" fill={labelColor}>
-                    {!icon ? 'Medium' : this.alarmPoint?.y}
+                  <text
+                    x={icon ? '152' : '140'}
+                    y="184"
+                    font-size={size.label}
+                    text-anchor="middle"
+                    fill={icon ? labelColor : StatusProgress.PRIMARYTEXT}
+                  >
+                    {!icon ? 'Medium' : this.breachedThreshold?.value}
                   </text>
                 ) : null}
                 {stream && !stream.unit && icon && (
