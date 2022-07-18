@@ -1,5 +1,5 @@
 import { Threshold } from '../charts/common/types';
-import { DataPoint, DataStream, MessageOverrides, MinimalViewPortConfig, ViewPortConfig } from '../../utils/dataTypes';
+import { DataPoint, DataStream, MessageOverrides, ViewPortConfig } from '../../utils/dataTypes';
 import { LabelsConfig } from '../common/types';
 import { StatusIcon } from '../charts/common/constants';
 
