@@ -50,7 +50,7 @@ export class ScDialBase {
     const size = sizeContent.XL;
 
     return (
-      <div class={{ wrapper: true, large: false }}>
+      <div class="sc-dialbase-container">
         <div class={{ main: true, large: false }}>
           {this.isLoading ? (
             <div

@@ -10,6 +10,12 @@ import { isMinimalStaticViewport } from '../../utils/predicates';
 import { getThresholds } from '../charts/common/annotations/utils';
 
 const renderCell: RenderCell = props => <sc-dial-base {...props} />;
+const title = (dataStream: { detailedName?: any; name?: any }) => {
+  if (dataStream) {
+    return dataStream.detailedName || dataStream.name;
+  }
+  return null;
+};
 @Component({
   tag: 'sc-dial',
   styleUrl: 'sc-dial.css',
@@ -96,7 +102,12 @@ export class ScDial implements DialConfig {
     const alarmStream = this.getAlarmStream(this.dataStream) ? this.dataStream : undefined;
     const threshold = this.getBreachedThreshold(propertyPoint, this.dataStream);
     return (
-      <fragement>
+      <sc-dial-tooltip
+        title={title(this.dataStream)}
+        propertyPoint={propertyPoint}
+        alarmPoint={alarmStream && propertyPoint}
+        breachedThreshold={threshold}
+      >
         {renderCell({
           propertyStream: this.dataStream,
           propertyPoint,
@@ -110,7 +121,7 @@ export class ScDial implements DialConfig {
           isLoading: this.dataStream ? this.dataStream.isLoading || false : false,
           isRefreshing: this.dataStream ? this.dataStream.isRefreshing || false : false,
         })}
-      </fragement>
+      </sc-dial-tooltip>
     );
   }
 }

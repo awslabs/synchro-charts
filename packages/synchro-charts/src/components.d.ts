@@ -96,6 +96,12 @@ export namespace Components {
     }
     interface ScDialStandard {
     }
+    interface ScDialTooltip {
+        "alarmPoint"?: DataPoint;
+        "breachedThreshold"?: Threshold;
+        "propertyPoint"?: DataPoint;
+        "title": string;
+    }
     interface ScErrorBadge {
     }
     interface ScExpandableInput {
@@ -688,6 +694,12 @@ declare global {
     var HTMLScDialStandardElement: {
         prototype: HTMLScDialStandardElement;
         new (): HTMLScDialStandardElement;
+    };
+    interface HTMLScDialTooltipElement extends Components.ScDialTooltip, HTMLStencilElement {
+    }
+    var HTMLScDialTooltipElement: {
+        prototype: HTMLScDialTooltipElement;
+        new (): HTMLScDialTooltipElement;
     };
     interface HTMLScErrorBadgeElement extends Components.ScErrorBadge, HTMLStencilElement {
     }
@@ -1340,6 +1352,7 @@ declare global {
         "sc-dial": HTMLScDialElement;
         "sc-dial-base": HTMLScDialBaseElement;
         "sc-dial-standard": HTMLScDialStandardElement;
+        "sc-dial-tooltip": HTMLScDialTooltipElement;
         "sc-error-badge": HTMLScErrorBadgeElement;
         "sc-expandable-input": HTMLScExpandableInputElement;
         "sc-expandable-input-standard": HTMLScExpandableInputStandardElement;
@@ -1529,6 +1542,12 @@ declare namespace LocalJSX {
         "viewport"?: ViewPortConfig;
     }
     interface ScDialStandard {
+    }
+    interface ScDialTooltip {
+        "alarmPoint"?: DataPoint;
+        "breachedThreshold"?: Threshold;
+        "propertyPoint"?: DataPoint;
+        "title"?: string;
     }
     interface ScErrorBadge {
     }
@@ -2067,6 +2086,7 @@ declare namespace LocalJSX {
         "sc-dial": ScDial;
         "sc-dial-base": ScDialBase;
         "sc-dial-standard": ScDialStandard;
+        "sc-dial-tooltip": ScDialTooltip;
         "sc-error-badge": ScErrorBadge;
         "sc-expandable-input": ScExpandableInput;
         "sc-expandable-input-standard": ScExpandableInputStandard;
@@ -2193,6 +2213,7 @@ declare module "@stencil/core" {
             "sc-dial": LocalJSX.ScDial & JSXBase.HTMLAttributes<HTMLScDialElement>;
             "sc-dial-base": LocalJSX.ScDialBase & JSXBase.HTMLAttributes<HTMLScDialBaseElement>;
             "sc-dial-standard": LocalJSX.ScDialStandard & JSXBase.HTMLAttributes<HTMLScDialStandardElement>;
+            "sc-dial-tooltip": LocalJSX.ScDialTooltip & JSXBase.HTMLAttributes<HTMLScDialTooltipElement>;
             "sc-error-badge": LocalJSX.ScErrorBadge & JSXBase.HTMLAttributes<HTMLScErrorBadgeElement>;
             "sc-expandable-input": LocalJSX.ScExpandableInput & JSXBase.HTMLAttributes<HTMLScExpandableInputElement>;
             "sc-expandable-input-standard": LocalJSX.ScExpandableInputStandard & JSXBase.HTMLAttributes<HTMLScExpandableInputStandardElement>;
