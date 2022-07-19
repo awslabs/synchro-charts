@@ -30,12 +30,6 @@ const DEFAULT_MARGINS: Partial<SizeConfig> = {
 
 // Fits two rows of legend rows
 const THRESHOLD_LEGEND_HEIGHT_PX = 50;
-const title = (dataStream: { detailedName?: any; name?: any }) => {
-  if (dataStream) {
-    return dataStream.detailedName || dataStream.name;
-  }
-  return null;
-};
 @Component({
   tag: 'sc-dial',
   styleUrl: 'sc-dial.css',
@@ -143,27 +137,20 @@ export class ScDial implements DialConfig {
 
           return [
             <div style={{ height: `${chartSize.height}px`, width: `${chartSize.width}px` }}>
-              <sc-dial-tooltip
-                title={title(this.dataStream)}
-                propertyPoint={propertyPoint}
-                alarmPoint={alarmStream && propertyPoint}
-                breachedThreshold={threshold}
-              >
-                {renderCell({
-                  propertyStream: this.dataStream,
-                  propertyPoint,
-                  alarmStream,
-                  breachedThreshold: threshold,
-                  viewport: this.viewport,
-                  messageOverrides: this.messageOverrides,
-                  icon: threshold ? threshold.icon : undefined,
-                  valueColor: threshold ? threshold.color : undefined,
-                  error: this.dataStream ? this.dataStream.error : undefined,
-                  isLoading: this.dataStream ? this.dataStream.isLoading || false : false,
-                  isRefreshing: this.dataStream ? this.dataStream.isRefreshing || false : false,
-                  size: chartSize,
-                })}
-              </sc-dial-tooltip>
+              {renderCell({
+                propertyStream: this.dataStream,
+                propertyPoint,
+                alarmStream,
+                breachedThreshold: threshold,
+                viewport: this.viewport,
+                messageOverrides: this.messageOverrides,
+                icon: threshold ? threshold.icon : undefined,
+                valueColor: threshold ? threshold.color : undefined,
+                error: this.dataStream ? this.dataStream.error : undefined,
+                isLoading: this.dataStream ? this.dataStream.isLoading || false : false,
+                isRefreshing: this.dataStream ? this.dataStream.isRefreshing || false : false,
+                size: chartSize,
+              })}
             </div>,
           ];
         }}

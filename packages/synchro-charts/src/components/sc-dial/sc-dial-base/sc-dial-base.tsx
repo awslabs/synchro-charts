@@ -8,6 +8,12 @@ import { NO_VALUE_PRESENT } from '../../common/terms';
 import { DialLoading } from './sc-dial-loading';
 import { sizeContent, StatusProgress } from './util';
 
+const title = (dataStream: { detailedName?: any; name?: any } | null | false) => {
+  if (dataStream) {
+    return dataStream.detailedName || dataStream.name;
+  }
+  return null;
+};
 @Component({
   tag: 'sc-dial-base',
   styleUrl: 'sc-dial-base.css',
@@ -48,75 +54,85 @@ export class ScDialBase {
     const right = 760 - left;
     const stream = propertyStream;
     const size = sizeContent.XL;
+    const unit = propertyStream && propertyStream.unit;
     const width = `${(this.size?.width || 0) - (this.size?.marginLeft || 0) - (this.size?.marginRight || 0)}px`;
     const height = `${(this.size?.height || 0) - (this.size?.marginTop || 0) - (this.size?.marginBottom || 0)}px`;
 
     return (
-      <div class="sc-dialbase-container" style={{ height: `${this.size?.height}px`, width: `${this.size?.width}px` }}>
-        {this.isLoading ? (
-          <div style={{ height, width }}>
-            <DialLoading />
-          </div>
-        ) : (
-          <div style={{ height, width }}>
-            <svg viewBox="0 0 276 276">
-              <circle
-                cx="138"
-                cy="138"
-                r="121"
-                stroke-width="34"
-                stroke="#d9d9d9"
-                fill="none"
-                transform="matrix(1,0,0,-1,0,276)"
-                stroke-dasharray={percent === 0 ? `${left} ${right}` : `${left - 2} ${right + 2}`}
-                stroke-dashoffset="-192"
-              />
-              {point && (
+      <sc-dial-tooltip
+        title={title(propertyStream)}
+        propertyPoint={this.propertyPoint}
+        alarmPoint={this.alarmStream && this.propertyPoint}
+        breachedThreshold={this.breachedThreshold}
+        unit={unit || '%'}
+        value={unit ? (point?.y as number) : percent * 100}
+      >
+        <div class="sc-dialbase-container" style={{ height: `${this.size?.height}px`, width: `${this.size?.width}px` }}>
+          {this.isLoading ? (
+            <div style={{ height, width }}>
+              <DialLoading />
+            </div>
+          ) : (
+            <div style={{ height, width }}>
+              <svg viewBox="0 0 276 276">
                 <circle
                   cx="138"
                   cy="138"
                   r="121"
                   stroke-width="34"
-                  stroke={labelColor || StatusProgress.BLUE}
+                  stroke="#d9d9d9"
                   fill="none"
-                  stroke-dasharray={percent === 1 ? `${right} ${left}` : `${right - 2} ${left + 2}`}
-                  transform="matrix(1,0,0,1,0,0)"
-                  stroke-dashoffset="190"
+                  transform="matrix(1,0,0,-1,0,276)"
+                  stroke-dasharray={percent === 0 ? `${left} ${right}` : `${left - 2} ${right + 2}`}
+                  stroke-dashoffset="-192"
                 />
-              )}
+                {point && (
+                  <circle
+                    cx="138"
+                    cy="138"
+                    r="121"
+                    stroke-width="34"
+                    stroke={labelColor || StatusProgress.BLUE}
+                    fill="none"
+                    stroke-dasharray={percent === 1 ? `${right} ${left}` : `${right - 2} ${left + 2}`}
+                    transform="matrix(1,0,0,1,0,0)"
+                    stroke-dashoffset="190"
+                  />
+                )}
 
-              {point ? (
-                <text x="142" y="140" font-size={size.value} text-anchor="middle">
-                  <tspan dy={stream && !stream.unit ? 0 : 10}>
-                    {stream && stream.unit ? round(point?.y as number) : round(percent * 100)}
-                    <tspan font-size={size.unit}>{(stream && stream.unit) || '%'}</tspan>
-                  </tspan>
-                </text>
-              ) : (
-                <text x="138" y="140" font-size={size.value} text-anchor="middle" fill={StatusProgress.SECONDARYTEXT}>
-                  <tspan dy={stream && !stream.unit ? 0 : 10}>{NO_VALUE_PRESENT}</tspan>
-                </text>
-              )}
+                {point ? (
+                  <text x="142" y="140" font-size={size.value} text-anchor="middle">
+                    <tspan dy={stream && !stream.unit ? 0 : 10}>
+                      {stream && stream.unit ? round(point?.y as number) : round(percent * 100)}
+                      <tspan font-size={size.unit}>{(stream && stream.unit) || '%'}</tspan>
+                    </tspan>
+                  </text>
+                ) : (
+                  <text x="138" y="140" font-size={size.value} text-anchor="middle" fill={StatusProgress.SECONDARYTEXT}>
+                    <tspan dy={stream && !stream.unit ? 0 : 10}>{NO_VALUE_PRESENT}</tspan>
+                  </text>
+                )}
 
-              {stream && !stream.unit ? (
-                <text
-                  x={icon ? '152' : '140'}
-                  y="184"
-                  font-size={size.label}
-                  text-anchor="middle"
-                  fill={icon ? labelColor : StatusProgress.PRIMARYTEXT}
-                >
-                  {!icon ? 'Medium' : this.breachedThreshold?.value}
-                </text>
-              ) : null}
-              {stream && !stream.unit && icon && (
-                <g transform="matrix(1,0,0,1,58,158)">{getIcons(icon, labelColor, size.alarm)}</g>
-              )}
-            </svg>
-          </div>
-        )}
-        {error != null && <sc-error-badge data-testid="warning">{error}</sc-error-badge>}
-      </div>
+                {stream && !stream.unit ? (
+                  <text
+                    x={icon ? '152' : '140'}
+                    y="184"
+                    font-size={size.label}
+                    text-anchor="middle"
+                    fill={icon ? labelColor : StatusProgress.PRIMARYTEXT}
+                  >
+                    {!icon ? 'Medium' : this.breachedThreshold?.value}
+                  </text>
+                ) : null}
+                {stream && !stream.unit && icon && (
+                  <g transform="matrix(1,0,0,1,58,158)">{getIcons(icon, labelColor, size.alarm)}</g>
+                )}
+              </svg>
+            </div>
+          )}
+          {error != null && <sc-error-badge data-testid="warning">{error}</sc-error-badge>}
+        </div>
+      </sc-dial-tooltip>
     );
   }
 }

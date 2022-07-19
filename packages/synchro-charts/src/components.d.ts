@@ -103,6 +103,8 @@ export namespace Components {
         "breachedThreshold"?: Threshold;
         "propertyPoint"?: DataPoint;
         "title": string;
+        "unit"?: string;
+        "value"?: number | undefined;
     }
     interface ScErrorBadge {
     }
@@ -1552,6 +1554,8 @@ declare namespace LocalJSX {
         "breachedThreshold"?: Threshold;
         "propertyPoint"?: DataPoint;
         "title"?: string;
+        "unit"?: string;
+        "value"?: number | undefined;
     }
     interface ScErrorBadge {
     }

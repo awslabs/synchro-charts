@@ -17,6 +17,8 @@ export class ScDialTooltip {
   @Prop() propertyPoint?: DataPoint;
   @Prop() alarmPoint?: DataPoint;
   @Prop() breachedThreshold?: Threshold;
+  @Prop() unit?: string;
+  @Prop() value?: number | undefined;
 
   private tooltip: Instance | undefined;
 
@@ -47,6 +49,7 @@ export class ScDialTooltip {
   render() {
     const thereIsSomeData = this.propertyPoint != null || this.alarmPoint != null;
     const color = this.breachedThreshold ? this.breachedThreshold.color : undefined;
+    const icon = this.breachedThreshold ? this.breachedThreshold.icon : undefined;
 
     return (
       <div class="tooltip-container">
@@ -60,10 +63,11 @@ export class ScDialTooltip {
                 {this.propertyPoint && (
                   <div>
                     <div class="awsui-util-label">Latest value:</div>
-                    <div>
-                      <strong style={{ color }}>
-                        <Value value={this.propertyPoint.y} />
-                      </strong>{' '}
+                    <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+                      <strong style={{ color, display: 'flex', marginRight: '3px' }}>
+                        {icon && <sc-chart-icon name={icon} color={color} style={{ marginRight: '3px' }} />}
+                        <Value value={this.value} unit={this.unit} />
+                      </strong>
                       at{' '}
                       {new Date(this.propertyPoint.x).toLocaleString('en-US', {
                         hour12: true,
@@ -74,13 +78,12 @@ export class ScDialTooltip {
                         day: 'numeric',
                       })}
                     </div>
-                  </div>
-                )}
-
-                {this.alarmPoint && (
-                  <div>
-                    {this.breachedThreshold && this.breachedThreshold.description && (
-                      <div>({this.breachedThreshold.description})</div>
+                    {this.alarmPoint && (
+                      <div>
+                        {this.breachedThreshold && this.breachedThreshold.icon && (
+                          <span style={{ color }}>{this.breachedThreshold.value}</span>
+                        )}
+                      </div>
                     )}
                   </div>
                 )}
