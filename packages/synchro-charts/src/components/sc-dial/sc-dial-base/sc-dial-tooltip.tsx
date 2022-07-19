@@ -10,7 +10,7 @@ import { Value } from '../../value/Value';
   tag: 'sc-dial-tooltip',
   shadow: false,
 })
-export class ScGridTooltip {
+export class ScDialTooltip {
   @Element() el: HTMLElement;
 
   @Prop() title: string;

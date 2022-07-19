@@ -1,5 +1,7 @@
 sc-dial-base .sc-dialbase-container {
-  display: block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 sc-dial-base circle {
@@ -7,23 +9,4 @@ sc-dial-base circle {
   transition: stroke-dasharray 800ms;
 }
 
-sc-dial-base .wrapper {
-  overflow: hidden;
-  display: grid;
-
-  /* icon width */
-  grid-template-columns: 36px auto;
-  grid-template-rows: auto auto;
-}
-
-sc-dial-base .main {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-sc-dial-base .loading-dial {
-  position: absolute;
-  top: -10px;
-}
 

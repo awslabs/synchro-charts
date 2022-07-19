@@ -50,6 +50,10 @@ export class ScDialStandard {
       <sc-dial
         widgetId="test-widget"
         dataStream={this.dataStream}
+        size={{
+          height: 500,
+          width: 500,
+        }}
         associatedStreams={[
           {
             id: 'car-speed-alarm',

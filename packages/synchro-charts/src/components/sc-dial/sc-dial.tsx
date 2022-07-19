@@ -1,5 +1,13 @@
 import { Component, Event, EventEmitter, h, Prop, State } from '@stencil/core';
-import { DataPoint, DataStream, MessageOverrides, StreamAssociation, ViewPortConfig } from '../../utils/dataTypes';
+import {
+  DataPoint,
+  DataStream,
+  MessageOverrides,
+  MinimalSizeConfig,
+  SizeConfig,
+  StreamAssociation,
+  ViewPortConfig,
+} from '../../utils/dataTypes';
 import { Annotations, DialConfig, Threshold, WidgetConfigurationUpdate } from '../charts/common/types';
 import { validate } from '../common/validator/validate';
 import { NameValue, updateName } from '../sc-data-stream-name/helper';
@@ -8,8 +16,20 @@ import { RenderCell } from './type';
 import { breachedThreshold } from '../charts/common/annotations/breachedThreshold';
 import { isMinimalStaticViewport } from '../../utils/predicates';
 import { getThresholds } from '../charts/common/annotations/utils';
+import { RectScrollFixed } from '../../utils/types';
+import { DEFAULT_CHART_CONFIG } from '../charts/sc-webgl-base-chart/chartDefaults';
 
 const renderCell: RenderCell = props => <sc-dial-base {...props} />;
+
+const DEFAULT_MARGINS: Partial<SizeConfig> = {
+  marginLeft: 10,
+  marginTop: 0,
+  marginBottom: DEFAULT_CHART_CONFIG.size.marginBottom,
+  marginRight: 5,
+};
+
+// Fits two rows of legend rows
+const THRESHOLD_LEGEND_HEIGHT_PX = 50;
 const title = (dataStream: { detailedName?: any; name?: any }) => {
   if (dataStream) {
     return dataStream.detailedName || dataStream.name;
@@ -28,6 +48,8 @@ export class ScDial implements DialConfig {
   @Prop() associatedStreams: StreamAssociation[];
   @Prop() annotations: Annotations;
   @Prop() messageOverrides: MessageOverrides = {};
+
+  @Prop() size?: MinimalSizeConfig;
 
   @Event()
   widgetUpdated: EventEmitter<WidgetConfigurationUpdate>;
@@ -100,28 +122,52 @@ export class ScDial implements DialConfig {
   render() {
     const propertyPoint = this.getPoint(this.dataStream);
     const alarmStream = this.getAlarmStream(this.dataStream) ? this.dataStream : undefined;
-    const threshold = this.getBreachedThreshold(propertyPoint, this.dataStream);
+    const threshold =
+      getThresholds(this.annotations).filter(a => a.icon)[0] ||
+      this.getBreachedThreshold(propertyPoint, this.dataStream);
     return (
-      <sc-dial-tooltip
-        title={title(this.dataStream)}
-        propertyPoint={propertyPoint}
-        alarmPoint={alarmStream && propertyPoint}
-        breachedThreshold={threshold}
-      >
-        {renderCell({
-          propertyStream: this.dataStream,
-          propertyPoint,
-          alarmStream,
-          breachedThreshold: threshold,
-          viewport: this.viewport,
-          messageOverrides: this.messageOverrides,
-          icon: threshold ? threshold.icon : undefined,
-          valueColor: threshold ? threshold.color : undefined,
-          error: this.dataStream ? this.dataStream.error : undefined,
-          isLoading: this.dataStream ? this.dataStream.isLoading || false : false,
-          isRefreshing: this.dataStream ? this.dataStream.isRefreshing || false : false,
-        })}
-      </sc-dial-tooltip>
+      <sc-size-provider
+        size={this.size}
+        renderFunc={(size: RectScrollFixed) => {
+          const totalSize = {
+            ...DEFAULT_CHART_CONFIG.size,
+            ...DEFAULT_MARGINS,
+            ...this.size,
+            ...size,
+          };
+          const chartHeight = totalSize.height - THRESHOLD_LEGEND_HEIGHT_PX;
+          const chartSize = {
+            ...totalSize,
+            height: chartHeight,
+          };
+
+          return [
+            <div style={{ height: `${chartSize.height}px`, width: `${chartSize.width}px` }}>
+              <sc-dial-tooltip
+                title={title(this.dataStream)}
+                propertyPoint={propertyPoint}
+                alarmPoint={alarmStream && propertyPoint}
+                breachedThreshold={threshold}
+              >
+                {renderCell({
+                  propertyStream: this.dataStream,
+                  propertyPoint,
+                  alarmStream,
+                  breachedThreshold: threshold,
+                  viewport: this.viewport,
+                  messageOverrides: this.messageOverrides,
+                  icon: threshold ? threshold.icon : undefined,
+                  valueColor: threshold ? threshold.color : undefined,
+                  error: this.dataStream ? this.dataStream.error : undefined,
+                  isLoading: this.dataStream ? this.dataStream.isLoading || false : false,
+                  isRefreshing: this.dataStream ? this.dataStream.isRefreshing || false : false,
+                  size: chartSize,
+                })}
+              </sc-dial-tooltip>
+            </div>,
+          ];
+        }}
+      />
     );
   }
 }

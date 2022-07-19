@@ -1,5 +1,5 @@
 import { Threshold } from '../charts/common/types';
-import { DataPoint, DataStream, MessageOverrides, ViewPortConfig } from '../../utils/dataTypes';
+import { DataPoint, DataStream, MessageOverrides, MinimalSizeConfig, ViewPortConfig } from '../../utils/dataTypes';
 import { LabelsConfig } from '../common/types';
 import { StatusIcon } from '../charts/common/constants';
 
@@ -10,7 +10,7 @@ export type CellOptions = {
   isRefreshing?: boolean;
   isLoading?: boolean;
   messageOverrides: MessageOverrides;
-  breachedThreshold?: Threshold;
+  breachedThreshold?: Threshold | undefined;
   point?: DataPoint | undefined;
   alarmPoint?: DataPoint;
   alarmStream?: DataStream;
@@ -18,6 +18,7 @@ export type CellOptions = {
   propertyStream?: DataStream;
   valueColor?: string;
   viewport: ViewPortConfig;
+  size?: MinimalSizeConfig;
 };
 
 export type RenderCell = (cellOptions: CellOptions) => void;
