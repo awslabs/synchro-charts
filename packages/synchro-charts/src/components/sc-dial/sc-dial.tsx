@@ -43,7 +43,7 @@ export class ScDial implements DialConfig {
   @Prop() annotations?: Annotations;
   @Prop() messageOverrides: MessageOverrides = {};
 
-  @Prop() size?: MinimalSizeConfig;
+  @Prop() size?: MinimalSizeConfig = { width: 276, height: 276 };
 
   @Event()
   widgetUpdated: EventEmitter<WidgetConfigurationUpdate>;

@@ -1,5 +1,6 @@
 sc-dial-base .sc-dialbase-container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }

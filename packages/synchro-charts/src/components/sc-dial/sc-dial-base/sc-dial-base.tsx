@@ -88,7 +88,7 @@ export class ScDialBase {
     const stream = propertyStream;
     const unit = propertyStream && propertyStream.unit;
     const width = `${(this.size?.width || 0) - (this.size?.marginLeft || 0) - (this.size?.marginRight || 0)}px`;
-    const height = `${(this.size?.height || 0) - (this.size?.marginTop || 0) - (this.size?.marginBottom || 0)}px`;
+    const height = `${(this.size?.height || 0) - (this.size?.marginTop || 0) - (this.size?.marginBottom || 0) + 80}px`;
 
     return (
       <sc-dial-tooltip
@@ -100,7 +100,10 @@ export class ScDialBase {
         value={unit ? (point?.y as number) : percent * 100}
         color={labelColor}
       >
-        <div class="sc-dialbase-container" style={{ height: `${this.size?.height}px`, width: `${this.size?.width}px` }}>
+        <div
+          class="sc-dialbase-container"
+          style={{ minHeight: `${this.size?.height}px`, width: `${this.size?.width}px` }}
+        >
           {this.isLoading ? (
             <div style={{ height, width }}>
               <DialLoading />
