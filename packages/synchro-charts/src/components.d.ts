@@ -78,8 +78,8 @@ export namespace Components {
         "pointType"?: POINT_TYPE;
     }
     interface ScDial {
-        "annotations": Annotations;
-        "associatedStreams": StreamAssociation[];
+        "annotations"?: Annotations;
+        "associatedStreams"?: StreamAssociation[];
         "dataStream": DataStream;
         "messageOverrides": MessageOverrides;
         "size"?: MinimalSizeConfig;
@@ -101,6 +101,7 @@ export namespace Components {
     interface ScDialTooltip {
         "alarmPoint"?: DataPoint;
         "breachedThreshold"?: Threshold;
+        "color"?: string | undefined;
         "propertyPoint"?: DataPoint;
         "title": string;
         "unit"?: string;
@@ -1552,6 +1553,7 @@ declare namespace LocalJSX {
     interface ScDialTooltip {
         "alarmPoint"?: DataPoint;
         "breachedThreshold"?: Threshold;
+        "color"?: string | undefined;
         "propertyPoint"?: DataPoint;
         "title"?: string;
         "unit"?: string;

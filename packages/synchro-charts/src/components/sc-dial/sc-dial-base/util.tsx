@@ -8,6 +8,13 @@ export enum StatusProgress {
   SECONDARYTEXT = '#687078',
 }
 
+export interface TextSizeConfig {
+  value: number;
+  unit: number;
+  label: number;
+  alarm: number;
+}
+
 export const sizeContent = {
   Huge: {
     value: 96,

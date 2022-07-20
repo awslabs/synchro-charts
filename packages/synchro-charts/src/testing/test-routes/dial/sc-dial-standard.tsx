@@ -24,7 +24,7 @@ import { COMPARISON_OPERATOR, StatusIcon } from '../../../components/charts/comm
 
 // viewport boundaries
 const Y_MIN = 0;
-const Y_MAX = 5000;
+const Y_MAX = 2000;
 
 // const NUM_POINTS = 3;
 
@@ -38,7 +38,7 @@ export class ScDialStandard {
     data: [
       {
         x: new Date(2001, 0, 0).getTime(),
-        y: 1599,
+        y: 10,
       },
     ],
     unit: '',
@@ -51,8 +51,8 @@ export class ScDialStandard {
         widgetId="test-widget"
         dataStream={this.dataStream}
         size={{
-          height: 500,
-          width: 500,
+          height: 300,
+          width: 300,
         }}
         associatedStreams={[
           {
@@ -63,16 +63,16 @@ export class ScDialStandard {
         annotations={{
           y: [
             {
-              color: '#1d8102',
-              value: 15,
-              comparisonOperator: COMPARISON_OPERATOR.GREATER_THAN_EQUAL,
+              color: '#000000',
+              value: 1579,
+              comparisonOperator: COMPARISON_OPERATOR.GREATER_THAN,
             },
             {
               color: '',
-              value: 'Warning',
+              value: 'Critical',
               comparisonOperator: COMPARISON_OPERATOR.EQUAL,
               dataStreamIds: ['car-speed-alarm'],
-              icon: StatusIcon.NORMAL,
+              icon: StatusIcon.ERROR,
             },
           ],
         }}

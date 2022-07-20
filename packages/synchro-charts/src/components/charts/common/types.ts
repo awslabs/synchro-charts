@@ -67,7 +67,7 @@ export interface DialConfig extends BaseConfig {
   viewport: ViewPortConfig;
   widgetId: string;
   dataStream: DataStream;
-  associatedStreams: StreamAssociation[];
+  associatedStreams?: StreamAssociation[];
   annotations?: Annotations;
   messageOverrides?: MessageOverrides;
 }

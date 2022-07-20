@@ -19,6 +19,7 @@ export class ScDialTooltip {
   @Prop() breachedThreshold?: Threshold;
   @Prop() unit?: string;
   @Prop() value?: number | undefined;
+  @Prop() color?: string | undefined;
 
   private tooltip: Instance | undefined;
 
@@ -48,7 +49,7 @@ export class ScDialTooltip {
 
   render() {
     const thereIsSomeData = this.propertyPoint != null || this.alarmPoint != null;
-    const color = this.breachedThreshold ? this.breachedThreshold.color : undefined;
+    const { color } = this;
     const icon = this.breachedThreshold ? this.breachedThreshold.icon : undefined;
 
     return (

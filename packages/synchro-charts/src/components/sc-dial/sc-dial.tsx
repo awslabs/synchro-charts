@@ -39,8 +39,8 @@ export class ScDial implements DialConfig {
   @Prop() viewport: ViewPortConfig;
   @Prop() widgetId!: string;
   @Prop() dataStream!: DataStream;
-  @Prop() associatedStreams: StreamAssociation[];
-  @Prop() annotations: Annotations;
+  @Prop() associatedStreams?: StreamAssociation[];
+  @Prop() annotations?: Annotations;
   @Prop() messageOverrides: MessageOverrides = {};
 
   @Prop() size?: MinimalSizeConfig;
@@ -65,7 +65,7 @@ export class ScDial implements DialConfig {
   };
 
   getAlarmStream = (dataStream: DataStream): boolean => {
-    return this.associatedStreams.some(stream => stream.id === dataStream.id);
+    return !!this.associatedStreams && this.associatedStreams.some(stream => stream.id === dataStream.id);
   };
 
   getBreachedThreshold = (point: DataPoint | undefined, dataStream: DataStream): Threshold | undefined =>
@@ -116,9 +116,10 @@ export class ScDial implements DialConfig {
   render() {
     const propertyPoint = this.getPoint(this.dataStream);
     const alarmStream = this.getAlarmStream(this.dataStream) ? this.dataStream : undefined;
-    const threshold =
-      getThresholds(this.annotations).filter(a => a.icon)[0] ||
-      this.getBreachedThreshold(propertyPoint, this.dataStream);
+    const threshold = alarmStream
+      ? getThresholds(this.annotations).filter(a => a.icon)[0] ||
+        this.getBreachedThreshold(propertyPoint, this.dataStream)
+      : undefined;
     return (
       <sc-size-provider
         size={this.size}
