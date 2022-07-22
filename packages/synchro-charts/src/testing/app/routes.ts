@@ -345,4 +345,8 @@ export const routes = [
     url: '/tests/widget-test-route',
     component: 'widget-test-route',
   },
+  {
+    url: '/tests/sc-dial',
+    component: 'sc-dial-standard',
+  },
 ];
