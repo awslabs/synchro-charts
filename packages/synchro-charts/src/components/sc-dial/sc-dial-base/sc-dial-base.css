@@ -1,13 +1,11 @@
-sc-dial-base .sc-dialbase-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+sc-dial-base .error {
+  text-align: center;
+  font-size: var(--font-size-1);
+  line-height: var(--line-height-3);
 }
 
-sc-dial-base circle {
-  -webkit-transition: stroke-dasharray 800ms;
-  transition: stroke-dasharray 800ms;
+sc-dial-base .error .warning-symbol {
+  transform: scale(0.7);
 }
 
 

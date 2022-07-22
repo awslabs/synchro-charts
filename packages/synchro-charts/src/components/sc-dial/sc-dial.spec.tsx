@@ -1,23 +1,21 @@
 import { newSpecPage } from '@stencil/core/testing';
 import { Components } from '../../components.d';
 import { CustomHTMLElement } from '../../utils/types';
-import { ScSizeProvider } from '../sc-size-provider/sc-size-provider';
-import { ScGridTooltip } from '../sc-widget-grid/sc-grid-tooltip';
-import { ScWidgetGrid } from '../sc-widget-grid/sc-widget-grid';
 import { DATA_STREAMS } from '../charts/common/tests/chart/constants';
 import { ScDial } from './sc-dial';
 import { DEFAULT_CHART_CONFIG } from '../charts/sc-webgl-base-chart/chartDefaults';
-import { MINUTE_IN_MS } from '../../utils/time';
+import { DAY_IN_MS, MINUTE_IN_MS } from '../../utils/time';
 import { update } from '../charts/common/tests/merge';
 import { DATA_STREAM } from '../../testing/__mocks__/mockWidgetProperties';
 import { StreamType } from '../../utils/dataConstants';
-import { ScDialTooltip } from './sc-dial-base/sc-dial-tooltip';
+import { DataPoint } from '../../models';
+import { Y_MAX, Y_MIN } from '../../testing/test-routes/charts/constants';
 
 const VIEWPORT = {
   ...DEFAULT_CHART_CONFIG.viewport,
   duration: MINUTE_IN_MS,
-  yMin: 0,
-  yMax: 5000,
+  yMin: Y_MIN,
+  yMax: Y_MAX,
 };
 
 const ASSOCIALTED_STREAMS = [
@@ -27,14 +25,19 @@ const ASSOCIALTED_STREAMS = [
   },
 ];
 
+const mockCurrentTime = (mockedDate: Date) => {
+  // @ts-ignore
+  Date.now = jest.spyOn(Date, 'now').mockImplementation(() => mockedDate.getTime());
+};
+
 const newValueSpecPage = async (propOverrides: Partial<Components.ScDial> = {}) => {
   const page = await newSpecPage({
-    components: [ScDial, ScSizeProvider, ScWidgetGrid, ScDialTooltip],
+    components: [ScDial],
     html: '<div></div>',
     supportsShadowDom: false,
   });
   const dial = page.doc.createElement('sc-dial') as CustomHTMLElement<Components.ScDial>;
-  const props: Partial<Components.ScDial> = {
+  const props: Partial<Components.ScDialBase> = {
     widgetId: 'test-dial-widget',
     dataStream: DATA_STREAMS[0],
     viewport: VIEWPORT,
@@ -52,146 +55,76 @@ describe('when enabled', () => {
   it('renders a base dial', async () => {
     const { dial } = await newValueSpecPage({ dataStream: DATA_STREAM, associatedStreams: ASSOCIALTED_STREAMS });
 
-    const dialBases = dial.querySelectorAll('sc-dial-base');
+    const provider = dial.querySelectorAll('sc-size-provider');
 
-    expect(dialBases.length).toBe(1);
+    expect(provider.length).toBe(1);
   });
-
-  //   it('renders cell', async () => {
-  //     const { renderCell } = await newValueSpecPage();
-  //     expect(renderCell).toBeCalled();
-  //   });
-
-  //   it('renders base dial per numerical data stream', async () => {
-  //     const dataStreams = [DATA_STREAM, STRING_STREAM_1, STRING_STREAM_2];
-
-  //     const { dial } = await newValueSpecPage({ dataStreams });
-
-  //     const dialBases = dial.querySelectorAll('sc-dial-base');
-  //     expect(dialBases.length).toBe(dataStreams.length);
-  //   });
-
-  //   it('does render string data streams', async () => {
-  //     const { dial } = await newValueSpecPage({ dataStreams: [STRING_STREAM_1] });
-
-  //     const dialBases = dial.querySelectorAll('sc-dial-base');
-  //     expect(dialBases).toHaveLength(1);
-  //   });
-
-  //   it('does not render a help icon', async () => {
-  //     const viewport: MinimalLiveViewport = {
-  //       yMin: 0,
-  //       yMax: 10000,
-  //       duration: MINUTE_IN_MS,
-  //     };
-  //     const { dial } = await newValueSpecPage({ viewport });
-
-  //     expect(dial.querySelector('sc-help-tooltip')).toBeNull();
-  //   });
-
-  //   it('displays error from data stream', async () => {
-  //     const error = 'some error';
-  //     const { dial } = await newValueSpecPage({
-  //       dataStreams: [
-  //         {
-  //           ...DATA_STREAM,
-  //           error,
-  //         },
-  //       ],
-  //       annotations: { y: [ALARM_THRESHOLD] },
-  //     });
-
-  //     const cell = dial.querySelector('sc-dial-base');
-  //     expect(cell).toEqualAttribute('error', error);
-  //   });
-
-  //   describe('alarms', () => {
-  //     const pointInViewport: DataPoint<number> = {
-  //       x: new Date(2000, 0, 0).getTime(),
-  //       y: 100,
-  //     };
-
-  //     it('with an alarm data stream that is breached, display the color of the breached threshold', async () => {
-  //       const stream = { ...DATA_WITH_ALARM_ASSOCIATION, data: [pointInViewport] };
-
-  //       const { dial } = await newValueSpecPage({
-  //         dataStreams: [ALARM_STREAM, stream],
-  //         annotations: { y: [ALARM_THRESHOLD] },
-  //       });
-
-  //       const cells = dial.querySelectorAll('sc-dial-base');
-  //       expect(cells).toHaveLength(1);
-
-  //       const cell = cells[0];
-
-  //       expect(cell.isEnabled).not.toBeFalse();
-
-  //       expect(cell.alarmStream).toBe(ALARM_STREAM);
-  //       expect(cell.alarmPoint).toBe(ALARM_STREAM.data[0]);
-
-  //       expect(cell.propertyStream).toBe(stream);
-  //       expect(cell.propertyPoint).toBe(pointInViewport);
-  //     });
-
-  //     it('with an alarm data stream that is breached, display the color of the breached threshold only on alarm stream when alarm is not associated', async () => {
-  //       const stream = { ...DATA_STREAM, data: [pointInViewport] };
-  //       const { dial } = await newValueSpecPage({
-  //         dataStreams: [stream, ALARM_STREAM],
-  //         annotations: { y: [ALARM_THRESHOLD] },
-  //       });
-
-  //       const cells = dial.querySelectorAll('sc-dial-base');
-  //       expect(cells).toHaveLength(2);
-
-  //       const propertyCell = cells[0];
-  //       expect(propertyCell.propertyStream).toBe(stream);
-  //       expect(propertyCell.propertyPoint).toBe(pointInViewport);
-
-  //       expect(propertyCell.alarmStream).toBeUndefined();
-  //       expect(propertyCell.alarmPoint).toBeUndefined();
-
-  //       expect(propertyCell).not.toHaveAttribute('valueColor');
-  //       expect(propertyCell).not.toHaveAttribute('icon');
-
-  //       const alarmCell = cells[1];
-  //       expect(alarmCell.alarmPoint).toBe(ALARM_STREAM.data[0]);
-  //       expect(alarmCell.alarmStream).toBe(ALARM_STREAM);
-
-  //       expect(alarmCell.propertyPoint).toBeUndefined();
-  //       expect(alarmCell.propertyStream).toBeUndefined();
-
-  //       expect(alarmCell).toEqualAttribute('valueColor', ALARM_THRESHOLD.color);
-  //       expect(alarmCell).toEqualAttribute('icon', ALARM_THRESHOLD.icon);
-  //     });
-  //   });
 });
 
-// describe('when disabled', () => {
-//   it('renders base kpi per data stream', async () => {
-//     const NON_LIVE_VIEWPORT = {
-//       ...DEFAULT_CHART_CONFIG.viewport,
-//     };
+describe('updating the viewport', () => {
+  it('updates the viewport and renders a cell with the data point that was previously outside of the viewport', async () => {
+    const laterDate = new Date((new Date(2020, 1, 0, 0) as Date).getTime() + MINUTE_IN_MS);
+    const SOME_LATER_POINT: DataPoint<number> = { y: 111, x: laterDate.getTime() };
 
-//     const dataStreams = [STRING_STREAM_1, STRING_STREAM_2, DATA_STREAM, ALARM_STREAM];
+    const { dial, page } = await newValueSpecPage({
+      viewport: DEFAULT_CHART_CONFIG.viewport,
+      dataStream: {
+        ...DATA_STREAM,
+        data: [SOME_LATER_POINT],
+      },
+    });
 
-//     const { dial } = await newValueSpecPage({
-//       viewport: NON_LIVE_VIEWPORT,
-//       dataStreams,
-//     });
+    update(dial, {
+      viewport: {
+        ...DEFAULT_CHART_CONFIG.viewport,
+      },
+    });
 
-//     const dialBases = dial.querySelectorAll('sc-dial-base');
-//     expect(dialBases.length).toBe(dataStreams.length);
-//   });
+    await page.waitForChanges();
+  });
 
-//   it('renders a help icon', async () => {
-//     const NON_LIVE_VIEWPORT = {
-//       ...DEFAULT_CHART_CONFIG.viewport,
-//     };
+  it('updates the viewport based on duration', async () => {
+    const DATE_NOW = new Date(2000, 0, 0);
+    mockCurrentTime(DATE_NOW);
 
-//     const { dial } = await newValueSpecPage({
-//       viewport: NON_LIVE_VIEWPORT,
-//     });
+    const { dial, page } = await newValueSpecPage({
+      viewport: VIEWPORT,
+    });
 
-//     expect(dial.querySelector('sc-help-tooltip')).not.toBeNull();
-//   });
-// });
+    const startDate = new Date(2000, 0, 0);
+    const endDate = new Date(2000, 1, 0);
+
+    update(dial, {
+      viewport: {
+        start: startDate,
+        end: endDate,
+        duration: DAY_IN_MS,
+        yMin: Y_MIN,
+        yMax: Y_MAX,
+      },
+    });
+
+    await page.waitForChanges();
+  });
+
+  it('updates the viewport based on a start date and end date', async () => {
+    const { dial, page } = await newValueSpecPage({
+      viewport: VIEWPORT,
+    });
+
+    const startDate = new Date(2000, 0, 0);
+    const endDate = new Date(2000, 1, 0);
+
+    update(dial, {
+      viewport: {
+        start: startDate,
+        end: endDate,
+        duration: DAY_IN_MS,
+        yMin: Y_MIN,
+        yMax: Y_MAX,
+      },
+    });
+
+    await page.waitForChanges();
+  });
+});

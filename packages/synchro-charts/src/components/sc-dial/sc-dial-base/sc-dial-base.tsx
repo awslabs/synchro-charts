@@ -102,7 +102,14 @@ export class ScDialBase {
       >
         <div
           class="sc-dialbase-container"
-          style={{ minHeight: `${this.size?.height}px`, width: `${this.size?.width}px` }}
+          style={{
+            minHeight: `${this.size?.height}px`,
+            width: `${this.size?.width}px`,
+            marginLeft: `${this.size?.marginLeft}px`,
+            marginRight: `${this.size?.marginRight}px`,
+            marginTop: `${this.size?.marginTop}px`,
+            marginBottom: `${this.size?.marginBottom}px`,
+          }}
         >
           {this.isLoading ? (
             <div style={{ height, width }}>
@@ -110,7 +117,7 @@ export class ScDialBase {
             </div>
           ) : (
             <div style={{ height, width }}>
-              <svg viewBox="0 0 276 276">
+              <svg viewBox="0 0 276 276" data-testid="current-value">
                 <circle
                   cx="138"
                   cy="138"
@@ -172,7 +179,25 @@ export class ScDialBase {
               </svg>
             </div>
           )}
-          {error != null && <sc-error-badge data-testid="warning">{error}</sc-error-badge>}
+          {error != null && (
+            <div class="error">
+              <sc-error-badge data-testid="warning">{error}</sc-error-badge>
+              {point && (
+                <div>
+                  Last value at
+                  {new Date(point.x).toLocaleString('en-US', {
+                    hour12: true,
+                    second: 'numeric',
+                    minute: 'numeric',
+                    hour: 'numeric',
+                    year: 'numeric',
+                    month: 'numeric',
+                    day: 'numeric',
+                  })}
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </sc-dial-tooltip>
     );

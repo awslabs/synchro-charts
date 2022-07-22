@@ -1,7 +1,7 @@
 import { h } from '@stencil/core';
 
 export const DialLoading = () => (
-  <svg viewBox="0 0 276 276">
+  <svg viewBox="0 0 276 276" data-testid="loading">
     <symbol id="sym-octagon" stroke="black" viewBox="0 0 200 200">
       <defs>
         <clipPath id="a">

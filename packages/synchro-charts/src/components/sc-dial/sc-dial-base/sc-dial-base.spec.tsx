@@ -1,59 +1,221 @@
-// import { newSpecPage } from '@stencil/core/testing';
-// import { Components } from '../../../components.d';
-// import { CustomHTMLElement } from '../../../utils/types';
-// import { ScSizeProvider } from '../../sc-size-provider/sc-size-provider';
-// import { ScGridTooltip } from '../../sc-widget-grid/sc-grid-tooltip';
-// import { ScWidgetGrid } from '../../sc-widget-grid/sc-widget-grid';
-// import { DATA_STREAMS } from '../../charts/common/tests/chart/constants';
-// import { ScDialBase } from './sc-dial-base';
-// import { update } from '../../charts/common/tests/merge';
-// import { DEFAULT_CHART_CONFIG } from '../../charts/sc-webgl-base-chart/chartDefaults';
-// import { MINUTE_IN_MS } from '../../../utils/time';
-// import { DATA_STREAM } from '../../../testing/__mocks__/mockWidgetProperties';
-// import { DEFAULT_MESSAGE_OVERRIDES } from '../../../utils/dataTypes';
+import { newSpecPage } from '@stencil/core/testing';
+import { Components } from '../../../components.d';
+import { CustomHTMLElement } from '../../../utils/types';
+import { ScSizeProvider } from '../../sc-size-provider/sc-size-provider';
+import { ScGridTooltip } from '../../sc-widget-grid/sc-grid-tooltip';
+import { ScWidgetGrid } from '../../sc-widget-grid/sc-widget-grid';
+import { ScDialBase } from './sc-dial-base';
+import { update } from '../../charts/common/tests/merge';
+import { DEFAULT_CHART_CONFIG } from '../../charts/sc-webgl-base-chart/chartDefaults';
+import { MINUTE_IN_MS } from '../../../utils/time';
+import { DATA_STREAM, NUMBER_INFO_1, NUMBER_STREAM_1 } from '../../../testing/__mocks__/mockWidgetProperties';
+import { round } from '../../../utils/number';
+import { DataType } from '../../../utils/dataConstants';
+import { COMPARISON_OPERATOR, StatusIcon } from '../../charts/common/constants';
+import { StatusProgress } from './util';
 
-// const VIEWPORT = {
-//   ...DEFAULT_CHART_CONFIG.viewport,
-//   duration: MINUTE_IN_MS,
-//   yMin: 0,
-//   yMax: 5000,
-// };
+const VIEWPORT = {
+  ...DEFAULT_CHART_CONFIG.viewport,
+  duration: MINUTE_IN_MS,
+  yMin: 0,
+  yMax: 5000,
+};
 
-// const newValueSpecPage = async (propOverrides: Partial<Components.ScDialBase> = {}) => {
-//   const page = await newSpecPage({
-//     components: [ScDialBase, ScSizeProvider, ScWidgetGrid, ScGridTooltip],
-//     html: '<div></div>',
-//     supportsShadowDom: false,
-//   });
-//   const dialBase = page.doc.createElement('sc-dial-base') as CustomHTMLElement<Components.ScDialBase>;
-//   const props: Partial<Components.ScKpi> = {
-//     widgetId: 'test-dial-base-widget',
-//     isEditing: false,
-//     dataStreams: DATA_STREAMS,
-//     viewport: VIEWPORT,
-//     ...propOverrides,
-//   };
-//   update(dialBase, props);
-//   page.body.appendChild(dialBase);
+const VALUE1 = 1250;
+const VALUE2 = 3250;
+const VALUE3 = 4500;
 
-//   await page.waitForChanges();
+const newValueSpecPage = async (propOverrides: Partial<Components.ScDialBase> = {}) => {
+  const page = await newSpecPage({
+    components: [ScDialBase, ScSizeProvider, ScWidgetGrid, ScGridTooltip],
+    html: '<div></div>',
+    supportsShadowDom: false,
+  });
+  const dialBase = page.doc.createElement('sc-dial-base') as CustomHTMLElement<Components.ScDialBase>;
+  const props: Partial<Components.ScDialBase> = {
+    viewport: VIEWPORT,
+    ...propOverrides,
+  };
+  update(dialBase, props);
+  page.body.appendChild(dialBase);
 
-//   return { page, dialBase };
-// };
+  await page.waitForChanges();
 
-// describe('messageOverrides', () => {
-//   it.skip('when override provided, utilize it', async () => {
-//     const MY_MSG_OVERRIDE = 'MY_MSG_OVERRIDE';
-//     const { dialBase } = await newValueSpecPage({
-//       // Setup scenario where the 'live time frame value label' renders
-//       propertyPoint: {
-//         x: Date.now(),
-//         y: 123,
-//       },
-//       propertyStream: DATA_STREAM,
-//     });
+  return { page, dialBase };
+};
 
-//     expect(dialBase.innerHTML).not.toContain(DEFAULT_MESSAGE_OVERRIDES.liveTimeFrameValueLabel);
-//     expect(dialBase.innerHTML).toContain(MY_MSG_OVERRIDE);
-//   });
-// });
+describe('Overview', () => {
+  it('when has no data', async () => {
+    const { dialBase } = await newValueSpecPage({
+      // Setup scenario where the 'live time frame value label' renders
+      propertyStream: DATA_STREAM,
+    });
+
+    expect(dialBase.innerHTML).toContain('-');
+  });
+
+  it('when has no unit', async () => {
+    const { dialBase } = await newValueSpecPage({
+      propertyStream: NUMBER_STREAM_1,
+      propertyPoint: NUMBER_STREAM_1.data[0],
+    });
+
+    const value = round((NUMBER_STREAM_1.data[0].y / (VIEWPORT.yMax - VIEWPORT.yMin)) * 100);
+    expect(dialBase.textContent).toContain(`${value}%`);
+  });
+
+  it('when has unit', async () => {
+    const { dialBase } = await newValueSpecPage({
+      propertyStream: {
+        id: 'car-speed-alarm',
+        name: 'Wind temperature',
+        data: [
+          {
+            x: new Date(2001, 0, 0).getTime(),
+            y: VALUE1,
+          },
+        ],
+        unit: 'rpm',
+        resolution: 0,
+        dataType: DataType.NUMBER,
+      },
+      propertyPoint: {
+        x: new Date(2001, 0, 0).getTime(),
+        y: VALUE1,
+      },
+    });
+
+    expect(dialBase.textContent).toContain(`${VALUE1}rpm`);
+  });
+
+  it('when has more than 1 data', async () => {
+    const { dialBase } = await newValueSpecPage({
+      propertyStream: {
+        id: 'car-speed-alarm',
+        name: 'Wind temperature',
+        data: [
+          {
+            x: new Date(2001, 0, 0).getTime(),
+            y: VALUE1,
+          },
+          {
+            x: new Date(2002, 0, 0).getTime(),
+            y: VALUE2,
+          },
+        ],
+        unit: 'rpm',
+        resolution: 0,
+        dataType: DataType.NUMBER,
+      },
+      propertyPoint: {
+        x: new Date(2001, 0, 0).getTime(),
+        y: VALUE2,
+      },
+    });
+
+    expect(dialBase.textContent).toContain(`${VALUE2}rpm`);
+  });
+
+  it('when loading', async () => {
+    const { dialBase } = await newValueSpecPage({
+      isLoading: true,
+      propertyStream: NUMBER_STREAM_1,
+      propertyPoint: NUMBER_STREAM_1.data[0],
+    });
+
+    const value = round((NUMBER_STREAM_1.data[0].y / (VIEWPORT.yMax - VIEWPORT.yMin)) * 100);
+    expect(dialBase.textContent).not.toContain(`${value}%`);
+    expect(dialBase.textContent).toContain('Loading');
+    expect(dialBase.innerHTML).toContain('data-testid="loading"');
+  });
+
+  it('when input valueColor', async () => {
+    const { dialBase } = await newValueSpecPage({
+      propertyStream: NUMBER_STREAM_1,
+      propertyPoint: NUMBER_STREAM_1.data[0],
+      valueColor: '#000000',
+    });
+
+    expect(dialBase.innerHTML).toContain('#000000');
+  });
+});
+
+describe('Alarm states', () => {
+  it('when Critical', async () => {
+    const { dialBase } = await newValueSpecPage({
+      propertyStream: NUMBER_STREAM_1,
+      propertyPoint: NUMBER_STREAM_1.data[0],
+      alarmStream: NUMBER_STREAM_1,
+      breachedThreshold: {
+        color: '',
+        value: 'Critical',
+        comparisonOperator: COMPARISON_OPERATOR.EQUAL,
+        dataStreamIds: [NUMBER_INFO_1.id],
+        icon: StatusIcon.ERROR,
+      },
+    });
+
+    expect(dialBase.textContent).toContain('Critical');
+    expect(dialBase.innerHTML).toContain(StatusProgress.CRITICAL);
+  });
+  it('when Warning', async () => {
+    const DATASTREAM = {
+      id: 'car-speed-alarm',
+      name: 'Wind temperature',
+      data: [
+        {
+          x: new Date(2001, 0, 0).getTime(),
+          y: VALUE2,
+        },
+      ],
+      unit: '',
+      resolution: 0,
+      dataType: DataType.NUMBER,
+    };
+    const { dialBase } = await newValueSpecPage({
+      propertyStream: DATASTREAM,
+      propertyPoint: DATASTREAM.data[0],
+      alarmStream: DATASTREAM,
+      breachedThreshold: {
+        color: '',
+        value: 'Warning',
+        comparisonOperator: COMPARISON_OPERATOR.EQUAL,
+        dataStreamIds: [NUMBER_INFO_1.id],
+        icon: StatusIcon.LATCHED,
+      },
+    });
+
+    expect(dialBase.textContent).toContain('Warning');
+    expect(dialBase.innerHTML).toContain(StatusProgress.WARNING);
+  });
+  it('when Normal', async () => {
+    const DATASTREAM = {
+      id: 'car-speed-alarm',
+      name: 'Wind temperature',
+      data: [
+        {
+          x: new Date(2001, 0, 0).getTime(),
+          y: VALUE3,
+        },
+      ],
+      unit: '',
+      resolution: 0,
+      dataType: DataType.NUMBER,
+    };
+    const { dialBase } = await newValueSpecPage({
+      propertyStream: DATASTREAM,
+      propertyPoint: DATASTREAM.data[0],
+      alarmStream: DATASTREAM,
+      breachedThreshold: {
+        color: '',
+        value: 'Normal',
+        comparisonOperator: COMPARISON_OPERATOR.EQUAL,
+        dataStreamIds: [NUMBER_INFO_1.id],
+        icon: StatusIcon.NORMAL,
+      },
+    });
+
+    expect(dialBase.textContent).toContain('Normal');
+    expect(dialBase.innerHTML).toContain(StatusProgress.NORMAL);
+  });
+});

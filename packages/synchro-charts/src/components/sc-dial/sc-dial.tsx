@@ -33,7 +33,7 @@ const THRESHOLD_LEGEND_HEIGHT_PX = 50;
 @Component({
   tag: 'sc-dial',
   styleUrl: 'sc-dial.css',
-  shadow: true,
+  shadow: false,
 })
 export class ScDial implements DialConfig {
   @Prop() viewport: ViewPortConfig;
