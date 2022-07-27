@@ -8,4 +8,9 @@ sc-dial-base .error .warning-symbol {
   transform: scale(0.7);
 }
 
+sc-dial-base circle {
+  -webkit-transition: stroke-dasharray 800ms;
+  transition: stroke-dasharray 800ms;
+}
+
 

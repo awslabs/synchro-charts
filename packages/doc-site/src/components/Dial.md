@@ -4,7 +4,20 @@ import { COMPARISON_OPERATOR, StatusIcon, StreamType } from '@synchro-charts/cor
 <div style={{ width: '100%', height: '100%' }}>
   <Dial
     widgetId="test-widget"
-    dataStream={this.dataStream}
+    dataStream={{
+    id: 'car-speed-alarm',
+    name: 'Wind temperature',
+    data: [
+      {
+        x: new Date(2001, 0, 0).getTime(),
+        y: latestValue || Y_MIN + 30,
+      },
+    ],
+    unit: unit || '',
+    resolution: 0,
+    dataType: DATA_TYPE,
+    isLoading: JSON.parse(isloading || 'false'),
+  }}
     size={{
       height: 300,
       width: 300,
@@ -35,7 +48,20 @@ import { COMPARISON_OPERATOR, StatusIcon, StreamType } from '@synchro-charts/cor
 <div style={{ width: '100%', height: '100%' }}>
   <Dial
     widgetId="test-widget"
-    dataStream={this.dataStream}
+    dataStream={{
+    id: 'car-speed-alarm',
+    name: 'Wind temperature',
+    data: [
+      {
+        x: new Date(2001, 0, 0).getTime(),
+        y: latestValue || Y_MIN + 30,
+      },
+    ],
+    unit: unit || '',
+    resolution: 0,
+    dataType: DATA_TYPE,
+    isLoading: JSON.parse(isloading || 'false'),
+  }}
     size={{
       height: 300,
       width: 300,
