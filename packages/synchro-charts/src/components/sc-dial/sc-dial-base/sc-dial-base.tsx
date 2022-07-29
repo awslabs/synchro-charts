@@ -6,7 +6,7 @@ import { getIcons } from '../../charts/common/annotations/iconUtils';
 import { Threshold } from '../../charts/common/types';
 import { NO_VALUE_PRESENT } from '../../common/terms';
 import { DialLoading } from './sc-dial-loading';
-import { LengthToSize, sizeContent, SizeFont, StatusProgress, TextSizeConfig } from './util';
+import { TextSizeConfig, sizeContent, StatusProgress, LengthToSize, SizeFont } from './util';
 
 const title = (dataStream: { detailedName?: any; name?: any } | null | false) => {
   if (dataStream) {
