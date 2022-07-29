@@ -8,6 +8,15 @@ export enum StatusProgress {
   SECONDARYTEXT = '#687078',
 }
 
+export const enum SizeFont {
+  Huge = 'Huge',
+  XL = 'XL',
+  L = 'L',
+  M = 'M',
+  S = 'S',
+  XS = 'XS',
+}
+
 export interface TextSizeConfig {
   value: number;
   unit: number;
@@ -52,4 +61,21 @@ export const sizeContent = {
     label: 16,
     alarm: 14,
   },
+};
+
+export const LengthToSize = {
+  1: SizeFont.Huge,
+  2: SizeFont.Huge,
+  3: SizeFont.XL,
+  4: SizeFont.XL,
+  5: SizeFont.XL,
+  6: SizeFont.XL,
+  7: SizeFont.L,
+  8: SizeFont.L,
+  9: SizeFont.M,
+  10: SizeFont.M,
+  11: SizeFont.M,
+  12: SizeFont.S,
+  13: SizeFont.S,
+  14: SizeFont.XS,
 };

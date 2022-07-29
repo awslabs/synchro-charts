@@ -82,7 +82,6 @@ export namespace Components {
         "associatedStreams"?: StreamAssociation[];
         "dataStream": DataStream;
         "messageOverrides": MessageOverrides;
-        "size"?: MinimalSizeConfig;
         "viewport": ViewPortConfig;
         "widgetId": string;
     }
@@ -1533,8 +1532,6 @@ declare namespace LocalJSX {
         "associatedStreams"?: StreamAssociation[];
         "dataStream": DataStream;
         "messageOverrides"?: MessageOverrides;
-        "onWidgetUpdated"?: (event: CustomEvent<WidgetConfigurationUpdate>) => void;
-        "size"?: MinimalSizeConfig;
         "viewport"?: ViewPortConfig;
         "widgetId": string;
     }

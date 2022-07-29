@@ -7,7 +7,6 @@ import { DEFAULT_CHART_CONFIG } from '../charts/sc-webgl-base-chart/chartDefault
 import { DAY_IN_MS, MINUTE_IN_MS } from '../../utils/time';
 import { update } from '../charts/common/tests/merge';
 import { DATA_STREAM } from '../../testing/__mocks__/mockWidgetProperties';
-import { StreamType } from '../../utils/dataConstants';
 import { DataPoint } from '../../models';
 import { Y_MAX, Y_MIN } from '../../testing/test-routes/charts/constants';
 
@@ -17,13 +16,6 @@ const VIEWPORT = {
   yMin: Y_MIN,
   yMax: Y_MAX,
 };
-
-const ASSOCIALTED_STREAMS = [
-  {
-    id: 'some-id',
-    type: StreamType.ALARM,
-  },
-];
 
 const mockCurrentTime = (mockedDate: Date) => {
   // @ts-ignore
@@ -50,16 +42,6 @@ const newValueSpecPage = async (propOverrides: Partial<Components.ScDial> = {}) 
 
   return { page, dial };
 };
-
-describe('when enabled', () => {
-  it('renders a base dial', async () => {
-    const { dial } = await newValueSpecPage({ dataStream: DATA_STREAM, associatedStreams: ASSOCIALTED_STREAMS });
-
-    const provider = dial.querySelectorAll('sc-size-provider');
-
-    expect(provider.length).toBe(1);
-  });
-});
 
 describe('updating the viewport', () => {
   it('updates the viewport and renders a cell with the data point that was previously outside of the viewport', async () => {
