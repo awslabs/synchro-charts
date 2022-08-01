@@ -1,6 +1,13 @@
+sc-dial-tooltip {
+  height: inherit;
+}
+
+sc-dial-base {
+  height: inherit;
+}
+
 sc-dial-base .sc-dialbase-container {
-  width: 100%;
-  height: 100%;
+  height: inherit;
 }
 
 sc-dial-base .error {
@@ -24,5 +31,3 @@ sc-dial-base circle {
   -webkit-transition: stroke-dasharray 800ms;
   transition: stroke-dasharray 800ms;
 }
-
-

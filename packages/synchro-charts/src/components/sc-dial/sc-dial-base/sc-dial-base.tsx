@@ -93,7 +93,13 @@ export class ScDialBase {
           {this.isLoading ? (
             <DialLoading />
           ) : (
-            <svg viewBox="0 0 276 276" data-testid="current-value">
+            <svg
+              width="100%"
+              height="100%"
+              viewBox="0 0 276 276"
+              data-testid="current-value"
+              preserveAspectRatio="xMidYMin meet"
+            >
               <circle
                 cx="138"
                 cy="138"
@@ -134,11 +140,11 @@ export class ScDialBase {
                   text-anchor="middle"
                   fill={StatusProgress.SECONDARYTEXT}
                 >
-                  <tspan dy={stream && !stream.unit ? 0 : 10}>{NO_VALUE_PRESENT}</tspan>
+                  <tspan dy={stream && point && !stream.unit ? 0 : 10}>{NO_VALUE_PRESENT}</tspan>
                 </text>
               )}
 
-              {stream && !stream.unit ? (
+              {stream && point && !stream.unit ? (
                 <text
                   x={icon ? '152' : '140'}
                   y="184"

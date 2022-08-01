@@ -1,6 +1,13 @@
 import * as queryString from 'query-string';
 import { LEGEND } from './constants';
-import { AlarmsConfig, DataStream, DataStreamInfo, MessageOverrides, TableColumn } from '../../utils/dataTypes';
+import {
+  AlarmsConfig,
+  DataStream,
+  DataStreamInfo,
+  MessageOverrides,
+  StreamAssociation,
+  TableColumn,
+} from '../../utils/dataTypes';
 import { Annotations, Axis, LegendConfig, XAnnotation } from '../../components/charts/common/types';
 
 export type SearchQueryParams = {
@@ -21,6 +28,8 @@ export type SearchQueryParams = {
   annotations?: Annotations;
   tableColumns: TableColumn[];
   dataStreams: DataStream[];
+  dataStream: DataStream;
+  associatedStreams?: StreamAssociation[];
 
   // Data returned asynchronously through `onRequestData`
   asyncDataStreams: DataStream[];
@@ -61,6 +70,8 @@ export const SCREEN_SIZE = {
 export const constructSearchQuery = ({
   viewportStart,
   viewportEnd,
+  dataStream,
+  associatedStreams,
   dataStreams,
   asyncDataStreams,
   alarms,
@@ -80,6 +91,8 @@ export const constructSearchQuery = ({
     annotations: annotations && JSON.stringify(annotations),
     legend: legend && JSON.stringify(legend),
     dataStreamInfos: dataStreamInfos && JSON.stringify(dataStreamInfos),
+    associatedStreams: associatedStreams && JSON.stringify(associatedStreams),
+    dataStream: dataStream && JSON.stringify(dataStream),
     dataStreams: dataStreams && JSON.stringify(dataStreams),
     asyncDataStreams: asyncDataStreams && JSON.stringify(asyncDataStreams),
     alarms: alarms && JSON.stringify(alarms),
@@ -124,6 +137,8 @@ export const testCaseParameters = (): SearchQueryParams => {
     annotations: query.annotations != null ? deserializeAnnotations(query.annotations) : undefined,
     isEditing: query.isEditing != null ? parseBool(query.isEditing) : false,
     hasError: query.hasError != null ? parseBool(query.hasError) : false,
+    associatedStreams: query.associatedStreams != null ? JSON.parse(query.associatedStreams) : [],
+    dataStream: query.dataStream != null ? JSON.parse(query.dataStream) : [],
     dataStreams: query.dataStreams != null ? JSON.parse(query.dataStreams).map(deserializeDataStream) : [],
     asyncDataStreams:
       query.asyncDataStreams != null ? JSON.parse(query.asyncDataStreams).map(deserializeDataStream) : [],

@@ -16,6 +16,8 @@ import { DataType, StreamType } from '../../utils/dataConstants';
 // viewport boundaries
 const X_MIN = new Date(2000, 0, 0);
 const X_MAX = new Date(2000, 0, 1);
+const Y_MIN = 0;
+const Y_MAX = 2000;
 const DIFF = X_MAX.getTime() - X_MIN.getTime();
 
 const SOME_NUM = 60;

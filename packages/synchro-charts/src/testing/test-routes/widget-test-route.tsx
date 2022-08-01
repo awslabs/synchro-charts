@@ -2,6 +2,7 @@ import { Component, h, Listen, Prop } from '@stencil/core';
 import { SIZE, VIEWPORT as DEFAULT_VIEWPORT } from '../dynamicWidgetUtils/constants';
 import { testCaseParameters } from '../dynamicWidgetUtils/testCaseParameters';
 import { DataStreamInfo } from '../../utils/dataTypes';
+import { Y_MAX, Y_MIN } from './charts/constants';
 
 const DEFAULT_WIDTH = 700;
 const DEFAULT_HEIGHT = 400;
@@ -19,6 +20,8 @@ const {
   viewportEnd,
   duration,
   isEditing,
+  associatedStreams,
+  dataStream,
   dataStreams,
   gestures,
   legend,
@@ -64,6 +67,8 @@ export class WidgetTestRoute {
       end: viewportEnd,
       duration,
       group: 'some-viewport-group',
+      yMin: Y_MIN,
+      yMax: Y_MAX,
     };
 
     // live mode
@@ -76,6 +81,8 @@ export class WidgetTestRoute {
       <div style={{ width: styleSize(width), height: styleSize(height) }}>
         <this.component
           widgetId="some-widget-id"
+          associatedStreams={associatedStreams}
+          dataStream={dataStream}
           dataStreams={dataStreams}
           isEditing={isEditing}
           alarms={alarms}

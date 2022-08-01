@@ -8,6 +8,7 @@ import { Value } from '../../value/Value';
 
 @Component({
   tag: 'sc-dial-tooltip',
+  styleUrl: 'sc-dial-base.css',
   shadow: false,
 })
 export class ScDialTooltip {
@@ -53,7 +54,7 @@ export class ScDialTooltip {
     const icon = this.breachedThreshold ? this.breachedThreshold.icon : undefined;
 
     return (
-      <div class="tooltip-container">
+      <div class="tooltip-container" style={{ width: 'inherit', height: 'inherit' }}>
         <div class="cell-tooltip awsui-util-container awsui">
           <div class={{ 'awsui-util-container-header': true, 'awsui-util-mb-m': thereIsSomeData }}>
             <h3>{this.title}</h3>

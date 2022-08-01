@@ -49,9 +49,17 @@ export class ScDial implements DialConfig {
     const propertyPoint = this.getPoint(this.dataStream);
     const alarmStream = this.getAlarmStream(this.dataStream) ? this.dataStream : undefined;
     const threshold = alarmStream
-      ? getThresholds(this.annotations).filter(a => a.icon)[0] ||
+      ? getThresholds(this.annotations)
+          .filter(a => a.icon)
+          .filter(a => a.dataStreamIds?.includes(this.dataStream.id))[0] ||
         this.getBreachedThreshold(propertyPoint, this.dataStream)
       : undefined;
+    let valueColor: string | undefined;
+    if (typeof this.annotations?.thresholdOptions === 'object') {
+      const { showColor = false } = this.annotations?.thresholdOptions;
+      valueColor = showColor ? threshold?.color : undefined;
+    }
+
     return (
       <sc-dial-base
         propertyStream={this.dataStream}
@@ -59,7 +67,7 @@ export class ScDial implements DialConfig {
         alarmStream={alarmStream}
         breachedThreshold={threshold}
         viewport={this.viewport}
-        valueColor={threshold ? threshold.color : undefined}
+        valueColor={valueColor}
         isLoading={this.dataStream ? this.dataStream.isLoading || false : false}
       />
     );
