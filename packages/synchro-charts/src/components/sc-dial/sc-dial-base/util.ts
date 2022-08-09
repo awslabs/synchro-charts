@@ -1,4 +1,4 @@
-export enum StatusProgress {
+export enum sizeConfigurations {
   BLUE = '#2E72B5',
   NORMAL = '#3F7E23',
   WARNING = '#F29D38',
@@ -40,7 +40,7 @@ export const sizeContent = {
   L: {
     value: 48,
     unit: 24,
-    label: 20,
+    label: 24,
     alarm: 24,
   },
   M: {
@@ -58,14 +58,17 @@ export const sizeContent = {
   XS: {
     value: 20,
     unit: 14,
-    label: 16,
+    label: 14,
     alarm: 14,
   },
 };
 
+/**
+ * Number of characters in a string maps to a particular font size
+ */
 export const LengthToSize = {
   1: SizeFont.Huge,
-  2: SizeFont.Huge,
+  2: SizeFont.XL,
   3: SizeFont.XL,
   4: SizeFont.XL,
   5: SizeFont.XL,

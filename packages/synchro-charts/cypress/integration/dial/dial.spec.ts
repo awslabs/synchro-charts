@@ -1,24 +1,8 @@
-import { VIEWPORT } from '../../../src/components/charts/common/testUtil';
-import {
-  DEFAULT_THRESHOLD_OPTIONS,
-  DEFAULT_THRESHOLD_OPTIONS_OFF,
-} from '../../../src/components/charts/sc-webgl-base-chart/chartDefaults';
 import { COMPARISON_OPERATOR, DataType, NO_VALUE_PRESENT, StatusIcon, StreamType } from '../../../src/constants';
 import { visitDynamicWidget } from '../../../src/testing/selectors';
-import { X_MIN, Y_MAX, Y_MIN } from '../../../src/testing/test-routes/charts/constants';
-import {
-  ALARM_STREAM,
-  ALARM_STREAM_INFO,
-  ALARM_THRESHOLD,
-  DATA_STREAM,
-  DATA_WITH_ALARM_ASSOCIATION,
-  DATA_WITH_ALARM_INFO,
-} from '../../../src/testing/__mocks__/mockWidgetProperties';
-import { DataStream, Primitive } from '../../../src/utils/dataTypes';
+import { Y_MAX, Y_MIN } from '../../../src/testing/test-routes/charts/constants';
 import { round } from '../../../src/utils/number';
-import { MINUTE_IN_MS } from '../../../src/utils/time';
 
-const root = '/tests/sc-dial';
 const VALUE_ERROR = '[data-testid="warning"]';
 const VALUE_LOADING = '[data-testid="loading"]';
 const VALUE_SVG = '[data-testid="current-value"]';
@@ -50,25 +34,43 @@ const alarmValue = {
   },
 };
 
-// const getRoute = ({
-//   latestValue,
-//   isLoading,
-//   unit,
-//   error = '',
-//   alarm,
-// }: {
-//   latestValue?: Primitive;
-//   isLoading?: boolean;
-//   unit?: string;
-//   error?: string;
-//   alarm?: string;
-// }): string =>
-//   `${root}?latestValue=${latestValue}&&isloading=${isLoading}&&unit=${unit}&&error=${error}&&alarm=${alarm}`;
-// const WIDTH = 300;
-// const HEIGHT = 400;
-// beforeEach(() => {
-//   cy.viewport(WIDTH, HEIGHT);
-// });
+const annotations = {
+  y: [
+    {
+      color: '#C03F25',
+      value: 1650,
+      comparisonOperator: COMPARISON_OPERATOR.LESS_THAN_EQUAL,
+      dataStreamIds: ['car-speed-alarm'],
+      label: {
+        text: alarmValue.low.value,
+        show: true,
+      },
+      icon: alarmValue.low.icon,
+    },
+    {
+      color: '#F29D38',
+      value: 3300,
+      comparisonOperator: COMPARISON_OPERATOR.LESS_THAN_EQUAL,
+      dataStreamIds: ['car-speed-alarm'],
+      label: {
+        text: alarmValue.middle.value,
+        show: true,
+      },
+      icon: alarmValue.middle.icon,
+    },
+    {
+      color: '#3F7E23',
+      value: 3300,
+      comparisonOperator: COMPARISON_OPERATOR.GREATER_THAN,
+      dataStreamIds: ['car-speed-alarm'],
+      label: {
+        text: alarmValue.high.value,
+        show: true,
+      },
+      icon: alarmValue.high.icon,
+    },
+  ],
+};
 
 it('renders latest value', () => {
   const LATEST_VALUE1 = 100;
@@ -194,6 +196,7 @@ it('renders alarm Critica', () => {
   const LATEST_VALUE = 1250;
   visitDynamicWidget(cy, {
     componentTag: 'sc-dial',
+    fontSize: 'M',
     dataStream: {
       ...DATASTREAM,
       id: 'car-speed-alarm',
@@ -206,18 +209,7 @@ it('renders alarm Critica', () => {
         type: StreamType.ALARM,
       },
     ],
-    annotations: {
-      y: [
-        {
-          color: '#000',
-          value: alarmValue.low.value,
-          comparisonOperator: COMPARISON_OPERATOR.EQUAL,
-          dataStreamIds: ['car-speed-alarm'],
-          icon: alarmValue.low.icon,
-        },
-      ],
-      thresholdOptions: DEFAULT_THRESHOLD_OPTIONS,
-    },
+    annotations,
     duration: undefined,
   });
 
@@ -237,6 +229,7 @@ it('renders alarm Warning', () => {
   const LATEST_VALUE = 3250;
   visitDynamicWidget(cy, {
     componentTag: 'sc-dial',
+    fontSize: 'M',
     dataStream: {
       ...DATASTREAM,
       id: 'car-speed-alarm',
@@ -249,18 +242,7 @@ it('renders alarm Warning', () => {
         type: StreamType.ALARM,
       },
     ],
-    annotations: {
-      y: [
-        {
-          color: '#000',
-          value: alarmValue.middle.value,
-          comparisonOperator: COMPARISON_OPERATOR.EQUAL,
-          dataStreamIds: ['car-speed-alarm'],
-          icon: alarmValue.middle.icon,
-        },
-      ],
-      thresholdOptions: DEFAULT_THRESHOLD_OPTIONS_OFF,
-    },
+    annotations,
     duration: undefined,
   });
 
@@ -279,6 +261,7 @@ it('renders alarm Normal', () => {
   const LATEST_VALUE = 4500;
   visitDynamicWidget(cy, {
     componentTag: 'sc-dial',
+    fontSize: 'M',
     dataStream: {
       ...DATASTREAM,
       id: 'car-speed-alarm',
@@ -291,18 +274,7 @@ it('renders alarm Normal', () => {
         type: StreamType.ALARM,
       },
     ],
-    annotations: {
-      y: [
-        {
-          color: '#000',
-          value: alarmValue.high.value,
-          comparisonOperator: COMPARISON_OPERATOR.EQUAL,
-          dataStreamIds: ['car-speed-alarm'],
-          icon: alarmValue.high.icon,
-        },
-      ],
-      thresholdOptions: DEFAULT_THRESHOLD_OPTIONS_OFF,
-    },
+    annotations,
     duration: undefined,
   });
 

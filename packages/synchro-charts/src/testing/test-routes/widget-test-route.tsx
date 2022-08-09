@@ -13,6 +13,7 @@ const {
   messageOverrides,
   width = DEFAULT_WIDTH,
   height = DEFAULT_HEIGHT,
+  fontSize,
   axis,
   componentTag,
   annotations,
@@ -28,7 +29,9 @@ const {
   tableColumns,
 } = testCaseParameters();
 
-const getSize = (value: number | string): { height: number | string; width: number | string } | undefined => {
+const getSize = (
+  value: number | string
+): { height: number | string; width: number | string; fontSize?: string } | undefined => {
   if (typeof value === 'string') {
     return undefined;
   }
@@ -36,6 +39,7 @@ const getSize = (value: number | string): { height: number | string; width: numb
     ...SIZE,
     width,
     height,
+    fontSize,
   };
 };
 

@@ -1,5 +1,6 @@
 > - [Bar chart](#/Components/BarChart)
 > - [KPI](#/Components/KPI)
+> - [Dial](#/Components/Dial)
 > - [Line chart](#/Components/LineChart)
 > - [Scatter chart](#/Components/ScatterChart)
 > - [Status chart](#/Components/StatusChart)

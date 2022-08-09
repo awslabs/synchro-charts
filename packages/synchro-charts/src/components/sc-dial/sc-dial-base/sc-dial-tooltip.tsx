@@ -83,7 +83,7 @@ export class ScDialTooltip {
                     {this.alarmPoint && (
                       <div>
                         {this.breachedThreshold && this.breachedThreshold.icon && (
-                          <span style={{ color }}>{this.breachedThreshold.value}</span>
+                          <span style={{ color }}>{this.breachedThreshold?.label?.text}</span>
                         )}
                       </div>
                     )}

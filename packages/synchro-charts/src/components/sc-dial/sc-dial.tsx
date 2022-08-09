@@ -1,7 +1,13 @@
 import { Component, h, Prop } from '@stencil/core';
-import { DataPoint, DataStream, MessageOverrides, StreamAssociation, ViewPortConfig } from '../../utils/dataTypes';
+import {
+  DataPoint,
+  DataStream,
+  MessageOverrides,
+  SizeConfig,
+  StreamAssociation,
+  ViewPortConfig,
+} from '../../utils/dataTypes';
 import { Annotations, DialConfig, Threshold } from '../charts/common/types';
-import { validate } from '../common/validator/validate';
 import { breachedThreshold } from '../charts/common/annotations/breachedThreshold';
 import { isMinimalStaticViewport } from '../../utils/predicates';
 import { getThresholds } from '../charts/common/annotations/utils';
@@ -17,11 +23,8 @@ export class ScDial implements DialConfig {
   @Prop() dataStream!: DataStream;
   @Prop() associatedStreams?: StreamAssociation[];
   @Prop() annotations?: Annotations;
+  @Prop() size?: SizeConfig & { fontSize?: string };
   @Prop() messageOverrides: MessageOverrides = {};
-
-  componentWillRender() {
-    validate(this);
-  }
 
   getPoint = (dataStream: DataStream): DataPoint | undefined => {
     if (dataStream.data && dataStream.data.length > 0) {
@@ -48,17 +51,7 @@ export class ScDial implements DialConfig {
   render() {
     const propertyPoint = this.getPoint(this.dataStream);
     const alarmStream = this.getAlarmStream(this.dataStream) ? this.dataStream : undefined;
-    const threshold = alarmStream
-      ? getThresholds(this.annotations)
-          .filter(a => a.icon)
-          .filter(a => a.dataStreamIds?.includes(this.dataStream.id))[0] ||
-        this.getBreachedThreshold(propertyPoint, this.dataStream)
-      : undefined;
-    let valueColor: string | undefined;
-    if (typeof this.annotations?.thresholdOptions === 'object') {
-      const { showColor = false } = this.annotations?.thresholdOptions;
-      valueColor = showColor ? threshold?.color : undefined;
-    }
+    const threshold = alarmStream ? this.getBreachedThreshold(propertyPoint, this.dataStream) : undefined;
 
     return (
       <sc-dial-base
@@ -67,7 +60,7 @@ export class ScDial implements DialConfig {
         alarmStream={alarmStream}
         breachedThreshold={threshold}
         viewport={this.viewport}
-        valueColor={valueColor}
+        size={this.size}
         isLoading={this.dataStream ? this.dataStream.isLoading || false : false}
       />
     );

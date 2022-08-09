@@ -1,9 +1,7 @@
 import { newSpecPage } from '@stencil/core/testing';
 import { Components } from '../../../components.d';
 import { CustomHTMLElement } from '../../../utils/types';
-import { ScSizeProvider } from '../../sc-size-provider/sc-size-provider';
 import { ScGridTooltip } from '../../sc-widget-grid/sc-grid-tooltip';
-import { ScWidgetGrid } from '../../sc-widget-grid/sc-widget-grid';
 import { ScDialBase } from './sc-dial-base';
 import { update } from '../../charts/common/tests/merge';
 import { DEFAULT_CHART_CONFIG } from '../../charts/sc-webgl-base-chart/chartDefaults';
@@ -12,7 +10,8 @@ import { DATA_STREAM, NUMBER_INFO_1, NUMBER_STREAM_1 } from '../../../testing/__
 import { round } from '../../../utils/number';
 import { DataType } from '../../../utils/dataConstants';
 import { COMPARISON_OPERATOR, StatusIcon } from '../../charts/common/constants';
-import { StatusProgress } from './util';
+import { sizeConfigurations } from './util';
+import { ScDialTooltip } from './sc-dial-tooltip';
 
 const VIEWPORT = {
   ...DEFAULT_CHART_CONFIG.viewport,
@@ -27,7 +26,7 @@ const VALUE3 = 4500;
 
 const newValueSpecPage = async (propOverrides: Partial<Components.ScDialBase> = {}) => {
   const page = await newSpecPage({
-    components: [ScDialBase, ScSizeProvider, ScWidgetGrid, ScGridTooltip],
+    components: [ScDialBase, ScDialTooltip, ScGridTooltip],
     html: '<div></div>',
     supportsShadowDom: false,
   });
@@ -147,16 +146,20 @@ describe('Alarm states', () => {
       propertyPoint: NUMBER_STREAM_1.data[0],
       alarmStream: NUMBER_STREAM_1,
       breachedThreshold: {
-        color: '',
-        value: 'Critical',
-        comparisonOperator: COMPARISON_OPERATOR.EQUAL,
+        color: sizeConfigurations.CRITICAL,
+        value: 1650,
+        comparisonOperator: COMPARISON_OPERATOR.LESS_THAN,
         dataStreamIds: [NUMBER_INFO_1.id],
+        label: {
+          text: 'Critical',
+          show: true,
+        },
         icon: StatusIcon.ERROR,
       },
     });
 
     expect(dialBase.textContent).toContain('Critical');
-    expect(dialBase.innerHTML).toContain(StatusProgress.CRITICAL);
+    expect(dialBase.innerHTML).toContain(sizeConfigurations.CRITICAL);
   });
   it('when Warning', async () => {
     const DATASTREAM = {
@@ -177,16 +180,20 @@ describe('Alarm states', () => {
       propertyPoint: DATASTREAM.data[0],
       alarmStream: DATASTREAM,
       breachedThreshold: {
-        color: '',
-        value: 'Warning',
-        comparisonOperator: COMPARISON_OPERATOR.EQUAL,
+        color: sizeConfigurations.WARNING,
+        value: 3300,
+        comparisonOperator: COMPARISON_OPERATOR.LESS_THAN,
         dataStreamIds: [NUMBER_INFO_1.id],
+        label: {
+          text: 'Warning',
+          show: true,
+        },
         icon: StatusIcon.LATCHED,
       },
     });
 
     expect(dialBase.textContent).toContain('Warning');
-    expect(dialBase.innerHTML).toContain(StatusProgress.WARNING);
+    expect(dialBase.innerHTML).toContain(sizeConfigurations.WARNING);
   });
   it('when Normal', async () => {
     const DATASTREAM = {
@@ -207,15 +214,19 @@ describe('Alarm states', () => {
       propertyPoint: DATASTREAM.data[0],
       alarmStream: DATASTREAM,
       breachedThreshold: {
-        color: '',
-        value: 'Normal',
-        comparisonOperator: COMPARISON_OPERATOR.EQUAL,
+        color: sizeConfigurations.NORMAL,
+        value: 3300,
+        comparisonOperator: COMPARISON_OPERATOR.GREATER_THAN_EQUAL,
         dataStreamIds: [NUMBER_INFO_1.id],
+        label: {
+          text: 'Normal',
+          show: true,
+        },
         icon: StatusIcon.NORMAL,
       },
     });
 
     expect(dialBase.textContent).toContain('Normal');
-    expect(dialBase.innerHTML).toContain(StatusProgress.NORMAL);
+    expect(dialBase.innerHTML).toContain(sizeConfigurations.NORMAL);
   });
 });

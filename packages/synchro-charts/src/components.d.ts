@@ -82,6 +82,7 @@ export namespace Components {
         "associatedStreams"?: StreamAssociation[];
         "dataStream": DataStream;
         "messageOverrides": MessageOverrides;
+        "size"?: SizeConfig & { fontSize?: string };
         "viewport": ViewPortConfig;
         "widgetId": string;
     }
@@ -91,11 +92,9 @@ export namespace Components {
         "isLoading"?: boolean;
         "propertyPoint"?: DataPoint<Primitive>;
         "propertyStream"?: DataStream;
-        "size"?: MinimalSizeConfig;
+        "size"?: SizeConfig & { fontSize?: string };
         "valueColor"?: string;
         "viewport": ViewPortConfig;
-    }
-    interface ScDialStandard {
     }
     interface ScDialTooltip {
         "alarmPoint"?: DataPoint;
@@ -692,12 +691,6 @@ declare global {
     var HTMLScDialBaseElement: {
         prototype: HTMLScDialBaseElement;
         new (): HTMLScDialBaseElement;
-    };
-    interface HTMLScDialStandardElement extends Components.ScDialStandard, HTMLStencilElement {
-    }
-    var HTMLScDialStandardElement: {
-        prototype: HTMLScDialStandardElement;
-        new (): HTMLScDialStandardElement;
     };
     interface HTMLScDialTooltipElement extends Components.ScDialTooltip, HTMLStencilElement {
     }
@@ -1355,7 +1348,6 @@ declare global {
         "sc-data-stream-name": HTMLScDataStreamNameElement;
         "sc-dial": HTMLScDialElement;
         "sc-dial-base": HTMLScDialBaseElement;
-        "sc-dial-standard": HTMLScDialStandardElement;
         "sc-dial-tooltip": HTMLScDialTooltipElement;
         "sc-error-badge": HTMLScErrorBadgeElement;
         "sc-expandable-input": HTMLScExpandableInputElement;
@@ -1532,6 +1524,7 @@ declare namespace LocalJSX {
         "associatedStreams"?: StreamAssociation[];
         "dataStream": DataStream;
         "messageOverrides"?: MessageOverrides;
+        "size"?: SizeConfig & { fontSize?: string };
         "viewport"?: ViewPortConfig;
         "widgetId": string;
     }
@@ -1541,11 +1534,9 @@ declare namespace LocalJSX {
         "isLoading"?: boolean;
         "propertyPoint"?: DataPoint<Primitive>;
         "propertyStream"?: DataStream;
-        "size"?: MinimalSizeConfig;
+        "size"?: SizeConfig & { fontSize?: string };
         "valueColor"?: string;
         "viewport"?: ViewPortConfig;
-    }
-    interface ScDialStandard {
     }
     interface ScDialTooltip {
         "alarmPoint"?: DataPoint;
@@ -2092,7 +2083,6 @@ declare namespace LocalJSX {
         "sc-data-stream-name": ScDataStreamName;
         "sc-dial": ScDial;
         "sc-dial-base": ScDialBase;
-        "sc-dial-standard": ScDialStandard;
         "sc-dial-tooltip": ScDialTooltip;
         "sc-error-badge": ScErrorBadge;
         "sc-expandable-input": ScExpandableInput;
@@ -2219,7 +2209,6 @@ declare module "@stencil/core" {
             "sc-data-stream-name": LocalJSX.ScDataStreamName & JSXBase.HTMLAttributes<HTMLScDataStreamNameElement>;
             "sc-dial": LocalJSX.ScDial & JSXBase.HTMLAttributes<HTMLScDialElement>;
             "sc-dial-base": LocalJSX.ScDialBase & JSXBase.HTMLAttributes<HTMLScDialBaseElement>;
-            "sc-dial-standard": LocalJSX.ScDialStandard & JSXBase.HTMLAttributes<HTMLScDialStandardElement>;
             "sc-dial-tooltip": LocalJSX.ScDialTooltip & JSXBase.HTMLAttributes<HTMLScDialTooltipElement>;
             "sc-error-badge": LocalJSX.ScErrorBadge & JSXBase.HTMLAttributes<HTMLScErrorBadgeElement>;
             "sc-expandable-input": LocalJSX.ScExpandableInput & JSXBase.HTMLAttributes<HTMLScExpandableInputElement>;

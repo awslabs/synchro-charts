@@ -1,6 +1,6 @@
 import React from 'react';
-import { LineChart, StatusTimeline } from '@synchro-charts/react';
-import {COMPARISON_OPERATOR, DataType, StreamType} from '@synchro-charts/core';
+import { LineChart, StatusTimeline, Dial } from '@synchro-charts/react';
+import {COMPARISON_OPERATOR, DataType, StreamType, StatusIcon } from '@synchro-charts/core';
 import {MINUTE_IN_MS, SECOND_IN_MS} from "./dateUtil";
 
 const pallet = ['#0073bb', '#6b8ea5'];
@@ -56,6 +56,33 @@ const dataStreams = [{
   resolution: 0,
   color: pallet[1],
 }];
+
+const dataStreamNoUnit = {
+  id: '3',
+  name: 'Wind temperature',
+  data: [
+    {
+      x: new Date(2001, 0, 0).getTime(),
+      y: 1580,
+    },
+  ],
+  resolution: 0,
+  dataType: DataType.NUMBER,
+}
+
+const dataStreamUnit = {
+  id: '4',
+  name: 'Wind temperature',
+  data: [
+    {
+      x: new Date(2001, 0, 0).getTime(),
+      y: 1580.001,
+    },
+  ],
+  unit: 'rpm',
+  resolution: 0,
+  dataType: DataType.NUMBER,
+}
 
 const alarmStatusStreams = [{
   id: '1',
@@ -125,6 +152,40 @@ const annotations = {
     value: 'OK',
     comparisonOperator: COMPARISON_OPERATOR.EQUAL,
   }],
+}
+
+const annotations_dial = {
+  y: [ {
+    color: "#C03F25",
+    value: 660,
+    comparisonOperator: COMPARISON_OPERATOR.LESS_THAN_EQUAL,
+    dataStreamIds: ['5'],
+    label: {
+      text: 'Critical',
+      show: true,
+    },
+    icon: StatusIcon.ERROR,
+  },{
+    color: "#F29D38",
+    value: 1320,
+    comparisonOperator: COMPARISON_OPERATOR.LESS_THAN_EQUAL,
+    dataStreamIds: ['5'],
+    label: {
+      text: 'Warning',
+      show: true,
+    },
+    icon: StatusIcon.LATCHED,
+  },{
+    color: "#3F7E23",
+    value: 1320,
+    comparisonOperator: COMPARISON_OPERATOR.GREATER_THAN,
+    dataStreamIds: ['5'],
+    label: {
+      text: 'Normal',
+      show: true,
+    },
+    icon: StatusIcon.NORMAL,
+  },],
   thresholdOptions: {
     showColor: true,
   },
@@ -145,8 +206,11 @@ export class LiveDemo extends React.Component {
     }
   }
 
+  getRandomColor=()=>{ return '#'+('00000'+((Math.random()*16777215+0.5)>>0).toString(16)).slice(-6); }
+
   addDataPoints = (x) => {
     const { dataStreams, alarmStatusStreams } = this.state;
+    const { data } = dataStreamNoUnit
     const [dataStream1, dataStream2] = dataStreams;
     const [alarmStream1, alarmStream2] = alarmStatusStreams;
 
@@ -158,6 +222,17 @@ export class LiveDemo extends React.Component {
 
     alarmStream1.data = [...alarmStream1.data, { x, y: alarmStatus( y1 ) }];
     alarmStream2.data = [...alarmStream2.data, { x: x, y: alarmStatus(y2) }];
+
+
+    const value = Math.round(Math.random()*2001)
+    data.push({
+      x: Date.now(),
+      y: value,
+    })
+    data.shift()
+
+    dataStreamUnit.data.push({x: Date.now(),y: Math.random()*2001,})
+    dataStreamUnit.data.shift()
 
     this.setState({ dataStreams: [dataStream1, dataStream2], alarmStatusStreams: [alarmStream1, alarmStream2] });
   }
@@ -208,6 +283,37 @@ export class LiveDemo extends React.Component {
             dataStreams={alarmStatusStreams}
             annotations={annotations}
           />
+        </div>
+        <h3>Overiew</h3>
+        <div style={{ display: 'flex', flexDirection: 'row' }}>
+          <div style={{ height: '300px', width: '50%' }}>
+            <Dial 
+              dataStream={dataStreamNoUnit}
+              viewport={{...viewport, yMin: 0, yMax: 2000}} 
+            />
+          </div>
+          <div style={{ height: '300px', width: '50%' }}>
+            <Dial 
+              dataStream={dataStreamUnit}
+              viewport={{...viewport, yMin: 0, yMax: 2000}} 
+            />
+          </div>
+        </div>
+        <h3>Alarm states</h3>
+        <div style={{ display: 'flex', flexDirection: 'row', marginTop: '50px' }}>
+          <div style={{ height: '300px', width: '50%' }}>
+            <Dial 
+              dataStream={{...dataStreamNoUnit, id: '5'}}
+              viewport={{...viewport, yMin: 0, yMax: 2000}} 
+              associatedStreams={[
+                {
+                  id: '5',
+                  type: StreamType.ALARM,
+                },
+              ]}
+              annotations={annotations_dial}
+            />
+          </div>
         </div>
       </div>
     )

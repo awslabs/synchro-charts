@@ -63,12 +63,13 @@ export interface ChartConfig extends BaseConfig {
   messageOverrides?: MessageOverrides;
 }
 
-export interface DialConfig extends BaseConfig {
+export interface DialConfig {
   viewport: ViewPortConfig;
   widgetId: string;
   dataStream: DataStream;
   associatedStreams?: StreamAssociation[];
   annotations?: Annotations;
+  size?: SizeConfig & { fontSize?: string };
   messageOverrides?: MessageOverrides;
 }
 
