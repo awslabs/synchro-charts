@@ -60,11 +60,11 @@ export const DialSVG = ({ percent, point, breachedThreshold, stream, fontSize })
           text-anchor="middle"
           fill={sizeConfigurations.SECONDARYTEXT}
         >
-          <tspan dy={stream && point && !stream.unit ? 0 : 10}>{NO_VALUE_PRESENT}</tspan>
+          <tspan dy={stream && !stream.unit ? 0 : 10}>{NO_VALUE_PRESENT}</tspan>
         </text>
       )}
 
-      {stream && point && !stream.unit && !breachedThreshold ? (
+      {stream && !stream.unit && !breachedThreshold ? (
         <text
           x="138"
           y="173"

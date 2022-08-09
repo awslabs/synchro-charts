@@ -102,7 +102,7 @@ describe('alarm', () => {
       },
     ],
   };
-  const ASSOCIATEDSTREAMS = [
+  const ASSOCIATED_STREAMS = [
     {
       id: 'car-speed-alarm',
       type: StreamType.ALARM,
@@ -141,7 +141,7 @@ describe('alarm', () => {
     const { dial } = await newValueSpecPage({
       dataStream: DATA,
       annotations: ANNOTIONS,
-      associatedStreams: ASSOCIATEDSTREAMS,
+      associatedStreams: ASSOCIATED_STREAMS,
     });
 
     const dialBases = dial.querySelectorAll('sc-dial-base');
@@ -163,7 +163,7 @@ describe('alarm', () => {
     const { dial } = await newValueSpecPage({
       dataStream: DATA,
       annotations: ANNOTIONS,
-      associatedStreams: [ASSOCIATEDSTREAMS[0], { id: DATA_STREAM.id, type: StreamType.ALARM }],
+      associatedStreams: [ASSOCIATED_STREAMS[0], { id: DATA_STREAM.id, type: StreamType.ALARM }],
     });
 
     const dialBases = dial.querySelectorAll('sc-dial-base');
@@ -186,7 +186,7 @@ describe('alarm', () => {
     const { dial } = await newValueSpecPage({
       dataStream: DATA,
       annotations: { ...ANNOTIONS, thresholdOptions: { showColor: true } },
-      associatedStreams: [ASSOCIATEDSTREAMS[0], { id: DATA_STREAM.id, type: StreamType.ALARM }],
+      associatedStreams: [ASSOCIATED_STREAMS[0], { id: DATA_STREAM.id, type: StreamType.ALARM }],
     });
 
     const dialBases = dial.querySelectorAll('sc-dial-base');
@@ -220,7 +220,7 @@ describe('alarm', () => {
     const { dial } = await newValueSpecPage({
       dataStream: DATA,
       annotations: ANNOTIONS_0,
-      associatedStreams: [ASSOCIATEDSTREAMS[0], { id: DATA_STREAM.id, type: StreamType.ALARM }],
+      associatedStreams: [ASSOCIATED_STREAMS[0], { id: DATA_STREAM.id, type: StreamType.ALARM }],
     });
 
     const dialBases = dial.querySelectorAll('sc-dial-base');
