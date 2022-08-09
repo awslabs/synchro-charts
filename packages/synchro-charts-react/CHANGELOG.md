@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+
+## 6.0.0 (2022-08-09)
+
+### Bug Fixes
+
+* fix dateRangeChange incorrectly being called when new data comes in during live mode ([#150](https://github.com/awslabs/synchro-charts/issues/150)) ([797b043](https://github.com/awslabs/synchro-charts/pull/155/commits/797b04317b7a2f67d03823e18e072d5bb04cf2ef))
+
+
+
+
+
+
 # 5.0.0 (2022-06-21)
 
 ### Breaking changes
