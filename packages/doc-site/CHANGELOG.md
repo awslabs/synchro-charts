@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 6.0.0 (2022-08-09)
+
+### Features
+
+* add development quick start documentation ([ec4547e](https://github.com/awslabs/synchro-charts/pull/149/commits/ec4547eb5b931994f32c613945e52b4ef97f9945))
+
+
+
+
+
 # 5.0.0 (2022-06-21)
 
 ### Breaking changes
