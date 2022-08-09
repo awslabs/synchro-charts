@@ -10,6 +10,7 @@ import { Annotations, Axis, LayoutConfig, Legend, LegendConfig, MovementConfig, 
 import { Trend, TrendResult } from "./components/charts/common/trends/types";
 import { DATA_ALIGNMENT, StatusIcon } from "./components/charts/common/constants";
 import { POINT_TYPE } from "./components/charts/sc-webgl-base-chart/activePoints";
+import { TextSizeConfig } from "./components/sc-dial/sc-dial-base/util";
 import { RectScrollFixed } from "./utils/types";
 import { LabelsConfig } from "./components/common/types";
 import { Cell, Row } from "./components/sc-table/constructTableData";
@@ -95,6 +96,13 @@ export namespace Components {
         "size"?: SizeConfig & { fontSize?: string };
         "valueColor"?: string;
         "viewport": ViewPortConfig;
+    }
+    interface ScDialSvg {
+        "breachedThreshold": Threshold;
+        "fontSize": TextSizeConfig;
+        "percent": number;
+        "point"?: DataPoint;
+        "stream"?: DataStream | null;
     }
     interface ScDialTooltip {
         "alarmPoint"?: DataPoint;
@@ -691,6 +699,12 @@ declare global {
     var HTMLScDialBaseElement: {
         prototype: HTMLScDialBaseElement;
         new (): HTMLScDialBaseElement;
+    };
+    interface HTMLScDialSvgElement extends Components.ScDialSvg, HTMLStencilElement {
+    }
+    var HTMLScDialSvgElement: {
+        prototype: HTMLScDialSvgElement;
+        new (): HTMLScDialSvgElement;
     };
     interface HTMLScDialTooltipElement extends Components.ScDialTooltip, HTMLStencilElement {
     }
@@ -1348,6 +1362,7 @@ declare global {
         "sc-data-stream-name": HTMLScDataStreamNameElement;
         "sc-dial": HTMLScDialElement;
         "sc-dial-base": HTMLScDialBaseElement;
+        "sc-dial-svg": HTMLScDialSvgElement;
         "sc-dial-tooltip": HTMLScDialTooltipElement;
         "sc-error-badge": HTMLScErrorBadgeElement;
         "sc-expandable-input": HTMLScExpandableInputElement;
@@ -1537,6 +1552,13 @@ declare namespace LocalJSX {
         "size"?: SizeConfig & { fontSize?: string };
         "valueColor"?: string;
         "viewport"?: ViewPortConfig;
+    }
+    interface ScDialSvg {
+        "breachedThreshold"?: Threshold;
+        "fontSize"?: TextSizeConfig;
+        "percent"?: number;
+        "point"?: DataPoint;
+        "stream"?: DataStream | null;
     }
     interface ScDialTooltip {
         "alarmPoint"?: DataPoint;
@@ -2083,6 +2105,7 @@ declare namespace LocalJSX {
         "sc-data-stream-name": ScDataStreamName;
         "sc-dial": ScDial;
         "sc-dial-base": ScDialBase;
+        "sc-dial-svg": ScDialSvg;
         "sc-dial-tooltip": ScDialTooltip;
         "sc-error-badge": ScErrorBadge;
         "sc-expandable-input": ScExpandableInput;
@@ -2209,6 +2232,7 @@ declare module "@stencil/core" {
             "sc-data-stream-name": LocalJSX.ScDataStreamName & JSXBase.HTMLAttributes<HTMLScDataStreamNameElement>;
             "sc-dial": LocalJSX.ScDial & JSXBase.HTMLAttributes<HTMLScDialElement>;
             "sc-dial-base": LocalJSX.ScDialBase & JSXBase.HTMLAttributes<HTMLScDialBaseElement>;
+            "sc-dial-svg": LocalJSX.ScDialSvg & JSXBase.HTMLAttributes<HTMLScDialSvgElement>;
             "sc-dial-tooltip": LocalJSX.ScDialTooltip & JSXBase.HTMLAttributes<HTMLScDialTooltipElement>;
             "sc-error-badge": LocalJSX.ScErrorBadge & JSXBase.HTMLAttributes<HTMLScErrorBadgeElement>;
             "sc-expandable-input": LocalJSX.ScExpandableInput & JSXBase.HTMLAttributes<HTMLScExpandableInputElement>;

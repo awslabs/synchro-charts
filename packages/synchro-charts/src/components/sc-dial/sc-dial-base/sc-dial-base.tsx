@@ -3,7 +3,6 @@ import { DataPoint, DataStream, Primitive, SizeConfig, ViewPortConfig } from '..
 import { isNumberDataStream } from '../../../utils/predicates';
 import { Threshold } from '../../charts/common/types';
 import { DialLoading } from './sc-dial-loading';
-import { DialSVG } from './sc-dial-svg';
 import { TextSizeConfig, sizeContent, sizeConfigurations } from './util';
 
 const title = (dataStream: { detailedName?: any; name?: any } | null | false) => {
@@ -39,13 +38,12 @@ export class ScDialBase {
 
   render() {
     const { yMin = 0, yMax = 0 } = this.viewport;
-    const propertyStream = this.propertyStream ? isNumberDataStream(this.propertyStream) && this.propertyStream : null;
-    const point = propertyStream ? this.propertyPoint : null;
+    const propertyStream = this.propertyStream && isNumberDataStream(this.propertyStream) ? this.propertyStream : null;
+    const point = propertyStream ? this.propertyPoint : undefined;
     const error = propertyStream ? propertyStream.error : 'Only numbers are supported';
 
     const percent = point ? (point.y as number) / (yMax - yMin) : 0;
     const labelColor = this.breachedThreshold?.color || sizeConfigurations.BLUE;
-    const stream = propertyStream;
     const unit = propertyStream && propertyStream.unit;
 
     return (
@@ -62,11 +60,11 @@ export class ScDialBase {
           {this.isLoading ? (
             <DialLoading />
           ) : (
-            <DialSVG
+            <sc-dial-svg
               percent={percent}
               point={point}
               breachedThreshold={this.breachedThreshold}
-              stream={stream}
+              stream={propertyStream}
               fontSize={this.fontSize}
             />
           )}
