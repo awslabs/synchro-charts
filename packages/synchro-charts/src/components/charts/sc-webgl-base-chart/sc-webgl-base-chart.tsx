@@ -540,15 +540,18 @@ export class ScWebglBaseChart {
    * Provide no `hasDataChanged` to prevent a re-processing of the chart scenes.
    */
   onUpdate = (
-    { start, end }: { start: Date; end: Date },
-
+    {
+      start,
+      end,
+      shouldBlockDateRangeChangedEvent,
+    }: { start: Date; end: Date; shouldBlockDateRangeChangedEvent?: boolean },
     hasDataChanged: boolean = false,
     hasSizeChanged: boolean = false,
     hasAnnotationChanged: boolean = false,
     shouldRerender: boolean = false
   ) => {
     const hasViewPortChanged = this.start.getTime() !== start.getTime() || this.end.getTime() !== end.getTime();
-    if (hasViewPortChanged) {
+    if (hasViewPortChanged && !shouldBlockDateRangeChangedEvent) {
       this.onDateRangeChange([start, end, this.viewport.group]);
     }
 

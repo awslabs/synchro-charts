@@ -55,8 +55,15 @@ export class ViewportHandler<T extends ViewPortManager> {
 
       // Sets the new start and end in the viewport live id for the current manager
       this.viewportMap[viewPortMapKey] = { start: newStart, end: newEnd };
-      // Have manager update its own viewport
-      manager.updateViewPort({ start: newStart, end: newEnd, duration });
+
+      // Have manager update its own viewport, preventing 'dateRangeChange' events when in live mode
+      const isInLiveMode = Boolean(duration);
+      manager.updateViewPort({
+        start: newStart,
+        end: newEnd,
+        duration,
+        shouldBlockDateRangeChangedEvent: isInLiveMode,
+      });
     }, tickRate) as unknown) as number;
 
     this.viewportMap[viewPortMapKey] = { start: initStart, end: initEnd };

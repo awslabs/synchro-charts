@@ -371,4 +371,22 @@ describe('internal clock', () => {
     // @ts-ignore
     expect(manager1.updateViewPort.mock.calls.length).toBeGreaterThan(manager2.updateViewPort.mock.calls.length);
   });
+
+  it('blocks dateRangeChanged event emission when a duration is passed in', () => {
+    jest.useFakeTimers();
+    const groups = new ViewportHandler();
+    const VIEWPORT_GROUP_1 = 'view-port-group-1';
+    const manager = viewportManager(VIEWPORT_GROUP_1);
+
+    /** Create a viewport group and sync it's viewport */
+    groups.add({ manager, duration: 10 * SECOND_IN_MS, chartSize });
+
+    const secondsElapsed = 1;
+    jest.advanceTimersByTime(secondsElapsed * SECOND_IN_MS);
+    expect(manager.updateViewPort).toBeCalledWith(
+      expect.objectContaining({
+        shouldBlockDateRangeChangedEvent: true,
+      })
+    );
+  });
 });

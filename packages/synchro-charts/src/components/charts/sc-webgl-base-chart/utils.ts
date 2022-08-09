@@ -100,7 +100,16 @@ export const constructChartScene = ({
      */
     viewportGroup: viewport.group,
 
-    updateViewPort: ({ start, end }: { start: Date; end: Date }) => {
+    updateViewPort: ({
+      start,
+      end,
+      ...rest
+    }: {
+      start: Date;
+      end: Date;
+      duration?: number | undefined;
+      shouldBlockDateRangeChangedEvent?: boolean;
+    }) => {
       /**
        * Update threejs cameras position.
        * This will cause the shaders to have an updated uniform, utilized
@@ -117,7 +126,7 @@ export const constructChartScene = ({
        * for non-webGL based features, i.e. thresholds, axis, etc.
        */
       if (onUpdate) {
-        onUpdate({ start, end });
+        onUpdate({ start, end, ...rest });
       }
     },
   };

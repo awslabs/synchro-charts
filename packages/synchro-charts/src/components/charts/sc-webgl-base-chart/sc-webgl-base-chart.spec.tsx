@@ -32,6 +32,7 @@ import { ScWebglBaseChart } from './sc-webgl-base-chart';
 import { ScWebglAxis } from './sc-webgl-axis';
 import { chartScene, updateChartScene } from '../sc-line-chart/chartScene';
 import { DATA_ALIGNMENT, LEGEND_POSITION } from '../common/constants';
+import { SECOND_IN_MS } from '../../../utils/time';
 
 const VIEWPORT: ViewPort = { start: new Date(2000), end: new Date(2001, 0, 0), yMin: 0, yMax: 100 };
 
@@ -480,6 +481,28 @@ describe('chart scene management', () => {
         end: UPDATED_END,
       })
     );
+  });
+
+  it('calls onUpdate without emitting dateRangeChanged event when chart is in live mode', async () => {
+    jest.useFakeTimers();
+
+    const mockEventListener = jest.fn();
+    document.addEventListener = mockEventListener;
+    await newChartSpecPage({
+      createChartScene: chartScene,
+      updateChartScene,
+      viewport: { duration: 500 },
+      minBufferSize: MIN_BUFFER_SIZE,
+      bufferFactor: BUFFER_FACTOR,
+      dataStreams: DATA_STREAMS,
+      onUpdateLifeCycle: jest.fn(),
+    });
+    mockEventListener.mockReset();
+
+    const secondsElapsed = 1;
+    jest.advanceTimersByTime(secondsElapsed * SECOND_IN_MS);
+
+    expect(mockEventListener).not.toHaveBeenCalledWith('dateRangeChanged');
   });
 });
 
