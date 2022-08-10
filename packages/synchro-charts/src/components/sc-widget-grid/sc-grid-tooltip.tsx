@@ -18,6 +18,8 @@ export class ScGridTooltip {
   @Prop() propertyPoint?: DataPoint;
   @Prop() alarmPoint?: DataPoint;
   @Prop() breachedThreshold?: Threshold;
+  @Prop() unit?: string;
+  @Prop() value?: number | string;
 
   private tooltip: Instance | undefined;
 
@@ -49,9 +51,13 @@ export class ScGridTooltip {
     const thereIsSomeData = this.propertyPoint != null || this.alarmPoint != null;
     const color = this.breachedThreshold ? this.breachedThreshold.color : undefined;
     const displaysMoreThanTitle = thereIsSomeData && this.isEnabled;
+    const icon = this.breachedThreshold ? this.breachedThreshold.icon : undefined;
+    const label = this.breachedThreshold ? this.breachedThreshold.label : undefined;
+    const unit = this.unit || '';
+    const value = this.value || this.propertyPoint?.y;
 
     return (
-      <div class="tooltip-container">
+      <div class="tooltip-container" style={{ width: 'inherit', height: 'inherit' }}>
         <div class="cell-tooltip awsui-util-container awsui">
           <div class={{ 'awsui-util-container-header': true, 'awsui-util-mb-m': displaysMoreThanTitle }}>
             <h3>{this.title}</h3>
@@ -64,7 +70,8 @@ export class ScGridTooltip {
                     <div class="awsui-util-label">Latest value:</div>
                     <div>
                       <strong style={{ color }}>
-                        <Value value={this.propertyPoint.y} />
+                        {icon && <sc-chart-icon name={icon} color={color} style={{ marginRight: '3px' }} />}
+                        <Value value={value + unit} />
                       </strong>{' '}
                       at{' '}
                       {new Date(this.propertyPoint.x).toLocaleString('en-US', {
@@ -79,24 +86,30 @@ export class ScGridTooltip {
                   </div>
                 )}
 
-                {this.alarmPoint && (
-                  <div>
-                    <div class="awsui-util-label">Status:</div>
-                    <div>
-                      <strong style={{ color }}>{this.alarmPoint.y}</strong> since{' '}
-                      {new Date(this.alarmPoint.x).toLocaleString('en-US', {
-                        hour12: true,
-                        minute: 'numeric',
-                        hour: 'numeric',
-                        year: 'numeric',
-                        month: 'numeric',
-                        day: 'numeric',
-                      })}
-                      {this.breachedThreshold && this.breachedThreshold.description && (
-                        <div>({this.breachedThreshold.description})</div>
-                      )}
-                    </div>
-                  </div>
+                {label ? (
+                  <strong style={{ color }}>{this.breachedThreshold?.label?.text}</strong>
+                ) : (
+                  <fragement>
+                    {this.alarmPoint && (
+                      <div>
+                        <div class="awsui-util-label">Status:</div>
+                        <div>
+                          <strong style={{ color }}>{this.alarmPoint.y}</strong> since{' '}
+                          {new Date(this.alarmPoint.x).toLocaleString('en-US', {
+                            hour12: true,
+                            minute: 'numeric',
+                            hour: 'numeric',
+                            year: 'numeric',
+                            month: 'numeric',
+                            day: 'numeric',
+                          })}
+                          {this.breachedThreshold && this.breachedThreshold.description && (
+                            <div>({this.breachedThreshold.description})</div>
+                          )}
+                        </div>
+                      </div>
+                    )}
+                  </fragement>
                 )}
               </div>
             </div>

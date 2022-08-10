@@ -79,7 +79,7 @@ export class scDialSVG {
           </text>
         )}
 
-        {this.stream && !this.stream.unit && !this.breachedThreshold ? (
+        {this.stream && !this.stream.unit && this.point && !this.breachedThreshold ? (
           <text
             x="138"
             y="173"

@@ -1,8 +1,8 @@
-sc-dial-tooltip {
+sc-dial-base {
   height: inherit;
 }
 
-sc-dial-base {
+sc-grid-tooltip {
   height: inherit;
 }
 

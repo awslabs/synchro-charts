@@ -104,15 +104,6 @@ export namespace Components {
         "point"?: DataPoint;
         "stream"?: DataStream | null;
     }
-    interface ScDialTooltip {
-        "alarmPoint"?: DataPoint;
-        "breachedThreshold"?: Threshold;
-        "color"?: string | undefined;
-        "propertyPoint"?: DataPoint;
-        "title": string;
-        "unit"?: string;
-        "value"?: number | undefined;
-    }
     interface ScErrorBadge {
     }
     interface ScExpandableInput {
@@ -135,6 +126,8 @@ export namespace Components {
         "isEnabled": boolean;
         "propertyPoint"?: DataPoint;
         "title": string;
+        "unit"?: string;
+        "value"?: number | string;
     }
     interface ScHelpTooltip {
         "message": string;
@@ -705,12 +698,6 @@ declare global {
     var HTMLScDialSvgElement: {
         prototype: HTMLScDialSvgElement;
         new (): HTMLScDialSvgElement;
-    };
-    interface HTMLScDialTooltipElement extends Components.ScDialTooltip, HTMLStencilElement {
-    }
-    var HTMLScDialTooltipElement: {
-        prototype: HTMLScDialTooltipElement;
-        new (): HTMLScDialTooltipElement;
     };
     interface HTMLScErrorBadgeElement extends Components.ScErrorBadge, HTMLStencilElement {
     }
@@ -1363,7 +1350,6 @@ declare global {
         "sc-dial": HTMLScDialElement;
         "sc-dial-base": HTMLScDialBaseElement;
         "sc-dial-svg": HTMLScDialSvgElement;
-        "sc-dial-tooltip": HTMLScDialTooltipElement;
         "sc-error-badge": HTMLScErrorBadgeElement;
         "sc-expandable-input": HTMLScExpandableInputElement;
         "sc-expandable-input-standard": HTMLScExpandableInputStandardElement;
@@ -1560,15 +1546,6 @@ declare namespace LocalJSX {
         "point"?: DataPoint;
         "stream"?: DataStream | null;
     }
-    interface ScDialTooltip {
-        "alarmPoint"?: DataPoint;
-        "breachedThreshold"?: Threshold;
-        "color"?: string | undefined;
-        "propertyPoint"?: DataPoint;
-        "title"?: string;
-        "unit"?: string;
-        "value"?: number | undefined;
-    }
     interface ScErrorBadge {
     }
     interface ScExpandableInput {
@@ -1591,6 +1568,8 @@ declare namespace LocalJSX {
         "isEnabled"?: boolean;
         "propertyPoint"?: DataPoint;
         "title"?: string;
+        "unit"?: string;
+        "value"?: number | string;
     }
     interface ScHelpTooltip {
         "message": string;
@@ -2106,7 +2085,6 @@ declare namespace LocalJSX {
         "sc-dial": ScDial;
         "sc-dial-base": ScDialBase;
         "sc-dial-svg": ScDialSvg;
-        "sc-dial-tooltip": ScDialTooltip;
         "sc-error-badge": ScErrorBadge;
         "sc-expandable-input": ScExpandableInput;
         "sc-expandable-input-standard": ScExpandableInputStandard;
@@ -2233,7 +2211,6 @@ declare module "@stencil/core" {
             "sc-dial": LocalJSX.ScDial & JSXBase.HTMLAttributes<HTMLScDialElement>;
             "sc-dial-base": LocalJSX.ScDialBase & JSXBase.HTMLAttributes<HTMLScDialBaseElement>;
             "sc-dial-svg": LocalJSX.ScDialSvg & JSXBase.HTMLAttributes<HTMLScDialSvgElement>;
-            "sc-dial-tooltip": LocalJSX.ScDialTooltip & JSXBase.HTMLAttributes<HTMLScDialTooltipElement>;
             "sc-error-badge": LocalJSX.ScErrorBadge & JSXBase.HTMLAttributes<HTMLScErrorBadgeElement>;
             "sc-expandable-input": LocalJSX.ScExpandableInput & JSXBase.HTMLAttributes<HTMLScExpandableInputElement>;
             "sc-expandable-input-standard": LocalJSX.ScExpandableInputStandard & JSXBase.HTMLAttributes<HTMLScExpandableInputStandardElement>;

@@ -47,7 +47,7 @@ export class ScDialBase {
     const unit = propertyStream && propertyStream.unit;
 
     return (
-      <sc-dial-tooltip
+      <sc-grid-tooltip
         title={title(propertyStream)}
         propertyPoint={this.propertyPoint}
         alarmPoint={this.alarmStream && this.propertyPoint}
@@ -55,6 +55,7 @@ export class ScDialBase {
         unit={unit || '%'}
         value={unit ? (point?.y as number) : percent * 100}
         color={labelColor}
+        isEnabled
       >
         <div class="sc-dialbase-container">
           {this.isLoading ? (
@@ -88,7 +89,7 @@ export class ScDialBase {
             </div>
           )}
         </div>
-      </sc-dial-tooltip>
+      </sc-grid-tooltip>
     );
   }
 }

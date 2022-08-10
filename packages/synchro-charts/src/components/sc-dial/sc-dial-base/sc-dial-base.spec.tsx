@@ -11,7 +11,6 @@ import { round } from '../../../utils/number';
 import { DataType } from '../../../utils/dataConstants';
 import { COMPARISON_OPERATOR, StatusIcon } from '../../charts/common/constants';
 import { sizeConfigurations } from './util';
-import { ScDialTooltip } from './sc-dial-tooltip';
 
 const VIEWPORT = {
   ...DEFAULT_CHART_CONFIG.viewport,
@@ -26,7 +25,7 @@ const VALUE3 = 4500;
 
 const newValueSpecPage = async (propOverrides: Partial<Components.ScDialBase> = {}) => {
   const page = await newSpecPage({
-    components: [ScDialBase, ScDialTooltip, ScGridTooltip],
+    components: [ScDialBase, ScGridTooltip],
     html: '<div></div>',
     supportsShadowDom: false,
   });
