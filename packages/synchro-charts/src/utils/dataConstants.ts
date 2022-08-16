@@ -1,4 +1,4 @@
-import { BOX, FONT_SIZE, LINE_THICKNESS } from "../testing/styleGuide";
+import { BOX, FONT_SIZE, LINE_THICKNESS } from '../testing/styleGuide';
 
 export enum DataType {
   NUMBER = 'NUMBER',
@@ -57,7 +57,6 @@ export const DIAL_SIZE_CONFIG = {
     fontSize: FONT_SIZE.medium,
     dialThickness: LINE_THICKNESS.medium,
     iconSize: FONT_SIZE.medium,
-    labelSize: FONT_SIZE.small,
     unitSize: FONT_SIZE.small,
     viewport: BOX.medium,
   },
