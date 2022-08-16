@@ -1,9 +1,10 @@
-import { Component, h, Prop, State } from '@stencil/core';
-import { DataPoint, DataStream, Primitive, SizeConfig, ViewPortConfig } from '../../../utils/dataTypes';
+import { Component, h, Prop } from '@stencil/core';
+import { DataPoint, DataStream, DialSizeConfig, Primitive, ViewPortConfig } from '../../../utils/dataTypes';
 import { isNumberDataStream } from '../../../utils/predicates';
 import { Threshold } from '../../charts/common/types';
+import { ErrorStatus } from '../../charts/sc-webgl-base-chart/ErrorStatus';
 import { DialLoading } from './sc-dial-loading';
-import { TextSizeConfig, sizeContent, sizeConfigurations } from './util';
+import { sizeConfigurations } from './util';
 
 const title = (dataStream: { detailedName?: any; name?: any } | null | false) => {
   if (dataStream) {
@@ -26,15 +27,9 @@ export class ScDialBase {
 
   @Prop() propertyStream?: DataStream;
   @Prop() propertyPoint?: DataPoint<Primitive>;
-  @Prop() size?: SizeConfig & { fontSize?: string };
+  @Prop() size?: DialSizeConfig;
 
   @Prop() isLoading?: boolean = false;
-
-  @State() fontSize: TextSizeConfig;
-
-  componentWillRender() {
-    this.fontSize = sizeContent[this.size?.fontSize || 'M'];
-  }
 
   render() {
     const { yMin = 0, yMax = 0 } = this.viewport;
@@ -57,7 +52,7 @@ export class ScDialBase {
         color={labelColor}
         isEnabled
       >
-        <div class="sc-dialbase-container">
+        <div class="sc-dialbase-container" style={{ height: `${this.size?.viewport}px` }}>
           {this.isLoading ? (
             <DialLoading />
           ) : (
@@ -66,7 +61,7 @@ export class ScDialBase {
               point={point}
               breachedThreshold={this.breachedThreshold}
               stream={propertyStream}
-              fontSize={this.fontSize}
+              size={this.size}
             />
           )}
           {error != null && (

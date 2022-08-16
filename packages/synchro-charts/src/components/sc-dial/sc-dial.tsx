@@ -2,8 +2,8 @@ import { Component, h, Prop } from '@stencil/core';
 import {
   DataPoint,
   DataStream,
+  DialSizeConfig,
   MessageOverrides,
-  SizeConfig,
   StreamAssociation,
   ViewPortConfig,
 } from '../../utils/dataTypes';
@@ -23,7 +23,7 @@ export class ScDial implements DialConfig {
   @Prop() dataStream!: DataStream;
   @Prop() associatedStreams?: StreamAssociation[];
   @Prop() annotations?: Annotations;
-  @Prop() size?: SizeConfig & { fontSize?: string };
+  @Prop() size?: DialSizeConfig;
   @Prop() messageOverrides: MessageOverrides = {};
 
   getPoint = (dataStream: DataStream): DataPoint | undefined => {

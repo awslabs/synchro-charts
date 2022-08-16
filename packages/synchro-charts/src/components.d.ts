@@ -5,12 +5,11 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { AlarmsConfig, DataPoint, DataStream, DataStreamInfo, MessageOverrides, MinimalSizeConfig, MinimalViewPortConfig, Primitive, SizeConfig, SizePositionConfig, StreamAssociation, TableColumn, ViewPort, ViewPortConfig } from "./utils/dataTypes";
+import { AlarmsConfig, DataPoint, DataStream, DataStreamInfo, DialSizeConfig, MessageOverrides, MinimalSizeConfig, MinimalViewPortConfig, Primitive, SizeConfig, SizePositionConfig, StreamAssociation, TableColumn, ViewPort, ViewPortConfig } from "./utils/dataTypes";
 import { Annotations, Axis, LayoutConfig, Legend, LegendConfig, MovementConfig, ScaleConfig, Threshold, Tooltip, WidgetConfigurationUpdate } from "./components/charts/common/types";
 import { Trend, TrendResult } from "./components/charts/common/trends/types";
 import { DATA_ALIGNMENT, StatusIcon } from "./components/charts/common/constants";
 import { POINT_TYPE } from "./components/charts/sc-webgl-base-chart/activePoints";
-import { TextSizeConfig } from "./components/sc-dial/sc-dial-base/util";
 import { RectScrollFixed } from "./utils/types";
 import { LabelsConfig } from "./components/common/types";
 import { Cell, Row } from "./components/sc-table/constructTableData";
@@ -83,7 +82,7 @@ export namespace Components {
         "associatedStreams"?: StreamAssociation[];
         "dataStream": DataStream;
         "messageOverrides": MessageOverrides;
-        "size"?: SizeConfig & { fontSize?: string };
+        "size"?: DialSizeConfig;
         "viewport": ViewPortConfig;
         "widgetId": string;
     }
@@ -93,15 +92,15 @@ export namespace Components {
         "isLoading"?: boolean;
         "propertyPoint"?: DataPoint<Primitive>;
         "propertyStream"?: DataStream;
-        "size"?: SizeConfig & { fontSize?: string };
+        "size"?: DialSizeConfig;
         "valueColor"?: string;
         "viewport": ViewPortConfig;
     }
     interface ScDialSvg {
         "breachedThreshold": Threshold;
-        "fontSize": TextSizeConfig;
         "percent": number;
         "point"?: DataPoint;
+        "size": DialSizeConfig;
         "stream"?: DataStream | null;
     }
     interface ScErrorBadge {
@@ -1525,7 +1524,7 @@ declare namespace LocalJSX {
         "associatedStreams"?: StreamAssociation[];
         "dataStream": DataStream;
         "messageOverrides"?: MessageOverrides;
-        "size"?: SizeConfig & { fontSize?: string };
+        "size"?: DialSizeConfig;
         "viewport"?: ViewPortConfig;
         "widgetId": string;
     }
@@ -1535,15 +1534,15 @@ declare namespace LocalJSX {
         "isLoading"?: boolean;
         "propertyPoint"?: DataPoint<Primitive>;
         "propertyStream"?: DataStream;
-        "size"?: SizeConfig & { fontSize?: string };
+        "size"?: DialSizeConfig;
         "valueColor"?: string;
         "viewport"?: ViewPortConfig;
     }
     interface ScDialSvg {
         "breachedThreshold"?: Threshold;
-        "fontSize"?: TextSizeConfig;
         "percent"?: number;
         "point"?: DataPoint;
+        "size"?: DialSizeConfig;
         "stream"?: DataStream | null;
     }
     interface ScErrorBadge {

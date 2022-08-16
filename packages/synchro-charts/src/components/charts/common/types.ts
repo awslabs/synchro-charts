@@ -6,6 +6,7 @@ import {
   DataPoint,
   DataStream,
   DataStreamId,
+  DialSizeConfig,
   MessageOverrides,
   MinimalViewPortConfig,
   SizeConfig,
@@ -69,7 +70,7 @@ export interface DialConfig {
   dataStream: DataStream;
   associatedStreams?: StreamAssociation[];
   annotations?: Annotations;
-  size?: SizeConfig & { fontSize?: string };
+  size?: DialSizeConfig;
   messageOverrides?: MessageOverrides;
 }
 

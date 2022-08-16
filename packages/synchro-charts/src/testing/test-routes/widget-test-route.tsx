@@ -1,8 +1,9 @@
 import { Component, h, Listen, Prop } from '@stencil/core';
 import { SIZE, VIEWPORT as DEFAULT_VIEWPORT } from '../dynamicWidgetUtils/constants';
 import { testCaseParameters } from '../dynamicWidgetUtils/testCaseParameters';
-import { DataStreamInfo } from '../../utils/dataTypes';
+import { DataStreamInfo, DialSizeConfig } from '../../utils/dataTypes';
 import { Y_MAX, Y_MIN } from './charts/constants';
+import { DIAL_SIZE_CONFIG } from '../../constants';
 
 const DEFAULT_WIDTH = 700;
 const DEFAULT_HEIGHT = 400;
@@ -13,7 +14,7 @@ const {
   messageOverrides,
   width = DEFAULT_WIDTH,
   height = DEFAULT_HEIGHT,
-  fontSize,
+  size,
   axis,
   componentTag,
   annotations,
@@ -31,7 +32,8 @@ const {
 
 const getSize = (
   value: number | string
-): { height: number | string; width: number | string; fontSize?: string } | undefined => {
+): { height: number | string; width: number | string } | DialSizeConfig | undefined => {
+  if (size && typeof size === 'string') return DIAL_SIZE_CONFIG[size];
   if (typeof value === 'string') {
     return undefined;
   }
@@ -39,7 +41,6 @@ const getSize = (
     ...SIZE,
     width,
     height,
-    fontSize,
   };
 };
 

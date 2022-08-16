@@ -16,7 +16,7 @@ export type SearchQueryParams = {
   width?: number | string;
   axis?: Axis.Options;
   height?: number | string;
-  fontSize?: string;
+  size?: string;
   duration?: number;
   errMsg: string;
   viewportStart: Date;
@@ -84,7 +84,7 @@ export const constructSearchQuery = ({
   axis,
   width,
   height,
-  fontSize,
+  size,
   // Props that can be directly serialized, i.e. numbers, booleans, and strings
   ...serializableProps
 }: Partial<SearchQueryParams>): string =>
@@ -105,7 +105,7 @@ export const constructSearchQuery = ({
     axis: axis && JSON.stringify(axis),
     width: width && JSON.stringify(width),
     height: height && JSON.stringify(height),
-    fontSize: fontSize && JSON.stringify(fontSize),
+    size: size && JSON.stringify(size),
     // For the rest, we don't have to do any work! and doing less is better
     ...serializableProps,
   });
@@ -126,7 +126,7 @@ export const testCaseParameters = (): SearchQueryParams => {
     width: query.width ? JSON.parse(query.width) : undefined,
     axis: query.axis ? JSON.parse(query.axis) : undefined,
     height: query.height ? JSON.parse(query.height) : undefined,
-    fontSize: query.fontSize ? JSON.parse(query.fontSize) : undefined,
+    size: query.size ? JSON.parse(query.size) : undefined,
     duration: query.duration ? JSON.parse(query.duration) : undefined,
     errMsg: query.errMsg,
     gestures: query.gestures != null ? parseBool(query.gestures) : true,

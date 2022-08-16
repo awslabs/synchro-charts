@@ -78,6 +78,7 @@ it('renders latest value', () => {
   const DATA = round((LATEST_VALUE2 / (Y_MAX - Y_MIN)) * 100);
   visitDynamicWidget(cy, {
     componentTag: 'sc-dial',
+    size: 'M',
     dataStream: {
       ...DATASTREAM,
       data: [
@@ -102,6 +103,7 @@ it('renders string value', () => {
   const LATEST_VALUE = 'ABC';
   visitDynamicWidget(cy, {
     componentTag: 'sc-dial',
+    size: 'M',
     dataStream: {
       ...DATASTREAM,
       unit: 'rpm',
@@ -126,6 +128,7 @@ it('renders loading status', () => {
   const LATEST_VALUE = 2238;
   visitDynamicWidget(cy, {
     componentTag: 'sc-dial',
+    size: 'M',
     dataStream: {
       ...DATASTREAM,
       unit: 'rpm',
@@ -150,6 +153,7 @@ it('renders unit value', () => {
   const LATEST_VALUE = 2238;
   visitDynamicWidget(cy, {
     componentTag: 'sc-dial',
+    size: 'M',
     dataStream: {
       ...DATASTREAM,
       unit: 'rpm',
@@ -173,6 +177,7 @@ it('renders error value', () => {
   const LATEST_VALUE = 2238;
   visitDynamicWidget(cy, {
     componentTag: 'sc-dial',
+    size: 'M',
     dataStream: {
       ...DATASTREAM,
       unit: '',
@@ -196,7 +201,7 @@ it('renders alarm Critica', () => {
   const LATEST_VALUE = 1250;
   visitDynamicWidget(cy, {
     componentTag: 'sc-dial',
-    fontSize: 'M',
+    size: 'M',
     dataStream: {
       ...DATASTREAM,
       id: 'car-speed-alarm',
@@ -229,7 +234,7 @@ it('renders alarm Warning', () => {
   const LATEST_VALUE = 3250;
   visitDynamicWidget(cy, {
     componentTag: 'sc-dial',
-    fontSize: 'M',
+    size: 'M',
     dataStream: {
       ...DATASTREAM,
       id: 'car-speed-alarm',
@@ -257,11 +262,171 @@ it('renders alarm Warning', () => {
   cy.matchImageSnapshotOnCI();
 });
 
-it('renders alarm Normal', () => {
+it('renders alarm Normal when size = `XS`', () => {
   const LATEST_VALUE = 4500;
   visitDynamicWidget(cy, {
     componentTag: 'sc-dial',
-    fontSize: 'M',
+    size: 'XS',
+    dataStream: {
+      ...DATASTREAM,
+      id: 'car-speed-alarm',
+      unit: '',
+      data: [{ x: new Date(1999, 0, 0).getTime(), y: LATEST_VALUE }],
+    },
+    associatedStreams: [
+      {
+        id: 'car-speed-alarm',
+        type: StreamType.ALARM,
+      },
+    ],
+    annotations,
+    duration: undefined,
+  });
+
+  cy.wait(1000);
+  cy.get(VALUE_SVG)
+    .should('be.visible')
+    .should('contain', 'Normal');
+
+  cy.get(VALUE_LOADING).should('not.exist');
+  cy.get(VALUE_ERROR).should('not.exist');
+
+  cy.matchImageSnapshotOnCI();
+});
+
+it('renders alarm Normal when size = `S`', () => {
+  const LATEST_VALUE = 4500;
+  visitDynamicWidget(cy, {
+    componentTag: 'sc-dial',
+    size: 'S',
+    dataStream: {
+      ...DATASTREAM,
+      id: 'car-speed-alarm',
+      unit: '',
+      data: [{ x: new Date(1999, 0, 0).getTime(), y: LATEST_VALUE }],
+    },
+    associatedStreams: [
+      {
+        id: 'car-speed-alarm',
+        type: StreamType.ALARM,
+      },
+    ],
+    annotations,
+    duration: undefined,
+  });
+
+  cy.wait(1000);
+  cy.get(VALUE_SVG)
+    .should('be.visible')
+    .should('contain', 'Normal');
+
+  cy.get(VALUE_LOADING).should('not.exist');
+  cy.get(VALUE_ERROR).should('not.exist');
+
+  cy.matchImageSnapshotOnCI();
+});
+
+it('renders alarm Normal when size = `M`', () => {
+  const LATEST_VALUE = 4500;
+  visitDynamicWidget(cy, {
+    componentTag: 'sc-dial',
+    size: 'M',
+    dataStream: {
+      ...DATASTREAM,
+      id: 'car-speed-alarm',
+      unit: '',
+      data: [{ x: new Date(1999, 0, 0).getTime(), y: LATEST_VALUE }],
+    },
+    associatedStreams: [
+      {
+        id: 'car-speed-alarm',
+        type: StreamType.ALARM,
+      },
+    ],
+    annotations,
+    duration: undefined,
+  });
+
+  cy.wait(1000);
+  cy.get(VALUE_SVG)
+    .should('be.visible')
+    .should('contain', 'Normal');
+
+  cy.get(VALUE_LOADING).should('not.exist');
+  cy.get(VALUE_ERROR).should('not.exist');
+
+  cy.matchImageSnapshotOnCI();
+});
+
+it('renders alarm Normal when size = `L`', () => {
+  const LATEST_VALUE = 4500;
+  visitDynamicWidget(cy, {
+    componentTag: 'sc-dial',
+    size: 'L',
+    dataStream: {
+      ...DATASTREAM,
+      id: 'car-speed-alarm',
+      unit: '',
+      data: [{ x: new Date(1999, 0, 0).getTime(), y: LATEST_VALUE }],
+    },
+    associatedStreams: [
+      {
+        id: 'car-speed-alarm',
+        type: StreamType.ALARM,
+      },
+    ],
+    annotations,
+    duration: undefined,
+  });
+
+  cy.wait(1000);
+  cy.get(VALUE_SVG)
+    .should('be.visible')
+    .should('contain', 'Normal');
+
+  cy.get(VALUE_LOADING).should('not.exist');
+  cy.get(VALUE_ERROR).should('not.exist');
+
+  cy.matchImageSnapshotOnCI();
+});
+
+it('renders alarm Normal when size = `XL`', () => {
+  const LATEST_VALUE = 4500;
+  visitDynamicWidget(cy, {
+    componentTag: 'sc-dial',
+    size: 'XL',
+    dataStream: {
+      ...DATASTREAM,
+      id: 'car-speed-alarm',
+      unit: '',
+      data: [{ x: new Date(1999, 0, 0).getTime(), y: LATEST_VALUE }],
+    },
+    associatedStreams: [
+      {
+        id: 'car-speed-alarm',
+        type: StreamType.ALARM,
+      },
+    ],
+    annotations,
+    duration: undefined,
+  });
+
+  cy.wait(1000);
+  cy.get(VALUE_SVG)
+    .should('be.visible')
+    .should('contain', 'Normal');
+
+  cy.get(VALUE_LOADING).should('not.exist');
+  cy.get(VALUE_ERROR).should('not.exist');
+
+  cy.matchImageSnapshotOnCI();
+});
+
+it('renders alarm Normal when size = `XXL`', () => {
+  const LATEST_VALUE = 4500;
+  visitDynamicWidget(cy, {
+    componentTag: 'sc-dial',
+    size: 'XXL',
     dataStream: {
       ...DATASTREAM,
       id: 'car-speed-alarm',
@@ -293,6 +458,7 @@ it('renders empty value', () => {
   visitDynamicWidget(cy, {
     componentTag: 'sc-dial',
     dataStream: DATASTREAM,
+    size: 'M',
     duration: undefined,
   });
 
