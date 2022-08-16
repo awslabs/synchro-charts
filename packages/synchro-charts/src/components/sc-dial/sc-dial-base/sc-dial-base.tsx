@@ -2,7 +2,6 @@ import { Component, h, Prop } from '@stencil/core';
 import { DataPoint, DataStream, DialSizeConfig, Primitive, ViewPortConfig } from '../../../utils/dataTypes';
 import { isNumberDataStream } from '../../../utils/predicates';
 import { Threshold } from '../../charts/common/types';
-import { ErrorStatus } from '../../charts/sc-webgl-base-chart/ErrorStatus';
 import { DialLoading } from './sc-dial-loading';
 import { sizeConfigurations } from './util';
 
