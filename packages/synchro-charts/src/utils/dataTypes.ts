@@ -81,15 +81,6 @@ export interface SizeConfig extends MinimalSizeConfig {
   marginBottom: number;
 }
 
-export interface DialSizeConfig extends MinimalSizeConfig {
-  fontSize: number;
-  dialThickness: number;
-  iconSize: number;
-  labelSize: number;
-  unitSize: number;
-  viewport: number;
-}
-
 export interface SizePositionConfig extends SizeConfig {
   x: number;
   y: number;

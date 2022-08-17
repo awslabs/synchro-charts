@@ -5,11 +5,12 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { AlarmsConfig, DataPoint, DataStream, DataStreamInfo, DialSizeConfig, MessageOverrides, MinimalSizeConfig, MinimalViewPortConfig, Primitive, SizeConfig, SizePositionConfig, StreamAssociation, TableColumn, ViewPort, ViewPortConfig } from "./utils/dataTypes";
+import { AlarmsConfig, DataPoint, DataStream, DataStreamInfo, MessageOverrides, MinimalSizeConfig, MinimalViewPortConfig, Primitive, SizeConfig, SizePositionConfig, StreamAssociation, TableColumn, ViewPort, ViewPortConfig } from "./utils/dataTypes";
 import { Annotations, Axis, LayoutConfig, Legend, LegendConfig, MovementConfig, ScaleConfig, Threshold, Tooltip, WidgetConfigurationUpdate } from "./components/charts/common/types";
 import { Trend, TrendResult } from "./components/charts/common/trends/types";
 import { DATA_ALIGNMENT, StatusIcon } from "./components/charts/common/constants";
 import { POINT_TYPE } from "./components/charts/sc-webgl-base-chart/activePoints";
+import { DialSizeConfig } from "./components/sc-dial/type";
 import { RectScrollFixed } from "./utils/types";
 import { LabelsConfig } from "./components/common/types";
 import { Cell, Row } from "./components/sc-table/constructTableData";

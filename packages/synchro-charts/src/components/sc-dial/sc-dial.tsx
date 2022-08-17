@@ -1,16 +1,10 @@
 import { Component, h, Prop } from '@stencil/core';
-import {
-  DataPoint,
-  DataStream,
-  DialSizeConfig,
-  MessageOverrides,
-  StreamAssociation,
-  ViewPortConfig,
-} from '../../utils/dataTypes';
+import { DataPoint, DataStream, MessageOverrides, StreamAssociation, ViewPortConfig } from '../../utils/dataTypes';
 import { Annotations, DialConfig, Threshold } from '../charts/common/types';
 import { breachedThreshold } from '../charts/common/annotations/breachedThreshold';
 import { isMinimalStaticViewport } from '../../utils/predicates';
 import { getThresholds } from '../charts/common/annotations/utils';
+import { DialSizeConfig } from './type';
 
 @Component({
   tag: 'sc-dial',

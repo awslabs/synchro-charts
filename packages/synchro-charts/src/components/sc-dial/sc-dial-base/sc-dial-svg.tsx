@@ -1,16 +1,17 @@
 import { Component, h, Prop } from '@stencil/core';
 import { NO_VALUE_PRESENT } from '../../../constants';
-import { DataPoint, DataStream, DialSizeConfig } from '../../../utils/dataTypes';
+import { DataPoint, DataStream } from '../../../utils/dataTypes';
 import { round } from '../../../utils/number';
 import { getIcons } from '../../charts/common/annotations/iconUtils';
 import { Threshold } from '../../charts/common/types';
+import { DialSizeConfig } from '../type';
 import { sizeConfigurations } from './util';
 
 @Component({
   tag: 'sc-dial-svg',
   shadow: false,
 })
-export class scDialSVG {
+export class ScDialSvg {
   @Prop() percent: number;
   @Prop() point?: DataPoint;
   @Prop() breachedThreshold: Threshold;

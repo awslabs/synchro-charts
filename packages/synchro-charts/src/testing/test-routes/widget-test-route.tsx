@@ -1,9 +1,10 @@
 import { Component, h, Listen, Prop } from '@stencil/core';
 import { SIZE, VIEWPORT as DEFAULT_VIEWPORT } from '../dynamicWidgetUtils/constants';
 import { testCaseParameters } from '../dynamicWidgetUtils/testCaseParameters';
-import { DataStreamInfo, DialSizeConfig } from '../../utils/dataTypes';
+import { DataStreamInfo } from '../../utils/dataTypes';
 import { Y_MAX, Y_MIN } from './charts/constants';
 import { DIAL_SIZE_CONFIG } from '../../constants';
+import { DialSizeConfig } from '../../components/sc-dial/type';
 
 const DEFAULT_WIDTH = 700;
 const DEFAULT_HEIGHT = 400;
