@@ -83,7 +83,7 @@ export namespace Components {
         "associatedStreams"?: StreamAssociation[];
         "dataStream": DataStream;
         "messageOverrides": MessageOverrides;
-        "size"?: DialSizeConfig;
+        "size": DialSizeConfig;
         "viewport": ViewPortConfig;
         "widgetId": string;
     }
@@ -93,7 +93,7 @@ export namespace Components {
         "isLoading"?: boolean;
         "propertyPoint"?: DataPoint<Primitive>;
         "propertyStream"?: DataStream;
-        "size"?: DialSizeConfig;
+        "size": DialSizeConfig;
         "valueColor"?: string;
         "viewport": ViewPortConfig;
     }

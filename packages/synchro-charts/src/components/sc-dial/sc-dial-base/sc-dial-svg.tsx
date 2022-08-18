@@ -19,7 +19,7 @@ export class ScDialSvg {
   @Prop() size: DialSizeConfig;
 
   render() {
-    const R = this.size.viewport / 2;
+    const R = this.size.width / 2;
     const r = R - this.size.dialThickness;
     const perimeter = 2 * Math.PI * r;
     const left = perimeter * (1 - this.percent);
@@ -31,7 +31,7 @@ export class ScDialSvg {
       <svg
         width="100%"
         height="100%"
-        viewBox={`0 0 ${this.size.viewport} ${this.size.viewport}`}
+        viewBox={`0 0 ${this.size.width} ${this.size.width}`}
         data-testid="current-value"
         preserveAspectRatio="xMidYMin meet"
       >
@@ -42,7 +42,7 @@ export class ScDialSvg {
           stroke-width={this.size.dialThickness}
           stroke="#d9d9d9"
           fill="none"
-          transform={`matrix(1,0,0,-1,0,${this.size.viewport})`}
+          transform={`matrix(1,0,0,-1,0,${this.size.width})`}
           stroke-dasharray={this.percent === 0 ? `${left} ${right}` : `${left - 1} ${right + 1}`}
           stroke-dashoffset={-(R / 2 + r) - 1}
         />
@@ -61,7 +61,13 @@ export class ScDialSvg {
         )}
 
         {this.point ? (
-          <text x={R + (icon ? r / 4 : 0)} y={R} font-size={this.size.fontSize} font-weight="bold" text-anchor="middle">
+          <text
+            x={R + this.size.unitSize / 4}
+            y={R}
+            font-size={this.size.fontSize}
+            font-weight="bold"
+            text-anchor="middle"
+          >
             <tspan dy={this.stream && !this.stream.unit ? 0 : 10}>
               {this.stream && this.stream.unit ? round(this.point?.y as number) : round(this.percent * 100)}
               <tspan font-size={this.size.unitSize}>{(this.stream && this.stream.unit) || '%'}</tspan>
@@ -76,7 +82,7 @@ export class ScDialSvg {
             text-anchor="middle"
             fill={sizeConfigurations.SECONDARYTEXT}
           >
-            <tspan dy={this.stream && !this.stream.unit ? 0 : 10}>{NO_VALUE_PRESENT}</tspan>
+            <tspan dy="10">{NO_VALUE_PRESENT}</tspan>
           </text>
         )}
 
@@ -95,12 +101,12 @@ export class ScDialSvg {
 
         {this.stream && !this.stream.unit && this.breachedThreshold && label && (
           <text
-            x={R - r / 2 - (r * 0.1) / 2}
+            x={R + this.size.labelSize / 2}
             y={R + r / 2}
             font-size={this.size.labelSize}
             font-weight="bold"
-            text-anchor="center"
-            textLength={r * 1.1}
+            text-anchor="middle"
+            textLength={r}
             lengthAdjust="spacing"
             fill={labelColor || sizeConfigurations.PRIMARYTEXT}
           >
@@ -109,8 +115,13 @@ export class ScDialSvg {
         )}
 
         {this.stream && !this.stream.unit && this.breachedThreshold && label && (
-          <g transform={`matrix(1,0,0,1,${R / 2.5},${R / 2 + r / 5})`}>
-            {icon && getIcons(icon, labelColor, this.size.iconSize)}
+          <g
+            transform={`matrix(1,0,0,1,${R - r / 2 - this.size.labelSize / 2},${R +
+              r / 2 -
+              this.size.labelSize +
+              this.size.labelSize / 8})`}
+          >
+            {icon && getIcons(icon, labelColor, this.size.labelSize)}
           </g>
         )}
       </svg>

@@ -8,6 +8,88 @@ const VALUE_LOADING = '[data-testid="loading"]';
 const VALUE_SVG = '[data-testid="current-value"]';
 const errorMessage = 'SiteWise network error';
 
+const VIEWPORT = { duration: undefined, yMin: Y_MIN, yMax: Y_MAX };
+
+export const FONT_SIZE = {
+  xxSmall: 14,
+  xSmall: 16,
+  small: 20,
+  smaller: 24,
+  medium: 32,
+  large: 48,
+  larger: 60,
+  xLarger: 96,
+};
+
+const LINE_THICKNESS = {
+  xSmall: 8,
+  small: 10,
+  medium: 15,
+  large: 30,
+  larger: 36,
+  xLarger: 50,
+};
+
+const BOX = {
+  xSmall: 75,
+  small: 100,
+  medium: 150,
+  large: 200,
+  larger: 300,
+  xLarger: 500,
+};
+
+const DIAL_SIZE_CONFIG = {
+  XXL: {
+    fontSize: FONT_SIZE.xLarger,
+    dialThickness: LINE_THICKNESS.xLarger,
+    iconSize: FONT_SIZE.xLarger,
+    labelSize: FONT_SIZE.large,
+    unitSize: FONT_SIZE.large,
+    width: BOX.xLarger,
+  },
+  XL: {
+    fontSize: FONT_SIZE.larger,
+    dialThickness: LINE_THICKNESS.larger,
+    iconSize: FONT_SIZE.large,
+    labelSize: FONT_SIZE.medium,
+    unitSize: FONT_SIZE.medium,
+    width: BOX.larger,
+  },
+  L: {
+    fontSize: FONT_SIZE.large,
+    dialThickness: LINE_THICKNESS.large,
+    iconSize: FONT_SIZE.large,
+    labelSize: FONT_SIZE.smaller,
+    unitSize: FONT_SIZE.smaller,
+    width: BOX.large,
+  },
+  M: {
+    fontSize: FONT_SIZE.medium,
+    dialThickness: LINE_THICKNESS.medium,
+    iconSize: FONT_SIZE.medium,
+    labelSize: FONT_SIZE.small,
+    unitSize: FONT_SIZE.small,
+    width: BOX.medium,
+  },
+  S: {
+    fontSize: FONT_SIZE.smaller,
+    dialThickness: LINE_THICKNESS.small,
+    iconSize: FONT_SIZE.small,
+    labelSize: FONT_SIZE.xSmall,
+    unitSize: FONT_SIZE.xSmall,
+    width: BOX.small,
+  },
+  XS: {
+    fontSize: FONT_SIZE.small,
+    dialThickness: LINE_THICKNESS.xSmall,
+    iconSize: FONT_SIZE.xSmall,
+    labelSize: FONT_SIZE.xxSmall,
+    unitSize: FONT_SIZE.xxSmall,
+    width: BOX.xSmall,
+  },
+};
+
 const DATASTREAM = {
   id: 'test-dial-id',
   detailedName: 'data-stream-name/detailed-name',
@@ -78,7 +160,7 @@ it('renders latest value', () => {
   const DATA = round((LATEST_VALUE2 / (Y_MAX - Y_MIN)) * 100);
   visitDynamicWidget(cy, {
     componentTag: 'sc-dial',
-    size: 'M',
+    size: DIAL_SIZE_CONFIG.L,
     dataStream: {
       ...DATASTREAM,
       data: [
@@ -86,7 +168,7 @@ it('renders latest value', () => {
         { x: new Date(2000, 0, 0).getTime(), y: LATEST_VALUE2 },
       ],
     },
-    duration: undefined,
+    ...VIEWPORT,
   });
   cy.wait(1000);
   cy.get('.sc-dialbase-container')
@@ -103,14 +185,14 @@ it('renders string value', () => {
   const LATEST_VALUE = 'ABC';
   visitDynamicWidget(cy, {
     componentTag: 'sc-dial',
-    size: 'M',
+    size: DIAL_SIZE_CONFIG.L,
     dataStream: {
       ...DATASTREAM,
       unit: 'rpm',
       data: [{ x: new Date(1999, 0, 0).getTime(), y: LATEST_VALUE }],
       dataType: DataType.STRING,
     },
-    duration: undefined,
+    ...VIEWPORT,
   });
 
   cy.wait(1000);
@@ -128,14 +210,14 @@ it('renders loading status', () => {
   const LATEST_VALUE = 2238;
   visitDynamicWidget(cy, {
     componentTag: 'sc-dial',
-    size: 'M',
+    size: DIAL_SIZE_CONFIG.L,
     dataStream: {
       ...DATASTREAM,
       unit: 'rpm',
       isLoading: true,
       data: [{ x: new Date(1999, 0, 0).getTime(), y: LATEST_VALUE }],
     },
-    duration: undefined,
+    ...VIEWPORT,
   });
 
   cy.wait(1000);
@@ -153,13 +235,13 @@ it('renders unit value', () => {
   const LATEST_VALUE = 2238;
   visitDynamicWidget(cy, {
     componentTag: 'sc-dial',
-    size: 'M',
+    size: DIAL_SIZE_CONFIG.L,
     dataStream: {
       ...DATASTREAM,
       unit: 'rpm',
       data: [{ x: new Date(1999, 0, 0).getTime(), y: LATEST_VALUE }],
     },
-    duration: undefined,
+    ...VIEWPORT,
   });
 
   cy.wait(1000);
@@ -177,14 +259,14 @@ it('renders error value', () => {
   const LATEST_VALUE = 2238;
   visitDynamicWidget(cy, {
     componentTag: 'sc-dial',
-    size: 'M',
+    size: DIAL_SIZE_CONFIG.L,
     dataStream: {
       ...DATASTREAM,
       unit: '',
       data: [{ x: new Date(1999, 0, 0).getTime(), y: LATEST_VALUE }],
       error: errorMessage,
     },
-    duration: undefined,
+    ...VIEWPORT,
   });
 
   cy.wait(1000);
@@ -201,7 +283,7 @@ it('renders alarm Critica', () => {
   const LATEST_VALUE = 1250;
   visitDynamicWidget(cy, {
     componentTag: 'sc-dial',
-    size: 'M',
+    size: DIAL_SIZE_CONFIG.L,
     dataStream: {
       ...DATASTREAM,
       id: 'car-speed-alarm',
@@ -215,7 +297,7 @@ it('renders alarm Critica', () => {
       },
     ],
     annotations,
-    duration: undefined,
+    ...VIEWPORT,
   });
 
   cy.wait(1000);
@@ -234,7 +316,7 @@ it('renders alarm Warning', () => {
   const LATEST_VALUE = 3250;
   visitDynamicWidget(cy, {
     componentTag: 'sc-dial',
-    size: 'M',
+    size: DIAL_SIZE_CONFIG.L,
     dataStream: {
       ...DATASTREAM,
       id: 'car-speed-alarm',
@@ -248,7 +330,7 @@ it('renders alarm Warning', () => {
       },
     ],
     annotations,
-    duration: undefined,
+    ...VIEWPORT,
   });
 
   cy.wait(1000);
@@ -266,7 +348,7 @@ it('renders alarm Normal when size = `XS`', () => {
   const LATEST_VALUE = 4500;
   visitDynamicWidget(cy, {
     componentTag: 'sc-dial',
-    size: 'XS',
+    size: DIAL_SIZE_CONFIG.XS,
     dataStream: {
       ...DATASTREAM,
       id: 'car-speed-alarm',
@@ -280,7 +362,7 @@ it('renders alarm Normal when size = `XS`', () => {
       },
     ],
     annotations,
-    duration: undefined,
+    ...VIEWPORT,
   });
 
   cy.wait(1000);
@@ -298,7 +380,7 @@ it('renders alarm Normal when size = `S`', () => {
   const LATEST_VALUE = 4500;
   visitDynamicWidget(cy, {
     componentTag: 'sc-dial',
-    size: 'S',
+    size: DIAL_SIZE_CONFIG.S,
     dataStream: {
       ...DATASTREAM,
       id: 'car-speed-alarm',
@@ -312,7 +394,7 @@ it('renders alarm Normal when size = `S`', () => {
       },
     ],
     annotations,
-    duration: undefined,
+    ...VIEWPORT,
   });
 
   cy.wait(1000);
@@ -330,7 +412,7 @@ it('renders alarm Normal when size = `M`', () => {
   const LATEST_VALUE = 4500;
   visitDynamicWidget(cy, {
     componentTag: 'sc-dial',
-    size: 'M',
+    size: DIAL_SIZE_CONFIG.M,
     dataStream: {
       ...DATASTREAM,
       id: 'car-speed-alarm',
@@ -344,7 +426,7 @@ it('renders alarm Normal when size = `M`', () => {
       },
     ],
     annotations,
-    duration: undefined,
+    ...VIEWPORT,
   });
 
   cy.wait(1000);
@@ -362,7 +444,7 @@ it('renders alarm Normal when size = `L`', () => {
   const LATEST_VALUE = 4500;
   visitDynamicWidget(cy, {
     componentTag: 'sc-dial',
-    size: 'L',
+    size: DIAL_SIZE_CONFIG.L,
     dataStream: {
       ...DATASTREAM,
       id: 'car-speed-alarm',
@@ -376,7 +458,7 @@ it('renders alarm Normal when size = `L`', () => {
       },
     ],
     annotations,
-    duration: undefined,
+    ...VIEWPORT,
   });
 
   cy.wait(1000);
@@ -394,7 +476,7 @@ it('renders alarm Normal when size = `XL`', () => {
   const LATEST_VALUE = 4500;
   visitDynamicWidget(cy, {
     componentTag: 'sc-dial',
-    size: 'XL',
+    size: DIAL_SIZE_CONFIG.XL,
     dataStream: {
       ...DATASTREAM,
       id: 'car-speed-alarm',
@@ -408,7 +490,7 @@ it('renders alarm Normal when size = `XL`', () => {
       },
     ],
     annotations,
-    duration: undefined,
+    ...VIEWPORT,
   });
 
   cy.wait(1000);
@@ -423,10 +505,10 @@ it('renders alarm Normal when size = `XL`', () => {
 });
 
 it('renders alarm Normal when size = `XXL`', () => {
-  const LATEST_VALUE = 4500;
+  const LATEST_VALUE = 4444;
   visitDynamicWidget(cy, {
     componentTag: 'sc-dial',
-    size: 'XXL',
+    size: DIAL_SIZE_CONFIG.XXL,
     dataStream: {
       ...DATASTREAM,
       id: 'car-speed-alarm',
@@ -440,7 +522,7 @@ it('renders alarm Normal when size = `XXL`', () => {
       },
     ],
     annotations,
-    duration: undefined,
+    ...VIEWPORT,
   });
 
   cy.wait(1000);
@@ -458,8 +540,8 @@ it('renders empty value', () => {
   visitDynamicWidget(cy, {
     componentTag: 'sc-dial',
     dataStream: DATASTREAM,
-    size: 'M',
-    duration: undefined,
+    size: DIAL_SIZE_CONFIG.L,
+    ...VIEWPORT,
   });
 
   cy.contains('.sc-dialbase-container', NO_VALUE_PRESENT).should('be.visible');

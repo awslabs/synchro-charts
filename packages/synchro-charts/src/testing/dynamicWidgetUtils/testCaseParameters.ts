@@ -9,6 +9,7 @@ import {
   TableColumn,
 } from '../../utils/dataTypes';
 import { Annotations, Axis, LegendConfig, XAnnotation } from '../../components/charts/common/types';
+import { DialSizeConfig } from '../../components/sc-dial/type';
 
 export type SearchQueryParams = {
   alarms?: AlarmsConfig;
@@ -16,7 +17,9 @@ export type SearchQueryParams = {
   width?: number | string;
   axis?: Axis.Options;
   height?: number | string;
-  size?: string;
+  size?: DialSizeConfig;
+  yMin?: number;
+  yMax?: number;
   duration?: number;
   errMsg: string;
   viewportStart: Date;
@@ -85,6 +88,8 @@ export const constructSearchQuery = ({
   width,
   height,
   size,
+  yMin,
+  yMax,
   // Props that can be directly serialized, i.e. numbers, booleans, and strings
   ...serializableProps
 }: Partial<SearchQueryParams>): string =>
@@ -106,6 +111,8 @@ export const constructSearchQuery = ({
     width: width && JSON.stringify(width),
     height: height && JSON.stringify(height),
     size: size && JSON.stringify(size),
+    yMin: yMin && JSON.stringify(yMin),
+    yMax: yMax && JSON.stringify(yMax),
     // For the rest, we don't have to do any work! and doing less is better
     ...serializableProps,
   });
@@ -148,5 +155,7 @@ export const testCaseParameters = (): SearchQueryParams => {
       query.asyncDataStreams != null ? JSON.parse(query.asyncDataStreams).map(deserializeDataStream) : [],
     viewportStart: query.viewportStart != null ? new Date(query.viewportStart) : new Date(2000, 0, 0),
     viewportEnd: query.viewportEnd != null ? new Date(query.viewportEnd) : new Date(2000, 0, 1),
+    yMin: query.yMin ? JSON.parse(query.yMin) : undefined,
+    yMax: query.yMax ? JSON.parse(query.yMax) : undefined,
   };
 };

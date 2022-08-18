@@ -1,15 +1,3 @@
-sc-dial-base {
-  height: inherit;
-}
-
-sc-grid-tooltip {
-  height: inherit;
-}
-
-sc-dial-base .sc-dialbase-container {
-  height: inherit;
-}
-
 sc-dial-base .error {
   display: flex;
   flex-direction: column;

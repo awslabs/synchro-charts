@@ -1,6 +1,6 @@
 import { Component, h, Prop } from '@stencil/core';
 import { DataPoint, DataStream, MessageOverrides, StreamAssociation, ViewPortConfig } from '../../utils/dataTypes';
-import { Annotations, DialConfig, Threshold } from '../charts/common/types';
+import { Annotations, Threshold } from '../charts/common/types';
 import { breachedThreshold } from '../charts/common/annotations/breachedThreshold';
 import { isMinimalStaticViewport } from '../../utils/predicates';
 import { getThresholds } from '../charts/common/annotations/utils';
@@ -11,13 +11,13 @@ import { DialSizeConfig } from './type';
   styleUrl: 'sc-dial.css',
   shadow: false,
 })
-export class ScDial implements DialConfig {
+export class ScDial {
   @Prop() viewport: ViewPortConfig;
   @Prop() widgetId!: string;
   @Prop() dataStream!: DataStream;
   @Prop() associatedStreams?: StreamAssociation[];
   @Prop() annotations?: Annotations;
-  @Prop() size?: DialSizeConfig;
+  @Prop() size: DialSizeConfig;
   @Prop() messageOverrides: MessageOverrides = {};
 
   getPoint = (dataStream: DataStream): DataPoint | undefined => {

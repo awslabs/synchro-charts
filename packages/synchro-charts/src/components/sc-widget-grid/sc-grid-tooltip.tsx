@@ -57,7 +57,7 @@ export class ScGridTooltip {
     const value = this.value || this.propertyPoint?.y;
 
     return (
-      <div class="tooltip-container" style={{ width: 'inherit', height: 'inherit' }}>
+      <div class="tooltip-container">
         <div class="cell-tooltip awsui-util-container awsui">
           <div class={{ 'awsui-util-container-header': true, 'awsui-util-mb-m': displaysMoreThanTitle }}>
             <h3>{this.title}</h3>
@@ -71,7 +71,7 @@ export class ScGridTooltip {
                     <div>
                       <strong style={{ color }}>
                         {icon && <sc-chart-icon name={icon} color={color} style={{ marginRight: '3px' }} />}
-                        <Value value={value + unit} />
+                        <Value value={value} unit={unit} />
                       </strong>{' '}
                       at{' '}
                       {new Date(this.propertyPoint.x).toLocaleString('en-US', {

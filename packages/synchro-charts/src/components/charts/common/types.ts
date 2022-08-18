@@ -64,16 +64,6 @@ export interface ChartConfig extends BaseConfig {
   messageOverrides?: MessageOverrides;
 }
 
-export interface DialConfig {
-  viewport: ViewPortConfig;
-  widgetId: string;
-  dataStream: DataStream;
-  associatedStreams?: StreamAssociation[];
-  annotations?: Annotations;
-  size?: DialSizeConfig;
-  messageOverrides?: MessageOverrides;
-}
-
 export type WidgetConfigurationUpdate = Omit<ChartConfig, 'viewport' | 'messageOverrides'> & {
   dataStreams: Omit<DataStream, 'data' | 'aggregates'>[];
   widgetId: string;

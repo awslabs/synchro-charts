@@ -4,5 +4,5 @@ export interface DialSizeConfig {
   iconSize: number;
   labelSize: number;
   unitSize: number;
-  viewport: number;
+  width: number;
 }

@@ -2,8 +2,6 @@ import { Component, h, Listen, Prop } from '@stencil/core';
 import { SIZE, VIEWPORT as DEFAULT_VIEWPORT } from '../dynamicWidgetUtils/constants';
 import { testCaseParameters } from '../dynamicWidgetUtils/testCaseParameters';
 import { DataStreamInfo } from '../../utils/dataTypes';
-import { Y_MAX, Y_MIN } from './charts/constants';
-import { DIAL_SIZE_CONFIG } from '../../constants';
 import { DialSizeConfig } from '../../components/sc-dial/type';
 
 const DEFAULT_WIDTH = 700;
@@ -29,12 +27,13 @@ const {
   gestures,
   legend,
   tableColumns,
+  yMin,
+  yMax,
 } = testCaseParameters();
 
 const getSize = (
   value: number | string
 ): { height: number | string; width: number | string } | DialSizeConfig | undefined => {
-  if (size && typeof size === 'string') return DIAL_SIZE_CONFIG[size];
   if (typeof value === 'string') {
     return undefined;
   }
@@ -42,6 +41,7 @@ const getSize = (
     ...SIZE,
     width,
     height,
+    ...size,
   };
 };
 
@@ -67,20 +67,21 @@ export class WidgetTestRoute {
   }
 
   render() {
-    const viewport = {
+    let viewport = {
       ...DEFAULT_VIEWPORT,
       start: viewportStart,
       end: viewportEnd,
       duration,
       group: 'some-viewport-group',
-      yMin: Y_MIN,
-      yMax: Y_MAX,
     };
 
     // live mode
     if (duration != null) {
       delete viewport.start;
       delete viewport.end;
+    }
+    if (yMin || yMax) {
+      viewport = Object.assign(viewport, { yMin, yMax });
     }
 
     return (

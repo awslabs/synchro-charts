@@ -27,7 +27,7 @@ export class ScDialBase {
 
   @Prop() propertyStream?: DataStream;
   @Prop() propertyPoint?: DataPoint<Primitive>;
-  @Prop() size?: DialSizeConfig;
+  @Prop() size: DialSizeConfig;
 
   @Prop() isLoading?: boolean = false;
 
@@ -52,7 +52,7 @@ export class ScDialBase {
         color={labelColor}
         isEnabled
       >
-        <div class="sc-dialbase-container" style={{ height: `${this.size?.viewport}px` }}>
+        <div class="sc-dialbase-container" style={{ height: `${this.size?.width}px` }}>
           {this.isLoading ? (
             <DialLoading />
           ) : (
