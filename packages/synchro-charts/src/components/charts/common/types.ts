@@ -9,14 +9,12 @@ import {
   MessageOverrides,
   MinimalViewPortConfig,
   SizeConfig,
-  StreamAssociation,
   ViewPort,
   ViewPortConfig,
 } from '../../../utils/dataTypes';
 import { COMPARISON_OPERATOR, LEGEND_POSITION, ScaleType, StatusIcon } from './constants';
 import { StencilCSSProperty } from '../../../utils/types';
 import { TrendResult } from './trends/types';
-import { DialSizeConfig } from '../../sc-dial/type';
 
 export type Scale = ScaleContinuousNumeric<number, number> | ScaleTime<any, any>;
 
