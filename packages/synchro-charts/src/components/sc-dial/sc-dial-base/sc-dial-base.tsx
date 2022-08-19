@@ -2,7 +2,7 @@ import { Component, h, Prop } from '@stencil/core';
 import { DataPoint, DataStream, Primitive, ViewPortConfig } from '../../../utils/dataTypes';
 import { isNumberDataStream } from '../../../utils/predicates';
 import { Threshold } from '../../charts/common/types';
-import { DialSizeConfig } from '../type';
+import { DialMessageOverrides, DialSizeConfig } from '../type';
 import { DialLoading } from './sc-dial-loading';
 import { sizeConfigurations } from './util';
 
@@ -29,13 +29,17 @@ export class ScDialBase {
   @Prop() propertyPoint?: DataPoint<Primitive>;
   @Prop() size: DialSizeConfig;
 
+  @Prop() messageOverrides: DialMessageOverrides = {};
+
   @Prop() isLoading?: boolean = false;
 
   render() {
     const { yMin = 0, yMax = 0 } = this.viewport;
     const propertyStream = this.propertyStream && isNumberDataStream(this.propertyStream) ? this.propertyStream : null;
     const point = propertyStream ? this.propertyPoint : undefined;
-    const error = propertyStream ? propertyStream.error : 'Only numbers are supported';
+    const error = propertyStream
+      ? propertyStream.error
+      : this.messageOverrides.dataNotNumberError || 'Only numbers are supported';
 
     const percent = point ? (point.y as number) / (yMax - yMin) : 0;
     const labelColor = this.breachedThreshold?.color || sizeConfigurations.BLUE;
@@ -50,6 +54,7 @@ export class ScDialBase {
         unit={unit || '%'}
         value={unit ? (point?.y as number) : percent * 100}
         color={labelColor}
+        messageOverrides={this.messageOverrides}
         isEnabled
       >
         <div class="sc-dialbase-container" style={{ height: `${this.size?.width}px` }}>

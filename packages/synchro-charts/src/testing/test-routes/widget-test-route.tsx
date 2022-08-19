@@ -67,8 +67,10 @@ export class WidgetTestRoute {
   }
 
   render() {
-    let viewport = {
+    const viewport = {
       ...DEFAULT_VIEWPORT,
+      yMin,
+      yMax,
       start: viewportStart,
       end: viewportEnd,
       duration,
@@ -79,9 +81,6 @@ export class WidgetTestRoute {
     if (duration != null) {
       delete viewport.start;
       delete viewport.end;
-    }
-    if (yMin || yMax) {
-      viewport = Object.assign(viewport, { yMin, yMax });
     }
 
     return (

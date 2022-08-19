@@ -11,8 +11,8 @@ sc-dial-base .error .warning-symbol {
   transform: scale(0.7);
 }
 
-sc-dial-base .error .error-message {
-  padding-left: 1.4286em;
+sc-dial-base .error sc-error-badge div {
+  padding-left: 0;
 }
 
 sc-dial-base circle {

@@ -10,7 +10,7 @@ import { Annotations, Axis, LayoutConfig, Legend, LegendConfig, MovementConfig, 
 import { Trend, TrendResult } from "./components/charts/common/trends/types";
 import { DATA_ALIGNMENT, StatusIcon } from "./components/charts/common/constants";
 import { POINT_TYPE } from "./components/charts/sc-webgl-base-chart/activePoints";
-import { DialSizeConfig } from "./components/sc-dial/type";
+import { DialMessageOverrides, DialSizeConfig } from "./components/sc-dial/type";
 import { RectScrollFixed } from "./utils/types";
 import { LabelsConfig } from "./components/common/types";
 import { Cell, Row } from "./components/sc-table/constructTableData";
@@ -82,7 +82,7 @@ export namespace Components {
         "annotations"?: Annotations;
         "associatedStreams"?: StreamAssociation[];
         "dataStream": DataStream;
-        "messageOverrides": MessageOverrides;
+        "messageOverrides": DialMessageOverrides;
         "size": DialSizeConfig;
         "viewport": ViewPortConfig;
         "widgetId": string;
@@ -91,6 +91,7 @@ export namespace Components {
         "alarmStream"?: DataStream;
         "breachedThreshold"?: Threshold;
         "isLoading"?: boolean;
+        "messageOverrides": DialMessageOverrides;
         "propertyPoint"?: DataPoint<Primitive>;
         "propertyStream"?: DataStream;
         "size": DialSizeConfig;
@@ -124,6 +125,7 @@ export namespace Components {
         "alarmPoint"?: DataPoint;
         "breachedThreshold"?: Threshold;
         "isEnabled": boolean;
+        "messageOverrides"?: DialMessageOverrides;
         "propertyPoint"?: DataPoint;
         "title": string;
         "unit"?: string;
@@ -1524,7 +1526,7 @@ declare namespace LocalJSX {
         "annotations"?: Annotations;
         "associatedStreams"?: StreamAssociation[];
         "dataStream": DataStream;
-        "messageOverrides"?: MessageOverrides;
+        "messageOverrides"?: DialMessageOverrides;
         "size"?: DialSizeConfig;
         "viewport"?: ViewPortConfig;
         "widgetId": string;
@@ -1533,6 +1535,7 @@ declare namespace LocalJSX {
         "alarmStream"?: DataStream;
         "breachedThreshold"?: Threshold;
         "isLoading"?: boolean;
+        "messageOverrides"?: DialMessageOverrides;
         "propertyPoint"?: DataPoint<Primitive>;
         "propertyStream"?: DataStream;
         "size"?: DialSizeConfig;
@@ -1566,6 +1569,7 @@ declare namespace LocalJSX {
         "alarmPoint"?: DataPoint;
         "breachedThreshold"?: Threshold;
         "isEnabled"?: boolean;
+        "messageOverrides"?: DialMessageOverrides;
         "propertyPoint"?: DataPoint;
         "title"?: string;
         "unit"?: string;

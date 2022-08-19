@@ -5,6 +5,7 @@ import { TIPPY_SETTINGS } from '../common/toolTipSettings';
 import { DataPoint } from '../../utils/dataTypes';
 import { Value } from '../value/Value';
 import { Threshold } from '../charts/common/types';
+import { DialMessageOverrides } from '../sc-dial/type';
 
 @Component({
   tag: 'sc-grid-tooltip',
@@ -20,6 +21,8 @@ export class ScGridTooltip {
   @Prop() breachedThreshold?: Threshold;
   @Prop() unit?: string;
   @Prop() value?: number | string;
+
+  @Prop() messageOverrides?: DialMessageOverrides;
 
   private tooltip: Instance | undefined;
 
@@ -67,13 +70,13 @@ export class ScGridTooltip {
               <div class="awsui-util-spacing-v-s">
                 {this.propertyPoint && (
                   <div>
-                    <div class="awsui-util-label">Latest value:</div>
+                    <div class="awsui-util-label">{this.messageOverrides?.tooltipValueTitles || 'Latest value:'}</div>
                     <div>
                       <strong style={{ color }}>
                         {icon && <sc-chart-icon name={icon} color={color} style={{ marginRight: '3px' }} />}
                         <Value value={value} unit={unit} />
                       </strong>{' '}
-                      at{' '}
+                      {this.messageOverrides?.tooltipValueTimeDescribed || 'at'}{' '}
                       {new Date(this.propertyPoint.x).toLocaleString('en-US', {
                         hour12: true,
                         minute: 'numeric',
@@ -92,9 +95,10 @@ export class ScGridTooltip {
                   <fragement>
                     {this.alarmPoint && (
                       <div>
-                        <div class="awsui-util-label">Status:</div>
+                        <div class="awsui-util-label">{this.messageOverrides?.tooltipValueTitles || 'Status:'}</div>
                         <div>
-                          <strong style={{ color }}>{this.alarmPoint.y}</strong> since{' '}
+                          <strong style={{ color }}>{this.alarmPoint.y}</strong>{' '}
+                          {this.messageOverrides?.tooltipStatusDescribed || 'since'}{' '}
                           {new Date(this.alarmPoint.x).toLocaleString('en-US', {
                             hour12: true,
                             minute: 'numeric',

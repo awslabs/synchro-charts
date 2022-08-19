@@ -44,7 +44,7 @@ export class ScDialSvg {
           fill="none"
           transform={`matrix(1,0,0,-1,0,${this.size.width})`}
           stroke-dasharray={this.percent === 0 ? `${left} ${right}` : `${left - 1} ${right + 1}`}
-          stroke-dashoffset={-(R / 2 + r) - 1}
+          stroke-dashoffset={-(R / 2 + r) + 5}
         />
         {this.point && right - 2 > 0 && (
           <circle
@@ -56,7 +56,7 @@ export class ScDialSvg {
             fill="none"
             stroke-dasharray={this.percent === 1 ? `${right} ${left}` : `${right - 1} ${left + 1}`}
             transform="matrix(1,0,0,1,0,0)"
-            stroke-dashoffset={R / 2 + r}
+            stroke-dashoffset={R / 2 + r - 5}
           />
         )}
 

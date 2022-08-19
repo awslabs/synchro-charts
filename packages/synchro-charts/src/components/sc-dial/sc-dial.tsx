@@ -1,10 +1,10 @@
 import { Component, h, Prop } from '@stencil/core';
-import { DataPoint, DataStream, MessageOverrides, StreamAssociation, ViewPortConfig } from '../../utils/dataTypes';
+import { DataPoint, DataStream, StreamAssociation, ViewPortConfig } from '../../utils/dataTypes';
 import { Annotations, Threshold } from '../charts/common/types';
 import { breachedThreshold } from '../charts/common/annotations/breachedThreshold';
 import { isMinimalStaticViewport } from '../../utils/predicates';
 import { getThresholds } from '../charts/common/annotations/utils';
-import { DialSizeConfig } from './type';
+import { DialMessageOverrides, DialSizeConfig } from './type';
 
 @Component({
   tag: 'sc-dial',
@@ -18,7 +18,7 @@ export class ScDial {
   @Prop() associatedStreams?: StreamAssociation[];
   @Prop() annotations?: Annotations;
   @Prop() size: DialSizeConfig;
-  @Prop() messageOverrides: MessageOverrides = {};
+  @Prop() messageOverrides: DialMessageOverrides = {};
 
   getPoint = (dataStream: DataStream): DataPoint | undefined => {
     if (dataStream.data && dataStream.data.length > 0) {
@@ -55,6 +55,7 @@ export class ScDial {
         breachedThreshold={threshold}
         viewport={this.viewport}
         size={this.size}
+        messageOverrides={this.messageOverrides}
         isLoading={this.dataStream ? this.dataStream.isLoading || false : false}
       />
     );

@@ -6,3 +6,11 @@ export interface DialSizeConfig {
   unitSize: number;
   width: number;
 }
+
+export type DialMessageOverrides = {
+  dataNotNumberError?: string;
+  tooltipValueTitles?: string;
+  tooltipValueTimeDescribed?: string;
+  tooltipStatusTitles?: string;
+  tooltipStatusDescribed?: string;
+};

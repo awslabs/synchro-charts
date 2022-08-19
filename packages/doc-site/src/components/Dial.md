@@ -1,5 +1,3 @@
-# Overview
-
 ```jsx
 import { COMPARISON_OPERATOR, StatusIcon, StreamType, DataType } from '@synchro-charts/core';
 <div style={{ width: '100%', height: '300px' }}>
@@ -17,9 +15,30 @@ import { COMPARISON_OPERATOR, StatusIcon, StreamType, DataType } from '@synchro-
       resolution: 0,
       dataType: DataType.NUMBER,
     }}
+    size={{
+      fontSize: 60,
+      dialThickness: 36,
+      iconSize: 48,
+      labelSize: 32,
+      unitSize: 32,
+      width: 300,
+    }}  
     viewport={{ yMin: 0, yMax: 2000, duration: 1000 }}
   />
 </div>;
+```
+Dial visualizes the latest value from a data stream by emphasizing the property value.For data stream of no unit it will display the percentage by using the two `yMin` and `yMax`.
+
+You can provide `size` to change the font size、dial thickness、icon size、label size、unit size and the dial width.
+```jsx static
+const size = {
+  fontSize: 60,
+  dialThickness: 36,
+  iconSize: 48,
+  labelSize: 32,
+  unitSize: 32,
+  width: 300,
+}
 ```
 
 ```jsx
@@ -40,6 +59,14 @@ import { COMPARISON_OPERATOR, StatusIcon, StreamType, DataType } from '@synchro-
       resolution: 0,
       dataType: DataType.NUMBER,
     }}
+    size={{
+      fontSize: 60,
+      dialThickness: 36,
+      iconSize: 48,
+      labelSize: 32,
+      unitSize: 32,
+      width: 300,
+    }} 
     viewport={{ yMin: 0, yMax: 2000, duration: 1000 }}
   />
 </div>;
@@ -63,6 +90,14 @@ import { COMPARISON_OPERATOR, StatusIcon, StreamType, DataType } from '@synchro-
       resolution: 0,
       dataType: DataType.NUMBER,
     }}
+    size={{
+      fontSize: 36,
+      dialThickness: 36,
+      iconSize: 48,
+      labelSize: 32,
+      unitSize: 24,
+      width: 300,
+    }} 
     viewport={{ yMin: 0, yMax: 2000, duration: 1000 }}
   />
 </div>;
@@ -70,21 +105,21 @@ import { COMPARISON_OPERATOR, StatusIcon, StreamType, DataType } from '@synchro-
 
 ### Dial with alarms
 
-You can show the current latest alarm status on the legend through setting the `icon` property for the threshold.
+You can show the current latest alarm status on the dial center through setting the `icon` property and the `text` property for the threshold.
 
 You can provide an `icon` property within the threshold to show an icon that is associated with the breaching color/status.
 
 Supported Icon:
 
 1. error
-2. normal
-3. latched
+2. active
+3. normal
+4. acknowledged
+5. snoozed
+6. disabled
+7. latched
 
-Corresponding value:
-
-1. Critical
-2. Warning
-3. Normal
+Corresponding value you can custom.
 
 ```jsx
 import { COMPARISON_OPERATOR, StatusIcon, StreamType, DataType } from '@synchro-charts/core';
@@ -112,7 +147,7 @@ import { COMPARISON_OPERATOR, StatusIcon, StreamType, DataType } from '@synchro-
     annotations={{
       y: [
         {
-          color: "#C03F25",
+          color: '#C03F25',
           value: 660,
           comparisonOperator: COMPARISON_OPERATOR.LESS_THAN_EQUAL,
           dataStreamIds: ['car-speed-alarm'],
@@ -121,8 +156,9 @@ import { COMPARISON_OPERATOR, StatusIcon, StreamType, DataType } from '@synchro-
             show: true,
           },
           icon: StatusIcon.ERROR,
-        },{
-          color: "#F29D38",
+        },
+        {
+          color: '#F29D38',
           value: 1320,
           comparisonOperator: COMPARISON_OPERATOR.LESS_THAN_EQUAL,
           dataStreamIds: ['car-speed-alarm'],
@@ -131,8 +167,9 @@ import { COMPARISON_OPERATOR, StatusIcon, StreamType, DataType } from '@synchro-
             show: true,
           },
           icon: StatusIcon.LATCHED,
-        },{
-          color: "#3F7E23",
+        },
+        {
+          color: '#3F7E23',
           value: 1320,
           comparisonOperator: COMPARISON_OPERATOR.GREATER_THAN,
           dataStreamIds: ['car-speed-alarm'],
@@ -144,6 +181,14 @@ import { COMPARISON_OPERATOR, StatusIcon, StreamType, DataType } from '@synchro-
         },
       ],
     }}
+    size={{
+      fontSize: 60,
+      dialThickness: 36,
+      iconSize: 48,
+      labelSize: 32,
+      unitSize: 32,
+      width: 300,
+    }} 
     viewport={{ yMin: 0, yMax: 2000, duration: 1000 }}
   />
 </div>;
