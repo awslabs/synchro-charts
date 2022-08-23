@@ -12,13 +12,14 @@ import { DialMessageOverrides, DialSizeConfig } from './type';
   shadow: false,
 })
 export class ScDial {
-  @Prop() viewport: ViewPortConfig;
+  @Prop() viewport!: ViewPortConfig;
   @Prop() widgetId!: string;
   @Prop() dataStream!: DataStream;
   @Prop() associatedStreams?: StreamAssociation[];
   @Prop() annotations?: Annotations;
   @Prop() size: DialSizeConfig;
   @Prop() messageOverrides: DialMessageOverrides = {};
+  @Prop() significantDigits?: number;
 
   getPoint = (dataStream: DataStream): DataPoint | undefined => {
     if (dataStream.data && dataStream.data.length > 0) {
@@ -57,6 +58,7 @@ export class ScDial {
         size={this.size}
         messageOverrides={this.messageOverrides}
         isLoading={this.dataStream ? this.dataStream.isLoading || false : false}
+        significantDigits={this.significantDigits}
       />
     );
   }

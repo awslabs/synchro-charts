@@ -100,7 +100,6 @@ const DIAL_SIZE_CONFIG = {
 
 const DATASTREAM = {
   id: 'test-dial-id',
-  detailedName: 'data-stream-name/detailed-name',
   name: 'data-stream-name',
   color: 'black',
   resolution: 0,
@@ -175,6 +174,59 @@ it('renders latest value', () => {
         { x: new Date(1999, 0, 0).getTime(), y: LATEST_VALUE1 },
         { x: new Date(2000, 0, 0).getTime(), y: LATEST_VALUE2 },
       ],
+    },
+    ...VIEWPORT,
+  });
+  cy.wait(1000);
+  cy.get('.sc-dialbase-container')
+    .invoke('text')
+    .should('contain', `${DATA}%`);
+
+  cy.get(VALUE_LOADING).should('not.exist');
+  cy.get(VALUE_ERROR).should('not.exist');
+
+  cy.matchImageSnapshotOnCI();
+});
+
+it('renders value under percentile when detailedName is existed', () => {
+  const LATEST_VALUE1 = 100;
+  const LATEST_VALUE2 = 2238;
+  const DATA = round((LATEST_VALUE2 / (Y_MAX - Y_MIN)) * 100);
+  visitDynamicWidget(cy, {
+    componentTag: 'sc-dial',
+    size: DIAL_SIZE_CONFIG.L,
+    dataStream: {
+      ...DATASTREAM,
+      data: [
+        { x: new Date(1999, 0, 0).getTime(), y: LATEST_VALUE1 },
+        { x: new Date(2000, 0, 0).getTime(), y: LATEST_VALUE2 },
+      ],
+      detailedName: 'Medium',
+    },
+    ...VIEWPORT,
+  });
+  cy.wait(1000);
+  cy.get('.sc-dialbase-container')
+    .invoke('text')
+    .should('contain', `${DATA}%`);
+
+  cy.get(VALUE_LOADING).should('not.exist');
+  cy.get(VALUE_ERROR).should('not.exist');
+
+  cy.matchImageSnapshotOnCI();
+});
+
+it('renders value under percentile when significantDigits is 2', () => {
+  const significantDigits = 2;
+  const LATEST_VALUE = 2238;
+  const DATA = Number((LATEST_VALUE / (Y_MAX - Y_MIN)).toPrecision(significantDigits)) * 100;
+  visitDynamicWidget(cy, {
+    componentTag: 'sc-dial',
+    size: DIAL_SIZE_CONFIG.L,
+    significantDigits,
+    dataStream: {
+      ...DATASTREAM,
+      data: [{ x: new Date(2000, 0, 0).getTime(), y: LATEST_VALUE }],
     },
     ...VIEWPORT,
   });

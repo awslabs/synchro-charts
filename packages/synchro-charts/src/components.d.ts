@@ -83,6 +83,7 @@ export namespace Components {
         "associatedStreams"?: StreamAssociation[];
         "dataStream": DataStream;
         "messageOverrides": DialMessageOverrides;
+        "significantDigits"?: number;
         "size": DialSizeConfig;
         "viewport": ViewPortConfig;
         "widgetId": string;
@@ -94,6 +95,7 @@ export namespace Components {
         "messageOverrides": DialMessageOverrides;
         "propertyPoint"?: DataPoint<Primitive>;
         "propertyStream"?: DataStream;
+        "significantDigits"?: number;
         "size": DialSizeConfig;
         "valueColor"?: string;
         "viewport": ViewPortConfig;
@@ -102,6 +104,7 @@ export namespace Components {
         "breachedThreshold": Threshold;
         "percent": number;
         "point"?: DataPoint;
+        "significantDigits"?: number;
         "size": DialSizeConfig;
         "stream"?: DataStream | null;
     }
@@ -1527,8 +1530,9 @@ declare namespace LocalJSX {
         "associatedStreams"?: StreamAssociation[];
         "dataStream": DataStream;
         "messageOverrides"?: DialMessageOverrides;
+        "significantDigits"?: number;
         "size"?: DialSizeConfig;
-        "viewport"?: ViewPortConfig;
+        "viewport": ViewPortConfig;
         "widgetId": string;
     }
     interface ScDialBase {
@@ -1538,6 +1542,7 @@ declare namespace LocalJSX {
         "messageOverrides"?: DialMessageOverrides;
         "propertyPoint"?: DataPoint<Primitive>;
         "propertyStream"?: DataStream;
+        "significantDigits"?: number;
         "size"?: DialSizeConfig;
         "valueColor"?: string;
         "viewport"?: ViewPortConfig;
@@ -1546,6 +1551,7 @@ declare namespace LocalJSX {
         "breachedThreshold"?: Threshold;
         "percent"?: number;
         "point"?: DataPoint;
+        "significantDigits"?: number;
         "size"?: DialSizeConfig;
         "stream"?: DataStream | null;
     }

@@ -31,6 +31,8 @@ export class ScDialBase {
 
   @Prop() messageOverrides: DialMessageOverrides = {};
 
+  @Prop() significantDigits?: number;
+
   @Prop() isLoading?: boolean = false;
 
   render() {
@@ -67,6 +69,7 @@ export class ScDialBase {
               breachedThreshold={this.breachedThreshold}
               stream={propertyStream}
               size={this.size}
+              significantDigits={this.significantDigits}
             />
           )}
           {error != null && (

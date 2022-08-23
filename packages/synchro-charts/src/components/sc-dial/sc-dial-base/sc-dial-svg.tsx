@@ -7,6 +7,7 @@ import { Threshold } from '../../charts/common/types';
 import { DialSizeConfig } from '../type';
 import { sizeConfigurations } from './util';
 
+const PRECISION = 4;
 @Component({
   tag: 'sc-dial-svg',
   shadow: false,
@@ -17,6 +18,7 @@ export class ScDialSvg {
   @Prop() breachedThreshold: Threshold;
   @Prop() stream?: DataStream | null;
   @Prop() size: DialSizeConfig;
+  @Prop() significantDigits?: number;
 
   render() {
     const R = this.size.width / 2;
@@ -27,6 +29,7 @@ export class ScDialSvg {
     const labelColor = this.breachedThreshold?.color || sizeConfigurations.BLUE;
     const label = this.breachedThreshold?.label?.show ? this.breachedThreshold?.label?.text : '';
     const icon = this.breachedThreshold ? this.breachedThreshold.icon : undefined;
+    const value = (this.percent * 100).toPrecision(this.significantDigits || PRECISION);
     return (
       <svg
         width="100%"
@@ -68,8 +71,8 @@ export class ScDialSvg {
             font-weight="bold"
             text-anchor="middle"
           >
-            <tspan dy={this.stream && !this.stream.unit ? 0 : 10}>
-              {this.stream && this.stream.unit ? round(this.point?.y as number) : round(this.percent * 100)}
+            <tspan dy={(this.stream && this.stream.detailedName) || label ? 0 : 10}>
+              {this.stream && this.stream.unit ? round(this.point?.y as number) : value}
               <tspan font-size={this.size.unitSize}>{(this.stream && this.stream.unit) || '%'}</tspan>
             </tspan>
           </text>
@@ -95,7 +98,7 @@ export class ScDialSvg {
             text-anchor="middle"
             fill={sizeConfigurations.PRIMARYTEXT}
           >
-            Medium
+            {this.stream.detailedName}
           </text>
         ) : null}
 

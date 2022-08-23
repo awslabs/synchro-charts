@@ -47,6 +47,8 @@ export type SearchQueryParams = {
 
   // Whether to display the info names - useful for tests involve editing inputs
   displayInfoNames: boolean;
+
+  significantDigits: number;
 };
 
 const parseBool = (str: string): boolean => str === 'true';
@@ -90,6 +92,7 @@ export const constructSearchQuery = ({
   size,
   yMin,
   yMax,
+  significantDigits,
   // Props that can be directly serialized, i.e. numbers, booleans, and strings
   ...serializableProps
 }: Partial<SearchQueryParams>): string =>
@@ -113,6 +116,7 @@ export const constructSearchQuery = ({
     size: size && JSON.stringify(size),
     yMin: yMin && JSON.stringify(yMin),
     yMax: yMax && JSON.stringify(yMax),
+    significantDigits: significantDigits && JSON.stringify(significantDigits),
     // For the rest, we don't have to do any work! and doing less is better
     ...serializableProps,
   });
@@ -157,5 +161,6 @@ export const testCaseParameters = (): SearchQueryParams => {
     viewportEnd: query.viewportEnd != null ? new Date(query.viewportEnd) : new Date(2000, 0, 1),
     yMin: query.yMin ? JSON.parse(query.yMin) : undefined,
     yMax: query.yMax ? JSON.parse(query.yMax) : undefined,
+    significantDigits: query.significantDigits ? JSON.parse(query.significantDigits) : undefined,
   };
 };

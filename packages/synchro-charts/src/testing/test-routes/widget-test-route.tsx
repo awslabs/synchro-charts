@@ -29,6 +29,7 @@ const {
   tableColumns,
   yMin,
   yMax,
+  significantDigits,
 } = testCaseParameters();
 
 const getSize = (
@@ -100,6 +101,7 @@ export class WidgetTestRoute {
           annotations={annotations}
           gestures={gestures}
           messageOverrides={messageOverrides}
+          significantDigits={significantDigits}
           /** TODO: Port these over to the message overrides */
           invalidTagErrorHeader="invalidComponentTag.header"
           invalidTagErrorSubheader="invalidComponentTag.subheader"
