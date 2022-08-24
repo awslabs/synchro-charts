@@ -14,6 +14,7 @@ import {
   STRING_STREAM_2,
   STRING_STREAM_1,
   NUMBER_EMPTY_STREAM,
+  NUMBER_STREAM_1,
 } from '../../../../src/testing/__mocks__/mockWidgetProperties';
 import { ANNOTATIONS } from '../../../../src/testing/dynamicWidgetUtils/constants';
 
@@ -69,6 +70,26 @@ it('renders with tooltip for multiple data streams with order in which they were
     .eq(2)
     .contains(STRING_STREAM_2.data[0].y)
     .should('be.visible');
+
+  cy.get(CHART_VIZ_CONTAINER_SELECTOR).matchImageSnapshotOnCI();
+});
+
+it('renders tooltip to the left of the mouse when the mouse is on the right side', () => {
+  visitDynamicWidget(cy, {
+    componentTag: 'sc-status-timeline',
+    viewportStart: new Date(new Date(2000, 0, 0).getTime() - MINUTE_IN_MS),
+    viewportEnd: new Date(2000, 0, 0, 0, 5),
+    dataStreams: [NUMBER_STREAM_1],
+  });
+
+  cy.waitForChart();
+
+  cy.get(CHART_VIZ_CONTAINER_SELECTOR).trigger('mousemove', {
+    offsetX: 600,
+    offsetY: SCREEN_SIZE.height / 2,
+  });
+
+  cy.get(CHART_TOOLTIP_SELECTOR).should('be.visible');
 
   cy.get(CHART_VIZ_CONTAINER_SELECTOR).matchImageSnapshotOnCI();
 });
