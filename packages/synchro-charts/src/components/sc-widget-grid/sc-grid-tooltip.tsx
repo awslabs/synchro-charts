@@ -1,11 +1,13 @@
 import { Component, Element, h, Prop } from '@stencil/core';
 
 import tippy, { Instance } from 'tippy.js';
+import merge from 'lodash.merge';
 import { TIPPY_SETTINGS } from '../common/toolTipSettings';
 import { DataPoint } from '../../utils/dataTypes';
 import { Value } from '../value/Value';
 import { Threshold } from '../charts/common/types';
-import { DialMessageOverrides } from '../sc-dial/type';
+import { RecursivePartial, TooltipMessage } from '../sc-dial/type';
+import { DefaultTooltipMessages } from '../sc-dial/util';
 
 @Component({
   tag: 'sc-grid-tooltip',
@@ -22,9 +24,14 @@ export class ScGridTooltip {
   @Prop() unit?: string;
   @Prop() value?: number | string;
 
-  @Prop() messageOverrides?: DialMessageOverrides;
+  @Prop() messageOverrides: RecursivePartial<TooltipMessage>;
 
   private tooltip: Instance | undefined;
+  private messages: TooltipMessage;
+
+  componentWillLoad() {
+    this.messages = merge(DefaultTooltipMessages, this.messageOverrides);
+  }
 
   componentDidLoad() {
     this.displayToolTip();
@@ -70,13 +77,13 @@ export class ScGridTooltip {
               <div class="awsui-util-spacing-v-s">
                 {this.propertyPoint && (
                   <div>
-                    <div class="awsui-util-label">{this.messageOverrides?.tooltipValueTitles || 'Latest value:'}</div>
+                    <div class="awsui-util-label">{this.messages.tooltipValueTitles}</div>
                     <div>
                       <strong style={{ color }}>
                         {icon && <sc-chart-icon name={icon} color={color} style={{ marginRight: '3px' }} />}
                         <Value value={value} unit={unit} />
                       </strong>{' '}
-                      {this.messageOverrides?.tooltipValueTimeDescribed || 'at'}{' '}
+                      {this.messages.tooltipValueTimeDescribed}{' '}
                       {new Date(this.propertyPoint.x).toLocaleString('en-US', {
                         hour12: true,
                         minute: 'numeric',
@@ -95,10 +102,9 @@ export class ScGridTooltip {
                   <fragement>
                     {this.alarmPoint && (
                       <div>
-                        <div class="awsui-util-label">{this.messageOverrides?.tooltipValueTitles || 'Status:'}</div>
+                        <div class="awsui-util-label">{this.messages.tooltipValueTitles}</div>
                         <div>
-                          <strong style={{ color }}>{this.alarmPoint.y}</strong>{' '}
-                          {this.messageOverrides?.tooltipStatusDescribed || 'since'}{' '}
+                          <strong style={{ color }}>{this.alarmPoint.y}</strong> {this.messages.tooltipStatusDescribed}{' '}
                           {new Date(this.alarmPoint.x).toLocaleString('en-US', {
                             hour12: true,
                             minute: 'numeric',

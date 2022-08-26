@@ -9,11 +9,11 @@ import {
   TableColumn,
 } from '../../utils/dataTypes';
 import { Annotations, Axis, LegendConfig, XAnnotation } from '../../components/charts/common/types';
-import { DialAnnotations, DialMessageOverrides, DialSizeConfig } from '../../components/sc-dial/type';
+import { DialAnnotations, DialSizeConfig } from '../../components/sc-dial/type';
 
 export type SearchQueryParams = {
   alarms?: AlarmsConfig;
-  messageOverrides?: MessageOverrides & DialMessageOverrides;
+  messageOverrides?: MessageOverrides;
   width?: number | string;
   axis?: Axis.Options;
   height?: number | string;

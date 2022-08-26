@@ -67,7 +67,6 @@ describe('Only input data stream', () => {
     expect(dialBases[0].alarmStream).toBeUndefined();
     expect(dialBases[0].breachedThreshold).toBeUndefined();
     expect(dialBases[0].viewport).toBe(VIEWPORT);
-    expect(dialBases[0].valueColor).toBeUndefined();
     expect(dialBases[0].isLoading).toBe(false);
   });
 
@@ -85,20 +84,59 @@ describe('Only input data stream', () => {
     expect(dialBases[0].alarmStream).toBeUndefined();
     expect(dialBases[0].breachedThreshold).toBeUndefined();
     expect(dialBases[0].viewport).toBe(VIEWPORT);
-    expect(dialBases[0].valueColor).toBeUndefined();
     expect(dialBases[0].isLoading).toBe(true);
   });
 });
 
 describe('alarm', () => {
+  const alarmValue = {
+    low: {
+      value: 'Critical',
+      icon: StatusIcon.ERROR,
+    },
+    middle: {
+      value: 'Warning',
+      icon: StatusIcon.LATCHED,
+    },
+    high: {
+      value: 'Normal',
+      icon: StatusIcon.NORMAL,
+    },
+  };
   const ANNOTIONS = {
     y: [
       {
-        color: '#000',
-        value: 'Normal',
-        comparisonOperator: COMPARISON_OPERATOR.EQUAL,
+        color: '#C03F25',
+        value: 1650,
+        comparisonOperator: COMPARISON_OPERATOR.LESS_THAN_EQUAL,
         dataStreamIds: ['some-id'],
-        icon: StatusIcon.NORMAL,
+        label: {
+          text: alarmValue.low.value,
+          show: true,
+        },
+        icon: alarmValue.low.icon,
+      },
+      {
+        color: '#F29D38',
+        value: 3300,
+        comparisonOperator: COMPARISON_OPERATOR.LESS_THAN_EQUAL,
+        dataStreamIds: ['some-id'],
+        label: {
+          text: alarmValue.middle.value,
+          show: true,
+        },
+        icon: alarmValue.middle.icon,
+      },
+      {
+        color: '#3F7E23',
+        value: 3300,
+        comparisonOperator: COMPARISON_OPERATOR.GREATER_THAN,
+        dataStreamIds: ['some-id'],
+        label: {
+          text: alarmValue.high.value,
+          show: true,
+        },
+        icon: alarmValue.high.icon,
       },
     ],
   };
@@ -130,7 +168,6 @@ describe('alarm', () => {
     expect(dialBases[0].alarmStream).toBeUndefined();
     expect(dialBases[0].breachedThreshold).toBeUndefined();
     expect(dialBases[0].viewport).toBe(VIEWPORT);
-    expect(dialBases[0].valueColor).toBeUndefined();
     expect(dialBases[0].isLoading).toBe(false);
   });
 
@@ -152,7 +189,6 @@ describe('alarm', () => {
     expect(dialBases[0].alarmStream).toBeUndefined();
     expect(dialBases[0].breachedThreshold).toBeUndefined();
     expect(dialBases[0].viewport).toBe(VIEWPORT);
-    expect(dialBases[0].valueColor).toBeUndefined();
     expect(dialBases[0].isLoading).toBe(false);
   });
 
@@ -169,13 +205,12 @@ describe('alarm', () => {
     const dialBases = dial.querySelectorAll('sc-dial-base');
     expect(dialBases.length).toBe(1);
 
-    const threshold = getThresholds(ANNOTIONS).filter(a => a.icon)[0] || getBreachedThreshold(SOME_LATER_POINT, DATA);
+    const threshold = getBreachedThreshold(SOME_LATER_POINT, DATA);
     expect(dialBases[0].propertyStream).toBe(DATA);
     expect(dialBases[0].propertyPoint).toBe(SOME_LATER_POINT);
     expect(dialBases[0].alarmStream).toBe(DATA);
     expect(dialBases[0].breachedThreshold).toBe(threshold);
     expect(dialBases[0].viewport).toBe(VIEWPORT);
-    expect(dialBases[0].valueColor).toBeUndefined();
     expect(dialBases[0].isLoading).toBe(false);
   });
 
@@ -192,52 +227,34 @@ describe('alarm', () => {
     const dialBases = dial.querySelectorAll('sc-dial-base');
     expect(dialBases.length).toBe(1);
 
-    const threshold = getThresholds(ANNOTIONS).filter(a => a.icon)[0] || getBreachedThreshold(SOME_LATER_POINT, DATA);
+    const threshold = getBreachedThreshold(SOME_LATER_POINT, DATA);
     expect(dialBases[0].propertyStream).toBe(DATA);
     expect(dialBases[0].propertyPoint).toBe(SOME_LATER_POINT);
     expect(dialBases[0].alarmStream).toBe(DATA);
     expect(dialBases[0].breachedThreshold).toBe(threshold);
     expect(dialBases[0].viewport).toBe(VIEWPORT);
-    expect(dialBases[0].valueColor).toBe(ANNOTIONS.y[0].color);
     expect(dialBases[0].isLoading).toBe(false);
   });
 
   it('when `annotations` includes y without datastream id in dataStreamIds', async () => {
     const laterDate = new Date((new Date(2020, 1, 0, 0) as Date).getTime() + MINUTE_IN_MS);
     const SOME_LATER_POINT: DataPoint<number> = { y: 111, x: laterDate.getTime() };
-    const DATA = { ...DATA_STREAM, data: [SOME_LATER_POINT] };
-    const ANNOTIONS_0 = {
-      y: [
-        {
-          color: '#000',
-          value: 'Normal',
-          comparisonOperator: COMPARISON_OPERATOR.EQUAL,
-          dataStreamIds: ['car-speed-alarm'],
-          icon: StatusIcon.NORMAL,
-        },
-      ],
-    };
+    const DATA = { ...DATA_STREAM, data: [SOME_LATER_POINT], id: 'test-id' };
+    const associatedStreams = [ASSOCIATED_STREAMS[0]];
     const { dial } = await newValueSpecPage({
       dataStream: DATA,
-      annotations: ANNOTIONS_0,
-      associatedStreams: [ASSOCIATED_STREAMS[0], { id: DATA_STREAM.id, type: StreamType.ALARM }],
+      annotations: ANNOTIONS,
+      associatedStreams,
     });
 
     const dialBases = dial.querySelectorAll('sc-dial-base');
     expect(dialBases.length).toBe(1);
 
-    const threshold =
-      getThresholds(ANNOTIONS_0)
-        .filter(a => a.icon)
-        .filter(a => a.dataStreamIds?.includes(DATA_STREAM.id))[0] || getBreachedThreshold(SOME_LATER_POINT, DATA);
-
-    expect(threshold).toBeUndefined();
     expect(dialBases[0].propertyStream).toBe(DATA);
     expect(dialBases[0].propertyPoint).toBe(SOME_LATER_POINT);
-    expect(dialBases[0].alarmStream).toBe(DATA);
+    expect(dialBases[0].alarmStream).toBeUndefined();
     expect(dialBases[0].breachedThreshold).toBeUndefined();
     expect(dialBases[0].viewport).toBe(VIEWPORT);
-    expect(dialBases[0].valueColor).toBeUndefined();
     expect(dialBases[0].isLoading).toBe(false);
   });
 });

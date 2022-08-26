@@ -142,7 +142,6 @@ export class LiveDemo extends React.Component {
     this.state = {
       dataStreams,
       alarmStatusStreams,
-
     }
   }
 

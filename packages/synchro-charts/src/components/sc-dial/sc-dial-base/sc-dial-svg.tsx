@@ -5,7 +5,7 @@ import { round } from '../../../utils/number';
 import { getIcons } from '../../charts/common/annotations/iconUtils';
 import { Threshold } from '../../charts/common/types';
 import { DialSizeConfig, OffsetForIcon } from '../type';
-import { sizeConfigurations } from './util';
+import { ColorConfigurations } from '../util';
 
 const FONT_SIZE = 48;
 const ICON_SIZE = 24;
@@ -25,11 +25,8 @@ export class ScDialSvg {
   @Prop() stream?: DataStream | null;
   @Prop() size?: DialSizeConfig;
   @Prop() significantDigits?: number;
+  @Prop() unit: string;
   @Prop() offsetForIcon?: OffsetForIcon;
-
-  @State() path1: string;
-  @State() path2: string;
-  @State() path3: string;
 
   @State() sizeConfig: DialSizeConfig;
 
@@ -51,7 +48,7 @@ export class ScDialSvg {
   render() {
     const r = R - this.sizeConfig?.dialThickness / 2;
 
-    const labelColor = this.breachedThreshold?.color || sizeConfigurations.BLUE;
+    const labelColor = this.breachedThreshold?.color || ColorConfigurations.BLUE;
     const label = this.breachedThreshold?.label?.show ? this.breachedThreshold?.label?.text : '';
     const icon = this.breachedThreshold ? this.breachedThreshold.icon : undefined;
     const value = this.significantDigits
@@ -62,7 +59,7 @@ export class ScDialSvg {
     const circleX = R;
     const circleY = R;
 
-    // Offset Center Y to center of value.
+    // Offset Center Y to center of value
     const valueOffsetY = this.sizeConfig?.fontSize / 4;
 
     const iconHalfSize = this.sizeConfig?.iconSize / 2;
@@ -71,7 +68,7 @@ export class ScDialSvg {
     const valueBottomMiddleX = circleX;
     const valueBottomMiddleY = circleY + ((this.stream && this.stream.detailedName) || label ? 0 : valueOffsetY);
 
-    // Label bottom Y coordinate (The y-coordinate of the text tag is at the bottom of the font).
+    // Label bottom Y coordinate (The y-coordinate of the text tag is at the bottom of the font)
     const labelBottomMiddleY = R + r / 2;
     const labelBottomMiddleX = circleX + iconHalfSize;
 
@@ -144,7 +141,7 @@ export class ScDialSvg {
           >
             <tspan>
               {this.stream?.unit ? round(this.point?.y as number) : value}
-              <tspan font-size={this.sizeConfig?.unitSize}>{this.stream?.unit || '%'}</tspan>
+              <tspan font-size={this.sizeConfig?.unitSize}>{this.unit}</tspan>
             </tspan>
           </text>
         ) : (
@@ -154,7 +151,7 @@ export class ScDialSvg {
             font-size={this.sizeConfig?.fontSize}
             font-weight="bold"
             text-anchor="middle"
-            fill={sizeConfigurations.SECONDARYTEXT}
+            fill={ColorConfigurations.SECONDARYTEXT}
           >
             {NO_VALUE_PRESENT}
           </text>
@@ -167,7 +164,7 @@ export class ScDialSvg {
             font-weight="bold"
             font-size={this.sizeConfig?.labelSize}
             text-anchor="middle"
-            fill={sizeConfigurations.PRIMARYTEXT}
+            fill={ColorConfigurations.PRIMARYTEXT}
           >
             {this.stream?.detailedName}
           </text>
@@ -180,7 +177,7 @@ export class ScDialSvg {
             font-size={this.sizeConfig?.labelSize}
             font-weight="bold"
             text-anchor="middle"
-            fill={labelColor || sizeConfigurations.PRIMARYTEXT}
+            fill={labelColor || ColorConfigurations.PRIMARYTEXT}
           >
             {label}
           </text>

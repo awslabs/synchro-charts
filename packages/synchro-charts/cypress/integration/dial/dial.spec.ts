@@ -10,14 +10,6 @@ const errorMessage = 'SiteWise network error';
 
 const VIEWPORT = { duration: undefined, yMin: Y_MIN, yMax: Y_MAX };
 
-const DialMessageOverrides = {
-  dataNotNumberError: 'Only accept numbers',
-  tooltipValueTitles: 'Current data',
-  tooltipValueTimeDescribed: 'at',
-  tooltipStatusTitles: 'Current Status',
-  tooltipStatusDescribed: 'to',
-};
-
 const DIAL_SIZE = {
   fontSize: 70,
   dialThickness: 30,
@@ -170,7 +162,7 @@ it('renders value under percentile when significantDigits is 2', () => {
   cy.matchImageSnapshotOnCI();
 });
 
-it('renders string value', () => {
+it('renders error message when value is string', () => {
   const LATEST_VALUE = 'ABC';
   visitDynamicWidget(cy, {
     componentTag: 'sc-dial',
@@ -189,32 +181,6 @@ it('renders string value', () => {
   cy.get(VALUE_ERROR)
     .invoke('text')
     .should('contain', 'Only numbers are supported');
-
-  cy.get(VALUE_LOADING).should('not.exist');
-
-  cy.matchImageSnapshotOnCI();
-});
-
-it('renders `Only accept numbers` when value is string', () => {
-  const LATEST_VALUE = 'ABC';
-  visitDynamicWidget(cy, {
-    componentTag: 'sc-dial',
-    size: DIAL_SIZE,
-    dataStream: {
-      ...DATASTREAM,
-      unit: 'rpm',
-      data: [{ x: new Date(1999, 0, 0).getTime(), y: LATEST_VALUE }],
-      dataType: DataType.STRING,
-    },
-    messageOverrides: DialMessageOverrides,
-    ...VIEWPORT,
-  });
-
-  cy.wait(1000);
-  cy.contains('.sc-dialbase-container', NO_VALUE_PRESENT).should('be.visible');
-  cy.get(VALUE_ERROR)
-    .invoke('text')
-    .should('contain', 'Only accept numbers');
 
   cy.get(VALUE_LOADING).should('not.exist');
 

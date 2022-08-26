@@ -1,10 +1,11 @@
 import { Component, h, Prop } from '@stencil/core';
+import merge from 'lodash.merge';
 import { DataPoint, DataStream, Primitive, ViewPortConfig } from '../../../utils/dataTypes';
 import { isNumberDataStream } from '../../../utils/predicates';
 import { Threshold } from '../../charts/common/types';
-import { DialMessageOverrides, DialSizeConfig, OffsetForIcon } from '../type';
+import { DialMessages, DialSizeConfig, OffsetForIcon, RecursivePartial } from '../type';
+import { DefaultDialMessages, ColorConfigurations } from '../util';
 import { DialLoading } from './sc-dial-loading';
-import { sizeConfigurations } from './util';
 
 const title = (dataStream: { detailedName?: any; name?: any } | null | false) => {
   if (dataStream) {
@@ -12,6 +13,8 @@ const title = (dataStream: { detailedName?: any; name?: any } | null | false) =>
   }
   return null;
 };
+
+const defaultUnit = '%';
 
 @Component({
   tag: 'sc-dial-base',
@@ -22,7 +25,6 @@ export class ScDialBase {
   @Prop() viewport: ViewPortConfig;
   @Prop() breachedThreshold?: Threshold;
   @Prop() offsetForIcon?: OffsetForIcon;
-  @Prop() valueColor?: string; // css color string
 
   @Prop() alarmStream?: DataStream;
 
@@ -30,23 +32,30 @@ export class ScDialBase {
   @Prop() propertyPoint?: DataPoint<Primitive>;
   @Prop() size?: DialSizeConfig;
 
-  @Prop() messageOverrides: DialMessageOverrides = {};
+  @Prop() messageOverrides?: RecursivePartial<DialMessages>;
 
   @Prop() significantDigits?: number;
 
   @Prop() isLoading?: boolean = false;
 
+  private messages: DialMessages;
+  private unit: string;
+
+  componentWillLoad() {
+    this.messages = merge(DefaultDialMessages, this.messageOverrides);
+  }
+
   render() {
     const { yMin = 0, yMax = 0 } = this.viewport;
     const propertyStream = this.propertyStream && isNumberDataStream(this.propertyStream) ? this.propertyStream : null;
     const point = propertyStream ? this.propertyPoint : undefined;
-    const error = propertyStream
-      ? propertyStream.error
-      : this.messageOverrides.dataNotNumberError || 'Only numbers are supported';
+    const error = propertyStream ? propertyStream.error : this.messages.error.dataNotNumberError;
 
     const percent = point ? (point.y as number) / (yMax - yMin) : 0;
-    const labelColor = this.breachedThreshold?.color || sizeConfigurations.BLUE;
+    const labelColor = this.breachedThreshold?.color || ColorConfigurations.BLUE;
     const unit = propertyStream && propertyStream.unit;
+    const value = unit ? (point?.y as number) : percent * 100;
+    this.unit = unit || defaultUnit;
 
     return (
       <sc-grid-tooltip
@@ -54,10 +63,10 @@ export class ScDialBase {
         propertyPoint={this.propertyPoint}
         alarmPoint={this.alarmStream && this.propertyPoint}
         breachedThreshold={this.breachedThreshold}
-        unit={unit || '%'}
-        value={unit ? (point?.y as number) : percent * 100}
+        unit={this.unit}
+        value={value}
         color={labelColor}
-        messageOverrides={this.messageOverrides}
+        messageOverrides={this.messages.tooltip}
         isEnabled
       >
         <div class="sc-dialbase-container">
@@ -72,6 +81,7 @@ export class ScDialBase {
               size={this.size}
               significantDigits={this.significantDigits}
               offsetForIcon={this.offsetForIcon}
+              unit={this.unit}
             />
           )}
           {error != null && (
@@ -79,7 +89,7 @@ export class ScDialBase {
               <sc-error-badge data-testid="warning">{error}</sc-error-badge>
               {point && (
                 <div class="error-message">
-                  Last value at
+                  {this.messages.error.dataNotNumberError}
                   {new Date(point.x).toLocaleString('en-US', {
                     hour12: true,
                     second: 'numeric',

@@ -10,7 +10,7 @@ import { DATA_STREAM, NUMBER_INFO_1, NUMBER_STREAM_1 } from '../../../testing/__
 import { round } from '../../../utils/number';
 import { DataType } from '../../../utils/dataConstants';
 import { COMPARISON_OPERATOR, StatusIcon } from '../../charts/common/constants';
-import { sizeConfigurations } from './util';
+import { ColorConfigurations } from '../util';
 
 const VIEWPORT = {
   ...DEFAULT_CHART_CONFIG.viewport,
@@ -43,7 +43,7 @@ const newValueSpecPage = async (propOverrides: Partial<Components.ScDialBase> = 
 };
 
 describe('Overview', () => {
-  it('when has no data', async () => {
+  it('renders `-` value when has no data', async () => {
     const { dialBase } = await newValueSpecPage({
       // Setup scenario where the 'live time frame value label' renders
       propertyStream: DATA_STREAM,
@@ -52,17 +52,17 @@ describe('Overview', () => {
     expect(dialBase.innerHTML).toContain('-');
   });
 
-  it('when has no unit', async () => {
+  it('renders `%` unit when has no unit', async () => {
     const { dialBase } = await newValueSpecPage({
       propertyStream: NUMBER_STREAM_1,
       propertyPoint: NUMBER_STREAM_1.data[0],
     });
 
     const value = round((NUMBER_STREAM_1.data[0].y / (VIEWPORT.yMax - VIEWPORT.yMin)) * 100);
-    expect(dialBase.textContent).toContain(`${value}%`);
+    expect(dialBase.textContent).toContain(`${value} %`);
   });
 
-  it('when has unit', async () => {
+  it('renders defined unit when has unit', async () => {
     const { dialBase } = await newValueSpecPage({
       propertyStream: {
         id: 'car-speed-alarm',
@@ -83,10 +83,10 @@ describe('Overview', () => {
       },
     });
 
-    expect(dialBase.textContent).toContain(`${VALUE1}rpm`);
+    expect(dialBase.textContent).toContain(`${VALUE1} rpm`);
   });
 
-  it('when has more than 1 data', async () => {
+  it('renders latest value when has more than 1 data', async () => {
     const { dialBase } = await newValueSpecPage({
       propertyStream: {
         id: 'car-speed-alarm',
@@ -111,41 +111,86 @@ describe('Overview', () => {
       },
     });
 
-    expect(dialBase.textContent).toContain(`${VALUE2}rpm`);
+    expect(dialBase.textContent).toContain(`${VALUE2} rpm`);
   });
 
-  it('when loading', async () => {
+  it('render percent with two significant sigits value When significantDigits = 2', async () => {
+    const { dialBase } = await newValueSpecPage({
+      propertyStream: {
+        id: 'car-speed-alarm',
+        name: 'Wind temperature',
+        data: [
+          {
+            x: new Date(2001, 0, 0).getTime(),
+            y: VALUE1,
+          },
+        ],
+        unit: '',
+        resolution: 0,
+        dataType: DataType.NUMBER,
+      },
+      propertyPoint: {
+        x: new Date(2001, 0, 0).getTime(),
+        y: VALUE1,
+      },
+      significantDigits: 2,
+    });
+
+    const percent = VALUE1 / (VIEWPORT.yMax - VIEWPORT.yMin);
+    const value = (percent * 100).toPrecision(2);
+    expect(dialBase.textContent).toContain(`${value} %`);
+  });
+
+  it('Overwrite the previous copy when messageOverrides provided', async () => {
+    const messageOverrides = {
+      tooltip: { tooltipValueTitles: 'Current data' },
+    };
+    const { dialBase } = await newValueSpecPage({
+      propertyStream: {
+        id: 'car-speed-alarm',
+        name: 'Wind temperature',
+        data: [
+          {
+            x: new Date(2001, 0, 0).getTime(),
+            y: VALUE1,
+          },
+        ],
+        unit: '',
+        resolution: 0,
+        dataType: DataType.NUMBER,
+      },
+      propertyPoint: {
+        x: new Date(2001, 0, 0).getTime(),
+        y: VALUE1,
+      },
+      messageOverrides,
+    });
+
+    expect(dialBase.textContent).toContain(messageOverrides.tooltip.tooltipValueTitles);
+  });
+
+  it('renders loading icon when loading condition', async () => {
     const { dialBase } = await newValueSpecPage({
       isLoading: true,
-      propertyStream: NUMBER_STREAM_1,
-      propertyPoint: NUMBER_STREAM_1.data[0],
+      propertyStream: { ...NUMBER_STREAM_1, data: [] },
+      propertyPoint: undefined,
     });
 
     const value = round((NUMBER_STREAM_1.data[0].y / (VIEWPORT.yMax - VIEWPORT.yMin)) * 100);
-    expect(dialBase.textContent).not.toContain(`${value}%`);
+    expect(dialBase.textContent).not.toContain(`${value} %`);
     expect(dialBase.textContent).toContain('Loading');
     expect(dialBase.innerHTML).toContain('data-testid="loading"');
-  });
-
-  it('when input valueColor', async () => {
-    const { dialBase } = await newValueSpecPage({
-      propertyStream: NUMBER_STREAM_1,
-      propertyPoint: NUMBER_STREAM_1.data[0],
-      valueColor: '#000000',
-    });
-
-    expect(dialBase.innerHTML).toContain('#000000');
   });
 });
 
 describe('Alarm states', () => {
-  it('when Critical', async () => {
+  it('renders `Critical` text with related colors and icon when Critical', async () => {
     const { dialBase } = await newValueSpecPage({
       propertyStream: NUMBER_STREAM_1,
       propertyPoint: NUMBER_STREAM_1.data[0],
       alarmStream: NUMBER_STREAM_1,
       breachedThreshold: {
-        color: sizeConfigurations.CRITICAL,
+        color: ColorConfigurations.CRITICAL,
         value: 1650,
         comparisonOperator: COMPARISON_OPERATOR.LESS_THAN,
         dataStreamIds: [NUMBER_INFO_1.id],
@@ -158,9 +203,9 @@ describe('Alarm states', () => {
     });
 
     expect(dialBase.textContent).toContain('Critical');
-    expect(dialBase.innerHTML).toContain(sizeConfigurations.CRITICAL);
+    expect(dialBase.innerHTML).toContain(ColorConfigurations.CRITICAL);
   });
-  it('when Warning', async () => {
+  it('renders `Warning` text with related colors and icon when Warning', async () => {
     const DATASTREAM = {
       id: 'car-speed-alarm',
       name: 'Wind temperature',
@@ -179,7 +224,7 @@ describe('Alarm states', () => {
       propertyPoint: DATASTREAM.data[0],
       alarmStream: DATASTREAM,
       breachedThreshold: {
-        color: sizeConfigurations.WARNING,
+        color: ColorConfigurations.WARNING,
         value: 3300,
         comparisonOperator: COMPARISON_OPERATOR.LESS_THAN,
         dataStreamIds: [NUMBER_INFO_1.id],
@@ -192,9 +237,9 @@ describe('Alarm states', () => {
     });
 
     expect(dialBase.textContent).toContain('Warning');
-    expect(dialBase.innerHTML).toContain(sizeConfigurations.WARNING);
+    expect(dialBase.innerHTML).toContain(ColorConfigurations.WARNING);
   });
-  it('when Normal', async () => {
+  it('renders `Normal` text with related colors and icon when Normal', async () => {
     const DATASTREAM = {
       id: 'car-speed-alarm',
       name: 'Wind temperature',
@@ -213,7 +258,7 @@ describe('Alarm states', () => {
       propertyPoint: DATASTREAM.data[0],
       alarmStream: DATASTREAM,
       breachedThreshold: {
-        color: sizeConfigurations.NORMAL,
+        color: ColorConfigurations.NORMAL,
         value: 3300,
         comparisonOperator: COMPARISON_OPERATOR.GREATER_THAN_EQUAL,
         dataStreamIds: [NUMBER_INFO_1.id],
@@ -226,6 +271,6 @@ describe('Alarm states', () => {
     });
 
     expect(dialBase.textContent).toContain('Normal');
-    expect(dialBase.innerHTML).toContain(sizeConfigurations.NORMAL);
+    expect(dialBase.innerHTML).toContain(ColorConfigurations.NORMAL);
   });
 });

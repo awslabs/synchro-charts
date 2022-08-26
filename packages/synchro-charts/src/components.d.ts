@@ -10,7 +10,7 @@ import { Annotations, Axis, LayoutConfig, Legend, LegendConfig, MovementConfig, 
 import { Trend, TrendResult } from "./components/charts/common/trends/types";
 import { DATA_ALIGNMENT, StatusIcon } from "./components/charts/common/constants";
 import { POINT_TYPE } from "./components/charts/sc-webgl-base-chart/activePoints";
-import { DialAnnotations, DialMessageOverrides, DialSizeConfig, OffsetForIcon } from "./components/sc-dial/type";
+import { DialAnnotations, DialMessages, DialSizeConfig, OffsetForIcon, RecursivePartial, TooltipMessage } from "./components/sc-dial/type";
 import { RectScrollFixed } from "./utils/types";
 import { LabelsConfig } from "./components/common/types";
 import { Cell, Row } from "./components/sc-table/constructTableData";
@@ -82,7 +82,7 @@ export namespace Components {
         "annotations"?: DialAnnotations;
         "associatedStreams"?: StreamAssociation[];
         "dataStream": DataStream;
-        "messageOverrides": DialMessageOverrides;
+        "messageOverrides"?: RecursivePartial<DialMessages>;
         "significantDigits"?: number;
         "size"?: DialSizeConfig;
         "viewport": ViewPortConfig;
@@ -92,13 +92,12 @@ export namespace Components {
         "alarmStream"?: DataStream;
         "breachedThreshold"?: Threshold;
         "isLoading"?: boolean;
-        "messageOverrides": DialMessageOverrides;
+        "messageOverrides"?: RecursivePartial<DialMessages>;
         "offsetForIcon"?: OffsetForIcon;
         "propertyPoint"?: DataPoint<Primitive>;
         "propertyStream"?: DataStream;
         "significantDigits"?: number;
         "size"?: DialSizeConfig;
-        "valueColor"?: string;
         "viewport": ViewPortConfig;
     }
     interface ScDialSvg {
@@ -109,6 +108,7 @@ export namespace Components {
         "significantDigits"?: number;
         "size"?: DialSizeConfig;
         "stream"?: DataStream | null;
+        "unit": string;
     }
     interface ScErrorBadge {
     }
@@ -130,7 +130,7 @@ export namespace Components {
         "alarmPoint"?: DataPoint;
         "breachedThreshold"?: Threshold;
         "isEnabled": boolean;
-        "messageOverrides"?: DialMessageOverrides;
+        "messageOverrides": RecursivePartial<TooltipMessage>;
         "propertyPoint"?: DataPoint;
         "title": string;
         "unit"?: string;
@@ -1531,7 +1531,7 @@ declare namespace LocalJSX {
         "annotations"?: DialAnnotations;
         "associatedStreams"?: StreamAssociation[];
         "dataStream": DataStream;
-        "messageOverrides"?: DialMessageOverrides;
+        "messageOverrides"?: RecursivePartial<DialMessages>;
         "significantDigits"?: number;
         "size"?: DialSizeConfig;
         "viewport": ViewPortConfig;
@@ -1541,13 +1541,12 @@ declare namespace LocalJSX {
         "alarmStream"?: DataStream;
         "breachedThreshold"?: Threshold;
         "isLoading"?: boolean;
-        "messageOverrides"?: DialMessageOverrides;
+        "messageOverrides"?: RecursivePartial<DialMessages>;
         "offsetForIcon"?: OffsetForIcon;
         "propertyPoint"?: DataPoint<Primitive>;
         "propertyStream"?: DataStream;
         "significantDigits"?: number;
         "size"?: DialSizeConfig;
-        "valueColor"?: string;
         "viewport"?: ViewPortConfig;
     }
     interface ScDialSvg {
@@ -1558,6 +1557,7 @@ declare namespace LocalJSX {
         "significantDigits"?: number;
         "size"?: DialSizeConfig;
         "stream"?: DataStream | null;
+        "unit"?: string;
     }
     interface ScErrorBadge {
     }
@@ -1579,7 +1579,7 @@ declare namespace LocalJSX {
         "alarmPoint"?: DataPoint;
         "breachedThreshold"?: Threshold;
         "isEnabled"?: boolean;
-        "messageOverrides"?: DialMessageOverrides;
+        "messageOverrides"?: RecursivePartial<TooltipMessage>;
         "propertyPoint"?: DataPoint;
         "title"?: string;
         "unit"?: string;
