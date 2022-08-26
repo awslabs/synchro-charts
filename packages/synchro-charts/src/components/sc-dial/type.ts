@@ -1,4 +1,4 @@
-import { Annotations, Threshold } from '../charts/common/types';
+import { Annotations } from '../charts/common/types';
 
 export interface DialSizeConfig {
   fontSize: number;
