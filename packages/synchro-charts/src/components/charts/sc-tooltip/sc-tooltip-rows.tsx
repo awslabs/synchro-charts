@@ -186,6 +186,17 @@ export class ScTooltipRows {
         ? `${this.top}px`
         : `${position.y - (this.tooltipHeight(points.length) * 3) / 4 - this.size.height}px`;
 
+    const displayToolTipOnLeftSize = position.x >= this.size.width / 2;
+
+    const toolTipPositioning = displayToolTipOnLeftSize
+      ? {
+          right: `${-position.x + X_OFFSET}px`,
+          transform: 'translateX(-100%)',
+        }
+      : {
+          left: `${position.x + X_OFFSET}px`,
+        };
+
     return (
       <div class="awsui">
         <div
@@ -198,8 +209,8 @@ export class ScTooltipRows {
         <div
           class="tooltip-container"
           style={{
-            left: `${position.x + X_OFFSET}px`,
             top: tooltipContainerTop,
+            ...toolTipPositioning,
           }}
         >
           <div class="awsui-util-shadow awsui-util-p-s">

@@ -5,7 +5,7 @@ import {
   visitDynamicWidget,
 } from '../../../../src/testing/selectors';
 import { SCREEN_SIZE } from '../../../../src/testing/dynamicWidgetUtils/testCaseParameters';
-import { SECOND_IN_MS } from '../../../../src/utils/time';
+import { MINUTE_IN_MS, SECOND_IN_MS } from '../../../../src/utils/time';
 import {
   STRING_STREAM_1,
   NUMBER_EMPTY_STREAM,
@@ -50,8 +50,6 @@ it('renders tooltip rows in order of values magnitude', () => {
     offsetY: SCREEN_SIZE.height / 2,
   });
 
-  cy.wait(0.05 * SECOND_IN_MS);
-
   cy.get(CHART_TOOLTIP_SELECTOR).should('be.visible');
   cy.get(CHART_TOOLTIP_ROW_SELECTOR).should('have.length', 2);
 
@@ -79,6 +77,26 @@ it('renders tooltip rows in order of values magnitude', () => {
   cy.get(CHART_TOOLTIP_ROW_SELECTOR)
     .contains(NUMBER_EMPTY_STREAM.name)
     .should('not.exist');
+
+  cy.get(CHART_VIZ_CONTAINER_SELECTOR).matchImageSnapshotOnCI();
+});
+
+it('renders tooltip to the left of the mouse when the mouse is on the right side', () => {
+  visitDynamicWidget(cy, {
+    componentTag: 'sc-scatter-chart',
+    viewportStart: new Date(new Date(2000, 0, 0).getTime() - MINUTE_IN_MS),
+    viewportEnd: new Date(2000, 0, 0, 0, 5),
+    dataStreams: [NUMBER_STREAM_1],
+  });
+
+  cy.waitForChart();
+
+  cy.get(CHART_VIZ_CONTAINER_SELECTOR).trigger('mousemove', {
+    offsetX: 300,
+    offsetY: SCREEN_SIZE.height / 2,
+  });
+
+  cy.get(CHART_TOOLTIP_SELECTOR).should('be.visible');
 
   cy.get(CHART_VIZ_CONTAINER_SELECTOR).matchImageSnapshotOnCI();
 });

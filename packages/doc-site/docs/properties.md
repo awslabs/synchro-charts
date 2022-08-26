@@ -100,15 +100,15 @@
     (Optional) The margin between the data visualization area and the left side of the chart.
     Starts at the left side of the viewport. Provides space for the left-sided y axis.
         
-   + `marginTop`: number
+  + `marginTop`: number
 
     (Optional) The margin between the data visualization area and the top of the widget.
     Starts at the top of the viewport.
-        
-   + `marginBottom`: number
 
-    (Optional) The margin between the data visualization area and either the legend (if the legend is positioned to the bottom) or the bottom of the widget.
-    Starts at the bottom of the viewport. Defaults to a value which provides sensible padding.
+  + `marginBottom`: number
+
+      (Optional) The margin between the data visualization area and either the legend (if the legend is positioned to the bottom) or the bottom of the widget.
+      Starts at the bottom of the viewport. Defaults to a value which provides sensible padding.
 
 ---
 
@@ -139,13 +139,20 @@
   
     The resolution, in milliseconds, at which the data should be aggregated.
     To display raw data, set the resolution to 0.
-    
+
+  - `meta`: Object
+
+    (Optional) object containing information associated to the `dataStream`. Object values can only be numbers, strings and booleans.
+
   - `dataType`: string
   
     The type of data contained within this stream. Must be one of the following:
-    - `NUMBER`: numerical data, such as `12.0`
-    - `STRING`: string data, such as categorical data `"OK"`, `"WARNING"`, etc.
-    - `BOOLEAN`: boolean data, such as `true` and `false`.
+  
+    **`NUMBER`**: numerical data, such as `12.0`
+  
+    **`STRING`**: string data, such as categorical data `"OK"`, `"WARNING"`, etc.
+ 
+    **`BOOLEAN`**: boolean data, such as `true` and `false`.
 
   - `name`: string
 
@@ -158,9 +165,9 @@
 
     - `resolution` (key): number
       The resolution (in milliseconds) of the data.
-      
-      - data point (value): DataPoint[]
-        The data points that are associated to this resolution.
+
+    - data point (value): DataPoint[]
+      The data points that are associated to this resolution.
         
   - `detailedName`: string
 
@@ -201,9 +208,11 @@
 
       Must be one of the following:
 
-      - `ALARM`: Alarm data stream type.
-      - `ANOMALY`: Anomaly data stream type.
-      - `ALARM_THRESHOLD`: Alarm threshold stream type. 
+      **`ALARM`**: Alarm data stream type.
+    
+      **`ANOMALY`**: Anomaly data stream type.
+    
+      **`ALARM_THRESHOLD`**: Alarm threshold stream type. 
  
 ---
 
@@ -214,8 +223,10 @@
   + `position`: string
     
     The position of the legend within the widget. Must be one of the following:
-    - `RIGHT`: Position the legend on the right portion of the widget.
-    - `BOTTOM`: Position the legend on the bottom portion of the widget.
+  
+    **`RIGHT`**: Position the legend on the right portion of the widget.
+
+    **`BOTTOM`**: Position the legend on the bottom portion of the widget.
     
   + `width`: number
     
@@ -227,12 +238,12 @@
 
   (Optional) Annotations provide a mechanism to annotate a value along either the x-axis or the y-axis.
   Utilized to create thresholds to help monitor data streams to be within specified constraints.
-  
+
   - `x`: Object[]
   
-  (Optional) A collection of x-annotations. An x-annotation provides a mechanism to annotate a value along the x-axis.
+    (Optional) A collection of x-annotations. An x-annotation provides a mechanism to annotate a value along the x-axis.
   
-  Each x-annotation contains the following information:
+    Each x-annotation contains the following information:
   
     - `color`: string
     
@@ -292,12 +303,16 @@
         against the annotations `value` attribute.
         
         Must be one of the following:
-        
-        - `LT`: Less than.
-        - `LTE`: Less than or equals.
-        - `GT`: Greater than.
-        - `GTE`: Greater than or equals.
-        - `EQ`: Equal.
+ 
+        **`LT`**: Less than.
+      
+        **`LTE`**: Less than or equals.
+      
+        **`GT`**: Greater than.
+      
+        **`GTE`**: Greater than or equals.
+      
+        **`EQ`**: Equal.
 
       - `id`: string
 
@@ -327,12 +342,14 @@
           
             A setting to display the label of the annotation on the graph.
             
- - `thresholdOptions`: Object or Boolean
+- `thresholdOptions`: Object or Boolean
  
-   (Optional) An threshold objects object to configure the thresholds. This setting will applie to all the thresholds.
-   Also, note that you can pass in `false` to disable all threshold options 
-   - `showColor`: boolean
-     (Optional) A setting to color the data points when it passes the threshold
+  (Optional) An threshold objects object to configure the thresholds. This setting will applie to all the thresholds.
+  Also, note that you can pass in `false` to disable all threshold options
+ 
+    - `showColor`: boolean
+
+      (Optional) A setting to color the data points when it passes the threshold
             
 ---
 
@@ -350,7 +367,9 @@
   
     The type of trend line to apply against the data. Must be equal to one of the following strings:
     
-    - `linear-regression`: Least-squares linear regression algorithm to determine the line of best fit against the data.
+    - `linear-regression`
+    
+      Least-squares linear regression algorithm to determine the line of best fit against the data.
 
 ---
 

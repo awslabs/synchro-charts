@@ -2,8 +2,7 @@
 import {LineChart} from "@synchro-charts/react";
 
 const DAY_RESOLUTION = 1000 * 60 * 60 * 24; // one day
-<div style={{width: "900px", height: "400px", display: "flex"}}>
-  <div style={{width: "100%", height: "400px"}}>
+<div style={{width: "900px", height: "400px"}}>
     <LineChart
       widgetId="chart-1"
       viewport={{
@@ -12,7 +11,6 @@ const DAY_RESOLUTION = 1000 * 60 * 60 * 24; // one day
       }}
       dataStreams={[]}
     />
-  </div>
 </div>;
 ```
 

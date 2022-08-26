@@ -200,18 +200,19 @@ const annotations_dial = {
   offsetX: 58,
 }
 
+
+const viewport = {
+  duration: DURATION,
+  group: 'Live_demo',
+}
+
 export class LiveDemo extends React.Component {
   constructor(props) {
     super(props);
-    this.liveDemoContainer = React.createRef();
     this.state = {
       dataStreams,
       alarmStatusStreams,
-      isLiveMode: true,
-      viewport: {
-        duration: DURATION,
-        group: 'Live_demo',
-      },
+
     }
   }
 
@@ -254,32 +255,14 @@ export class LiveDemo extends React.Component {
 
   componentDidMount() {
     this.appendDataPointsPeriodically();
-
-    this.liveDemoContainer.current.addEventListener('dateRangeChange', this.onDateRangeChange);
-  }
-
-  componentWillUnmount() {
-    this.liveDemoContainer.current.removeEventListener('dateRangeChange', this.onDateRangeChange);
-  }
-
-  onDateRangeChange = ({ detail: [start, end]}) => {
-    this.setState({
-      isLiveMode: false,
-      viewport: {
-        ...this.state.viewport,
-        start,
-        end,
-      }
-    })
   }
 
   render() {
-    const { viewport, dataStreams, alarmStatusStreams } = this.state;
+    const { dataStreams, alarmStatusStreams } = this.state;
     return (
-      <div ref={this.liveDemoContainer}>
+      <>
         <div style={{ height: '250px', width: '100%' }}>
           <LineChart
-            widgetId="line-chart-1"
             viewport={viewport}
             dataStreams={dataStreams}
             annotations={propertyAnnotations}
@@ -287,7 +270,6 @@ export class LiveDemo extends React.Component {
         </div>
         <div style={{ height: '250px', marginLeft: '40px', width: 'calc(100% - 75px)' }}>
           <StatusTimeline
-            widgetId="status-timeline-1"
             viewport={viewport}
             dataStreams={alarmStatusStreams}
             annotations={annotations}
@@ -327,7 +309,7 @@ export class LiveDemo extends React.Component {
             />
           </div>
         </div>
-      </div>
+      </>
     )
   }
 }

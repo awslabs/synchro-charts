@@ -228,6 +228,9 @@ export interface DataStream<T extends Primitive = Primitive> extends DataStreamI
     [resolution: number]: DataPoint<T>[] | undefined;
   };
 
+  // Mechanism to associate some information about the data stream
+  meta?: Record<string, string | number | boolean>;
+
   dataType: DataType;
   streamType?: StreamType;
   associatedStreams?: StreamAssociation[];
