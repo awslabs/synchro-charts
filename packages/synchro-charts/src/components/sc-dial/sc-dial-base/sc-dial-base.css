@@ -19,3 +19,19 @@ sc-dial-base circle {
   -webkit-transition: stroke-dasharray 800ms;
   transition: stroke-dasharray 800ms;
 }
+
+sc-dial-base {
+  height: inherit;
+}
+
+sc-dial-base .sc-dialbase-container {
+  height: inherit;
+}
+
+sc-grid-tooltip {
+  height: inherit;
+}
+
+sc-grid-tooltip .tooltip-container {
+  height: inherit;
+}

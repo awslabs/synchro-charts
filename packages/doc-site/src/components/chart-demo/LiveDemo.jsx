@@ -5,6 +5,14 @@ import {MINUTE_IN_MS, SECOND_IN_MS} from "./dateUtil";
 
 const pallet = ['#0073bb', '#6b8ea5'];
 
+const size = {
+  fontSize: 50,
+  dialThickness: 36,
+  iconSize: 48,
+  labelSize: 32,
+  unitSize: 30,
+} 
+
 const alarmStatus = (v) => {
   if (Math.abs(v) > 80) {
     return 'ALERT';
@@ -189,6 +197,7 @@ const annotations_dial = {
   thresholdOptions: {
     showColor: true,
   },
+  offsetX: 58,
 }
 
 export class LiveDemo extends React.Component {
@@ -289,12 +298,14 @@ export class LiveDemo extends React.Component {
           <div style={{ height: '300px', width: '50%' }}>
             <Dial 
               dataStream={dataStreamNoUnit}
+              size={size}
               viewport={{...viewport, yMin: 0, yMax: 2000}} 
             />
           </div>
           <div style={{ height: '300px', width: '50%' }}>
             <Dial 
               dataStream={dataStreamUnit}
+              size={{...size, fontSize: 30, unitSize: 20}}
               viewport={{...viewport, yMin: 0, yMax: 2000}} 
             />
           </div>
@@ -311,6 +322,7 @@ export class LiveDemo extends React.Component {
                   type: StreamType.ALARM,
                 },
               ]}
+              size={size}
               annotations={annotations_dial}
             />
           </div>

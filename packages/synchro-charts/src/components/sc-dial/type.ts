@@ -1,10 +1,11 @@
+import { Annotations, Threshold } from '../charts/common/types';
+
 export interface DialSizeConfig {
   fontSize: number;
   dialThickness: number;
   iconSize: number;
   labelSize: number;
   unitSize: number;
-  width: number;
 }
 
 export type DialMessageOverrides = {
@@ -14,3 +15,9 @@ export type DialMessageOverrides = {
   tooltipStatusTitles?: string;
   tooltipStatusDescribed?: string;
 };
+
+export type OffsetForIcon = {
+  offsetX?: number;
+};
+
+export type DialAnnotations = Annotations & OffsetForIcon;

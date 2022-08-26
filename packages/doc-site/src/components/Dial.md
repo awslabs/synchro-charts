@@ -12,6 +12,7 @@ import { COMPARISON_OPERATOR, StatusIcon, StreamType, DataType } from '@synchro-
           y: 900,
         },
       ],
+      detailedName: 'Medium',
       resolution: 0,
       dataType: DataType.NUMBER,
     }}
@@ -21,7 +22,6 @@ import { COMPARISON_OPERATOR, StatusIcon, StreamType, DataType } from '@synchro-
       iconSize: 48,
       labelSize: 32,
       unitSize: 32,
-      width: 300,
     }}  
     viewport={{ yMin: 0, yMax: 2000, duration: 1000 }}
   />
@@ -29,7 +29,7 @@ import { COMPARISON_OPERATOR, StatusIcon, StreamType, DataType } from '@synchro-
 ```
 Dial visualizes the latest value from a data stream by emphasizing the property value.For data stream of no unit it will display the percentage by using the two `yMin` and `yMax`.
 
-You can provide `size` to change the font size、dial thickness、icon size、label size、unit size and the dial width.
+You can provide `size` to change the font size、dial thickness、icon size、label size、unit size.
 ```jsx static
 const size = {
   fontSize: 60,
@@ -37,9 +37,44 @@ const size = {
   iconSize: 48,
   labelSize: 32,
   unitSize: 32,
-  width: 300,
 }
 ```
+
+```jsx
+import { COMPARISON_OPERATOR, StatusIcon, StreamType, DataType } from '@synchro-charts/core';
+<div style={{ width: '100%', height: '300px' }}>
+  <Dial
+    widgetId="test-widget"
+    dataStream={{
+      id: 'car-speed-alarm',
+      name: 'Wind temperature',
+      data: [
+        {
+          x: new Date(2001, 0, 0).getTime(),
+          y: 911,
+        },
+      ],
+      resolution: 0,
+      dataType: DataType.NUMBER,
+    }}
+    significantDigits={2}
+    size={{
+      fontSize: 60,
+      dialThickness: 36,
+      iconSize: 48,
+      labelSize: 32,
+      unitSize: 32,
+    }}  
+    viewport={{ yMin: 0, yMax: 2000, duration: 1000 }}
+  />
+</div>;
+```
+You can provide `significantDigits` to set the number of significant digits in the primary value.
+```jsx static
+const significantDigits = 2
+```
+
+
 
 ```jsx
 import { COMPARISON_OPERATOR, StatusIcon, StreamType, DataType } from '@synchro-charts/core';
@@ -65,7 +100,6 @@ import { COMPARISON_OPERATOR, StatusIcon, StreamType, DataType } from '@synchro-
       iconSize: 48,
       labelSize: 32,
       unitSize: 32,
-      width: 300,
     }} 
     viewport={{ yMin: 0, yMax: 2000, duration: 1000 }}
   />
@@ -96,7 +130,6 @@ import { COMPARISON_OPERATOR, StatusIcon, StreamType, DataType } from '@synchro-
       iconSize: 48,
       labelSize: 32,
       unitSize: 24,
-      width: 300,
     }} 
     viewport={{ yMin: 0, yMax: 2000, duration: 1000 }}
   />
@@ -108,6 +141,8 @@ import { COMPARISON_OPERATOR, StatusIcon, StreamType, DataType } from '@synchro-
 You can show the current latest alarm status on the dial center through setting the `icon` property and the `text` property for the threshold.
 
 You can provide an `icon` property within the threshold to show an icon that is associated with the breaching color/status.
+
+You can offset the icon by using `offsetX` in `annotations` if the icon position is unsatisfactory.
 
 Supported Icon:
 
@@ -180,6 +215,7 @@ import { COMPARISON_OPERATOR, StatusIcon, StreamType, DataType } from '@synchro-
           icon: StatusIcon.NORMAL,
         },
       ],
+      offsetX: 58,
     }}
     size={{
       fontSize: 60,
@@ -187,7 +223,6 @@ import { COMPARISON_OPERATOR, StatusIcon, StreamType, DataType } from '@synchro-
       iconSize: 48,
       labelSize: 32,
       unitSize: 32,
-      width: 300,
     }} 
     viewport={{ yMin: 0, yMax: 2000, duration: 1000 }}
   />

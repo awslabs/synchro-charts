@@ -10,7 +10,7 @@ import { Annotations, Axis, LayoutConfig, Legend, LegendConfig, MovementConfig, 
 import { Trend, TrendResult } from "./components/charts/common/trends/types";
 import { DATA_ALIGNMENT, StatusIcon } from "./components/charts/common/constants";
 import { POINT_TYPE } from "./components/charts/sc-webgl-base-chart/activePoints";
-import { DialMessageOverrides, DialSizeConfig } from "./components/sc-dial/type";
+import { DialAnnotations, DialMessageOverrides, DialSizeConfig, OffsetForIcon } from "./components/sc-dial/type";
 import { RectScrollFixed } from "./utils/types";
 import { LabelsConfig } from "./components/common/types";
 import { Cell, Row } from "./components/sc-table/constructTableData";
@@ -79,12 +79,12 @@ export namespace Components {
         "pointType"?: POINT_TYPE;
     }
     interface ScDial {
-        "annotations"?: Annotations;
+        "annotations"?: DialAnnotations;
         "associatedStreams"?: StreamAssociation[];
         "dataStream": DataStream;
         "messageOverrides": DialMessageOverrides;
         "significantDigits"?: number;
-        "size": DialSizeConfig;
+        "size"?: DialSizeConfig;
         "viewport": ViewPortConfig;
         "widgetId": string;
     }
@@ -93,19 +93,21 @@ export namespace Components {
         "breachedThreshold"?: Threshold;
         "isLoading"?: boolean;
         "messageOverrides": DialMessageOverrides;
+        "offsetForIcon"?: OffsetForIcon;
         "propertyPoint"?: DataPoint<Primitive>;
         "propertyStream"?: DataStream;
         "significantDigits"?: number;
-        "size": DialSizeConfig;
+        "size"?: DialSizeConfig;
         "valueColor"?: string;
         "viewport": ViewPortConfig;
     }
     interface ScDialSvg {
         "breachedThreshold": Threshold;
+        "offsetForIcon"?: OffsetForIcon;
         "percent": number;
         "point"?: DataPoint;
         "significantDigits"?: number;
-        "size": DialSizeConfig;
+        "size"?: DialSizeConfig;
         "stream"?: DataStream | null;
     }
     interface ScErrorBadge {
@@ -1526,7 +1528,7 @@ declare namespace LocalJSX {
         "pointType"?: POINT_TYPE;
     }
     interface ScDial {
-        "annotations"?: Annotations;
+        "annotations"?: DialAnnotations;
         "associatedStreams"?: StreamAssociation[];
         "dataStream": DataStream;
         "messageOverrides"?: DialMessageOverrides;
@@ -1540,6 +1542,7 @@ declare namespace LocalJSX {
         "breachedThreshold"?: Threshold;
         "isLoading"?: boolean;
         "messageOverrides"?: DialMessageOverrides;
+        "offsetForIcon"?: OffsetForIcon;
         "propertyPoint"?: DataPoint<Primitive>;
         "propertyStream"?: DataStream;
         "significantDigits"?: number;
@@ -1549,6 +1552,7 @@ declare namespace LocalJSX {
     }
     interface ScDialSvg {
         "breachedThreshold"?: Threshold;
+        "offsetForIcon"?: OffsetForIcon;
         "percent"?: number;
         "point"?: DataPoint;
         "significantDigits"?: number;

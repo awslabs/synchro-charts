@@ -2,7 +2,7 @@ import { Component, h, Prop } from '@stencil/core';
 import { DataPoint, DataStream, Primitive, ViewPortConfig } from '../../../utils/dataTypes';
 import { isNumberDataStream } from '../../../utils/predicates';
 import { Threshold } from '../../charts/common/types';
-import { DialMessageOverrides, DialSizeConfig } from '../type';
+import { DialMessageOverrides, DialSizeConfig, OffsetForIcon } from '../type';
 import { DialLoading } from './sc-dial-loading';
 import { sizeConfigurations } from './util';
 
@@ -21,13 +21,14 @@ const title = (dataStream: { detailedName?: any; name?: any } | null | false) =>
 export class ScDialBase {
   @Prop() viewport: ViewPortConfig;
   @Prop() breachedThreshold?: Threshold;
+  @Prop() offsetForIcon?: OffsetForIcon;
   @Prop() valueColor?: string; // css color string
 
   @Prop() alarmStream?: DataStream;
 
   @Prop() propertyStream?: DataStream;
   @Prop() propertyPoint?: DataPoint<Primitive>;
-  @Prop() size: DialSizeConfig;
+  @Prop() size?: DialSizeConfig;
 
   @Prop() messageOverrides: DialMessageOverrides = {};
 
@@ -59,7 +60,7 @@ export class ScDialBase {
         messageOverrides={this.messageOverrides}
         isEnabled
       >
-        <div class="sc-dialbase-container" style={{ height: `${this.size?.width}px` }}>
+        <div class="sc-dialbase-container">
           {this.isLoading ? (
             <DialLoading />
           ) : (
@@ -70,6 +71,7 @@ export class ScDialBase {
               stream={propertyStream}
               size={this.size}
               significantDigits={this.significantDigits}
+              offsetForIcon={this.offsetForIcon}
             />
           )}
           {error != null && (

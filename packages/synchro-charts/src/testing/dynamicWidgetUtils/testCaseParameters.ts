@@ -9,7 +9,7 @@ import {
   TableColumn,
 } from '../../utils/dataTypes';
 import { Annotations, Axis, LegendConfig, XAnnotation } from '../../components/charts/common/types';
-import { DialMessageOverrides, DialSizeConfig } from '../../components/sc-dial/type';
+import { DialAnnotations, DialMessageOverrides, DialSizeConfig } from '../../components/sc-dial/type';
 
 export type SearchQueryParams = {
   alarms?: AlarmsConfig;
@@ -29,7 +29,7 @@ export type SearchQueryParams = {
   isEditing: boolean;
   gestures: boolean;
   dataStreamInfos: DataStreamInfo[];
-  annotations?: Annotations;
+  annotations?: DialAnnotations;
   tableColumns: TableColumn[];
   dataStreams: DataStream[];
   dataStream: DataStream;

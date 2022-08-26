@@ -1,10 +1,10 @@
 import { Component, h, Prop } from '@stencil/core';
 import { DataPoint, DataStream, StreamAssociation, ViewPortConfig } from '../../utils/dataTypes';
-import { Annotations, Threshold } from '../charts/common/types';
+import { Threshold } from '../charts/common/types';
 import { breachedThreshold } from '../charts/common/annotations/breachedThreshold';
 import { isMinimalStaticViewport } from '../../utils/predicates';
 import { getThresholds } from '../charts/common/annotations/utils';
-import { DialMessageOverrides, DialSizeConfig } from './type';
+import { DialAnnotations, DialMessageOverrides, DialSizeConfig } from './type';
 
 @Component({
   tag: 'sc-dial',
@@ -16,8 +16,8 @@ export class ScDial {
   @Prop() widgetId!: string;
   @Prop() dataStream!: DataStream;
   @Prop() associatedStreams?: StreamAssociation[];
-  @Prop() annotations?: Annotations;
-  @Prop() size: DialSizeConfig;
+  @Prop() annotations?: DialAnnotations;
+  @Prop() size?: DialSizeConfig;
   @Prop() messageOverrides: DialMessageOverrides = {};
   @Prop() significantDigits?: number;
 
@@ -47,6 +47,7 @@ export class ScDial {
     const propertyPoint = this.getPoint(this.dataStream);
     const alarmStream = this.getAlarmStream(this.dataStream) ? this.dataStream : undefined;
     const threshold = alarmStream ? this.getBreachedThreshold(propertyPoint, this.dataStream) : undefined;
+    const offsetForIcon = { offsetX: this.annotations?.offsetX };
 
     return (
       <sc-dial-base
@@ -54,6 +55,7 @@ export class ScDial {
         propertyPoint={propertyPoint}
         alarmStream={alarmStream}
         breachedThreshold={threshold}
+        offsetForIcon={alarmStream ? offsetForIcon : undefined}
         viewport={this.viewport}
         size={this.size}
         messageOverrides={this.messageOverrides}
