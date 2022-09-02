@@ -1,0 +1,34 @@
+sc-dial-base .error {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: var(--font-size-1);
+  line-height: var(--line-height-3);
+}
+
+sc-dial-base .error .warning-symbol {
+  transform: scale(0.7);
+}
+
+sc-dial-base .error sc-error-badge div {
+  padding-left: 0;
+}
+
+sc-dial-base circle {
+  -webkit-transition: stroke-dasharray 800ms;
+  transition: stroke-dasharray 800ms;
+}
+
+sc-dial-base {
+  height: inherit;
+}
+
+sc-grid-tooltip {
+  height: inherit;
+}
+
+sc-grid-tooltip .tooltip-container {
+  height: inherit;
+  overflow: hidden;
+}
