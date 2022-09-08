@@ -24,6 +24,18 @@ sc-dial-base {
   height: inherit;
 }
 
+sc-dial-base .sc-dialbase-container {
+  height: inherit;
+}
+
+sc-dial-base .sc-dialbase-container .svg-height-no-error {
+  height: 100%;
+}
+
+sc-dial-base .sc-dialbase-container .svg-height-error {
+  height: calc(100% - var(--font-size-1) * 3);
+}
+
 sc-grid-tooltip {
   height: inherit;
 }

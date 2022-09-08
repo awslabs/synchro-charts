@@ -180,7 +180,32 @@ it('renders error message when value is string', () => {
   cy.contains('.sc-dialbase-container', NO_VALUE_PRESENT).should('be.visible');
   cy.get(VALUE_ERROR)
     .invoke('text')
-    .should('contain', 'Only numbers are supported');
+    .should('contain', 'Invalid value');
+
+  cy.get(VALUE_LOADING).should('not.exist');
+
+  cy.matchImageSnapshotOnCI();
+});
+
+it('renders error message when value is not included in the range of `yMin` and `yMax`', () => {
+  const LATEST_VALUE = -10;
+  visitDynamicWidget(cy, {
+    componentTag: 'sc-dial',
+    size: DIAL_SIZE,
+    dataStream: {
+      ...DATASTREAM,
+      unit: 'rpm',
+      data: [{ x: new Date(1999, 0, 0).getTime(), y: LATEST_VALUE }],
+      dataType: DataType.NUMBER,
+    },
+    ...VIEWPORT,
+  });
+
+  cy.wait(1000);
+  cy.contains('.sc-dialbase-container', NO_VALUE_PRESENT).should('be.visible');
+  cy.get(VALUE_ERROR)
+    .invoke('text')
+    .should('contain', 'Invalid value');
 
   cy.get(VALUE_LOADING).should('not.exist');
 

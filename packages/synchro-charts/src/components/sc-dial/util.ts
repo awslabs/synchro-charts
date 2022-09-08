@@ -12,7 +12,7 @@ export enum ColorConfigurations {
 
 export const DefaultDialErrorMessages: DialErrorMessages = {
   errorTimeLabel: 'Last value at',
-  dataNotNumberError: 'Only numbers are supported',
+  dataNotNumberError: 'Invalid valued',
 };
 
 export const DefaultTooltipMessages: TooltipMessage = {

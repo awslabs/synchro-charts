@@ -1,4 +1,4 @@
-import { Component, h, Prop } from '@stencil/core';
+import { Component, h, Prop, Element } from '@stencil/core';
 import merge from 'lodash.merge';
 import { DataPoint, DataStream, Primitive, ViewPortConfig } from '../../../utils/dataTypes';
 import { isNumberDataStream } from '../../../utils/predicates';
@@ -22,6 +22,7 @@ const defaultUnit = '%';
   shadow: false,
 })
 export class ScDialBase {
+  @Element() el!: HTMLElement;
   @Prop() viewport: ViewPortConfig;
   @Prop() breachedThreshold?: Threshold;
   @Prop() offsetForIcon?: OffsetForIcon;
@@ -49,7 +50,7 @@ export class ScDialBase {
     const { yMin = 0, yMax = 0 } = this.viewport;
     const propertyStream = this.propertyStream && isNumberDataStream(this.propertyStream) ? this.propertyStream : null;
     const point = propertyStream ? this.propertyPoint : undefined;
-    const ifShowDefaultError = !propertyStream;
+    const ifShowDefaultError = !propertyStream || (point && (point.y < yMin || point.y > yMax));
     const error = this.propertyStream
       ? this.propertyStream.error || (ifShowDefaultError && this.messages.error.dataNotNumberError)
       : null;
@@ -61,6 +62,8 @@ export class ScDialBase {
     this.unit = propertyStream ? unit || defaultUnit : '';
 
     const showError = !this.isLoading && error;
+
+    const svgContainerCssName = showError ? 'svg-height-error' : 'svg-height-no-error';
 
     return (
       <sc-grid-tooltip
@@ -74,21 +77,23 @@ export class ScDialBase {
         messageOverrides={this.messages.tooltip}
         isEnabled
       >
-        <div class="sc-dialbase-container" style={{ height: error ? '90%' : '100%' }}>
-          {this.isLoading ? (
-            <DialLoading />
-          ) : (
-            <sc-dial-svg
-              percent={percent}
-              point={point}
-              breachedThreshold={this.breachedThreshold}
-              stream={propertyStream}
-              size={this.size}
-              significantDigits={this.significantDigits}
-              offsetForIcon={this.offsetForIcon}
-              unit={this.unit}
-            />
-          )}
+        <div class="sc-dialbase-container">
+          <div class={svgContainerCssName}>
+            {this.isLoading ? (
+              <DialLoading />
+            ) : (
+              <sc-dial-svg
+                percent={percent}
+                point={point}
+                breachedThreshold={this.breachedThreshold}
+                stream={propertyStream}
+                size={this.size}
+                significantDigits={this.significantDigits}
+                offsetForIcon={this.offsetForIcon}
+                unit={this.unit}
+              />
+            )}
+          </div>
           {showError && (
             <div class="error">
               <sc-error-badge data-testid="warning">{error}</sc-error-badge>
