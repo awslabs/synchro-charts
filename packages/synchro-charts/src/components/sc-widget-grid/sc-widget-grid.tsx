@@ -1,4 +1,5 @@
 import { Component, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
+import { viewportManager } from '@iot-app-kit/core';
 
 import throttle from 'lodash.throttle';
 import {
@@ -23,7 +24,6 @@ import { isMinimalStaticViewport } from '../../utils/predicates';
 import { parseDuration } from '../../utils/time';
 import { getDataStreamForEventing } from '../charts/common';
 import { validate } from '../common/validator/validate';
-import { webGLRenderer } from '../sc-webgl-context/webglContext';
 import { DATE_RANGE_EMIT_EVENT_MS } from '../common/constants';
 
 const title = ({ alarm, property }: { alarm?: DataStream; property?: DataStream }): string => {
@@ -71,14 +71,19 @@ export class ScWidgetGrid implements ChartConfig {
   @State() names: NameValue[] = [];
 
   /** Active Viewport */
-  @State() start: Date = viewportStartDate(this.viewport);
-  @State() end: Date = viewportEndDate(this.viewport);
-  @State() duration?: number = !isMinimalStaticViewport(this.viewport)
-    ? parseDuration(this.viewport.duration)
-    : undefined;
+  @State() start: Date;
+  @State() end: Date;
+  @State() duration;
 
   @Event()
   widgetUpdated: EventEmitter<WidgetConfigurationUpdate>;
+
+  private unsubscribeFromViewportGroup : () => void | undefined;
+
+  componentWillLoad() {
+    this.updateViewport(this.viewport);
+    this.subscribeToViewportGroup();
+  }
 
   componentWillRender() {
     validate(this);
@@ -95,28 +100,28 @@ export class ScWidgetGrid implements ChartConfig {
     }
   );
 
-  componentDidLoad() {
-    webGLRenderer.addChartScene({
-      manager: {
-        id: this.widgetId,
-        viewportGroup: this.viewport.group,
-        updateViewPort: this.onUpdate,
-      },
-      duration: this.duration,
-    });
-  }
+  subscribeToViewportGroup = () => {
+    if (this.viewport.group != null) {
+      const { viewport, unsubscribe } = viewportManager.subscribe(this.viewport.group, this.updateViewport);
+      this.unsubscribeFromViewportGroup = unsubscribe;
+      if (viewport) {
+        this.updateViewport(viewport);
+      } else {
+        viewportManager.update(this.viewport.group, this.viewport);
+      }
+    }
+  };
 
   @Watch('viewport')
-  onViewPortChange(newViewPort: MinimalViewPortConfig) {
-    this.onUpdate({
-      ...newViewPort,
-      duration: !isMinimalStaticViewport(newViewPort) ? parseDuration(newViewPort.duration) : undefined,
-      start: viewportStartDate(this.viewport),
-      end: viewportEndDate(this.viewport),
-    });
+  onViewPortChange(viewport: MinimalViewPortConfig) {
+    this.updateViewport(viewport);
   }
 
-  onUpdate = ({ start, end, duration }: { start: Date; end: Date; duration?: number }) => {
+  updateViewport = (viewport: MinimalViewPortConfig) => {
+    const duration = 'duration' in viewport ? parseDuration(viewport.duration) : undefined;
+    const start = viewportStartDate(viewport);
+    const end = viewportEndDate(viewport);
+
     const hasViewPortChanged =
       viewportStartDate(this.viewport).getTime() !== start.getTime() ||
       viewportEndDate(this.viewport).getTime() !== end.getTime();
@@ -130,8 +135,9 @@ export class ScWidgetGrid implements ChartConfig {
   };
 
   disconnectedCallback() {
-    // necessary to make sure that the allocated memory is released, and nothing is incorrectly rendered.
-    webGLRenderer.removeChartScene(this.widgetId);
+    if (this.unsubscribeFromViewportGroup) {
+      this.unsubscribeFromViewportGroup();
+    }
   }
 
   /**

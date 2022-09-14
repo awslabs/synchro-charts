@@ -1,5 +1,6 @@
 import { newSpecPage } from '@stencil/core/testing';
 
+import { viewportManager } from '@iot-app-kit/core';
 import { Components } from '../../components';
 import { CustomHTMLElement } from '../../utils/types';
 import { DATA_STREAMS } from '../charts/common/tests/chart/constants';
@@ -59,6 +60,10 @@ const widgetGridSpecPage = async (propOverrides: Partial<Components.ScWidgetGrid
   return { page, widgetGrid, renderCell };
 };
 
+beforeEach(() => {
+  viewportManager.reset();
+});
+
 describe('when enabled', () => {
   it('renders cell', async () => {
     const { renderCell } = await widgetGridSpecPage();
@@ -95,6 +100,25 @@ describe('when enabled', () => {
 });
 
 describe('updating the viewport', () => {
+  it('updates the viewport when the subscribed viewport group updates', async () => {
+    const GROUP = 'some-group';
+    const { renderCell, page } = await widgetGridSpecPage({
+      viewport: { start: new Date(2000, 0, 0), end: new Date(2001, 0, 0), group: GROUP },
+      dataStreams: [DATA_STREAM],
+    });
+
+    const UPDATED_VIEWPORT = { start: new Date(2002, 0, 0), end: new Date(2003, 0, 0) };
+    viewportManager.update(GROUP, UPDATED_VIEWPORT);
+
+    await page.waitForChanges();
+
+    expect(renderCell).toHaveBeenLastCalledWith(
+      expect.objectContaining({
+        viewport: UPDATED_VIEWPORT,
+      })
+    );
+  });
+
   it('updates the viewport and renders a cell with the data point that was previously outside of the viewport', async () => {
     const laterDate = new Date(
       ((DEFAULT_CHART_CONFIG.viewport as MinimalStaticViewport).end as Date).getTime() + MINUTE_IN_MS
