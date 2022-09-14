@@ -1,7 +1,15 @@
 import * as queryString from 'query-string';
 import { LEGEND } from './constants';
-import { AlarmsConfig, DataStream, DataStreamInfo, MessageOverrides, TableColumn } from '../../utils/dataTypes';
+import {
+  AlarmsConfig,
+  DataStream,
+  DataStreamInfo,
+  MessageOverrides,
+  StreamAssociation,
+  TableColumn,
+} from '../../utils/dataTypes';
 import { Annotations, Axis, LegendConfig, XAnnotation } from '../../components/charts/common/types';
+import { DialSizeConfig } from '../../components/sc-dial/utils/type';
 
 export type SearchQueryParams = {
   alarms?: AlarmsConfig;
@@ -9,6 +17,9 @@ export type SearchQueryParams = {
   width?: number | string;
   axis?: Axis.Options;
   height?: number | string;
+  size?: DialSizeConfig;
+  yMin?: number;
+  yMax?: number;
   duration?: number;
   errMsg: string;
   viewportStart: Date;
@@ -21,6 +32,8 @@ export type SearchQueryParams = {
   annotations?: Annotations;
   tableColumns: TableColumn[];
   dataStreams: DataStream[];
+  dataStream: DataStream;
+  associatedStreams?: StreamAssociation[];
 
   // Data returned asynchronously through `onRequestData`
   asyncDataStreams: DataStream[];
@@ -34,6 +47,8 @@ export type SearchQueryParams = {
 
   // Whether to display the info names - useful for tests involve editing inputs
   displayInfoNames: boolean;
+
+  significantDigits: number;
 };
 
 const parseBool = (str: string): boolean => str === 'true';
@@ -61,6 +76,8 @@ export const SCREEN_SIZE = {
 export const constructSearchQuery = ({
   viewportStart,
   viewportEnd,
+  dataStream,
+  associatedStreams,
   dataStreams,
   asyncDataStreams,
   alarms,
@@ -72,6 +89,10 @@ export const constructSearchQuery = ({
   axis,
   width,
   height,
+  size,
+  yMin,
+  yMax,
+  significantDigits,
   // Props that can be directly serialized, i.e. numbers, booleans, and strings
   ...serializableProps
 }: Partial<SearchQueryParams>): string =>
@@ -80,6 +101,8 @@ export const constructSearchQuery = ({
     annotations: annotations && JSON.stringify(annotations),
     legend: legend && JSON.stringify(legend),
     dataStreamInfos: dataStreamInfos && JSON.stringify(dataStreamInfos),
+    associatedStreams: associatedStreams && JSON.stringify(associatedStreams),
+    dataStream: dataStream && JSON.stringify(dataStream),
     dataStreams: dataStreams && JSON.stringify(dataStreams),
     asyncDataStreams: asyncDataStreams && JSON.stringify(asyncDataStreams),
     alarms: alarms && JSON.stringify(alarms),
@@ -90,6 +113,10 @@ export const constructSearchQuery = ({
     axis: axis && JSON.stringify(axis),
     width: width && JSON.stringify(width),
     height: height && JSON.stringify(height),
+    size: size && JSON.stringify(size),
+    yMin: yMin && JSON.stringify(yMin),
+    yMax: yMax && JSON.stringify(yMax),
+    significantDigits: significantDigits && JSON.stringify(significantDigits),
     // For the rest, we don't have to do any work! and doing less is better
     ...serializableProps,
   });
@@ -110,6 +137,7 @@ export const testCaseParameters = (): SearchQueryParams => {
     width: query.width ? JSON.parse(query.width) : undefined,
     axis: query.axis ? JSON.parse(query.axis) : undefined,
     height: query.height ? JSON.parse(query.height) : undefined,
+    size: query.size ? JSON.parse(query.size) : undefined,
     duration: query.duration ? JSON.parse(query.duration) : undefined,
     errMsg: query.errMsg,
     gestures: query.gestures != null ? parseBool(query.gestures) : true,
@@ -124,10 +152,15 @@ export const testCaseParameters = (): SearchQueryParams => {
     annotations: query.annotations != null ? deserializeAnnotations(query.annotations) : undefined,
     isEditing: query.isEditing != null ? parseBool(query.isEditing) : false,
     hasError: query.hasError != null ? parseBool(query.hasError) : false,
+    associatedStreams: query.associatedStreams != null ? JSON.parse(query.associatedStreams) : [],
+    dataStream: query.dataStream != null ? JSON.parse(query.dataStream) : [],
     dataStreams: query.dataStreams != null ? JSON.parse(query.dataStreams).map(deserializeDataStream) : [],
     asyncDataStreams:
       query.asyncDataStreams != null ? JSON.parse(query.asyncDataStreams).map(deserializeDataStream) : [],
     viewportStart: query.viewportStart != null ? new Date(query.viewportStart) : new Date(2000, 0, 0),
     viewportEnd: query.viewportEnd != null ? new Date(query.viewportEnd) : new Date(2000, 0, 1),
+    yMin: query.yMin ? JSON.parse(query.yMin) : undefined,
+    yMax: query.yMax ? JSON.parse(query.yMax) : undefined,
+    significantDigits: query.significantDigits ? JSON.parse(query.significantDigits) : undefined,
   };
 };

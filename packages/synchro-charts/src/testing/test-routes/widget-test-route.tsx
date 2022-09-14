@@ -2,6 +2,7 @@ import { Component, h, Listen, Prop } from '@stencil/core';
 import { SIZE, VIEWPORT as DEFAULT_VIEWPORT } from '../dynamicWidgetUtils/constants';
 import { testCaseParameters } from '../dynamicWidgetUtils/testCaseParameters';
 import { DataStreamInfo } from '../../utils/dataTypes';
+import { DialSizeConfig } from '../../components/sc-dial/utils/type';
 
 const DEFAULT_WIDTH = 700;
 const DEFAULT_HEIGHT = 400;
@@ -12,6 +13,7 @@ const {
   messageOverrides,
   width = DEFAULT_WIDTH,
   height = DEFAULT_HEIGHT,
+  size,
   axis,
   componentTag,
   annotations,
@@ -19,13 +21,20 @@ const {
   viewportEnd,
   duration,
   isEditing,
+  associatedStreams,
+  dataStream,
   dataStreams,
   gestures,
   legend,
   tableColumns,
+  yMin,
+  yMax,
+  significantDigits,
 } = testCaseParameters();
 
-const getSize = (value: number | string): { height: number | string; width: number | string } | undefined => {
+const getSize = (
+  value: number | string
+): { height: number | string; width: number | string } | DialSizeConfig | undefined => {
   if (typeof value === 'string') {
     return undefined;
   }
@@ -33,6 +42,7 @@ const getSize = (value: number | string): { height: number | string; width: numb
     ...SIZE,
     width,
     height,
+    ...size,
   };
 };
 
@@ -60,6 +70,8 @@ export class WidgetTestRoute {
   render() {
     const viewport = {
       ...DEFAULT_VIEWPORT,
+      yMin,
+      yMax,
       start: viewportStart,
       end: viewportEnd,
       duration,
@@ -76,6 +88,8 @@ export class WidgetTestRoute {
       <div style={{ width: styleSize(width), height: styleSize(height) }}>
         <this.component
           widgetId="some-widget-id"
+          associatedStreams={associatedStreams}
+          dataStream={dataStream}
           dataStreams={dataStreams}
           isEditing={isEditing}
           alarms={alarms}
@@ -87,6 +101,7 @@ export class WidgetTestRoute {
           annotations={annotations}
           gestures={gestures}
           messageOverrides={messageOverrides}
+          significantDigits={significantDigits}
           /** TODO: Port these over to the message overrides */
           invalidTagErrorHeader="invalidComponentTag.header"
           invalidTagErrorSubheader="invalidComponentTag.subheader"
