@@ -99,14 +99,23 @@ export namespace Components {
         "size"?: DialSizeConfig;
         "viewport": ViewPortConfig;
     }
+    interface ScDialLoading {
+        "diameter": number;
+        "iconSize": number;
+        "labelSize": number;
+        "loadingText": string;
+        "strokeWidth": number;
+    }
     interface ScDialSvg {
         "breachedThreshold": Threshold;
+        "isLoading": boolean;
+        "loadingText": string;
         "percent": number;
         "point"?: DataPoint;
-        "significantDigits"?: number;
         "size"?: DialSizeConfig;
         "stream"?: DataStream | null;
         "unit": string;
+        "value": number | string;
     }
     interface ScErrorBadge {
     }
@@ -694,6 +703,12 @@ declare global {
     var HTMLScDialBaseElement: {
         prototype: HTMLScDialBaseElement;
         new (): HTMLScDialBaseElement;
+    };
+    interface HTMLScDialLoadingElement extends Components.ScDialLoading, HTMLStencilElement {
+    }
+    var HTMLScDialLoadingElement: {
+        prototype: HTMLScDialLoadingElement;
+        new (): HTMLScDialLoadingElement;
     };
     interface HTMLScDialSvgElement extends Components.ScDialSvg, HTMLStencilElement {
     }
@@ -1351,6 +1366,7 @@ declare global {
         "sc-data-stream-name": HTMLScDataStreamNameElement;
         "sc-dial": HTMLScDialElement;
         "sc-dial-base": HTMLScDialBaseElement;
+        "sc-dial-loading": HTMLScDialLoadingElement;
         "sc-dial-svg": HTMLScDialSvgElement;
         "sc-error-badge": HTMLScErrorBadgeElement;
         "sc-expandable-input": HTMLScExpandableInputElement;
@@ -1543,14 +1559,23 @@ declare namespace LocalJSX {
         "size"?: DialSizeConfig;
         "viewport"?: ViewPortConfig;
     }
+    interface ScDialLoading {
+        "diameter"?: number;
+        "iconSize"?: number;
+        "labelSize"?: number;
+        "loadingText"?: string;
+        "strokeWidth"?: number;
+    }
     interface ScDialSvg {
         "breachedThreshold"?: Threshold;
+        "isLoading"?: boolean;
+        "loadingText"?: string;
         "percent"?: number;
         "point"?: DataPoint;
-        "significantDigits"?: number;
         "size"?: DialSizeConfig;
         "stream"?: DataStream | null;
         "unit"?: string;
+        "value"?: number | string;
     }
     interface ScErrorBadge {
     }
@@ -2088,6 +2113,7 @@ declare namespace LocalJSX {
         "sc-data-stream-name": ScDataStreamName;
         "sc-dial": ScDial;
         "sc-dial-base": ScDialBase;
+        "sc-dial-loading": ScDialLoading;
         "sc-dial-svg": ScDialSvg;
         "sc-error-badge": ScErrorBadge;
         "sc-expandable-input": ScExpandableInput;
@@ -2214,6 +2240,7 @@ declare module "@stencil/core" {
             "sc-data-stream-name": LocalJSX.ScDataStreamName & JSXBase.HTMLAttributes<HTMLScDataStreamNameElement>;
             "sc-dial": LocalJSX.ScDial & JSXBase.HTMLAttributes<HTMLScDialElement>;
             "sc-dial-base": LocalJSX.ScDialBase & JSXBase.HTMLAttributes<HTMLScDialBaseElement>;
+            "sc-dial-loading": LocalJSX.ScDialLoading & JSXBase.HTMLAttributes<HTMLScDialLoadingElement>;
             "sc-dial-svg": LocalJSX.ScDialSvg & JSXBase.HTMLAttributes<HTMLScDialSvgElement>;
             "sc-error-badge": LocalJSX.ScErrorBadge & JSXBase.HTMLAttributes<HTMLScErrorBadgeElement>;
             "sc-expandable-input": LocalJSX.ScExpandableInput & JSXBase.HTMLAttributes<HTMLScExpandableInputElement>;

@@ -1,11 +1,10 @@
 import { Component, h, Prop } from '@stencil/core';
 import merge from 'lodash.merge';
 import { DataPoint, DataStream, Primitive, ViewPortConfig } from '../../../utils/dataTypes';
-import { isNumberDataStream } from '../../../utils/predicates';
 import { Threshold } from '../../charts/common/types';
 import { DialSizeConfig, RecursivePartial, DialMessages } from '../utils/type';
 import { DefaultDialMessages } from '../utils/util';
-import { DialLoading } from './sc-dial-loading';
+import { getData, getErrorMessage, getPoint, getPropertyStream } from './formatStream';
 
 const title = (dataStream: { detailedName?: any; name?: any } | null | false | undefined) => {
   if (dataStream) {
@@ -13,8 +12,6 @@ const title = (dataStream: { detailedName?: any; name?: any } | null | false | u
   }
   return null;
 };
-
-const defaultUnit = '%';
 
 @Component({
   tag: 'sc-dial-base',
@@ -44,17 +41,17 @@ export class ScDialBase {
   }
 
   render() {
-    const { yMin = 0, yMax = 0 } = this.viewport;
-    const propertyStream = this.propertyStream && isNumberDataStream(this.propertyStream) ? this.propertyStream : null;
-    const point = propertyStream ? this.propertyPoint : undefined;
-    const ifShowDefaultError = !propertyStream || (point && (point.y < yMin || point.y > yMax));
-    const error = this.propertyStream
-      ? this.propertyStream.error || (ifShowDefaultError && this.messages.error.dataNotNumberError)
-      : null;
+    const point = getPoint(this.propertyPoint, this.propertyStream);
+    const propertyStream = getPropertyStream(this.propertyStream);
 
-    const percent = point ? (point.y as number) / (yMax - yMin) : 0;
-    const propertyStreamUnit = propertyStream && propertyStream.unit;
-    const unit = propertyStream ? propertyStreamUnit || defaultUnit : '';
+    const error = getErrorMessage(this.viewport, this.messages.error, this.propertyStream);
+
+    const { unit, percent, value } = getData(
+      this.viewport,
+      this.propertyPoint,
+      this.propertyStream,
+      this.significantDigits
+    );
 
     const showError = !this.isLoading && error;
 
@@ -70,19 +67,17 @@ export class ScDialBase {
       >
         <div class="sc-dialbase-container">
           <div class={svgContainerCssName}>
-            {this.isLoading ? (
-              <DialLoading />
-            ) : (
-              <sc-dial-svg
-                percent={percent}
-                point={point}
-                breachedThreshold={this.breachedThreshold}
-                stream={propertyStream}
-                size={this.size}
-                significantDigits={this.significantDigits}
-                unit={unit}
-              />
-            )}
+            <sc-dial-svg
+              percent={percent}
+              value={value}
+              point={point}
+              breachedThreshold={this.breachedThreshold}
+              stream={propertyStream}
+              size={this.size}
+              unit={unit}
+              isLoading={this.isLoading}
+              loadingText={this.messages.loading}
+            />
           </div>
           {showError && (
             <div class="error">

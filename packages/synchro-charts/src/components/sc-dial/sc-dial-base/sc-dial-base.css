@@ -29,10 +29,12 @@ sc-dial-base .sc-dialbase-container {
 }
 
 sc-dial-base .sc-dialbase-container .svg-height-no-error {
+  position: relative;
   height: 100%;
 }
 
 sc-dial-base .sc-dialbase-container .svg-height-error {
+  position: relative;
   height: calc(100% - var(--font-size-1) * 3);
 }
 

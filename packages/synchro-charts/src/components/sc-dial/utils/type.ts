@@ -16,9 +16,26 @@ export type RecursivePartial<T> = {
 
 export type DialErrorMessages = {
   errorTimeLabel: string;
-  dataNotNumberError: string;
+  invalidValueError: string;
+  missingYminAndYmaxError: string;
+  missingYminError: string;
+  missingYmaxError: string;
+  invalidYminAndYmaxError: string;
+  dataNotLimitsError: string;
 };
 
 export type DialMessages = {
   error: DialErrorMessages;
+  loading: string;
+};
+
+/**
+ * These are radian.
+ * For example:
+ *    const angle = { startAngle: 0, endAngle: Math.PI } means `The range of angles is [0, 180°]`
+ *    The display is a semi-circular arc.
+ */
+export type AngleDefault = {
+  startAngle: number;
+  endAngle: number;
 };

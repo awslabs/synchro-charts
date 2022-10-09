@@ -70,10 +70,8 @@ it('renders loading when loading condition', async () => {
     propertyPoint: undefined,
   });
 
-  const dialBaseContainer = dialBase.querySelectorAll('[data-testid="loading"]');
   const dialDialSvg = dialBase.querySelectorAll('sc-dial-svg');
   const errorBadge = dialBase.querySelectorAll('sc-error-badge');
-  expect(dialBaseContainer.length).toBe(1);
-  expect(dialDialSvg.length).toBe(0);
+  expect(dialDialSvg.length).toBe(1);
   expect(errorBadge.length).toBe(0);
 });
