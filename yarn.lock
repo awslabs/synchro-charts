@@ -6207,6 +6207,11 @@ d3-collection@1:
   resolved "https://registry.yarnpkg.com/d3-collection/-/d3-collection-1.0.7.tgz#349bd2aa9977db071091c13144d5e4f16b5b310e"
   integrity sha512-ii0/r5f4sjKNTfh84Di+DpztYwqKhEyUlKoPrzUFfeSkWxjW49xU2QzO9qrPrNkpdI0XJkfzvmTu8V2Zylln6A==
 
+d3-color-1-fix@^1.4.2:
+  version "1.4.2"
+  resolved "https://registry.yarnpkg.com/d3-color-1-fix/-/d3-color-1-fix-1.4.2.tgz#1910c6fa6dc8d48f6d5d97ba694ca08ac06ee743"
+  integrity sha512-m1rQC2eF0aQFvmCXIeml97cIgBFTPwPTi31pYpgYdpyJEQI86U/ROUjdMcKDrUWgmlxVzqwq3MNYpE2DRHkGag==
+
 d3-color@1:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/d3-color/-/d3-color-1.4.1.tgz#c52002bf8846ada4424d55d97982fef26eb3bc8a"
