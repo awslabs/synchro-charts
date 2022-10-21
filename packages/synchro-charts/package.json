@@ -1,7 +1,7 @@
 {
   "name": "@synchro-charts/core",
   "description": "Synchro Charts",
-  "version": "6.0.2",
+  "version": "6.0.3",
   "publishConfig": {
     "access": "public"
   },
