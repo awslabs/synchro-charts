@@ -2,12 +2,12 @@
   "name": "@synchro-charts/doc-site",
   "description": "Synchro Charts documentation site",
   "homepage": "https://synchrocharts.com",
-  "version": "6.0.1",
+  "version": "6.0.4",
   "private": true,
   "dependencies": {
     "@awsui/components-react": "^3.0.182",
-    "@synchro-charts/core": "^6.0.1",
-    "@synchro-charts/react": "^6.0.1",
+    "@synchro-charts/core": "^6.0.4",
+    "@synchro-charts/react": "^6.0.4",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "^3.4.4"
