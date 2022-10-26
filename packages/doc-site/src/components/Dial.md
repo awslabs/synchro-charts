@@ -27,9 +27,13 @@ import { COMPARISON_OPERATOR, StatusIcon, StreamType, DataType } from '@synchro-
   />
 </div>;
 ```
-Dial visualizes the latest value from a data stream by emphasizing the property value.For data stream of no unit it will display the percentage by using the two `yMin` and `yMax`.
+
+Dial visualizes the latest value from a data stream by emphasizing the property value. 
+
+When no unit is provided, the dial will display a percentage value relative to the yMin and yMax values. For example, if the value is equal to yMax, it will display 100%. For a value equal to yMin, it will display 0%.
 
 You can provide `size` to change the font size、dial thickness、icon size、label size、unit size.
+
 ```jsx static
 const size = {
   fontSize: 60,
@@ -57,7 +61,6 @@ import { COMPARISON_OPERATOR, StatusIcon, StreamType, DataType } from '@synchro-
       resolution: 0,
       dataType: DataType.NUMBER,
     }}
-    significantDigits={2}
     size={{
       fontSize: 60,
       dialThickness: 36,
@@ -69,9 +72,40 @@ import { COMPARISON_OPERATOR, StatusIcon, StreamType, DataType } from '@synchro-
   />
 </div>;
 ```
+
 You can provide `significantDigits` to set the number of significant digits in the primary value.
-```jsx static
-const significantDigits = 2
+
+```jsx
+import { COMPARISON_OPERATOR, StatusIcon, StreamType, DataType } from '@synchro-charts/core';
+
+const significantDigits = 3;
+
+<div style={{ width: '100%', height: '300px' }}>
+  <Dial
+    widgetId="test-widget"
+    dataStream={{
+      id: 'car-speed-alarm',
+      name: 'Wind temperature',
+      data: [
+        {
+          x: new Date(2001, 0, 0).getTime(),
+          y: 911,
+        },
+      ],
+      resolution: 0,
+      dataType: DataType.NUMBER,
+    }}
+    significantDigits={significantDigits}
+    size={{
+      fontSize: 60,
+      dialThickness: 36,
+      iconSize: 48,
+      labelSize: 32,
+      unitSize: 32,
+    }}  
+    viewport={{ yMin: 0, yMax: 2000, duration: 1000 }}
+  />
+</div>;
 ```
 
 
