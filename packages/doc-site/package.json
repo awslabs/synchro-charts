@@ -8,12 +8,16 @@
     "@awsui/components-react": "^3.0.182",
     "@synchro-charts/core": "^6.0.4",
     "@synchro-charts/react": "^6.0.4",
+    "minimatch": "3.0.5",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "^3.4.4"
   },
   "devDependencies": {
     "react-styleguidist": "^11.1.6"
+  },
+  "resolutions": {
+    "minimatch": "3.0.5"
   },
   "scripts": {
     "start": "styleguidist server",
