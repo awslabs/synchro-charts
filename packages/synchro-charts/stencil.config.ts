@@ -23,6 +23,7 @@ export const config: Config = {
     coverageReporters: ['text-summary', 'cobertura', 'html', 'json-summary'],
     moduleNameMapper: {
       '\\.(css|scss|svg)$': 'identity-obj-proxy',
+      'd3-format': 'd3-format/dist/d3-format',
     },
     modulePathIgnorePatterns: ['cypress'],
     coverageThreshold: {

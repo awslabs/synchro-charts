@@ -70,10 +70,10 @@ it('draggable annotation rescales axis in positive direction', () => {
   cy.get('g.axis.y-axis > g.tick').should('have.length', 17);
   cy.get('g.axis.y-axis > g.tick > text')
     .eq(16)
-    .should('have.text', '8,000');
+    .should('have.text', '8.0k');
   cy.get('g.axis.y-axis > g.tick > text')
     .eq(0)
-    .should('have.text', '0');
+    .should('have.text', '0.0');
 });
 
 it('draggable annotation rescales axis in negative direction', () => {
@@ -90,10 +90,10 @@ it('draggable annotation rescales axis in negative direction', () => {
   cy.get('g.axis.y-axis > g.tick').should('have.length', 9);
   cy.get('g.axis.y-axis > g.tick > text')
     .eq(8)
-    .should('have.text', '3,000');
+    .should('have.text', '3.0k');
   cy.get('g.axis.y-axis > g.tick > text')
     .eq(0)
-    .should('have.text', '−5,000');
+    .should('have.text', '−5.0k');
 });
 
 it('non-Editable annotation is not draggable', () => {

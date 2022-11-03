@@ -1,6 +1,7 @@
 import { axisBottom, axisLeft } from 'd3-axis';
 import { scaleLinear, scaleTime } from 'd3-scale';
 import { select } from 'd3-selection';
+import { format } from 'd3-format';
 
 import { getTickCount } from './ChartAxis/getTickCount';
 import { TICK_PADDING, TICK_SIZE } from './ChartAxis/ChartAxis';
@@ -68,8 +69,10 @@ const xAxisConstructor = (size: SizeConfig, viewport: ViewPort) => {
 const yAxisConstructor = (size: SizeConfig, viewport: ViewPort) => {
   const { yTickCount } = tickCount(size);
   const { yScale } = scales(size, viewport);
+
   return axisLeft(yScale)
     .ticks(yTickCount)
+    .tickFormat(format('.2s'))
     .tickSize(-size.width)
     .tickPadding(TICK_PADDING);
 };
