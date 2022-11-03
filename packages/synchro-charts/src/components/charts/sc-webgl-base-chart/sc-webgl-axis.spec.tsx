@@ -126,11 +126,9 @@ describe('initial render', () => {
 
   it('has expected y axis value labels', async () => {
     const { axis } = await axisSpecPage();
-    expect(axis.innerHTML).toContain('3,000');
-    expect(axis.innerHTML).not.toContain('3,025');
-    expect(axis.innerHTML).toContain('3,050');
-    expect(axis.innerHTML).not.toContain('3,075');
-    expect(axis.innerHTML).toContain('3,100');
+    expect(axis.innerHTML).toContain('3.0k');
+    expect(axis.innerHTML).toContain('3.1k');
+    expect(axis.innerHTML).not.toContain('3.00k');
   });
 
   it('renders the y-axis label', async () => {
@@ -243,14 +241,14 @@ describe('updated correctly', () => {
     await page.waitForChanges();
 
     // Does not contain old y labels
-    expect(axis.innerHTML).not.toContain('3,000');
-    expect(axis.innerHTML).not.toContain('3,050');
-    expect(axis.innerHTML).not.toContain('3,100');
+    expect(axis.innerHTML).not.toContain('3.00k');
+    expect(axis.innerHTML).not.toContain('3.05k');
+    expect(axis.innerHTML).not.toContain('3.10k');
 
     // Does contain new y labels
-    expect(axis.innerHTML).toContain('4,000');
-    expect(axis.innerHTML).toContain('4,500');
-    expect(axis.innerHTML).toContain('5,000');
+    expect(axis.innerHTML).toContain('4.0k');
+    expect(axis.innerHTML).toContain('4.5k');
+    expect(axis.innerHTML).toContain('5.0k');
   });
 
   it('updates the y-axis label', async () => {

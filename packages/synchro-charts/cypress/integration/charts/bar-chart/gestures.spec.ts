@@ -61,7 +61,7 @@ it('adjusts y range as data in the view changes', () => {
   cy.viewport(VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
   cy.visit(`${root}/chart/y-range?componentTag=sc-bar-chart`);
 
-  const EXISTING_Y_VALUE = '18,000';
+  const EXISTING_Y_VALUE = '18k';
 
   cy.waitForChart();
 

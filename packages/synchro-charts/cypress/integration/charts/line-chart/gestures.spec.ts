@@ -62,7 +62,7 @@ it('adjusts y range as data in the view changes', () => {
   cy.waitForChart();
 
   // Ensure that this y value is present on the y axis
-  const EXISTING_Y_VALUE = '18,000';
+  const EXISTING_Y_VALUE = '18k';
   cy.contains(EXISTING_Y_VALUE).should('exist');
 
   cy.get('.data-container').dblclick('left');
