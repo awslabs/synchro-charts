@@ -3,6 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 6.0.5 (2022-11-03)
+
+### Bug Fixes
+* fix: y-axis no longer cuts off digits, instead uses SI format with 2 significant digits ([#175](https://github.com/awslabs/synchro-charts/pull/175)) ([d03068d](https://github.com/awslabs/synchro-charts/pull/175/commits/d03068d2128e2b1400e60a8b59c6210ef2849a5d))
+
 ## 6.0.4 (2022-10-21)
 
 ### Bug Fixes
