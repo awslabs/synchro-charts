@@ -580,6 +580,8 @@ export namespace Components {
     }
     interface StatusTimelineThresholdNoColoration {
     }
+    interface TestingGround {
+    }
     interface WidgetTestRoute {
         "component": string;
         "dataStreamInfos": DataStreamInfo[];
@@ -1282,6 +1284,12 @@ declare global {
         prototype: HTMLStatusTimelineThresholdNoColorationElement;
         new (): HTMLStatusTimelineThresholdNoColorationElement;
     };
+    interface HTMLTestingGroundElement extends Components.TestingGround, HTMLStencilElement {
+    }
+    var HTMLTestingGroundElement: {
+        prototype: HTMLTestingGroundElement;
+        new (): HTMLTestingGroundElement;
+    };
     interface HTMLWidgetTestRouteElement extends Components.WidgetTestRoute, HTMLStencilElement {
     }
     var HTMLWidgetTestRouteElement: {
@@ -1405,6 +1413,7 @@ declare global {
         "status-timeline-threshold-coloration-multiple-data-stream": HTMLStatusTimelineThresholdColorationMultipleDataStreamElement;
         "status-timeline-threshold-coloration-multiple-thresholds": HTMLStatusTimelineThresholdColorationMultipleThresholdsElement;
         "status-timeline-threshold-no-coloration": HTMLStatusTimelineThresholdNoColorationElement;
+        "testing-ground": HTMLTestingGroundElement;
         "widget-test-route": HTMLWidgetTestRouteElement;
     }
 }
@@ -1988,6 +1997,8 @@ declare namespace LocalJSX {
     }
     interface StatusTimelineThresholdNoColoration {
     }
+    interface TestingGround {
+    }
     interface WidgetTestRoute {
         "component"?: string;
         "dataStreamInfos"?: DataStreamInfo[];
@@ -2109,6 +2120,7 @@ declare namespace LocalJSX {
         "status-timeline-threshold-coloration-multiple-data-stream": StatusTimelineThresholdColorationMultipleDataStream;
         "status-timeline-threshold-coloration-multiple-thresholds": StatusTimelineThresholdColorationMultipleThresholds;
         "status-timeline-threshold-no-coloration": StatusTimelineThresholdNoColoration;
+        "testing-ground": TestingGround;
         "widget-test-route": WidgetTestRoute;
     }
 }
@@ -2232,6 +2244,7 @@ declare module "@stencil/core" {
             "status-timeline-threshold-coloration-multiple-data-stream": LocalJSX.StatusTimelineThresholdColorationMultipleDataStream & JSXBase.HTMLAttributes<HTMLStatusTimelineThresholdColorationMultipleDataStreamElement>;
             "status-timeline-threshold-coloration-multiple-thresholds": LocalJSX.StatusTimelineThresholdColorationMultipleThresholds & JSXBase.HTMLAttributes<HTMLStatusTimelineThresholdColorationMultipleThresholdsElement>;
             "status-timeline-threshold-no-coloration": LocalJSX.StatusTimelineThresholdNoColoration & JSXBase.HTMLAttributes<HTMLStatusTimelineThresholdNoColorationElement>;
+            "testing-ground": LocalJSX.TestingGround & JSXBase.HTMLAttributes<HTMLTestingGroundElement>;
             "widget-test-route": LocalJSX.WidgetTestRoute & JSXBase.HTMLAttributes<HTMLWidgetTestRouteElement>;
         }
     }
