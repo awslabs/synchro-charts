@@ -131,6 +131,38 @@ describe('breachedThreshold', () => {
     ).toEqual(ALARM_W_SEVERITY_THRESHOLD);
   });
 
+  it('returns alarm with the numerical threshold with the lower severity', () => {
+    const DATA_STREAMS = [
+      {
+        ...ALARM_DATA_STREAM,
+        data: [
+          {
+            x: Date.now(),
+            y: BREACHING_VALUE,
+          },
+        ],
+      },
+    ];
+    const ALARM_W_SEVERITY_2_THRESHOLD: Threshold = {
+      ...NUMERICAL_THRESHOLD,
+      severity: 2,
+    };
+    const ALARM_W_SEVERITY_1_THRESHOLD: Threshold = {
+      ...NUMERICAL_THRESHOLD,
+      severity: 1,
+    };
+
+    expect(
+      breachedThreshold({
+        value: NUMERICAL_THRESHOLD.value - 5, // breaches threshold
+        date: new Date(),
+        dataStream: PROPERTY_STREAM,
+        dataStreams: DATA_STREAMS,
+        thresholds: [ALARM_W_SEVERITY_1_THRESHOLD, ALARM_W_SEVERITY_2_THRESHOLD],
+      })
+    ).toEqual(ALARM_W_SEVERITY_1_THRESHOLD);
+  });
+
   it('returns alarm with threshold with the lower severity', () => {
     const DATA_STREAMS = [
       {

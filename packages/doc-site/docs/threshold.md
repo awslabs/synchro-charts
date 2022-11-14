@@ -487,6 +487,8 @@ const dataStreams = [{
 Below is an example of two horizontal thresholds intersecting each other with opposing comparison operator.
 Notice that the upper threshold's color overrides the lower threshold's color.
 
+The lower threshold's color will take effect past the upper threshold when the upper threshold no longer applies.
+
 ```jsx
 import { LineChart, ScatterChart, BarChart } from "@synchro-charts/react";
 
@@ -562,6 +564,7 @@ const dataStreams = [{
 This is an example of two thresholds intersecting each other with opposing comparison operator in the values below 0.
 Notice that the threshold color with greater negative value overrides the lesser negative value. 
 
+The upper threshold's color will take effect below the lower threshold when the lower threshold no longer applies.
 ```jsx
 import { LineChart, ScatterChart, BarChart } from "@synchro-charts/react";
 

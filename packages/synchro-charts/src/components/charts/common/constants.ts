@@ -26,6 +26,14 @@ export enum COMPARISON_OPERATOR {
   EQUAL = 'EQ',
 }
 
+export const COMPARATOR_MAP = {
+  GTE: '>=',
+  GT: '>',
+  LTE: '<=',
+  LT: '<',
+  EQ: '=',
+};
+
 export enum StatusIcon {
   ERROR = 'error',
   ACTIVE = 'active',
