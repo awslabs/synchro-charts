@@ -24,9 +24,17 @@ export type DialErrorMessages = {
   dataNotLimitsError: string;
 };
 
+export type TooltipMessage = {
+  tooltipValueTitles: string;
+  tooltipValueTimeDescribed: string;
+  tooltipStatusTitles: string;
+  tooltipStatusDescribed: string;
+};
+
 export type DialMessages = {
   error: DialErrorMessages;
   loading: string;
+  tooltip: TooltipMessage;
 };
 
 /**

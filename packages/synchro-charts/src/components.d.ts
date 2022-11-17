@@ -10,7 +10,7 @@ import { Annotations, Axis, LayoutConfig, Legend, LegendConfig, MovementConfig, 
 import { Trend, TrendResult } from "./components/charts/common/trends/types";
 import { DATA_ALIGNMENT, StatusIcon } from "./components/charts/common/constants";
 import { POINT_TYPE } from "./components/charts/sc-webgl-base-chart/activePoints";
-import { DialMessages, DialSizeConfig, RecursivePartial } from "./components/sc-dial/utils/type";
+import { DialMessages, DialSizeConfig, RecursivePartial, TooltipMessage } from "./components/sc-dial/utils/type";
 import { RectScrollFixed } from "./utils/types";
 import { LabelsConfig } from "./components/common/types";
 import { Cell, Row } from "./components/sc-table/constructTableData";
@@ -137,8 +137,11 @@ export namespace Components {
         "alarmPoint"?: DataPoint;
         "breachedThreshold"?: Threshold;
         "isEnabled": boolean;
+        "messageOverrides": RecursivePartial<TooltipMessage>;
         "propertyPoint"?: DataPoint;
         "title": string;
+        "unit"?: string;
+        "value"?: number | string;
     }
     interface ScHelpTooltip {
         "message": string;
@@ -1597,8 +1600,11 @@ declare namespace LocalJSX {
         "alarmPoint"?: DataPoint;
         "breachedThreshold"?: Threshold;
         "isEnabled"?: boolean;
+        "messageOverrides"?: RecursivePartial<TooltipMessage>;
         "propertyPoint"?: DataPoint;
         "title"?: string;
+        "unit"?: string;
+        "value"?: number | string;
     }
     interface ScHelpTooltip {
         "message": string;

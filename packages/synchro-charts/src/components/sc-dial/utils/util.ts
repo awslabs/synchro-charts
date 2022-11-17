@@ -1,4 +1,4 @@
-import { DialErrorMessages, DialMessages } from './type';
+import { DialErrorMessages, DialMessages, TooltipMessage } from './type';
 
 const loading = 'Loading';
 
@@ -33,7 +33,15 @@ export const DefaultDialErrorMessages: DialErrorMessages = {
   dataNotLimitsError: 'Invalid data',
 };
 
+export const DefaultTooltipMessages: TooltipMessage = {
+  tooltipValueTitles: 'Latest value:',
+  tooltipValueTimeDescribed: 'at',
+  tooltipStatusTitles: 'Status:',
+  tooltipStatusDescribed: 'since',
+};
+
 export const DefaultDialMessages: DialMessages = {
   error: DefaultDialErrorMessages,
   loading,
+  tooltip: DefaultTooltipMessages,
 };
