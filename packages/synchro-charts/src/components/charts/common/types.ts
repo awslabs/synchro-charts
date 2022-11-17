@@ -105,8 +105,8 @@ type AnnotationLabel = {
   show: boolean;
 };
 
-export type AnnotationValue = number | string | Date;
-export type ThresholdValue = number | string;
+export type AnnotationValue = number | string | boolean | Date;
+export type ThresholdValue = number | string | boolean;
 
 export interface Annotation<T extends AnnotationValue> {
   color: string;
@@ -144,7 +144,7 @@ export interface Threshold<T extends ThresholdValue = ThresholdValue> extends An
 
 export type XAnnotation = Annotation<Date>;
 
-export type YAnnotation = Annotation<number | string> | Threshold;
+export type YAnnotation = Annotation<number | string | boolean> | Threshold;
 
 export interface Annotations {
   show?: boolean;

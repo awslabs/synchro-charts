@@ -81,6 +81,9 @@ const valueDisplayText = ({
   if (typeof value === 'string') {
     return value;
   }
+  if (typeof value === 'boolean') {
+    return String(value);
+  }
   return displayDate(value, resolution, viewport);
 };
 
@@ -206,6 +209,14 @@ export const isThresholdBreached = (value: Primitive, threshold: Threshold): boo
     throw new Error(`Unsupported string threshold comparison operator: ${thresholdComparison}`);
   }
 
+  if (typeof dataStreamValue === 'boolean' && typeof thresholdValue === 'boolean') {
+    if (thresholdComparison === COMPARISON_OPERATOR.EQUAL) {
+      return dataStreamValue === thresholdValue;
+    }
+
+    throw new Error(`Unsupported boolean threshold comparison operator: ${thresholdComparison}`);
+  }
+
   return false;
 };
 
@@ -258,7 +269,7 @@ export const getBreachedThreshold = (value: Primitive, thresholds: Threshold[]):
     return undefined;
   }
 
-  if (typeof value === 'string') {
+  if (typeof value === 'string' || typeof value === 'boolean') {
     return thresholds.find(threshold => isThresholdBreached(value, threshold)) || undefined;
   }
 

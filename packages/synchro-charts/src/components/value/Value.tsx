@@ -16,6 +16,6 @@ export const Value = ({ isEnabled = true, value, unit }: { isEnabled?: boolean; 
     return [round(value), unit && <span class="unit"> {unit}</span>];
   }
 
-  /** Display String */
-  return [value, unit && <span class="unit"> {unit}</span>];
+  /** Display String or Booleans */
+  return [String(value), unit && <span class="unit"> {unit}</span>];
 };

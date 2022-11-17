@@ -83,7 +83,10 @@ export class ScGridTooltip {
                   <div>
                     <div class="awsui-util-label">Status:</div>
                     <div>
-                      <strong style={{ color }}>{this.alarmPoint.y}</strong> since{' '}
+                      <strong style={{ color }}>
+                        <Value value={this.alarmPoint.y} />
+                      </strong>{' '}
+                      since{' '}
                       {new Date(this.alarmPoint.x).toLocaleString('en-US', {
                         hour12: true,
                         minute: 'numeric',
