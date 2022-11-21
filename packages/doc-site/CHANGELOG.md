@@ -3,6 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 6.1.0 (2022-11-18)
+
+### Features
+* feat: add boolean data type to primitives ([#182](https://github.com/awslabs/synchro-charts/pull/182)) ([0728fdc](https://github.com/awslabs/synchro-charts/commit/0728fdc324a42a66f0e5df3ac9d9c2756d55d397))
+
 ## 6.0.5 (2022-11-03)
 
 ### Bug Fixes
