@@ -2,7 +2,8 @@ import { Component, h, Prop } from '@stencil/core';
 import merge from 'lodash.merge';
 import { DataPoint, DataStream, Primitive, ViewPortConfig } from '../../../utils/dataTypes';
 import { Threshold } from '../../charts/common/types';
-import { DialSizeConfig, RecursivePartial, DialMessages } from '../utils/type';
+import { RecursivePartial } from '../../common/types';
+import { DialSizeConfig, DialMessages } from '../utils/type';
 import { DefaultDialMessages } from '../utils/util';
 import { getData, getErrorMessage, getPoint, getPropertyStream } from './formatStream';
 

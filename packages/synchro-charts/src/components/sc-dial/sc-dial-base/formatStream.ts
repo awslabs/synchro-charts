@@ -1,8 +1,8 @@
 import { DataPoint, DataStream, ViewPortConfig } from '../../../utils/dataTypes';
 import { round } from '../../../utils/number';
 import { isNumberDataStream } from '../../../utils/predicates';
-import { DialErrorMessages } from '../utils/type';
-import { ErrorMessageName } from '../utils/util';
+import { ErrorMessageName } from '../../common/constants';
+import { ErrorMessages } from '../../common/types';
 
 /**
  * Processing data stream.
@@ -48,7 +48,7 @@ export const getDeviationDataFlow = (yMin: number, yMax: number) => {
  */
 export const getErrorMessage = (
   viewport: ViewPortConfig,
-  errorMessages: DialErrorMessages,
+  errorMessages: ErrorMessages,
   propertyStream?: DataStream
 ) => {
   const { yMin, yMax } = viewport;

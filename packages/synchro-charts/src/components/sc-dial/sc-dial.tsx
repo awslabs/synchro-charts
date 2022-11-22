@@ -4,7 +4,8 @@ import { Annotations, Threshold } from '../charts/common/types';
 import { breachedThreshold } from '../charts/common/annotations/breachedThreshold';
 import { isMinimalStaticViewport } from '../../utils/predicates';
 import { getThresholds } from '../charts/common/annotations/utils';
-import { DialMessages, DialSizeConfig, RecursivePartial } from './utils/type';
+import { DialMessages, DialSizeConfig } from './utils/type';
+import { RecursivePartial } from '../common/types';
 
 @Component({
   tag: 'sc-dial',

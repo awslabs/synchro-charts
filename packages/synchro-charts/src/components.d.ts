@@ -10,9 +10,9 @@ import { Annotations, Axis, LayoutConfig, Legend, LegendConfig, MovementConfig, 
 import { Trend, TrendResult } from "./components/charts/common/trends/types";
 import { DATA_ALIGNMENT, StatusIcon } from "./components/charts/common/constants";
 import { POINT_TYPE } from "./components/charts/sc-webgl-base-chart/activePoints";
-import { DialMessages, DialSizeConfig, RecursivePartial, TooltipMessage } from "./components/sc-dial/utils/type";
+import { DialMessages, DialSizeConfig } from "./components/sc-dial/utils/type";
+import { LabelsConfig, RecursivePartial, TooltipMessage } from "./components/common/types";
 import { RectScrollFixed } from "./utils/types";
-import { LabelsConfig } from "./components/common/types";
 import { Cell, Row } from "./components/sc-table/constructTableData";
 import { ChartSceneCreator, ChartSceneUpdater } from "./components/charts/sc-webgl-base-chart/types";
 import { RenderCell } from "./components/sc-widget-grid/types";

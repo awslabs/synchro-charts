@@ -1,5 +1,5 @@
 import { Component, h, Prop } from '@stencil/core';
-import { ColorConfigurations } from '../utils/util';
+import { ColorConfigurations } from '../../common/constants';
 
 const SPACE = 4;
 @Component({

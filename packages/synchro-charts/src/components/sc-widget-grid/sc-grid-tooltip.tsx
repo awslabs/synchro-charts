@@ -6,8 +6,8 @@ import { TIPPY_SETTINGS } from '../common/toolTipSettings';
 import { DataPoint } from '../../utils/dataTypes';
 import { Value } from '../value/Value';
 import { Threshold } from '../charts/common/types';
-import { RecursivePartial, TooltipMessage } from '../sc-dial/utils/type';
-import { DefaultTooltipMessages } from '../sc-dial/utils/util';
+import { RecursivePartial, TooltipMessage } from '../common/types';
+import { DefaultTooltipMessages } from '../common/constants';
 
 @Component({
   tag: 'sc-grid-tooltip',
