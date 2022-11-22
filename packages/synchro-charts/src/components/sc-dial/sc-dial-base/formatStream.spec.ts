@@ -1,5 +1,6 @@
 import { NUMBER_STREAM_1, STRING_STREAM_1 } from '../../../testing/__mocks__/mockWidgetProperties';
-import { DefaultDialErrorMessages, DefaultDialMessages, ErrorMessageName } from '../utils/util';
+import { DefaultErrorMessages, ErrorMessageName } from '../../common/constants';
+import { DefaultDialMessages } from '../utils/util';
 import {
   getData,
   getDeviationDataFlow,
@@ -92,7 +93,7 @@ describe('getErrorMessage', () => {
 
   it('returns Invalid value when `propertyPoint` and `propertyStream` did not provide', () => {
     expect(getErrorMessage(viewport, DefaultDialMessages.error)).toBe(
-      DefaultDialErrorMessages[ErrorMessageName.INVALID_VALUE_ERROR]
+      DefaultErrorMessages[ErrorMessageName.INVALID_VALUE_ERROR]
     );
   });
 

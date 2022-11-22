@@ -7,8 +7,9 @@ import { NO_VALUE_PRESENT } from '../../../constants';
 import { DataPoint, DataStream } from '../../../utils/dataTypes';
 import { getIcons } from '../../charts/common/annotations/iconUtils';
 import { Threshold } from '../../charts/common/types';
-import { AngleDefault, DialSizeConfig } from '../utils/type';
-import { ColorConfigurations } from '../utils/util';
+import { ColorConfigurations } from '../../common/constants';
+import { AngleDefault } from '../../common/types';
+import { DialSizeConfig } from '../utils/type';
 
 const FONT_SIZE = 48;
 const ICON_SIZE = 24;

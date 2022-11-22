@@ -6,8 +6,8 @@ import { ScDialSvg } from './sc-dial-svg';
 import { update } from '../../charts/common/tests/merge';
 import { round } from '../../../utils/number';
 import { COMPARISON_OPERATOR, DataType, StatusIcon } from '../../../constants';
-import { ColorConfigurations } from '../utils/util';
 import { ScDialLoading } from './sc-dial-loading';
+import { ColorConfigurations } from '../../common/constants';
 
 const PERCENT = 0.5;
 const THRESHOLD_COLOR = '#C03F25';
