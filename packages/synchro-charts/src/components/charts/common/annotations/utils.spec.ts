@@ -10,6 +10,8 @@ import {
   getValueAndTextVisibility,
   getValueText,
   getValueTextVisibility,
+  highestPriorityThresholds,
+  isHigherPriorityThresholds,
   isThreshold,
   isThresholdBreached,
   sortThreshold,
@@ -67,6 +69,29 @@ describe('getValueAndText and getValueAndTextVisibility', () => {
     expect(valueText).toBe(value.toString());
 
     const displayMode = getValueTextVisibility(yAnnotations[0]);
+    expect(displayMode).toEqual('inline');
+  });
+
+  it('returns a value text with a comparison operator from a threshold', () => {
+    const value = 50;
+    const comparisonOperator = COMPARISON_OPERATOR.GREATER_THAN_EQUAL;
+    const yThresholds: Threshold[] = [
+      {
+        ...BASE_Y_ANNOTATION,
+        value,
+        comparisonOperator,
+      },
+    ];
+
+    const valueText = getValueText({
+      annotation: yThresholds[0],
+      resolution: 1000,
+      viewport: VIEWPORT,
+      formatText: false,
+    });
+    expect(valueText).toEqual('>= 50');
+
+    const displayMode = getValueTextVisibility(yThresholds[0]);
     expect(displayMode).toEqual('inline');
   });
 
@@ -615,7 +640,7 @@ describe('annotation logic', () => {
       expect(getBreachedThreshold(0, thresholds)).toBeNil();
     });
 
-    it('returns the correct threshold when the data point is below two threshold of same value and above a threshold with less than operator', () => {
+    it('returns the correct threshold when the data point is below two threshold of same value and above a threshold with "less than" operator', () => {
       const expectedColor = 'yellow';
       const thresholds: Threshold[] = [
         {
@@ -638,12 +663,13 @@ describe('annotation logic', () => {
       expect(getBreachedThreshold(26, thresholds)).toEqual(expect.objectContaining({ color: expectedColor }));
     });
 
-    it('returns undefined when the point is outside of a band', () => {
+    it('returns the correct threshold when the point is higher than a "less than" threshold but still technically breached by a lower "greater than" threshold', () => {
+      const expectedColor = 'blue';
       const thresholds: Threshold[] = [
         {
           color: 'red',
           value: 28,
-          comparisonOperator: COMPARISON_OPERATOR.LESS_THAN_EQUAL,
+          comparisonOperator: COMPARISON_OPERATOR.LESS_THAN,
         },
         {
           color: 'blue',
@@ -652,7 +678,25 @@ describe('annotation logic', () => {
         },
       ];
 
-      expect(getBreachedThreshold(30, thresholds)).toBeNil();
+      expect(getBreachedThreshold(40, thresholds)).toEqual(expect.objectContaining({ color: expectedColor }));
+    });
+
+    it('returns the correct threshold when the point is lower than a "greater than" threshold but still technically breached by a higher "less than" threshold', () => {
+      const expectedColor = 'red';
+      const thresholds: Threshold[] = [
+        {
+          color: 'red',
+          value: 28,
+          comparisonOperator: COMPARISON_OPERATOR.LESS_THAN,
+        },
+        {
+          color: 'blue',
+          value: 10,
+          comparisonOperator: COMPARISON_OPERATOR.GREATER_THAN,
+        },
+      ];
+
+      expect(getBreachedThreshold(3, thresholds)).toEqual(expect.objectContaining({ color: expectedColor }));
     });
   });
 });
@@ -852,14 +896,28 @@ const DATA_THRESHOLD: Threshold = {
   color: 'red',
   comparisonOperator: COMPARISON_OPERATOR.EQUAL,
 };
-const ALARM_THRESHOLD: Threshold = {
+
+const DATA_THRESHOLD_2: Threshold = {
+  value: 6,
+  color: 'blue',
+  comparisonOperator: COMPARISON_OPERATOR.EQUAL,
+};
+
+const ALARM_THRESHOLD_1_SEVERITY: Threshold = {
   value: 0,
   color: 'orange',
   comparisonOperator: COMPARISON_OPERATOR.EQUAL,
   severity: 1,
 };
 
-const ALARM_THRESHOLD_2: Threshold = {
+const ALARM_THRESHOLD_1_SEVERITY_2: Threshold = {
+  value: 3,
+  color: 'black',
+  comparisonOperator: COMPARISON_OPERATOR.EQUAL,
+  severity: 1,
+};
+
+const ALARM_THRESHOLD_2_SEVERITY: Threshold = {
   value: 1,
   color: 'yellow',
   comparisonOperator: COMPARISON_OPERATOR.EQUAL,
@@ -881,12 +939,75 @@ describe('highestPriorityThreshold', () => {
   });
 
   it('always return the threshold with the lowest severity', () => {
-    expect(highestPriorityThreshold([ALARM_THRESHOLD, ALARM_THRESHOLD_2])).toBe(ALARM_THRESHOLD); // Has lower seveirty
+    expect(highestPriorityThreshold([ALARM_THRESHOLD_1_SEVERITY, ALARM_THRESHOLD_2_SEVERITY])).toBe(
+      ALARM_THRESHOLD_1_SEVERITY
+    ); // Has lower seveirty
   });
 
   it('always returns a threshold with a severity, over one without', () => {
-    const LOW_SEVERITY = { ...ALARM_THRESHOLD, severity: 999999 };
+    const LOW_SEVERITY = { ...ALARM_THRESHOLD_1_SEVERITY, severity: 999999 };
     expect(highestPriorityThreshold([LOW_SEVERITY, DATA_THRESHOLD])).toBe(LOW_SEVERITY);
+  });
+});
+
+describe('isHigherPriorityThresholds', () => {
+  it('returns an array with threshold when passed no thresholds', () => {
+    expect(isHigherPriorityThresholds([], DATA_THRESHOLD)).toStrictEqual([DATA_THRESHOLD]);
+  });
+
+  it('returns an array with all thresholds when neither have severity', () => {
+    expect(isHigherPriorityThresholds([DATA_THRESHOLD], DATA_THRESHOLD_2)).toStrictEqual([
+      DATA_THRESHOLD,
+      DATA_THRESHOLD_2,
+    ]);
+  });
+
+  it('returns an array with all thresholds when they have the same severity', () => {
+    expect(isHigherPriorityThresholds([ALARM_THRESHOLD_1_SEVERITY], ALARM_THRESHOLD_1_SEVERITY_2)).toStrictEqual([
+      ALARM_THRESHOLD_1_SEVERITY,
+      ALARM_THRESHOLD_1_SEVERITY_2,
+    ]);
+  });
+
+  it('returns a new array with the threshold with severity when the initial thresholds array has no severity', () => {
+    expect(isHigherPriorityThresholds([DATA_THRESHOLD], ALARM_THRESHOLD_1_SEVERITY)).toStrictEqual([
+      ALARM_THRESHOLD_1_SEVERITY,
+    ]);
+  });
+
+  it('returns the initial thresholds array with severity when the new threshold has no severity', () => {
+    expect(isHigherPriorityThresholds([ALARM_THRESHOLD_1_SEVERITY], DATA_THRESHOLD)).toStrictEqual([
+      ALARM_THRESHOLD_1_SEVERITY,
+    ]);
+  });
+
+  it('returns an array with the higher priority threshold', () => {
+    expect(isHigherPriorityThresholds([ALARM_THRESHOLD_1_SEVERITY], ALARM_THRESHOLD_2_SEVERITY)).toStrictEqual([
+      ALARM_THRESHOLD_1_SEVERITY,
+    ]);
+    expect(isHigherPriorityThresholds([ALARM_THRESHOLD_2_SEVERITY], ALARM_THRESHOLD_1_SEVERITY)).toStrictEqual([
+      ALARM_THRESHOLD_1_SEVERITY,
+    ]);
+  });
+});
+
+describe('highestPriorityThresholds', () => {
+  it('returns an array of a threshold with severity', () => {
+    expect(highestPriorityThresholds([DATA_THRESHOLD, ALARM_THRESHOLD_1_SEVERITY])).toStrictEqual([
+      ALARM_THRESHOLD_1_SEVERITY,
+    ]);
+  });
+
+  it('returns an array of thresholds with the same severity', () => {
+    expect(
+      highestPriorityThresholds([DATA_THRESHOLD, ALARM_THRESHOLD_1_SEVERITY, ALARM_THRESHOLD_1_SEVERITY_2])
+    ).toStrictEqual([ALARM_THRESHOLD_1_SEVERITY, ALARM_THRESHOLD_1_SEVERITY_2]);
+  });
+
+  it('returns an array of thresholds with higher priority', () => {
+    expect(
+      highestPriorityThresholds([ALARM_THRESHOLD_2_SEVERITY, ALARM_THRESHOLD_1_SEVERITY, ALARM_THRESHOLD_1_SEVERITY_2])
+    ).toStrictEqual([ALARM_THRESHOLD_1_SEVERITY, ALARM_THRESHOLD_1_SEVERITY_2]);
   });
 });
 

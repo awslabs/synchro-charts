@@ -5,7 +5,7 @@ import { displayDate } from '../../../../utils/time';
 import { Primitive, ViewPort } from '../../../../utils/dataTypes';
 import { isValid } from '../../../../utils/predicates';
 import { isNumeric } from '../../../../utils/number';
-import { COMPARISON_OPERATOR } from '../constants';
+import { COMPARISON_OPERATOR, COMPARATOR_MAP } from '../constants';
 
 /**
  * Returns only thresholds defined for number
@@ -36,6 +36,65 @@ export const getNumberAnnotations = (annotations: Annotations): Annotations => {
     ...annotations,
     y: numberAnnotations,
   };
+};
+
+/**
+ * Returns an array of the higher priority thresholds.
+ *
+ * If there is only one threshold with the higher priority severity, returns an
+ * array with just that one threshold.
+ *
+ * If there are multiple thresholds with the same higher priority threshold,
+ * returns an array with those thresholds.
+ *
+ * @param {Array.<Threshold>} t1Array
+ * @param {Threshold} t2
+ * @returns {Array.<Threshold>}
+ */
+export const isHigherPriorityThresholds = (t1Array: Threshold[], t2: Threshold): Threshold[] => {
+  const t1Severity = t1Array[0]?.severity;
+  const t2Severity = t2.severity;
+  const t2Array = [t2];
+
+  // If no highest priority thresholds yet, return t2 in array.
+  if (t1Array.length === 0) {
+    return t2Array;
+  }
+
+  // If no severity declared OR same severity level, return t1 array with t2 added.
+  if ((t1Severity == null && t2Severity == null) || t1Severity === t2Severity) {
+    t1Array.push(t2);
+    return t1Array;
+  }
+
+  // If only t2 severity is declared, return t2 in an array.
+  if (t1Severity == null) {
+    return t2Array;
+  }
+
+  // If only t1 severity is declared, return t1 array.
+  if (t2Severity == null) {
+    return t1Array;
+  }
+
+  // If t1 severity is higher priority, return t1 array.
+  // If t2 severity is higher priority, return new array with t2.
+  return t1Severity < t2Severity ? t1Array : t2Array;
+};
+
+/**
+ * Returns an array with the most important thresholds.
+ *
+ * The most important thresholds are the visuals which are most important to a user
+ * This is determined via the `severity`. Lower severity means highest importance.
+ *
+ * If no thresholds are present with `severity`, an array with all thresholds is returned.
+ *
+ * @param {Array.<Threshold>} thresholds
+ * @returns {Array.<Threshold>}
+ */
+export const highestPriorityThresholds = (thresholds: Threshold[]): Threshold[] => {
+  return thresholds.reduce(isHigherPriorityThresholds, []);
 };
 
 const formatValueString = (thresholdValue: number): string => {
@@ -159,7 +218,7 @@ export const getValueText = ({
   viewport,
   formatText,
 }: {
-  annotation: Annotation<AnnotationValue>;
+  annotation: Annotation<AnnotationValue> | Threshold;
   resolution: number;
   viewport: ViewPort;
   formatText: boolean;
@@ -168,8 +227,12 @@ export const getValueText = ({
     ? valueDisplayText({ value: annotation.value, resolution, viewport, formatText })
     : null;
 
+  // Add comparison operator with trailing space if it's a threshold
+  const comparisonOperator =
+    'comparisonOperator' in annotation ? `${COMPARATOR_MAP[annotation.comparisonOperator] ?? ''} ` : '';
+
   if (valueText) {
-    return `${valueText}`;
+    return `${comparisonOperator}${valueText}`;
   }
   return '';
 };
@@ -273,7 +336,20 @@ export const getBreachedThreshold = (value: Primitive, thresholds: Threshold[]):
     return thresholds.find(threshold => isThresholdBreached(value, threshold)) || undefined;
   }
 
-  const numberThresholds = getNumberThresholds(thresholds);
+  /**
+   * Filter by breached thresholds to remove the 'band' feature as the default.
+   *
+   * https://github.com/awslabs/synchro-charts/issues/153
+   *
+   * TO-DO: Add the 'in between operator' feature as one of the operator selections to consider
+   * breached data points in between 2 thresholds.
+   */
+  const breachedThresholds = thresholds.filter(threshold => isThresholdBreached(value, threshold));
+
+  // Only consider the highest severity breached thresholds.
+  const highestSeverityThresholds = highestPriorityThresholds(breachedThresholds);
+
+  const numberThresholds = getNumberThresholds(highestSeverityThresholds);
 
   const sortedThresholds = sortThreshold(numberThresholds);
   const idx = thresholdBisector(sortedThresholds, value);
