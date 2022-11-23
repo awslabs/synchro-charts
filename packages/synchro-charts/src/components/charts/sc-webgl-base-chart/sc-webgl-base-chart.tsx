@@ -15,6 +15,7 @@ import {
   ViewPortConfig,
   MessageOverrides,
 } from '../../../utils/dataTypes';
+import { DataType, StreamType } from '../../../utils/dataConstants';
 import {
   Annotations,
   Axis,
@@ -46,8 +47,8 @@ import { getYRange } from '../common/getYRange';
 import { isNumeric } from '../../../utils/number';
 import { isMinimalStaticViewport, isNumberDataStream } from '../../../utils/predicates';
 import { EmptyStatus } from './EmptyStatus';
+import { UnsupportedDataTypeStatus } from './UnsupportedDataTypeStatus';
 import { getDataPoints } from '../../../utils/getDataPoints';
-import { StreamType } from '../../../utils/dataConstants';
 import { LEGEND_POSITION } from '../common/constants';
 import { getDataStreamForEventing } from '../common';
 import { attachDraggable } from '../common/annotations/draggableAnnotations';
@@ -96,6 +97,7 @@ export class ScWebglBaseChart {
   @Prop() visualizesAlarms: boolean;
   @Prop() displaysError: boolean = true;
   @Prop() alarms?: AlarmsConfig;
+  @Prop() supportedDataTypes: DataType[] = Object.values(DataType);
   @Prop() shouldRerenderOnViewportChange?: ({
     oldViewport,
     newViewport,
@@ -829,6 +831,9 @@ export class ScWebglBaseChart {
     const { marginLeft, marginTop, marginRight, marginBottom } = chartSizeConfig;
 
     const hasError = this.dataStreams.some(({ error }) => error != null);
+    const hasSupportedDataTypes = this.dataStreams.every(
+      ({ streamType, dataType }) => streamType === StreamType.ALARM || this.supportedDataTypes.includes(dataType)
+    );
 
     const shouldDisplayAsLoading = !hasError && this.visualizedDataStreams().some(({ isLoading }) => isLoading);
     const hasNoDataStreamsPresent = this.visualizedDataStreams().length === 0;
@@ -849,6 +854,18 @@ export class ScWebglBaseChart {
       this.legend != null && this.legend.showDataStreamColor != null
         ? this.legend.showDataStreamColor
         : DEFAULT_SHOW_DATA_STREAM_COLOR;
+
+    if (!hasSupportedDataTypes) {
+      return (
+        <div class="awsui sc-webgl-base-chart">
+          <UnsupportedDataTypeStatus
+            size={chartSizeConfig}
+            messageOverrides={this.messageOverrides || {}}
+            supportedDataTypes={this.supportedDataTypes}
+          />
+        </div>
+      );
+    }
 
     return [
       <div class="awsui sc-webgl-base-chart">

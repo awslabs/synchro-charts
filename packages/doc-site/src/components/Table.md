@@ -167,6 +167,9 @@ const carSpeedTableColumn = {
 </div>
 ```
 
+> **Supported data type(s): Number, String, Boolean** 
+> (alarm streams excluded) 
+
 Table components help visualizes a group of data streams that is closely associated with each other under one column.
 Each of the cells in the table represents one data stream. You have to use the `tableColumns` property to group a
 set of data streams under one column.

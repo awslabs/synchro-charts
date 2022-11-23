@@ -15,6 +15,7 @@ import { DataStreamId } from '../utils/dataTypes';
 export const ERROR_SYMBOL_SELECTOR = '[data-test-tag="error"]';
 export const LOADING_SPINNER_SELECTOR = 'sc-loading-spinner';
 export const CHART_VIZ_CONTAINER_SELECTOR = 'sc-webgl-base-chart .data-container';
+export const DATA_TYPE_ERROR_CONTAINER_SELECTOR = 'sc-webgl-base-chart .unsupported-data-type-status';
 export const CHART_TOOLTIP_SELECTOR = 'sc-webgl-base-chart .tooltip-container';
 export const CHART_TOOLTIP_ROW_SELECTOR = 'sc-tooltip-row';
 export const LEGEND_SELECTOR = 'sc-legend';
@@ -30,6 +31,13 @@ const SMALL_WAIT = 0.01 * SECOND_IN_MS;
 export const waitForChart = (cy: any) =>
   cy
     .get(CHART_VIZ_CONTAINER_SELECTOR)
+    .should('be.visible')
+    .wait(SMALL_WAIT)
+    .click({ multiple: true });
+
+export const waitForDataError = (cy: any) =>
+  cy
+    .get(DATA_TYPE_ERROR_CONTAINER_SELECTOR)
     .should('be.visible')
     .wait(SMALL_WAIT)
     .click({ multiple: true });

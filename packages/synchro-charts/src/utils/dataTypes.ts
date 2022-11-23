@@ -176,6 +176,10 @@ export type MessageOverrides = {
   noDataPresentHeader?: string;
   noDataPresentSubHeader?: string;
   liveModeOnly?: string;
+  /** unsupported data type - msg displayed when a dataStream has a invalid type */
+  unsupportedDataTypeHeader?: string;
+  unsupportedDataTypeSubHeader?: string;
+  supportedTypes?: string;
 };
 export const DEFAULT_MESSAGE_OVERRIDES: Required<MessageOverrides> = {
   liveTimeFrameValueLabel: 'Value',
@@ -186,6 +190,9 @@ export const DEFAULT_MESSAGE_OVERRIDES: Required<MessageOverrides> = {
   noDataPresentSubHeader: "There's no data to display for this time range.",
   liveModeOnly:
     'This visualization displays only live data. Choose a live time frame to display data in this visualization.',
+  unsupportedDataTypeHeader: 'Unable to render your data',
+  unsupportedDataTypeSubHeader: 'This chart only supports the following DataType(s):',
+  supportedTypes: 'Number, String, Boolean',
 };
 
 /** SVG Constants */

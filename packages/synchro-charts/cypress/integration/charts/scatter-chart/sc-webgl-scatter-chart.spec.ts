@@ -113,4 +113,12 @@ describe('scatter chart', () => {
 
     cy.matchImageSnapshotOnCI();
   });
+
+  it('renders an error when the dataStream has a non-numerical dataType', () => {
+    cy.visit(`${root}/unsupported-data-types`);
+
+    cy.waitForDataError();
+
+    cy.get('.unsupported-data-type-status').contains('NUMBER');
+  });
 });

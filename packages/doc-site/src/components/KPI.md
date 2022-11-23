@@ -74,6 +74,9 @@ import { LEGEND_POSITION, DataType, COMPARISON_OPERATOR, StreamType, StatusIcon 
 </div>
 ```
 
+> **Supported data type(s): Number, String, Boolean** 
+> (alarm streams excluded) 
+
 Key Performance Indicator (KPI) visualizes the latest value from a data stream by emphasizing the property value.
 For data stream of type `NUMBER` it will also display the trending percentage by using the two most recent data points.
 

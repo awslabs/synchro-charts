@@ -85,6 +85,7 @@ const newChartSpecPage = async (chartProps: Partial<Components.ScWebglBaseChart>
     bufferFactor: 2,
     minBufferSize: 200,
     configId: 'config-id',
+    supportedDataTypes: [DataType.NUMBER],
     legend: {
       position: LEGEND_POSITION.BOTTOM,
       width: 300,
@@ -602,6 +603,7 @@ describe('with string data', () => {
         updateChartScene: mockUpdateChartScene,
         dataStreams: STRING_STREAMS,
         supportString: true,
+        supportedDataTypes: [DataType.STRING],
       });
 
       expect(mockCreateChartScene).toBeCalledWith(

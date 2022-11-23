@@ -78,6 +78,9 @@ import { LEGEND_POSITION, DataType, COMPARISON_OPERATOR, StreamType } from '@syn
 </div>
 ```
 
+> **Supported data type(s): Number, String, Boolean** 
+> (alarm streams excluded) 
+
 Status Grid visualizes the latest status for a given data stream by emphasizing the current status of a property.
 
 The color of the status grid is determined by the threshold color. If no threshold is provided or no status is

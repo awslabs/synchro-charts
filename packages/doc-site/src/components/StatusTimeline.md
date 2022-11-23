@@ -56,6 +56,9 @@ const MONTH_RESOLUTION = 1000 * 60 * 60 * 24 * 30; // one month
 </div>
 ```
 
+> **Supported data type(s): Number, String, Boolean** 
+> (alarm streams excluded) 
+
 Each bar in the status timeline represents a period of the time that the associated data point that is active. 
 
 The color of the bar is determined by the threshold that is considered breached by the data point. If no data is breaching

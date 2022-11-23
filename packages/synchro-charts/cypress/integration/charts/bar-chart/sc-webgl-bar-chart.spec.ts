@@ -46,6 +46,14 @@ describe('bar chart', () => {
     cy.get('#chart-container').matchImageSnapshotOnCI();
   });
 
+  it('renders an error when the dataStream has a non-numerical dataType', () => {
+    cy.visit(`${root}/unsupported-data-types`);
+
+    cy.waitForDataError();
+
+    cy.get('.unsupported-data-type-status').contains('NUMBER');
+  });
+
   it('renders bar chart from zero when all points are negative', () => {
     cy.visit(`${root}/start-from-zero`);
 

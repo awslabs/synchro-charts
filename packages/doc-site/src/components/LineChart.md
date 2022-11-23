@@ -68,6 +68,9 @@ const MONTH_RESOLUTION = 1000 * 60 * 60 * 24 * 30; // one month
 </div>
 ```
 
+> **Supported data type(s): Number** 
+> (alarm streams excluded) 
+
 ### Line chart with alarms
 
 You can show the current latest alarm status on the legend through setting the `icon` property for the threshold.

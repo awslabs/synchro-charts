@@ -1,4 +1,4 @@
-import { STATUS_TIMELINE_OVERLAY_SELECTOR, waitForChart } from '../../src/testing/selectors';
+import { STATUS_TIMELINE_OVERLAY_SELECTOR, waitForChart, waitForDataError } from '../../src/testing/selectors';
 
 const defaultSnapshotOptions = {
   failureThreshold: 1.2,
@@ -7,6 +7,7 @@ const defaultSnapshotOptions = {
 
 export const addChartCommands = () => {
   Cypress.Commands.add('waitForChart', () => waitForChart(cy));
+  Cypress.Commands.add('waitForDataError', () => waitForDataError(cy));
 
   Cypress.Commands.add('waitForStatusTimeline', () => {
     waitForChart(cy);
