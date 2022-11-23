@@ -10,6 +10,7 @@ export const X_MIN = new Date(2000, 0, 0, 0, 0);
 export const X_MAX = new Date(2000, 0, 0, 0, 10);
 
 export const Y_VALUE = 2500;
+export const Y_VALUE_STRING = 'Warning';
 
 export const Y_THRESHOLD: Threshold<number> = {
   isEditable: true,

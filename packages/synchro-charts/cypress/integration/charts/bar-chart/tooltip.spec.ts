@@ -7,7 +7,6 @@ import {
 import { SCREEN_SIZE } from '../../../../src/testing/dynamicWidgetUtils/testCaseParameters';
 import { MINUTE_IN_MS, SECOND_IN_MS } from '../../../../src/utils/time';
 import {
-  STRING_STREAM_1,
   NUMBER_EMPTY_STREAM,
   NUMBER_INFO_1,
   NUMBER_STREAM_1,
@@ -16,15 +15,12 @@ import {
   START_DATE,
 } from '../../../../src/testing/__mocks__/mockWidgetProperties';
 
-it('renders no tooltip when only info is empty or string', () => {
+it('renders no tooltip when only info is empty', () => {
   visitDynamicWidget(cy, {
     componentTag: 'sc-bar-chart',
     viewportStart: new Date(START_DATE.getTime() - MINUTE_IN_MS),
     viewportEnd: new Date(START_DATE.getTime() + 10 * MINUTE_IN_MS),
-    dataStreams: [
-      { ...NUMBER_EMPTY_STREAM, resolution: SECOND_IN_MS },
-      { ...STRING_STREAM_1, data: [], aggregates: { [SECOND_IN_MS]: STRING_STREAM_1.data }, resolution: SECOND_IN_MS },
-    ],
+    dataStreams: [{ ...NUMBER_EMPTY_STREAM, resolution: SECOND_IN_MS }],
   });
 
   cy.waitForChart();

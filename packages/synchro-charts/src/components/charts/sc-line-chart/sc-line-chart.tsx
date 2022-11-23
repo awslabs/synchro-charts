@@ -22,6 +22,7 @@ import { RectScrollFixed } from '../../../utils/types';
 import { Trend } from '../common/trends/types';
 import { DATA_ALIGNMENT } from '../common/constants';
 import { validate } from '../../common/validator/validate';
+import { DataType } from '../../../constants';
 
 // The initial size of buffers. The larger this is, the more memory allocated up front per chart.
 // The lower this number is, more likely that charts will have to re-initialize there buffers which is
@@ -69,6 +70,7 @@ export class ScLineChart implements ChartConfig {
         size={this.size}
         renderFunc={(rect: RectScrollFixed) => (
           <sc-webgl-base-chart
+            supportedDataTypes={[DataType.NUMBER]}
             axis={this.axis}
             alarms={this.alarms}
             gestures={this.gestures}

@@ -70,6 +70,10 @@ export const routes = [
     component: 'sc-webgl-chart-standard',
   },
   {
+    url: '/tests/sc-webgl-chart/unsupported-data-types',
+    component: 'line-chart-unsupported-data-types',
+  },
+  {
     url: '/tests/sc-webgl-chart/sc-webgl-chart-large-viewport',
     component: 'sc-webgl-chart-large-viewport',
   },
@@ -194,6 +198,10 @@ export const routes = [
     component: 'sc-webgl-bar-chart-start-from-zero',
   },
   {
+    url: '/tests/sc-webgl-bar-chart/unsupported-data-types',
+    component: 'sc-webgl-bar-chart-unsupported-data-types',
+  },
+  {
     url: '/tests/sc-webgl-chart/annotations',
     component: 'sc-webgl-chart-annotations',
   },
@@ -264,6 +272,10 @@ export const routes = [
   {
     url: '/tests/sc-scatter-chart/threshold/no-coloration',
     component: 'sc-scatter-chart-threshold-no-coloration',
+  },
+  {
+    url: '/tests/sc-scatter-chart/unsupported-data-types',
+    component: 'sc-scatter-chart-unsupported-data-types',
   },
   {
     url: '/tests/common-components/sc-toggle',

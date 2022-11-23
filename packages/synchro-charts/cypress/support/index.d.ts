@@ -7,6 +7,7 @@ declare namespace Cypress {
      * Custom command to wait until a chart is done with it's initial rendering
      */
     waitForChart(): Chainable<Element>;
+    waitForDataError(): Chainable<Element>;
     waitForStatusTimeline(): Chainable<Element>;
     matchImageSnapshotOnCI(nameOrOptions?: string | Object): void;
   }

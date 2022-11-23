@@ -115,6 +115,14 @@ describe('line chart', () => {
     cy.get(X_TEXT_SELECTOR).should('not.exist');
   });
 
+  it('renders an error when the dataStream has a non-numerical dataType', () => {
+    cy.visit(`${root}/unsupported-data-types`);
+
+    cy.waitForDataError();
+
+    cy.get('.unsupported-data-type-status').contains('NUMBER');
+  });
+
   it('renders data stream added dynamically', () => {
     cy.visit(`${root}/line-chart-dynamic-data-streams`);
 

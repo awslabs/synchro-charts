@@ -14,8 +14,11 @@ import { RectScrollFixed } from "./utils/types";
 import { LabelsConfig } from "./components/common/types";
 import { Cell, Row } from "./components/sc-table/constructTableData";
 import { ChartSceneCreator, ChartSceneUpdater } from "./components/charts/sc-webgl-base-chart/types";
+import { DataType } from "./utils/dataConstants";
 import { RenderCell } from "./components/sc-widget-grid/types";
 export namespace Components {
+    interface LineChartUnsupportedDataTypes {
+    }
     interface LineChartViewportChange {
     }
     interface MultipleStatuses {
@@ -248,6 +251,8 @@ export namespace Components {
     }
     interface ScScatterChartTrendLineWithLegend {
     }
+    interface ScScatterChartUnsupportedDataTypes {
+    }
     interface ScSingleBar {
     }
     interface ScSingleColoredBar {
@@ -452,6 +457,8 @@ export namespace Components {
     }
     interface ScWebglBarChartThresholdNoColoration {
     }
+    interface ScWebglBarChartUnsupportedDataTypes {
+    }
     interface ScWebglBaseChart {
         "alarms"?: AlarmsConfig;
         "annotations": Annotations;
@@ -485,6 +492,7 @@ export namespace Components {
   }) => boolean;
         "size": SizePositionConfig;
         "supportString": boolean;
+        "supportedDataTypes": DataType[];
         "trends": Trend[];
         "updateChartScene": ChartSceneUpdater;
         "viewport": MinimalViewPortConfig;
@@ -588,6 +596,12 @@ export namespace Components {
     }
 }
 declare global {
+    interface HTMLLineChartUnsupportedDataTypesElement extends Components.LineChartUnsupportedDataTypes, HTMLStencilElement {
+    }
+    var HTMLLineChartUnsupportedDataTypesElement: {
+        prototype: HTMLLineChartUnsupportedDataTypesElement;
+        new (): HTMLLineChartUnsupportedDataTypesElement;
+    };
     interface HTMLLineChartViewportChangeElement extends Components.LineChartViewportChange, HTMLStencilElement {
     }
     var HTMLLineChartViewportChangeElement: {
@@ -834,6 +848,12 @@ declare global {
         prototype: HTMLScScatterChartTrendLineWithLegendElement;
         new (): HTMLScScatterChartTrendLineWithLegendElement;
     };
+    interface HTMLScScatterChartUnsupportedDataTypesElement extends Components.ScScatterChartUnsupportedDataTypes, HTMLStencilElement {
+    }
+    var HTMLScScatterChartUnsupportedDataTypesElement: {
+        prototype: HTMLScScatterChartUnsupportedDataTypesElement;
+        new (): HTMLScScatterChartUnsupportedDataTypesElement;
+    };
     interface HTMLScSingleBarElement extends Components.ScSingleBar, HTMLStencilElement {
     }
     var HTMLScSingleBarElement: {
@@ -1049,6 +1069,12 @@ declare global {
     var HTMLScWebglBarChartThresholdNoColorationElement: {
         prototype: HTMLScWebglBarChartThresholdNoColorationElement;
         new (): HTMLScWebglBarChartThresholdNoColorationElement;
+    };
+    interface HTMLScWebglBarChartUnsupportedDataTypesElement extends Components.ScWebglBarChartUnsupportedDataTypes, HTMLStencilElement {
+    }
+    var HTMLScWebglBarChartUnsupportedDataTypesElement: {
+        prototype: HTMLScWebglBarChartUnsupportedDataTypesElement;
+        new (): HTMLScWebglBarChartUnsupportedDataTypesElement;
     };
     interface HTMLScWebglBaseChartElement extends Components.ScWebglBaseChart, HTMLStencilElement {
     }
@@ -1297,6 +1323,7 @@ declare global {
         new (): HTMLWidgetTestRouteElement;
     };
     interface HTMLElementTagNameMap {
+        "line-chart-unsupported-data-types": HTMLLineChartUnsupportedDataTypesElement;
         "line-chart-viewport-change": HTMLLineChartViewportChangeElement;
         "multiple-statuses": HTMLMultipleStatusesElement;
         "sc-angled-line-segment": HTMLScAngledLineSegmentElement;
@@ -1338,6 +1365,7 @@ declare global {
         "sc-scatter-chart-tooltip-with-multiple-data-streams-and-trends": HTMLScScatterChartTooltipWithMultipleDataStreamsAndTrendsElement;
         "sc-scatter-chart-trend-line-color-configuration": HTMLScScatterChartTrendLineColorConfigurationElement;
         "sc-scatter-chart-trend-line-with-legend": HTMLScScatterChartTrendLineWithLegendElement;
+        "sc-scatter-chart-unsupported-data-types": HTMLScScatterChartUnsupportedDataTypesElement;
         "sc-single-bar": HTMLScSingleBarElement;
         "sc-single-colored-bar": HTMLScSingleColoredBarElement;
         "sc-size-provider": HTMLScSizeProviderElement;
@@ -1374,6 +1402,7 @@ declare global {
         "sc-webgl-bar-chart-threshold-coloration-multiple-data-stream": HTMLScWebglBarChartThresholdColorationMultipleDataStreamElement;
         "sc-webgl-bar-chart-threshold-coloration-multiple-thresholds": HTMLScWebglBarChartThresholdColorationMultipleThresholdsElement;
         "sc-webgl-bar-chart-threshold-no-coloration": HTMLScWebglBarChartThresholdNoColorationElement;
+        "sc-webgl-bar-chart-unsupported-data-types": HTMLScWebglBarChartUnsupportedDataTypesElement;
         "sc-webgl-base-chart": HTMLScWebglBaseChartElement;
         "sc-webgl-chart-annotation-editable": HTMLScWebglChartAnnotationEditableElement;
         "sc-webgl-chart-annotations": HTMLScWebglChartAnnotationsElement;
@@ -1418,6 +1447,8 @@ declare global {
     }
 }
 declare namespace LocalJSX {
+    interface LineChartUnsupportedDataTypes {
+    }
     interface LineChartViewportChange {
     }
     interface MultipleStatuses {
@@ -1650,6 +1681,8 @@ declare namespace LocalJSX {
     }
     interface ScScatterChartTrendLineWithLegend {
     }
+    interface ScScatterChartUnsupportedDataTypes {
+    }
     interface ScSingleBar {
     }
     interface ScSingleColoredBar {
@@ -1859,6 +1892,8 @@ declare namespace LocalJSX {
     }
     interface ScWebglBarChartThresholdNoColoration {
     }
+    interface ScWebglBarChartUnsupportedDataTypes {
+    }
     interface ScWebglBaseChart {
         "alarms"?: AlarmsConfig;
         "annotations"?: Annotations;
@@ -1897,6 +1932,7 @@ declare namespace LocalJSX {
   }) => boolean;
         "size": SizePositionConfig;
         "supportString"?: boolean;
+        "supportedDataTypes"?: DataType[];
         "trends"?: Trend[];
         "updateChartScene": ChartSceneUpdater;
         "viewport": MinimalViewPortConfig;
@@ -2004,6 +2040,7 @@ declare namespace LocalJSX {
         "dataStreamInfos"?: DataStreamInfo[];
     }
     interface IntrinsicElements {
+        "line-chart-unsupported-data-types": LineChartUnsupportedDataTypes;
         "line-chart-viewport-change": LineChartViewportChange;
         "multiple-statuses": MultipleStatuses;
         "sc-angled-line-segment": ScAngledLineSegment;
@@ -2045,6 +2082,7 @@ declare namespace LocalJSX {
         "sc-scatter-chart-tooltip-with-multiple-data-streams-and-trends": ScScatterChartTooltipWithMultipleDataStreamsAndTrends;
         "sc-scatter-chart-trend-line-color-configuration": ScScatterChartTrendLineColorConfiguration;
         "sc-scatter-chart-trend-line-with-legend": ScScatterChartTrendLineWithLegend;
+        "sc-scatter-chart-unsupported-data-types": ScScatterChartUnsupportedDataTypes;
         "sc-single-bar": ScSingleBar;
         "sc-single-colored-bar": ScSingleColoredBar;
         "sc-size-provider": ScSizeProvider;
@@ -2081,6 +2119,7 @@ declare namespace LocalJSX {
         "sc-webgl-bar-chart-threshold-coloration-multiple-data-stream": ScWebglBarChartThresholdColorationMultipleDataStream;
         "sc-webgl-bar-chart-threshold-coloration-multiple-thresholds": ScWebglBarChartThresholdColorationMultipleThresholds;
         "sc-webgl-bar-chart-threshold-no-coloration": ScWebglBarChartThresholdNoColoration;
+        "sc-webgl-bar-chart-unsupported-data-types": ScWebglBarChartUnsupportedDataTypes;
         "sc-webgl-base-chart": ScWebglBaseChart;
         "sc-webgl-chart-annotation-editable": ScWebglChartAnnotationEditable;
         "sc-webgl-chart-annotations": ScWebglChartAnnotations;
@@ -2128,6 +2167,7 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "line-chart-unsupported-data-types": LocalJSX.LineChartUnsupportedDataTypes & JSXBase.HTMLAttributes<HTMLLineChartUnsupportedDataTypesElement>;
             "line-chart-viewport-change": LocalJSX.LineChartViewportChange & JSXBase.HTMLAttributes<HTMLLineChartViewportChangeElement>;
             "multiple-statuses": LocalJSX.MultipleStatuses & JSXBase.HTMLAttributes<HTMLMultipleStatusesElement>;
             "sc-angled-line-segment": LocalJSX.ScAngledLineSegment & JSXBase.HTMLAttributes<HTMLScAngledLineSegmentElement>;
@@ -2169,6 +2209,7 @@ declare module "@stencil/core" {
             "sc-scatter-chart-tooltip-with-multiple-data-streams-and-trends": LocalJSX.ScScatterChartTooltipWithMultipleDataStreamsAndTrends & JSXBase.HTMLAttributes<HTMLScScatterChartTooltipWithMultipleDataStreamsAndTrendsElement>;
             "sc-scatter-chart-trend-line-color-configuration": LocalJSX.ScScatterChartTrendLineColorConfiguration & JSXBase.HTMLAttributes<HTMLScScatterChartTrendLineColorConfigurationElement>;
             "sc-scatter-chart-trend-line-with-legend": LocalJSX.ScScatterChartTrendLineWithLegend & JSXBase.HTMLAttributes<HTMLScScatterChartTrendLineWithLegendElement>;
+            "sc-scatter-chart-unsupported-data-types": LocalJSX.ScScatterChartUnsupportedDataTypes & JSXBase.HTMLAttributes<HTMLScScatterChartUnsupportedDataTypesElement>;
             "sc-single-bar": LocalJSX.ScSingleBar & JSXBase.HTMLAttributes<HTMLScSingleBarElement>;
             "sc-single-colored-bar": LocalJSX.ScSingleColoredBar & JSXBase.HTMLAttributes<HTMLScSingleColoredBarElement>;
             "sc-size-provider": LocalJSX.ScSizeProvider & JSXBase.HTMLAttributes<HTMLScSizeProviderElement>;
@@ -2205,6 +2246,7 @@ declare module "@stencil/core" {
             "sc-webgl-bar-chart-threshold-coloration-multiple-data-stream": LocalJSX.ScWebglBarChartThresholdColorationMultipleDataStream & JSXBase.HTMLAttributes<HTMLScWebglBarChartThresholdColorationMultipleDataStreamElement>;
             "sc-webgl-bar-chart-threshold-coloration-multiple-thresholds": LocalJSX.ScWebglBarChartThresholdColorationMultipleThresholds & JSXBase.HTMLAttributes<HTMLScWebglBarChartThresholdColorationMultipleThresholdsElement>;
             "sc-webgl-bar-chart-threshold-no-coloration": LocalJSX.ScWebglBarChartThresholdNoColoration & JSXBase.HTMLAttributes<HTMLScWebglBarChartThresholdNoColorationElement>;
+            "sc-webgl-bar-chart-unsupported-data-types": LocalJSX.ScWebglBarChartUnsupportedDataTypes & JSXBase.HTMLAttributes<HTMLScWebglBarChartUnsupportedDataTypesElement>;
             "sc-webgl-base-chart": LocalJSX.ScWebglBaseChart & JSXBase.HTMLAttributes<HTMLScWebglBaseChartElement>;
             "sc-webgl-chart-annotation-editable": LocalJSX.ScWebglChartAnnotationEditable & JSXBase.HTMLAttributes<HTMLScWebglChartAnnotationEditableElement>;
             "sc-webgl-chart-annotations": LocalJSX.ScWebglChartAnnotations & JSXBase.HTMLAttributes<HTMLScWebglChartAnnotationsElement>;

@@ -64,6 +64,9 @@
 </div>
 ```
 
+> **Supported data type(s): Number** 
+> (alarm streams excluded) 
+
 ### Bar chart with alarms
  
 You can show the current latest alarm status on the legend through setting the `icon` property for the threshold.
