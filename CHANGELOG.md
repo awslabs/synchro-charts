@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 7.0.0 (2022-11-23)
+
+### Breaking changes
+
+* feat: errors for unsupported data types ([#186](https://github.com/awslabs/synchro-charts/pull/186)) ([003b9ae](https://github.com/awslabs/synchro-charts/commit/003b9ae286fc755561eb0fb86bfa046ed039cfe5))
+* fix: apply default breached thresholds behavior to all thresholds ([#183](https://github.com/awslabs/synchro-charts/pull/183) ([89a24cb](https://github.com/awslabs/synchro-charts/commit/89a24cbbca1ca6ccdcf3a46d1519c5487519739a))
+
+### Bug Fixes
+
+* fix: fix severity for breached thresholds ([#183](https://github.com/awslabs/synchro-charts/pull/183)) ([89a24cb](https://github.com/awslabs/synchro-charts/commit/89a24cbbca1ca6ccdcf3a46d1519c5487519739a))
+* feat: add comparators in threshold labels ([#183](https://github.com/awslabs/synchro-charts/pull/183)) ([89a24cb](https://github.com/awslabs/synchro-charts/commit/89a24cbbca1ca6ccdcf3a46d1519c5487519739a))
+
 ## 6.1.0 (2022-11-18)
 
 ### Features
