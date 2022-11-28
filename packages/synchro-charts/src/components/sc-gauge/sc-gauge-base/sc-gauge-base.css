@@ -1,0 +1,46 @@
+sc-gauge-base .error {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: var(--font-size-1);
+  line-height: var(--line-height-3);
+}
+
+sc-gauge-base .error .warning-symbol {
+  transform: scale(0.7);
+}
+
+sc-gauge-base .error sc-error-badge div {
+  padding-left: 0;
+}
+
+sc-gauge-base circle {
+  -webkit-transition: stroke-dasharray 800ms;
+  transition: stroke-dasharray 800ms;
+}
+
+sc-gauge-base {
+  height: inherit;
+}
+
+sc-gauge-base .sc-gaugebase-container {
+  height: inherit;
+}
+
+sc-gauge-base .sc-gaugebase-container .svg-height-no-error {
+  height: 100%;
+}
+
+sc-gauge-base .sc-gaugebase-container .svg-height-error {
+  height: calc(100% - var(--font-size-1) * 3);
+}
+
+sc-grid-tooltip {
+  height: inherit;
+}
+
+sc-grid-tooltip .tooltip-container {
+  height: inherit;
+  overflow: hidden;
+}

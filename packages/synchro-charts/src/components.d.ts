@@ -12,6 +12,7 @@ import { DATA_ALIGNMENT, StatusIcon } from "./components/charts/common/constants
 import { POINT_TYPE } from "./components/charts/sc-webgl-base-chart/activePoints";
 import { DialMessages, DialSizeConfig } from "./components/sc-dial/utils/type";
 import { LabelsConfig, RecursivePartial, TooltipMessage } from "./components/common/types";
+import { GuageOuterRing } from "./components/sc-gauge/utils/type";
 import { RectScrollFixed } from "./utils/types";
 import { Cell, Row } from "./components/sc-table/constructTableData";
 import { ChartSceneCreator, ChartSceneUpdater } from "./components/charts/sc-webgl-base-chart/types";
@@ -125,6 +126,48 @@ export namespace Components {
         "value": string;
     }
     interface ScExpandableInputStandard {
+    }
+    interface ScGauge {
+        "annotations"?: Annotations;
+        "associatedStreams"?: StreamAssociation[];
+        "dataStream": DataStream;
+        "messageOverrides"?: RecursivePartial<DialMessages>;
+        "significantDigits"?: number;
+        "size"?: DialSizeConfig;
+        "viewport": ViewPortConfig;
+        "widgetId": string;
+    }
+    interface ScGaugeBase {
+        "alarmStream"?: DataStream;
+        "breachedThreshold"?: Threshold;
+        "isLoading"?: boolean;
+        "messageOverrides"?: RecursivePartial<DialMessages>;
+        "outerRingRange"?: GuageOuterRing[];
+        "propertyPoint"?: DataPoint<Primitive>;
+        "propertyStream"?: DataStream;
+        "significantDigits"?: number;
+        "size"?: DialSizeConfig;
+        "viewport": ViewPortConfig;
+    }
+    interface ScGaugeLoading {
+        "iconSize": number;
+        "labelSize": number;
+        "loadingText": string;
+        "offsetY": number;
+        "strokeWidth": number;
+    }
+    interface ScGaugeSvg {
+        "breachedThreshold": Threshold;
+        "isLoading": boolean;
+        "loadingText": string;
+        "outerRingRange"?: GuageOuterRing[];
+        "percent": number;
+        "point"?: DataPoint;
+        "significantDigits"?: number;
+        "size"?: DialSizeConfig;
+        "stream"?: DataStream | null;
+        "unit": string;
+        "value": number | string;
     }
     interface ScGestureHandler {
         "onDateRangeChange": ({ end, start }: { start: Date; end: Date }) => void;
@@ -736,6 +779,30 @@ declare global {
     var HTMLScExpandableInputStandardElement: {
         prototype: HTMLScExpandableInputStandardElement;
         new (): HTMLScExpandableInputStandardElement;
+    };
+    interface HTMLScGaugeElement extends Components.ScGauge, HTMLStencilElement {
+    }
+    var HTMLScGaugeElement: {
+        prototype: HTMLScGaugeElement;
+        new (): HTMLScGaugeElement;
+    };
+    interface HTMLScGaugeBaseElement extends Components.ScGaugeBase, HTMLStencilElement {
+    }
+    var HTMLScGaugeBaseElement: {
+        prototype: HTMLScGaugeBaseElement;
+        new (): HTMLScGaugeBaseElement;
+    };
+    interface HTMLScGaugeLoadingElement extends Components.ScGaugeLoading, HTMLStencilElement {
+    }
+    var HTMLScGaugeLoadingElement: {
+        prototype: HTMLScGaugeLoadingElement;
+        new (): HTMLScGaugeLoadingElement;
+    };
+    interface HTMLScGaugeSvgElement extends Components.ScGaugeSvg, HTMLStencilElement {
+    }
+    var HTMLScGaugeSvgElement: {
+        prototype: HTMLScGaugeSvgElement;
+        new (): HTMLScGaugeSvgElement;
     };
     interface HTMLScGestureHandlerElement extends Components.ScGestureHandler, HTMLStencilElement {
     }
@@ -1374,6 +1441,10 @@ declare global {
         "sc-error-badge": HTMLScErrorBadgeElement;
         "sc-expandable-input": HTMLScExpandableInputElement;
         "sc-expandable-input-standard": HTMLScExpandableInputStandardElement;
+        "sc-gauge": HTMLScGaugeElement;
+        "sc-gauge-base": HTMLScGaugeBaseElement;
+        "sc-gauge-loading": HTMLScGaugeLoadingElement;
+        "sc-gauge-svg": HTMLScGaugeSvgElement;
         "sc-gesture-handler": HTMLScGestureHandlerElement;
         "sc-grid": HTMLScGridElement;
         "sc-grid-tooltip": HTMLScGridTooltipElement;
@@ -1588,6 +1659,48 @@ declare namespace LocalJSX {
         "value": string;
     }
     interface ScExpandableInputStandard {
+    }
+    interface ScGauge {
+        "annotations"?: Annotations;
+        "associatedStreams"?: StreamAssociation[];
+        "dataStream": DataStream;
+        "messageOverrides"?: RecursivePartial<DialMessages>;
+        "significantDigits"?: number;
+        "size"?: DialSizeConfig;
+        "viewport": ViewPortConfig;
+        "widgetId": string;
+    }
+    interface ScGaugeBase {
+        "alarmStream"?: DataStream;
+        "breachedThreshold"?: Threshold;
+        "isLoading"?: boolean;
+        "messageOverrides"?: RecursivePartial<DialMessages>;
+        "outerRingRange"?: GuageOuterRing[];
+        "propertyPoint"?: DataPoint<Primitive>;
+        "propertyStream"?: DataStream;
+        "significantDigits"?: number;
+        "size"?: DialSizeConfig;
+        "viewport"?: ViewPortConfig;
+    }
+    interface ScGaugeLoading {
+        "iconSize"?: number;
+        "labelSize"?: number;
+        "loadingText"?: string;
+        "offsetY"?: number;
+        "strokeWidth"?: number;
+    }
+    interface ScGaugeSvg {
+        "breachedThreshold"?: Threshold;
+        "isLoading"?: boolean;
+        "loadingText"?: string;
+        "outerRingRange"?: GuageOuterRing[];
+        "percent"?: number;
+        "point"?: DataPoint;
+        "significantDigits"?: number;
+        "size"?: DialSizeConfig;
+        "stream"?: DataStream | null;
+        "unit"?: string;
+        "value"?: number | string;
     }
     interface ScGestureHandler {
         "onDateRangeChange": ({ end, start }: { start: Date; end: Date }) => void;
@@ -2124,6 +2237,10 @@ declare namespace LocalJSX {
         "sc-error-badge": ScErrorBadge;
         "sc-expandable-input": ScExpandableInput;
         "sc-expandable-input-standard": ScExpandableInputStandard;
+        "sc-gauge": ScGauge;
+        "sc-gauge-base": ScGaugeBase;
+        "sc-gauge-loading": ScGaugeLoading;
+        "sc-gauge-svg": ScGaugeSvg;
         "sc-gesture-handler": ScGestureHandler;
         "sc-grid": ScGrid;
         "sc-grid-tooltip": ScGridTooltip;
@@ -2251,6 +2368,10 @@ declare module "@stencil/core" {
             "sc-error-badge": LocalJSX.ScErrorBadge & JSXBase.HTMLAttributes<HTMLScErrorBadgeElement>;
             "sc-expandable-input": LocalJSX.ScExpandableInput & JSXBase.HTMLAttributes<HTMLScExpandableInputElement>;
             "sc-expandable-input-standard": LocalJSX.ScExpandableInputStandard & JSXBase.HTMLAttributes<HTMLScExpandableInputStandardElement>;
+            "sc-gauge": LocalJSX.ScGauge & JSXBase.HTMLAttributes<HTMLScGaugeElement>;
+            "sc-gauge-base": LocalJSX.ScGaugeBase & JSXBase.HTMLAttributes<HTMLScGaugeBaseElement>;
+            "sc-gauge-loading": LocalJSX.ScGaugeLoading & JSXBase.HTMLAttributes<HTMLScGaugeLoadingElement>;
+            "sc-gauge-svg": LocalJSX.ScGaugeSvg & JSXBase.HTMLAttributes<HTMLScGaugeSvgElement>;
             "sc-gesture-handler": LocalJSX.ScGestureHandler & JSXBase.HTMLAttributes<HTMLScGestureHandlerElement>;
             "sc-grid": LocalJSX.ScGrid & JSXBase.HTMLAttributes<HTMLScGridElement>;
             "sc-grid-tooltip": LocalJSX.ScGridTooltip & JSXBase.HTMLAttributes<HTMLScGridTooltipElement>;
