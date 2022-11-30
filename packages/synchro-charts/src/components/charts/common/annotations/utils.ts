@@ -2,7 +2,7 @@ import { bisector } from 'd3-array';
 
 import { Annotation, Annotations, AnnotationValue, Threshold, YAnnotation } from '../types';
 import { displayDate } from '../../../../utils/time';
-import { Primitive, ViewPort } from '../../../../utils/dataTypes';
+import { Primitive, ThresholdDataTypes, ViewPort } from '../../../../utils/dataTypes';
 import { isValid } from '../../../../utils/predicates';
 import { isNumeric } from '../../../../utils/number';
 import { COMPARISON_OPERATOR, COMPARATOR_MAP } from '../constants';
@@ -237,7 +237,7 @@ export const getValueText = ({
   return '';
 };
 
-export const isThresholdBreached = (value: Primitive, threshold: Threshold): boolean => {
+export const isThresholdBreached = (value: ThresholdDataTypes, threshold: Threshold): boolean => {
   const dataStreamValue = isNumeric(value) ? Number(value) : value;
   const thresholdValue = isNumeric(threshold.value) ? Number(threshold.value) : threshold.value;
   const thresholdComparison = threshold.comparisonOperator;
@@ -269,7 +269,21 @@ export const isThresholdBreached = (value: Primitive, threshold: Threshold): boo
       return dataStreamValue === thresholdValue;
     }
 
+    if (thresholdComparison === COMPARISON_OPERATOR.CONTAINS) {
+      return dataStreamValue.includes(thresholdValue);
+    }
+
     throw new Error(`Unsupported string threshold comparison operator: ${thresholdComparison}`);
+  }
+
+  if (typeof dataStreamValue === 'string' && Array.isArray(thresholdValue)) {
+    if (thresholdComparison === COMPARISON_OPERATOR.EQUAL || thresholdComparison === COMPARISON_OPERATOR.CONTAINS) {
+      return thresholdValue.some(thresholdString => {
+        return dataStreamValue.includes(thresholdString);
+      });
+    }
+
+    throw new Error(`Unsupported string array threshold comparison operator: ${thresholdComparison}`);
   }
 
   if (typeof dataStreamValue === 'boolean' && typeof thresholdValue === 'boolean') {
