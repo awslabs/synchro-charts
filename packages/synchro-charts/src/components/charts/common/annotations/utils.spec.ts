@@ -232,45 +232,53 @@ describe('getValueAndText formatText', () => {
 
 describe('annotation logic', () => {
   describe.each`
-    key      | thresholdValue | operator                                  | expected
-    ${1}     | ${2}           | ${COMPARISON_OPERATOR.GREATER_THAN_EQUAL} | ${false}
-    ${1}     | ${2}           | ${COMPARISON_OPERATOR.GREATER_THAN}       | ${false}
-    ${1}     | ${2}           | ${COMPARISON_OPERATOR.LESS_THAN_EQUAL}    | ${true}
-    ${1}     | ${2}           | ${COMPARISON_OPERATOR.LESS_THAN}          | ${true}
-    ${1}     | ${1}           | ${COMPARISON_OPERATOR.GREATER_THAN_EQUAL} | ${true}
-    ${1}     | ${1}           | ${COMPARISON_OPERATOR.GREATER_THAN}       | ${false}
-    ${1}     | ${1}           | ${COMPARISON_OPERATOR.LESS_THAN_EQUAL}    | ${true}
-    ${1}     | ${1}           | ${COMPARISON_OPERATOR.LESS_THAN}          | ${false}
-    ${0}     | ${0}           | ${COMPARISON_OPERATOR.GREATER_THAN_EQUAL} | ${true}
-    ${0}     | ${0}           | ${COMPARISON_OPERATOR.GREATER_THAN}       | ${false}
-    ${0}     | ${0}           | ${COMPARISON_OPERATOR.LESS_THAN_EQUAL}    | ${true}
-    ${0}     | ${0}           | ${COMPARISON_OPERATOR.LESS_THAN}          | ${false}
-    ${-1}    | ${-1}          | ${COMPARISON_OPERATOR.GREATER_THAN_EQUAL} | ${true}
-    ${-1}    | ${-1}          | ${COMPARISON_OPERATOR.GREATER_THAN}       | ${false}
-    ${-1}    | ${-1}          | ${COMPARISON_OPERATOR.LESS_THAN_EQUAL}    | ${true}
-    ${-1}    | ${-1}          | ${COMPARISON_OPERATOR.LESS_THAN}          | ${false}
-    ${-1}    | ${0}           | ${COMPARISON_OPERATOR.GREATER_THAN_EQUAL} | ${false}
-    ${-1}    | ${0}           | ${COMPARISON_OPERATOR.GREATER_THAN}       | ${false}
-    ${-1}    | ${0}           | ${COMPARISON_OPERATOR.LESS_THAN_EQUAL}    | ${true}
-    ${-1}    | ${0}           | ${COMPARISON_OPERATOR.LESS_THAN}          | ${true}
-    ${1}     | ${0}           | ${COMPARISON_OPERATOR.GREATER_THAN_EQUAL} | ${true}
-    ${1}     | ${0}           | ${COMPARISON_OPERATOR.GREATER_THAN}       | ${true}
-    ${1}     | ${0}           | ${COMPARISON_OPERATOR.LESS_THAN_EQUAL}    | ${false}
-    ${1}     | ${0}           | ${COMPARISON_OPERATOR.LESS_THAN}          | ${false}
-    ${0}     | ${-1}          | ${COMPARISON_OPERATOR.GREATER_THAN_EQUAL} | ${true}
-    ${0}     | ${-1}          | ${COMPARISON_OPERATOR.GREATER_THAN}       | ${true}
-    ${0}     | ${-1}          | ${COMPARISON_OPERATOR.LESS_THAN_EQUAL}    | ${false}
-    ${0}     | ${-1}          | ${COMPARISON_OPERATOR.LESS_THAN}          | ${false}
-    ${1.5}   | ${1.5}         | ${COMPARISON_OPERATOR.EQUAL}              | ${true}
-    ${1.6}   | ${1.5}         | ${COMPARISON_OPERATOR.EQUAL}              | ${false}
-    ${0}     | ${0.1}         | ${COMPARISON_OPERATOR.EQUAL}              | ${false}
-    ${'UP'}  | ${'UP'}        | ${COMPARISON_OPERATOR.EQUAL}              | ${true}
-    ${'ON'}  | ${'OFF'}       | ${COMPARISON_OPERATOR.EQUAL}              | ${false}
-    ${''}    | ${'UP'}        | ${COMPARISON_OPERATOR.EQUAL}              | ${false}
-    ${'1'}   | ${1}           | ${COMPARISON_OPERATOR.EQUAL}              | ${true}
-    ${2e2}   | ${2e2}         | ${COMPARISON_OPERATOR.EQUAL}              | ${true}
-    ${'2e2'} | ${2e2}         | ${COMPARISON_OPERATOR.EQUAL}              | ${true}
-    ${NaN}   | ${NaN}         | ${COMPARISON_OPERATOR.EQUAL}              | ${false}
+    key          | thresholdValue      | operator                                  | expected
+    ${1}         | ${2}                | ${COMPARISON_OPERATOR.GREATER_THAN_EQUAL} | ${false}
+    ${1}         | ${2}                | ${COMPARISON_OPERATOR.GREATER_THAN}       | ${false}
+    ${1}         | ${2}                | ${COMPARISON_OPERATOR.LESS_THAN_EQUAL}    | ${true}
+    ${1}         | ${2}                | ${COMPARISON_OPERATOR.LESS_THAN}          | ${true}
+    ${1}         | ${1}                | ${COMPARISON_OPERATOR.GREATER_THAN_EQUAL} | ${true}
+    ${1}         | ${1}                | ${COMPARISON_OPERATOR.GREATER_THAN}       | ${false}
+    ${1}         | ${1}                | ${COMPARISON_OPERATOR.LESS_THAN_EQUAL}    | ${true}
+    ${1}         | ${1}                | ${COMPARISON_OPERATOR.LESS_THAN}          | ${false}
+    ${0}         | ${0}                | ${COMPARISON_OPERATOR.GREATER_THAN_EQUAL} | ${true}
+    ${0}         | ${0}                | ${COMPARISON_OPERATOR.GREATER_THAN}       | ${false}
+    ${0}         | ${0}                | ${COMPARISON_OPERATOR.LESS_THAN_EQUAL}    | ${true}
+    ${0}         | ${0}                | ${COMPARISON_OPERATOR.LESS_THAN}          | ${false}
+    ${-1}        | ${-1}               | ${COMPARISON_OPERATOR.GREATER_THAN_EQUAL} | ${true}
+    ${-1}        | ${-1}               | ${COMPARISON_OPERATOR.GREATER_THAN}       | ${false}
+    ${-1}        | ${-1}               | ${COMPARISON_OPERATOR.LESS_THAN_EQUAL}    | ${true}
+    ${-1}        | ${-1}               | ${COMPARISON_OPERATOR.LESS_THAN}          | ${false}
+    ${-1}        | ${0}                | ${COMPARISON_OPERATOR.GREATER_THAN_EQUAL} | ${false}
+    ${-1}        | ${0}                | ${COMPARISON_OPERATOR.GREATER_THAN}       | ${false}
+    ${-1}        | ${0}                | ${COMPARISON_OPERATOR.LESS_THAN_EQUAL}    | ${true}
+    ${-1}        | ${0}                | ${COMPARISON_OPERATOR.LESS_THAN}          | ${true}
+    ${1}         | ${0}                | ${COMPARISON_OPERATOR.GREATER_THAN_EQUAL} | ${true}
+    ${1}         | ${0}                | ${COMPARISON_OPERATOR.GREATER_THAN}       | ${true}
+    ${1}         | ${0}                | ${COMPARISON_OPERATOR.LESS_THAN_EQUAL}    | ${false}
+    ${1}         | ${0}                | ${COMPARISON_OPERATOR.LESS_THAN}          | ${false}
+    ${0}         | ${-1}               | ${COMPARISON_OPERATOR.GREATER_THAN_EQUAL} | ${true}
+    ${0}         | ${-1}               | ${COMPARISON_OPERATOR.GREATER_THAN}       | ${true}
+    ${0}         | ${-1}               | ${COMPARISON_OPERATOR.LESS_THAN_EQUAL}    | ${false}
+    ${0}         | ${-1}               | ${COMPARISON_OPERATOR.LESS_THAN}          | ${false}
+    ${1.5}       | ${1.5}              | ${COMPARISON_OPERATOR.EQUAL}              | ${true}
+    ${1.6}       | ${1.5}              | ${COMPARISON_OPERATOR.EQUAL}              | ${false}
+    ${0}         | ${0.1}              | ${COMPARISON_OPERATOR.EQUAL}              | ${false}
+    ${'UP'}      | ${'UP'}             | ${COMPARISON_OPERATOR.EQUAL}              | ${true}
+    ${'ON'}      | ${'OFF'}            | ${COMPARISON_OPERATOR.EQUAL}              | ${false}
+    ${''}        | ${'UP'}             | ${COMPARISON_OPERATOR.EQUAL}              | ${false}
+    ${'1'}       | ${1}                | ${COMPARISON_OPERATOR.EQUAL}              | ${true}
+    ${2e2}       | ${2e2}              | ${COMPARISON_OPERATOR.EQUAL}              | ${true}
+    ${'2e2'}     | ${2e2}              | ${COMPARISON_OPERATOR.EQUAL}              | ${true}
+    ${NaN}       | ${NaN}              | ${COMPARISON_OPERATOR.EQUAL}              | ${false}
+    ${'GO'}      | ${'STOP'}           | ${COMPARISON_OPERATOR.CONTAINS}           | ${false}
+    ${'STOP'}    | ${'STOPPED'}        | ${COMPARISON_OPERATOR.CONTAINS}           | ${false}
+    ${'STOP'}    | ${'STOP'}           | ${COMPARISON_OPERATOR.CONTAINS}           | ${true}
+    ${'STOPPED'} | ${'STOP'}           | ${COMPARISON_OPERATOR.CONTAINS}           | ${true}
+    ${'3 STOP'}  | ${'STOP'}           | ${COMPARISON_OPERATOR.CONTAINS}           | ${true}
+    ${'GO'}      | ${['STOP', 'AUTO']} | ${COMPARISON_OPERATOR.CONTAINS}           | ${false}
+    ${'STOP'}    | ${['STOP']}         | ${COMPARISON_OPERATOR.CONTAINS}           | ${true}
+    ${'STOP'}    | ${['STOP', 'AUTO']} | ${COMPARISON_OPERATOR.CONTAINS}           | ${true}
   `('Check if data point is within the threshold', ({ key, thresholdValue, operator, expected }) => {
     test(`Given the data value of
     ${key} and threshold value of ${thresholdValue} and

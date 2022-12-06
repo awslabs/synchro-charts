@@ -1,14 +1,14 @@
 ```jsx
 import { LEGEND_POSITION, DataType, COMPARISON_OPERATOR } from '@synchro-charts/core';
 const windTableColumn = {
-  header: 'Wind temperture',
+  header: 'Wind temperature',
   rows:[
-    'wind-temperture-station-1',
-    'wind-temperture-station-2',
-    'wind-temperture-station-3',
-    'wind-temperture-station-4',
-    'wind-temperture-station-5',
-    'wind-temperture-station-6',
+    'wind-temperature-station-1',
+    'wind-temperature-station-2',
+    'wind-temperature-station-3',
+    'wind-temperature-station-4',
+    'wind-temperature-station-5',
+    'wind-temperature-station-6',
   ],
 };
 
@@ -28,8 +28,8 @@ const carSpeedTableColumn = {
   <Table
     dataStreams={[
       {
-        id: 'wind-temperture-station-1',
-        name: 'Wind temperture',
+        id: 'wind-temperature-station-1',
+        name: 'Wind temperature',
         data: [{
           x: new Date(2001, 0, 0).getTime(),
           y: 15,
@@ -39,8 +39,8 @@ const carSpeedTableColumn = {
         dataType: DataType.NUMBER,
       },
       {
-        id: 'wind-temperture-station-2',
-        name: 'Wind temperture',
+        id: 'wind-temperature-station-2',
+        name: 'Wind temperature',
         data: [{
           x: new Date(2001, 0, 0).getTime(),
           y: 30,
@@ -50,8 +50,8 @@ const carSpeedTableColumn = {
         dataType: DataType.NUMBER,
       },
       {
-        id: 'wind-temperture-station-3',
-        name: 'Wind temperture',
+        id: 'wind-temperature-station-3',
+        name: 'Wind temperature',
         data: [{
           x: new Date(2001, 0, 0).getTime(),
           y: 40,
@@ -61,8 +61,8 @@ const carSpeedTableColumn = {
         dataType: DataType.NUMBER,
       },
       {
-        id: 'wind-temperture-station-4',
-        name: 'Wind temperture',
+        id: 'wind-temperature-station-4',
+        name: 'Wind temperature',
         data: [{
           x: new Date(2001, 0, 0).getTime(),
           y: 50,
@@ -72,8 +72,8 @@ const carSpeedTableColumn = {
         dataType: DataType.NUMBER,
       },
       {
-        id: 'wind-temperture-station-5',
-        name: 'Wind temperture',
+        id: 'wind-temperature-station-5',
+        name: 'Wind temperature',
         data: [{
           x: new Date(2001, 0, 0).getTime(),
           y: 60,
@@ -83,8 +83,8 @@ const carSpeedTableColumn = {
         dataType: DataType.NUMBER,
       },
       {
-        id: 'wind-temperture-station-6',
-        name: 'Wind temperture',
+        id: 'wind-temperature-station-6',
+        name: 'Wind temperature',
         data: [{
           x: new Date(2001, 0, 0).getTime(),
           y: 70,
@@ -177,8 +177,8 @@ set of data streams under one column.
 An example of creating the table column:
 ```jsx static
 const windTableColumn = {
-  header: 'Wind temperture',
-  rows:['wind-temperture-station-1', 'wind-temperture-station-2'],
+  header: 'Wind temperature',
+  rows:['wind-temperature-station-1', 'wind-temperature-station-2'],
 };
 ```
 
@@ -192,14 +192,14 @@ In this example, we are showing temperatures from two different weather stations
 ```jsx
 import { LEGEND_POSITION, DataType, COMPARISON_OPERATOR } from '@synchro-charts/core';
 const windTableColumn = {
-  header: 'Wind temperture',
+  header: 'Wind temperature',
   rows:[
-    'wind-temperture-station-1',
-    'wind-temperture-station-2',
-    'wind-temperture-station-3',
-    'wind-temperture-station-4',
-    'wind-temperture-station-5',
-    'wind-temperture-station-6',
+    'wind-temperature-station-1',
+    'wind-temperature-station-2',
+    'wind-temperature-station-3',
+    'wind-temperature-station-4',
+    'wind-temperature-station-5',
+    'wind-temperature-station-6',
   ],
 };
 
@@ -219,8 +219,8 @@ const carSpeedTableColumn = {
   <Table
     dataStreams={[
       {
-        id: 'wind-temperture-station-1',
-        name: 'Wind temperture',
+        id: 'wind-temperature-station-1',
+        name: 'Wind temperature',
         data: [{
           x: new Date(2001, 0, 0).getTime(),
           y: 15,
@@ -230,8 +230,8 @@ const carSpeedTableColumn = {
         dataType: DataType.NUMBER,
       },
       {
-        id: 'wind-temperture-station-2',
-        name: 'Wind temperture',
+        id: 'wind-temperature-station-2',
+        name: 'Wind temperature',
         data: [{
           x: new Date(2001, 0, 0).getTime(),
           y: 30,
@@ -241,8 +241,8 @@ const carSpeedTableColumn = {
         dataType: DataType.NUMBER,
       },
       {
-        id: 'wind-temperture-station-3',
-        name: 'Wind temperture',
+        id: 'wind-temperature-station-3',
+        name: 'Wind temperature',
         data: [{
           x: new Date(2001, 0, 0).getTime(),
           y: 40,
@@ -252,8 +252,8 @@ const carSpeedTableColumn = {
         dataType: DataType.NUMBER,
       },
       {
-        id: 'wind-temperture-station-4',
-        name: 'Wind temperture',
+        id: 'wind-temperature-station-4',
+        name: 'Wind temperature',
         data: [{
           x: new Date(2001, 0, 0).getTime(),
           y: 50,
@@ -263,8 +263,8 @@ const carSpeedTableColumn = {
         dataType: DataType.NUMBER,
       },
       {
-        id: 'wind-temperture-station-5',
-        name: 'Wind temperture',
+        id: 'wind-temperature-station-5',
+        name: 'Wind temperature',
         data: [{
           x: new Date(2001, 0, 0).getTime(),
           y: 60,
@@ -274,8 +274,8 @@ const carSpeedTableColumn = {
         dataType: DataType.NUMBER,
       },
       {
-        id: 'wind-temperture-station-6',
-        name: 'Wind temperture',
+        id: 'wind-temperature-station-6',
+        name: 'Wind temperature',
         data: [{
           x: new Date(2001, 0, 0).getTime(),
           y: 70,
@@ -411,26 +411,26 @@ Like the KPI, table status icon currently supports:
 ```jsx
 import { LEGEND_POSITION, DataType, COMPARISON_OPERATOR, StatusIcon, StreamType } from '@synchro-charts/core';
 const windTableColumn = {
-    header: 'Wind temperture',
+    header: 'Wind temperature',
     rows:[
-      'wind-temperture-station-1', 
-      'wind-temperture-station-2',
-      'wind-temperture-station-3',
-      'wind-temperture-station-4',
-      'wind-temperture-station-5',
-      'wind-temperture-station-6',
+      'wind-temperature-station-1', 
+      'wind-temperature-station-2',
+      'wind-temperature-station-3',
+      'wind-temperature-station-4',
+      'wind-temperature-station-5',
+      'wind-temperature-station-6',
     ],
 };
 
 const windTempAlarm = {
   header: 'Status',
   rows:[
-    'wind-temperture-station-1-alarm', 
-    'wind-temperture-station-2-alarm',
-    'wind-temperture-station-3-alarm',
-    'wind-temperture-station-4-alarm',
-    'wind-temperture-station-5-alarm',
-    'wind-temperture-station-6-alarm',
+    'wind-temperature-station-1-alarm', 
+    'wind-temperature-station-2-alarm',
+    'wind-temperature-station-3-alarm',
+    'wind-temperature-station-4-alarm',
+    'wind-temperature-station-5-alarm',
+    'wind-temperature-station-6-alarm',
   ],
 };
 
@@ -438,8 +438,8 @@ const windTempAlarm = {
   <Table
     dataStreams={[
       {
-        id: 'wind-temperture-station-1',
-        name: 'Wind temperture',
+        id: 'wind-temperature-station-1',
+        name: 'Wind temperature',
         data: [{
           x: new Date(2001, 0, 0).getTime(),
           y: 15,
@@ -449,8 +449,8 @@ const windTempAlarm = {
         dataType: DataType.NUMBER,
       },
       {
-        id: 'wind-temperture-station-2',
-        name: 'Wind temperture',
+        id: 'wind-temperature-station-2',
+        name: 'Wind temperature',
         data: [{
           x: new Date(2001, 0, 0).getTime(),
           y: 30,
@@ -460,8 +460,8 @@ const windTempAlarm = {
         dataType: DataType.NUMBER,
       },
       {
-        id: 'wind-temperture-station-3',
-        name: 'Wind temperture',
+        id: 'wind-temperature-station-3',
+        name: 'Wind temperature',
         data: [{
           x: new Date(2001, 0, 0).getTime(),
           y: 40,
@@ -471,8 +471,8 @@ const windTempAlarm = {
         dataType: DataType.NUMBER,
       },
       {
-        id: 'wind-temperture-station-4',
-        name: 'Wind temperture',
+        id: 'wind-temperature-station-4',
+        name: 'Wind temperature',
         data: [{
           x: new Date(2001, 0, 0).getTime(),
           y: 50,
@@ -482,8 +482,8 @@ const windTempAlarm = {
         dataType: DataType.NUMBER,
       },
       {
-        id: 'wind-temperture-station-5',
-        name: 'Wind temperture',
+        id: 'wind-temperature-station-5',
+        name: 'Wind temperature',
         data: [{
           x: new Date(2001, 0, 0).getTime(),
           y: 60,
@@ -493,8 +493,8 @@ const windTempAlarm = {
         dataType: DataType.NUMBER,
       },
       {
-        id: 'wind-temperture-station-6',
-        name: 'Wind temperture',
+        id: 'wind-temperature-station-6',
+        name: 'Wind temperature',
         data: [{
           x: new Date(2001, 0, 0).getTime(),
           y: 70,
@@ -504,7 +504,7 @@ const windTempAlarm = {
         dataType: DataType.NUMBER,
       },
       {
-        id: 'wind-temperture-station-1-alarm',
+        id: 'wind-temperature-station-1-alarm',
         name: 'station 1 alarm',
         data: [{
           x: new Date(2001, 0, 0).getTime(),
@@ -515,7 +515,7 @@ const windTempAlarm = {
         streamType: StreamType.ALARM,
       },
       {
-        id: 'wind-temperture-station-2-alarm',
+        id: 'wind-temperature-station-2-alarm',
         name: 'station 2 alarm',
         data: [{
           x: new Date(2001, 0, 0).getTime(),
@@ -526,7 +526,7 @@ const windTempAlarm = {
         streamType: StreamType.ALARM,
       },
       {
-        id: 'wind-temperture-station-3-alarm',
+        id: 'wind-temperature-station-3-alarm',
         name: 'station 3 alarm',
         data: [{
           x: new Date(2001, 0, 0).getTime(),
@@ -537,7 +537,7 @@ const windTempAlarm = {
         streamType: StreamType.ALARM,
       },
       {
-        id: 'wind-temperture-station-4-alarm',
+        id: 'wind-temperature-station-4-alarm',
         name: 'station 4 alarm',
         data: [{
           x: new Date(2001, 0, 0).getTime(),
@@ -548,7 +548,7 @@ const windTempAlarm = {
         streamType: StreamType.ALARM,
       },
       {
-        id: 'wind-temperture-station-5-alarm',
+        id: 'wind-temperature-station-5-alarm',
         name: 'station 5 alarm',
         data: [{
           x: new Date(2001, 0, 0).getTime(),
@@ -559,7 +559,7 @@ const windTempAlarm = {
         streamType: StreamType.ALARM,
       },
       {
-        id: 'wind-temperture-station-6-alarm',
+        id: 'wind-temperature-station-6-alarm',
         name: 'station 6 alarm',
         data: [{
           x: new Date(2001, 0, 0).getTime(),

@@ -6,6 +6,8 @@ import { DataType, StreamType } from './dataConstants';
 
 export type Primitive = string | number | boolean;
 
+export type ThresholdDataTypes = string | string[] | number | boolean;
+
 export type Timestamp = number;
 
 export type DataPoint<T extends Primitive = Primitive> = { x: Timestamp; y: T };

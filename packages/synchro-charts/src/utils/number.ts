@@ -1,4 +1,4 @@
-import { Primitive } from './dataTypes';
+import { ThresholdDataTypes } from './dataTypes';
 
 const MAX_PRECISION = 4;
 
@@ -26,5 +26,5 @@ export const round = (num: number): number => {
 /**
  * Checks if value can be used as a number
  */
-export const isNumeric = (value: Primitive): boolean =>
+export const isNumeric = (value: ThresholdDataTypes): boolean =>
   /^(\+|-)?(Infinity|\d+)(\.\d+)?e?((\+|-)?\d+)?$/.test(String(value));

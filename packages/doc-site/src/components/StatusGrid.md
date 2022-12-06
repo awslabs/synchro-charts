@@ -5,8 +5,8 @@ import { LEGEND_POSITION, DataType, COMPARISON_OPERATOR, StreamType } from '@syn
   <StatusGrid
     dataStreams={[
       {
-        id: 'wind-temperture',
-        name: 'Wind temperture',
+        id: 'wind-temperature',
+        name: 'Wind temperature',
         data: [{
           x: new Date(2001, 0, 0).getTime(),
           y: 15,
@@ -100,8 +100,8 @@ import { LEGEND_POSITION, DataType, COMPARISON_OPERATOR } from '@synchro-charts/
   <StatusGrid
     dataStreams={[
       {
-        id: 'wind-temperture',
-        name: 'Wind temperture',
+        id: 'wind-temperature',
+        name: 'Wind temperature',
         data: [{
           x: new Date(2001, 0, 0),
           y: 15,
@@ -147,8 +147,8 @@ import { LEGEND_POSITION, DataType, COMPARISON_OPERATOR } from '@synchro-charts/
   <StatusGrid
     dataStreams={[
       {
-        id: 'wind-temperture',
-        name: 'Wind temperture',
+        id: 'wind-temperature',
+        name: 'Wind temperature',
         data: [{
           x: new Date(2001, 0, 0).getTime(),
           y: 15,

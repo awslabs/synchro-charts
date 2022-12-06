@@ -50,6 +50,7 @@ describe.each`
 describe.each`
   value           | expected
   ${'test'}       | ${false}
+  ${['test']}     | ${false}
   ${new Date()}   | ${false}
   ${NaN}          | ${false}
   ${'NaN'}        | ${false}

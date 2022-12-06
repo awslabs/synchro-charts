@@ -666,3 +666,118 @@ const annotations = {
 ```
 
 Note that if severity is left undefined, any threshold with a defined severity will be considered higher priority.
+
+
+### Threshold strings
+A threshold value can be a string or an array of strings.
+
+If the threshold value is a string or an array of strings, the `comparisonOperator` must be `EQUAL` OR `CONTAINS`. The `EQUAL` operator requires the data value to strictly equal the threshold value. The `CONTAINS` operator requires the data value to partly match the threshold value.
+
+Threshold strings and arrays of strings are only supported on the `KPI`, `StatusGrid`, `StatusTimeline`, and `Table` components.
+
+```jsx
+import { Table } from "@synchro-charts/react";
+import { LEGEND_POSITION, DataType, COMPARISON_OPERATOR } from '@synchro-charts/core';
+const windTableColumn = {
+  header: 'Wind temperature',
+  rows:[
+    'wind-temperature-station-1',
+    'wind-temperature-station-2',
+    'wind-temperature-station-3',
+  ],
+};
+
+const carSpeedTableColumn = {
+  header: 'Car speed',
+  rows: [
+    'car-speed', 
+    'car-speed-2',
+    'car-speed-3',
+  ],
+};
+
+<div style={{ width: '100%', height: '300px' }}>
+  <Table
+    dataStreams={[
+      {
+        id: 'wind-temperature-station-1',
+        name: 'Wind temperature',
+        data: [{
+          x: new Date(2001, 0, 0).getTime(),
+          y: 'High',
+        }],
+        resolution: 0,
+        dataType: DataType.NUMBER,
+      },
+      {
+        id: 'wind-temperature-station-2',
+        name: 'Wind temperature',
+        data: [{
+          x: new Date(2001, 0, 0).getTime(),
+          y: 'Windy',
+        }],
+        resolution: 0,
+        dataType: DataType.NUMBER,
+      },
+      {
+        id: 'wind-temperature-station-3',
+        name: 'Wind temperature',
+        data: [{
+          x: new Date(2001, 0, 0).getTime(),
+          y: 'Low',
+        }],
+        resolution: 0,
+        dataType: DataType.NUMBER,
+      },
+      {
+        id: 'car-speed',
+        name: 'Car speed',
+        data: [{
+          x: new Date(2001, 0, 0).getTime(),
+          y: 'Very High',
+        }],
+        resolution: 0,
+        dataType: DataType.NUMBER,
+      },
+      {
+        id: 'car-speed-2',
+        name: 'Car speed',
+        data: [{
+          x: new Date(2001, 0, 0).getTime(),
+          y: 'Dangerous',
+        }],
+        resolution: 0,
+        dataType: DataType.NUMBER,
+      },
+      {
+        id: 'car-speed-3',
+        name: 'Car speed',
+        data: [{
+          x: new Date(2001, 0, 0).getTime(),
+          y: 'Very Low',
+        }],
+        resolution: 0,
+        dataType: DataType.NUMBER,
+      },
+    ]}
+    widgetId="widget-id"
+    annotations={{
+      y: [{
+        color: '#d13212',
+        value: ['High', 'Dangerous'],
+        comparisonOperator: COMPARISON_OPERATOR.CONTAINS,
+      }, {
+        color: '#ff9900',
+        value: 'Low',
+        comparisonOperator: COMPARISON_OPERATOR.CONTAINS,
+      }],
+    }}
+    legend= {{
+      width: 100,
+      position: LEGEND_POSITION.BOTTOM,
+    }}
+    viewport={{ duration: 1000 }}
+    tableColumns={[windTableColumn, carSpeedTableColumn]}
+  />
+</div>
+```

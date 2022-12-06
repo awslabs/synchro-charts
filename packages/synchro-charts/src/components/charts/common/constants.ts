@@ -24,6 +24,7 @@ export enum COMPARISON_OPERATOR {
   LESS_THAN_EQUAL = 'LTE',
   GREATER_THAN_EQUAL = 'GTE',
   EQUAL = 'EQ',
+  CONTAINS = 'CONTAINS',
 }
 
 export const COMPARATOR_MAP = {
