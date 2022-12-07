@@ -1,4 +1,4 @@
-import { SizeConfig } from '../../common/types';
+import { DonutSizeConfig } from '../../common/types';
 
 export type GuageOuterRing = {
   percent: number;
@@ -7,6 +7,6 @@ export type GuageOuterRing = {
   color: string;
 };
 
-export type GaugeSizeConfig = SizeConfig & {
+export type GaugeSizeConfig = DonutSizeConfig & {
   gaugeThickness: number;
 };

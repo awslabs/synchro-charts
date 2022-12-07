@@ -1,5 +1,5 @@
-import { SizeConfig } from '../../common/types';
+import { DonutSizeConfig } from '../../common/types';
 
-export type DialSizeConfig = SizeConfig & {
+export type DialSizeConfig = DonutSizeConfig & {
   dialThickness: number;
 };
