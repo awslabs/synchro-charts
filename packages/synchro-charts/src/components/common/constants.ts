@@ -1,5 +1,5 @@
 import { SECOND_IN_MS } from '../../utils/time';
-import { ErrorMessages, TooltipMessage } from './types';
+import { ErrorMessages, Messages, TooltipMessage } from './types';
 
 export const loading = 'Loading';
 export const DATE_RANGE_EMIT_EVENT_MS = 0.5 * SECOND_IN_MS;
@@ -40,4 +40,10 @@ export const DefaultTooltipMessages: TooltipMessage = {
   tooltipValueTimeDescribed: 'at',
   tooltipStatusTitles: 'Status:',
   tooltipStatusDescribed: 'since',
+};
+
+export const DefaultMessages: Messages = {
+  error: DefaultErrorMessages,
+  loading,
+  tooltip: DefaultTooltipMessages,
 };

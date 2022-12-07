@@ -2,7 +2,7 @@ export const FONT_SIZE = 48;
 export const ICON_SIZE = 24;
 export const LABEL_SIZE = 24;
 export const UNIT_SIZE = 24;
-export const DIAL_THICKNESS = 34;
+export const GAUGE_THICKNESS = 34;
 export const DIAMETER = 138;
 export const STROKE_WIDTH = 1;
 
