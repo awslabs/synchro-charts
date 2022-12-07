@@ -40,7 +40,7 @@ export type AngleDefault = {
   endAngle: number;
 };
 
-export type SizeConfig = {
+export type DonutSizeConfig = {
   fontSize: number;
   iconSize: number;
   labelSize: number;
