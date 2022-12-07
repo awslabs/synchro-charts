@@ -2,10 +2,10 @@ import { Component, h, Prop } from '@stencil/core';
 import merge from 'lodash.merge';
 import { DataPoint, DataStream, Primitive, ViewPortConfig } from '../../../utils/dataTypes';
 import { Threshold } from '../../charts/common/types';
-import { RecursivePartial } from '../../common/types';
-import { DialSizeConfig, DialMessages } from '../utils/type';
-import { DefaultDialMessages } from '../utils/util';
-import { getData, getErrorMessage, getPoint, getPropertyStream } from './formatStream';
+import { DefaultMessages } from '../../common/constants';
+import { getPoint, getPropertyStream, getErrorMessage, getData } from '../../common/formatStream';
+import { Messages, RecursivePartial } from '../../common/types';
+import { DialSizeConfig } from '../utils/type';
 
 const title = (dataStream: { detailedName?: any; name?: any } | null | false | undefined) => {
   if (dataStream) {
@@ -29,16 +29,16 @@ export class ScDialBase {
   @Prop() propertyPoint?: DataPoint<Primitive>;
   @Prop() size?: DialSizeConfig;
 
-  @Prop() messageOverrides?: RecursivePartial<DialMessages>;
+  @Prop() messageOverrides?: RecursivePartial<Messages>;
 
   @Prop() significantDigits?: number;
 
   @Prop() isLoading?: boolean = false;
 
-  private messages: DialMessages;
+  private messages: Messages;
 
   componentWillLoad() {
-    this.messages = merge(DefaultDialMessages, this.messageOverrides);
+    this.messages = merge(DefaultMessages, this.messageOverrides);
   }
 
   render() {

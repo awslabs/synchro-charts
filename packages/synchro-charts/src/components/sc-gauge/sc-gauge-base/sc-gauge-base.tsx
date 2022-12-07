@@ -2,11 +2,10 @@ import { Component, h, Prop } from '@stencil/core';
 import merge from 'lodash.merge';
 import { DataPoint, DataStream, Primitive, ViewPortConfig } from '../../../utils/dataTypes';
 import { Threshold } from '../../charts/common/types';
-import { RecursivePartial } from '../../common/types';
-import { getData, getErrorMessage, getPoint, getPropertyStream } from '../../sc-dial/sc-dial-base/formatStream';
-import { DialMessages, DialSizeConfig } from '../../sc-dial/utils/type';
-import { DefaultDialMessages } from '../../sc-dial/utils/util';
-import { GuageOuterRing } from '../utils/type';
+import { DefaultMessages } from '../../common/constants';
+import { getData, getErrorMessage, getPoint, getPropertyStream } from '../../common/formatStream';
+import { Messages, RecursivePartial } from '../../common/types';
+import { GaugeSizeConfig, GuageOuterRing } from '../utils/type';
 
 const title = (dataStream: { detailedName?: any; name?: any } | null | false | undefined) => {
   if (dataStream) {
@@ -29,19 +28,19 @@ export class ScGaugeBase {
   @Prop() propertyStream?: DataStream;
   @Prop() propertyPoint?: DataPoint<Primitive>;
   @Prop() outerRingRange?: GuageOuterRing[];
-  @Prop() size?: DialSizeConfig;
+  @Prop() size?: GaugeSizeConfig;
 
-  @Prop() messageOverrides?: RecursivePartial<DialMessages>;
+  @Prop() messageOverrides?: RecursivePartial<Messages>;
 
   @Prop() significantDigits?: number;
 
   @Prop() isLoading?: boolean = false;
 
-  private messages: DialMessages;
+  private messages: Messages;
   private unit: string;
 
   componentWillLoad() {
-    this.messages = merge(DefaultDialMessages, this.messageOverrides);
+    this.messages = merge(DefaultMessages, this.messageOverrides);
   }
 
   render() {

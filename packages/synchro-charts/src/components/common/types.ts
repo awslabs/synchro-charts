@@ -39,3 +39,16 @@ export type AngleDefault = {
   startAngle: number;
   endAngle: number;
 };
+
+export type SizeConfig = {
+  fontSize: number;
+  iconSize: number;
+  labelSize: number;
+  unitSize: number;
+};
+
+export type Messages = {
+  error: ErrorMessages;
+  loading: string;
+  tooltip: TooltipMessage;
+};

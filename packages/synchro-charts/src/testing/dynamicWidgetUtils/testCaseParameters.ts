@@ -10,6 +10,7 @@ import {
 } from '../../utils/dataTypes';
 import { Annotations, Axis, LegendConfig, XAnnotation } from '../../components/charts/common/types';
 import { DialSizeConfig } from '../../components/sc-dial/utils/type';
+import { GaugeSizeConfig } from '../../components/sc-gauge/utils/type';
 
 export type SearchQueryParams = {
   alarms?: AlarmsConfig;
@@ -17,7 +18,7 @@ export type SearchQueryParams = {
   width?: number | string;
   axis?: Axis.Options;
   height?: number | string;
-  size?: DialSizeConfig;
+  size?: DialSizeConfig | GaugeSizeConfig;
   yMin?: number;
   yMax?: number;
   duration?: number;

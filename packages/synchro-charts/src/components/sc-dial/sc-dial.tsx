@@ -4,8 +4,8 @@ import { Annotations, Threshold } from '../charts/common/types';
 import { breachedThreshold } from '../charts/common/annotations/breachedThreshold';
 import { isMinimalStaticViewport } from '../../utils/predicates';
 import { getThresholds } from '../charts/common/annotations/utils';
-import { DialMessages, DialSizeConfig } from './utils/type';
-import { RecursivePartial } from '../common/types';
+import { DialSizeConfig } from './utils/type';
+import { Messages, RecursivePartial } from '../common/types';
 
 @Component({
   tag: 'sc-dial',
@@ -19,7 +19,7 @@ export class ScDial {
   @Prop() associatedStreams?: StreamAssociation[];
   @Prop() annotations?: Annotations;
   @Prop() size?: DialSizeConfig;
-  @Prop() messageOverrides?: RecursivePartial<DialMessages>;
+  @Prop() messageOverrides?: RecursivePartial<Messages>;
   @Prop() significantDigits?: number;
 
   getPoint = (dataStream: DataStream): DataPoint | undefined => {

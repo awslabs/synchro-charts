@@ -1,8 +1,8 @@
-import { DataPoint, DataStream, ViewPortConfig } from '../../../utils/dataTypes';
-import { round } from '../../../utils/number';
-import { isNumberDataStream } from '../../../utils/predicates';
-import { ErrorMessageName } from '../../common/constants';
-import { ErrorMessages } from '../../common/types';
+import { DataPoint, DataStream, ViewPortConfig } from '../../utils/dataTypes';
+import { round } from '../../utils/number';
+import { isNumberDataStream } from '../../utils/predicates';
+import { ErrorMessageName } from './constants';
+import { ErrorMessages } from './types';
 
 /**
  * Processing data stream.

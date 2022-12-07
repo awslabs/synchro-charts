@@ -1,6 +1,5 @@
-import { NUMBER_STREAM_1, STRING_STREAM_1 } from '../../../testing/__mocks__/mockWidgetProperties';
-import { DefaultErrorMessages, ErrorMessageName } from '../../common/constants';
-import { DefaultDialMessages } from '../utils/util';
+import { NUMBER_STREAM_1, STRING_STREAM_1 } from '../../testing/__mocks__/mockWidgetProperties';
+import { DefaultErrorMessages, DefaultMessages, ErrorMessageName } from './constants';
 import {
   getData,
   getDeviationDataFlow,
@@ -92,19 +91,17 @@ describe('getErrorMessage', () => {
   const viewport = { yMin: 0, yMax: 100, duration: 1000 };
 
   it('returns Invalid value when `propertyPoint` and `propertyStream` did not provide', () => {
-    expect(getErrorMessage(viewport, DefaultDialMessages.error)).toBe(
+    expect(getErrorMessage(viewport, DefaultMessages.error)).toBe(
       DefaultErrorMessages[ErrorMessageName.INVALID_VALUE_ERROR]
     );
   });
 
   it('returns undefined when `propertyPoint` and `propertyStream` provided', () => {
-    expect(getErrorMessage(viewport, DefaultDialMessages.error, NUMBER_STREAM_1)).toBeEmpty();
+    expect(getErrorMessage(viewport, DefaultMessages.error, NUMBER_STREAM_1)).toBeEmpty();
   });
 
   it('returns `propertyStream`s error when `propertyPoint` and `propertyStream` provided and `propertyStream` provided `error`', () => {
-    expect(getErrorMessage(viewport, DefaultDialMessages.error, { ...NUMBER_STREAM_1, error: 'Invalid' })).toBe(
-      'Invalid'
-    );
+    expect(getErrorMessage(viewport, DefaultMessages.error, { ...NUMBER_STREAM_1, error: 'Invalid' })).toBe('Invalid');
   });
 });
 

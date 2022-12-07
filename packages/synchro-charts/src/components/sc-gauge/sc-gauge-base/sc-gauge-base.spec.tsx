@@ -22,56 +22,56 @@ const newValueSpecPage = async (propOverrides: Partial<Components.ScGaugeBase> =
     html: '<div></div>',
     supportsShadowDom: false,
   });
-  const dialBase = page.doc.createElement('sc-gauge-base') as CustomHTMLElement<Components.ScGaugeBase>;
+  const gaugeBase = page.doc.createElement('sc-gauge-base') as CustomHTMLElement<Components.ScGaugeBase>;
   const props: Partial<Components.ScGaugeBase> = {
     viewport: VIEWPORT,
     ...propOverrides,
   };
-  update(dialBase, props);
-  page.body.appendChild(dialBase);
+  update(gaugeBase, props);
+  page.body.appendChild(gaugeBase);
 
   await page.waitForChanges();
 
-  return { page, dialBase };
+  return { page, gaugeBase };
 };
 
 it('renders normal data when has data', async () => {
-  const { dialBase } = await newValueSpecPage({
+  const { gaugeBase } = await newValueSpecPage({
     propertyStream: NUMBER_STREAM_1,
     propertyPoint: NUMBER_STREAM_1.data[0],
   });
 
-  const dialLoading = dialBase.querySelectorAll('[data-testid="loading"]');
-  const dialDialSvg = dialBase.querySelectorAll('sc-gauge-svg');
-  const errorBadge = dialBase.querySelectorAll('sc-error-badge');
-  expect(dialLoading.length).toBe(0);
-  expect(dialDialSvg.length).toBe(1);
+  const gaugeLoading = gaugeBase.querySelectorAll('[data-testid="loading"]');
+  const gaugegaugeSvg = gaugeBase.querySelectorAll('sc-gauge-svg');
+  const errorBadge = gaugeBase.querySelectorAll('sc-error-badge');
+  expect(gaugeLoading.length).toBe(0);
+  expect(gaugegaugeSvg.length).toBe(1);
   expect(errorBadge.length).toBe(0);
 });
 
 it('renders error message when has error data', async () => {
-  const { dialBase } = await newValueSpecPage({
+  const { gaugeBase } = await newValueSpecPage({
     propertyStream: { ...NUMBER_STREAM_1, error: 'Invalid value' },
     propertyPoint: NUMBER_STREAM_1.data[0],
   });
 
-  const dialLoading = dialBase.querySelectorAll('[data-testid="loading"]');
-  const dialDialSvg = dialBase.querySelectorAll('sc-gauge-svg');
-  const errorBadge = dialBase.querySelectorAll('sc-error-badge');
-  expect(dialLoading.length).toBe(0);
-  expect(dialDialSvg.length).toBe(1);
+  const gaugeLoading = gaugeBase.querySelectorAll('[data-testid="loading"]');
+  const gaugegaugeSvg = gaugeBase.querySelectorAll('sc-gauge-svg');
+  const errorBadge = gaugeBase.querySelectorAll('sc-error-badge');
+  expect(gaugeLoading.length).toBe(0);
+  expect(gaugegaugeSvg.length).toBe(1);
   expect(errorBadge.length).toBe(1);
 });
 
 it('renders loading when loading condition', async () => {
-  const { dialBase } = await newValueSpecPage({
+  const { gaugeBase } = await newValueSpecPage({
     isLoading: true,
     propertyStream: { ...NUMBER_STREAM_1, data: [] },
     propertyPoint: undefined,
   });
 
-  const dialDialSvg = dialBase.querySelectorAll('sc-gauge-svg');
-  const errorBadge = dialBase.querySelectorAll('sc-error-badge');
-  expect(dialDialSvg.length).toBe(1);
+  const gaugegaugeSvg = gaugeBase.querySelectorAll('sc-gauge-svg');
+  const errorBadge = gaugeBase.querySelectorAll('sc-error-badge');
+  expect(gaugegaugeSvg.length).toBe(1);
   expect(errorBadge.length).toBe(0);
 });

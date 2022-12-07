@@ -10,11 +10,10 @@ import { Threshold } from '../../charts/common/types';
 import { ColorConfigurations } from '../../common/constants';
 import { NO_VALUE_PRESENT } from '../../common/terms';
 import { AngleDefault } from '../../common/types';
-import { DialSizeConfig } from '../../sc-dial/utils/type';
-import { GuageOuterRing } from '../utils/type';
+import { GaugeSizeConfig, GuageOuterRing } from '../utils/type';
 import {
   CORNER_RADIUS,
-  DIAL_THICKNESS,
+  GAUGE_THICKNESS,
   DIAMETER,
   END_RADIAN,
   FONT_SIZE,
@@ -48,7 +47,7 @@ export class ScGaugeSvg {
   @Prop() point?: DataPoint;
   @Prop() breachedThreshold: Threshold;
   @Prop() stream?: DataStream | null;
-  @Prop() size?: DialSizeConfig;
+  @Prop() size?: GaugeSizeConfig;
   @Prop() significantDigits?: number;
   @Prop() unit: string;
   @Prop() outerRingRange?: GuageOuterRing[];
@@ -68,7 +67,7 @@ export class ScGaugeSvg {
   @State() label: string;
   @State() showLabel: boolean = false;
 
-  @State() sizeConfig: DialSizeConfig;
+  @State() sizeConfig: GaugeSizeConfig;
 
   oldColorAngle: AngleDefault = {
     startAngle: INITIAL_RADIAN,
@@ -98,11 +97,11 @@ export class ScGaugeSvg {
   }
 
   @Watch('size')
-  onSizeChanged(newSize?: DialSizeConfig) {
+  onSizeChanged(newSize?: GaugeSizeConfig) {
     this.sizeConfig = {
       fontSize: newSize?.fontSize || FONT_SIZE,
       iconSize: newSize?.iconSize || ICON_SIZE,
-      dialThickness: newSize?.dialThickness || DIAL_THICKNESS,
+      gaugeThickness: newSize?.gaugeThickness || GAUGE_THICKNESS,
       labelSize: newSize?.labelSize || LABEL_SIZE,
       unitSize: newSize?.unitSize || UNIT_SIZE,
     };
@@ -117,7 +116,7 @@ export class ScGaugeSvg {
       let labelpositon = RADIAN;
       const ringD: DefaultArcObject = {
         innerRadius: INNERRING_DIAMETER,
-        outerRadius: INNERRING_DIAMETER - this.sizeConfig.dialThickness,
+        outerRadius: INNERRING_DIAMETER - this.sizeConfig.gaugeThickness,
         padAngle: RADIAN / 2,
         startAngle: 0,
         endAngle: 0,
@@ -153,7 +152,7 @@ export class ScGaugeSvg {
   changeRing() {
     const ringD: DefaultArcObject = {
       innerRadius: INNERRING_DIAMETER,
-      outerRadius: INNERRING_DIAMETER - this.sizeConfig.dialThickness,
+      outerRadius: INNERRING_DIAMETER - this.sizeConfig.gaugeThickness,
       padAngle: RADIAN / 2,
       startAngle: 0,
       endAngle: 0,
@@ -252,7 +251,7 @@ export class ScGaugeSvg {
         {this.isLoading ? (
           <sc-gauge-loading
             offsetY={GAUGLE_OFFSET_Y}
-            strokeWidth={this.sizeConfig.dialThickness}
+            strokeWidth={this.sizeConfig.gaugeThickness}
             labelSize={this.sizeConfig.labelSize}
             iconSize={this.sizeConfig.iconSize}
             loadingText={this.loadingText}

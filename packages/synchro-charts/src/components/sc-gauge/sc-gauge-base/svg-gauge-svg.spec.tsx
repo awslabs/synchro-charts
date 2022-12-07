@@ -30,7 +30,7 @@ const DATA_STREAM = {
 
 const SIZE = {
   fontSize: 70,
-  dialThickness: 30,
+  gaugeThickness: 30,
   iconSize: 50,
   labelSize: 30,
   unitSize: 30,
@@ -165,14 +165,14 @@ describe('renders normal component when has changed size', () => {
 
     const ringD: DefaultArcObject = {
       innerRadius: DIAMETER,
-      outerRadius: DIAMETER - SIZE.dialThickness,
+      outerRadius: DIAMETER - SIZE.gaugeThickness,
       padAngle: RADIAN / 2,
       startAngle: 0,
       endAngle: 0,
     };
 
-    expect(colorArc(ringD)).toContain(DIAMETER - SIZE.dialThickness);
-    expect(defaultArc(ringD)).toContain(DIAMETER - SIZE.dialThickness);
+    expect(colorArc(ringD)).toContain(DIAMETER - SIZE.gaugeThickness);
+    expect(defaultArc(ringD)).toContain(DIAMETER - SIZE.gaugeThickness);
   });
 
   it('does default specify font size, icon size, thickness, label size and unit size when no size provided', async () => {
@@ -181,7 +181,7 @@ describe('renders normal component when has changed size', () => {
     const ICON_SIZE = 24;
     const LABEL_SIZE = 24;
     const UNIT_SIZE = 24;
-    const DIAL_THICKNESS = 34;
+    const GAUGE_THICKNESS = 34;
     const { gaugeSvg } = await newValueSpecPage({
       percent: PERCENT,
       value: POINT.y,
@@ -194,7 +194,7 @@ describe('renders normal component when has changed size', () => {
         iconSize: ICON_SIZE,
         labelSize: LABEL_SIZE,
         unitSize: UNIT_SIZE,
-        dialThickness: DIAL_THICKNESS,
+        gaugeThickness: GAUGE_THICKNESS,
       },
     });
     const texts = gaugeSvg.querySelectorAll('text');
@@ -216,14 +216,14 @@ describe('renders normal component when has changed size', () => {
 
     const ringD: DefaultArcObject = {
       innerRadius: DIAMETER,
-      outerRadius: DIAMETER - DIAL_THICKNESS,
+      outerRadius: DIAMETER - GAUGE_THICKNESS,
       padAngle: RADIAN / 2,
       startAngle: 0,
       endAngle: 0,
     };
 
-    expect(colorArc(ringD)).toContain(DIAL_THICKNESS);
-    expect(defaultArc(ringD)).toContain(DIAL_THICKNESS);
+    expect(colorArc(ringD)).toContain(GAUGE_THICKNESS);
+    expect(defaultArc(ringD)).toContain(GAUGE_THICKNESS);
   });
 });
 

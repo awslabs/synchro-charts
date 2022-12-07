@@ -4,9 +4,8 @@ import { Annotations, Threshold } from '../charts/common/types';
 import { breachedThreshold } from '../charts/common/annotations/breachedThreshold';
 import { isMinimalStaticViewport } from '../../utils/predicates';
 import { getNumberThresholds, getThresholds, sortThreshold } from '../charts/common/annotations/utils';
-import { DialMessages, DialSizeConfig } from '../sc-dial/utils/type';
-import { RecursivePartial } from '../common/types';
-import { GuageOuterRing } from './utils/type';
+import { Messages, RecursivePartial } from '../common/types';
+import { GaugeSizeConfig, GuageOuterRing } from './utils/type';
 
 @Component({
   tag: 'sc-gauge',
@@ -19,8 +18,8 @@ export class ScGauge {
   @Prop() dataStream!: DataStream;
   @Prop() associatedStreams?: StreamAssociation[];
   @Prop() annotations?: Annotations;
-  @Prop() size?: DialSizeConfig;
-  @Prop() messageOverrides?: RecursivePartial<DialMessages>;
+  @Prop() size?: GaugeSizeConfig;
+  @Prop() messageOverrides?: RecursivePartial<Messages>;
   @Prop() significantDigits?: number;
 
   getPoint = (dataStream: DataStream): DataPoint | undefined => {

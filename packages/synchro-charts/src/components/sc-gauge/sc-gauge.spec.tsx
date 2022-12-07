@@ -30,7 +30,7 @@ const newValueSpecPage = async (propOverrides: Partial<Components.ScGauge> = {})
   });
   const gauge = page.doc.createElement('sc-gauge') as CustomHTMLElement<Components.ScGauge>;
   const props: Partial<Components.ScGaugeBase> = {
-    widgetId: 'test-dial-widget',
+    widgetId: 'test-gauge-widget',
     dataStream: DATA_STREAMS[0],
     viewport: VIEWPORT,
     ...propOverrides,
@@ -44,7 +44,7 @@ const newValueSpecPage = async (propOverrides: Partial<Components.ScGauge> = {})
 };
 
 describe('Only input data stream', () => {
-  it('Render dial base component', async () => {
+  it('Render gauge base component', async () => {
     const laterDate = new Date((new Date(2020, 1, 0, 0) as Date).getTime() + MINUTE_IN_MS);
     const SOME_LATER_POINT: DataPoint<number> = { y: 111, x: laterDate.getTime() };
     const { gauge } = await newValueSpecPage({ dataStream: { ...DATA_STREAM, data: [SOME_LATER_POINT] } });

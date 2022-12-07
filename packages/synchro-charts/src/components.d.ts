@@ -10,9 +10,9 @@ import { Annotations, Axis, LayoutConfig, Legend, LegendConfig, MovementConfig, 
 import { Trend, TrendResult } from "./components/charts/common/trends/types";
 import { DATA_ALIGNMENT, StatusIcon } from "./components/charts/common/constants";
 import { POINT_TYPE } from "./components/charts/sc-webgl-base-chart/activePoints";
-import { DialMessages, DialSizeConfig } from "./components/sc-dial/utils/type";
-import { LabelsConfig, RecursivePartial, TooltipMessage } from "./components/common/types";
-import { GuageOuterRing } from "./components/sc-gauge/utils/type";
+import { DialSizeConfig } from "./components/sc-dial/utils/type";
+import { LabelsConfig, Messages, RecursivePartial, TooltipMessage } from "./components/common/types";
+import { GaugeSizeConfig, GuageOuterRing } from "./components/sc-gauge/utils/type";
 import { RectScrollFixed } from "./utils/types";
 import { Cell, Row } from "./components/sc-table/constructTableData";
 import { ChartSceneCreator, ChartSceneUpdater } from "./components/charts/sc-webgl-base-chart/types";
@@ -83,7 +83,7 @@ export namespace Components {
         "annotations"?: Annotations;
         "associatedStreams"?: StreamAssociation[];
         "dataStream": DataStream;
-        "messageOverrides"?: RecursivePartial<DialMessages>;
+        "messageOverrides"?: RecursivePartial<Messages>;
         "significantDigits"?: number;
         "size"?: DialSizeConfig;
         "viewport": ViewPortConfig;
@@ -93,7 +93,7 @@ export namespace Components {
         "alarmStream"?: DataStream;
         "breachedThreshold"?: Threshold;
         "isLoading"?: boolean;
-        "messageOverrides"?: RecursivePartial<DialMessages>;
+        "messageOverrides"?: RecursivePartial<Messages>;
         "propertyPoint"?: DataPoint<Primitive>;
         "propertyStream"?: DataStream;
         "significantDigits"?: number;
@@ -131,9 +131,9 @@ export namespace Components {
         "annotations"?: Annotations;
         "associatedStreams"?: StreamAssociation[];
         "dataStream": DataStream;
-        "messageOverrides"?: RecursivePartial<DialMessages>;
+        "messageOverrides"?: RecursivePartial<Messages>;
         "significantDigits"?: number;
-        "size"?: DialSizeConfig;
+        "size"?: GaugeSizeConfig;
         "viewport": ViewPortConfig;
         "widgetId": string;
     }
@@ -141,12 +141,12 @@ export namespace Components {
         "alarmStream"?: DataStream;
         "breachedThreshold"?: Threshold;
         "isLoading"?: boolean;
-        "messageOverrides"?: RecursivePartial<DialMessages>;
+        "messageOverrides"?: RecursivePartial<Messages>;
         "outerRingRange"?: GuageOuterRing[];
         "propertyPoint"?: DataPoint<Primitive>;
         "propertyStream"?: DataStream;
         "significantDigits"?: number;
-        "size"?: DialSizeConfig;
+        "size"?: GaugeSizeConfig;
         "viewport": ViewPortConfig;
     }
     interface ScGaugeLoading {
@@ -164,7 +164,7 @@ export namespace Components {
         "percent": number;
         "point"?: DataPoint;
         "significantDigits"?: number;
-        "size"?: DialSizeConfig;
+        "size"?: GaugeSizeConfig;
         "stream"?: DataStream | null;
         "unit": string;
         "value": number | string;
@@ -1616,7 +1616,7 @@ declare namespace LocalJSX {
         "annotations"?: Annotations;
         "associatedStreams"?: StreamAssociation[];
         "dataStream": DataStream;
-        "messageOverrides"?: RecursivePartial<DialMessages>;
+        "messageOverrides"?: RecursivePartial<Messages>;
         "significantDigits"?: number;
         "size"?: DialSizeConfig;
         "viewport": ViewPortConfig;
@@ -1626,7 +1626,7 @@ declare namespace LocalJSX {
         "alarmStream"?: DataStream;
         "breachedThreshold"?: Threshold;
         "isLoading"?: boolean;
-        "messageOverrides"?: RecursivePartial<DialMessages>;
+        "messageOverrides"?: RecursivePartial<Messages>;
         "propertyPoint"?: DataPoint<Primitive>;
         "propertyStream"?: DataStream;
         "significantDigits"?: number;
@@ -1664,9 +1664,9 @@ declare namespace LocalJSX {
         "annotations"?: Annotations;
         "associatedStreams"?: StreamAssociation[];
         "dataStream": DataStream;
-        "messageOverrides"?: RecursivePartial<DialMessages>;
+        "messageOverrides"?: RecursivePartial<Messages>;
         "significantDigits"?: number;
-        "size"?: DialSizeConfig;
+        "size"?: GaugeSizeConfig;
         "viewport": ViewPortConfig;
         "widgetId": string;
     }
@@ -1674,12 +1674,12 @@ declare namespace LocalJSX {
         "alarmStream"?: DataStream;
         "breachedThreshold"?: Threshold;
         "isLoading"?: boolean;
-        "messageOverrides"?: RecursivePartial<DialMessages>;
+        "messageOverrides"?: RecursivePartial<Messages>;
         "outerRingRange"?: GuageOuterRing[];
         "propertyPoint"?: DataPoint<Primitive>;
         "propertyStream"?: DataStream;
         "significantDigits"?: number;
-        "size"?: DialSizeConfig;
+        "size"?: GaugeSizeConfig;
         "viewport"?: ViewPortConfig;
     }
     interface ScGaugeLoading {
@@ -1697,7 +1697,7 @@ declare namespace LocalJSX {
         "percent"?: number;
         "point"?: DataPoint;
         "significantDigits"?: number;
-        "size"?: DialSizeConfig;
+        "size"?: GaugeSizeConfig;
         "stream"?: DataStream | null;
         "unit"?: string;
         "value"?: number | string;

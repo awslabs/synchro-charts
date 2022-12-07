@@ -12,7 +12,7 @@ const VIEWPORT = { duration: undefined, yMin: Y_MIN, yMax: Y_MAX };
 
 const GAUGLE_SIZE = {
   fontSize: 50,
-  dialThickness: 30,
+  gaugeThickness: 30,
   iconSize: 30,
   labelSize: 20,
   unitSize: 30,
@@ -403,7 +403,7 @@ it('renders error message when value is less than `yMin` and unit is exist.', ()
   cy.matchImageSnapshotOnCI();
 });
 
-it.only('renders loading status', () => {
+it('renders loading status', () => {
   const LATEST_VALUE = 2238;
   visitDynamicWidget(cy, {
     componentTag: 'sc-gauge',
