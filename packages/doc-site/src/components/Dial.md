@@ -2,9 +2,9 @@
 import { COMPARISON_OPERATOR, StatusIcon, StreamType, DataType } from '@synchro-charts/core';
 <div style={{ width: '100%', height: '300px' }}>
   <Dial
-    widgetId="test-widget"
+    widgetId="test-widget-1"
     dataStream={{
-      id: 'car-speed-alarm',
+      id: 'car-speed-alarm-1',
       name: 'Wind temperature',
       data: [
         {
@@ -48,9 +48,9 @@ const size = {
 import { COMPARISON_OPERATOR, StatusIcon, StreamType, DataType } from '@synchro-charts/core';
 <div style={{ width: '100%', height: '300px' }}>
   <Dial
-    widgetId="test-widget"
+    widgetId="test-widget-2"
     dataStream={{
-      id: 'car-speed-alarm',
+      id: 'car-speed-alarm-2',
       name: 'Wind temperature',
       data: [
         {
@@ -82,9 +82,9 @@ const significantDigits = 3;
 
 <div style={{ width: '100%', height: '300px' }}>
   <Dial
-    widgetId="test-widget"
+    widgetId="test-widget-3"
     dataStream={{
-      id: 'car-speed-alarm',
+      id: 'car-speed-alarm-3',
       name: 'Wind temperature',
       data: [
         {
@@ -114,9 +114,9 @@ const significantDigits = 3;
 import { COMPARISON_OPERATOR, StatusIcon, StreamType, DataType } from '@synchro-charts/core';
 <div style={{ width: '100%', height: '300px' }}>
   <Dial
-    widgetId="test-widget"
+    widgetId="test-widget-4"
     dataStream={{
-      id: 'car-speed-alarm',
+      id: 'car-speed-alarm-4',
       name: 'Wind temperature',
       data: [
         {
@@ -144,9 +144,9 @@ import { COMPARISON_OPERATOR, StatusIcon, StreamType, DataType } from '@synchro-
 import { COMPARISON_OPERATOR, StatusIcon, StreamType, DataType } from '@synchro-charts/core';
 <div style={{ width: '100%', height: '300px' }}>
   <Dial
-    widgetId="test-widget"
+    widgetId="test-widget-5"
     dataStream={{
-      id: 'car-speed-alarm',
+      id: 'car-speed-alarm-5',
       name: 'Wind temperature',
       data: [
         {
@@ -192,9 +192,9 @@ Corresponding value you can custom.
 import { COMPARISON_OPERATOR, StatusIcon, StreamType, DataType } from '@synchro-charts/core';
 <div style={{ width: '100%', height: '300px' }}>
   <Dial
-    widgetId="test-widget"
+    widgetId="test-widget-6"
     dataStream={{
-      id: 'car-speed-alarm',
+      id: 'car-speed-alarm-6',
       name: 'Wind temperature',
       data: [
         {
@@ -207,7 +207,7 @@ import { COMPARISON_OPERATOR, StatusIcon, StreamType, DataType } from '@synchro-
     }}
     associatedStreams={[
       {
-        id: 'car-speed-alarm',
+        id: 'car-speed-alarm-6',
         type: StreamType.ALARM,
       },
     ]}
@@ -217,7 +217,7 @@ import { COMPARISON_OPERATOR, StatusIcon, StreamType, DataType } from '@synchro-
           color: '#C03F25',
           value: 660,
           comparisonOperator: COMPARISON_OPERATOR.LESS_THAN_EQUAL,
-          dataStreamIds: ['car-speed-alarm'],
+          dataStreamIds: ['car-speed-alarm-6'],
           label: {
             text: 'Critical',
             show: true,
@@ -228,7 +228,7 @@ import { COMPARISON_OPERATOR, StatusIcon, StreamType, DataType } from '@synchro-
           color: '#F29D38',
           value: 1320,
           comparisonOperator: COMPARISON_OPERATOR.LESS_THAN_EQUAL,
-          dataStreamIds: ['car-speed-alarm'],
+          dataStreamIds: ['car-speed-alarm-6'],
           label: {
             text: 'Warning',
             show: true,
@@ -239,7 +239,7 @@ import { COMPARISON_OPERATOR, StatusIcon, StreamType, DataType } from '@synchro-
           color: '#3F7E23',
           value: 1320,
           comparisonOperator: COMPARISON_OPERATOR.GREATER_THAN,
-          dataStreamIds: ['car-speed-alarm'],
+          dataStreamIds: ['car-speed-alarm-6'],
           label: {
             text: 'Normal',
             show: true,
