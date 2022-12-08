@@ -17,3 +17,4 @@ export const StatusTimeline = /*@__PURE__*/createReactComponent<JSX.ScWebglConte
 export const Table = /*@__PURE__*/createReactComponent<JSX.ScWebglContext, HTMLScWebglContextElement>('sc-table');
 export const WebglContext = /*@__PURE__*/createReactComponent<JSX.ScWebglContext, HTMLScWebglContextElement>('sc-webgl-context');
 export const Dial = /*@__PURE__*/createReactComponent<JSX.ScDial, HTMLScDialElement>('sc-dial');
+export const Gauge = /*@__PURE__*/createReactComponent<JSX.ScGauge, HTMLScDialElement>('sc-gauge');

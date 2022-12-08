@@ -175,7 +175,7 @@ export class ScGaugeSvg {
       .startAngle(endAngle2)
       .endAngle(endAngle1);
 
-    transition()
+    transition(this.stream?.id)
       .duration(DURATION)
       .ease(easeCubicInOut)
       .attrTween('d', () => {
