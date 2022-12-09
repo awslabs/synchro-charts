@@ -311,6 +311,9 @@ export class ScWebglBaseChart {
 
   @Watch('dataStreams')
   onDataStreamsChange() {
+    // avoid updating if new dataStream has unsupported data
+    if (!this.getHasSupportedData()) return;
+
     // Avoiding a deep equality check due to the cost on a potentially large object.
     this.onUpdate(this.activeViewPort(), true);
   }
@@ -487,6 +490,12 @@ export class ScWebglBaseChart {
       this.trendContainer = this.el.querySelector('.trend-container') as SVGElement;
     }
     return this.trendContainer;
+  };
+
+  getHasSupportedData = (): boolean => {
+    return this.dataStreams.every(
+      ({ streamType, dataType }) => streamType === StreamType.ALARM || this.supportedDataTypes.includes(dataType)
+    );
   };
 
   thresholds = (): Threshold[] =>
@@ -831,9 +840,6 @@ export class ScWebglBaseChart {
     const { marginLeft, marginTop, marginRight, marginBottom } = chartSizeConfig;
 
     const hasError = this.dataStreams.some(({ error }) => error != null);
-    const hasSupportedDataTypes = this.dataStreams.every(
-      ({ streamType, dataType }) => streamType === StreamType.ALARM || this.supportedDataTypes.includes(dataType)
-    );
 
     const shouldDisplayAsLoading = !hasError && this.visualizedDataStreams().some(({ isLoading }) => isLoading);
     const hasNoDataStreamsPresent = this.visualizedDataStreams().length === 0;
@@ -855,7 +861,7 @@ export class ScWebglBaseChart {
         ? this.legend.showDataStreamColor
         : DEFAULT_SHOW_DATA_STREAM_COLOR;
 
-    if (!hasSupportedDataTypes) {
+    if (!this.getHasSupportedData()) {
       return (
         <div class="awsui sc-webgl-base-chart">
           <UnsupportedDataTypeStatus
