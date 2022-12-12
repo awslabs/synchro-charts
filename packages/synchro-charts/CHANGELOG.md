@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 7.1.0 (2022-12-12)
+
+### Features
+
+feat: add 'contains' operator to thresholds ([#190](https://github.com/awslabs/synchro-charts/pull/190)) ([93931bd](https://github.com/awslabs/synchro-charts/commit/93931bd897f6f8ba7aadaba51d4e26b47b0d5c3e))
+
+### Bug Fixes
+
+* fix: prevent update if unsupported data is present ([#196](https://github.com/awslabs/synchro-charts/pull/196)) ([7f4e698](https://github.com/awslabs/synchro-charts/commit/7f4e6988163a14ba1e9d41180c909df896b18497))
+
 ## 7.0.0 (2022-11-23)
 
 ### Breaking changes
