@@ -215,7 +215,7 @@ describe('syncing managers', () => {
 
     groups.add({ manager });
 
-    groups.syncViewPortGroup({ start: START, end: END, manager: manager, duration: 60000 });
+    groups.syncViewPortGroup({ start: START, end: END, manager, duration: 60000 });
 
     expect(manager.updateViewPort).toBeCalledWith(
       expect.objectContaining({
