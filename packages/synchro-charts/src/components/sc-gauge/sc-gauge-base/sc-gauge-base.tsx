@@ -66,8 +66,6 @@ export class ScGaugeBase {
         propertyPoint={this.propertyPoint}
         alarmPoint={this.alarmStream && this.propertyPoint}
         breachedThreshold={this.breachedThreshold}
-        unit={unit}
-        value={value}
         messageOverrides={this.messages.tooltip}
         isEnabled
       >

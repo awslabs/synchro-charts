@@ -21,8 +21,6 @@ export class ScGridTooltip {
   @Prop() propertyPoint?: DataPoint;
   @Prop() alarmPoint?: DataPoint;
   @Prop() breachedThreshold?: Threshold;
-  @Prop() unit?: string;
-  @Prop() value?: number | string;
 
   @Prop() messageOverrides: RecursivePartial<TooltipMessage>;
 
@@ -62,9 +60,8 @@ export class ScGridTooltip {
     const color = this.breachedThreshold ? this.breachedThreshold.color : undefined;
     const displaysMoreThanTitle = thereIsSomeData && this.isEnabled;
     const icon = this.breachedThreshold ? this.breachedThreshold.icon : undefined;
-    const label = this.breachedThreshold ? this.breachedThreshold.label : undefined;
-    const unit = this.unit || '';
-    const value = this.value || this.propertyPoint?.y;
+    const label = this.breachedThreshold ? this.breachedThreshold.label?.text : undefined;
+    const alarmValue = label || this.alarmPoint?.y;
 
     return (
       <div class="tooltip-container">
@@ -81,7 +78,7 @@ export class ScGridTooltip {
                     <div>
                       <strong style={{ color }}>
                         {icon && <sc-chart-icon name={icon} color={color} style={{ marginRight: '3px' }} />}
-                        <Value value={value} unit={unit} />
+                        <Value value={this.propertyPoint?.y} />
                       </strong>{' '}
                       {this.messages.tooltipValueTimeDescribed}{' '}
                       {new Date(this.propertyPoint.x).toLocaleString('en-US', {
@@ -96,28 +93,24 @@ export class ScGridTooltip {
                   </div>
                 )}
 
-                {label ? (
-                  <strong style={{ color }}>{this.breachedThreshold?.label?.text}</strong>
-                ) : (
-                  this.alarmPoint && (
+                {this.alarmPoint && (
+                  <div>
+                    <div class="awsui-util-label">{this.messages.tooltipStatusTitles}</div>
                     <div>
-                      <div class="awsui-util-label">{this.messages.tooltipValueTitles}</div>
-                      <div>
-                        <strong style={{ color }}>{this.alarmPoint.y}</strong> {this.messages.tooltipStatusDescribed}{' '}
-                        {new Date(this.alarmPoint.x).toLocaleString('en-US', {
-                          hour12: true,
-                          minute: 'numeric',
-                          hour: 'numeric',
-                          year: 'numeric',
-                          month: 'numeric',
-                          day: 'numeric',
-                        })}
-                        {this.breachedThreshold && this.breachedThreshold.description && (
-                          <div>({this.breachedThreshold.description})</div>
-                        )}
-                      </div>
+                      <strong style={{ color }}>{alarmValue}</strong> {this.messages.tooltipStatusDescribed}{' '}
+                      {new Date(this.alarmPoint.x).toLocaleString('en-US', {
+                        hour12: true,
+                        minute: 'numeric',
+                        hour: 'numeric',
+                        year: 'numeric',
+                        month: 'numeric',
+                        day: 'numeric',
+                      })}
+                      {this.breachedThreshold && this.breachedThreshold.description && (
+                        <div>({this.breachedThreshold.description})</div>
+                      )}
                     </div>
-                  )
+                  </div>
                 )}
               </div>
             </div>

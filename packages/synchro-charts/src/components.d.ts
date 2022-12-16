@@ -183,8 +183,6 @@ export namespace Components {
         "messageOverrides": RecursivePartial<TooltipMessage>;
         "propertyPoint"?: DataPoint;
         "title": string;
-        "unit"?: string;
-        "value"?: number | string;
     }
     interface ScHelpTooltip {
         "message": string;
@@ -1716,8 +1714,6 @@ declare namespace LocalJSX {
         "messageOverrides"?: RecursivePartial<TooltipMessage>;
         "propertyPoint"?: DataPoint;
         "title"?: string;
-        "unit"?: string;
-        "value"?: number | string;
     }
     interface ScHelpTooltip {
         "message": string;
