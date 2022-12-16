@@ -164,7 +164,8 @@ export class ViewportHandler<T extends ViewPortManager> {
     }
 
     const updateViewPort = (v: T) => {
-      v.updateViewPort({ start, end, duration });
+      const isInLiveMode = Boolean(duration);
+      v.updateViewPort({ start, end, duration, shouldBlockDateRangeChangedEvent: isInLiveMode });
     };
 
     if (manager.viewportGroup) {

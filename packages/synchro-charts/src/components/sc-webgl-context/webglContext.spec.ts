@@ -62,7 +62,7 @@ describe('sync chart scene cameras', () => {
     const start = new Date(2000, 0, 0);
     const end = new Date();
     webGLRenderer.updateViewPorts({ start, end, manager: chartScene1 });
-    expect(chartScene1.updateViewPort).toBeCalledWith({ start, end });
+    expect(chartScene1.updateViewPort).toBeCalledWith(expect.objectContaining({ start, end }));
   });
 
   it('syncs multiple cameras viewport', () => {
@@ -79,8 +79,8 @@ describe('sync chart scene cameras', () => {
     const start = new Date(2000, 0, 0);
     const end = new Date();
     webGLRenderer.updateViewPorts({ start, end, manager: chartScene1 });
-    expect(chartScene1.updateViewPort).toBeCalledWith({ start, end });
-    expect(chartScene2.updateViewPort).toBeCalledWith({ start, end });
+    expect(chartScene1.updateViewPort).toBeCalledWith(expect.objectContaining({ start, end }));
+    expect(chartScene2.updateViewPort).toBeCalledWith(expect.objectContaining({ start, end }));
   });
 
   it('does not sync camera of removed chart scene', () => {
