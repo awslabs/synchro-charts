@@ -213,7 +213,7 @@ describe('syncing managers', () => {
 
     const manager = viewportManager(VIEWPORT_GROUP);
 
-    groups.add({ manager: manager });
+    groups.add({ manager });
 
     groups.syncViewPortGroup({ start: START, end: END, manager: manager, duration: 60000 });
 
