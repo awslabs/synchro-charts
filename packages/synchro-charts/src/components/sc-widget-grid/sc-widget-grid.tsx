@@ -120,7 +120,8 @@ export class ScWidgetGrid implements ChartConfig {
     const hasViewPortChanged =
       viewportStartDate(this.viewport).getTime() !== start.getTime() ||
       viewportEndDate(this.viewport).getTime() !== end.getTime();
-    if (hasViewPortChanged) {
+    const isInLiveMode = Boolean(duration);
+    if (hasViewPortChanged && !isInLiveMode) {
       this.onDateRangeChange([start, end, this.viewport.group]);
     }
     // Update active viewport

@@ -71,11 +71,11 @@ describe('syncing managers', () => {
 
     /** Manager 1 is updated */
     expect(manager1.updateViewPort).toBeCalledTimes(1);
-    expect(manager1.updateViewPort).toBeCalledWith({ start: START, end: END });
+    expect(manager1.updateViewPort).toBeCalledWith(expect.objectContaining({ start: START, end: END }));
 
     /** Manager 2 is updated */
     expect(manager2.updateViewPort).toBeCalledTimes(1);
-    expect(manager2.updateViewPort).toBeCalledWith({ start: START, end: END });
+    expect(manager2.updateViewPort).toBeCalledWith(expect.objectContaining({ start: START, end: END }));
   });
 
   it('always updates any managers when syncViewPortGroup is called', () => {
@@ -115,7 +115,7 @@ describe('syncing managers', () => {
 
     /** The manager which initiated the view port sync is updated */
     expect(manager1.updateViewPort).toBeCalledTimes(1);
-    expect(manager1.updateViewPort).toBeCalledWith({ start: START, end: END });
+    expect(manager1.updateViewPort).toBeCalledWith(expect.objectContaining({ start: START, end: END }));
 
     /** The other manager, which is in a different view port group, is not updated */
     expect(manager2.updateViewPort).not.toBeCalled();
@@ -136,7 +136,7 @@ describe('syncing managers', () => {
     groups.syncViewPortGroup({ start: START, end: END, manager: manager1 });
 
     expect(manager1.updateViewPort).toBeCalledTimes(1);
-    expect(manager1.updateViewPort).toBeCalledWith({ start: START, end: END });
+    expect(manager1.updateViewPort).toBeCalledWith(expect.objectContaining({ start: START, end: END }));
 
     expect(manager2.updateViewPort).not.toBeCalled();
   });
@@ -202,6 +202,26 @@ describe('syncing managers', () => {
 
     /** manager added to existing view port group that has had it's viewport synced should have it's viewport synced to the group */
     expect(manager2.updateViewPort).not.toBeCalled();
+  });
+
+  it('blocks dateRangeChanged event emission when a duration is passed in', () => {
+    const groups = new ViewportHandler();
+
+    const VIEWPORT_GROUP = 'view-port-group-1';
+    const START = new Date(2000, 0, 0);
+    const END = new Date(2001, 0, 0);
+
+    const manager = viewportManager(VIEWPORT_GROUP);
+
+    groups.add({ manager });
+
+    groups.syncViewPortGroup({ start: START, end: END, manager, duration: 60000 });
+
+    expect(manager.updateViewPort).toBeCalledWith(
+      expect.objectContaining({
+        shouldBlockDateRangeChangedEvent: true,
+      })
+    );
   });
 });
 
