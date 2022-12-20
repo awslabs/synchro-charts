@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.1.1](https://github.com/awslabs/synchro-charts/compare/synchro-charts-v7.1.0...synchro-charts-v7.1.1) (2022-12-20)
+
+
+### Bug Fixes
+
+* do not emit dateRangeChange in live mode ([#210](https://github.com/awslabs/synchro-charts/issues/210)) ([290098b](https://github.com/awslabs/synchro-charts/commit/290098bbe76ec030c55c44ddfd29b0cfb15bc5ea))
+
 ## 7.1.0 (2022-12-12)
 
 ### Features
