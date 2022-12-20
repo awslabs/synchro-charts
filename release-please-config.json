@@ -1,0 +1,32 @@
+{
+  "packages": {
+    ".": {
+      "component": "root"
+    },
+    "packages/synchro-charts": {
+      "component": "synchro-charts"
+    },
+    "packages/synchro-charts-react": {
+      "component": "synchro-charts-react"
+    }
+  },
+  "bootstrap-sha": "69b68f26508e9628846d979fdb81753fc3a3ac43",
+  "release-type": "node",
+  "plugins": [
+    {
+      "type": "node-workspace",
+      "merge": false
+    },
+    {
+      "type": "linked-versions",
+      "group-name": "iot-app-kit",
+      "components": [
+        "root",
+        "synchro-charts",
+        "synchro-charts-react"
+      ]
+    }
+  ],
+  "pull-request-title-pattern": "chore: release ${version}" ,
+  "group-pull-request-title-pattern": "chore: release ${version}"
+}
