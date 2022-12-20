@@ -1,6 +1,6 @@
 {
   "name": "synchro-charts",
-  "version": "1.0.0",
+  "version": "7.1.1",
   "description": "Time series visualization library",
   "homepage": "https://synchrocharts.com",
   "main": "index.js",
