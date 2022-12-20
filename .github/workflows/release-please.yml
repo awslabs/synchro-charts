@@ -31,9 +31,6 @@ jobs:
         with:
           node-version: 16.x
 
-      - name: Updating package-lock.json file
-        run: yarn install --no-audit --no-fund --ignore-scripts --package-lock-only
-
       - name: Merging changes with last commit
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
