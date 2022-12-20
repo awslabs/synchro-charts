@@ -19,7 +19,7 @@
     },
     {
       "type": "linked-versions",
-      "group-name": "iot-app-kit",
+      "group-name": "synchro-charts",
       "components": [
         "root",
         "synchro-charts",
