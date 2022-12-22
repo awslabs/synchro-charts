@@ -311,9 +311,6 @@ export class ScWebglBaseChart {
 
   @Watch('dataStreams')
   onDataStreamsChange() {
-    // avoid updating if new dataStream has unsupported data
-    if (!this.getHasSupportedData()) return;
-
     // Avoiding a deep equality check due to the cost on a potentially large object.
     this.onUpdate(this.activeViewPort(), true);
   }
@@ -561,6 +558,9 @@ export class ScWebglBaseChart {
     hasAnnotationChanged: boolean = false,
     shouldRerender: boolean = false
   ) => {
+    // avoid updating if dataStream has unsupported data
+    if (!this.getHasSupportedData()) return;
+
     const hasViewPortChanged = this.start.getTime() !== start.getTime() || this.end.getTime() !== end.getTime();
     if (hasViewPortChanged && !shouldBlockDateRangeChangedEvent) {
       this.onDateRangeChange([start, end, this.viewport.group]);
