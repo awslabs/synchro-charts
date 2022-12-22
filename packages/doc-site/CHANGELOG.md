@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 7.1.2 (2022-12-22)
+
+### Chore
+
+* chore: move check for unsupported data ([#216](https://github.com/awslabs/synchro-charts/pull/216)) ([d4e7702](https://github.com/awslabs/synchro-charts/commit/d4e7702a0d8ee329f0f15d0b6100c292ea81e44a))
+
 ## 7.1.0 (2022-12-12)
 
 ### Features
