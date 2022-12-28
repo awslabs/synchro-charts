@@ -10,3 +10,7 @@ export const viewportStartDate = (viewportConfig: MinimalViewPortConfig): Date =
 export const viewportEndDate = (viewportConfig: MinimalViewPortConfig): Date => {
   return isMinimalStaticViewport(viewportConfig) ? new Date(viewportConfig.end) : new Date(Date.now());
 };
+
+export const isInLiveMode = (viewport: MinimalViewPortConfig): boolean => {
+  return !isMinimalStaticViewport(viewport) && Boolean(viewport.duration);
+};

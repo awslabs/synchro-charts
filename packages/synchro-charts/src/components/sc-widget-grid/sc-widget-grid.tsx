@@ -15,7 +15,7 @@ import { getThresholds } from '../charts/common/annotations/utils';
 import { breachedThreshold } from '../charts/common/annotations/breachedThreshold';
 import { streamPairs } from '../../utils/streamPairs';
 import { RenderCell } from './types';
-import { viewportEndDate, viewportStartDate } from '../../utils/viewPort';
+import { viewportEndDate, viewportStartDate, isInLiveMode } from '../../utils/viewPort';
 import { Annotations, ChartConfig, Threshold, WidgetConfigurationUpdate } from '../charts/common/types';
 import { LabelsConfig } from '../common/types';
 import { DATA_ALIGNMENT } from '../charts/common/constants';
@@ -120,8 +120,8 @@ export class ScWidgetGrid implements ChartConfig {
     const hasViewPortChanged =
       viewportStartDate(this.viewport).getTime() !== start.getTime() ||
       viewportEndDate(this.viewport).getTime() !== end.getTime();
-    const isInLiveMode = Boolean(duration);
-    if (hasViewPortChanged && !isInLiveMode) {
+    const inLiveMode = isInLiveMode(this.viewport);
+    if (hasViewPortChanged && !inLiveMode) {
       this.onDateRangeChange([start, end, this.viewport.group]);
     }
     // Update active viewport

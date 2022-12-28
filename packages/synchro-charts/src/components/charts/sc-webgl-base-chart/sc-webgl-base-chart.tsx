@@ -41,6 +41,7 @@ import { renderTrendLines } from '../common/trends/renderTrendLines';
 import { Trend, TrendResult } from '../common/trends/types';
 import { renderAxis } from './renderAxis';
 import { parseDuration } from '../../../utils/time';
+import { isInLiveMode } from '../../../utils/viewPort';
 import { getAllTrendResults } from '../common/trends/trendAnalysis';
 import { getVisibleData } from '../common/dataFilters';
 import { getYRange } from '../common/getYRange';
@@ -561,8 +562,9 @@ export class ScWebglBaseChart {
     // avoid updating if dataStream has unsupported data
     if (!this.getHasSupportedData()) return;
 
+    const inLiveMode = isInLiveMode(this.viewport);
     const hasViewPortChanged = this.start.getTime() !== start.getTime() || this.end.getTime() !== end.getTime();
-    if (hasViewPortChanged && !shouldBlockDateRangeChangedEvent) {
+    if (!inLiveMode && hasViewPortChanged && !shouldBlockDateRangeChangedEvent) {
       this.onDateRangeChange([start, end, this.viewport.group]);
     }
 

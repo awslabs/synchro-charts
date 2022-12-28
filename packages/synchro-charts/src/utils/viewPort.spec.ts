@@ -1,5 +1,5 @@
 import { DAY_IN_MS } from './time';
-import { viewportEndDate, viewportStartDate } from './viewPort';
+import { viewportEndDate, viewportStartDate, isInLiveMode } from './viewPort';
 
 const mockCurrentTime = (mockedDate: Date) => {
   // @ts-ignore
@@ -29,5 +29,15 @@ describe('viewportEnd', () => {
     const TIME = new Date(2000, 0, 1);
     mockCurrentTime(TIME);
     expect(viewportEndDate({ duration: DAY_IN_MS })).toEqual(TIME);
+  });
+});
+
+describe('isInLiveMode', () => {
+  it('returns true when in live mode', () => {
+    expect(isInLiveMode({ duration: 60000 })).toBeTrue();
+  });
+
+  it('returns false when viewport is static', () => {
+    expect(isInLiveMode({ start: new Date(), end: new Date() })).toBeFalse();
   });
 });
