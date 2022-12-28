@@ -2,7 +2,7 @@ import uuid from 'uuid/v4';
 
 import { ViewportHandler } from './viewportHandler';
 import { ViewPortManager } from './types';
-import { SECOND_IN_MS } from '../../utils/time';
+import { SECOND_IN_MS, MINUTE_IN_MS } from '../../utils/time';
 import { SizeConfig } from '../../utils/dataTypes';
 
 const viewportManager = (viewportGroup?: string): ViewPortManager => ({
@@ -159,7 +159,7 @@ describe('syncing managers', () => {
 
     /** manager added to existing view port group that has had it's viewport synced should have it's viewport synced to the group */
     expect(manager2.updateViewPort).toBeCalledTimes(1);
-    expect(manager2.updateViewPort).toBeCalledWith({ start: START, end: END });
+    expect(manager2.updateViewPort).toBeCalledWith(expect.objectContaining({ start: START, end: END }));
   });
 
   it('will not update viewport when syncUpdate is false', () => {
@@ -405,6 +405,24 @@ describe('internal clock', () => {
     jest.advanceTimersByTime(secondsElapsed * SECOND_IN_MS);
     expect(manager.updateViewPort).toBeCalledWith(
       expect.objectContaining({
+        shouldBlockDateRangeChangedEvent: true,
+      })
+    );
+  });
+
+  it('blocks dateRangeChanged event emission when viewport group with duration updated', () => {
+    const groups = new ViewportHandler();
+    const VIEWPORT_GROUP_1 = 'view-port-group-1';
+    const manager = viewportManager(VIEWPORT_GROUP_1);
+    const duration = 10 * MINUTE_IN_MS;
+
+    /** Create a viewport group and sync it's viewport */
+    groups.add({ manager, duration: MINUTE_IN_MS, chartSize });
+    groups.add({ manager, duration, chartSize });
+
+    expect(manager.updateViewPort).toBeCalledWith(
+      expect.objectContaining({
+        duration,
         shouldBlockDateRangeChangedEvent: true,
       })
     );

@@ -117,7 +117,12 @@ export class ViewportHandler<T extends ViewPortManager> {
      * the current viewport groups time span.
      */
     if (manager.viewportGroup && this.viewportMap[manager.viewportGroup] && shouldSync) {
-      manager.updateViewPort(this.viewportMap[manager.viewportGroup]);
+      const shouldBlockDateRangeChangedEvent = Boolean(duration);
+      manager.updateViewPort({
+        ...this.viewportMap[manager.viewportGroup],
+        duration,
+        shouldBlockDateRangeChangedEvent,
+      });
     }
     // If duration is not null, this means that we want to have live mode
     if (duration != null) {
