@@ -1,4 +1,10 @@
 # Synchro Charts
+[![Build Status](https://github.com/awslabs/synchro-charts/actions/workflows/github-actions.yml/badge.svg?event=push)](https://github.com/awslabs/synchro-charts/blob/main/.github/workflows/github-actions.yml)
+[![NPM Version](https://img.shields.io/npm/v/@synchro-charts/core)](https://npmjs.org/package/@synchro-charts/core)
+[![License](https://img.shields.io/npm/l/@synchro-charts/core)](https://github.com/awslabs/synchro-charts/blob/main/LICENSE)
+[![Bundle Size](https://img.shields.io/bundlephobia/minzip/@synchro-charts/core)](https://bundlephobia.com/package/@synchro-charts/core)
+[![Downloads](https://img.shields.io/npm/dw/@synchro-charts/core)](https://npmjs.org/package/@synchro-charts/core)
+
 Synchro Charts is a front-end component library that provides a collection of components to visualize time-series data.
 
 You can learn more about what Synchro Charts at https://synchrocharts.com/.
