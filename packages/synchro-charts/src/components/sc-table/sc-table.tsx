@@ -5,7 +5,7 @@ import { isThreshold } from '../charts/common/annotations/utils';
 import { Trend } from '../charts/common/trends/types';
 import { Annotations, ChartConfig, Threshold } from '../charts/common/types';
 import { constructTableData, Row } from './constructTableData';
-import { viewportEndDate, viewportStartDate } from '../../utils/viewPort';
+import { viewportEndDate, viewportStartDate, isInLiveMode } from '../../utils/viewPort';
 import { isMinimalStaticViewport } from '../../utils/predicates';
 import { parseDuration } from '../../utils/time';
 import { webGLRenderer } from '../sc-webgl-context/webglContext';
@@ -53,8 +53,8 @@ export class ScTable implements ChartConfig {
     const hasViewPortChanged =
       viewportStartDate(this.viewport).getTime() !== start.getTime() ||
       viewportEndDate(this.viewport).getTime() !== end.getTime();
-    const isInLiveMode = Boolean(duration);
-    if (hasViewPortChanged && !isInLiveMode) {
+    const inLiveMode = isInLiveMode(this.viewport);
+    if (hasViewPortChanged && !inLiveMode) {
       this.onDateRangeChange([start, end, this.viewport.group]);
     }
     // Update active viewport
