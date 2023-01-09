@@ -194,6 +194,7 @@ export class ScGaugeSvg {
   render() {
     const labelColor = this.breachedThreshold?.color || ColorConfigurations.BLUE;
     const icon = this.breachedThreshold ? this.breachedThreshold.icon : undefined;
+    const valueUnitSpace = 5;
 
     // Center coordinates
     const circleX = OUTRING_DIAMETER;
@@ -268,7 +269,9 @@ export class ScGaugeSvg {
               >
                 <tspan>
                   {this.value}
-                  <tspan font-size={this.sizeConfig?.unitSize}>{this.unit}</tspan>
+                  <tspan font-size={this.sizeConfig?.unitSize} dx={valueUnitSpace}>
+                    {this.unit}
+                  </tspan>
                 </tspan>
               </text>
             ) : (
