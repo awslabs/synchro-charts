@@ -1,8 +1,5 @@
 import { Component, h, Prop, State, Watch, Element } from '@stencil/core';
-import { easeCubicInOut } from 'd3-ease';
-import { interpolate } from 'd3-interpolate';
 import { arc, DefaultArcObject } from 'd3-shape';
-import { transition } from 'd3-transition';
 import { NO_VALUE_PRESENT } from '../../../constants';
 import { DataPoint, DataStream } from '../../../utils/dataTypes';
 import { getIcons } from '../../charts/common/annotations/iconUtils';
@@ -18,7 +15,6 @@ const UNIT_SIZE = 24;
 const DIAL_THICKNESS = 34;
 const DIAMETER = 138;
 const RADIAN = Math.PI / 180;
-const DURATION = 1000;
 const CORNER_RADIUS = 4;
 const SPACE = 4;
 @Component({
@@ -126,40 +122,10 @@ export class ScDialSvg {
       .startAngle(endAngle2)
       .endAngle(endAngle1);
 
-    transition(this.stream?.id)
-      .duration(DURATION)
-      .ease(easeCubicInOut)
-      .attrTween('d', () => {
-        const endAngleColor = colorArc.endAngle()(ringD);
-        const startAngleColor = colorArc.startAngle()(ringD);
-
-        const endAngleDefault = defaultArc.endAngle()(ringD);
-        const startAngleDefault = defaultArc.startAngle()(ringD);
-
-        const interpolateColor = interpolate(
-          { startAngle: this.oldColorAngle.startAngle, endAngle: this.oldColorAngle.endAngle },
-          { startAngle: startAngleColor, endAngle: endAngleColor }
-        );
-
-        const interpolateDefault = interpolate(
-          { startAngle: this.oldDefaultAngle.startAngle, endAngle: this.oldDefaultAngle.endAngle },
-          { startAngle: startAngleColor, endAngle: endAngleColor }
-        );
-
-        this.oldColorAngle.startAngle = startAngleColor;
-        this.oldColorAngle.endAngle = endAngleColor;
-
-        this.oldDefaultAngle.startAngle = startAngleDefault;
-        this.oldDefaultAngle.endAngle = endAngleDefault;
-
-        return t => {
-          if (percent > 0) {
-            this.colorRing = colorArc.endAngle(interpolateColor(t).endAngle)(ringD) || '';
-          }
-          this.defaultRing = defaultArc.endAngle(interpolateDefault(t).endAngle)(ringD) || '';
-          return t;
-        };
-      });
+    if (percent > 0) {
+      this.colorRing = colorArc(ringD) || '';
+    }
+    this.defaultRing = defaultArc(ringD) || '';
   }
 
   positionLabelAndIcon() {
