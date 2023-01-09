@@ -65,6 +65,7 @@ export class ScDialBase {
         alarmPoint={this.alarmStream && this.propertyPoint}
         breachedThreshold={this.breachedThreshold}
         messageOverrides={this.messages.tooltip}
+        unit={propertyStream?.unit}
         isEnabled
       >
         <div class="sc-dialbase-container">

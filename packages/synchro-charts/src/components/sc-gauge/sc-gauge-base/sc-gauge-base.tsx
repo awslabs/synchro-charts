@@ -37,7 +37,6 @@ export class ScGaugeBase {
   @Prop() isLoading?: boolean = false;
 
   private messages: Messages;
-  private unit: string;
 
   componentWillLoad() {
     this.messages = merge(DefaultMessages, this.messageOverrides);
@@ -67,6 +66,7 @@ export class ScGaugeBase {
         alarmPoint={this.alarmStream && this.propertyPoint}
         breachedThreshold={this.breachedThreshold}
         messageOverrides={this.messages.tooltip}
+        unit={propertyStream?.unit}
         isEnabled
       >
         <div class="sc-gaugebase-container">

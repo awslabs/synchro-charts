@@ -21,6 +21,7 @@ export class ScGridTooltip {
   @Prop() propertyPoint?: DataPoint;
   @Prop() alarmPoint?: DataPoint;
   @Prop() breachedThreshold?: Threshold;
+  @Prop() unit?: string;
 
   @Prop() messageOverrides: RecursivePartial<TooltipMessage>;
 
@@ -60,7 +61,8 @@ export class ScGridTooltip {
     const color = this.breachedThreshold ? this.breachedThreshold.color : undefined;
     const displaysMoreThanTitle = thereIsSomeData && this.isEnabled;
     const icon = this.breachedThreshold ? this.breachedThreshold.icon : undefined;
-    const label = this.breachedThreshold ? this.breachedThreshold.label?.text : undefined;
+    const label = this.breachedThreshold?.label?.text;
+    const unit = this.unit || '';
     const alarmValue = label || this.alarmPoint?.y;
 
     return (
@@ -78,7 +80,7 @@ export class ScGridTooltip {
                     <div>
                       <strong style={{ color }}>
                         {icon && <sc-chart-icon name={icon} color={color} style={{ marginRight: '3px' }} />}
-                        <Value value={this.propertyPoint?.y} />
+                        <Value value={this.propertyPoint?.y} unit={unit} />
                       </strong>{' '}
                       {this.messages.tooltipValueTimeDescribed}{' '}
                       {new Date(this.propertyPoint.x).toLocaleString('en-US', {
