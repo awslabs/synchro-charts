@@ -21,7 +21,7 @@ const GAUGLE_SIZE = {
 const DATASTREAM = {
   id: 'test-gauge-id',
   name: 'data-stream-name',
-  color: 'black',
+  color: '',
   resolution: 0,
   dataType: DataType.NUMBER,
   unit: '',

@@ -148,7 +148,7 @@ export class ScDialSvg {
   render() {
     const r = DIAMETER - this.sizeConfig?.dialThickness / 2;
 
-    const labelColor = this.breachedThreshold?.color || ColorConfigurations.BLUE;
+    const labelColor = this.breachedThreshold?.color || this.stream?.color || ColorConfigurations.BLUE;
     const icon = this.breachedThreshold ? this.breachedThreshold.icon : undefined;
 
     // Center coordinates
