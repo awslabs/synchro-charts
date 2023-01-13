@@ -560,20 +560,14 @@ export class ScWebglBaseChart {
   ) => {
     // avoid updating if dataStream has unsupported data
     if (!this.getHasSupportedData()) return;
+    // This should never occur - if it does, it's not recoverable so we just bail.
+    if (!this.scene) return;
 
     const hasViewPortChanged = this.start.getTime() !== start.getTime() || this.end.getTime() !== end.getTime();
     if (hasViewPortChanged && !shouldBlockDateRangeChangedEvent) {
       this.onDateRangeChange([start, end, this.viewport.group]);
     }
 
-    /**
-     * Failure Handling
-     */
-
-    if (!this.scene) {
-      // This should never occur - if it does, it's not recoverable so we just bail.
-      throw new Error('[SynchroCharts] Scene is not present but update is being called.');
-    }
     if (!this.el.isConnected) {
       // Disconnected failure case:
       // This can occur in very 'stressed' performance situations where updates get called
