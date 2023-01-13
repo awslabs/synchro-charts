@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.1.4](https://github.com/awslabs/synchro-charts/compare/root-v7.1.3...root-v7.1.4) (2023-01-13)
+
+
+### Bug Fixes
+
+* stop onUpdate if scene does not exist ([#226](https://github.com/awslabs/synchro-charts/issues/226)) ([719ef32](https://github.com/awslabs/synchro-charts/commit/719ef32a6dc85b52e496e39ee32a229dfa2fb40f))
+
 ## [7.1.3](https://github.com/awslabs/synchro-charts/compare/root-v7.1.2...root-v7.1.3) (2022-12-29)
 
 

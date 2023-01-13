@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.1.4](https://github.com/awslabs/synchro-charts/compare/synchro-charts-react-v7.1.3...synchro-charts-react-v7.1.4) (2023-01-13)
+
+
+### Miscellaneous Chores
+
+* **synchro-charts-react:** Synchronize undefined versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @synchro-charts/core bumped from ^7.1.3 to ^7.1.4
+
 ## [7.1.3](https://github.com/awslabs/synchro-charts/compare/synchro-charts-react-v7.1.2...synchro-charts-react-v7.1.3) (2022-12-29)
 
 
