@@ -192,7 +192,7 @@ export class ScGaugeSvg {
   }
 
   render() {
-    const labelColor = this.breachedThreshold?.color || ColorConfigurations.BLUE;
+    const labelColor = this.breachedThreshold?.color || this.stream?.color || ColorConfigurations.BLUE;
     const icon = this.breachedThreshold ? this.breachedThreshold.icon : undefined;
     const valueUnitSpace = 5;
 

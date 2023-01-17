@@ -21,7 +21,7 @@ const POINT = {
 const DATA_STREAM = {
   id: 'test-gauge-id',
   name: 'data-stream-name',
-  color: 'black',
+  color: '',
   resolution: 0,
   dataType: DataType.NUMBER,
   unit: '',
@@ -228,7 +228,7 @@ describe('renders normal component when has changed size', () => {
 });
 
 describe('renders normal component when has changed color', () => {
-  it('does specify color with `blue` when no breachedThreshold provided', async () => {
+  it('does specify color with `blue` when no breachedThreshold provided and no data stream color', async () => {
     const UNIT = '%';
     const { gaugeSvg } = await newValueSpecPage({
       size: SIZE,
@@ -240,6 +240,21 @@ describe('renders normal component when has changed color', () => {
     });
     const path = gaugeSvg.querySelectorAll('path')[1]?.attributes.getNamedItem('fill')?.value;
     expect(path).toEqual(ColorConfigurations.BLUE);
+  });
+
+  it('does specify color with data stream color when data stream color provided and no breachedThreshold provided ', async () => {
+    const UNIT = '%';
+    const COLOR = '#000';
+    const { gaugeSvg } = await newValueSpecPage({
+      size: SIZE,
+      percent: PERCENT,
+      value: POINT.y,
+      point: POINT,
+      stream: { ...DATA_STREAM, color: COLOR },
+      unit: UNIT,
+    });
+    const path = gaugeSvg.querySelectorAll('path')[1]?.attributes.getNamedItem('fill')?.value;
+    expect(path).toEqual(COLOR);
   });
 
   it('does specify color with `breachedThreshold` color when breachedThreshold provided', async () => {
