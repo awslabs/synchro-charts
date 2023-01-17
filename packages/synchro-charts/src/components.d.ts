@@ -184,7 +184,6 @@ export namespace Components {
         "propertyPoint"?: DataPoint;
         "title": string;
         "unit"?: string;
-        "value"?: number | string;
     }
     interface ScHelpTooltip {
         "message": string;
@@ -1717,7 +1716,6 @@ declare namespace LocalJSX {
         "propertyPoint"?: DataPoint;
         "title"?: string;
         "unit"?: string;
-        "value"?: number | string;
     }
     interface ScHelpTooltip {
         "message": string;
