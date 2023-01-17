@@ -75,7 +75,7 @@ export class ScGauge {
 
     splitThresholds.L = splitThresholds.L.map(
       (threshold: GuageOuterRing): GuageOuterRing => {
-        const percent = (threshold.value as number) / distance;
+        const percent = ((threshold.value as number) - yMin) / distance;
         const showValue = threshold.value;
 
         return { ...threshold, percent, showValue };
@@ -88,7 +88,7 @@ export class ScGauge {
         let showValue: string | number;
         if (index === length - 1) {
           percent = 1;
-          showValue = distance;
+          showValue = yMax;
         } else {
           percent = (arrays[index + 1].value as number) / distance;
           showValue = `${arrays[index + 1].value}`;
@@ -99,7 +99,7 @@ export class ScGauge {
 
     const outerRingRange = splitThresholds.L.concat(splitThresholds.G);
 
-    return outerRingRange;
+    return outerRingRange.filter(item => item.percent <= 1 && item.percent >= 0);
   };
 
   render() {
