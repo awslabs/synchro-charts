@@ -9810,7 +9810,7 @@ body.awsui-modal-open {
   border-bottom: 1px solid var(--awsui-color-border-divider-default);
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-  min-height: 415px;
+  min-height: 41px;
   background: #fafafa;
   background: var(--awsui-color-background-container-header);
   word-break: keep-all;
@@ -10030,7 +10030,7 @@ body.awsui-modal-open {
   padding-left: 19px;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-  height: 415px;
+  height: 41px;
 }
 
 .awsui awsui-table .awsui-table-container > table > tbody > tr > td:last-child,
