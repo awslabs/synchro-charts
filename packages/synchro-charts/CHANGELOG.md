@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.1.5](https://github.com/awslabs/synchro-charts/compare/synchro-charts-v7.1.4...synchro-charts-v7.1.5) (2023-01-18)
+
+
+### Bug Fixes
+
+* **styles:** fix table row height ([#228](https://github.com/awslabs/synchro-charts/issues/228)) ([f4c2ca0](https://github.com/awslabs/synchro-charts/commit/f4c2ca0981b29b0889fc1a7a75e69d2a5f499049))
+
 ## [7.1.4](https://github.com/awslabs/synchro-charts/compare/synchro-charts-v7.1.3...synchro-charts-v7.1.4) (2023-01-13)
 
 
