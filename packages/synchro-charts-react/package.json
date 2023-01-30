@@ -1,7 +1,7 @@
 {
   "name": "@synchro-charts/react",
   "description": "Synchro Charts React",
-  "version": "7.1.5",
+  "version": "7.1.6",
   "publishConfig": {
     "access": "public"
   },
@@ -35,7 +35,7 @@
     "react-dom": "16.x.x || 17.x.x"
   },
   "dependencies": {
-    "@synchro-charts/core": "^7.1.5"
+    "@synchro-charts/core": "^7.1.6"
   },
   "license": "Apache-2.0",
   "style": "dist/styles.css",
