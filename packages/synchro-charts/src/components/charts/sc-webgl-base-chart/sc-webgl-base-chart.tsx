@@ -144,8 +144,17 @@ export class ScWebglBaseChart {
   private internalAnnotations: Annotations;
 
   componentDidLoad() {
-    this.setupChartScene();
-    this.isMounted = true;
+    // Why do we have this condition?
+    //  - If componentDidUnload is called before componentDidLoad this.el.isConnected will be false
+    //  - This can happen when scrolling page very quickly
+    //  - If the component is unmounted before this.setupChartScene is complete we run into a race condition
+    //  where the scene gets created and assigned to this.scene but we override it with null before
+    //  this.setupChartScene calls this.onUpdate
+    //  - Without the component mounted there is no point in calling onUpdate since we have nowhere to render this.scene
+    if (this.el.isConnected) {
+      this.setupChartScene();
+      this.isMounted = true;
+    }
   }
 
   componentWillLoad() {
@@ -558,17 +567,20 @@ export class ScWebglBaseChart {
     hasAnnotationChanged: boolean = false,
     shouldRerender: boolean = false
   ) => {
+    /**
+     * Failure Handling
+     */
+
     // avoid updating if dataStream has unsupported data
     if (!this.getHasSupportedData()) return;
-    // This should never occur - if it does, it's not recoverable so we just bail.
-    if (!this.scene) return;
 
-    const hasViewPortChanged = this.start.getTime() !== start.getTime() || this.end.getTime() !== end.getTime();
-    if (hasViewPortChanged && !shouldBlockDateRangeChangedEvent) {
-      this.onDateRangeChange([start, end, this.viewport.group]);
-    }
+    // why do we have this condition?
+    // - if one of the watched props e.g. dataStreams changes this will call onUpdate
+    // - if the component unmounts before this this.scene is set to null
+    // - if we do not have a scene or a component to render it in we should bail
+    if (!this.scene && !this.el.isConnected) return;
 
-    if (!this.el.isConnected) {
+    if (!this.el.isConnected && this.scene) {
       // Disconnected failure case:
       // This can occur in very 'stressed' performance situations where updates get called
       // and then a chart is disconnected. We can recover from this by removing itself
@@ -584,9 +596,19 @@ export class ScWebglBaseChart {
       return;
     }
 
+    if (!this.scene) {
+      // This should never occur - if it does, it's not recoverable so we just bail.
+      throw new Error('[SynchroCharts] Scene is not present but update is being called.');
+    }
+
     /**
      * Update Procedure
      */
+
+    const hasViewPortChanged = this.start.getTime() !== start.getTime() || this.end.getTime() !== end.getTime();
+    if (hasViewPortChanged && !shouldBlockDateRangeChangedEvent) {
+      this.onDateRangeChange([start, end, this.viewport.group]);
+    }
 
     // Update Active Viewport
     this.start = start;
