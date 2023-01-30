@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.1.6](https://github.com/awslabs/synchro-charts/compare/root-v7.1.5...root-v7.1.6) (2023-01-30)
+
+
+### Bug Fixes
+
+* missing scene issue [#255](https://github.com/awslabs/synchro-charts/issues/255) ([#233](https://github.com/awslabs/synchro-charts/issues/233)) ([c285e9e](https://github.com/awslabs/synchro-charts/commit/c285e9e2e26fcb78cad14d6a6d4469b348d221d2))
+
 ## [7.1.5](https://github.com/awslabs/synchro-charts/compare/root-v7.1.4...root-v7.1.5) (2023-01-18)
 
 
