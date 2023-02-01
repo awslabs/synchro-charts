@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 import { WebGLRenderer } from 'three';
+import ResizeObserver from 'resize-observer-polyfill';
 import { ChartScene } from './types';
 import { ClipSpaceRect, ClipSpaceRectMap } from '../common/webGLPositioning';
 import { RectScrollFixed } from '../../utils/types';
@@ -100,6 +101,8 @@ export const createWebGLRenderer = (viewportHandler: ViewportHandler<ViewPortMan
    */
   let renderer: WebGLRenderer | undefined;
   let canvas: HTMLCanvasElement | undefined;
+  let viewFrame: Element | Window | undefined;
+  let viewFrameSizeObserver: ResizeObserver | undefined;
 
   const fullClearAndRerender = () => {
     if (renderer) {
@@ -120,7 +123,18 @@ export const createWebGLRenderer = (viewportHandler: ViewportHandler<ViewPortMan
 
   const onScroll = () => {
     if (renderer && canvas) {
-      const transform = `translate(${window.scrollX}px, ${window.scrollY}px)`;
+      let x = 0;
+      let y = 0;
+      if (!viewFrame) return;
+      if ('scrollX' in viewFrame) {
+        x = viewFrame.scrollX;
+        y = viewFrame.scrollY;
+      } else {
+        x = viewFrame.scrollLeft;
+        y = viewFrame.scrollTop;
+      }
+      const transform = `translate(${x}px, ${y}px)`;
+
       // eslint-disable-next-line no-param-reassign
       renderer.domElement.style.transform = transform;
 
@@ -141,11 +155,13 @@ export const createWebGLRenderer = (viewportHandler: ViewportHandler<ViewPortMan
 
   const initRendering = (
     renderCanvas: HTMLCanvasElement,
-    onContextInitialization: (context: WebGLRenderingContext) => void = () => {}
+    onContextInitialization: (context: WebGLRenderingContext) => void = () => {},
+    viewFrameRef?: Element | Window
   ) => {
     rectMap = new ClipSpaceRectMap(renderCanvas);
     canvas = renderCanvas;
     renderer = new WebGLRenderer({ canvas, alpha: true, antialias: true, preserveDrawingBuffer: true });
+    viewFrame = viewFrameRef || window;
 
     onContextInitialization(renderer.getContext());
 
@@ -156,8 +172,15 @@ export const createWebGLRenderer = (viewportHandler: ViewportHandler<ViewPortMan
     renderer.setClearColor(0x000000, 0); // transparent clear
     onScroll();
     onResize();
-    window.addEventListener('scroll', onScroll);
-    window.addEventListener('resize', onResize);
+
+    // setup viewframe size and scroll events
+    viewFrame.addEventListener('scroll', onScroll);
+    if (viewFrame instanceof Element) {
+      viewFrameSizeObserver = new ResizeObserver(onResize);
+      viewFrameSizeObserver.observe(viewFrame);
+    } else {
+      viewFrame.addEventListener('resize', onResize);
+    }
   };
 
   /**
@@ -191,8 +214,14 @@ export const createWebGLRenderer = (viewportHandler: ViewportHandler<ViewPortMan
     viewportHandler.dispose();
 
     /** Release event listeners */
-    window.removeEventListener('scroll', onScroll);
-    window.removeEventListener('resize', onResize);
+    if (viewFrame) {
+      viewFrame.removeEventListener('scroll', onScroll);
+      viewFrame.removeEventListener('resize', onResize);
+    }
+
+    if (viewFrameSizeObserver) {
+      viewFrameSizeObserver.disconnect();
+    }
   };
 
   /**

@@ -9,13 +9,16 @@ import { webGLRenderer } from './webglContext';
 export class ScWebglContext {
   @Element() el!: HTMLElement;
   @Prop() onContextInitialization: (context: WebGLRenderingContext) => void;
+  @Prop() viewFrame: HTMLElement | Window | undefined;
 
   componentDidLoad() {
     const canvas = this.el.querySelector('canvas') as HTMLCanvasElement;
-    webGLRenderer.initRendering(canvas, this.onContextInitialization);
+    webGLRenderer.initRendering(canvas, this.onContextInitialization, this.viewFrame);
   }
 
   render() {
-    return <canvas class="webgl-context-canvas" />;
+    const viewportViewFrame = this.viewFrame === undefined || this.viewFrame instanceof Window;
+    const classes = `webgl-context-canvas ${viewportViewFrame ? 'webgl-context-canvas-viewport' : ''}`;
+    return <canvas class={classes} />;
   }
 }

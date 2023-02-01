@@ -16,16 +16,15 @@ export interface ClipSpaceRect {
 const clipSpaceRect = (containerRect: RectScrollFixed, canvasRect: DOMRectReadOnly): ClipSpaceRect => {
   const density = window.devicePixelRatio;
   const { left, bottom, width, height } = containerRect;
-  const canvasHeight = canvasRect.height;
 
   // The coordinate y-axis is flipped between the DOM and webGL so we must correct for that.
   // Bounding client rect measures the bottom as the distance from the top, i.e.:
   // For DOM, (0, 0) is the top left.
   // In WebGL, (0, 0) is the bottom left.
-  const positiveYUpBottom = canvasHeight - (bottom - window.scrollY);
+  const positiveYUpBottom = canvasRect.bottom - (bottom - window.scrollY);
 
   // Need to account for pixel density - i.e. retina display
-  const pixelLeft = (left - window.scrollX) * density;
+  const pixelLeft = (left - canvasRect.left - window.scrollX) * density;
   const pixelBottom = positiveYUpBottom * density;
   const pixelWidth = width * density;
   const pixelHeight = height * density;

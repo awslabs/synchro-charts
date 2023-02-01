@@ -1,3 +1,14 @@
+/* eslint-disable import/first */
+const observeMock = jest.fn();
+jest.mock('resize-observer-polyfill', () => ({
+  __esModule: true,
+  default: jest.fn().mockImplementation(() => ({
+    observe: observeMock,
+    unobserve: jest.fn(),
+    disconnect: jest.fn(),
+  })),
+}));
+
 import 'webgl-mock-threejs';
 import { Scene } from 'three';
 import { createWebGLRenderer } from './webglContext';
@@ -18,7 +29,12 @@ const testDomRect: DOMRect = {
   toJSON: () => '{}',
 };
 
-export const createTestWebglRenderer = (domRect: DOMRect, skipInit = false, onContextInitialization?: () => void) => {
+export const createTestWebglRenderer = (
+  domRect: DOMRect,
+  skipInit = false,
+  onContextInitialization?: () => void,
+  viewFrame: Element | Window = window
+) => {
   const webGLRenderer = createWebGLRenderer(new ViewportHandler());
   // @ts-ignore
   const canvas = new HTMLCanvasElement(domRect.width, domRect.height);
@@ -27,7 +43,7 @@ export const createTestWebglRenderer = (domRect: DOMRect, skipInit = false, onCo
   canvas.getBoundingClientRect = () => domRect;
 
   if (!skipInit) {
-    webGLRenderer.initRendering(canvas, onContextInitialization);
+    webGLRenderer.initRendering(canvas, onContextInitialization, viewFrame);
   }
 
   return webGLRenderer;
@@ -189,5 +205,49 @@ describe('on initialization', () => {
         drawingBufferWidth: 500,
       })
     );
+  });
+});
+
+describe('view frame', () => {
+  it('attaches the correct listeners to the window', () => {
+    const addEventListenerMock = jest.fn();
+    window.addEventListener = addEventListenerMock;
+
+    createTestWebglRenderer(testDomRect);
+    expect(addEventListenerMock).toBeCalledTimes(2);
+    expect(addEventListenerMock).toBeCalledWith('scroll', expect.any(Function));
+    expect(addEventListenerMock).toBeCalledWith('resize', expect.any(Function));
+  });
+
+  it('attaches the correct listeners to an element', () => {
+    const testViewFrameRect: DOMRect = {
+      height: 400,
+      width: 400,
+      x: 50,
+      y: 50,
+      left: 50,
+      top: 50,
+      bottom: 450,
+      right: 450,
+      toJSON: () => '{}',
+    };
+
+    const addEventListenerMock = jest.fn();
+
+    const mockViewFrame = {
+      getBoundingClientRect: () => testViewFrameRect,
+      addEventListener: addEventListenerMock,
+    };
+    // @ts-ignore
+    // eslint-disable-next-line
+    mockViewFrame.__proto__ = Element.prototype;
+
+    expect(mockViewFrame).toBeInstanceOf(Element);
+
+    createTestWebglRenderer(testDomRect, false, () => {}, mockViewFrame as any);
+    expect(addEventListenerMock).toBeCalledTimes(1);
+    expect(addEventListenerMock).toBeCalledWith('scroll', expect.any(Function));
+    expect(observeMock).toBeCalledTimes(1);
+    expect(observeMock).toBeCalledWith(mockViewFrame);
   });
 });

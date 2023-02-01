@@ -3,7 +3,18 @@ import { ClipSpaceRectMap, rectScrollFixed } from './webGLPositioning';
 const INITIAL_CANVAS_HEIGHT = 500;
 const INITIAL_CANVAS_WIDTH = 650;
 
-const createCanvas = (): HTMLCanvasElement => {
+type CanvasRect = {
+  height: number;
+  width: number;
+  top: number;
+  right: number;
+  left: number;
+  bottom: number;
+  x: number;
+  y: number;
+};
+
+const createCanvas = (dimensions?: Partial<CanvasRect>): HTMLCanvasElement => {
   const canvas = new HTMLCanvasElement();
   canvas.getBoundingClientRect = () =>
     ({
@@ -16,6 +27,7 @@ const createCanvas = (): HTMLCanvasElement => {
       bottom: INITIAL_CANVAS_HEIGHT,
       right: INITIAL_CANVAS_WIDTH,
       toJSON: () => '',
+      ...dimensions,
     } as DOMRect);
   return canvas;
 };
@@ -59,6 +71,44 @@ describe('clip space mapping', () => {
       height: HEIGHT,
       left: 0,
       bottom: INITIAL_CANVAS_HEIGHT - HEIGHT,
+    });
+  });
+
+  it('returns clip rect from a canvas that is interior to the viewport', () => {
+    const canvasDimensions = {
+      bottom: 711,
+      height: 681,
+      left: 30,
+      right: 1004,
+      top: 30,
+      width: 974,
+      x: 30,
+      y: 30,
+    };
+
+    const chartDimensions = {
+      bottom: 500,
+      height: 446,
+      left: 80,
+      right: 480,
+      top: 54,
+      width: 400,
+      x: 80,
+      y: 54,
+    };
+
+    const CHART_SCENE_ID = '1';
+
+    const clipSpaceRectMap = new ClipSpaceRectMap(createCanvas(canvasDimensions));
+    const el = createDiv(chartDimensions);
+
+    clipSpaceRectMap.updateChartScene(CHART_SCENE_ID, rectScrollFixed(el));
+
+    expect(clipSpaceRectMap.clipRect(CHART_SCENE_ID)).toEqual({
+      width: chartDimensions.width,
+      height: chartDimensions.height,
+      left: chartDimensions.left - canvasDimensions.left,
+      bottom: canvasDimensions.bottom - chartDimensions.bottom,
     });
   });
 
