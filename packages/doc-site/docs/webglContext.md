@@ -19,8 +19,29 @@ To set up the WebGL context, you will create a single instance of the following 
 <sc-webgl-context />
 ```
 
-This component will create a single canvas element which spans across the entire screen, and create an associated WebGL context to this canvas. Additionally, this component
+This component will create a single canvas element, and create an associated WebGL context to this canvas. Additionally, this component
 contains some Synchro Charts specific logic so that components can register and be part of the various update loops.
+
+By default the canvas element will consider the viewport as the viewing frame. The viewing frame is a rectangle in which the chart data is visible.
+If you want the viewport to be the viewing frame, place the context component in the DOM such that the document is its position scope.
+
+```jsx static
+
+<sc-webgl-context />
+
+or
+
+<sc-webgl-context viewFrame={window} />
+```
+
+Additionally you can pick an HTML Element as the viewing frame. This element should operate similar to the viewport in that it can scroll child contents that overflow
+and will respond to resizing events.
+
+*Note: The viewing frame can't be larger than the viewport size. The canvas will start clipping anything past that bound.*
+
+```jsx static
+<sc-webgl-context viewFrame={document.querySelector('#myViewFrame')} />
+```
 
 #### Correct place of initialization
 

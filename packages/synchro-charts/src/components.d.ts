@@ -535,6 +535,11 @@ export namespace Components {
     }
     interface ScWebglContext {
         "onContextInitialization": (context: WebGLRenderingContext) => void;
+        "viewFrame": HTMLElement | Window | undefined;
+    }
+    interface ScWebglContextNested {
+    }
+    interface ScWebglContextRoot {
     }
     interface ScWebglLineChartDynamicBuffer {
     }
@@ -1190,6 +1195,18 @@ declare global {
         prototype: HTMLScWebglContextElement;
         new (): HTMLScWebglContextElement;
     };
+    interface HTMLScWebglContextNestedElement extends Components.ScWebglContextNested, HTMLStencilElement {
+    }
+    var HTMLScWebglContextNestedElement: {
+        prototype: HTMLScWebglContextNestedElement;
+        new (): HTMLScWebglContextNestedElement;
+    };
+    interface HTMLScWebglContextRootElement extends Components.ScWebglContextRoot, HTMLStencilElement {
+    }
+    var HTMLScWebglContextRootElement: {
+        prototype: HTMLScWebglContextRootElement;
+        new (): HTMLScWebglContextRootElement;
+    };
     interface HTMLScWebglLineChartDynamicBufferElement extends Components.ScWebglLineChartDynamicBuffer, HTMLStencilElement {
     }
     var HTMLScWebglLineChartDynamicBufferElement: {
@@ -1422,6 +1439,8 @@ declare global {
         "sc-webgl-chart-threshold-coloration-split-half": HTMLScWebglChartThresholdColorationSplitHalfElement;
         "sc-webgl-chart-tooltip-with-multiple-data-streams": HTMLScWebglChartTooltipWithMultipleDataStreamsElement;
         "sc-webgl-context": HTMLScWebglContextElement;
+        "sc-webgl-context-nested": HTMLScWebglContextNestedElement;
+        "sc-webgl-context-root": HTMLScWebglContextRootElement;
         "sc-webgl-line-chart-dynamic-buffer": HTMLScWebglLineChartDynamicBufferElement;
         "sc-webgl-line-chart-dynamic-data": HTMLScWebglLineChartDynamicDataElement;
         "sc-webgl-line-chart-dynamic-data-streams": HTMLScWebglLineChartDynamicDataStreamsElement;
@@ -1975,6 +1994,11 @@ declare namespace LocalJSX {
     }
     interface ScWebglContext {
         "onContextInitialization"?: (context: WebGLRenderingContext) => void;
+        "viewFrame"?: HTMLElement | Window | undefined;
+    }
+    interface ScWebglContextNested {
+    }
+    interface ScWebglContextRoot {
     }
     interface ScWebglLineChartDynamicBuffer {
     }
@@ -2139,6 +2163,8 @@ declare namespace LocalJSX {
         "sc-webgl-chart-threshold-coloration-split-half": ScWebglChartThresholdColorationSplitHalf;
         "sc-webgl-chart-tooltip-with-multiple-data-streams": ScWebglChartTooltipWithMultipleDataStreams;
         "sc-webgl-context": ScWebglContext;
+        "sc-webgl-context-nested": ScWebglContextNested;
+        "sc-webgl-context-root": ScWebglContextRoot;
         "sc-webgl-line-chart-dynamic-buffer": ScWebglLineChartDynamicBuffer;
         "sc-webgl-line-chart-dynamic-data": ScWebglLineChartDynamicData;
         "sc-webgl-line-chart-dynamic-data-streams": ScWebglLineChartDynamicDataStreams;
@@ -2266,6 +2292,8 @@ declare module "@stencil/core" {
             "sc-webgl-chart-threshold-coloration-split-half": LocalJSX.ScWebglChartThresholdColorationSplitHalf & JSXBase.HTMLAttributes<HTMLScWebglChartThresholdColorationSplitHalfElement>;
             "sc-webgl-chart-tooltip-with-multiple-data-streams": LocalJSX.ScWebglChartTooltipWithMultipleDataStreams & JSXBase.HTMLAttributes<HTMLScWebglChartTooltipWithMultipleDataStreamsElement>;
             "sc-webgl-context": LocalJSX.ScWebglContext & JSXBase.HTMLAttributes<HTMLScWebglContextElement>;
+            "sc-webgl-context-nested": LocalJSX.ScWebglContextNested & JSXBase.HTMLAttributes<HTMLScWebglContextNestedElement>;
+            "sc-webgl-context-root": LocalJSX.ScWebglContextRoot & JSXBase.HTMLAttributes<HTMLScWebglContextRootElement>;
             "sc-webgl-line-chart-dynamic-buffer": LocalJSX.ScWebglLineChartDynamicBuffer & JSXBase.HTMLAttributes<HTMLScWebglLineChartDynamicBufferElement>;
             "sc-webgl-line-chart-dynamic-data": LocalJSX.ScWebglLineChartDynamicData & JSXBase.HTMLAttributes<HTMLScWebglLineChartDynamicDataElement>;
             "sc-webgl-line-chart-dynamic-data-streams": LocalJSX.ScWebglLineChartDynamicDataStreams & JSXBase.HTMLAttributes<HTMLScWebglLineChartDynamicDataStreamsElement>;

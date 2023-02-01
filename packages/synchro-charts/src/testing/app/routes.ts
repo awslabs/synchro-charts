@@ -18,6 +18,14 @@ export const routes = [
     component: 'sc-status-grid-standard',
   },
   {
+    url: '/tests/sc-webgl-context/nested',
+    component: 'sc-webgl-context-nested',
+  },
+  {
+    url: '/tests/sc-webgl-context/root',
+    component: 'sc-webgl-context-root',
+  },
+  {
     url: '/tests/sc-webgl-chart/circle-point-shaders',
     component: 'sc-circle-point-shaders',
   },
