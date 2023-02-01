@@ -1,5 +1,5 @@
 import { NUM_STATUS_COMPONENTS, statusMesh, updateStatusMesh } from './statusMesh';
-import { DEFAULT_STATUS_BAR_COLOR, HEIGHT } from './constants';
+import { DEFAULT_STATUS_BAR_COLOR_1, DEFAULT_STATUS_BAR_COLOR_2, HEIGHT } from './constants';
 import { DAY_IN_MS, MINUTE_IN_MS } from '../../../utils/time';
 import { DataType } from '../../../utils/dataConstants';
 import { DataPoint, DataStream } from '../../../utils/dataTypes';
@@ -121,6 +121,32 @@ describe('create status mesh', () => {
     expect(mesh.geometry.attributes.status.array[3]).toBeLessThan(HEIGHT);
   });
 
+  it('draws adjacent data points as the same gray color when the data points have the same y value', () => {
+    const mesh = statusMesh({
+      ...BASE_PROPS,
+      dataStreams: [
+        {
+          id: 'data-stream',
+          name: 'name',
+          resolution: 0,
+          dataType: DataType.NUMBER,
+          data: [DATA_POINT_1, { ...DATA_POINT_2, y: DATA_POINT_1.y }], // 2 points with the same y
+        },
+      ],
+    });
+    expect(mesh.count).toEqual(2);
+
+    // default status bar color 1
+    expect(mesh.geometry.attributes.color.array[0]).toBe(DEFAULT_STATUS_BAR_COLOR_1[0]);
+    expect(mesh.geometry.attributes.color.array[1]).toBe(DEFAULT_STATUS_BAR_COLOR_1[1]);
+    expect(mesh.geometry.attributes.color.array[2]).toBe(DEFAULT_STATUS_BAR_COLOR_1[2]);
+
+    // default status bar color 1
+    expect(mesh.geometry.attributes.color.array[3]).toBe(DEFAULT_STATUS_BAR_COLOR_1[0]);
+    expect(mesh.geometry.attributes.color.array[4]).toBe(DEFAULT_STATUS_BAR_COLOR_1[1]);
+    expect(mesh.geometry.attributes.color.array[5]).toBe(DEFAULT_STATUS_BAR_COLOR_1[2]);
+  });
+
   it('draws two statuses with two point data set', () => {
     const mesh = statusMesh({
       ...BASE_PROPS,
@@ -146,15 +172,15 @@ describe('create status mesh', () => {
     expect(mesh.geometry.attributes.status.array[6]).toBeCloseTo(EXPECTED_WIDTH, 8);
     expect(mesh.geometry.attributes.status.array[7]).toBeLessThan(HEIGHT);
 
-    // default status bar color
-    expect(mesh.geometry.attributes.color.array[0]).toBe(DEFAULT_STATUS_BAR_COLOR[0]);
-    expect(mesh.geometry.attributes.color.array[1]).toBe(DEFAULT_STATUS_BAR_COLOR[1]);
-    expect(mesh.geometry.attributes.color.array[2]).toBe(DEFAULT_STATUS_BAR_COLOR[2]);
+    // default status bar color 1
+    expect(mesh.geometry.attributes.color.array[0]).toBe(DEFAULT_STATUS_BAR_COLOR_1[0]);
+    expect(mesh.geometry.attributes.color.array[1]).toBe(DEFAULT_STATUS_BAR_COLOR_1[1]);
+    expect(mesh.geometry.attributes.color.array[2]).toBe(DEFAULT_STATUS_BAR_COLOR_1[2]);
 
-    // default status bar color
-    expect(mesh.geometry.attributes.color.array[3]).toBe(DEFAULT_STATUS_BAR_COLOR[0]);
-    expect(mesh.geometry.attributes.color.array[4]).toBe(DEFAULT_STATUS_BAR_COLOR[1]);
-    expect(mesh.geometry.attributes.color.array[5]).toBe(DEFAULT_STATUS_BAR_COLOR[2]);
+    // default status bar color 2
+    expect(mesh.geometry.attributes.color.array[3]).toBe(DEFAULT_STATUS_BAR_COLOR_2[0]);
+    expect(mesh.geometry.attributes.color.array[4]).toBe(DEFAULT_STATUS_BAR_COLOR_2[1]);
+    expect(mesh.geometry.attributes.color.array[5]).toBe(DEFAULT_STATUS_BAR_COLOR_2[2]);
   });
 
   it('constructs buffers correctly for multiple data streams', () => {
@@ -206,25 +232,25 @@ describe('create status mesh', () => {
     expect(mesh.geometry.attributes.status.array[14]).toBeCloseTo(EXPECTED_WIDTH, 8);
     expect(mesh.geometry.attributes.status.array[15]).toBeLessThan(height);
 
-    // Data stream 1 status 1 is default status bar color
-    expect(mesh.geometry.attributes.color.array[0]).toBe(DEFAULT_STATUS_BAR_COLOR[0]);
-    expect(mesh.geometry.attributes.color.array[1]).toBe(DEFAULT_STATUS_BAR_COLOR[1]);
-    expect(mesh.geometry.attributes.color.array[2]).toBe(DEFAULT_STATUS_BAR_COLOR[2]);
+    // Data stream 1 status 1 is default status bar color 1
+    expect(mesh.geometry.attributes.color.array[0]).toBe(DEFAULT_STATUS_BAR_COLOR_1[0]);
+    expect(mesh.geometry.attributes.color.array[1]).toBe(DEFAULT_STATUS_BAR_COLOR_1[1]);
+    expect(mesh.geometry.attributes.color.array[2]).toBe(DEFAULT_STATUS_BAR_COLOR_1[2]);
 
-    // Data stream 1 status 1 is default status bar color
-    expect(mesh.geometry.attributes.color.array[3]).toBe(DEFAULT_STATUS_BAR_COLOR[0]);
-    expect(mesh.geometry.attributes.color.array[4]).toBe(DEFAULT_STATUS_BAR_COLOR[1]);
-    expect(mesh.geometry.attributes.color.array[5]).toBe(DEFAULT_STATUS_BAR_COLOR[2]);
+    // Data stream 1 status 1 is default status bar color 2
+    expect(mesh.geometry.attributes.color.array[3]).toBe(DEFAULT_STATUS_BAR_COLOR_2[0]);
+    expect(mesh.geometry.attributes.color.array[4]).toBe(DEFAULT_STATUS_BAR_COLOR_2[1]);
+    expect(mesh.geometry.attributes.color.array[5]).toBe(DEFAULT_STATUS_BAR_COLOR_2[2]);
 
-    // Data stream 2 status 1 is default status bar color
-    expect(mesh.geometry.attributes.color.array[6]).toBe(DEFAULT_STATUS_BAR_COLOR[0]);
-    expect(mesh.geometry.attributes.color.array[7]).toBe(DEFAULT_STATUS_BAR_COLOR[1]);
-    expect(mesh.geometry.attributes.color.array[8]).toBe(DEFAULT_STATUS_BAR_COLOR[2]);
+    // Data stream 2 status 1 is default status bar color 1
+    expect(mesh.geometry.attributes.color.array[6]).toBe(DEFAULT_STATUS_BAR_COLOR_1[0]);
+    expect(mesh.geometry.attributes.color.array[7]).toBe(DEFAULT_STATUS_BAR_COLOR_1[1]);
+    expect(mesh.geometry.attributes.color.array[8]).toBe(DEFAULT_STATUS_BAR_COLOR_1[2]);
 
-    // Data stream 2 status 2 is default status bar color
-    expect(mesh.geometry.attributes.color.array[9]).toBe(DEFAULT_STATUS_BAR_COLOR[0]);
-    expect(mesh.geometry.attributes.color.array[10]).toBe(DEFAULT_STATUS_BAR_COLOR[1]);
-    expect(mesh.geometry.attributes.color.array[11]).toBe(DEFAULT_STATUS_BAR_COLOR[2]);
+    // Data stream 2 status 2 is default status bar color 2
+    expect(mesh.geometry.attributes.color.array[9]).toBe(DEFAULT_STATUS_BAR_COLOR_2[0]);
+    expect(mesh.geometry.attributes.color.array[10]).toBe(DEFAULT_STATUS_BAR_COLOR_2[1]);
+    expect(mesh.geometry.attributes.color.array[11]).toBe(DEFAULT_STATUS_BAR_COLOR_2[2]);
   });
 
   it('constructs buffer correctly for two data streams', () => {
@@ -310,15 +336,15 @@ describe('update status mesh', () => {
     expect(mesh.geometry.attributes.status.array[6]).toBeCloseTo(EXPECTED_WIDTH, 8);
     expect(mesh.geometry.attributes.status.array[7]).toBeLessThan(HEIGHT);
 
-    // default status bar color
-    expect(mesh.geometry.attributes.color.array[0]).toBe(DEFAULT_STATUS_BAR_COLOR[0]);
-    expect(mesh.geometry.attributes.color.array[1]).toBe(DEFAULT_STATUS_BAR_COLOR[1]);
-    expect(mesh.geometry.attributes.color.array[2]).toBe(DEFAULT_STATUS_BAR_COLOR[2]);
+    // default status bar color 1
+    expect(mesh.geometry.attributes.color.array[0]).toBe(DEFAULT_STATUS_BAR_COLOR_1[0]);
+    expect(mesh.geometry.attributes.color.array[1]).toBe(DEFAULT_STATUS_BAR_COLOR_1[1]);
+    expect(mesh.geometry.attributes.color.array[2]).toBe(DEFAULT_STATUS_BAR_COLOR_1[2]);
 
-    // default status bar color
-    expect(mesh.geometry.attributes.color.array[3]).toBe(DEFAULT_STATUS_BAR_COLOR[0]);
-    expect(mesh.geometry.attributes.color.array[4]).toBe(DEFAULT_STATUS_BAR_COLOR[1]);
-    expect(mesh.geometry.attributes.color.array[5]).toBe(DEFAULT_STATUS_BAR_COLOR[2]);
+    // default status bar color 2
+    expect(mesh.geometry.attributes.color.array[3]).toBe(DEFAULT_STATUS_BAR_COLOR_2[0]);
+    expect(mesh.geometry.attributes.color.array[4]).toBe(DEFAULT_STATUS_BAR_COLOR_2[1]);
+    expect(mesh.geometry.attributes.color.array[5]).toBe(DEFAULT_STATUS_BAR_COLOR_2[2]);
   });
 
   it('updates a non-empty status mesh to an empty one', () => {
@@ -532,10 +558,10 @@ describe('threshold correctly effects the color buffer', () => {
     });
     expect(mesh.count).toEqual(1);
 
-    // default status bar color
-    expect(mesh.geometry.attributes.color.array[0]).toBe(DEFAULT_STATUS_BAR_COLOR[0]);
-    expect(mesh.geometry.attributes.color.array[1]).toBe(DEFAULT_STATUS_BAR_COLOR[1]);
-    expect(mesh.geometry.attributes.color.array[2]).toBe(DEFAULT_STATUS_BAR_COLOR[2]);
+    // default status bar color 1
+    expect(mesh.geometry.attributes.color.array[0]).toBe(DEFAULT_STATUS_BAR_COLOR_1[0]);
+    expect(mesh.geometry.attributes.color.array[1]).toBe(DEFAULT_STATUS_BAR_COLOR_1[1]);
+    expect(mesh.geometry.attributes.color.array[2]).toBe(DEFAULT_STATUS_BAR_COLOR_1[2]);
   });
 
   it('initializes color buffer with the correct threshold color for a single status', () => {
@@ -617,10 +643,10 @@ describe('threshold correctly effects the color buffer', () => {
     });
     expect(mesh.count).toEqual(2);
 
-    // Default status color
-    expect(mesh.geometry.attributes.color.array[0]).toBe(DEFAULT_STATUS_BAR_COLOR[0]);
-    expect(mesh.geometry.attributes.color.array[1]).toBe(DEFAULT_STATUS_BAR_COLOR[1]);
-    expect(mesh.geometry.attributes.color.array[2]).toBe(DEFAULT_STATUS_BAR_COLOR[2]);
+    // Default status color 1
+    expect(mesh.geometry.attributes.color.array[0]).toBe(DEFAULT_STATUS_BAR_COLOR_1[0]);
+    expect(mesh.geometry.attributes.color.array[1]).toBe(DEFAULT_STATUS_BAR_COLOR_1[1]);
+    expect(mesh.geometry.attributes.color.array[2]).toBe(DEFAULT_STATUS_BAR_COLOR_1[2]);
 
     // Red
     expect(mesh.geometry.attributes.color.array[3]).toBe(255);
@@ -678,10 +704,10 @@ describe('threshold correctly effects the color buffer', () => {
     });
     expect(mesh.count).toEqual(1);
 
-    // default status bar color
-    expect(mesh.geometry.attributes.color.array[0]).toBe(DEFAULT_STATUS_BAR_COLOR[0]);
-    expect(mesh.geometry.attributes.color.array[1]).toBe(DEFAULT_STATUS_BAR_COLOR[1]);
-    expect(mesh.geometry.attributes.color.array[2]).toBe(DEFAULT_STATUS_BAR_COLOR[2]);
+    // default status bar color 1
+    expect(mesh.geometry.attributes.color.array[0]).toBe(DEFAULT_STATUS_BAR_COLOR_1[0]);
+    expect(mesh.geometry.attributes.color.array[1]).toBe(DEFAULT_STATUS_BAR_COLOR_1[1]);
+    expect(mesh.geometry.attributes.color.array[2]).toBe(DEFAULT_STATUS_BAR_COLOR_1[2]);
   });
 
   it('updates the color buffer when point breached threshold, despite the data stream color change', () => {
@@ -769,10 +795,10 @@ describe('threshold correctly effects the color buffer', () => {
     });
     expect(mesh.count).toEqual(1);
 
-    // default status bar color
-    expect(mesh.geometry.attributes.color.array[0]).toBe(DEFAULT_STATUS_BAR_COLOR[0]);
-    expect(mesh.geometry.attributes.color.array[1]).toBe(DEFAULT_STATUS_BAR_COLOR[1]);
-    expect(mesh.geometry.attributes.color.array[2]).toBe(DEFAULT_STATUS_BAR_COLOR[2]);
+    // default status bar color 1
+    expect(mesh.geometry.attributes.color.array[0]).toBe(DEFAULT_STATUS_BAR_COLOR_1[0]);
+    expect(mesh.geometry.attributes.color.array[1]).toBe(DEFAULT_STATUS_BAR_COLOR_1[1]);
+    expect(mesh.geometry.attributes.color.array[2]).toBe(DEFAULT_STATUS_BAR_COLOR_1[2]);
 
     updateStatusMesh({
       chartSize: CHART_SIZE,
@@ -848,10 +874,10 @@ describe('threshold correctly effects the color buffer', () => {
     });
     expect(mesh.count).toEqual(1);
 
-    // default status bar color
-    expect(mesh.geometry.attributes.color.array[0]).toBe(DEFAULT_STATUS_BAR_COLOR[0]);
-    expect(mesh.geometry.attributes.color.array[1]).toBe(DEFAULT_STATUS_BAR_COLOR[1]);
-    expect(mesh.geometry.attributes.color.array[2]).toBe(DEFAULT_STATUS_BAR_COLOR[2]);
+    // default status bar color 1
+    expect(mesh.geometry.attributes.color.array[0]).toBe(DEFAULT_STATUS_BAR_COLOR_1[0]);
+    expect(mesh.geometry.attributes.color.array[1]).toBe(DEFAULT_STATUS_BAR_COLOR_1[1]);
+    expect(mesh.geometry.attributes.color.array[2]).toBe(DEFAULT_STATUS_BAR_COLOR_1[2]);
   });
 
   it('updates the color buffer with the correct threshold color for multiple streams with different colors', () => {
@@ -885,15 +911,15 @@ describe('threshold correctly effects the color buffer', () => {
     });
     expect(mesh.count).toEqual(2);
 
-    // default status bar color
-    expect(mesh.geometry.attributes.color.array[0]).toBe(DEFAULT_STATUS_BAR_COLOR[0]);
-    expect(mesh.geometry.attributes.color.array[1]).toBe(DEFAULT_STATUS_BAR_COLOR[1]);
-    expect(mesh.geometry.attributes.color.array[2]).toBe(DEFAULT_STATUS_BAR_COLOR[2]);
+    // default status bar color 1
+    expect(mesh.geometry.attributes.color.array[0]).toBe(DEFAULT_STATUS_BAR_COLOR_1[0]);
+    expect(mesh.geometry.attributes.color.array[1]).toBe(DEFAULT_STATUS_BAR_COLOR_1[1]);
+    expect(mesh.geometry.attributes.color.array[2]).toBe(DEFAULT_STATUS_BAR_COLOR_1[2]);
 
-    // default status bar color
-    expect(mesh.geometry.attributes.color.array[3]).toBe(DEFAULT_STATUS_BAR_COLOR[0]);
-    expect(mesh.geometry.attributes.color.array[4]).toBe(DEFAULT_STATUS_BAR_COLOR[1]);
-    expect(mesh.geometry.attributes.color.array[5]).toBe(DEFAULT_STATUS_BAR_COLOR[2]);
+    // default status bar color 1
+    expect(mesh.geometry.attributes.color.array[3]).toBe(DEFAULT_STATUS_BAR_COLOR_1[0]);
+    expect(mesh.geometry.attributes.color.array[4]).toBe(DEFAULT_STATUS_BAR_COLOR_1[1]);
+    expect(mesh.geometry.attributes.color.array[5]).toBe(DEFAULT_STATUS_BAR_COLOR_1[2]);
 
     const thresholds2: Threshold[] = [
       {
@@ -928,10 +954,10 @@ describe('threshold correctly effects the color buffer', () => {
     expect(mesh.geometry.attributes.color.array[1]).toBe(0);
     expect(mesh.geometry.attributes.color.array[2]).toBe(0);
 
-    // default status bar color
-    expect(mesh.geometry.attributes.color.array[3]).toBe(DEFAULT_STATUS_BAR_COLOR[0]);
-    expect(mesh.geometry.attributes.color.array[4]).toBe(DEFAULT_STATUS_BAR_COLOR[1]);
-    expect(mesh.geometry.attributes.color.array[5]).toBe(DEFAULT_STATUS_BAR_COLOR[2]);
+    // default status bar color 1
+    expect(mesh.geometry.attributes.color.array[3]).toBe(DEFAULT_STATUS_BAR_COLOR_1[0]);
+    expect(mesh.geometry.attributes.color.array[4]).toBe(DEFAULT_STATUS_BAR_COLOR_1[1]);
+    expect(mesh.geometry.attributes.color.array[5]).toBe(DEFAULT_STATUS_BAR_COLOR_1[2]);
   });
 
   it('updates the color buffer with the upper threshold when a positive point breached two threshold', () => {

@@ -10,7 +10,7 @@ export class testingGrounds {
       <div>
         <h3>
           hello, welcome to the{' '}
-          <a href="https://synchrocharts.com/" rel="noreferrer" target="_blank">
+          <a href="https://synchrocharts.com/" rel="noopener noreferrer" target="_blank">
             synchro-charts
           </a>{' '}
           testing grounds!

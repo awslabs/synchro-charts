@@ -14,7 +14,7 @@ import statusFrag from './status.frag';
 import { WriteableBufferAttribute, WriteableInstancedBufferAttribute } from '../../sc-webgl-context/types';
 import { numDataPoints, vertices } from '../sc-webgl-base-chart/utils';
 import { getCSSColorByString } from '../common/getCSSColorByString';
-import { STATUS_MARGIN_TOP_PX, DEFAULT_STATUS_BAR_COLOR, HEIGHT } from './constants';
+import { STATUS_MARGIN_TOP_PX, DEFAULT_STATUS_BAR_COLOR_1, DEFAULT_STATUS_BAR_COLOR_2, HEIGHT } from './constants';
 import { getBreachedThreshold } from '../common/annotations/utils';
 import { getDistanceFromDuration } from '../common/getDistanceFromDuration';
 import { Threshold, ThresholdOptions } from '../common/types';
@@ -121,10 +121,20 @@ const updateMesh = ({
   const vizHeight = rowHeight - margin;
 
   streamVertexSets.forEach((streamVertexSet, setIndex) => {
+    let prevY: Primitive | undefined;
+    let currentDefaultGrayColor = DEFAULT_STATUS_BAR_COLOR_1;
     streamVertexSet.forEach((currVertex, v) => {
       const nextVertex = streamVertexSet[v + 1];
       const [nextX = undefined] = nextVertex || [];
       const [currX, currY] = currVertex;
+
+      if (prevY != null && prevY !== currY) {
+        // Swap grays if data value has changed since last point. Don't want to change color of the data point has the same value as the previous data point.
+        currentDefaultGrayColor =
+          currentDefaultGrayColor === DEFAULT_STATUS_BAR_COLOR_1
+            ? DEFAULT_STATUS_BAR_COLOR_2
+            : DEFAULT_STATUS_BAR_COLOR_1;
+      }
 
       /**
        * Color Buffer Construction
@@ -133,8 +143,12 @@ const updateMesh = ({
       const breachedThreshold = getBreachedThreshold(currY, thresholds);
 
       if (breachedThreshold == null || !thresholdOptions.showColor) {
-        const [r, g, b] = DEFAULT_STATUS_BAR_COLOR;
-        // Set status color to default gray (r, g, b)
+        const [r, g, b] = currentDefaultGrayColor;
+        // The status-timeline alternates between two grays as a default color.
+        // This provides visual contrast when the data value changes, without
+        // requiring a user to specify every threshold in advance.
+        // In certain use cases of the status-timeline, the values visualized cannot be known ahead of time,
+        // but users still need to be able to visually differentiate when they change.
         color.array[colorIndex] = r;
         color.array[colorIndex + 1] = g;
         color.array[colorIndex + 2] = b;
@@ -169,6 +183,7 @@ const updateMesh = ({
 
       // Increment Indexes by the associated stride of the buffer
       statusIndex += NUM_STATUS_COMPONENTS;
+      prevY = currY;
     });
   });
   status.needsUpdate = true;
