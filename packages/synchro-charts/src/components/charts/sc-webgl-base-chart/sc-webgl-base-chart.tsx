@@ -910,7 +910,7 @@ export class ScWebglBaseChart {
             />
           )}
         </DataContainer>
-        {this.legend && (
+        {this.legend && !this.legend.hidden && (
           <ChartLegendContainer config={this.legend} legendHeight={LEGEND_HEIGHT} size={chartSizeConfig}>
             {this.renderLegendComponent({ isLoading: shouldDisplayAsLoading, thresholds, showDataStreamColor })}
           </ChartLegendContainer>

@@ -44,6 +44,7 @@ export interface LegendConfig {
   legendLabels?: {
     title: string;
   };
+  hidden?: boolean;
 }
 
 /**
@@ -200,6 +201,7 @@ export interface ThresholdColorAndIcon {
   color: string | undefined;
   icon: StatusIcon | undefined;
 }
+
 export namespace Legend {
   export interface Props {
     config: LegendConfig;
