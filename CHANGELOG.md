@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.2.0](https://github.com/awslabs/synchro-charts/compare/root-v7.1.6...root-v7.2.0) (2023-02-03)
+
+
+### Features
+
+* **status-timeline:** visually differentiate value change when data points have no associated breached thresholds ([94f6181](https://github.com/awslabs/synchro-charts/commit/94f61816aa46a5ba406552891180a74d2e625dfd))
+* **synchro-charts:** refactor webgl context to all it to be placed in any scope ([94f7f3b](https://github.com/awslabs/synchro-charts/commit/94f7f3b3675f04700c5cc123d3698bf81b2ebc2e))
+
 ## [7.1.6](https://github.com/awslabs/synchro-charts/compare/root-v7.1.5...root-v7.1.6) (2023-01-30)
 
 
