@@ -212,6 +212,7 @@ export class ScGaugeSvg {
     const labelBottomMiddleY = OUTRING_DIAMETER + this.sizeConfig.labelSize / 2 + GAUGLE_OFFSET_Y;
 
     const showDetailedName = this.stream && !this.stream.unit && this.point && !this.breachedThreshold;
+    const showOuterRing = this.breachedThreshold && this.outers;
     return (
       <fragment>
         {this.isLoading ? (
@@ -245,13 +246,13 @@ export class ScGaugeSvg {
               />
             </g>
             <g transform={`matrix(1,0,0,1,${OUTRING_DIAMETER},${DIAMETER + GAUGLE_OFFSET_Y})`}>
-              {this.outers &&
+              {showOuterRing &&
                 this.outers.map(outer => (
                   <path d={outer.path} fill={outer.fill} stroke={STROKE_COLOR} stroke-width="1" />
                 ))}
             </g>
             <g transform={`matrix(1,0,0,1,${DIAMETER},${DIAMETER})`}>
-              {this.outers &&
+              {showOuterRing &&
                 this.outers.map(outer => (
                   <text x={outer.x} y={outer.y} font-size={DEFAULT_FONT_SIZE} text-anchor="left">
                     {outer.value}

@@ -1,7 +1,6 @@
 import { COMPARISON_OPERATOR, DataType, NO_VALUE_PRESENT, StatusIcon, StreamType } from '../../../src/constants';
 import { visitDynamicWidget } from '../../../src/testing/selectors';
 import { Y_MAX, Y_MIN } from '../../../src/testing/test-routes/charts/constants';
-import { round } from '../../../src/utils/number';
 
 const VALUE_ERROR = '[data-testid="warning"]';
 const VALUE_LOADING = '[data-testid="loading"]';
@@ -84,7 +83,6 @@ const annotations = {
 it('renders latest value', () => {
   const LATEST_VALUE1 = 100;
   const LATEST_VALUE2 = 2238;
-  const DATA = round((LATEST_VALUE2 / (Y_MAX - Y_MIN)) * 100);
   visitDynamicWidget(cy, {
     componentTag: 'sc-gauge',
     size: GAUGLE_SIZE,
@@ -100,7 +98,7 @@ it('renders latest value', () => {
   cy.wait(1000);
   cy.get('.sc-gaugebase-container')
     .invoke('text')
-    .should('contain', `${DATA}%`);
+    .should('contain', `${LATEST_VALUE2}`);
 
   cy.get(VALUE_LOADING).should('not.exist');
   cy.get(VALUE_ERROR).should('not.exist');
@@ -111,7 +109,6 @@ it('renders latest value', () => {
 it('renders value under percentile when detailedName is existed', () => {
   const LATEST_VALUE1 = 100;
   const LATEST_VALUE2 = 2238;
-  const DATA = round((LATEST_VALUE2 / (Y_MAX - Y_MIN)) * 100);
   visitDynamicWidget(cy, {
     componentTag: 'sc-gauge',
     size: GAUGLE_SIZE,
@@ -128,7 +125,7 @@ it('renders value under percentile when detailedName is existed', () => {
   cy.wait(1000);
   cy.get('.sc-gaugebase-container')
     .invoke('text')
-    .should('contain', `${DATA}%`);
+    .should('contain', `${LATEST_VALUE2}`);
 
   cy.get(VALUE_LOADING).should('not.exist');
   cy.get(VALUE_ERROR).should('not.exist');
@@ -139,7 +136,6 @@ it('renders value under percentile when detailedName is existed', () => {
 it('renders value under percentile when significantDigits is 2', () => {
   const significantDigits = 2;
   const LATEST_VALUE = 2238;
-  const DATA = ((LATEST_VALUE / (Y_MAX - Y_MIN)) * 100).toPrecision(significantDigits);
   visitDynamicWidget(cy, {
     componentTag: 'sc-gauge',
     size: GAUGLE_SIZE,
@@ -153,7 +149,7 @@ it('renders value under percentile when significantDigits is 2', () => {
   cy.wait(1000);
   cy.get('.sc-gaugebase-container')
     .invoke('text')
-    .should('contain', `${DATA}%`);
+    .should('contain', `${LATEST_VALUE}`);
 
   cy.get(VALUE_LOADING).should('not.exist');
   cy.get(VALUE_ERROR).should('not.exist');
@@ -287,8 +283,7 @@ it('renders error message when `yMin` and `yMax` are the same and unit is not ex
 });
 
 it('renders normal when value is greater than `yMax` and unit is not exist.', () => {
-  const LATEST_VALUE = 8000;
-  const DATA = round((LATEST_VALUE / (Y_MAX - Y_MIN)) * 100);
+  const LATEST_VALUE = 6000;
   visitDynamicWidget(cy, {
     componentTag: 'sc-gauge',
     size: GAUGLE_SIZE,
@@ -302,7 +297,7 @@ it('renders normal when value is greater than `yMax` and unit is not exist.', ()
   });
 
   cy.wait(1000);
-  cy.contains('.sc-gaugebase-container', DATA).should('be.visible');
+  cy.contains('.sc-gaugebase-container', LATEST_VALUE).should('be.visible');
   cy.get(VALUE_ERROR).should('not.exist');
 
   cy.get(VALUE_LOADING).should('not.exist');
