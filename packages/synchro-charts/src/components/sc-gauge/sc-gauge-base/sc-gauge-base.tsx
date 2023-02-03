@@ -48,12 +48,7 @@ export class ScGaugeBase {
 
     const error = getErrorMessage(this.viewport, this.messages.error, this.propertyStream);
 
-    const { unit, percent, value } = getData(
-      this.viewport,
-      this.propertyPoint,
-      this.propertyStream,
-      this.significantDigits
-    );
+    const { percent } = getData(this.viewport, this.propertyPoint, this.propertyStream, this.significantDigits);
 
     const showError = !this.isLoading && error;
 
@@ -73,13 +68,13 @@ export class ScGaugeBase {
           <div class={svgContainerCssName}>
             <sc-gauge-svg
               percent={percent}
-              value={value}
+              value={this.propertyPoint?.y}
               point={point}
               breachedThreshold={this.breachedThreshold}
               stream={propertyStream}
               size={this.size}
               significantDigits={this.significantDigits}
-              unit={unit}
+              unit={propertyStream?.unit}
               outerRingRange={this.outerRingRange}
               isLoading={this.isLoading}
               loadingText={this.messages.loading}
