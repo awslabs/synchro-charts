@@ -1,6 +1,6 @@
 import { Component, h } from '@stencil/core';
 
-import { DataPoint } from '../../../../utils/dataTypes';
+import { AggregateType, DataPoint } from '../../../../utils/dataTypes';
 import { MONTH_IN_MS } from '../../../../utils/time';
 import { DataType } from '../../../../utils/dataConstants';
 import { COMPARISON_OPERATOR } from '../../../../components/charts/common/constants';
@@ -50,6 +50,7 @@ export class ScScatterChartThresholdColorationBand {
             {
               id: 'test',
               data: [],
+              aggregationType: AggregateType.AVERAGE,
               aggregates: {
                 [MONTH_IN_MS]: [TEST_DATA_POINT, TEST_DATA_POINT_2, TEST_DATA_POINT_3],
               },
@@ -63,6 +64,7 @@ export class ScScatterChartThresholdColorationBand {
               color: 'red',
               name: 'test stream2',
               data: [],
+              aggregationType: AggregateType.AVERAGE,
               aggregates: {
                 [MONTH_IN_MS]: [TEST_2_DATA_POINT, TEST_2_DATA_POINT_2],
               },

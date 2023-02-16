@@ -8,6 +8,7 @@ const MONTH_RESOLUTION = 1000 * 60 * 60 * 24 * 30; // one month
       {
         id: 'car-speed-alarm',
         name: 'Car speed',
+        aggregationType: 'AVERAGE',
         aggregates: {
           [MONTH_RESOLUTION]: [{
             x: new Date(2000, 0, 0).getTime(),
@@ -115,6 +116,7 @@ const MONTH_RESOLUTION = 1000 * 60 * 60 * 24 * 30; // one month
       {
         id: 'car-speed-alarm',
         name: 'Car speed',
+        aggregationType: 'AVERAGE',
         aggregates: {
           [MONTH_RESOLUTION]: [{
             x: new Date(2000, 0, 0).getTime(),

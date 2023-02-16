@@ -1,7 +1,7 @@
 import { Component, h, State } from '@stencil/core';
 import { Y_VALUE } from '../constants';
 import { MONTH_IN_MS } from '../../../../utils/time';
-import { DataPoint } from '../../../../utils/dataTypes';
+import { AggregateType, DataPoint } from '../../../../utils/dataTypes';
 import { DataType } from '../../../../utils/dataConstants';
 
 // viewport boundaries
@@ -56,6 +56,7 @@ export class ScScatterChartDynamicData {
                 color: 'red',
                 name: 'test stream',
                 data: [],
+                aggregationType: AggregateType.AVERAGE,
                 aggregates: {
                   [MONTH_IN_MS]: this.data,
                 },

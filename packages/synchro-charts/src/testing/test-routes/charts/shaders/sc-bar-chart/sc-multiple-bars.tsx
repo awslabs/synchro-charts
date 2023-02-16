@@ -3,7 +3,7 @@ import { webGLRenderer } from '../../../../../components/sc-webgl-context/webglC
 import { chartScene } from '../../../../../components/charts/sc-bar-chart/chartScene';
 import { CHART_SIZE } from '../chartSize';
 import { HOUR_IN_MS } from '../../../../../utils/time';
-import { DataPoint } from '../../../../../utils/dataTypes';
+import { AggregateType, DataPoint } from '../../../../../utils/dataTypes';
 import { DataType } from '../../../../../utils/dataConstants';
 
 // viewport boundaries
@@ -50,6 +50,7 @@ export class ScMultipleBars {
           id: 'test-stream',
           name: 'test-stream-name',
           color: 'black',
+          aggregationType: AggregateType.AVERAGE,
           aggregates: { [HOUR_IN_MS * 5]: [TEST_DATA_POINT_1] },
           data: [],
           resolution: HOUR_IN_MS * 5,
@@ -59,6 +60,7 @@ export class ScMultipleBars {
           id: 'test-stream-2',
           name: 'test-stream-name-2',
           color: 'red',
+          aggregationType: AggregateType.AVERAGE,
           aggregates: { [HOUR_IN_MS * 5]: [TEST_DATA_POINT_2] },
           data: [],
           resolution: HOUR_IN_MS * 5,

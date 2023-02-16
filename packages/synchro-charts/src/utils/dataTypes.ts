@@ -214,6 +214,15 @@ export const TREND_ICON_DASH_ARRAY = '1, 5';
  * A `resolution` of `0` implies that there is no aggregation occurring, and that the data represents a single point in time,
  * of which has no duration.
  */
+
+export const AggregateType = {
+  AVERAGE: 'AVERAGE',
+  COUNT: 'COUNT',
+  MAXIMUM: 'MAXIMUM',
+  MINIMUM: 'MINIMUM',
+  STANDARD_DEVIATION: 'STANDARD_DEVIATION',
+  SUM: 'SUM',
+};
 export interface DataStream<T extends Primitive = Primitive> extends DataStreamInfo {
   id: DataStreamId;
 
@@ -246,6 +255,7 @@ export interface DataStream<T extends Primitive = Primitive> extends DataStreamI
   isLoading?: boolean;
   isRefreshing?: boolean;
   error?: string;
+  aggregationType?: string;
   resolution: number; // length of aggregation period in milliseconds. 0 implies no aggregations.
 }
 

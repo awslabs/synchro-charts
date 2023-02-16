@@ -1,6 +1,7 @@
 import { Component, h } from '@stencil/core';
 
 import { MINUTE_IN_MS } from '../../../../utils/time';
+import { AggregateType } from '../../../../utils/dataTypes';
 import { TEST_DATA_POINT_STANDARD, Y_MAX, Y_MIN, X_MIN, X_MAX } from '../constants';
 import { DataType } from '../../../..';
 
@@ -24,6 +25,7 @@ export class ScWebglBarChartStandard {
               color: 'black',
               name: 'test stream',
               data: [],
+              aggregationType: AggregateType.AVERAGE,
               aggregates: {
                 [MINUTE_IN_MS]: [TEST_DATA_POINT_STANDARD],
               },

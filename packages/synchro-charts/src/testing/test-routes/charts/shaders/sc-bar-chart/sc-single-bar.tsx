@@ -4,7 +4,7 @@ import { chartScene } from '../../../../../components/charts/sc-bar-chart/chartS
 import { CHART_SIZE } from '../chartSize';
 import { DAY_IN_MS } from '../../../../../utils/time';
 import { DataType } from '../../../../../utils/dataConstants';
-import { DataPoint } from '../../../../../utils/dataTypes';
+import { AggregateType, DataPoint } from '../../../../../utils/dataTypes';
 
 // viewport boundaries
 const X_MIN = new Date(2000, 0, 0);
@@ -47,6 +47,7 @@ export class ScSingleBar {
           name: 'test-stream-name',
           color: 'black',
           data: [],
+          aggregationType: AggregateType.AVERAGE,
           aggregates: {
             [DAY_IN_MS]: [TEST_DATA_POINT_1],
           },

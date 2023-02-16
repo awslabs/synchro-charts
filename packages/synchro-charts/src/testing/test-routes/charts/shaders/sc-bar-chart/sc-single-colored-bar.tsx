@@ -3,7 +3,7 @@ import { webGLRenderer } from '../../../../../components/sc-webgl-context/webglC
 import { chartScene } from '../../../../../components/charts/sc-bar-chart/chartScene';
 import { CHART_SIZE } from '../chartSize';
 import { DAY_IN_MS } from '../../../../../utils/time';
-import { DataPoint } from '../../../../../utils/dataTypes';
+import { AggregateType, DataPoint } from '../../../../../utils/dataTypes';
 import { DataType } from '../../../../../utils/dataConstants';
 
 // viewport boundaries
@@ -48,6 +48,7 @@ export class ScSingleColoredBar {
           color: 'red',
           resolution: DAY_IN_MS,
           data: [],
+          aggregationType: AggregateType.AVERAGE,
           aggregates: {
             [DAY_IN_MS]: [TEST_DATA_POINT_1],
           },

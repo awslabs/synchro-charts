@@ -1,7 +1,7 @@
 import { Component, h, State } from '@stencil/core';
 
 import { MONTH_IN_MS } from '../../../../utils/time';
-import { DataPoint } from '../../../../utils/dataTypes';
+import { AggregateType, DataPoint } from '../../../../utils/dataTypes';
 import { DataType } from '../../../../utils/dataConstants';
 
 // viewport boundaries
@@ -52,6 +52,7 @@ export class StatusTimelineDynamicData {
                 id: 'test',
                 name: 'test stream',
                 color: 'red',
+                aggregationType: AggregateType.AVERAGE,
                 aggregates: { [MONTH_IN_MS]: this.data },
                 data: [],
                 resolution: MONTH_IN_MS,

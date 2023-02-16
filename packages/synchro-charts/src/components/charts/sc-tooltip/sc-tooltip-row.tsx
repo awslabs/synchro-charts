@@ -13,8 +13,6 @@ import { getAggregationFrequency } from '../../sc-data-stream-name/helper';
 import { StatusIcon } from '../common/constants';
 
 const baseColor = '#000';
-const AGGREGATED_LEVEL = 'average';
-
 @Component({
   tag: 'sc-tooltip-row',
   styleUrl: 'sc-tooltip-row.css',
@@ -28,6 +26,7 @@ export class ScTooltipRow {
   @Prop() showDataStreamColor!: boolean;
   @Prop() pointType!: POINT_TYPE;
   @Prop() valueColor?: string = baseColor;
+  @Prop() aggregationType?: string;
   @Prop() icon?: StatusIcon;
 
   render() {
@@ -57,7 +56,7 @@ export class ScTooltipRow {
         </span>
         {this.resolution != null && (
           <div class="awsui-util-pb-s">
-            <small>{getAggregationFrequency(this.resolution, AGGREGATED_LEVEL)}</small>
+            <small>{getAggregationFrequency(this.resolution, this.aggregationType)}</small>
           </div>
         )}
       </div>

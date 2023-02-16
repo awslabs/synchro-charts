@@ -1,4 +1,4 @@
-import { DataPoint, DataStream, DataStreamInfo } from '../../utils/dataTypes';
+import { AggregateType, DataPoint, DataStream, DataStreamInfo } from '../../utils/dataTypes';
 import { COMPARISON_OPERATOR, LEGEND_POSITION, StatusIcon } from '../../components/charts/common/constants';
 import { Annotations, LegendConfig, Threshold } from '../../components/charts/common/types';
 import { MINUTE_IN_MS } from '../../utils/time';
@@ -121,6 +121,7 @@ const mphStream: DataStream<number> = {
   dataType: dataStreamInfoWithAlarms.dataType,
   color: 'black',
   name: 'mph',
+  aggregationType: AggregateType.AVERAGE,
   aggregates: {
     [MINUTE_IN_MS]: getMPHData(),
   },

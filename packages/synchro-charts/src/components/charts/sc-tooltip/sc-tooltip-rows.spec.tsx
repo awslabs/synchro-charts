@@ -5,7 +5,7 @@ import { update } from '../common/tests/merge';
 import { ScTooltipRow } from './sc-tooltip-row';
 import { Threshold } from '../common/types';
 import { TrendResult } from '../common/trends/types';
-import { DataPoint, DataStream, DataStreamInfo } from '../../../utils/dataTypes';
+import { AggregateType, DataPoint, DataStream, DataStreamInfo } from '../../../utils/dataTypes';
 import { ScTooltipRows } from './sc-tooltip-rows';
 import { DEFAULT_CHART_CONFIG } from '../sc-webgl-base-chart/chartDefaults';
 
@@ -51,6 +51,7 @@ const DATA_STREAM: DataStream<number> = {
   id: 'data-stream-id',
   dataType: DataType.NUMBER,
   data: [],
+  aggregationType: AggregateType.AVERAGE,
   aggregates: { [MINUTE_IN_MS]: [DEFAULT_POINT] },
   resolution: MINUTE_IN_MS,
 };
@@ -61,6 +62,7 @@ const DATA_STREAM_2: DataStream<number> = {
   id: 'data-stream-id-2',
   dataType: DataType.NUMBER,
   data: [],
+  aggregationType: AggregateType.AVERAGE,
   aggregates: { [MINUTE_IN_MS]: [DEFAULT_POINT] },
   resolution: MINUTE_IN_MS,
 };
@@ -70,6 +72,7 @@ const STRING_STREAM: DataStream<string> = {
   name: 'string-stream-name',
   id: 'string-data-stream-id',
   dataType: DataType.STRING,
+  aggregationType: AggregateType.AVERAGE,
   aggregates: { [MINUTE_IN_MS]: [DEFAULT_STRING_POINT] },
   data: [],
   resolution: MINUTE_IN_MS,
@@ -138,7 +141,7 @@ it('renders one tooltip row with the streams point passed in', async () => {
 describe('showsBlankTooltipRows is true', () => {
   it('renders one tooltip row with no point passed in when no data present in the data stream', async () => {
     const { tooltipRows } = await newTooltipRowsSpecPage({
-      dataStreams: [{ ...DATA_STREAM, aggregates: {}, data: [] }],
+      dataStreams: [{ ...DATA_STREAM, aggregates: {}, aggregationType: AggregateType.AVERAGE, data: [] }],
       showBlankTooltipRows: true,
     });
 
@@ -150,7 +153,7 @@ describe('showsBlankTooltipRows is true', () => {
 
   it('renders one tooltip row with no point passed in when no data present in the data stream', async () => {
     const { tooltipRows } = await newTooltipRowsSpecPage({
-      dataStreams: [{ ...DATA_STREAM, aggregates: {}, data: [] }],
+      dataStreams: [{ ...DATA_STREAM, aggregates: {}, aggregationType: AggregateType.AVERAGE, data: [] }],
       sortPoints: true,
       showBlankTooltipRows: true,
     });
@@ -174,7 +177,9 @@ describe('showsBlankTooltipRows is false', () => {
 
   it('renders no tooltip rows when no data present in data stream and is sorting with non raw data', async () => {
     const { tooltipRows } = await newTooltipRowsSpecPage({
-      dataStreams: [{ ...DATA_STREAM, resolution: MINUTE_IN_MS, aggregates: {} }],
+      dataStreams: [
+        { ...DATA_STREAM, resolution: MINUTE_IN_MS, aggregationType: AggregateType.AVERAGE, aggregates: {} },
+      ],
       sortPoints: true,
       showBlankTooltipRows: false,
     });

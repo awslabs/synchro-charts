@@ -1,25 +1,28 @@
 import update from 'immutability-helper';
+import { aggregateToString } from '../../utils/aggregateToString';
 import { convertMS } from '../../utils/time';
 
-export const getAggregationFrequency = (dataResolution: number, aggregatedLevel: string) => {
-  if (dataResolution === 0) {
+export const getAggregationFrequency = (dataResolution: number, aggregationType?: string) => {
+  if (dataResolution === 0 || !aggregationType) {
     return 'raw data';
   }
 
   const { day, hour, minute, seconds } = convertMS(dataResolution);
   const getPlural = (input: number) => (input > 1 ? 's' : '');
 
+  const aggregateString = aggregateToString(aggregationType);
+
   if (day !== 0) {
-    return `${day} day${getPlural(day)} ${aggregatedLevel}`;
+    return `${day} day${getPlural(day)} ${aggregateString}`;
   }
   if (hour !== 0) {
-    return `${hour} hour${getPlural(hour)} ${aggregatedLevel}`;
+    return `${hour} hour${getPlural(hour)} ${aggregateString}`;
   }
   if (minute !== 0) {
-    return `${minute} minute${getPlural(minute)} ${aggregatedLevel}`;
+    return `${minute} minute${getPlural(minute)} ${aggregateString}`;
   }
   if (seconds !== 0) {
-    return `${seconds} second${getPlural(seconds)} ${aggregatedLevel}`;
+    return `${seconds} second${getPlural(seconds)} ${aggregateString}`;
   }
 
   return 'N/A';

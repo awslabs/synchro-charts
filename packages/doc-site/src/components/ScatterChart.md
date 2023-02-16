@@ -18,6 +18,7 @@ const MONTH_RESOLUTION = 1000 * 60 * 60 * 24 * 30; // one month
         resolution: MONTH_RESOLUTION,
         name: 'Car Count',
         color: '#0073bb',
+        aggregationType: 'AVERAGE',
         aggregates: {
           [MONTH_RESOLUTION]: [
             {
@@ -45,6 +46,7 @@ const MONTH_RESOLUTION = 1000 * 60 * 60 * 24 * 30; // one month
         name: 'Boat Count',
         color: '#dd6b10',
         resolution: MONTH_RESOLUTION,
+        aggregationType: 'AVERAGE',
         aggregates: {
           [MONTH_RESOLUTION]: [{
             x: new Date(2000, 0, 0).getTime(),
@@ -97,6 +99,7 @@ const MONTH_RESOLUTION = 1000 * 60 * 60 * 24 * 30; // one month
         resolution: MONTH_RESOLUTION,
         color: '#0073bb',
         name: 'Car Count',
+        aggregationType: 'AVERAGE',
         aggregates: {
           [MONTH_RESOLUTION]: [
             {
@@ -124,6 +127,7 @@ const MONTH_RESOLUTION = 1000 * 60 * 60 * 24 * 30; // one month
         color: '#dd6b10',
         name: 'Boat Count',
         resolution: MONTH_RESOLUTION,
+        aggregationType: 'AVERAGE',
         aggregates: {
           [MONTH_RESOLUTION]: [{
             x: new Date(2000, 0, 0).getTime(),

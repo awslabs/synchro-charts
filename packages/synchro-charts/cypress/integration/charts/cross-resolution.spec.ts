@@ -7,6 +7,7 @@ import {
   visitDynamicWidget,
 } from '../../../src/testing/selectors';
 import { DATA_STREAM, DATA_STREAM_2 } from '../../../src/testing/__mocks__/mockWidgetProperties';
+import { AggregateType } from '../../../src/utils/dataTypes';
 
 beforeEach(() => {
   cy.viewport(SCREEN_SIZE.width, SCREEN_SIZE.height);
@@ -29,6 +30,7 @@ const RAW_DATA_STREAM = {
 const AGGREGATED_DATA_STREAM = {
   ...DATA_STREAM_2,
   resolution: DAY_IN_MS,
+  aggregationType: AggregateType.AVERAGE,
   aggregates: {
     [DAY_IN_MS]: [
       {

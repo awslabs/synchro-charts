@@ -15,6 +15,7 @@ import {
   ELEMENT_GROUP_SELECTOR,
 } from '../../../../src/components/charts/common/annotations/YAnnotations/YAnnotations';
 import { moveHandle, moveHandleFilter, moveHandleWithPause, parseTransformYValue } from '../utils-draggable';
+import { AggregateType } from '../../../../src/utils/dataTypes';
 
 const timelineParams: Partial<SearchQueryParams> = {
   componentTag: 'sc-bar-chart',
@@ -28,6 +29,7 @@ const timelineParams: Partial<SearchQueryParams> = {
       data: [],
       aggregates: { [MINUTE_IN_MS]: [TEST_DATA_POINT_STANDARD] },
       resolution: MINUTE_IN_MS,
+      aggregationType: AggregateType.AVERAGE,
       dataType: DataType.NUMBER,
     },
   ],

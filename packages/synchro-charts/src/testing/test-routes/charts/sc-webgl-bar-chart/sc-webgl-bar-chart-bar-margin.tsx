@@ -2,7 +2,7 @@ import { Component, h, State } from '@stencil/core';
 
 import { MONTH_IN_MS } from '../../../../utils/time';
 import { DataType } from '../../../../utils/dataConstants';
-import { DataPoint, DataStream } from '../../../../utils/dataTypes';
+import { AggregateType, DataPoint, DataStream } from '../../../../utils/dataTypes';
 
 // viewport boundaries
 const Y_MIN = 0;
@@ -22,6 +22,7 @@ const DATA_STREAM_1: DataStream = {
   color: 'red',
   name: 'test stream',
   resolution: MONTH_IN_MS,
+  aggregationType: AggregateType.AVERAGE,
   aggregates: {
     [MONTH_IN_MS]: [
       { x: new Date(1998, 3, 0, 0).getTime(), y: 1000 },
@@ -37,6 +38,7 @@ const DATA_STREAM_2: DataStream = {
   color: 'orange',
   name: 'test stream2',
   resolution: MONTH_IN_MS,
+  aggregationType: AggregateType.AVERAGE,
   aggregates: {
     [MONTH_IN_MS]: [
       { x: new Date(1998, 3, 0, 0).getTime(), y: 2000 },

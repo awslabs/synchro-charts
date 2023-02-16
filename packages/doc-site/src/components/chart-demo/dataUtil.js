@@ -1,5 +1,5 @@
-import {DAY_IN_MS} from "./dateUtil";
-import {DataType} from "@synchro-charts/core";
+import { DAY_IN_MS } from "./dateUtil";
+import { DataType } from "@synchro-charts/core";
 
 export const getY = (x, duration) =>
   Math.sin(x / (duration * 8)) * 15 +
@@ -11,7 +11,7 @@ export const getY = (x, duration) =>
   Math.random() / 1000;
 
 export const getYby = (x, duration) =>
-  Math.sin(x / (duration * 3 )) * 15;
+  Math.sin(x / (duration * 3)) * 15;
 
 export const truncateDate = (num) => Math.floor(num / DAY_IN_MS) * DAY_IN_MS;
 
@@ -41,6 +41,7 @@ export const getRandomData = ({
     id: streamId,
     name: streamId,
     resolution,
+    aggregationType: resolution !== 0 ? 'AVERAGE' : undefined,
     data: [],
     aggregates: {
       [resolution]: dataPoints,

@@ -1,5 +1,5 @@
 import { Component, h, State } from '@stencil/core';
-import { DataPoint, DataStream } from '../../../../utils/dataTypes';
+import { AggregateType, DataPoint, DataStream } from '../../../../utils/dataTypes';
 import { HOUR_IN_MS } from '../../../../utils/time';
 import { DataType } from '../../../../utils/dataConstants';
 
@@ -64,6 +64,7 @@ export class ScWebglBarChartFastViewport {
                 name: 'test stream',
                 data: [],
                 resolution: HOUR_IN_MS,
+                aggregationType: AggregateType.AVERAGE,
                 aggregates: {
                   [HOUR_IN_MS]: TEST_DATA_POINTS,
                 },

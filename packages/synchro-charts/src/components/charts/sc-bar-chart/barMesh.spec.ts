@@ -4,7 +4,7 @@ import { MONTH_IN_MS, DAY_IN_MS } from '../../../utils/time';
 import { getBarMargin, getBarWidth } from './displayLogic';
 import { getDistanceFromDuration } from '../common/getDistanceFromDuration';
 import { DataType } from '../../../utils/dataConstants';
-import { DataPoint, DataStream } from '../../../utils/dataTypes';
+import { AggregateType, DataPoint, DataStream } from '../../../utils/dataTypes';
 import { Threshold } from '../common/types';
 import { COMPARISON_OPERATOR } from '../common/constants';
 
@@ -30,6 +30,7 @@ const DATA_STREAMS: DataStream[] = [
     id: 'data-stream',
     name: 'some name',
     resolution: MONTH_IN_MS,
+    aggregationType: AggregateType.AVERAGE,
     aggregates: {
       [MONTH_IN_MS]: [DATA_POINT_1, DATA_POINT_2, DATA_POINT_3],
     },
@@ -174,6 +175,7 @@ describe('create bar mesh', () => {
           color: 'red',
           name: 'some name',
           resolution,
+          aggregationType: AggregateType.AVERAGE,
           aggregates: {
             [resolution]: [STREAM_1_DATA_POINT_1, STREAM_1_DATA_POINT_2],
           },
@@ -185,6 +187,7 @@ describe('create bar mesh', () => {
           color: 'blue',
           name: 'some name',
           resolution,
+          aggregationType: AggregateType.AVERAGE,
           aggregates: {
             [resolution]: [STREAM_2_DATA_POINT_1, STREAM_2_DATA_POINT_2],
           },
@@ -260,6 +263,7 @@ describe('create bar mesh', () => {
           name: 'some name',
           resolution,
           color: 'red',
+          aggregationType: AggregateType.AVERAGE,
           aggregates: {
             [resolution]: [STREAM_1_DATA_POINT_1, STREAM_1_DATA_POINT_2],
           },
@@ -276,6 +280,7 @@ describe('create bar mesh', () => {
           },
           data: [],
           dataType,
+          aggregationType: AggregateType.AVERAGE,
         },
         {
           id: 'data-stream-3',
@@ -287,6 +292,7 @@ describe('create bar mesh', () => {
           },
           data: [],
           dataType,
+          aggregationType: AggregateType.AVERAGE,
         },
       ],
       minBufferSize: 100,
@@ -374,6 +380,7 @@ describe('create bar mesh', () => {
           id: 'data-stream-1',
           resolution,
           data: [],
+          aggregationType: AggregateType.AVERAGE,
           aggregates: {
             [resolution]: [STREAM_1_DATA_POINT_1, STREAM_1_DATA_POINT_2],
           },
@@ -385,6 +392,7 @@ describe('create bar mesh', () => {
           id: 'data-stream-2',
           resolution,
           data: [],
+          aggregationType: AggregateType.AVERAGE,
           aggregates: {
             [resolution]: [STREAM_2_DATA_POINT_1],
           },
@@ -397,6 +405,7 @@ describe('create bar mesh', () => {
           resolution,
           color: 'black',
           name: 'data stream 3',
+          aggregationType: AggregateType.AVERAGE,
           aggregates: {
             [resolution]: [STREAM_3_DATA_POINT_1, STREAM_3_DATA_POINT_2],
           },
@@ -478,6 +487,7 @@ describe('update bar mesh', () => {
         id: 'data-stream',
         name: 'some name',
         resolution: MONTH_IN_MS,
+        aggregationType: AggregateType.AVERAGE,
         aggregates: {
           [MONTH_IN_MS]: [DATA_POINT_1, DATA_POINT_2],
         },
@@ -619,6 +629,7 @@ describe('update bar mesh', () => {
       name: 'data-stream-name',
       resolution: MONTH_IN_MS,
       data: [],
+      aggregationType: AggregateType.AVERAGE,
       aggregates: {
         [MONTH_IN_MS]: [DATA_POINT_1],
       },
@@ -666,6 +677,7 @@ describe('update bar mesh', () => {
         name: 'some name',
         resolution: MONTH_IN_MS,
         data: [],
+        aggregationType: AggregateType.AVERAGE,
         aggregates: {
           [MONTH_IN_MS]: [DATA_POINT_1],
         },
@@ -698,6 +710,7 @@ describe('update bar mesh', () => {
         name: 'some name',
         resolution: DAY_IN_MS,
         data: [],
+        aggregationType: AggregateType.AVERAGE,
         aggregates: {
           [DAY_IN_MS]: [DATA_POINT_1],
         },
@@ -733,6 +746,7 @@ describe('update bar mesh', () => {
         name: 'some name',
         resolution: MONTH_IN_MS,
         data: [],
+        aggregationType: AggregateType.AVERAGE,
         aggregates: {
           [MONTH_IN_MS]: [DATA_POINT_1],
         },
@@ -799,6 +813,7 @@ describe('threshold correctly effects the color buffer', () => {
           color: 'black',
           resolution: MONTH_IN_MS,
           data: [],
+          aggregationType: AggregateType.AVERAGE,
           aggregates: {
             [MONTH_IN_MS]: [DATA_POINT_1],
           },
@@ -843,6 +858,7 @@ describe('threshold correctly effects the color buffer', () => {
           name: 'some name',
           resolution: MONTH_IN_MS,
           data: [],
+          aggregationType: AggregateType.AVERAGE,
           aggregates: {
             [MONTH_IN_MS]: [DATA_POINT_1],
           },
@@ -886,6 +902,7 @@ describe('threshold correctly effects the color buffer', () => {
           name: 'some chart',
           color: 'purple',
           resolution: MONTH_IN_MS,
+          aggregationType: AggregateType.AVERAGE,
           aggregates: {
             [MONTH_IN_MS]: [DATA_POINT_1],
           },
@@ -897,6 +914,7 @@ describe('threshold correctly effects the color buffer', () => {
           name: 'some chart 2',
           color: 'blue',
           resolution: MONTH_IN_MS,
+          aggregationType: AggregateType.AVERAGE,
           aggregates: {
             [MONTH_IN_MS]: [DATA_POINT_2],
           },
@@ -933,6 +951,7 @@ describe('threshold correctly effects the color buffer', () => {
         name: 'some name',
         resolution: MONTH_IN_MS,
         data: [],
+        aggregationType: AggregateType.AVERAGE,
         aggregates: {
           [MONTH_IN_MS]: [DATA_POINT_1],
         },
@@ -995,6 +1014,7 @@ describe('threshold correctly effects the color buffer', () => {
         name: 'some name',
         resolution: MONTH_IN_MS,
         data: [],
+        aggregationType: AggregateType.AVERAGE,
         aggregates: {
           [MONTH_IN_MS]: [DATA_POINT_1],
         },
@@ -1071,6 +1091,7 @@ describe('threshold correctly effects the color buffer', () => {
           name: 'some name',
           resolution: MONTH_IN_MS,
           data: [],
+          aggregationType: AggregateType.AVERAGE,
           aggregates: {
             [MONTH_IN_MS]: [DATA_POINT_1],
           },
@@ -1101,6 +1122,7 @@ describe('threshold correctly effects the color buffer', () => {
           name: 'some name',
           resolution: MONTH_IN_MS,
           data: [],
+          aggregationType: AggregateType.AVERAGE,
           aggregates: {
             [MONTH_IN_MS]: [DATA_POINT_2],
           },
@@ -1144,6 +1166,7 @@ describe('threshold correctly effects the color buffer', () => {
           name: 'some name',
           resolution: MONTH_IN_MS,
           data: [],
+          aggregationType: AggregateType.AVERAGE,
           aggregates: {
             [MONTH_IN_MS]: [DATA_POINT_2],
           },
@@ -1174,6 +1197,7 @@ describe('threshold correctly effects the color buffer', () => {
           name: 'some name',
           resolution: MONTH_IN_MS,
           data: [],
+          aggregationType: AggregateType.AVERAGE,
           aggregates: {
             [MONTH_IN_MS]: [DATA_POINT_1],
           },
@@ -1204,6 +1228,7 @@ describe('threshold correctly effects the color buffer', () => {
         name: 'data-stream-name',
         resolution: MONTH_IN_MS,
         data: [],
+        aggregationType: AggregateType.AVERAGE,
         aggregates: {
           [MONTH_IN_MS]: [DATA_POINT_1],
         },
@@ -1215,6 +1240,7 @@ describe('threshold correctly effects the color buffer', () => {
         name: 'data-stream-name',
         resolution: MONTH_IN_MS,
         data: [],
+        aggregationType: AggregateType.AVERAGE,
         aggregates: {
           [MONTH_IN_MS]: [DATA_POINT_2],
         },
@@ -1300,6 +1326,7 @@ describe('threshold correctly effects the color buffer', () => {
         name: 'some name',
         resolution: MONTH_IN_MS,
         data: [],
+        aggregationType: AggregateType.AVERAGE,
         aggregates: {
           [MONTH_IN_MS]: [DATA_POINT_1],
         },

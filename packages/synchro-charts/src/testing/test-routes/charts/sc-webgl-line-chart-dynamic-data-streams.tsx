@@ -1,7 +1,7 @@
 import { Component, h, State } from '@stencil/core';
 import { Y_VALUE } from './constants';
 import { MINUTE_IN_MS } from '../../../utils/time';
-import { DataStream } from '../../../utils/dataTypes';
+import { AggregateType, DataStream } from '../../../utils/dataTypes';
 import { DataType } from '../../../utils/dataConstants';
 
 // viewport boundaries
@@ -46,6 +46,7 @@ export class ScWebglLineChartDynamicDataStreams {
         id: streamId,
         color: 'black',
         name: `${streamId}-name`,
+        aggregationType: AggregateType.AVERAGE,
         aggregates: { [MINUTE_IN_MS]: [leftPoint, middlePoint, rightPoint] },
         data: [],
         resolution: MINUTE_IN_MS,
