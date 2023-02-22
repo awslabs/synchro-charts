@@ -1,5 +1,5 @@
 import { chartScene, updateChartScene } from './chartScene';
-import { DataPoint } from '../../../utils/dataTypes';
+import { AggregateType, DataPoint } from '../../../utils/dataTypes';
 import { MONTH_IN_MS } from '../../../utils/time';
 import { BarChartBarMesh } from './barMesh';
 import { DataType } from '../../../utils/dataConstants';
@@ -43,6 +43,7 @@ describe('bars', () => {
           name: 'some name',
           resolution: MONTH_IN_MS,
           data: [],
+          aggregationType: AggregateType.AVERAGE,
           aggregates: {
             [MONTH_IN_MS]: TEST_DATA_POINT,
           },

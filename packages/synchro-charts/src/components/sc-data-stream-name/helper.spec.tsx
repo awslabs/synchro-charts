@@ -1,51 +1,47 @@
+import { AggregateType } from '../../utils/dataTypes';
 import { getAggregationFrequency, updateName } from './helper';
 import { SECOND_IN_MS, MINUTE_IN_MS, HOUR_IN_MS, DAY_IN_MS } from '../../utils/time';
+import { aggregateToString } from '../../utils/aggregateToString';
 
 describe('aggregationFrequency', () => {
+  const aggregationLevel = AggregateType.AVERAGE;
+  const aggregateString = aggregateToString(aggregationLevel);
   it('returns 1 second aggregation frequency', () => {
-    const aggregationLevel = 'average';
     const aggregationFrequency = getAggregationFrequency(SECOND_IN_MS, aggregationLevel);
-    expect(aggregationFrequency).toBe(`1 second ${aggregationLevel}`);
+    expect(aggregationFrequency).toBe(`1 second ${aggregateString}`);
   });
 
   it('returns more than 1 second aggregation frequency', () => {
-    const aggregationLevel = 'average';
     const aggregationFrequency = getAggregationFrequency(SECOND_IN_MS * 2, aggregationLevel);
-    expect(aggregationFrequency).toBe(`2 seconds ${aggregationLevel}`);
+    expect(aggregationFrequency).toBe(`2 seconds ${aggregateString}`);
   });
 
   it('returns 1 min aggregation frequency', () => {
-    const aggregationLevel = 'average';
     const aggregationFrequency = getAggregationFrequency(MINUTE_IN_MS, aggregationLevel);
-    expect(aggregationFrequency).toBe(`1 minute ${aggregationLevel}`);
+    expect(aggregationFrequency).toBe(`1 minute ${aggregateString}`);
   });
 
   it('returns more than 1 min aggregation frequency', () => {
-    const aggregationLevel = 'average';
     const aggregationFrequency = getAggregationFrequency(MINUTE_IN_MS * 2, aggregationLevel);
-    expect(aggregationFrequency).toBe(`2 minutes ${aggregationLevel}`);
+    expect(aggregationFrequency).toBe(`2 minutes ${aggregateString}`);
   });
 
   it('returns 1 hr aggregation frequency', () => {
-    const aggregationLevel = 'average';
     const aggregationFrequency = getAggregationFrequency(HOUR_IN_MS, aggregationLevel);
-    expect(aggregationFrequency).toBe(`1 hour ${aggregationLevel}`);
+    expect(aggregationFrequency).toBe(`1 hour ${aggregateString}`);
   });
 
   it('returns more than 1 hr aggregation frequency', () => {
-    const aggregationLevel = 'average';
     const aggregationFrequency = getAggregationFrequency(HOUR_IN_MS * 2, aggregationLevel);
-    expect(aggregationFrequency).toBe(`2 hours ${aggregationLevel}`);
+    expect(aggregationFrequency).toBe(`2 hours ${aggregateString}`);
   });
 
   it('returns 1 day aggregation frequency', () => {
-    const aggregationLevel = 'average';
     const aggregationFrequency = getAggregationFrequency(DAY_IN_MS, aggregationLevel);
-    expect(aggregationFrequency).toBe(`1 day ${aggregationLevel}`);
+    expect(aggregationFrequency).toBe(`1 day ${aggregateString}`);
   });
 
   it('returns N/A for time span less than a second', () => {
-    const aggregationLevel = 'average';
     const aggregationFrequency = getAggregationFrequency(20, aggregationLevel);
     expect(aggregationFrequency).toBe('N/A');
   });

@@ -6,7 +6,7 @@ import { DATA_STREAMS } from '../charts/common/tests/chart/constants';
 import { DEFAULT_CHART_CONFIG } from '../charts/sc-webgl-base-chart/chartDefaults';
 import { update } from '../charts/common/tests/merge';
 import { ScWidgetGrid } from './sc-widget-grid';
-import { DataPoint, MinimalStaticViewport, MinimalViewPortConfig } from '../../utils/dataTypes';
+import { AggregateType, DataPoint, MinimalStaticViewport, MinimalViewPortConfig } from '../../utils/dataTypes';
 import { DAY_IN_MS, MINUTE_IN_MS } from '../../utils/time';
 import { CellOptions, RenderCell } from './types';
 import {
@@ -405,7 +405,14 @@ describe('aggregated data', () => {
   it('displays aggregated data when resolution is available', async () => {
     const { renderCell } = await widgetGridSpecPage({
       viewport: DEFAULT_CHART_CONFIG.viewport,
-      dataStreams: [{ ...DATA_STREAM, aggregates: { [MINUTE_IN_MS]: [POINT] }, resolution: MINUTE_IN_MS }],
+      dataStreams: [
+        {
+          ...DATA_STREAM,
+          aggregationType: AggregateType.AVERAGE,
+          aggregates: { [MINUTE_IN_MS]: [POINT] },
+          resolution: MINUTE_IN_MS,
+        },
+      ],
     });
 
     expect(renderCell).toBeCalledTimes(1);
@@ -419,7 +426,14 @@ describe('aggregated data', () => {
   it('does not display data when only aggregated data is available and the resolution is 0', async () => {
     const { renderCell } = await widgetGridSpecPage({
       viewport: DEFAULT_CHART_CONFIG.viewport,
-      dataStreams: [{ ...DATA_STREAM, aggregates: { [MINUTE_IN_MS]: [POINT] }, resolution: 0 }],
+      dataStreams: [
+        {
+          ...DATA_STREAM,
+          aggregationType: AggregateType.AVERAGE,
+          aggregates: { [MINUTE_IN_MS]: [POINT] },
+          resolution: 0,
+        },
+      ],
     });
 
     expect(renderCell).toBeCalledTimes(1);

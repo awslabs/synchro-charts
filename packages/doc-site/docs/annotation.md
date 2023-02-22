@@ -28,6 +28,7 @@ const dataStreams = [{
   color: '#1d8102',
   name: 'Car Count',
   resolution: DAY_RESOLUTION, // one day
+  aggregationType: 'AVERAGE',
   aggregates: {
     [DAY_RESOLUTION]: [{
       x: new Date(2000, 1, 0).getTime(),
@@ -85,6 +86,7 @@ const dataStreams = [{
       dataType: 'NUMBER',
       resolution: 1000 * 60 * 24 * 60 * 24,
       color: '#1d8102',
+      aggregationType: 'AVERAGE',
       aggregates: {
         [1000 * 60 * 24 * 60 * 24]: [{
           x: new Date(2000, 1, 0).getTime(),
@@ -197,6 +199,7 @@ const dataStreams = [{
   color: '#1d8102',
   name: 'Car Count',
   resolution: DAY_RESOLUTION, // one day
+  aggregationType: 'AVERAGE',
   aggregates: {
     [DAY_RESOLUTION]: [{
       x: new Date(2000, 1, 0).getTime(),
@@ -254,6 +257,7 @@ const dataStreams = [{
       dataType: 'NUMBER',
       resolution: 1000 * 60 * 24 * 60 * 24,
       color: '#1d8102',
+      aggregationType: 'AVERAGE',
       aggregates: {
         [1000 * 60 * 24 * 60 * 24]: [{
           x: new Date(2000, 1, 0).getTime(),

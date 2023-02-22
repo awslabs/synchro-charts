@@ -17,6 +17,7 @@
         color: '#0073bb',
         name: 'Car Count',
         resolution: 1000 * 60 * 60 * 24 * 30, // one month
+        aggregationType: 'AVERAGE',
         aggregates: {
           [1000 * 60 * 60 * 24 * 30]: [{
             x: new Date(2000, 0, 0).getTime(),
@@ -41,6 +42,7 @@
         color: '#dd6b10',
         name: 'Boat Count',
         resolution: 1000 * 60 * 60 * 24 * 30, // one month
+        aggregationType: 'AVERAGE',
         aggregates: {
           [1000 * 60 * 60 * 24 * 30]: [{
             x: new Date(2000, 0, 0).getTime(),
@@ -92,6 +94,7 @@ import { DataType, COMPARISON_OPERATOR, StatusIcon } from '@synchro-charts/core'
         color: '#0073bb',
         name: 'Car Count',
         resolution: 1000 * 60 * 60 * 24 * 30, // one month
+        aggregationType: 'AVERAGE',
         aggregates: {
           [1000 * 60 * 60 * 24 * 30]: [{
             x: new Date(2000, 0, 0).getTime(),
@@ -116,6 +119,7 @@ import { DataType, COMPARISON_OPERATOR, StatusIcon } from '@synchro-charts/core'
         color: '#dd6b10',
         name: 'Boat Count',
         resolution: 1000 * 60 * 60 * 24 * 30, // one month
+        aggregationType: 'AVERAGE',
         aggregates: {
           [1000 * 60 * 60 * 24 * 30]: [{
             x: new Date(2000, 0, 0).getTime(),

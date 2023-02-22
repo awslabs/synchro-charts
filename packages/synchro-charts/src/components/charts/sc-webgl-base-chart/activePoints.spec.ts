@@ -1,4 +1,4 @@
-import { DataPoint, ViewPort } from '../../../utils/dataTypes';
+import { AggregateType, DataPoint, ViewPort } from '../../../utils/dataTypes';
 import { activePoints } from './activePoints';
 import { HOUR_IN_MS, MINUTE_IN_MS, SECOND_IN_MS, YEAR_IN_MS } from '../../../utils/time';
 import { DATA_STREAM } from '../../../testing/__mocks__/mockWidgetProperties';
@@ -679,6 +679,7 @@ describe('aggregated data', () => {
           {
             ...DATA_STREAM,
             data: [],
+            aggregationType: AggregateType.AVERAGE,
             aggregates: { [MINUTE_IN_MS]: [DATA_POINT_IN_VIEWPORT_1, DATA_POINT_AFTER_VIEWPORT] },
             resolution: 0,
           },
@@ -698,6 +699,7 @@ describe('aggregated data', () => {
           {
             ...DATA_STREAM,
             data: [DATA_POINT_IN_VIEWPORT_1, DATA_POINT_AFTER_VIEWPORT],
+            aggregationType: AggregateType.AVERAGE,
             aggregates: { [MINUTE_IN_MS]: [] },
             resolution: MINUTE_IN_MS,
           },
@@ -717,6 +719,7 @@ describe('aggregated data', () => {
           {
             ...DATA_STREAM,
             data: [],
+            aggregationType: AggregateType.AVERAGE,
             aggregates: { [MINUTE_IN_MS]: [DATA_POINT_IN_VIEWPORT_1] },
             resolution: MINUTE_IN_MS,
           },
@@ -736,6 +739,7 @@ describe('aggregated data', () => {
           {
             ...DATA_STREAM,
             data: [],
+            aggregationType: AggregateType.AVERAGE,
             aggregates: { [MINUTE_IN_MS]: [DATA_POINT_IN_VIEWPORT_1], [HOUR_IN_MS]: [DATA_POINT_IN_VIEWPORT_2] },
             resolution: MINUTE_IN_MS,
           },

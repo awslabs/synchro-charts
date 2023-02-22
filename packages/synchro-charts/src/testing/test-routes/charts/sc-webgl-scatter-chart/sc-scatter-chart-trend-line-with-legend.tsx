@@ -1,6 +1,6 @@
 import { Component, h } from '@stencil/core';
 import { SECOND_IN_MS } from '../../../../utils/time';
-import { DataPoint } from '../../../../utils/dataTypes';
+import { AggregateType, DataPoint } from '../../../../utils/dataTypes';
 import { DataType, TREND_TYPE } from '../../../../utils/dataConstants';
 import { LEGEND_POSITION } from '../../../../components/charts/common/constants';
 
@@ -40,6 +40,7 @@ export class ScScatterChartTrendLineWithLegend {
               id: 'test',
               color: 'black',
               name: 'test stream',
+              aggregationType: AggregateType.AVERAGE,
               aggregates: { [SECOND_IN_MS]: TEST_DATA_POINTS },
               data: [],
               resolution: SECOND_IN_MS,

@@ -4,7 +4,7 @@ import { chartScene } from '../../../../../components/charts/sc-status-timeline/
 import { CHART_SIZE } from '../chartSize';
 import { HOUR_IN_MS } from '../../../../../utils/time';
 import { HEIGHT } from '../../../../../components/charts/sc-status-timeline/constants';
-import { DataPoint } from '../../../../../utils/dataTypes';
+import { AggregateType, DataPoint } from '../../../../../utils/dataTypes';
 import { DataType } from '../../../../../utils/dataConstants';
 
 // viewport boundaries
@@ -42,6 +42,7 @@ export class MultipleStatuses {
       dataStreams: [
         {
           id: 'test-stream',
+          aggregationType: AggregateType.AVERAGE,
           aggregates: {
             [HOUR_IN_MS * 5]: [TEST_DATA_POINT_1],
           },
@@ -53,6 +54,7 @@ export class MultipleStatuses {
         },
         {
           id: 'test-stream-2',
+          aggregationType: AggregateType.AVERAGE,
           aggregates: {
             [HOUR_IN_MS * 5]: [TEST_DATA_POINT_2],
           },

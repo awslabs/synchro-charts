@@ -11,6 +11,7 @@ import { ScErrorBadge } from '../../sc-error-badge/sc-error-badge';
 import { ScChartIcon } from '../../charts/chart-icon/sc-chart-icon';
 import { DataType } from '../../../utils/dataConstants';
 import { MINUTE_IN_MS } from '../../../utils/time';
+import { AggregateType } from '../../../utils/dataTypes';
 
 // this is mock output that passed down from `sc-table-base`
 const CELL: Cell = {
@@ -61,6 +62,7 @@ it('renders aggregated data', async () => {
         data: [],
         dataType: DataType.NUMBER,
         resolution: MINUTE_IN_MS,
+        aggregationType: AggregateType.AVERAGE,
         aggregates: { [MINUTE_IN_MS]: [{ x: Date.now(), y: Y_VALUE }] },
       },
     },

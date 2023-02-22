@@ -4,7 +4,7 @@ import { chartScene } from '../../../../../components/charts/sc-status-timeline/
 import { CHART_SIZE } from '../chartSize';
 import { DAY_IN_MS } from '../../../../../utils/time';
 import { HEIGHT } from '../../../../../components/charts/sc-status-timeline/constants';
-import { DataPoint } from '../../../../../utils/dataTypes';
+import { AggregateType, DataPoint } from '../../../../../utils/dataTypes';
 import { DataType } from '../../../../../utils/dataConstants';
 
 // viewport boundaries
@@ -39,6 +39,7 @@ export class SingleColoredStatus {
           id: 'test-stream',
           name: 'test-stream-name',
           color: 'red',
+          aggregationType: AggregateType.AVERAGE,
           aggregates: {
             [DAY_IN_MS]: [TEST_DATA_POINT_1],
           },

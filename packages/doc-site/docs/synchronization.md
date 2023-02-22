@@ -18,6 +18,7 @@ const DAY_RESOLUTION = 1000 * 60 * 60 * 24; // one day
           color: '#1d8102',
           name: 'Car Count',
           resolution: DAY_RESOLUTION, // one day
+          aggregationType: 'AVERAGE',
           aggregates: {
             [DAY_RESOLUTION]: [
               {
@@ -74,6 +75,7 @@ const DAY_RESOLUTION = 1000 * 60 * 60 * 24; // one day
           color: 'purple',
           name: 'Car Count',
           resolution: DAY_RESOLUTION, // one day
+          aggregationType: 'AVERAGE',
           aggregates: {
             [DAY_RESOLUTION]: [
               {
@@ -129,6 +131,7 @@ const DAY_RESOLUTION = 1000 * 60 * 60 * 24; // one day
           color: 'red',
           name: 'Car Count',
           resolution: DAY_RESOLUTION, // one day
+          aggregationType: 'AVERAGE',
           aggregates: {
             [DAY_RESOLUTION]: [
               {

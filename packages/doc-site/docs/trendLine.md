@@ -21,6 +21,7 @@ import { ScatterChart } from "@synchro-charts/react";
       id: 'car-count',
       dataType: 'NUMBER',
       resolution: 1000 * 60 * 60 * 24, // one day
+      aggregationType: 'AVERAGE',
       aggregates: {
         [1000 * 60 * 60 * 24]: [{
           x: new Date(2000, 1, 0),

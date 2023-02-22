@@ -1,6 +1,6 @@
 import { Component, h, State } from '@stencil/core';
 
-import { DataPoint } from '../../../../utils/dataTypes';
+import { AggregateType, DataPoint } from '../../../../utils/dataTypes';
 import { MINUTE_IN_MS } from '../../../../utils/time';
 import { DataType } from '../../../../utils/dataConstants';
 
@@ -49,6 +49,7 @@ export class ScWebglBarChartStartFromZero {
                 color: 'purple',
                 name: 'test stream',
                 data: [],
+                aggregationType: AggregateType.AVERAGE,
                 aggregates: {
                   [MINUTE_IN_MS]: this.testData,
                 },

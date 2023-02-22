@@ -1,7 +1,7 @@
 import { Component, h, Prop } from '@stencil/core';
 
 import uniq from 'lodash.uniq';
-import { DataPoint, DataStream, DataStreamId, SizeConfig, ViewPort } from '../../../utils/dataTypes';
+import { AggregateType, DataPoint, DataStream, DataStreamId, SizeConfig, ViewPort } from '../../../utils/dataTypes';
 import { activePoints, POINT_TYPE } from '../sc-webgl-base-chart/activePoints';
 import { getAggregationFrequency } from '../../sc-data-stream-name/helper';
 import { displayDate } from '../../../utils/time';
@@ -16,7 +16,6 @@ import { StreamType } from '../../../utils/dataConstants';
 import { TrendResult } from '../common/trends/types';
 import { DATA_ALIGNMENT } from '../common/constants';
 
-const AGGREGATED_LEVEL = 'average';
 const TOOLTIP_ROW_HEIGHT = 21;
 const TOOLTIP_EMPTY_HEIGHT = 71;
 const X_OFFSET = 8;
@@ -221,7 +220,7 @@ export class ScTooltipRows {
               <small
                 class={{ 'awsui-util-d-b': true, 'awsui-util-mb-s': true, 'left-offset': !this.showDataStreamColor }}
               >
-                {getAggregationFrequency(minResolution, AGGREGATED_LEVEL)}
+                {getAggregationFrequency(minResolution, AggregateType.AVERAGE)}
               </small>
             )}
             {points.map(tooltipPoint => {
@@ -242,6 +241,7 @@ export class ScTooltipRows {
                   key={`${tooltipPoint.streamId}-${tooltipPoint.type}`}
                   showDataStreamColor={this.showDataStreamColor}
                   label={tooltipPoint.label || dataStream.name}
+                  aggregationType={dataStream.aggregationType}
                   resolution={isCrossResolution ? dataStream.resolution : undefined}
                   color={tooltipPoint.color || dataStream.color || 'black'}
                   point={tooltipPoint.point}

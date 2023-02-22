@@ -2,7 +2,7 @@ import { Component, h } from '@stencil/core';
 
 import { MINUTE_IN_MS } from '../../../../utils/time';
 import { TEST_DATA_POINT_STANDARD, X_MAX, X_MIN, Y_MAX, Y_MIN } from '../constants';
-import { DataPoint } from '../../../../utils/dataTypes';
+import { AggregateType, DataPoint } from '../../../../utils/dataTypes';
 import { DataType } from '../../../../utils/dataConstants';
 import { COMPARISON_OPERATOR } from '../../../../components/charts/common/constants';
 
@@ -37,6 +37,7 @@ export class StatusTimelineThresholdBand {
               id: 'test',
               color: 'black',
               name: 'test stream',
+              aggregationType: AggregateType.AVERAGE,
               aggregates: { [MINUTE_IN_MS]: [data] },
               data: [],
               resolution: MINUTE_IN_MS,

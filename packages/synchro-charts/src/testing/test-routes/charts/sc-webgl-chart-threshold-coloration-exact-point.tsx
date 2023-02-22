@@ -1,7 +1,7 @@
 import { Component, h } from '@stencil/core';
 
 import { MONTH_IN_MS } from '../../../utils/time';
-import { DataPoint } from '../../../utils/dataTypes';
+import { AggregateType, DataPoint } from '../../../utils/dataTypes';
 import { DataType } from '../../../utils/dataConstants';
 import { COMPARISON_OPERATOR } from '../../../components/charts/common/constants';
 
@@ -36,6 +36,7 @@ export class ScWebglChartThresholdColorationExactPoint {
               id: 'test',
               color: 'black',
               name: 'test stream',
+              aggregationType: AggregateType.AVERAGE,
               aggregates: { [MONTH_IN_MS]: [TEST_DATA_POINT, TEST_DATA_POINT_2] },
               data: [],
               resolution: MONTH_IN_MS,

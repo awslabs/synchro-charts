@@ -157,7 +157,14 @@
   - `name`: string
 
     A name by which to refer to the data stream. Utilized in the legend.
+
+  - `aggregationType`: string
   
+    (Optional) The type of aggregate data contained within the aggregates object:
+
+    **`AVERAGE`**
+    <!-- upcoming support **`COUNT`**, **`MAXIMUM`**, **`MINIMUM`**, **`STANDARD_DEVIATION`**, **`SUM`** -->
+
   - `aggregates`: Object
     
     (Optional) A map of resolution (in milliseconds) to its associated data points. The `resolution` in the `datastream`

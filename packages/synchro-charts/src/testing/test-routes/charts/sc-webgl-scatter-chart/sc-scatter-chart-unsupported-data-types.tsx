@@ -1,5 +1,5 @@
 import { Component, h } from '@stencil/core';
-import { DataPoint } from '../../../../utils/dataTypes';
+import { AggregateType, DataPoint } from '../../../../utils/dataTypes';
 import { MONTH_IN_MS } from '../../../../utils/time';
 import { DataType } from '../../../../utils/dataConstants';
 import { Y_VALUE_STRING } from '../constants';
@@ -34,6 +34,7 @@ export class ScScatterChartUnsupportedDataTypes {
               id: 'test',
               name: 'test stream',
               color: 'black',
+              aggregationType: AggregateType.AVERAGE,
               aggregates: { [MONTH_IN_MS]: [TEST_DATA_POINT, TEST_DATA_POINT_2] },
               data: [],
               resolution: MONTH_IN_MS,

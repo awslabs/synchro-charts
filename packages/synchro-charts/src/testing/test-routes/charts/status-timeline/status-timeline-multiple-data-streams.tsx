@@ -3,6 +3,7 @@ import { Component, h } from '@stencil/core';
 import { MINUTE_IN_MS } from '../../../../utils/time';
 import { TEST_DATA_POINT_STANDARD, Y_MAX, Y_MIN, X_MIN, X_MAX } from '../constants';
 import { DataType } from '../../../..';
+import { AggregateType } from '../../../../utils/dataTypes';
 
 @Component({
   tag: 'status-timeline-multiple-data-streams',
@@ -18,6 +19,7 @@ export class StatusTimelineMultipleDataStreams {
               id: 'test',
               color: 'black',
               name: 'test stream 1',
+              aggregationType: AggregateType.AVERAGE,
               aggregates: { [MINUTE_IN_MS]: [{ ...TEST_DATA_POINT_STANDARD, y: 70 }] },
               data: [],
               resolution: MINUTE_IN_MS,
@@ -27,6 +29,7 @@ export class StatusTimelineMultipleDataStreams {
               id: 'test2',
               color: 'blue',
               name: 'test stream 2',
+              aggregationType: AggregateType.AVERAGE,
               aggregates: { [MINUTE_IN_MS]: [{ ...TEST_DATA_POINT_STANDARD, y: 170 }] },
               data: [],
               resolution: MINUTE_IN_MS,
@@ -36,6 +39,7 @@ export class StatusTimelineMultipleDataStreams {
               id: 'test3',
               color: 'red',
               name: 'test stream 3',
+              aggregationType: AggregateType.AVERAGE,
               aggregates: { [MINUTE_IN_MS]: [{ ...TEST_DATA_POINT_STANDARD, y: 60 }] },
               data: [],
               resolution: MINUTE_IN_MS,

@@ -1,5 +1,5 @@
 import { Component, h, State } from '@stencil/core';
-import { DataStream } from '../../../../utils/dataTypes';
+import { AggregateType, DataStream } from '../../../../utils/dataTypes';
 import { MONTH_IN_MS } from '../../../../utils/time';
 import { Y_VALUE } from '../constants';
 import { DataType } from '../../../../utils/dataConstants';
@@ -57,6 +57,7 @@ export class ScWebglBarChartDynamicDataStreams {
         id: streamId,
         color: this.getColor(),
         name: `${streamId}-name`,
+        aggregationType: AggregateType.AVERAGE,
         aggregates: {
           [MONTH_IN_MS]: [leftPoint, middlePoint, rightPoint],
         },

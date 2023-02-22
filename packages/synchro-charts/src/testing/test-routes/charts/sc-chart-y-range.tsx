@@ -1,5 +1,5 @@
 import { Component, h, Prop } from '@stencil/core';
-import { DataPoint, DataStream } from '../../../utils/dataTypes';
+import { AggregateType, DataPoint, DataStream } from '../../../utils/dataTypes';
 import { MONTH_IN_MS } from '../../../utils/time';
 import { DataType } from '../../../utils/dataConstants';
 
@@ -44,6 +44,7 @@ const data: DataStream<number>[] = [
     dataType: DataType.NUMBER,
     color: 'black',
     name: 'test stream',
+    aggregationType: AggregateType.AVERAGE,
     aggregates: { [MONTH_IN_MS]: [POINT_1, POINT_2, POINT_3, POINT_4, POINT_5] },
     data: [],
     resolution: MONTH_IN_MS,

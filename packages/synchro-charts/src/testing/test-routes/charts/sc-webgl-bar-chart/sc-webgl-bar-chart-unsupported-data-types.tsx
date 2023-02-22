@@ -2,6 +2,7 @@ import { Component, h } from '@stencil/core';
 import { MONTH_IN_MS } from '../../../../utils/time';
 import { Y_VALUE_STRING } from '../constants';
 import { DataType } from '../../../../utils/dataConstants';
+import { AggregateType } from '../../../../utils/dataTypes';
 
 // viewport boundaries
 const Y_MIN = 0;
@@ -32,6 +33,7 @@ export class ScWebglBarChartUnsupportedDataTypes {
                 id: 'test',
                 color: 'black',
                 name: 'test-name',
+                aggregationType: AggregateType.AVERAGE,
                 aggregates: {},
                 data: [
                   {

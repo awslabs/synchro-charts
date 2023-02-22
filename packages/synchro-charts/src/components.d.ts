@@ -393,6 +393,7 @@ export namespace Components {
         "visualizesAlarms": boolean;
     }
     interface ScTooltipRow {
+        "aggregationType"?: string;
         "color": string;
         "icon"?: StatusIcon;
         "label": string;
@@ -1847,6 +1848,7 @@ declare namespace LocalJSX {
         "visualizesAlarms": boolean;
     }
     interface ScTooltipRow {
+        "aggregationType"?: string;
         "color": string;
         "icon"?: StatusIcon;
         "label": string;

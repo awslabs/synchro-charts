@@ -1,4 +1,4 @@
-import { DataStream } from '../../../../../utils/dataTypes';
+import { AggregateType, DataStream } from '../../../../../utils/dataTypes';
 import { DataType } from '../../../../../utils/dataConstants';
 
 export const DATA_STREAMS: DataStream[] = [
@@ -6,6 +6,7 @@ export const DATA_STREAMS: DataStream[] = [
     name: 'some name',
     resolution: 1000,
     id: '1',
+    aggregationType: AggregateType.AVERAGE,
     aggregates: {
       1000: [
         { x: new Date(1995, 0, 1).getTime(), y: 0 },

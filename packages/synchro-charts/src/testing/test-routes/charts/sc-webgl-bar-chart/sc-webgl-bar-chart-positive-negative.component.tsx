@@ -1,6 +1,6 @@
 import { Component, h } from '@stencil/core';
 import { MINUTE_IN_MS } from '../../../../utils/time';
-import { DataPoint } from '../../../../utils/dataTypes';
+import { AggregateType, DataPoint } from '../../../../utils/dataTypes';
 import { DataType } from '../../../../utils/dataConstants';
 
 // viewport boundaries
@@ -38,6 +38,7 @@ export class ScWebglBarChartPositiveNegative {
           dataStreams={[
             {
               id: 'test',
+              aggregationType: AggregateType.AVERAGE,
               aggregates: { [MINUTE_IN_MS]: [TEST_DATA_POINT, TEST_DATA_POINT_2] },
               data: [],
               resolution: MINUTE_IN_MS,
