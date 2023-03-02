@@ -1,7 +1,7 @@
 {
-  "name": "@synchro-charts/core",
+  "name": "@iot-app-kit-visualizations/core",
   "description": "Synchro Charts",
-  "version": "7.2.0",
+  "version": "0.0.0",
   "publishConfig": {
     "access": "public"
   },
@@ -16,7 +16,7 @@
   "types": "dist/types/interface.d.ts",
   "collection": "dist/collection/collection-manifest.json",
   "collection:main": "dist/collection/index.js",
-  "unpkg": "dist/synchro-charts/synchro-charts.js",
+  "unpkg": "dist/iot-app-kit-visualizations/iot-app-kit-visualizations.js",
   "files": [
     "dist/"
   ],

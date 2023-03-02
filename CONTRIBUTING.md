@@ -57,7 +57,7 @@ Please feel free to reach out to the core contributors of Synchro Charts to disc
 6. Install dependencies with `yarn -i`.
 7. Build the project with `yarn build`.
 8. Try running the doc site - `cd packages/doc-site && yarn start`.
-9. Try running synchro-charts - `cd packages/synchro-charts && yarn start`.
+9. Try running iot-app-kit-visualizations - `cd packages/iot-app-kit-visualizations && yarn start`.
 10. Try running tests - `yarn test`.
 11. You're good to go!
 

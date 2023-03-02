@@ -3,11 +3,11 @@
     ".": {
       "component": "root"
     },
-    "packages/synchro-charts": {
-      "component": "synchro-charts"
+    "packages/iot-app-kit-visualizations": {
+      "component": "iot-app-kit-visualizations"
     },
-    "packages/synchro-charts-react": {
-      "component": "synchro-charts-react"
+    "packages/iot-app-kit-visualizations-react": {
+      "component": "iot-app-kit-visualizations-react"
     }
   },
   "bootstrap-sha": "69b68f26508e9628846d979fdb81753fc3a3ac43",
@@ -19,14 +19,14 @@
     },
     {
       "type": "linked-versions",
-      "group-name": "synchro-charts",
+      "group-name": "iot-app-kit-visualizations",
       "components": [
         "root",
-        "synchro-charts",
-        "synchro-charts-react"
+        "iot-app-kit-visualizations",
+        "iot-app-kit-visualizations-react"
       ]
     }
   ],
-  "pull-request-title-pattern": "chore: release ${version}" ,
+  "pull-request-title-pattern": "chore: release ${version}",
   "group-pull-request-title-pattern": "chore: release ${version}"
 }

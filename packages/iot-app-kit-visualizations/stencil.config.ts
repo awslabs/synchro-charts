@@ -2,7 +2,7 @@ import { Config } from '@stencil/core';
 import nodePolyfills from 'rollup-plugin-node-polyfills';
 
 export const config: Config = {
-  namespace: 'synchro-charts',
+  namespace: 'iot-app-kit-visualizations',
   outputTargets: [
     {
       type: 'dist',

@@ -1,3 +1,7 @@
+**WARNING** synchro-charts is now deprecated (final release was v7.2.0)
+
+we are now building `iot-app-kit-visualizations` to provide components for [iot-app-kit](https://github.com/awslabs/iot-app-kit)
+
 ### What is Synchro Charts?
 
 Synchro Charts is a collection of time-series visualization components with a focus on operational use cases such as monitoring, root cause analysis, and basic analytics.

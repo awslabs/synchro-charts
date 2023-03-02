@@ -42,21 +42,21 @@ jobs:
           start: yarn start
           wait-on: 'http://localhost:3333'
           command: yarn test:cypress
-          working-directory: packages/synchro-charts
+          working-directory: packages/iot-app-kit-visualizations
       # after the test run completes
       # store videos and any screenshots
       - uses: actions/upload-artifact@v1
         if: failure()
         with:
           name: cypress-screenshots
-          path: packages/synchro-charts/cypress/screenshots
+          path: packages/iot-app-kit-visualizations/cypress/screenshots
       - uses: actions/upload-artifact@v1
         if: failure()
         with:
           name: cypress-videos
-          path: packages/synchro-charts/cypress/videos
+          path: packages/iot-app-kit-visualizations/cypress/videos
       - uses: actions/upload-artifact@v1
         if: failure()
         with:
           name: cypress-snapshots
-          path: packages/synchro-charts/cypress/snapshots
+          path: packages/iot-app-kit-visualizations/cypress/snapshots

@@ -11,7 +11,7 @@ export class testingGrounds {
         <h3>
           hello, welcome to the{' '}
           <a href="https://synchrocharts.com/" rel="noopener noreferrer" target="_blank">
-            synchro-charts
+            iot-app-kit-visualizations
           </a>{' '}
           testing grounds!
         </h3>
