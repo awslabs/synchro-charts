@@ -21,7 +21,7 @@ Base chart provides some common functionality, the primary components of the bas
 ![overview](base-chart-main-components.png)
 
 ## Customizing visualizations
-Synchro Charts utilizes https://threejs.org/ to manage 3D scenes which represent the visualizations rendered onto a bar chart. For example, to implement the dots within a scatter chart,
+IoT App Kit Visualizations utilizes https://threejs.org/ to manage 3D scenes which represent the visualizations rendered onto a bar chart. For example, to implement the dots within a scatter chart,
 We create some code which turns the data points into threejs `3DObjects`, which get rendered as a flat 2D point.
 
 How the base chart exposes the flexibility to create custom chart components, is to allow the passing in of two functions, `createChartScene` and `updateChartScene`. Within these functions,
