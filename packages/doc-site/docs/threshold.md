@@ -681,7 +681,7 @@ A threshold value can be a string or an array of strings.
 
 If the threshold value is a string or an array of strings, the `comparisonOperator` must be `EQUAL` OR `CONTAINS`. The `EQUAL` operator requires the data value to strictly equal the threshold value. The `CONTAINS` operator requires the data value to partly match the threshold value.
 
-Threshold strings and arrays of strings are only supported on the `KPI`, `StatusGrid`, `StatusTimeline`, and `Table` components.
+Threshold strings and arrays of strings are only supported on the `StatusTimeline` component.
 
 ```jsx
 import { Table } from "@synchro-charts/react";

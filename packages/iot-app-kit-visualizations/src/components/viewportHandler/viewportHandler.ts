@@ -28,8 +28,7 @@ export class ViewportHandler<T extends ViewPortManager> {
   };
 
   startTick = ({ manager, duration, chartSize }: { manager: T; duration: number; chartSize?: SizeConfig }): void => {
-    // If chart size is null then it is KPI or Status Grid
-    // We do not have to tick for those.
+    // If chart size is null then we do not have to tick for those.
     if (chartSize == null) {
       return;
     }

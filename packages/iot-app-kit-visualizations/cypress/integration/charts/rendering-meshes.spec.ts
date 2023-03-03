@@ -2,7 +2,7 @@
 import { CHART_SIZE } from '../../../src/testing/test-routes/charts/shaders/chartSize';
 import { SECOND_IN_MS } from '../../../src/utils/time';
 import { visitDynamicWidget } from '../../../src/testing/selectors';
-import { DataType } from '../../../src';
+import { DataType } from '../../../src/constants';
 
 const WAIT_MS = SECOND_IN_MS * 2;
 

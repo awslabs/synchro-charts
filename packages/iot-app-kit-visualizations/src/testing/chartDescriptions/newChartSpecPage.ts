@@ -8,7 +8,7 @@ import { ScGestureHandler } from '../../components/charts/sc-webgl-base-chart/sc
 import { ScLineChart } from '../../components/charts/sc-line-chart/sc-line-chart';
 import { ScSizeProvider } from '../../components/sc-size-provider/sc-size-provider';
 import { CustomHTMLElement } from '../../utils/types';
-import { LEGEND_POSITION } from '../..';
+import { LEGEND_POSITION } from '../../components/charts/common/constants';
 import { update } from '../../components/charts/common/tests/merge';
 import { ScBarChart } from '../../components/charts/sc-bar-chart/sc-bar-chart';
 import { ScScatterChart } from '../../components/charts/sc-scatter-chart/sc-scatter-chart';

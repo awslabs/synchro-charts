@@ -23,11 +23,6 @@ a component is able to receive callbacks to update it's `viewport` accordingly, 
 The base chart provides an easy way to make a particular type of visualization, such as a line chart. Learn more about it
 within the [base chart documentation](base-chart.md).
 
-### Widget grid
-
-The widget grid provides a base component which handles associating groups of data, and delegating that data to cells within the grid.
-Learn more within the [widget grid documentation](widget-grid.md).
-
 ## Component distribution
 
 Synchro Charts uses https://stenciljs.com/ to build Synchro Charts as a series of web components.
