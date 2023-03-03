@@ -36,7 +36,7 @@ export const NUM_POSITION_COMPONENTS = 2; // (x, y)
 const NUM_COLOR_COMPONENTS = 3; // (r, g, b)
 
 // TODO: Need to account for other visualization types, such as bar chart and line chart.
-export type PointBufferGeometry = BufferGeometry & {
+type PointBufferGeometry = BufferGeometry & {
   attributes: { position: WriteableBufferAttribute; pointColor: WriteableBufferAttribute };
 };
 type PointMaterial = ShaderMaterial & {

@@ -20,8 +20,3 @@ export enum StreamType {
 export enum TREND_TYPE {
   LINEAR = 'linear-regression',
 }
-
-export enum ChartType {
-  BarChart = 'bar-chart',
-  LineChart = 'line-chart',
-}

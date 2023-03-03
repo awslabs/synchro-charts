@@ -5,17 +5,14 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { AlarmsConfig, DataPoint, DataStream, DataStreamInfo, MessageOverrides, MinimalSizeConfig, MinimalViewPortConfig, Primitive, SizeConfig, SizePositionConfig, TableColumn, ViewPort, ViewPortConfig } from "./utils/dataTypes";
+import { AlarmsConfig, DataPoint, DataStream, DataStreamInfo, MessageOverrides, MinimalSizeConfig, MinimalViewPortConfig, Primitive, SizeConfig, SizePositionConfig, ViewPort, ViewPortConfig } from "./utils/dataTypes";
 import { Annotations, Axis, LayoutConfig, Legend, LegendConfig, MovementConfig, ScaleConfig, Threshold, Tooltip, WidgetConfigurationUpdate } from "./components/charts/common/types";
 import { Trend, TrendResult } from "./components/charts/common/trends/types";
 import { DATA_ALIGNMENT, StatusIcon } from "./components/charts/common/constants";
 import { POINT_TYPE } from "./components/charts/sc-webgl-base-chart/activePoints";
 import { RectScrollFixed } from "./utils/types";
-import { LabelsConfig } from "./components/common/types";
-import { Cell, Row } from "./components/sc-table/constructTableData";
 import { ChartSceneCreator, ChartSceneUpdater } from "./components/charts/sc-webgl-base-chart/types";
 import { DataType } from "./utils/dataConstants";
-import { RenderCell } from "./components/sc-widget-grid/types";
 export namespace Components {
     interface LineChartUnsupportedDataTypes {
     }
@@ -93,45 +90,6 @@ export namespace Components {
         "onDateRangeChange": ({ end, start }: { start: Date; end: Date }) => void;
         "size": SizeConfig;
         "viewport": ViewPort;
-    }
-    interface ScGrid {
-    }
-    interface ScGridTooltip {
-        "alarmPoint"?: DataPoint;
-        "breachedThreshold"?: Threshold;
-        "isEnabled": boolean;
-        "propertyPoint"?: DataPoint;
-        "title": string;
-    }
-    interface ScHelpTooltip {
-        "message": string;
-    }
-    interface ScKpi {
-        "annotations": Annotations;
-        "dataStreams": DataStream[];
-        "isEditing": boolean;
-        "messageOverrides": MessageOverrides;
-        "viewport": MinimalViewPortConfig;
-        "widgetId": string;
-    }
-    interface ScKpiBase {
-        "alarmPoint"?: DataPoint<Primitive>;
-        "alarmStream"?: DataStream;
-        "breachedThreshold"?: Threshold;
-        "isEditing": boolean;
-        "isEnabled": boolean;
-        "isLoading"?: boolean;
-        "isRefreshing"?: boolean;
-        "messageOverrides": MessageOverrides;
-        "miniVersion": boolean;
-        "onChangeLabel": ({ streamId, name }: { streamId: string; name: string }) => void;
-        "propertyPoint"?: DataPoint<Primitive>;
-        "propertyStream"?: DataStream;
-        "trendStream": DataStream | undefined;
-        "valueColor"?: string;
-        "viewport": MinimalViewPortConfig;
-    }
-    interface ScKpiStandard {
     }
     interface ScLegend {
         "config": LegendConfig;
@@ -266,34 +224,6 @@ export namespace Components {
     }
     interface ScSizeProviderStandard {
     }
-    interface ScStatusCell {
-        "alarmPoint"?: DataPoint;
-        "alarmStream"?: DataStream;
-        "breachedThreshold"?: Threshold;
-        "icon"?: StatusIcon;
-        "isEditing": boolean;
-        "isEnabled": boolean;
-        "labelsConfig": Required<LabelsConfig>;
-        "messageOverrides": MessageOverrides;
-        "onChangeLabel": ({ streamId, name }: { streamId: string; name: string }) => void;
-        "propertyPoint"?: DataPoint;
-        "propertyStream"?: DataStream;
-        "valueColor"?: string;
-    }
-    interface ScStatusGrid {
-        "annotations": Annotations;
-        "dataStreams": DataStream[];
-        "isEditing": boolean;
-        /**
-          * Status Grid Specific configuration
-         */
-        "labelsConfig": LabelsConfig;
-        "messageOverrides": MessageOverrides;
-        "viewport": MinimalViewPortConfig;
-        "widgetId": string;
-    }
-    interface ScStatusGridStandard {
-    }
     interface ScStatusTimeline {
         "alarms"?: AlarmsConfig;
         "annotations"?: Annotations;
@@ -341,27 +271,6 @@ export namespace Components {
     interface ScStraightLineSegment {
     }
     interface ScStraightLineSegmentColored {
-    }
-    interface ScTable {
-        "annotations": Annotations;
-        "dataStreams": DataStream[];
-        "messageOverrides": MessageOverrides;
-        /**
-          * Table column values
-         */
-        "tableColumns": TableColumn[];
-        "trends": Trend[];
-        "viewport": MinimalViewPortConfig;
-        "widgetId": string;
-    }
-    interface ScTableBase {
-        "columns": TableColumn[];
-        "isEnabled": boolean;
-        "messageOverrides": MessageOverrides;
-        "rows": Row[];
-    }
-    interface ScTableCell {
-        "cell": Cell | undefined;
     }
     interface ScThresholdLegend {
         "thresholds": Threshold[];
@@ -548,20 +457,6 @@ export namespace Components {
     }
     interface ScWebglLineChartDynamicDataStreams {
     }
-    interface ScWidgetGrid {
-        "annotations": Annotations;
-        "collapseVertically": boolean;
-        "dataStreams": DataStream[];
-        "isEditing": boolean;
-        /**
-          * Chart API
-         */
-        "labelsConfig"?: LabelsConfig;
-        "messageOverrides": MessageOverrides;
-        "renderCell": RenderCell;
-        "viewport": MinimalViewPortConfig;
-        "widgetId": string;
-    }
     interface SingleColoredStatus {
     }
     interface SingleStatus {
@@ -697,42 +592,6 @@ declare global {
     var HTMLScGestureHandlerElement: {
         prototype: HTMLScGestureHandlerElement;
         new (): HTMLScGestureHandlerElement;
-    };
-    interface HTMLScGridElement extends Components.ScGrid, HTMLStencilElement {
-    }
-    var HTMLScGridElement: {
-        prototype: HTMLScGridElement;
-        new (): HTMLScGridElement;
-    };
-    interface HTMLScGridTooltipElement extends Components.ScGridTooltip, HTMLStencilElement {
-    }
-    var HTMLScGridTooltipElement: {
-        prototype: HTMLScGridTooltipElement;
-        new (): HTMLScGridTooltipElement;
-    };
-    interface HTMLScHelpTooltipElement extends Components.ScHelpTooltip, HTMLStencilElement {
-    }
-    var HTMLScHelpTooltipElement: {
-        prototype: HTMLScHelpTooltipElement;
-        new (): HTMLScHelpTooltipElement;
-    };
-    interface HTMLScKpiElement extends Components.ScKpi, HTMLStencilElement {
-    }
-    var HTMLScKpiElement: {
-        prototype: HTMLScKpiElement;
-        new (): HTMLScKpiElement;
-    };
-    interface HTMLScKpiBaseElement extends Components.ScKpiBase, HTMLStencilElement {
-    }
-    var HTMLScKpiBaseElement: {
-        prototype: HTMLScKpiBaseElement;
-        new (): HTMLScKpiBaseElement;
-    };
-    interface HTMLScKpiStandardElement extends Components.ScKpiStandard, HTMLStencilElement {
-    }
-    var HTMLScKpiStandardElement: {
-        prototype: HTMLScKpiStandardElement;
-        new (): HTMLScKpiStandardElement;
     };
     interface HTMLScLegendElement extends Components.ScLegend, HTMLStencilElement {
     }
@@ -884,24 +743,6 @@ declare global {
         prototype: HTMLScSizeProviderStandardElement;
         new (): HTMLScSizeProviderStandardElement;
     };
-    interface HTMLScStatusCellElement extends Components.ScStatusCell, HTMLStencilElement {
-    }
-    var HTMLScStatusCellElement: {
-        prototype: HTMLScStatusCellElement;
-        new (): HTMLScStatusCellElement;
-    };
-    interface HTMLScStatusGridElement extends Components.ScStatusGrid, HTMLStencilElement {
-    }
-    var HTMLScStatusGridElement: {
-        prototype: HTMLScStatusGridElement;
-        new (): HTMLScStatusGridElement;
-    };
-    interface HTMLScStatusGridStandardElement extends Components.ScStatusGridStandard, HTMLStencilElement {
-    }
-    var HTMLScStatusGridStandardElement: {
-        prototype: HTMLScStatusGridStandardElement;
-        new (): HTMLScStatusGridStandardElement;
-    };
     interface HTMLScStatusTimelineElement extends Components.ScStatusTimeline, HTMLStencilElement {
     }
     var HTMLScStatusTimelineElement: {
@@ -931,24 +772,6 @@ declare global {
     var HTMLScStraightLineSegmentColoredElement: {
         prototype: HTMLScStraightLineSegmentColoredElement;
         new (): HTMLScStraightLineSegmentColoredElement;
-    };
-    interface HTMLScTableElement extends Components.ScTable, HTMLStencilElement {
-    }
-    var HTMLScTableElement: {
-        prototype: HTMLScTableElement;
-        new (): HTMLScTableElement;
-    };
-    interface HTMLScTableBaseElement extends Components.ScTableBase, HTMLStencilElement {
-    }
-    var HTMLScTableBaseElement: {
-        prototype: HTMLScTableBaseElement;
-        new (): HTMLScTableBaseElement;
-    };
-    interface HTMLScTableCellElement extends Components.ScTableCell, HTMLStencilElement {
-    }
-    var HTMLScTableCellElement: {
-        prototype: HTMLScTableCellElement;
-        new (): HTMLScTableCellElement;
     };
     interface HTMLScThresholdLegendElement extends Components.ScThresholdLegend, HTMLStencilElement {
     }
@@ -1226,12 +1049,6 @@ declare global {
         prototype: HTMLScWebglLineChartDynamicDataStreamsElement;
         new (): HTMLScWebglLineChartDynamicDataStreamsElement;
     };
-    interface HTMLScWidgetGridElement extends Components.ScWidgetGrid, HTMLStencilElement {
-    }
-    var HTMLScWidgetGridElement: {
-        prototype: HTMLScWidgetGridElement;
-        new (): HTMLScWidgetGridElement;
-    };
     interface HTMLSingleColoredStatusElement extends Components.SingleColoredStatus, HTMLStencilElement {
     }
     var HTMLSingleColoredStatusElement: {
@@ -1357,12 +1174,6 @@ declare global {
         "sc-expandable-input": HTMLScExpandableInputElement;
         "sc-expandable-input-standard": HTMLScExpandableInputStandardElement;
         "sc-gesture-handler": HTMLScGestureHandlerElement;
-        "sc-grid": HTMLScGridElement;
-        "sc-grid-tooltip": HTMLScGridTooltipElement;
-        "sc-help-tooltip": HTMLScHelpTooltipElement;
-        "sc-kpi": HTMLScKpiElement;
-        "sc-kpi-base": HTMLScKpiBaseElement;
-        "sc-kpi-standard": HTMLScKpiStandardElement;
         "sc-legend": HTMLScLegendElement;
         "sc-legend-row": HTMLScLegendRowElement;
         "sc-line-chart": HTMLScLineChartElement;
@@ -1388,17 +1199,11 @@ declare global {
         "sc-single-colored-bar": HTMLScSingleColoredBarElement;
         "sc-size-provider": HTMLScSizeProviderElement;
         "sc-size-provider-standard": HTMLScSizeProviderStandardElement;
-        "sc-status-cell": HTMLScStatusCellElement;
-        "sc-status-grid": HTMLScStatusGridElement;
-        "sc-status-grid-standard": HTMLScStatusGridStandardElement;
         "sc-status-timeline": HTMLScStatusTimelineElement;
         "sc-status-timeline-overlay": HTMLScStatusTimelineOverlayElement;
         "sc-status-timeline-overlay-row": HTMLScStatusTimelineOverlayRowElement;
         "sc-straight-line-segment": HTMLScStraightLineSegmentElement;
         "sc-straight-line-segment-colored": HTMLScStraightLineSegmentColoredElement;
-        "sc-table": HTMLScTableElement;
-        "sc-table-base": HTMLScTableBaseElement;
-        "sc-table-cell": HTMLScTableCellElement;
         "sc-threshold-legend": HTMLScThresholdLegendElement;
         "sc-threshold-legend-row": HTMLScThresholdLegendRowElement;
         "sc-tooltip": HTMLScTooltipElement;
@@ -1445,7 +1250,6 @@ declare global {
         "sc-webgl-line-chart-dynamic-buffer": HTMLScWebglLineChartDynamicBufferElement;
         "sc-webgl-line-chart-dynamic-data": HTMLScWebglLineChartDynamicDataElement;
         "sc-webgl-line-chart-dynamic-data-streams": HTMLScWebglLineChartDynamicDataStreamsElement;
-        "sc-widget-grid": HTMLScWidgetGridElement;
         "single-colored-status": HTMLSingleColoredStatusElement;
         "single-status": HTMLSingleStatusElement;
         "status-timeline-dynamic-buffer": HTMLStatusTimelineDynamicBufferElement;
@@ -1543,45 +1347,6 @@ declare namespace LocalJSX {
         "onDateRangeChange": ({ end, start }: { start: Date; end: Date }) => void;
         "size": SizeConfig;
         "viewport": ViewPort;
-    }
-    interface ScGrid {
-    }
-    interface ScGridTooltip {
-        "alarmPoint"?: DataPoint;
-        "breachedThreshold"?: Threshold;
-        "isEnabled"?: boolean;
-        "propertyPoint"?: DataPoint;
-        "title"?: string;
-    }
-    interface ScHelpTooltip {
-        "message": string;
-    }
-    interface ScKpi {
-        "annotations"?: Annotations;
-        "dataStreams": DataStream[];
-        "isEditing"?: boolean;
-        "messageOverrides"?: MessageOverrides;
-        "viewport"?: MinimalViewPortConfig;
-        "widgetId": string;
-    }
-    interface ScKpiBase {
-        "alarmPoint"?: DataPoint<Primitive>;
-        "alarmStream"?: DataStream;
-        "breachedThreshold"?: Threshold;
-        "isEditing"?: boolean;
-        "isEnabled"?: boolean;
-        "isLoading"?: boolean;
-        "isRefreshing"?: boolean;
-        "messageOverrides": MessageOverrides;
-        "miniVersion": boolean;
-        "onChangeLabel": ({ streamId, name }: { streamId: string; name: string }) => void;
-        "propertyPoint"?: DataPoint<Primitive>;
-        "propertyStream"?: DataStream;
-        "trendStream": DataStream | undefined;
-        "valueColor"?: string;
-        "viewport": MinimalViewPortConfig;
-    }
-    interface ScKpiStandard {
     }
     interface ScLegend {
         "config": LegendConfig;
@@ -1716,34 +1481,6 @@ declare namespace LocalJSX {
     }
     interface ScSizeProviderStandard {
     }
-    interface ScStatusCell {
-        "alarmPoint"?: DataPoint;
-        "alarmStream"?: DataStream;
-        "breachedThreshold"?: Threshold;
-        "icon"?: StatusIcon;
-        "isEditing"?: boolean;
-        "isEnabled"?: boolean;
-        "labelsConfig"?: Required<LabelsConfig>;
-        "messageOverrides"?: MessageOverrides;
-        "onChangeLabel": ({ streamId, name }: { streamId: string; name: string }) => void;
-        "propertyPoint"?: DataPoint;
-        "propertyStream"?: DataStream;
-        "valueColor"?: string;
-    }
-    interface ScStatusGrid {
-        "annotations"?: Annotations;
-        "dataStreams": DataStream[];
-        "isEditing"?: boolean;
-        /**
-          * Status Grid Specific configuration
-         */
-        "labelsConfig"?: LabelsConfig;
-        "messageOverrides"?: MessageOverrides;
-        "viewport"?: MinimalViewPortConfig;
-        "widgetId": string;
-    }
-    interface ScStatusGridStandard {
-    }
     interface ScStatusTimeline {
         "alarms"?: AlarmsConfig;
         "annotations"?: Annotations;
@@ -1792,31 +1529,6 @@ declare namespace LocalJSX {
     interface ScStraightLineSegment {
     }
     interface ScStraightLineSegmentColored {
-    }
-    interface ScTable {
-        "annotations"?: Annotations;
-        "dataStreams": DataStream[];
-        "messageOverrides"?: MessageOverrides;
-        /**
-          * On view port date range change, this component emits a `dateRangeChange` event. This allows other data visualization components to sync to the same date range.
-         */
-        "onDateRangeChange"?: (event: CustomEvent<[Date, Date, string | undefined]>) => void;
-        /**
-          * Table column values
-         */
-        "tableColumns"?: TableColumn[];
-        "trends"?: Trend[];
-        "viewport"?: MinimalViewPortConfig;
-        "widgetId": string;
-    }
-    interface ScTableBase {
-        "columns": TableColumn[];
-        "isEnabled": boolean;
-        "messageOverrides": MessageOverrides;
-        "rows": Row[];
-    }
-    interface ScTableCell {
-        "cell": Cell | undefined;
     }
     interface ScThresholdLegend {
         "thresholds": Threshold[];
@@ -2008,25 +1720,6 @@ declare namespace LocalJSX {
     }
     interface ScWebglLineChartDynamicDataStreams {
     }
-    interface ScWidgetGrid {
-        "annotations"?: Annotations;
-        "collapseVertically"?: boolean;
-        "dataStreams": DataStream[];
-        "isEditing"?: boolean;
-        /**
-          * Chart API
-         */
-        "labelsConfig"?: LabelsConfig;
-        "messageOverrides"?: MessageOverrides;
-        /**
-          * On view port date range change, this component emits a `dateRangeChange` event. This allows other data visualization components to sync to the same date range.
-         */
-        "onDateRangeChange"?: (event: CustomEvent<[Date, Date, string | undefined]>) => void;
-        "onWidgetUpdated"?: (event: CustomEvent<WidgetConfigurationUpdate>) => void;
-        "renderCell"?: RenderCell;
-        "viewport"?: MinimalViewPortConfig;
-        "widgetId": string;
-    }
     interface SingleColoredStatus {
     }
     interface SingleStatus {
@@ -2082,12 +1775,6 @@ declare namespace LocalJSX {
         "sc-expandable-input": ScExpandableInput;
         "sc-expandable-input-standard": ScExpandableInputStandard;
         "sc-gesture-handler": ScGestureHandler;
-        "sc-grid": ScGrid;
-        "sc-grid-tooltip": ScGridTooltip;
-        "sc-help-tooltip": ScHelpTooltip;
-        "sc-kpi": ScKpi;
-        "sc-kpi-base": ScKpiBase;
-        "sc-kpi-standard": ScKpiStandard;
         "sc-legend": ScLegend;
         "sc-legend-row": ScLegendRow;
         "sc-line-chart": ScLineChart;
@@ -2113,17 +1800,11 @@ declare namespace LocalJSX {
         "sc-single-colored-bar": ScSingleColoredBar;
         "sc-size-provider": ScSizeProvider;
         "sc-size-provider-standard": ScSizeProviderStandard;
-        "sc-status-cell": ScStatusCell;
-        "sc-status-grid": ScStatusGrid;
-        "sc-status-grid-standard": ScStatusGridStandard;
         "sc-status-timeline": ScStatusTimeline;
         "sc-status-timeline-overlay": ScStatusTimelineOverlay;
         "sc-status-timeline-overlay-row": ScStatusTimelineOverlayRow;
         "sc-straight-line-segment": ScStraightLineSegment;
         "sc-straight-line-segment-colored": ScStraightLineSegmentColored;
-        "sc-table": ScTable;
-        "sc-table-base": ScTableBase;
-        "sc-table-cell": ScTableCell;
         "sc-threshold-legend": ScThresholdLegend;
         "sc-threshold-legend-row": ScThresholdLegendRow;
         "sc-tooltip": ScTooltip;
@@ -2170,7 +1851,6 @@ declare namespace LocalJSX {
         "sc-webgl-line-chart-dynamic-buffer": ScWebglLineChartDynamicBuffer;
         "sc-webgl-line-chart-dynamic-data": ScWebglLineChartDynamicData;
         "sc-webgl-line-chart-dynamic-data-streams": ScWebglLineChartDynamicDataStreams;
-        "sc-widget-grid": ScWidgetGrid;
         "single-colored-status": SingleColoredStatus;
         "single-status": SingleStatus;
         "status-timeline-dynamic-buffer": StatusTimelineDynamicBuffer;
@@ -2211,12 +1891,6 @@ declare module "@stencil/core" {
             "sc-expandable-input": LocalJSX.ScExpandableInput & JSXBase.HTMLAttributes<HTMLScExpandableInputElement>;
             "sc-expandable-input-standard": LocalJSX.ScExpandableInputStandard & JSXBase.HTMLAttributes<HTMLScExpandableInputStandardElement>;
             "sc-gesture-handler": LocalJSX.ScGestureHandler & JSXBase.HTMLAttributes<HTMLScGestureHandlerElement>;
-            "sc-grid": LocalJSX.ScGrid & JSXBase.HTMLAttributes<HTMLScGridElement>;
-            "sc-grid-tooltip": LocalJSX.ScGridTooltip & JSXBase.HTMLAttributes<HTMLScGridTooltipElement>;
-            "sc-help-tooltip": LocalJSX.ScHelpTooltip & JSXBase.HTMLAttributes<HTMLScHelpTooltipElement>;
-            "sc-kpi": LocalJSX.ScKpi & JSXBase.HTMLAttributes<HTMLScKpiElement>;
-            "sc-kpi-base": LocalJSX.ScKpiBase & JSXBase.HTMLAttributes<HTMLScKpiBaseElement>;
-            "sc-kpi-standard": LocalJSX.ScKpiStandard & JSXBase.HTMLAttributes<HTMLScKpiStandardElement>;
             "sc-legend": LocalJSX.ScLegend & JSXBase.HTMLAttributes<HTMLScLegendElement>;
             "sc-legend-row": LocalJSX.ScLegendRow & JSXBase.HTMLAttributes<HTMLScLegendRowElement>;
             "sc-line-chart": LocalJSX.ScLineChart & JSXBase.HTMLAttributes<HTMLScLineChartElement>;
@@ -2242,17 +1916,11 @@ declare module "@stencil/core" {
             "sc-single-colored-bar": LocalJSX.ScSingleColoredBar & JSXBase.HTMLAttributes<HTMLScSingleColoredBarElement>;
             "sc-size-provider": LocalJSX.ScSizeProvider & JSXBase.HTMLAttributes<HTMLScSizeProviderElement>;
             "sc-size-provider-standard": LocalJSX.ScSizeProviderStandard & JSXBase.HTMLAttributes<HTMLScSizeProviderStandardElement>;
-            "sc-status-cell": LocalJSX.ScStatusCell & JSXBase.HTMLAttributes<HTMLScStatusCellElement>;
-            "sc-status-grid": LocalJSX.ScStatusGrid & JSXBase.HTMLAttributes<HTMLScStatusGridElement>;
-            "sc-status-grid-standard": LocalJSX.ScStatusGridStandard & JSXBase.HTMLAttributes<HTMLScStatusGridStandardElement>;
             "sc-status-timeline": LocalJSX.ScStatusTimeline & JSXBase.HTMLAttributes<HTMLScStatusTimelineElement>;
             "sc-status-timeline-overlay": LocalJSX.ScStatusTimelineOverlay & JSXBase.HTMLAttributes<HTMLScStatusTimelineOverlayElement>;
             "sc-status-timeline-overlay-row": LocalJSX.ScStatusTimelineOverlayRow & JSXBase.HTMLAttributes<HTMLScStatusTimelineOverlayRowElement>;
             "sc-straight-line-segment": LocalJSX.ScStraightLineSegment & JSXBase.HTMLAttributes<HTMLScStraightLineSegmentElement>;
             "sc-straight-line-segment-colored": LocalJSX.ScStraightLineSegmentColored & JSXBase.HTMLAttributes<HTMLScStraightLineSegmentColoredElement>;
-            "sc-table": LocalJSX.ScTable & JSXBase.HTMLAttributes<HTMLScTableElement>;
-            "sc-table-base": LocalJSX.ScTableBase & JSXBase.HTMLAttributes<HTMLScTableBaseElement>;
-            "sc-table-cell": LocalJSX.ScTableCell & JSXBase.HTMLAttributes<HTMLScTableCellElement>;
             "sc-threshold-legend": LocalJSX.ScThresholdLegend & JSXBase.HTMLAttributes<HTMLScThresholdLegendElement>;
             "sc-threshold-legend-row": LocalJSX.ScThresholdLegendRow & JSXBase.HTMLAttributes<HTMLScThresholdLegendRowElement>;
             "sc-tooltip": LocalJSX.ScTooltip & JSXBase.HTMLAttributes<HTMLScTooltipElement>;
@@ -2299,7 +1967,6 @@ declare module "@stencil/core" {
             "sc-webgl-line-chart-dynamic-buffer": LocalJSX.ScWebglLineChartDynamicBuffer & JSXBase.HTMLAttributes<HTMLScWebglLineChartDynamicBufferElement>;
             "sc-webgl-line-chart-dynamic-data": LocalJSX.ScWebglLineChartDynamicData & JSXBase.HTMLAttributes<HTMLScWebglLineChartDynamicDataElement>;
             "sc-webgl-line-chart-dynamic-data-streams": LocalJSX.ScWebglLineChartDynamicDataStreams & JSXBase.HTMLAttributes<HTMLScWebglLineChartDynamicDataStreamsElement>;
-            "sc-widget-grid": LocalJSX.ScWidgetGrid & JSXBase.HTMLAttributes<HTMLScWidgetGridElement>;
             "single-colored-status": LocalJSX.SingleColoredStatus & JSXBase.HTMLAttributes<HTMLSingleColoredStatusElement>;
             "single-status": LocalJSX.SingleStatus & JSXBase.HTMLAttributes<HTMLSingleStatusElement>;
             "status-timeline-dynamic-buffer": LocalJSX.StatusTimelineDynamicBuffer & JSXBase.HTMLAttributes<HTMLStatusTimelineDynamicBufferElement>;

@@ -7,7 +7,7 @@ import { update } from '../common/tests/merge';
 import { TrendResult } from '../common/trends/types';
 import { Threshold } from '../common/types';
 import { DataStream } from '../../../utils/dataTypes';
-import { COMPARISON_OPERATOR, LEGEND_POSITION, StatusIcon, TREND_TYPE } from '../../..';
+import { COMPARISON_OPERATOR, LEGEND_POSITION, StatusIcon, TREND_TYPE } from '../../../constants';
 import { ScLegendRow } from './sc-legend-row/sc-legend-row';
 import { DEFAULT_LEGEND_TEXT_COLOR } from './constants';
 import { POINT_TYPE } from '../sc-webgl-base-chart/activePoints';

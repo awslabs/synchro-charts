@@ -2,8 +2,9 @@ import { Component, h } from '@stencil/core';
 
 import { MINUTE_IN_MS } from '../../../../utils/time';
 import { TEST_DATA_POINT_STANDARD, Y_MAX, Y_MIN, X_MIN, X_MAX } from '../constants';
-import { COMPARISON_OPERATOR, DataType } from '../../../..';
+import { COMPARISON_OPERATOR } from '../../../../components/charts/common/constants';
 import { AggregateType } from '../../../../utils/dataTypes';
+import { DataType } from '../../../../utils/dataConstants';
 
 @Component({
   tag: 'status-timeline-threshold-no-coloration',

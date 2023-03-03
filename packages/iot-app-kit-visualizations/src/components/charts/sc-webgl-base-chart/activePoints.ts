@@ -4,7 +4,7 @@ import { sortTooltipPoints } from '../sc-tooltip/sort';
 import { getDataPoints } from '../../../utils/getDataPoints';
 import { DATA_ALIGNMENT } from '../common/constants';
 
-export type ActivePoint<T extends Primitive> = {
+type ActivePoint<T extends Primitive> = {
   // The id of the data stream that this point is associated with
   streamId: string;
   // An optional label for the data point. Most use cases should default this to the name of the data stream.

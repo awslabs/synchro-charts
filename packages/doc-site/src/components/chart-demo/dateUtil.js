@@ -6,6 +6,3 @@ export const DAY_IN_MS = 24 * HOUR_IN_MS;
 export const MONTH_IN_MS = 30 * DAY_IN_MS;
 export const YEAR_IN_MS = 12 * MONTH_IN_MS;
 
-// Global time format strings
-export const SHORT_TIME = 'hh:mm a';
-export const FULL_DATE = 'yyy-MM-dd hh:mm:ss a';
