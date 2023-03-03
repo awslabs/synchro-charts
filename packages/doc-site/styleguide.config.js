@@ -10,7 +10,7 @@ function kebabize(string) {
 }
 
 module.exports = {
-  title: 'Synchro Charts',
+  title: 'IoT App Kit Visualizations',
   theme: {
     fontFamily: {
       base: '"Amazon Ember", Helvetica, Arial, sans-serif',
@@ -99,7 +99,7 @@ module.exports = {
       ],
     },
     {
-      name: 'Contributing to Synchro Charts',
+      name: 'Contributing to IoT App Kit Visualizations',
       content: 'docs/contributing.md',
     },
     {

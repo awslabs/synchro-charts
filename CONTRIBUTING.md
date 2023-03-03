@@ -37,22 +37,22 @@ To send us a pull request, please:
     1. Answer any default questions in the pull request interface.
     1. Within the pull request, include a copy of the link to the passing GitHub Action running the tests
     1. If your pull request adds cypress integration tests which perform a snapshot, the snapshots must be created within the CI process. To achieve this, you
-       will need to temporarily alter the GitHub workflow to generate and persist snapshots. Create a pull request within your own forked version of Synchro Charts. Once the tests complete, it will provide you with a file containing
+       will need to temporarily alter the GitHub workflow to generate and persist snapshots. Create a pull request within your own forked version of IoT App Kit Visualizations. Once the tests complete, it will provide you with a file containing
        the generated snapshots. Take these generated snapshots, manually confirm they look correct, and then add them to the repository. Revert any changes made to the GitHub actions, and now you have
        correctly generated new snapshots! [Example of modified GitHub actions to include snapshot](https://github.com/diehbria/aws-synchro-charts/blob/0610b552b284f0f54ae059ee35fb5fa5ad036221/.github/workflows/github-actions.yml).
     1. Stay attentive to any conversation or requested changes, try to have a response within a weeks time. Stale pull requests will automatically be closed.
-1. Contributions which are approved by the core contributors of Synchro Charts and pass all tests will then be merged by a core contributor.
+1. Contributions which are approved by the core contributors of IoT App Kit Visualizations and pass all tests will then be merged by a core contributor.
 
 ## Finding contributions to work on
 Looking at the existing issues is a great way to find something to contribute on. As our projects, by default, use the default GitHub issue labels (enhancement/bug/duplicate/help wanted/invalid/question/wontfix), looking at any 'help wanted' issues is a great place to start.
 
-Please feel free to reach out to the core contributors of Synchro Charts to discuss any ideas further.
+Please feel free to reach out to the core contributors of IoT App Kit Visualizations to discuss any ideas further.
 
 ## Getting Started
 1. Install the latest version of node `16` from [nodejs.org](https://nodejs.org/en/about/releases/).
 2. Open a terminal.
 3. Install yarn - `npm install --global yarn`.
-4. Make a fork -your own copy- of synchro-charts on your GitHub account, then make a clone -a local copy- on your computer.
+4. Make a fork -your own copy- of this repo (synchro-charts) on your GitHub account, then make a clone -a local copy- on your computer.
 5. Navigate to the root of your fork `cd synchro-charts`.
 6. Install dependencies with `yarn -i`.
 7. Build the project with `yarn build`.
