@@ -1,4 +1,4 @@
 {
     "files": [],
-    "references": [{ "path": "synchro-charts" }, { "path": "synchro-charts-react" }]
+    "references": [{ "path": "iot-app-kit-visualizations" }, { "path": "iot-app-kit-visualizations-react" }]
 }

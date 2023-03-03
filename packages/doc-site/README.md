@@ -1,6 +1,6 @@
-# Synchro Charts documentation
+# IoT App Kit Visualizations documentation
 
-The website which makes up the Synchro Charts documentation, as seen in https://synchrocharts.com.
+The website which makes up the IoT App Kit Visualizations documentation, as seen in https://synchrocharts.com.
 
 ## Setup
 Run the following commands:
