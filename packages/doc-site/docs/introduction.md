@@ -2,15 +2,15 @@
 
 we are now building `iot-app-kit-visualizations` to provide components for [iot-app-kit](https://github.com/awslabs/iot-app-kit)
 
-### What is Synchro Charts?
+### What is IoT App Kit Visualizations?
 
-Synchro Charts is a collection of time-series visualization components with a focus on operational use cases such as monitoring, root cause analysis, and basic analytics.
+IoT App Kit Visualizations is a collection of time-series visualization components with a focus on operational use cases such as monitoring, root cause analysis, and basic analytics.
 
-Synchro Charts makes it easy to navigate a large amount of time-series data fluidly via intuitive gestures, synchronized across corresponding widgets.
+IoT App Kit Visualizations makes it easy to navigate a large amount of time-series data fluidly via intuitive gestures, synchronized across corresponding widgets.
 
-Synchro Charts has first class concepts of aggregation types, associated alarm status, allowing for an integrated experience when dealing with data which has corresponding status information.
+IoT App Kit Visualizations has first class concepts of aggregation types, associated alarm status, allowing for an integrated experience when dealing with data which has corresponding status information.
 
-Synchro Charts is open sourced, you can contribute at [Synchro Charts Github](https://github.com/awslabs/aws-synchro-charts).
+IoT App Kit Visualizations is open sourced, you can contribute at [IoT App Kit Visualizations Github](https://github.com/awslabs/aws-synchro-charts).
 
 ```jsx
 import {LiveDemo} from '../src/components/chart-demo/LiveDemo';

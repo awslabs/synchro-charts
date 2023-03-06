@@ -1,6 +1,6 @@
 {
   "name": "@iot-app-kit-visualizations/doc-site",
-  "description": "Synchro Charts documentation site",
+  "description": "IoT App Kit Visualizations documentation site",
   "homepage": "https://synchrocharts.com",
   "version": "0.0.0",
   "private": true,

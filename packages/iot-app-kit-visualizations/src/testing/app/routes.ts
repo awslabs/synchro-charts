@@ -10,14 +10,6 @@ export const routes = [
     component: 'testing-ground',
   },
   {
-    url: '/tests/kpi',
-    component: 'sc-kpi-standard',
-  },
-  {
-    url: '/tests/status-grid',
-    component: 'sc-status-grid-standard',
-  },
-  {
     url: '/tests/sc-webgl-context/nested',
     component: 'sc-webgl-context-nested',
   },

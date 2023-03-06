@@ -4,19 +4,19 @@
 
    To utilize as webcomponents
     ```bash
-    yarn add @synchro-charts/core
+    yarn add @iot-app-kit-visualizations/core
    
     # or with npm..
-    npm install --save @synchro-charts/core
+    npm install --save @iot-app-kit-visualizations/core
     ```
    
    For use within react,
    
     ```bash
-    yarn add @synchro-charts/react
+    yarn add @iot-app-kit-visualizations/react
    
     # or with npm..
-    npm install --save @synchro-charts/react
+    npm install --save @iot-app-kit-visualizations/react
     ```
 2. Initialize components if you are not using the react wrapper
 

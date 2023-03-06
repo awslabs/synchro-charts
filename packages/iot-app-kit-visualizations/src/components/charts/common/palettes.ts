@@ -1,6 +1,4 @@
-export const MAX_COLORS_SUPPORTED = 6;
-
-export const SEQUENTIAL_BLUES_MUTED = [
+const SEQUENTIAL_BLUES_MUTED = [
   ['#5e87b5'],
   ['#5e87b5', '#b8c6df'],
   ['#5e87b5', '#9cb1d2', '#d4dced'],
@@ -9,7 +7,7 @@ export const SEQUENTIAL_BLUES_MUTED = [
   ['#5e87b5', '#769dd2', '#96b2dd', '#b4c7e9', '#d4dced', '#eff2fb'],
 ];
 
-export const SEQUENTIAL_QUALITATIVE_MUTED = [
+const SEQUENTIAL_QUALITATIVE_MUTED = [
   ['#5e87b5'],
   ['#5e87b5', '#e6ac8c'],
   ['#5e87b5', '#e6ac8c', '#7fc6b1'],

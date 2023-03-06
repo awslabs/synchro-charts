@@ -4,7 +4,7 @@ import { ViewPortManager } from '../viewportHandler/types';
 // TypedArrays are mutable, but typescript made the choice
 // to mark them as readonly due to standard usecases only required read.
 // https://github.com/Microsoft/TypeScript/issues/9652
-export interface MutableArrayLike<T> {
+interface MutableArrayLike<T> {
   readonly length: number;
   [n: number]: T;
 }

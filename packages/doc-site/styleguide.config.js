@@ -1,9 +1,6 @@
 const path = require('path');
 
 function kebabize(string) {
-  if (string.toUpperCase() === 'KPI') {
-    return 'kpi';
-  }
   // uppercase after a non-uppercase or uppercase before non-uppercase
   const upper = /(?<!\p{Uppercase_Letter})\p{Uppercase_Letter}|\p{Uppercase_Letter}(?!\p{Uppercase_Letter})/gu;
   return string
@@ -13,7 +10,7 @@ function kebabize(string) {
 }
 
 module.exports = {
-  title: 'Synchro Charts',
+  title: 'IoT App Kit Visualizations',
   theme: {
     fontFamily: {
       base: '"Amazon Ember", Helvetica, Arial, sans-serif',
@@ -102,7 +99,7 @@ module.exports = {
       ],
     },
     {
-      name: 'Contributing to Synchro Charts',
+      name: 'Contributing to IoT App Kit Visualizations',
       content: 'docs/contributing.md',
     },
     {

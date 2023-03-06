@@ -8,7 +8,7 @@ interface Icons {
 
 const DEFAULT_SIZE_PX = 16;
 
-export const icons: Icons = {
+const icons: Icons = {
   normal(color?: string, size: number = DEFAULT_SIZE_PX) {
     return (
       <svg width={`${size}px`} height={`${size}px`} viewBox="0 0 16 16" fill={color ? `${color}` : '#1d8102'}>

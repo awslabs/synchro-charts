@@ -1,8 +1,5 @@
 > - [Bar chart](#/Components/BarChart)
-> - [KPI](#/Components/KPI)
 > - [Line chart](#/Components/LineChart)
 > - [Scatter chart](#/Components/ScatterChart)
 > - [Status chart](#/Components/StatusChart)
-> - [Status grid](#/Components/StatusGrid)
 > - [Status Timeline](#/Components/StatusTimeline)
-> - [Table](#/Components/Table)

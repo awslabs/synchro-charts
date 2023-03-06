@@ -1,4 +1,11 @@
 {
     "files": [],
-    "references": [{ "path": "iot-app-kit-visualizations" }, { "path": "iot-app-kit-visualizations-react" }]
+    "references": [
+        {
+            "path": "iot-app-kit-visualizations"
+        },
+        {
+            "path": "iot-app-kit-visualizations-react"
+        }
+    ]
 }

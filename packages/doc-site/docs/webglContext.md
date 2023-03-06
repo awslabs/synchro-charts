@@ -20,7 +20,7 @@ To set up the WebGL context, you will create a single instance of the following 
 ```
 
 This component will create a single canvas element, and create an associated WebGL context to this canvas. Additionally, this component
-contains some Synchro Charts specific logic so that components can register and be part of the various update loops.
+contains some IoT App Kit Visualizations specific logic so that components can register and be part of the various update loops.
 
 By default the canvas element will consider the viewport as the viewing frame. The viewing frame is a rectangle in which the chart data is visible.
 If you want the viewport to be the viewing frame, place the context component in the DOM such that the document is its position scope.
@@ -92,7 +92,7 @@ This callback can be used to, for example, instrument your development environme
 
    Currently, the WebGL context doesn't have a way to know that a component has moved when a scroll action takes place within a nested element on the browser.
 
-   Synchro Charts however does work well when scrolling occurs to the entire page.
+   IoT App Kit Visualizations however does work well when scrolling occurs to the entire page.
 
 ### Components which require a WebGL context
 

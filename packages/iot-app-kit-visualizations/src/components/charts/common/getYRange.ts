@@ -32,12 +32,12 @@ const roundToOrderOfMagnitude = (n: number, min: boolean): number => {
   return n < 0 ? roundedY(min) : roundedY(!min);
 };
 
-export type YRange = {
+type YRange = {
   yMin: number;
   yMax: number;
 };
 
-export const DEFAULT_Y_RANGE: YRange = {
+const DEFAULT_Y_RANGE: YRange = {
   yMax: 1000,
   yMin: 1,
 };

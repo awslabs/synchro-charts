@@ -2,7 +2,7 @@ import { E2EPage } from '@stencil/core/testing';
 
 import { BaseConfig, DataStream } from '../../../../utils/dataTypes';
 
-export interface ScConnectedComponent {
+interface ScConnectedComponent {
   config: BaseConfig;
   dataStreams: DataStream[];
   isEditing?: boolean;

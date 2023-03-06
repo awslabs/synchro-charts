@@ -1,6 +1,6 @@
 {
   "name": "@iot-app-kit-visualizations/core",
-  "description": "Synchro Charts",
+  "description": "IoT App Kit Visualizations",
   "version": "1.0.0",
   "publishConfig": {
     "access": "public"
