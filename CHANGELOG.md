@@ -3,5 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.0](https://github.com/awslabs/synchro-charts/compare/root-v1.0.0...root-v1.1.0) (2023-03-06)
+
+
+### Features
+
+* **status-timeline:** visually differentiate value change when data points have no associated breached thresholds ([94f6181](https://github.com/awslabs/synchro-charts/commit/94f61816aa46a5ba406552891180a74d2e625dfd))
+* **synchro-charts:** refactor webgl context to all it to be placed in any scope ([94f7f3b](https://github.com/awslabs/synchro-charts/commit/94f7f3b3675f04700c5cc123d3698bf81b2ebc2e))
+
+
+### Bug Fixes
+
+* do not call dateRangeChange in live mode ([#220](https://github.com/awslabs/synchro-charts/issues/220)) ([a1934cc](https://github.com/awslabs/synchro-charts/commit/a1934cc2cc276aab93f32a60a5e1b2441b14e7ba))
+* do not emit dateRangeChange in live mode ([#210](https://github.com/awslabs/synchro-charts/issues/210)) ([290098b](https://github.com/awslabs/synchro-charts/commit/290098bbe76ec030c55c44ddfd29b0cfb15bc5ea))
+* missing scene issue [#255](https://github.com/awslabs/synchro-charts/issues/255) ([#233](https://github.com/awslabs/synchro-charts/issues/233)) ([c285e9e](https://github.com/awslabs/synchro-charts/commit/c285e9e2e26fcb78cad14d6a6d4469b348d221d2))
+* stop onUpdate if scene does not exist ([#226](https://github.com/awslabs/synchro-charts/issues/226)) ([719ef32](https://github.com/awslabs/synchro-charts/commit/719ef32a6dc85b52e496e39ee32a229dfa2fb40f))
+* **styles:** fix table row height ([#228](https://github.com/awslabs/synchro-charts/issues/228)) ([f4c2ca0](https://github.com/awslabs/synchro-charts/commit/f4c2ca0981b29b0889fc1a7a75e69d2a5f499049))
+
 ## 1.0.0 (2023-03-06)
 * first iot-app-kit-visualizations release
