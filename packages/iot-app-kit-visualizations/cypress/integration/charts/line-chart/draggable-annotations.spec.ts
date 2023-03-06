@@ -1,7 +1,8 @@
 import { visitDynamicWidget } from '../../../../src/testing/selectors';
 import { SearchQueryParams } from '../../../../src/testing/dynamicWidgetUtils/testCaseParameters';
 import { Threshold, XAnnotation } from '../../../../src/components/charts/common/types';
-import { COMPARISON_OPERATOR, DataType } from '../../../../src/constants';
+import { COMPARISON_OPERATOR } from '../../../../src/components/charts/common/constants';
+import { DataType } from '../../../../src/utils/dataConstants';
 import { DataPoint } from '../../../../src/utils/dataTypes';
 import { moveHandle, moveHandleFilter, moveHandleWithPause, parseTransformYValue } from '../utils-draggable';
 import { Y_THRESHOLD, Y_ANNOTATION, X_ANNOTATION } from '../../../../src/testing/test-routes/charts/constants';

@@ -1,6 +1,7 @@
 import { visitDynamicWidget } from '../../../src/testing/selectors';
 import { SearchQueryParams } from '../../../src/testing/dynamicWidgetUtils/testCaseParameters';
-import { COMPARISON_OPERATOR, DataType } from '../../../src/constants';
+import { COMPARISON_OPERATOR } from '../../../src/components/charts/common/constants';
+import { DataType } from '../../../src/utils/dataConstants';
 import { DataPoint } from '../../../src/utils/dataTypes';
 import { Threshold, YAnnotation } from '../../../src/components/charts/common/types';
 
