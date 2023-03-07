@@ -7,14 +7,15 @@ import { update } from '../common/tests/merge';
 import { TrendResult } from '../common/trends/types';
 import { Threshold } from '../common/types';
 import { DataStream } from '../../../utils/dataTypes';
-import { COMPARISON_OPERATOR, LEGEND_POSITION, StatusIcon, TREND_TYPE } from '../../../constants';
+import { COMPARISON_OPERATOR, LEGEND_POSITION, StatusIcon } from '../common/constants';
+import { TREND_TYPE, DataType, StreamType } from '../../../utils/dataConstants';
+
 import { ScLegendRow } from './sc-legend-row/sc-legend-row';
 import { DEFAULT_LEGEND_TEXT_COLOR } from './constants';
 import { POINT_TYPE } from '../sc-webgl-base-chart/activePoints';
 import { VIEWPORT } from '../common/testUtil';
 import { DAY_IN_MS } from '../../../utils/time';
 import { NON_BREACHED_ALARM_INFO } from '../../../testing/__mocks__/mockWidgetProperties';
-import { DataType, StreamType } from '../../../utils/dataConstants';
 
 const noop = () => {};
 

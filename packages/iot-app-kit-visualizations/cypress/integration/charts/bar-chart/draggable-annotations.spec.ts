@@ -8,7 +8,7 @@ import {
   X_MIN,
   Y_THRESHOLD,
 } from '../../../../src/testing/test-routes/charts/constants';
-import { DataType } from '../../../../src/constants';
+import { DataType } from '../../../../src/utils/dataConstants';
 import { MINUTE_IN_MS } from '../../../../src/utils/time';
 import {
   DRAGGABLE_HANDLE_SELECTOR,

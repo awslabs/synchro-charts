@@ -26,7 +26,7 @@ import { isThreshold } from '../common/annotations/utils';
 import { DATA_ALIGNMENT } from '../common/constants';
 import { isMinimalStaticViewport } from '../../../utils/predicates';
 import { validate } from '../../common/validator/validate';
-import { DataType } from '../../../constants';
+import { DataType } from '../../../utils/dataConstants';
 
 // The initial size of buffers. The larger this is, the more memory allocated up front per chart.
 // The lower this number is, more likely that charts will have to re-initialize there buffers which is
