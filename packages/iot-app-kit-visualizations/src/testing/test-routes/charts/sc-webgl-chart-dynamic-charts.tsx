@@ -28,7 +28,7 @@ const createData = (point: DataPoint<number>, numPoints: number): DataPoint<numb
 let numPointCounter = 1;
 
 @Component({
-  tag: 'sc-webgl-chart-dynamic-charts',
+  tag: 'iot-app-kit-vis-webgl-chart-dynamic-charts',
 })
 export class ScWebglChartStandard {
   @State() chartKeys: { key: string; data: DataStream[] }[] = [];
@@ -139,14 +139,14 @@ export class ScWebglChartStandard {
 
         {this.chartKeys.map(({ key, data }) => (
           <div key={key} style={{ marginLeft: `${this.xOffset}px`, width: `${this.width}px`, height: '500px' }}>
-            <sc-line-chart
+            <iot-app-kit-vis-line-chart
               dataStreams={data}
               widgetId={key}
               viewport={{ start: X_MIN, end: X_MAX, yMin: Y_MIN, yMax: Y_MAX }}
             />
           </div>
         ))}
-        <sc-webgl-context />
+        <iot-app-kit-vis-webgl-context />
       </div>
     );
   }

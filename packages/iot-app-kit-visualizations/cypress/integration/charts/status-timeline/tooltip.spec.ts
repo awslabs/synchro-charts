@@ -21,7 +21,7 @@ import { ANNOTATIONS } from '../../../../src/testing/dynamicWidgetUtils/constant
 it('renders with tooltip for multiple data streams with order in which they were added', () => {
   // tooltip position is based on info order, *not* data order.
   visitDynamicWidget(cy, {
-    componentTag: 'sc-status-timeline',
+    componentTag: 'iot-app-kit-vis-status-timeline',
     viewportStart: new Date(2000, 0, 0),
     viewportEnd: new Date(2000, 0, 0, 0, 5),
     dataStreams: [STRING_STREAM_1, NUMBER_EMPTY_STREAM, STRING_STREAM_2],
@@ -76,7 +76,7 @@ it('renders with tooltip for multiple data streams with order in which they were
 
 it('renders tooltip to the left of the mouse when the mouse is on the right side', () => {
   visitDynamicWidget(cy, {
-    componentTag: 'sc-status-timeline',
+    componentTag: 'iot-app-kit-vis-status-timeline',
     viewportStart: new Date(new Date(2000, 0, 0).getTime() - MINUTE_IN_MS),
     viewportEnd: new Date(2000, 0, 0, 0, 5),
     dataStreams: [NUMBER_STREAM_1],

@@ -27,13 +27,13 @@ const TEST_DATA_POINTS: DataPoint[] = [
 ];
 
 @Component({
-  tag: 'sc-scatter-chart-trend-line-with-legend',
+  tag: 'iot-app-kit-vis-scatter-chart-trend-line-with-legend',
 })
 export class ScScatterChartTrendLineWithLegend {
   render() {
     return (
       <div>
-        <sc-line-chart
+        <iot-app-kit-vis-line-chart
           widgetId="widget-id"
           dataStreams={[
             {
@@ -68,7 +68,7 @@ export class ScScatterChartTrendLineWithLegend {
             },
           ]}
         />
-        <sc-webgl-context />
+        <iot-app-kit-vis-webgl-context />
       </div>
     );
   }

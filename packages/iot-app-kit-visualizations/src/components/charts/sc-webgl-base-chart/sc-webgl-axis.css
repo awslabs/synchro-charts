@@ -1,8 +1,8 @@
-sc-webgl-axis {
+iot-app-kit-vis-webgl-axis {
   font-size: var(--font-size-0);
 }
 
-sc-webgl-axis .axis {
+iot-app-kit-vis-webgl-axis .axis {
   font-family: var(--primary-font-family);
   shape-rendering: crispEdges;
   position: absolute;
@@ -11,29 +11,29 @@ sc-webgl-axis .axis {
   pointer-events: none;
 }
 
-sc-webgl-axis .axis path {
+iot-app-kit-vis-webgl-axis .axis path {
   display: none;
 }
 
-sc-webgl-axis .axis .tick {
+iot-app-kit-vis-webgl-axis .axis .tick {
   color: var(--polaris-light-gray);
 }
 
-sc-webgl-axis line.x-axis-separator {
+iot-app-kit-vis-webgl-axis line.x-axis-separator {
   color: var(--primary-light);
   stroke: var(--primary-light);
   stroke-width: 1px;
 }
 
-sc-webgl-axis .axis .tick line {
+iot-app-kit-vis-webgl-axis .axis .tick line {
   color: var(--primary-light);
 }
 
-sc-webgl-axis .axis .tick text {
+iot-app-kit-vis-webgl-axis .axis .tick text {
   font-size: var(--font-size-0);
   user-select: none;
 }
 
-sc-webgl-axis .x-axis .tick:last-child text {
+iot-app-kit-vis-webgl-axis .x-axis .tick:last-child text {
   font-weight: var(--font-weight-bold);
 }

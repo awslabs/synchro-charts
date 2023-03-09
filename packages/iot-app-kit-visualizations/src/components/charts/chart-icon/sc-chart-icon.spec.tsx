@@ -6,15 +6,17 @@ import { CustomHTMLElement } from '../../../utils/types';
 import { update } from '../common/tests/merge';
 import { StatusIcon } from '../common/constants';
 
-const newChartIconSpecPage = async (props: Partial<Components.ScChartIcon>) => {
+const newChartIconSpecPage = async (props: Partial<Components.IotAppKitVisChartIcon>) => {
   const page = await newSpecPage({
     components: [ScChartIcon],
     html: '<div></div>',
     supportsShadowDom: false,
   });
 
-  const chartIcon = page.doc.createElement('sc-chart-icon') as CustomHTMLElement<Components.ScChartIcon>;
-  const defaultProps: Components.ScChartIcon = {
+  const chartIcon = page.doc.createElement('iot-app-kit-vis-chart-icon') as CustomHTMLElement<
+    Components.IotAppKitVisChartIcon
+  >;
+  const defaultProps: Components.IotAppKitVisChartIcon = {
     name: StatusIcon.NORMAL,
   };
 

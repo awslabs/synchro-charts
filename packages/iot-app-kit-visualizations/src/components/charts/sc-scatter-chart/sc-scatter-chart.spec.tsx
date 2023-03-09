@@ -6,8 +6,8 @@ import 'webgl-mock-threejs';
 import { newChartSpecPage } from '../../../testing/chartDescriptions/newChartSpecPage';
 import { describeChart } from '../../../testing/chartDescriptions/describeChart';
 
-const scatterChart = newChartSpecPage('sc-scatter-chart');
+const scatterChart = newChartSpecPage('iot-app-kit-vis-scatter-chart');
 
-describe('sc-scatter-chart', () => {
+describe('iot-app-kit-vis-scatter-chart', () => {
   describeChart(scatterChart);
 });

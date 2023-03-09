@@ -18,7 +18,7 @@ import { moveHandle, moveHandleFilter, moveHandleWithPause, parseTransformYValue
 import { AggregateType } from '../../../../src/utils/dataTypes';
 
 const timelineParams: Partial<SearchQueryParams> = {
-  componentTag: 'sc-bar-chart',
+  componentTag: 'iot-app-kit-vis-bar-chart',
   viewportStart: X_MIN,
   viewportEnd: X_MAX,
   dataStreams: [

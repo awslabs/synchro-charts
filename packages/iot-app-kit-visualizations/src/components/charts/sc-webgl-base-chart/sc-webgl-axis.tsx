@@ -2,7 +2,7 @@ import { Component, h, Prop } from '@stencil/core';
 import { SizeConfig } from '../../../utils/dataTypes';
 
 @Component({
-  tag: 'sc-webgl-axis',
+  tag: 'iot-app-kit-vis-webgl-axis',
   styleUrl: 'sc-webgl-axis.css',
   shadow: false,
 })

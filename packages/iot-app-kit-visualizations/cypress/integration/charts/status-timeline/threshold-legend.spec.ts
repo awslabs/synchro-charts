@@ -22,19 +22,19 @@ it('renders threshold legend', () => {
   };
 
   visitDynamicWidget(cy, {
-    componentTag: 'sc-status-timeline',
+    componentTag: 'iot-app-kit-vis-status-timeline',
     annotations: {
       y: [eqThreshold],
     },
   });
 
-  cy.get('sc-threshold-legend').should('be.visible');
-  cy.get('sc-threshold-legend-row').should('be.visible');
-  cy.get('sc-threshold-legend-row').should('have.length', 1);
+  cy.get('iot-app-kit-vis-threshold-legend').should('be.visible');
+  cy.get('iot-app-kit-vis-threshold-legend-row').should('be.visible');
+  cy.get('iot-app-kit-vis-threshold-legend-row').should('have.length', 1);
 
-  cy.contains('sc-threshold-legend-row', eqThreshold.value).should('be.visible');
+  cy.contains('iot-app-kit-vis-threshold-legend-row', eqThreshold.value).should('be.visible');
 
-  cy.get('sc-threshold-legend').matchImageSnapshotOnCI();
+  cy.get('iot-app-kit-vis-threshold-legend').matchImageSnapshotOnCI();
 });
 
 it('renders many thresholds at once', () => {
@@ -42,7 +42,7 @@ it('renders many thresholds at once', () => {
   const thresholds = createUniqueThresholds(NUM_THRESHOLDS);
 
   visitDynamicWidget(cy, {
-    componentTag: 'sc-status-timeline',
+    componentTag: 'iot-app-kit-vis-status-timeline',
     annotations: {
       y: thresholds,
     },
@@ -60,7 +60,7 @@ it('does not render annotations (that are not thresholds)', () => {
   };
 
   visitDynamicWidget(cy, {
-    componentTag: 'sc-status-timeline',
+    componentTag: 'iot-app-kit-vis-status-timeline',
     annotations: {
       y: [annotation],
     },
@@ -68,5 +68,5 @@ it('does not render annotations (that are not thresholds)', () => {
 
   cy.waitForStatusTimeline();
 
-  cy.contains('sc-threshold-legend-row').should('have.length', 0);
+  cy.contains('iot-app-kit-vis-threshold-legend-row').should('have.length', 0);
 });

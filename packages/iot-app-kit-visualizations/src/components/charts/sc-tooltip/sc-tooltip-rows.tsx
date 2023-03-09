@@ -26,7 +26,7 @@ const X_OFFSET = 8;
  * Renders the tooltip, tooltip container, the tooltip line and the tool tip rows
  */
 @Component({
-  tag: 'sc-tooltip-rows',
+  tag: 'iot-app-kit-vis-tooltip-rows',
   shadow: false,
 })
 export class ScTooltipRows {
@@ -237,7 +237,7 @@ export class ScTooltipRows {
                 (tooltipPoint.point && this.rowsValueColorAndIcon(streamId, tooltipPoint.point, displayedDate)) || {};
 
               return (
-                <sc-tooltip-row
+                <iot-app-kit-vis-tooltip-row
                   key={`${tooltipPoint.streamId}-${tooltipPoint.type}`}
                   showDataStreamColor={this.showDataStreamColor}
                   label={tooltipPoint.label || dataStream.name}

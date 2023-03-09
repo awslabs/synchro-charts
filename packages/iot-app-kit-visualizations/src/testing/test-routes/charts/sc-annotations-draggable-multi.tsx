@@ -37,14 +37,14 @@ const SIZE = {
 };
 
 @Component({
-  tag: 'sc-annotations-draggable-multi',
+  tag: 'iot-app-kit-vis-annotations-draggable-multi',
 })
 export class ScAnnotationsDraggableMulti {
   render() {
     return (
       <div>
         <div style={{ width: '500px', height: '500px' }}>
-          <sc-line-chart
+          <iot-app-kit-vis-line-chart
             widgetId="widget-id"
             dataStreams={[]}
             annotations={ANNOTATIONS}
@@ -53,7 +53,7 @@ export class ScAnnotationsDraggableMulti {
           />
         </div>
         <div style={{ width: '500px', height: '500px' }}>
-          <sc-line-chart
+          <iot-app-kit-vis-line-chart
             widgetId="widget-id-2"
             dataStreams={[]}
             annotations={ANNOTATIONS}
@@ -61,7 +61,7 @@ export class ScAnnotationsDraggableMulti {
             viewport={{ start: X_MIN, end: X_MAX }}
           />
         </div>
-        <sc-webgl-context />
+        <iot-app-kit-vis-webgl-context />
       </div>
     );
   }

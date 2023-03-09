@@ -45,7 +45,7 @@ export class StatusTimelineDynamicData {
         <br />
         <br />
         <div id="chart-container" style={{ height: '500px', width: '500px' }}>
-          <sc-status-timeline
+          <iot-app-kit-vis-status-timeline
             alarms={{ expires: MONTH_IN_MS }}
             dataStreams={[
               {
@@ -71,7 +71,7 @@ export class StatusTimelineDynamicData {
               end: X_MAX,
             }}
           />
-          <sc-webgl-context />
+          <iot-app-kit-vis-webgl-context />
         </div>
       </div>
     );

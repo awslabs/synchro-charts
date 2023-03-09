@@ -28,13 +28,13 @@ const TEST_DATA_POINT_2: DataPoint<number> = {
  */
 
 @Component({
-  tag: 'sc-webgl-bar-chart-positive-negative',
+  tag: 'iot-app-kit-vis-webgl-bar-chart-positive-negative',
 })
 export class ScWebglBarChartPositiveNegative {
   render() {
     return (
       <div id="chart-container" style={{ width: '500px', height: '500px' }}>
-        <sc-bar-chart
+        <iot-app-kit-vis-bar-chart
           dataStreams={[
             {
               id: 'test',
@@ -54,7 +54,7 @@ export class ScWebglBarChartPositiveNegative {
           }}
           viewport={{ yMin: Y_MIN, yMax: Y_MAX, start: X_MIN, end: X_MAX }}
         />
-        <sc-webgl-context />
+        <iot-app-kit-vis-webgl-context />
       </div>
     );
   }

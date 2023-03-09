@@ -48,7 +48,7 @@ type ContextPlacement = 'viewport' | 'element';
  */
 
 @Component({
-  tag: 'sc-webgl-context-nested',
+  tag: 'iot-app-kit-vis-webgl-context-nested',
 })
 export class ScWebglContextNested {
   @State() elementRef?: HTMLDivElement;
@@ -66,7 +66,7 @@ export class ScWebglContextNested {
           width: '500px',
         }}
       >
-        <sc-line-chart
+        <iot-app-kit-vis-line-chart
           widgetId={`${x + y}id`}
           dataStreams={[
             {
@@ -168,12 +168,12 @@ export class ScWebglContextNested {
                 </div>
                 <div />
               </div>
-              {this.contextPlacement === 'element' && <sc-webgl-context viewFrame={this.elementRef} />}
+              {this.contextPlacement === 'element' && <iot-app-kit-vis-webgl-context viewFrame={this.elementRef} />}
             </div>
           </div>
           {sidePanel}
         </div>
-        {this.contextPlacement === 'viewport' && <sc-webgl-context />}
+        {this.contextPlacement === 'viewport' && <iot-app-kit-vis-webgl-context />}
       </div>
     );
   }

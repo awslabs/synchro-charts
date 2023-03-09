@@ -57,7 +57,7 @@ const Y_ANNOTATION: YAnnotation = {
 let oldAnnotations: Annotations | undefined;
 
 @Component({
-  tag: 'sc-webgl-chart-annotation-editable',
+  tag: 'iot-app-kit-vis-webgl-chart-annotation-editable',
 })
 export class ScWebglChartAnnotationRescaling {
   @State() isEditableValue: boolean = false;
@@ -156,7 +156,7 @@ export class ScWebglChartAnnotationRescaling {
           </button>
         </div>
         <div>
-          <sc-line-chart
+          <iot-app-kit-vis-line-chart
             widgetId="widget-id"
             dataStreams={[
               {
@@ -183,7 +183,7 @@ export class ScWebglChartAnnotationRescaling {
               width: 1000,
             }}
           />
-          <sc-webgl-context />
+          <iot-app-kit-vis-webgl-context />
         </div>
       </div>
     );

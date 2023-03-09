@@ -26,14 +26,16 @@ const DEFAULT_POINT: DataPoint = {
   y: 100,
 };
 
-const newTooltipRowPage = async (propOverrides: Partial<Components.ScTooltipRow> = {}) => {
+const newTooltipRowPage = async (propOverrides: Partial<Components.IotAppKitVisTooltipRow> = {}) => {
   const page = await newSpecPage({
     components: [ScTooltipRow],
     html: '<div></div>',
     supportsShadowDom: false,
   });
-  const tooltipRow = page.doc.createElement('sc-tooltip-row') as CustomHTMLElement<Components.ScTooltipRow>;
-  const props: Components.ScTooltipRow = {
+  const tooltipRow = page.doc.createElement('iot-app-kit-vis-tooltip-row') as CustomHTMLElement<
+    Components.IotAppKitVisTooltipRow
+  >;
+  const props: Components.IotAppKitVisTooltipRow = {
     label: DATA_STREAM_INFO.name,
     color: DATA_STREAM_INFO.color as string,
     point: DEFAULT_POINT,
@@ -69,12 +71,12 @@ describe('valueColor property', () => {
 describe('icon property', () => {
   it('renders the icon to be that of the value provided', async () => {
     const { tooltipRow } = await newTooltipRowPage({ icon: StatusIcon.SNOOZED });
-    const value = tooltipRow.querySelector('sc-chart-icon') as any;
+    const value = tooltipRow.querySelector('iot-app-kit-vis-chart-icon') as any;
     expect(value).not.toBeNull();
   });
   it('renders the icon to be empty when no value provided', async () => {
     const { tooltipRow } = await newTooltipRowPage({});
-    const value = tooltipRow.querySelector('sc-chart-icon') as HTMLElement;
+    const value = tooltipRow.querySelector('iot-app-kit-vis-chart-icon') as HTMLElement;
     expect(value).toBeNull();
   });
 });

@@ -7,7 +7,7 @@ import { DATA_STREAM } from '../../../../src/testing/__mocks__/mockWidgetPropert
 
 it('displays error when there is an error', () => {
   visitDynamicWidget(cy, {
-    componentTag: 'sc-bar-chart',
+    componentTag: 'iot-app-kit-vis-bar-chart',
     dataStreams: [{ ...DATA_STREAM, error: 'beep beep SEV-2' }],
   });
 

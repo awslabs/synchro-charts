@@ -3,7 +3,7 @@
   --timeline-row-margin-top: 34px;
 }
 
-sc-status-timeline-overlay-row {
+iot-app-kit-vis-status-timeline-overlay-row {
   flex-grow: 1;
   width: 100%;
   display: flex;
@@ -11,12 +11,12 @@ sc-status-timeline-overlay-row {
   justify-content: space-between;
 }
 
-sc-status-timeline-overlay-row sc-data-stream-name {
+iot-app-kit-vis-status-timeline-overlay-row sc-data-stream-name {
   max-height: var(--timeline-row-margin-top);
   overflow: hidden;
 }
 
-sc-status-timeline-overlay-row .value {
+iot-app-kit-vis-status-timeline-overlay-row .value {
   max-width: 200px;
   white-space: nowrap;
   overflow: hidden;
@@ -26,11 +26,11 @@ sc-status-timeline-overlay-row .value {
   padding-bottom: 2px;
 }
 
-sc-status-timeline-overlay-row .unit {
+iot-app-kit-vis-status-timeline-overlay-row .unit {
   padding-left: 2px;
 }
 
-sc-status-timeline-overlay-row .stream-info {
+iot-app-kit-vis-status-timeline-overlay-row .stream-info {
   text-overflow: ellipsis;
   overflow: hidden;
   height: var(--timeline-row-margin-top);
@@ -40,7 +40,7 @@ sc-status-timeline-overlay-row .stream-info {
   align-items: flex-end;
 }
 
-sc-status-timeline-overlay-row .no-data-visualization {
+iot-app-kit-vis-status-timeline-overlay-row .no-data-visualization {
   flex-grow: 1;
 
   /* striped gray background representing no-data to visualize */

@@ -15,13 +15,13 @@ const TEST_DATA_POINT: DataPoint<number> = {
 };
 
 @Component({
-  tag: 'sc-webgl-chart-annotations',
+  tag: 'iot-app-kit-vis-webgl-chart-annotations',
 })
 export class ScWebglChartAnnotations {
   render() {
     return (
       <div>
-        <sc-line-chart
+        <iot-app-kit-vis-line-chart
           widgetId="widget-id"
           dataStreams={[
             {
@@ -64,7 +64,7 @@ export class ScWebglChartAnnotations {
           }}
           viewport={{ start: X_MIN, end: X_MAX, yMin: Y_MIN, yMax: Y_MAX }}
         />
-        <sc-webgl-context />
+        <iot-app-kit-vis-webgl-context />
       </div>
     );
   }

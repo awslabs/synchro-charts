@@ -6,7 +6,7 @@ it('moves viewport when gestures are applied', () => {
   const OLD_Y_TICK_LABEL = 'Fri 31';
 
   visitDynamicWidget(cy, {
-    componentTag: 'sc-status-timeline',
+    componentTag: 'iot-app-kit-vis-status-timeline',
     viewportStart: START,
     viewportEnd: END,
     gestures: true,
@@ -29,7 +29,7 @@ it('does not move viewport when gestures are not applied', () => {
   const OLD_Y_TICK_LABEL = 'Fri 31';
 
   visitDynamicWidget(cy, {
-    componentTag: 'sc-status-timeline',
+    componentTag: 'iot-app-kit-vis-status-timeline',
     viewportStart: START,
     viewportEnd: END,
     gestures: false,

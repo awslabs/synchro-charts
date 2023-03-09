@@ -21,19 +21,19 @@
 2. Initialize components if you are not using the react wrapper
 
     ```js static
-    import { defineComponents, applyPolyfill } from '@synchro-charts/core/dist/loader';
+    import { defineComponents, applyPolyfill } from '@iot-app-kit-visualizations/core/dist/loader';
 
     applyPolyfill().then(() => defineComponents());
     ```
    
     If you are using the react wrapper, this step is not necessary.
 
-3. Include a `<sc-webgl-context>`
+3. Include a `<iot-app-kit-vis-webgl-context>`
     Include the webgl context such that it's present where ever you utilize webgl based components (not required for all components)
 
     ```jsx static
      ...
-      <sc-webgl-context />
+      <iot-app-kit-vis-webgl-context />
      ...
         
     ```

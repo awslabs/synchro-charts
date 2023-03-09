@@ -22,7 +22,7 @@ const RIGHT_X = new Date(X_MIN.getTime() + VIEWPORT_WIDTH * (1 / 2)).getTime();
  */
 
 @Component({
-  tag: 'sc-webgl-line-chart-dynamic-data-streams',
+  tag: 'iot-app-kit-vis-webgl-line-chart-dynamic-data-streams',
 })
 export class ScWebglLineChartDynamicDataStreams {
   @State() dataStreams: DataStream<number>[] = [];
@@ -74,7 +74,7 @@ export class ScWebglLineChartDynamicDataStreams {
         <br />
         <br />
         <div id="chart-container" style={{ marginTop: '20px', width: '500px', height: '500px' }}>
-          <sc-line-chart
+          <iot-app-kit-vis-line-chart
             widgetId="widget-id"
             dataStreams={this.dataStreams}
             size={{
@@ -84,7 +84,7 @@ export class ScWebglLineChartDynamicDataStreams {
             viewport={{ start: X_MIN, end: X_MAX, yMin: Y_MIN, yMax: Y_MAX }}
           />
         </div>
-        <sc-webgl-context />
+        <iot-app-kit-vis-webgl-context />
       </div>
     );
   }

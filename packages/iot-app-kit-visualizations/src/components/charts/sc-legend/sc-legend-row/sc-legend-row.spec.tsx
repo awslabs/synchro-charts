@@ -14,14 +14,16 @@ const noop = () => {};
 const CURRENT_VALUE_SELECTOR = "[data-testid='current-value']";
 const COLOR_BAR_SELECTOR = '.bar';
 
-const newLegendRowSpecPage = async (props: Partial<Components.ScLegendRow>) => {
+const newLegendRowSpecPage = async (props: Partial<Components.IotAppKitVisLegendRow>) => {
   const page = await newSpecPage({
     components: [ScLegendRow],
     html: '<div></div>',
     supportsShadowDom: false,
   });
-  const legendRow = page.doc.createElement('sc-legend-row') as CustomHTMLElement<Components.ScLegendRow>;
-  const defaultProps: Components.ScLegendRow = {
+  const legendRow = page.doc.createElement('iot-app-kit-vis-legend-row') as CustomHTMLElement<
+    Components.IotAppKitVisLegendRow
+  >;
+  const defaultProps: Components.IotAppKitVisLegendRow = {
     isLoading: false,
     updateDataStreamName: noop,
     isEditing: false,
@@ -61,7 +63,7 @@ it('displays icon when passed in', async () => {
     icon: StatusIcon.NORMAL,
   });
 
-  expect(dataStreamInfo.innerHTML).toInclude('sc-chart-icon');
+  expect(dataStreamInfo.innerHTML).toInclude('iot-app-kit-vis-chart-icon');
 });
 
 it('displays unit when provided', async () => {
@@ -100,7 +102,7 @@ describe('loading status', () => {
     const { dataStreamInfo } = await newLegendRowSpecPage({
       isLoading: true,
     });
-    const loadingSpinners = dataStreamInfo.querySelector('sc-loading-spinner');
+    const loadingSpinners = dataStreamInfo.querySelector('iot-app-kit-vis-loading-spinner');
     expect(loadingSpinners).not.toBeNull();
   });
 
@@ -108,7 +110,7 @@ describe('loading status', () => {
     const { dataStreamInfo } = await newLegendRowSpecPage({
       isLoading: false,
     });
-    const loadingSpinners = dataStreamInfo.querySelector('sc-loading-spinner');
+    const loadingSpinners = dataStreamInfo.querySelector('iot-app-kit-vis-loading-spinner');
     expect(loadingSpinners).toBeNull();
   });
 });

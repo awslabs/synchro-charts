@@ -13,13 +13,13 @@ import { DataType } from '../../../../utils/dataConstants';
  */
 
 @Component({
-  tag: 'sc-webgl-bar-chart-threshold-coloration',
+  tag: 'iot-app-kit-vis-webgl-bar-chart-threshold-coloration',
 })
 export class ScWebglBarChartThresholdColoration {
   render() {
     return (
       <div>
-        <sc-bar-chart
+        <iot-app-kit-vis-bar-chart
           dataStreams={[
             {
               id: 'test',
@@ -56,7 +56,7 @@ export class ScWebglBarChartThresholdColoration {
           }}
           viewport={{ yMin: Y_MIN, yMax: Y_MAX, start: X_MIN, end: X_MAX }}
         />
-        <sc-webgl-context />
+        <iot-app-kit-vis-webgl-context />
       </div>
     );
   }

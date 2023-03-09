@@ -4,7 +4,7 @@ import '@stencil/router';
 import { routes } from './routes';
 
 @Component({
-  tag: 'sc-app',
+  tag: 'iot-app-kit-vis-app',
 })
 export class App {
   render() {

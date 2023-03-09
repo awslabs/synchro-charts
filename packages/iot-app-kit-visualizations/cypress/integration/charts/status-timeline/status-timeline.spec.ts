@@ -30,7 +30,7 @@ describe('status timeline', () => {
     const viewportStart = new Date(2000, 0, 0);
     const viewportEnd = new Date(2000, 0, 1);
     const timelineParams: Partial<SearchQueryParams> = {
-      componentTag: 'sc-status-timeline',
+      componentTag: 'iot-app-kit-vis-status-timeline',
       viewportStart,
       viewportEnd,
       dataStreams: [
@@ -69,7 +69,7 @@ describe('status timeline', () => {
       unit: 'mph',
     };
     visitDynamicWidget(cy, {
-      componentTag: 'sc-status-timeline',
+      componentTag: 'iot-app-kit-vis-status-timeline',
       alarms: { expires: MINUTE_IN_MS },
       dataStreams: [
         {
@@ -88,7 +88,7 @@ describe('status timeline', () => {
   describe('isEditing', () => {
     it('edits a info name while `isEditing` is true', () => {
       visitDynamicWidget(cy, {
-        componentTag: 'sc-status-timeline',
+        componentTag: 'iot-app-kit-vis-status-timeline',
         alarms: { expires: MINUTE_IN_MS },
         isEditing: true,
         dataStreams: [DATA_STREAM],
@@ -123,7 +123,7 @@ describe('status timeline', () => {
     }));
 
     visitDynamicWidget(cy, {
-      componentTag: 'sc-status-timeline',
+      componentTag: 'iot-app-kit-vis-status-timeline',
       alarms: { expires: MINUTE_IN_MS },
       dataStreams,
     });
@@ -150,7 +150,7 @@ describe('status timeline', () => {
     const dataStreamInfos = createInfos(3); // Maximum that can fit within a chart the given size
 
     visitDynamicWidget(cy, {
-      componentTag: 'sc-status-timeline',
+      componentTag: 'iot-app-kit-vis-status-timeline',
       alarms: { expires: MINUTE_IN_MS },
       dataStreams: dataStreamInfos.map(info => ({ ...info, data: [] })),
     });
@@ -172,7 +172,7 @@ describe('status timeline', () => {
     })); // Maximum that can fit within a chart the given size
 
     visitDynamicWidget(cy, {
-      componentTag: 'sc-status-timeline',
+      componentTag: 'iot-app-kit-vis-status-timeline',
       alarms: { expires: MINUTE_IN_MS },
       dataStreams: dataStreamInfos.map(info => ({ ...info, data: [] })),
     });
@@ -326,14 +326,14 @@ describe('mesh', () => {
   const WAIT_MS = SECOND_IN_MS * 2;
 
   it('renders a single status', () => {
-    cy.visit('/tests/sc-webgl-chart/single-status');
+    cy.visit('/tests/webgl-chart/single-status');
     cy.viewport(CHART_SIZE.width, CHART_SIZE.height);
     cy.wait(WAIT_MS);
     cy.get('#test-container').matchImageSnapshotOnCI();
   });
 
   it('renders multiple data streams as parallel status timelines', () => {
-    cy.visit('/tests/sc-webgl-chart/multiple-statuses');
+    cy.visit('/tests/webgl-chart/multiple-statuses');
     cy.viewport(200, 200);
     cy.wait(WAIT_MS);
     cy.get('#test-container').matchImageSnapshotOnCI();

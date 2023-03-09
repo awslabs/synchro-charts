@@ -7,7 +7,7 @@ import { Component, h, Prop } from '@stencil/core';
  */
 
 @Component({
-  tag: 'sc-loading-spinner',
+  tag: 'iot-app-kit-vis-loading-spinner',
   styleUrl: 'sc-loading-spinner.css',
   shadow: true,
 })

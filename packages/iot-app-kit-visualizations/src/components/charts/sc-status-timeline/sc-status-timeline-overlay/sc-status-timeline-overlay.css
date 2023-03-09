@@ -1,8 +1,8 @@
-sc-status-timeline-overlay .expando {
+iot-app-kit-vis-status-timeline-overlay .expando {
   flex-grow: 1;
 }
 
-sc-status-timeline-overlay .overlay-container {
+iot-app-kit-vis-status-timeline-overlay .overlay-container {
   position: absolute;
   display: flex;
   flex-direction: column;

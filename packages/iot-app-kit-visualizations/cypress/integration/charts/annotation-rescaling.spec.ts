@@ -55,7 +55,7 @@ const yAnnotation: YAnnotation = {
 };
 
 const query: Partial<SearchQueryParams> = {
-  componentTag: 'sc-line-chart',
+  componentTag: 'iot-app-kit-vis-line-chart',
   viewportStart: X_MIN,
   viewportEnd: X_MAX,
   dataStreams: [

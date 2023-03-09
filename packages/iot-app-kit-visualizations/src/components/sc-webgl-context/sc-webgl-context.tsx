@@ -2,7 +2,7 @@ import { h, Element, Component, Prop } from '@stencil/core';
 import { webGLRenderer } from './webglContext';
 
 @Component({
-  tag: 'sc-webgl-context',
+  tag: 'iot-app-kit-vis-webgl-context',
   styleUrl: 'sc-webgl-context.css',
   shadow: false,
 })

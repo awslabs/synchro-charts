@@ -1,22 +1,22 @@
-sc-gesture-handler svg {
+iot-app-kit-vis-gesture-handler svg {
   position: absolute;
   width: 100%;
   height: 100%;
 }
 
-sc-gesture-handler line {
+iot-app-kit-vis-gesture-handler line {
   stroke: var(--selection-color);
   opacity: 0.3;
   stroke-width: 1.5px;
 }
 
-sc-gesture-handler .overlay {
+iot-app-kit-vis-gesture-handler .overlay {
   fill: none;
   pointer-events: all;
   cursor: crosshair;
 }
 
-sc-gesture-handler .brush-box {
+iot-app-kit-vis-gesture-handler .brush-box {
   fill: var(--selection-color);
   opacity: 0.2;
 }

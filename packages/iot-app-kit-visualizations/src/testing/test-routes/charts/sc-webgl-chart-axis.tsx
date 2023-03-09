@@ -2,13 +2,13 @@ import { Component, h } from '@stencil/core';
 import { Y_MAX, Y_MIN, X_MIN, X_MAX } from './constants';
 
 @Component({
-  tag: 'sc-webgl-chart-axis',
+  tag: 'iot-app-kit-vis-webgl-chart-axis',
 })
 export class ScWebglChartAnnotations {
   render() {
     return (
       <div>
-        <sc-line-chart
+        <iot-app-kit-vis-line-chart
           widgetId="widget-id"
           dataStreams={[]}
           axis={{
@@ -21,7 +21,7 @@ export class ScWebglChartAnnotations {
           }}
           viewport={{ start: X_MIN, end: X_MAX, yMin: Y_MIN, yMax: Y_MAX }}
         />
-        <sc-webgl-context />
+        <iot-app-kit-vis-webgl-context />
       </div>
     );
   }

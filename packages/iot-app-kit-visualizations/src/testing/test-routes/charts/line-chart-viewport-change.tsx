@@ -51,9 +51,9 @@ export class LineChartViewportChange {
         <br />
         <br />
         <div id="chart-container" style={{ marginTop: '20px', width: '500px', height: '500px' }}>
-          <sc-line-chart widgetId="widget-id" dataStreams={[]} viewport={this.viewport} />
+          <iot-app-kit-vis-line-chart widgetId="widget-id" dataStreams={[]} viewport={this.viewport} />
         </div>
-        <sc-webgl-context />
+        <iot-app-kit-vis-webgl-context />
       </div>
     );
   }

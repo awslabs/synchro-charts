@@ -19,7 +19,7 @@ const MOVEMENT_CONFIG: MovementConfig = {
 };
 
 @Component({
-  tag: 'sc-gesture-handler',
+  tag: 'iot-app-kit-vis-gesture-handler',
   styleUrl: 'sc-gesture-handler.css',
   shadow: false,
 })

@@ -21,13 +21,13 @@ const TEST_DATA_POINT_2: DataPoint<string> = {
 };
 
 @Component({
-  tag: 'sc-scatter-chart-unsupported-data-types',
+  tag: 'iot-app-kit-vis-scatter-chart-unsupported-data-types',
 })
 export class ScScatterChartUnsupportedDataTypes {
   render() {
     return (
       <div>
-        <sc-scatter-chart
+        <iot-app-kit-vis-scatter-chart
           widgetId="widget-id"
           dataStreams={[
             {
@@ -44,7 +44,7 @@ export class ScScatterChartUnsupportedDataTypes {
           annotations={{}}
           viewport={{ start: X_MIN, end: X_MAX, yMin: Y_MIN, yMax: Y_MAX }}
         />
-        <sc-webgl-context />
+        <iot-app-kit-vis-webgl-context />
       </div>
     );
   }

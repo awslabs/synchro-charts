@@ -1,8 +1,8 @@
-sc-status-timeline .status-timeline {
+iot-app-kit-vis-status-timeline .status-timeline {
   position: relative;
 }
 
-sc-threahold-legend {
+iot-app-kit-vis-threahold-legend {
   overflow-y: scroll;
   overflow-x: hidden;
 
@@ -14,6 +14,6 @@ sc-threahold-legend {
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
-sc-threshold-legend::-webkit-scrollbar {
+iot-app-kit-vis-threshold-legend::-webkit-scrollbar {
   display: none;
 }

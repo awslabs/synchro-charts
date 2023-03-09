@@ -121,7 +121,7 @@ module.exports = {
   ],
   getComponentPathLine(componentPath) {
     const name = path.basename(componentPath, '.js');
-    return `import { ${name} } from '@synchro-charts/react'; // <sc-${kebabize(name)}>`;
+    return `import { ${name} } from '@iot-app-kit-visualizations/react'; // <iot-app-kit-vis-${kebabize(name)}>`;
   },
   styleguideComponents: {
     SectionsRenderer: path.join(__dirname, 'src/styleguide/Sections'),

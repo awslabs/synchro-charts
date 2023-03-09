@@ -23,13 +23,13 @@ const TEST_DATA_POINT: DataPoint<number> = {
  */
 
 @Component({
-  tag: 'sc-webgl-chart-multi',
+  tag: 'iot-app-kit-vis-webgl-chart-multi',
 })
 export class ScWebglChartMulti {
   render() {
     return (
       <div id="chart-container" style={{ border: '1px solid lightgray', height: '500px', width: '500px' }}>
-        <sc-line-chart
+        <iot-app-kit-vis-line-chart
           widgetId="widget-a"
           dataStreams={[
             {
@@ -44,7 +44,7 @@ export class ScWebglChartMulti {
           viewport={{ start: X_MIN, end: X_MAX, yMin: Y_MIN, yMax: Y_MAX, group: VIEWPORT_GROUP }}
         />
 
-        <sc-line-chart
+        <iot-app-kit-vis-line-chart
           widgetId="widget-b"
           dataStreams={[
             {
@@ -63,7 +63,7 @@ export class ScWebglChartMulti {
           }}
           viewport={{ start: X_MIN, end: X_MAX, yMin: Y_MIN, yMax: Y_MAX, group: VIEWPORT_GROUP }}
         />
-        <sc-webgl-context />
+        <iot-app-kit-vis-webgl-context />
       </div>
     );
   }

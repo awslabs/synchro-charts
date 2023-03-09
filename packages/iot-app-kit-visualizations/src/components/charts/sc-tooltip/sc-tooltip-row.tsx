@@ -14,7 +14,7 @@ import { StatusIcon } from '../common/constants';
 
 const baseColor = '#000';
 @Component({
-  tag: 'sc-tooltip-row',
+  tag: 'iot-app-kit-vis-tooltip-row',
   styleUrl: 'sc-tooltip-row.css',
   shadow: false,
 })
@@ -51,7 +51,7 @@ export class ScTooltipRow {
           {this.label}
         </span>
         <span class="value awsui-util-d-i" data-testid="current-value" style={{ color: this.valueColor }}>
-          {this.icon && <sc-chart-icon name={this.icon} />}
+          {this.icon && <iot-app-kit-vis-chart-icon name={this.icon} />}
           <Value value={this.point && this.point.y} />
         </span>
         {this.resolution != null && (

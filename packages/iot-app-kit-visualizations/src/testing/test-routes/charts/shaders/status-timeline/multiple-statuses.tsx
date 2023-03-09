@@ -83,9 +83,9 @@ export class MultipleStatuses {
 
   render() {
     return (
-      <sc-webgl-context>
+      <iot-app-kit-vis-webgl-context>
         <div id="test-container" style={{ width: `${CHART_SIZE.width}px`, height: `${CHART_SIZE.height}px` }} />
-      </sc-webgl-context>
+      </iot-app-kit-vis-webgl-context>
     );
   }
 }

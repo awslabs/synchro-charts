@@ -31,7 +31,7 @@ const createData = (point: DataPoint<number>): DataPoint<number>[] =>
   }));
 
 @Component({
-  tag: 'sc-line-chart-stream-data',
+  tag: 'iot-app-kit-vis-line-chart-stream-data',
 })
 export class ScLineChartStreamData {
   @State() dataPoints: DataPoint<number>[] = [TEST_DATA_POINT];
@@ -75,7 +75,7 @@ export class ScLineChartStreamData {
   render() {
     return (
       <div id="chart-container" style={{ border: '1px solid lightgray', height: '500px', width: '500px' }}>
-        <sc-line-chart
+        <iot-app-kit-vis-line-chart
           widgetId="widget-id"
           dataStreams={[
             {
@@ -93,7 +93,7 @@ export class ScLineChartStreamData {
           }}
           viewport={this.viewport}
         />
-        <sc-webgl-context />
+        <iot-app-kit-vis-webgl-context />
       </div>
     );
   }

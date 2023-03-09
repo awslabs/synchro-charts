@@ -27,13 +27,13 @@ const TEST_DATA_POINTS: DataPoint[] = [
 ];
 
 @Component({
-  tag: 'sc-scatter-chart-trend-line-color-configuration',
+  tag: 'iot-app-kit-vis-scatter-chart-trend-line-color-configuration',
 })
 export class ScScatterChartTrendLineColorConfiguration {
   render() {
     return (
       <div>
-        <sc-line-chart
+        <iot-app-kit-vis-line-chart
           widgetId="widget-id"
           dataStreams={[
             {
@@ -69,7 +69,7 @@ export class ScScatterChartTrendLineColorConfiguration {
             },
           ]}
         />
-        <sc-webgl-context />
+        <iot-app-kit-vis-webgl-context />
       </div>
     );
   }

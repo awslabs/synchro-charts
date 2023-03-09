@@ -1,7 +1,7 @@
 import { Component, h } from '@stencil/core';
 
 @Component({
-  tag: 'sc-error-badge',
+  tag: 'iot-app-kit-vis-error-badge',
   styleUrl: 'sc-error-badge.css',
   shadow: false,
 })

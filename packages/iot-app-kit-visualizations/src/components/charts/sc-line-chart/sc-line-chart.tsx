@@ -31,10 +31,15 @@ const DEFAULT_MIN_BUFFER_SIZE = 1000;
 const DEFAULT_BUFFER_FACTOR = 2;
 
 const tooltip = (props: Tooltip.Props) => (
-  <sc-tooltip {...props} visualizesAlarms={false} supportString={false} dataAlignment={DATA_ALIGNMENT.EITHER} />
+  <iot-app-kit-vis-tooltip
+    {...props}
+    visualizesAlarms={false}
+    supportString={false}
+    dataAlignment={DATA_ALIGNMENT.EITHER}
+  />
 );
 @Component({
-  tag: 'sc-line-chart',
+  tag: 'iot-app-kit-vis-line-chart',
   shadow: false,
 })
 export class ScLineChart implements ChartConfig {
@@ -66,10 +71,10 @@ export class ScLineChart implements ChartConfig {
 
   render() {
     return (
-      <sc-size-provider
+      <iot-app-kit-vis-size-provider
         size={this.size}
         renderFunc={(rect: RectScrollFixed) => (
-          <sc-webgl-base-chart
+          <iot-app-kit-vis-webgl-base-chart
             supportedDataTypes={[DataType.NUMBER]}
             axis={this.axis}
             alarms={this.alarms}

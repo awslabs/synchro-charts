@@ -5,7 +5,7 @@ import { Y_VALUE } from '../../../../src/testing/test-routes/charts/constants';
 const SMALL_WAIT = 0.1 * SECOND_IN_MS;
 
 describe('bar chart', () => {
-  const root = '/tests/sc-webgl-bar-chart';
+  const root = '/tests/webgl-bar-chart';
 
   const VIEWPORT_HEIGHT = 600;
   const VIEWPORT_WIDTH = 500;
@@ -165,7 +165,7 @@ describe('bar chart', () => {
 });
 
 describe('handles buffer increasing in size after initialization', () => {
-  const root = '/tests/sc-webgl-bar-chart';
+  const root = '/tests/webgl-bar-chart';
   const VIEWPORT_HEIGHT = 600;
   const VIEWPORT_WIDTH = 500;
 

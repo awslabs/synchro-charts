@@ -1,6 +1,6 @@
 # Base chart
 
-Base chart (which is exposed as the Web component `<sc-webgl-base-chart />`) is a shared component used across the following components:
+Base chart (which is exposed as the Web component `<iot-app-kit-vis-webgl-base-chart />`) is a shared component used across the following components:
 
 - line chart
 - scatter chart

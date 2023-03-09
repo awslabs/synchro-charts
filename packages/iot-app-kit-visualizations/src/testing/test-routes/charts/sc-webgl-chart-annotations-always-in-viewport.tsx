@@ -15,13 +15,13 @@ const TEST_DATA_POINT: DataPoint<number> = {
 };
 
 @Component({
-  tag: 'sc-webgl-chart-annotations-always-in-viewport',
+  tag: 'iot-app-kit-vis-webgl-chart-annotations-always-in-viewport',
 })
 export class ScWebglChartAnnotationsAlwaysInViewport {
   render() {
     return (
       <div>
-        <sc-line-chart
+        <iot-app-kit-vis-line-chart
           dataStreams={[
             {
               id: 'test',
@@ -66,7 +66,7 @@ export class ScWebglChartAnnotationsAlwaysInViewport {
           viewport={{ start: X_MIN, end: X_MAX }}
           widgetId="widget-id"
         />
-        <sc-webgl-context />
+        <iot-app-kit-vis-webgl-context />
       </div>
     );
   }

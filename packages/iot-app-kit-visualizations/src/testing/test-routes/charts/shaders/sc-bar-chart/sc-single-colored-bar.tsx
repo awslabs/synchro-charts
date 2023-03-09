@@ -27,7 +27,7 @@ const TEST_DATA_POINT_1: DataPoint<number> = {
  */
 
 @Component({
-  tag: 'sc-single-colored-bar',
+  tag: 'iot-app-kit-vis-single-colored-bar',
 })
 export class ScSingleColoredBar {
   @Element() el!: HTMLElement;
@@ -73,9 +73,9 @@ export class ScSingleColoredBar {
 
   render() {
     return (
-      <sc-webgl-context>
+      <iot-app-kit-vis-webgl-context>
         <div id="test-container" style={{ width: `${CHART_SIZE.width}px`, height: `${CHART_SIZE.height}px` }} />
-      </sc-webgl-context>
+      </iot-app-kit-vis-webgl-context>
     );
   }
 }

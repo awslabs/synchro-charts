@@ -44,13 +44,13 @@ const TEST_DATA_POINTS_2: DataPoint[] = [
  */
 
 @Component({
-  tag: 'sc-scatter-chart-tooltip-with-multiple-data-streams-and-trends',
+  tag: 'iot-app-kit-vis-scatter-chart-tooltip-with-multiple-data-streams-and-trends',
 })
 export class ScScatterChartTooltipWithMultipleDataStreamsAndTrends {
   render() {
     return (
       <div>
-        <sc-scatter-chart
+        <iot-app-kit-vis-scatter-chart
           dataStreams={[
             {
               id: 'test',
@@ -86,7 +86,7 @@ export class ScScatterChartTooltipWithMultipleDataStreamsAndTrends {
             },
           ]}
         />
-        <sc-webgl-context />
+        <iot-app-kit-vis-webgl-context />
       </div>
     );
   }

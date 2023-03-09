@@ -1,4 +1,4 @@
-sc-legend-row {
+iot-app-kit-vis-legend-row {
   --color-container-width: 18px;
 
   /* prevents the stream info from hijacking scroll when element is focused */
@@ -9,18 +9,18 @@ sc-legend-row {
   padding-right: var(--margin-small);
 }
 
-sc-legend-row .legend-row-container {
+iot-app-kit-vis-legend-row .legend-row-container {
   display: flex;
   margin-left: 8px;
 }
 
-sc-legend-row .legend-value {
+iot-app-kit-vis-legend-row .legend-value {
   position: relative;
   display: flex;
   align-items: center;
 }
 
-sc-legend-row .color-container {
+iot-app-kit-vis-legend-row .color-container {
   display: flex;
   flex-direction: column-reverse;
   width: var(--color-container-width);
@@ -28,27 +28,27 @@ sc-legend-row .color-container {
   padding-top: 11px;
 }
 
-sc-data-stream-info .spinner-container {
+iot-app-kit-vis-data-stream-info .spinner-container {
   position: relative;
   top: 5px;
 }
 
-sc-legend-row .bar {
+iot-app-kit-vis-legend-row .bar {
   width: var(--color-container-width);
 }
 
-sc-legend-row .info {
+iot-app-kit-vis-legend-row .info {
   padding-left: var(--margin-small);
   display: flex;
   flex-direction: column;
 }
 
-sc-legend-row .info h4 {
+iot-app-kit-vis-legend-row .info h4 {
   line-height: 0.2em;
   font-size: 14px;
 }
 
-sc-legend-row .sc-expandable-input {
+iot-app-kit-vis-legend-row .sc-expandable-input {
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;

@@ -28,7 +28,7 @@ const TEST_DATA_POINT_2: DataPoint<number> = {
  */
 
 @Component({
-  tag: 'sc-straight-line-segment-colored',
+  tag: 'iot-app-kit-vis-straight-line-segment-colored',
 })
 export class ScStraightLineSegment {
   @Element() el!: HTMLElement;
@@ -71,9 +71,9 @@ export class ScStraightLineSegment {
 
   render() {
     return (
-      <sc-webgl-context>
+      <iot-app-kit-vis-webgl-context>
         <div id="test-container" style={{ width: `${CHART_SIZE.width}px`, height: `${CHART_SIZE.height}px` }} />
-      </sc-webgl-context>
+      </iot-app-kit-vis-webgl-context>
     );
   }
 }

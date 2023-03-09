@@ -1,21 +1,21 @@
-sc-tooltip-row {
+iot-app-kit-vis-tooltip-row {
   font-size: var(--font-size-1);
 
   --bar-size: 18px;
 }
 
-sc-tooltip-rows .left-offset {
+iot-app-kit-vis-tooltip-rows .left-offset {
   padding-left: 4px;
 }
 
 /* modern clearfix hack */
-sc-tooltip-row .clearfix::after {
+iot-app-kit-vis-tooltip-row .clearfix::after {
   content: '';
   clear: both;
   display: table;
 }
 
-sc-tooltip-row .bar {
+iot-app-kit-vis-tooltip-row .bar {
   display: inline-block;
   float: left;
   width: var(--bar-size);
@@ -23,13 +23,13 @@ sc-tooltip-row .bar {
   padding-top: 8px;
 }
 
-sc-tooltip-row .label {
+iot-app-kit-vis-tooltip-row .label {
   padding-left: var(--margin-small);
   color: var(--light-text);
   float: left;
 }
 
-sc-tooltip-row .value {
+iot-app-kit-vis-tooltip-row .value {
   font-weight: bold;
   float: right;
   margin-left: 15px;

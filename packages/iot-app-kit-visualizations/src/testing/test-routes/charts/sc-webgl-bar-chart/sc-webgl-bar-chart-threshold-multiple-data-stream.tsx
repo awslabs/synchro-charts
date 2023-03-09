@@ -36,13 +36,13 @@ const TEST_2_DATA_POINT_2: DataPoint<number> = {
  *
  */
 @Component({
-  tag: 'sc-webgl-bar-chart-threshold-coloration-multiple-data-stream',
+  tag: 'iot-app-kit-vis-webgl-bar-chart-threshold-coloration-multiple-data-stream',
 })
 export class ScWebglBarChartThresholdMultipleDataStream {
   render() {
     return (
       <div>
-        <sc-bar-chart
+        <iot-app-kit-vis-bar-chart
           dataStreams={[
             {
               id: 'test',
@@ -91,7 +91,7 @@ export class ScWebglBarChartThresholdMultipleDataStream {
           }}
           viewport={{ yMin: Y_MIN, yMax: Y_MAX, start: X_MIN, end: X_MAX }}
         />
-        <sc-webgl-context />
+        <iot-app-kit-vis-webgl-context />
       </div>
     );
   }

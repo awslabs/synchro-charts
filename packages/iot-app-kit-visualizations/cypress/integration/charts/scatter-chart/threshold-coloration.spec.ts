@@ -1,4 +1,4 @@
-const scRoot = '/tests/sc-scatter-chart';
+const scRoot = '/tests/scatter-chart';
 
 // @ts-ignore
 const VIEWPORT_HEIGHT = 500;

@@ -14,7 +14,7 @@ export const describeLegend = (newChartSpecPage: ChartSpecPage) => {
         },
       });
 
-      const legend = chart.querySelector('sc-legend');
+      const legend = chart.querySelector('iot-app-kit-vis-legend');
       expect(legend).toBeDefined();
     });
 
@@ -27,7 +27,7 @@ export const describeLegend = (newChartSpecPage: ChartSpecPage) => {
         isEditing: true,
       });
 
-      const legend = chart.querySelector('sc-legend');
+      const legend = chart.querySelector('iot-app-kit-vis-legend');
       expect(legend).toHaveAttribute('isEditing');
     });
 
@@ -40,7 +40,7 @@ export const describeLegend = (newChartSpecPage: ChartSpecPage) => {
         viewport: VIEWPORT,
       });
 
-      const legend = chart.querySelector('sc-legend') as HTMLScLegendElement;
+      const legend = chart.querySelector('iot-app-kit-vis-legend') as HTMLIotAppKitVisLegendElement;
 
       expect(legend.viewport).toMatchObject({ start: VIEWPORT.start, end: VIEWPORT.end });
     });
@@ -70,7 +70,7 @@ export const describeLegend = (newChartSpecPage: ChartSpecPage) => {
         },
       });
 
-      const legend = chart.querySelector('sc-legend') as HTMLScLegendElement;
+      const legend = chart.querySelector('iot-app-kit-vis-legend') as HTMLIotAppKitVisLegendElement;
 
       expect(legend.thresholds).toEqual(THRESHOLDS);
     });

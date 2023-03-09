@@ -14,7 +14,7 @@ const X_MAX = new Date(2000, 0, 0, 0, 10);
  */
 
 @Component({
-  tag: 'sc-webgl-bar-chart-start-from-zero',
+  tag: 'iot-app-kit-vis-webgl-bar-chart-start-from-zero',
 })
 export class ScWebglBarChartStartFromZero {
   @State() testData: DataPoint<number>[] = [
@@ -42,7 +42,7 @@ export class ScWebglBarChartStartFromZero {
         <br />
         <br />
         <div id="chart-container" style={{ width: '500px', height: '500px' }}>
-          <sc-bar-chart
+          <iot-app-kit-vis-bar-chart
             dataStreams={[
               {
                 id: 'test',
@@ -64,7 +64,7 @@ export class ScWebglBarChartStartFromZero {
             }}
             viewport={{ start: X_MIN, end: X_MAX }}
           />
-          <sc-webgl-context />
+          <iot-app-kit-vis-webgl-context />
         </div>
       </div>
     );

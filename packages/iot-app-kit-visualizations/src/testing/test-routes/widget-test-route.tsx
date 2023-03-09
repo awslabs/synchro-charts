@@ -92,7 +92,7 @@ export class WidgetTestRoute {
           invalidTagErrorSubheader="invalidComponentTag.subheader"
           liveModeOnly="invalidWidgetForHistoricalData.content"
         />
-        <sc-webgl-context />
+        <iot-app-kit-vis-webgl-context />
       </div>
     );
   }

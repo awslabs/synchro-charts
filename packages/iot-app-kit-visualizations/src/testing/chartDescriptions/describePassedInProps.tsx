@@ -11,7 +11,9 @@ export const describePassedInProps = (newChartSpecPage: ChartSpecPage, disableLi
       it('passes down', async () => {
         const alarms = { expires: HOUR_IN_MS };
         const { chart } = await newChartSpecPage({ alarms });
-        const baseChart = chart.querySelector('sc-webgl-base-chart') as HTMLScWebglBaseChartElement;
+        const baseChart = chart.querySelector(
+          'iot-app-kit-vis-webgl-base-chart'
+        ) as HTMLIotAppKitVisWebglBaseChartElement;
 
         expect(baseChart.alarms).toBe(alarms);
       });
@@ -21,7 +23,9 @@ export const describePassedInProps = (newChartSpecPage: ChartSpecPage, disableLi
       it('passes down', async () => {
         const messageOverrides = { noDataStreamsPresentHeader: 'an over ride message' };
         const { chart } = await newChartSpecPage({ messageOverrides });
-        const baseChart = chart.querySelector('sc-webgl-base-chart') as HTMLScWebglBaseChartElement;
+        const baseChart = chart.querySelector(
+          'iot-app-kit-vis-webgl-base-chart'
+        ) as HTMLIotAppKitVisWebglBaseChartElement;
 
         expect(baseChart.messageOverrides).toBe(messageOverrides);
       });
@@ -30,14 +34,18 @@ export const describePassedInProps = (newChartSpecPage: ChartSpecPage, disableLi
     describe('gestures', () => {
       it('passes gestures down as true', async () => {
         const { chart } = await newChartSpecPage({ gestures: true });
-        const baseChart = chart.querySelector('sc-webgl-base-chart') as HTMLScWebglBaseChartElement;
+        const baseChart = chart.querySelector(
+          'iot-app-kit-vis-webgl-base-chart'
+        ) as HTMLIotAppKitVisWebglBaseChartElement;
 
         expect(baseChart.gestures).toBeTrue();
       });
 
       it('passes gestures down as false', async () => {
         const { chart } = await newChartSpecPage({ gestures: false });
-        const baseChart = chart.querySelector('sc-webgl-base-chart') as HTMLScWebglBaseChartElement;
+        const baseChart = chart.querySelector(
+          'iot-app-kit-vis-webgl-base-chart'
+        ) as HTMLIotAppKitVisWebglBaseChartElement;
 
         expect(baseChart.gestures).toBeFalse();
       });
@@ -46,7 +54,9 @@ export const describePassedInProps = (newChartSpecPage: ChartSpecPage, disableLi
     describe('supports strings', () => {
       it('sets the provided option supportsStrings', async () => {
         const { chart } = await newChartSpecPage({});
-        const baseChart = chart.querySelector('sc-webgl-base-chart') as HTMLScWebglBaseChartElement;
+        const baseChart = chart.querySelector(
+          'iot-app-kit-vis-webgl-base-chart'
+        ) as HTMLIotAppKitVisWebglBaseChartElement;
 
         expect(baseChart.supportString).toBeDefined();
       });
@@ -61,7 +71,9 @@ export const describePassedInProps = (newChartSpecPage: ChartSpecPage, disableLi
           };
 
           const { chart } = await newChartSpecPage({ viewport: VIEWPORT });
-          const baseChart = chart.querySelector('sc-webgl-base-chart') as HTMLScWebglBaseChartElement;
+          const baseChart = chart.querySelector(
+            'iot-app-kit-vis-webgl-base-chart'
+          ) as HTMLIotAppKitVisWebglBaseChartElement;
 
           /** Start and end date is equal to what was provided */
           expect(baseChart.viewport).toEqual(expect.objectContaining(VIEWPORT));
@@ -82,7 +94,9 @@ export const describePassedInProps = (newChartSpecPage: ChartSpecPage, disableLi
           };
 
           const { chart } = await newChartSpecPage({ legend: LEGEND });
-          const baseChart = chart.querySelector('sc-webgl-base-chart') as HTMLScWebglBaseChartElement;
+          const baseChart = chart.querySelector(
+            'iot-app-kit-vis-webgl-base-chart'
+          ) as HTMLIotAppKitVisWebglBaseChartElement;
 
           expect(baseChart.legend).toEqual(LEGEND);
         });
@@ -100,7 +114,9 @@ export const describePassedInProps = (newChartSpecPage: ChartSpecPage, disableLi
           ];
 
           const { chart } = await newChartSpecPage({ trends: TRENDS });
-          const baseChart = chart.querySelector('sc-webgl-base-chart') as HTMLScWebglBaseChartElement;
+          const baseChart = chart.querySelector(
+            'iot-app-kit-vis-webgl-base-chart'
+          ) as HTMLIotAppKitVisWebglBaseChartElement;
 
           expect(baseChart.trends).toEqual(TRENDS);
         });
@@ -120,7 +136,9 @@ export const describePassedInProps = (newChartSpecPage: ChartSpecPage, disableLi
           };
 
           const { chart } = await newChartSpecPage({ annotations: ANNOTATIONS });
-          const baseChart = chart.querySelector('sc-webgl-base-chart') as HTMLScWebglBaseChartElement;
+          const baseChart = chart.querySelector(
+            'iot-app-kit-vis-webgl-base-chart'
+          ) as HTMLIotAppKitVisWebglBaseChartElement;
 
           expect(baseChart.annotations).toEqual(ANNOTATIONS);
         });
@@ -135,7 +153,9 @@ export const describePassedInProps = (newChartSpecPage: ChartSpecPage, disableLi
         };
 
         const { chart } = await newChartSpecPage({ axis: AXIS });
-        const baseChart = chart.querySelector('sc-webgl-base-chart') as HTMLScWebglBaseChartElement;
+        const baseChart = chart.querySelector(
+          'iot-app-kit-vis-webgl-base-chart'
+        ) as HTMLIotAppKitVisWebglBaseChartElement;
 
         expect(baseChart.axis).toEqual(AXIS);
       });

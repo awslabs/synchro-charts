@@ -15,7 +15,7 @@ it('moves viewport when gestures are applied', () => {
   const OLD_X_AXIS_TICK = 'Fri 31';
 
   visitDynamicWidget(cy, {
-    componentTag: 'sc-bar-chart',
+    componentTag: 'iot-app-kit-vis-bar-chart',
     viewportStart: START,
     viewportEnd: END,
     gestures: true,
@@ -40,7 +40,7 @@ it('does not move viewport when gestures are not applied', () => {
   const OLD_X_AXIS_TICK = 'Fri 31';
 
   visitDynamicWidget(cy, {
-    componentTag: 'sc-bar-chart',
+    componentTag: 'iot-app-kit-vis-bar-chart',
     viewportStart: START,
     viewportEnd: END,
     gestures: false,
@@ -59,7 +59,7 @@ it('does not move viewport when gestures are not applied', () => {
 
 it('adjusts y range as data in the view changes', () => {
   cy.viewport(VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
-  cy.visit(`${root}/chart/y-range?componentTag=sc-bar-chart`);
+  cy.visit(`${root}/chart/y-range?componentTag=iot-app-kit-vis-bar-chart`);
 
   const EXISTING_Y_VALUE = '18k';
 

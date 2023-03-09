@@ -18,7 +18,7 @@ export class LineChartUnsupportedDataTypes {
     return (
       <div class="synchro-chart-tests">
         <div id="chart-container" style={{ marginTop: '20px', width: '500px', height: '500px' }}>
-          <sc-line-chart
+          <iot-app-kit-vis-line-chart
             widgetId="widget-id"
             dataStreams={[
               {
@@ -47,7 +47,7 @@ export class LineChartUnsupportedDataTypes {
             bufferFactor={1}
             minBufferSize={1}
           />
-          <sc-webgl-context />
+          <iot-app-kit-vis-webgl-context />
         </div>
       </div>
     );

@@ -17,7 +17,7 @@ import {
 
 it('renders no tooltip when only info is empty', () => {
   visitDynamicWidget(cy, {
-    componentTag: 'sc-bar-chart',
+    componentTag: 'iot-app-kit-vis-bar-chart',
     viewportStart: new Date(START_DATE.getTime() - MINUTE_IN_MS),
     viewportEnd: new Date(START_DATE.getTime() + 10 * MINUTE_IN_MS),
     dataStreams: [{ ...NUMBER_EMPTY_STREAM, resolution: SECOND_IN_MS }],
@@ -37,7 +37,7 @@ it('renders no tooltip when only info is empty', () => {
 
 it('renders no tooltip when there is no data for the requested resolution', () => {
   visitDynamicWidget(cy, {
-    componentTag: 'sc-bar-chart',
+    componentTag: 'iot-app-kit-vis-bar-chart',
     viewportStart: new Date(START_DATE.getTime() - MINUTE_IN_MS),
     viewportEnd: new Date(START_DATE.getTime() + 10 * MINUTE_IN_MS),
     dataStreams: [{ ...NUMBER_STREAM_1, resolution: SECOND_IN_MS }],
@@ -58,7 +58,7 @@ it('renders no tooltip when there is no data for the requested resolution', () =
 it('renders tooltip rows in order of values magnitude', () => {
   const resolution = MINUTE_IN_MS;
   visitDynamicWidget(cy, {
-    componentTag: 'sc-bar-chart',
+    componentTag: 'iot-app-kit-vis-bar-chart',
     viewportStart: new Date(START_DATE.getTime() - MINUTE_IN_MS),
     viewportEnd: new Date(START_DATE.getTime() + 10 * MINUTE_IN_MS),
     dataStreams: [
@@ -102,7 +102,7 @@ it('renders tooltip rows in order of values magnitude', () => {
 
 it('renders tooltip to the left of the mouse when the mouse is on the right side', () => {
   visitDynamicWidget(cy, {
-    componentTag: 'sc-bar-chart',
+    componentTag: 'iot-app-kit-vis-bar-chart',
     viewportStart: new Date(new Date(2000, 0, 0).getTime() - MINUTE_IN_MS),
     viewportEnd: new Date(2000, 0, 0, 0, 5),
     dataStreams: [NUMBER_STREAM_1],

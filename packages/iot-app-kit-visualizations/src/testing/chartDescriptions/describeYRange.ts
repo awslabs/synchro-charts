@@ -7,7 +7,9 @@ export const describeYRange = (newChartSpecPage: ChartSpecPage) => {
     it('sets the provided viewport', async () => {
       const { chart } = await newChartSpecPage({ viewport: VIEWPORT });
 
-      const baseChart = chart.querySelector('sc-webgl-base-chart') as HTMLScWebglBaseChartElement;
+      const baseChart = chart.querySelector(
+        'iot-app-kit-vis-webgl-base-chart'
+      ) as HTMLIotAppKitVisWebglBaseChartElement;
 
       expect(baseChart.viewport.yMin).toBe(VIEWPORT.yMin);
       expect(baseChart.viewport.yMax).toBe(VIEWPORT.yMax);
@@ -31,7 +33,9 @@ export const describeYRange = (newChartSpecPage: ChartSpecPage) => {
         },
       });
 
-      const baseChart = chart.querySelector('sc-webgl-base-chart') as HTMLScWebglBaseChartElement;
+      const baseChart = chart.querySelector(
+        'iot-app-kit-vis-webgl-base-chart'
+      ) as HTMLIotAppKitVisWebglBaseChartElement;
 
       expect(baseChart.viewport.yMin).toBeLessThanOrEqual(SMALL_Y);
       expect(baseChart.viewport.yMax).toBeGreaterThanOrEqual(LARGE_Y);
@@ -51,7 +55,9 @@ export const describeYRange = (newChartSpecPage: ChartSpecPage) => {
         },
       });
 
-      const baseChart = chart.querySelector('sc-webgl-base-chart') as HTMLScWebglBaseChartElement;
+      const baseChart = chart.querySelector(
+        'iot-app-kit-vis-webgl-base-chart'
+      ) as HTMLIotAppKitVisWebglBaseChartElement;
 
       expect(baseChart.viewport.yMin).toBe(VIEWPORT.yMin);
       expect(baseChart.viewport.yMax).toBe(VIEWPORT.yMax);

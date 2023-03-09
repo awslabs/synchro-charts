@@ -11,12 +11,12 @@ import { DATA_ALIGNMENT, LEGEND_POSITION } from '../common/constants';
 import { StreamType } from '../../../utils/dataConstants';
 import { Components } from '../../../components.d';
 
-import ScLegendRow = Components.ScLegendRow;
+import ScLegendRow = Components.IotAppKitVisLegendRow;
 
 const noop = () => {};
 
 @Component({
-  tag: 'sc-legend',
+  tag: 'iot-app-kit-vis-legend',
   styleUrl: './sc-legend.css',
   shadow: false,
 })
@@ -85,7 +85,7 @@ export class ScLegend {
           const { color: valueColor = undefined, icon = undefined } =
             this.breachedThresholdColor(point, dataStream) || {};
           return [
-            <sc-legend-row
+            <iot-app-kit-vis-legend-row
               streamId={dataStream.id}
               label={dataStream.name}
               detailedLabel={dataStream.detailedName}
@@ -103,7 +103,7 @@ export class ScLegend {
             ...this.trendResults.reduce((rows: ScLegendRow[], trendResult: TrendResult) => {
               if (trendResult.dataStreamId === dataStream.id) {
                 rows.push(
-                  <sc-legend-row
+                  <iot-app-kit-vis-legend-row
                     streamId={dataStream.id}
                     label={getTrendLabel(dataStream.name, trendResult.type)}
                     detailedLabel={dataStream.detailedName && getTrendLabel(dataStream.detailedName, trendResult.type)}
