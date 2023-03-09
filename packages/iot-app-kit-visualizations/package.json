@@ -1,7 +1,7 @@
 {
   "name": "@iot-app-kit-visualizations/core",
   "description": "IoT App Kit Visualizations",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "publishConfig": {
     "access": "public"
   },
