@@ -1,11 +1,11 @@
-sc-error-badge div {
+iot-app-kit-vis-error-badge div {
   display: flex;
   padding-left: 1.4286em;
   line-height: 1.4286em;
   color: var(--error-badge-font-color, #6a7070);
 }
 
-sc-error-badge .warning-symbol {
+iot-app-kit-vis-error-badge .warning-symbol {
   font-size: 2rem;
   padding-right: var(--margin-small);
   font-weight: bold;

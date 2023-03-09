@@ -21,7 +21,7 @@ import { ScChartIcon } from '../../components/charts/chart-icon/sc-chart-icon';
 
 const VIEWPORT = { start: new Date(2000), end: new Date(2001, 0, 0), yMin: 0, yMax: 100 };
 
-export type ChartProps = Components.ScLineChart;
+export type ChartProps = Components.IotAppKitVisLineChart;
 
 export type ChartSpecPage = (props: Partial<ChartProps>) => Promise<{ page: SpecPage; chart: HTMLElement }>;
 

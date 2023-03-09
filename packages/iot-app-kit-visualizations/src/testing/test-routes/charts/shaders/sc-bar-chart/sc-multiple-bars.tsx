@@ -31,7 +31,7 @@ const TEST_DATA_POINT_2: DataPoint<number> = {
  */
 
 @Component({
-  tag: 'sc-multiple-bars',
+  tag: 'iot-app-kit-vis-multiple-bars',
 })
 export class ScMultipleBars {
   @Element() el!: HTMLElement;
@@ -85,9 +85,9 @@ export class ScMultipleBars {
 
   render() {
     return (
-      <sc-webgl-context>
+      <iot-app-kit-vis-webgl-context>
         <div id="test-container" style={{ width: `${CHART_SIZE.width}px`, height: `${CHART_SIZE.height}px` }} />
-      </sc-webgl-context>
+      </iot-app-kit-vis-webgl-context>
     );
   }
 }

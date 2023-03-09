@@ -46,7 +46,7 @@ export type LineChartLineMesh = InstancedMesh & { geometry: LineBufferGeometry; 
  * The representation of the lines between points on a chart.
  */
 
-// Ensure that the line width is equal to the existing <sc-line-chart />'s line thickness
+// Ensure that the line width is equal to the existing <iot-app-kit-vis-line-chart />'s line thickness
 const LINE_WIDTH = STROKE_WIDTH;
 export const LINE_MESH_INDEX = 1;
 

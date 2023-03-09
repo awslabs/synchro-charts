@@ -12,17 +12,22 @@ import { ScBox } from '../../testing/testing-ground/sc-box/sc-box';
 import { SECOND_IN_MS } from '../../utils/time';
 import { wait } from '../../testing/wait';
 
-const newWidgetSizerSpecPage = async (containerSize: Size, overrides: Partial<Components.ScSizeProvider> = {}) => {
+const newWidgetSizerSpecPage = async (
+  containerSize: Size,
+  overrides: Partial<Components.IotAppKitVisSizeProvider> = {}
+) => {
   const { width, height } = containerSize;
   const page = await newSpecPage({
     components: [ScSizeProvider, ScBox],
     html: `<div id="container" style="width: ${width}px; height: ${height}px"></div>`,
     supportsShadowDom: false,
   });
-  const widgetSizer = page.doc.createElement('sc-size-provider') as CustomHTMLElement<Components.ScSizeProvider>;
+  const widgetSizer = page.doc.createElement('iot-app-kit-vis-size-provider') as CustomHTMLElement<
+    Components.IotAppKitVisSizeProvider
+  >;
 
-  const defaultProps: Components.ScSizeProvider = {
-    renderFunc: jest.fn((size: Size) => <sc-box size={size} />),
+  const defaultProps: Components.IotAppKitVisSizeProvider = {
+    renderFunc: jest.fn((size: Size) => <iot-app-kit-vis-box size={size} />),
   };
   update(widgetSizer, { ...defaultProps, ...overrides });
 

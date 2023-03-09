@@ -23,13 +23,13 @@ const TEST_DATA_POINT_2: DataPoint<number> = {
 };
 
 @Component({
-  tag: 'sc-webgl-chart-threshold-coloration-exact-point',
+  tag: 'iot-app-kit-vis-webgl-chart-threshold-coloration-exact-point',
 })
 export class ScWebglChartThresholdColorationExactPoint {
   render() {
     return (
       <div>
-        <sc-line-chart
+        <iot-app-kit-vis-line-chart
           widgetId="widget-id"
           dataStreams={[
             {
@@ -64,7 +64,7 @@ export class ScWebglChartThresholdColorationExactPoint {
           }}
           viewport={{ start: X_MIN, end: X_MAX, yMin: Y_MIN, yMax: Y_MAX }}
         />
-        <sc-webgl-context />
+        <iot-app-kit-vis-webgl-context />
       </div>
     );
   }

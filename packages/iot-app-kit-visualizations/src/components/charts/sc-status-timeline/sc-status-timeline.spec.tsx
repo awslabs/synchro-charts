@@ -8,7 +8,7 @@ import 'webgl-mock-threejs';
 import { newChartSpecPage } from '../../../testing/chartDescriptions/newChartSpecPage';
 import { describeChart } from '../../../testing/chartDescriptions/describeChart';
 
-const statusTimeline = newChartSpecPage('sc-status-timeline');
+const statusTimeline = newChartSpecPage('iot-app-kit-vis-status-timeline');
 
 describe('status-timeline', () => {
   describeChart(statusTimeline, {
@@ -33,7 +33,7 @@ describe('annotations', () => {
     };
 
     const { chart } = await statusTimeline({ annotations: ANNOTATIONS });
-    const baseChart = chart.querySelector('sc-webgl-base-chart') as HTMLScWebglBaseChartElement;
+    const baseChart = chart.querySelector('iot-app-kit-vis-webgl-base-chart') as HTMLIotAppKitVisWebglBaseChartElement;
 
     expect(baseChart.annotations).toMatchObject({
       ...ANNOTATIONS,

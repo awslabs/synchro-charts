@@ -33,13 +33,13 @@ const TEST_2_DATA_POINT_2: DataPoint<number> = {
 };
 
 @Component({
-  tag: 'sc-scatter-chart-threshold-coloration-multiple-data-stream',
+  tag: 'iot-app-kit-vis-scatter-chart-threshold-coloration-multiple-data-stream',
 })
 export class ScScatterChartThresholdColorationMultipleDataStream {
   render() {
     return (
       <div>
-        <sc-scatter-chart
+        <iot-app-kit-vis-scatter-chart
           widgetId="widget-id"
           dataStreams={[
             {
@@ -83,7 +83,7 @@ export class ScScatterChartThresholdColorationMultipleDataStream {
           }}
           viewport={{ start: X_MIN, end: X_MAX, yMin: Y_MIN, yMax: Y_MAX }}
         />
-        <sc-webgl-context />
+        <iot-app-kit-vis-webgl-context />
       </div>
     );
   }

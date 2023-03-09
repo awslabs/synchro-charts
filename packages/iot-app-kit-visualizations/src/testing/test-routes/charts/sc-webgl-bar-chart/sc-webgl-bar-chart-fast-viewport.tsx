@@ -23,7 +23,7 @@ const TEST_DATA_POINTS: DataPoint<number>[] = Array.from({ length: 50 }, (_, ind
  */
 
 @Component({
-  tag: 'sc-webgl-bar-chart-fast-viewport',
+  tag: 'iot-app-kit-vis-webgl-bar-chart-fast-viewport',
 })
 export class ScWebglBarChartFastViewport {
   @State() dataStreams: DataStream<number>[] = [];
@@ -56,7 +56,7 @@ export class ScWebglBarChartFastViewport {
         <br />
         <br />
         <div id="chart-container" style={{ border: '1px solid lightgray', height: '500px', width: '500px' }}>
-          <sc-bar-chart
+          <iot-app-kit-vis-bar-chart
             dataStreams={[
               {
                 id: 'test',
@@ -83,7 +83,7 @@ export class ScWebglBarChartFastViewport {
               end: this.end,
             }}
           />
-          <sc-webgl-context />
+          <iot-app-kit-vis-webgl-context />
         </div>
       </div>
     );

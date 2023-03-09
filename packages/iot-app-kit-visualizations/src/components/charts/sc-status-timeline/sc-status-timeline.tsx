@@ -49,7 +49,7 @@ const TOP_TOOLTIP_MARGIN_PX = 4;
 const tooltip = (alarms?: AlarmsConfig) => (props: Tooltip.Props) => {
   const { size } = props;
   return (
-    <sc-tooltip
+    <iot-app-kit-vis-tooltip
       {...props}
       dataAlignment={DATA_ALIGNMENT.LEFT}
       top={-size.height + STATUS_MARGIN_TOP_PX + TOP_TOOLTIP_MARGIN_PX}
@@ -70,7 +70,7 @@ const getComponentViewport = (viewport: MinimalViewPortConfig): MinimalViewPortC
 });
 
 @Component({
-  tag: 'sc-status-timeline',
+  tag: 'iot-app-kit-vis-status-timeline',
   styleUrl: './sc-status-timeline.css',
   shadow: false,
 })
@@ -120,7 +120,7 @@ export class ScStatusTimeline implements ChartConfig {
 
   render() {
     return (
-      <sc-size-provider
+      <iot-app-kit-vis-size-provider
         size={this.size}
         renderFunc={(size: RectScrollFixed) => {
           const totalSize = {
@@ -138,7 +138,7 @@ export class ScStatusTimeline implements ChartConfig {
 
           return [
             <div class="status-timeline" style={{ height: `${chartSize.height}px` }}>
-              <sc-webgl-base-chart
+              <iot-app-kit-vis-webgl-base-chart
                 axis={{
                   ...this.axis,
                   showY: false,
@@ -169,7 +169,7 @@ export class ScStatusTimeline implements ChartConfig {
                 displaysNoDataPresentMsg={false}
                 messageOverrides={this.messageOverrides}
               />
-              <sc-status-timeline-overlay
+              <iot-app-kit-vis-status-timeline-overlay
                 isEditing={this.isEditing}
                 thresholds={this.thresholds()}
                 date={isMinimalStaticViewport(this.viewport) ? new Date(this.viewport.end) : new Date()}
@@ -179,7 +179,7 @@ export class ScStatusTimeline implements ChartConfig {
               />
             </div>,
             <div class="threshold-legend-container" style={{ maxHeight: `${THRESHOLD_LEGEND_HEIGHT_PX}px` }}>
-              <sc-threshold-legend thresholds={this.thresholds()} />
+              <iot-app-kit-vis-threshold-legend thresholds={this.thresholds()} />
             </div>,
           ];
         }}

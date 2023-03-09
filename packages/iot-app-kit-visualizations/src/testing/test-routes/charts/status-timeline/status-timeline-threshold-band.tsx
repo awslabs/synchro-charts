@@ -30,7 +30,7 @@ export class StatusTimelineThresholdBand {
   render() {
     return (
       <div>
-        <sc-status-timeline
+        <iot-app-kit-vis-status-timeline
           alarms={{ expires: MINUTE_IN_MS }}
           dataStreams={[
             {
@@ -68,7 +68,7 @@ export class StatusTimelineThresholdBand {
           }}
           viewport={{ yMin: Y_MIN, yMax: Y_MAX, start: X_MIN, end: X_MAX }}
         />
-        <sc-webgl-context />
+        <iot-app-kit-vis-webgl-context />
       </div>
     );
   }

@@ -33,7 +33,7 @@ export class StatusTimelineDynamicBuffer {
           Add Data Point
         </button>
         <div id="chart-container" style={{ height: '500px', width: '500px', marginTop: '20px' }}>
-          <sc-status-timeline
+          <iot-app-kit-vis-status-timeline
             widgetId="widget-id"
             alarms={{ expires: MONTH_IN_MS }}
             dataStreams={[
@@ -57,7 +57,7 @@ export class StatusTimelineDynamicBuffer {
             bufferFactor={1}
             minBufferSize={1}
           />
-          <sc-webgl-context />
+          <iot-app-kit-vis-webgl-context />
         </div>
       </div>
     );

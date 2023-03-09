@@ -62,7 +62,7 @@ const LEGEND_HEIGHT = 100;
 const DEFAULT_SHOW_DATA_STREAM_COLOR = true;
 
 @Component({
-  tag: 'sc-webgl-base-chart',
+  tag: 'iot-app-kit-vis-webgl-base-chart',
   styleUrl: './sc-webgl-base-chart.css',
   shadow: false,
 })
@@ -88,7 +88,7 @@ export class ScWebglBaseChart {
   @Prop() bufferFactor!: number;
   @Prop() minBufferSize!: number;
   @Prop() legend: LegendConfig;
-  @Prop() renderLegend: (props: Legend.Props) => HTMLElement = props => <sc-legend {...props} />;
+  @Prop() renderLegend: (props: Legend.Props) => HTMLElement = props => <iot-app-kit-vis-legend {...props} />;
   @Prop() annotations: Annotations = {};
   @Prop() trends: Trend[] = [];
   @Prop() supportString: boolean;
@@ -178,7 +178,7 @@ export class ScWebglBaseChart {
 
   getAxisContainer = (): SVGElement => {
     if (!this.axisContainer) {
-      // Grab the svg within `<sc-webgl-axis />` component
+      // Grab the svg within `<iot-app-kit-vis-webgl-axis />` component
       this.axisContainer = this.el.querySelector('svg.axis') as SVGElement;
     }
 
@@ -892,7 +892,7 @@ export class ScWebglBaseChart {
     return [
       <div class="awsui sc-webgl-base-chart">
         {this.displaysError && <ErrorStatus hasError={hasError} size={chartSizeConfig} />}
-        <sc-webgl-axis size={chartSizeConfig} />
+        <iot-app-kit-vis-webgl-axis size={chartSizeConfig} />
         <DataContainer size={chartSizeConfig}>
           <EmptyStatus
             displaysNoDataPresentMsg={this.displaysNoDataPresentMsg != null ? this.displaysNoDataPresentMsg : true}
@@ -903,7 +903,7 @@ export class ScWebglBaseChart {
           />
           <LoadingStatus isLoading={shouldDisplayAsLoading} />
           {this.gestures && (
-            <sc-gesture-handler
+            <iot-app-kit-vis-gesture-handler
               onDateRangeChange={this.handleCameraEvent}
               size={chartSizeConfig}
               viewport={this.activeViewPort()}

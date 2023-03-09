@@ -16,13 +16,13 @@ const TEST_DATA_POINT: DataPoint<number> = {
 };
 
 @Component({
-  tag: 'sc-webgl-chart-standard-with-legend',
+  tag: 'iot-app-kit-vis-webgl-chart-standard-with-legend',
 })
 export class ScWebglChartStandardWithLegend {
   render() {
     return (
       <div>
-        <sc-line-chart
+        <iot-app-kit-vis-line-chart
           widgetId="widget-id"
           dataStreams={[
             {
@@ -44,7 +44,7 @@ export class ScWebglChartStandardWithLegend {
             width: 300,
           }}
         />
-        <sc-webgl-context />
+        <iot-app-kit-vis-webgl-context />
       </div>
     );
   }

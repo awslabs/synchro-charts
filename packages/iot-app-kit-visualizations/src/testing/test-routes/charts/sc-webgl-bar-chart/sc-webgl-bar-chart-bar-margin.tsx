@@ -50,7 +50,7 @@ const DATA_STREAM_2: DataStream = {
 };
 
 @Component({
-  tag: 'sc-webgl-bar-chart-margin',
+  tag: 'iot-app-kit-vis-webgl-bar-chart-margin',
 })
 export class ScWebglBarChartDynamicBuffer {
   @State() data: DataPoint<number>[] = [];
@@ -58,14 +58,14 @@ export class ScWebglBarChartDynamicBuffer {
   render() {
     return (
       <div id="chart-container" style={{ height: '500px', width: '500px', marginTop: '20px' }}>
-        <sc-bar-chart
+        <iot-app-kit-vis-bar-chart
           widgetId="widget-id"
           dataStreams={[DATA_STREAM_1, DATA_STREAM_2]}
           viewport={{ yMin: Y_MIN, yMax: Y_MAX, start: X_MIN, end: X_MAX }}
           bufferFactor={1}
           minBufferSize={1}
         />
-        <sc-webgl-context />
+        <iot-app-kit-vis-webgl-context />
       </div>
     );
   }

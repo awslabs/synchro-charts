@@ -15,6 +15,6 @@ export const LoadingStatus = ({ isLoading }: { isLoading: boolean }) => (
       pointerEvents: 'none',
     }}
   >
-    {isLoading && <sc-loading-spinner size={LOADING_SPINNER_SIZE_PX} />}
+    {isLoading && <iot-app-kit-vis-loading-spinner size={LOADING_SPINNER_SIZE_PX} />}
   </div>
 );

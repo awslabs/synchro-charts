@@ -24,7 +24,7 @@ const label = (threshold: Threshold): string => {
 const key = ({ value, comparisonOperator, color }: Threshold): string => `${value}-${comparisonOperator}-${color}`;
 
 @Component({
-  tag: 'sc-threshold-legend',
+  tag: 'iot-app-kit-vis-threshold-legend',
   styleUrl: 'sc-threshold-legend.css',
   shadow: false,
 })
@@ -39,7 +39,7 @@ export class ScThresholdLegend {
 
   render() {
     return this.uniqueThresholds().map(threshold => (
-      <sc-threshold-legend-row key={key(threshold)} color={threshold.color} label={label(threshold)} />
+      <iot-app-kit-vis-threshold-legend-row key={key(threshold)} color={threshold.color} label={label(threshold)} />
     ));
   }
 }

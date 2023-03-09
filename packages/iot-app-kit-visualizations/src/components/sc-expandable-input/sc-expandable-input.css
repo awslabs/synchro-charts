@@ -1,4 +1,4 @@
-sc-expandable-input .sc-expandable-input {
+iot-app-kit-vis-expandable-input .sc-expandable-input {
   display: inline-block;
   background: none;
   color: inherit;
@@ -10,7 +10,7 @@ sc-expandable-input .sc-expandable-input {
   border-bottom: var(--border-width) solid var(--polaris-gray-400);
 }
 
-sc-expandable-input .sc-expandable-input.disabled {
+iot-app-kit-vis-expandable-input .sc-expandable-input.disabled {
   outline: none;
   border-bottom-color: rgba(0, 0, 0, 0);
 }

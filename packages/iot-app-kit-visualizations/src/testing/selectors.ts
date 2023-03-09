@@ -13,16 +13,16 @@ import { DataStreamId } from '../utils/dataTypes';
 
 // NOTE: the values of the selectors will change over time.
 export const ERROR_SYMBOL_SELECTOR = '[data-test-tag="error"]';
-export const LOADING_SPINNER_SELECTOR = 'sc-loading-spinner';
-export const CHART_VIZ_CONTAINER_SELECTOR = 'sc-webgl-base-chart .data-container';
-export const DATA_TYPE_ERROR_CONTAINER_SELECTOR = 'sc-webgl-base-chart .unsupported-data-type-status';
-export const CHART_TOOLTIP_SELECTOR = 'sc-webgl-base-chart .tooltip-container';
-export const CHART_TOOLTIP_ROW_SELECTOR = 'sc-tooltip-row';
-export const LEGEND_SELECTOR = 'sc-legend';
+export const LOADING_SPINNER_SELECTOR = 'iot-app-kit-vis-loading-spinner';
+export const CHART_VIZ_CONTAINER_SELECTOR = 'iot-app-kit-vis-webgl-base-chart .data-container';
+export const DATA_TYPE_ERROR_CONTAINER_SELECTOR = 'iot-app-kit-vis-webgl-base-chart .unsupported-data-type-status';
+export const CHART_TOOLTIP_SELECTOR = 'iot-app-kit-vis-webgl-base-chart .tooltip-container';
+export const CHART_TOOLTIP_ROW_SELECTOR = 'iot-app-kit-vis-tooltip-row';
+export const LEGEND_SELECTOR = 'iot-app-kit-vis-legend';
 
 // corresponds to the 'no data visualization', and the 'data stream name and value' panel directly above it.
-export const STATUS_TIMELINE_OVERLAY_SELECTOR = 'sc-status-timeline-overlay';
-export const STATUS_TIMELINE_OVERLAY_ROW_SELECTOR = 'sc-status-timeline-overlay-row';
+export const STATUS_TIMELINE_OVERLAY_SELECTOR = 'iot-app-kit-vis-status-timeline-overlay';
+export const STATUS_TIMELINE_OVERLAY_ROW_SELECTOR = 'iot-app-kit-vis-status-timeline-overlay-row';
 export const NO_VALUE_PRESENT_SELECTOR = '[data-testid="no-value-present"]';
 
 // Helps prevent DOM shift issues due to `size-provider`

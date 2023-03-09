@@ -12,13 +12,13 @@ import { DataType } from '../../../../utils/dataConstants';
  */
 
 @Component({
-  tag: 'sc-webgl-bar-chart-standard',
+  tag: 'iot-app-kit-vis-webgl-bar-chart-standard',
 })
 export class ScWebglBarChartStandard {
   render() {
     return (
       <div>
-        <sc-bar-chart
+        <iot-app-kit-vis-bar-chart
           dataStreams={[
             {
               id: 'test',
@@ -40,7 +40,7 @@ export class ScWebglBarChartStandard {
           }}
           viewport={{ yMin: Y_MIN, yMax: Y_MAX, start: X_MIN, end: X_MAX }}
         />
-        <sc-webgl-context />
+        <iot-app-kit-vis-webgl-context />
       </div>
     );
   }

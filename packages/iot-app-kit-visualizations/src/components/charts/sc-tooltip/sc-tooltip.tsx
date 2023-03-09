@@ -9,7 +9,7 @@ import { DATA_ALIGNMENT } from '../common/constants';
  * The parent tooltip container, listens for events to ensure tooltip renders at the correct position at the correct time.
  */
 @Component({
-  tag: 'sc-tooltip',
+  tag: 'iot-app-kit-vis-tooltip',
   styleUrl: 'sc-tooltip.css',
   shadow: false,
 })
@@ -84,7 +84,7 @@ export class ScTooltip {
     }
 
     return (
-      <sc-tooltip-rows
+      <iot-app-kit-vis-tooltip-rows
         trendResults={this.trendResults}
         size={this.size}
         dataStreams={this.dataStreams}

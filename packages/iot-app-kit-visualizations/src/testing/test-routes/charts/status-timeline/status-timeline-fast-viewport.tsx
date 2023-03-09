@@ -52,7 +52,7 @@ export class StatusTimelineFastViewport {
         <br />
         <br />
         <div id="chart-container" style={{ border: '1px solid lightgray', height: '500px', width: '500px' }}>
-          <sc-status-timeline
+          <iot-app-kit-vis-status-timeline
             alarms={{ expires: HOUR_IN_MS }}
             dataStreams={[
               {
@@ -78,7 +78,7 @@ export class StatusTimelineFastViewport {
               end: this.end,
             }}
           />
-          <sc-webgl-context />
+          <iot-app-kit-vis-webgl-context />
         </div>
       </div>
     );

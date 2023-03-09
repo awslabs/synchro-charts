@@ -1,4 +1,4 @@
-sc-threshold-legend {
+iot-app-kit-vis-threshold-legend {
   display: flex;
   flex-wrap: wrap;
   overflow-y: scroll;
@@ -8,11 +8,11 @@ sc-threshold-legend {
   line-height: 22px;
 }
 
-sc-threshold-legend-row {
+iot-app-kit-vis-threshold-legend-row {
   padding: 0.1em 1em;
 }
 
-sc-threshold-legend-row .box {
+iot-app-kit-vis-threshold-legend-row .box {
   display: inline-block;
   border-radius: 2px;
   margin-right: 8px;

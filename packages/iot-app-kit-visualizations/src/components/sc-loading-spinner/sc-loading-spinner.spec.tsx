@@ -5,13 +5,15 @@ import { CustomHTMLElement } from '../../utils/types';
 import { Components } from '../../components';
 import { ScLoadingSpinner } from './sc-loading-spinner';
 
-const newLoadingSpinner = async (props: Partial<Components.ScLoadingSpinner> = {}) => {
+const newLoadingSpinner = async (props: Partial<Components.IotAppKitVisLoadingSpinner> = {}) => {
   const page = await newSpecPage({
     components: [ScLoadingSpinner],
     html: '<div></div>',
     supportsShadowDom: true,
   });
-  const loadingSpinner = page.doc.createElement('sc-loading-spinner') as CustomHTMLElement<Components.ScLoadingSpinner>;
+  const loadingSpinner = page.doc.createElement('iot-app-kit-vis-loading-spinner') as CustomHTMLElement<
+    Components.IotAppKitVisLoadingSpinner
+  >;
   update(loadingSpinner, props);
   page.body.appendChild(loadingSpinner);
   await page.waitForChanges();

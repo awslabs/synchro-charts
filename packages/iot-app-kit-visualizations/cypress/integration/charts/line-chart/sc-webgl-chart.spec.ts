@@ -16,7 +16,7 @@ import {
 import { clickAndDrag } from '../../../utils';
 import { CHART_VIZ_CONTAINER_SELECTOR, visitDynamicWidget } from '../../../../src/testing/selectors';
 
-const root = '/tests/sc-webgl-chart';
+const root = '/tests/webgl-chart';
 
 const VIEWPORT_HEIGHT = 500;
 const VIEWPORT_WIDTH = 500;
@@ -40,7 +40,7 @@ describe('line chart', () => {
   });
 
   it('renders chart with a large viewport', () => {
-    cy.visit(`${root}/sc-webgl-chart-large-viewport`);
+    cy.visit(`${root}/webgl-chart-large-viewport`);
 
     cy.waitForChart();
 
@@ -220,7 +220,7 @@ describe('line chart', () => {
 
   it('renders the y-axis label if passed in', () => {
     visitDynamicWidget(cy, {
-      componentTag: 'sc-line-chart',
+      componentTag: 'iot-app-kit-vis-line-chart',
       axis: {
         labels: {
           yAxis: {

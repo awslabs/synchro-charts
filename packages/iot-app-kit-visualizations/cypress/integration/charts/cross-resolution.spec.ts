@@ -43,7 +43,7 @@ const AGGREGATED_DATA_STREAM = {
 
 it('displays each aggregation description within tooltip', () => {
   visitDynamicWidget(cy, {
-    componentTag: 'sc-line-chart',
+    componentTag: 'iot-app-kit-vis-line-chart',
     viewportStart: START,
     viewportEnd: END,
     dataStreams: [RAW_DATA_STREAM, AGGREGATED_DATA_STREAM],

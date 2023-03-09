@@ -53,15 +53,17 @@ const LOADING_STREAM: DataStream<number> = {
   isLoading: true,
 };
 
-const newChartSpecPage = async (chartProps: Partial<Components.ScWebglBaseChart>) => {
+const newChartSpecPage = async (chartProps: Partial<Components.IotAppKitVisWebglBaseChart>) => {
   const page = await newSpecPage({
     components: [ScWebglBaseChart, ScGestureHandler, ScWebglAxis, ScErrorBadge],
     html: '<div></div>',
     supportsShadowDom: false,
   });
-  const chart = page.doc.createElement('sc-webgl-base-chart') as CustomHTMLElement<Components.ScWebglBaseChart>;
+  const chart = page.doc.createElement('iot-app-kit-vis-webgl-base-chart') as CustomHTMLElement<
+    Components.IotAppKitVisWebglBaseChart
+  >;
 
-  const defaultProps: Components.ScWebglBaseChart = {
+  const defaultProps: Components.IotAppKitVisWebglBaseChart = {
     updateChartScene,
     visualizesAlarms: false,
     yRangeStartFromZero: false,
@@ -90,7 +92,7 @@ const newChartSpecPage = async (chartProps: Partial<Components.ScWebglBaseChart>
       position: LEGEND_POSITION.BOTTOM,
       width: 300,
     },
-    renderLegend: props => <sc-legend {...props} />,
+    renderLegend: props => <iot-app-kit-vis-legend {...props} />,
     isEditing: false,
     annotations: {
       x: [],
@@ -102,7 +104,12 @@ const newChartSpecPage = async (chartProps: Partial<Components.ScWebglBaseChart>
     messageOverrides: undefined,
     trends: [],
     renderTooltip: ({ visualizesAlarms = defaultProps.visualizesAlarms, ...rest }) => (
-      <sc-tooltip {...rest} dataAlignment={DATA_ALIGNMENT.RIGHT} visualizesAlarms={visualizesAlarms} supportString />
+      <iot-app-kit-vis-tooltip
+        {...rest}
+        dataAlignment={DATA_ALIGNMENT.RIGHT}
+        visualizesAlarms={visualizesAlarms}
+        supportString
+      />
     ),
   };
 
@@ -121,7 +128,7 @@ describe('legend', () => {
       },
     });
 
-    const legend = chart.querySelector('sc-legend');
+    const legend = chart.querySelector('iot-app-kit-vis-legend');
     expect(legend).toBeDefined();
   });
 
@@ -134,7 +141,7 @@ describe('legend', () => {
       isEditing: true,
     });
 
-    const legend = chart.querySelector('sc-legend');
+    const legend = chart.querySelector('iot-app-kit-vis-legend');
     expect(legend).toHaveAttribute('isEditing');
   });
 
@@ -147,7 +154,7 @@ describe('legend', () => {
       viewport: VIEWPORT,
     });
 
-    const legend = chart.querySelector('sc-legend') as HTMLScLegendElement;
+    const legend = chart.querySelector('iot-app-kit-vis-legend') as HTMLIotAppKitVisLegendElement;
 
     expect(legend.viewport).toEqual(VIEWPORT);
   });
@@ -532,7 +539,7 @@ describe('loading status', () => {
       });
 
       const loadingSpinner = chart.querySelector(LOADING_SPINNER_SELECTOR);
-      const legend = chart.querySelector('sc-legend');
+      const legend = chart.querySelector('iot-app-kit-vis-legend');
 
       expect(legend).toHaveAttribute('isLoading');
       expect(loadingSpinner).not.toBeNull();
@@ -544,7 +551,7 @@ describe('loading status', () => {
       });
 
       const loadingSpinner = chart.querySelector(LOADING_SPINNER_SELECTOR);
-      const legend = chart.querySelector('sc-legend') as HTMLScLegendElement;
+      const legend = chart.querySelector('iot-app-kit-vis-legend') as HTMLIotAppKitVisLegendElement;
 
       expect(legend).not.toHaveAttribute('isLoading');
       expect(loadingSpinner).toBeNull();
@@ -556,7 +563,7 @@ describe('loading status', () => {
       });
 
       const loadingSpinner = chart.querySelector(LOADING_SPINNER_SELECTOR);
-      const legend = chart.querySelector('sc-legend') as HTMLScLegendElement;
+      const legend = chart.querySelector('iot-app-kit-vis-legend') as HTMLIotAppKitVisLegendElement;
 
       expect(legend).not.toHaveAttribute('isLoading');
       expect(loadingSpinner).toBeNull();
@@ -612,7 +619,7 @@ describe('with string data', () => {
         })
       );
 
-      expect(chart.querySelector('sc-legend')).toHaveAttribute('supportString');
+      expect(chart.querySelector('iot-app-kit-vis-legend')).toHaveAttribute('supportString');
     });
   });
 });

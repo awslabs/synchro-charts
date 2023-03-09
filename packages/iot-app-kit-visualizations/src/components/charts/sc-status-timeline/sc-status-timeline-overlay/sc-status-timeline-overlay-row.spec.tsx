@@ -5,17 +5,17 @@ import { update } from '../../common/tests/merge';
 import { ScStatusTimelineOverlayRow } from './sc-status-timeline-overlay-row';
 import { ScDataStreamName } from '../../../sc-data-stream-name/sc-data-stream-name';
 
-const rowSpecPage = async (propOverrides: Partial<Components.ScStatusTimelineOverlayRow> = {}) => {
+const rowSpecPage = async (propOverrides: Partial<Components.IotAppKitVisStatusTimelineOverlayRow> = {}) => {
   const page = await newSpecPage({
     components: [ScStatusTimelineOverlayRow, ScDataStreamName],
     html: '<div></div>',
     supportsShadowDom: false,
   });
-  const row = page.doc.createElement('sc-status-timeline-overlay-row') as CustomHTMLElement<
-    Components.ScStatusTimelineOverlayRow
+  const row = page.doc.createElement('iot-app-kit-vis-status-timeline-overlay-row') as CustomHTMLElement<
+    Components.IotAppKitVisStatusTimelineOverlayRow
   >;
 
-  const props: Components.ScStatusTimelineOverlayRow = {
+  const props: Components.IotAppKitVisStatusTimelineOverlayRow = {
     label: 'some-label',
     onNameChange: () => {},
     isEditing: false,

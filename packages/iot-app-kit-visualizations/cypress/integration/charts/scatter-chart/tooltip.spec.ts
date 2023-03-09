@@ -16,7 +16,7 @@ import {
 
 it('renders no tooltip when only info is empty', () => {
   visitDynamicWidget(cy, {
-    componentTag: 'sc-scatter-chart',
+    componentTag: 'iot-app-kit-vis-scatter-chart',
     viewportStart: new Date(2000, 0, 0),
     viewportEnd: new Date(2000, 0, 0, 0, 5),
     dataStreams: [NUMBER_EMPTY_STREAM],
@@ -36,7 +36,7 @@ it('renders no tooltip when only info is empty', () => {
 
 it('renders tooltip rows in order of values magnitude', () => {
   visitDynamicWidget(cy, {
-    componentTag: 'sc-scatter-chart',
+    componentTag: 'iot-app-kit-vis-scatter-chart',
     viewportStart: new Date(2000, 0, 0),
     viewportEnd: new Date(2000, 0, 0, 0, 5),
     dataStreams: [NUMBER_STREAM_1, NUMBER_EMPTY_STREAM, NUMBER_STREAM_2],
@@ -82,7 +82,7 @@ it('renders tooltip rows in order of values magnitude', () => {
 
 it('renders tooltip to the left of the mouse when the mouse is on the right side', () => {
   visitDynamicWidget(cy, {
-    componentTag: 'sc-scatter-chart',
+    componentTag: 'iot-app-kit-vis-scatter-chart',
     viewportStart: new Date(new Date(2000, 0, 0).getTime() - MINUTE_IN_MS),
     viewportEnd: new Date(2000, 0, 0, 0, 5),
     dataStreams: [NUMBER_STREAM_1],

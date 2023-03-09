@@ -19,7 +19,7 @@ const X_MAX = new Date(2000, 0, 1);
 const WIDTH = X_MAX.getTime() - X_MIN.getTime();
 
 @Component({
-  tag: 'sc-webgl-line-chart-dynamic-data',
+  tag: 'iot-app-kit-vis-webgl-line-chart-dynamic-data',
 })
 export class ScWebglLineChartDynamicData {
   @State() data: DataPoint<number>[] = [];
@@ -48,7 +48,7 @@ export class ScWebglLineChartDynamicData {
           Remove Data Point
         </button>
         <div id="chart-container" style={{ marginTop: '20px', width: '500px', height: '500px' }}>
-          <sc-line-chart
+          <iot-app-kit-vis-line-chart
             widgetId="widget-id"
             dataStreams={[
               {
@@ -67,7 +67,7 @@ export class ScWebglLineChartDynamicData {
             viewport={{ start: X_MIN, end: X_MAX, yMin: Y_MIN, yMax: Y_MAX }}
           />
 
-          <sc-webgl-context />
+          <iot-app-kit-vis-webgl-context />
         </div>
       </div>
     );

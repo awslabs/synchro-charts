@@ -2,7 +2,7 @@ import { h, Component, Prop } from '@stencil/core';
 import { MinimalSizeConfig } from '../../../utils/dataTypes';
 
 @Component({
-  tag: 'sc-box',
+  tag: 'iot-app-kit-vis-box',
   shadow: false,
 })
 export class ScBox {

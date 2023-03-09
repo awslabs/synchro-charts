@@ -15,7 +15,7 @@ it('moves viewport when gestures are applied', () => {
   const OLD_Y_TICK_LABEL = 'Fri 31';
 
   visitDynamicWidget(cy, {
-    componentTag: 'sc-line-chart',
+    componentTag: 'iot-app-kit-vis-line-chart',
     viewportStart: START,
     viewportEnd: END,
     gestures: true,
@@ -38,7 +38,7 @@ it('does not move viewport when gestures are not applied', () => {
   const OLD_Y_TICK_LABEL = 'Fri 31';
 
   visitDynamicWidget(cy, {
-    componentTag: 'sc-scatter-chart',
+    componentTag: 'iot-app-kit-vis-scatter-chart',
     viewportStart: START,
     viewportEnd: END,
     gestures: false,
@@ -57,7 +57,7 @@ it('does not move viewport when gestures are not applied', () => {
 
 it('adjusts y range as data in the view changes', () => {
   cy.viewport(VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
-  cy.visit(`${root}/chart/y-range?componentTag=sc-line-chart`);
+  cy.visit(`${root}/chart/y-range?componentTag=iot-app-kit-vis-line-chart`);
 
   cy.waitForChart();
 
@@ -78,7 +78,7 @@ it('adjusts y range as data in the view changes', () => {
 
 describe('gestures while charts are synchronized', () => {
   it('zooms into both charts', () => {
-    cy.visit(`${root}/sc-webgl-chart/multi`);
+    cy.visit(`${root}/webgl-chart/multi`);
     cy.viewport(VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
 
     cy.waitForChart();

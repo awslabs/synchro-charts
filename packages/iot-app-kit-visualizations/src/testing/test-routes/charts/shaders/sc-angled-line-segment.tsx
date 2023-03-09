@@ -25,7 +25,7 @@ const TEST_DATA_POINT_2: DataPoint<number> = {
 };
 
 @Component({
-  tag: 'sc-angled-line-segment',
+  tag: 'iot-app-kit-vis-angled-line-segment',
 })
 export class ScAngledLineSegment {
   @Element() el!: HTMLElement;
@@ -68,9 +68,9 @@ export class ScAngledLineSegment {
 
   render() {
     return (
-      <sc-webgl-context>
+      <iot-app-kit-vis-webgl-context>
         <div id="test-container" style={{ width: `${CHART_SIZE.width}px`, height: `${CHART_SIZE.height}px` }} />
-      </sc-webgl-context>
+      </iot-app-kit-vis-webgl-context>
     );
   }
 }

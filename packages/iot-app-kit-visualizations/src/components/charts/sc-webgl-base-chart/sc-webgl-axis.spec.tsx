@@ -32,9 +32,11 @@ const axisSpecPage = async (axisRendererProps?: Partial<AxisRendererProps>) => {
     supportsShadowDom: false,
   });
 
-  const axis = page.doc.createElement('sc-webgl-axis') as CustomHTMLElement<Components.ScWebglAxis>;
+  const axis = page.doc.createElement('iot-app-kit-vis-webgl-axis') as CustomHTMLElement<
+    Components.IotAppKitVisWebglAxis
+  >;
 
-  const props: Components.ScWebglAxis = {
+  const props: Components.IotAppKitVisWebglAxis = {
     size: SIZE_CONFIG,
   };
   update(axis, props);
@@ -149,7 +151,7 @@ describe('updated correctly', () => {
     const { axis, page } = await axisSpecPage();
     const NEW_HEIGHT = 500;
     const NEW_WIDTH = 550;
-    const updatedProps: Partial<Components.ScWebglAxis> = {
+    const updatedProps: Partial<Components.IotAppKitVisWebglAxis> = {
       size: {
         ...SIZE_CONFIG,
         width: NEW_WIDTH,

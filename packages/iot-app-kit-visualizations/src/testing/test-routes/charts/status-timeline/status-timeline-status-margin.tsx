@@ -47,13 +47,13 @@ export class StatusTimelineStatusMargin {
   render() {
     return (
       <div id="chart-container" style={{ height: '500px', width: '500px', marginTop: '20px' }}>
-        <sc-status-timeline
+        <iot-app-kit-vis-status-timeline
           alarms={{ expires: MONTH_IN_MS }}
           widgetId="widget-id"
           dataStreams={[DATA_STREAM_1, DATA_STREAM_2]}
           viewport={{ yMin: Y_MIN, yMax: Y_MAX, start: X_MIN, end: X_MAX }}
         />
-        <sc-webgl-context />
+        <iot-app-kit-vis-webgl-context />
       </div>
     );
   }

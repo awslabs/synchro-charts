@@ -46,7 +46,7 @@ const xAnnotation: XAnnotation = {
 };
 
 const timelineParams: Partial<SearchQueryParams> = {
-  componentTag: 'sc-line-chart',
+  componentTag: 'iot-app-kit-vis-line-chart',
   viewportStart: X_MIN,
   viewportEnd: X_MAX,
   dataStreams: [
@@ -71,7 +71,7 @@ const timelineParams: Partial<SearchQueryParams> = {
   height: '95%',
 };
 
-const root = '/tests/sc-webgl-chart/annotations/annotation-editable';
+const root = '/tests/webgl-chart/annotations/annotation-editable';
 
 it('changing isEditable updates draggable annotations', () => {
   cy.visit(root);

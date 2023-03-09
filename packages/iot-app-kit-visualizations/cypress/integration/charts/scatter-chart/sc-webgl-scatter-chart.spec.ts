@@ -1,5 +1,5 @@
 describe('scatter chart', () => {
-  const root = '/tests/sc-scatter-chart';
+  const root = '/tests/scatter-chart';
 
   const VIEWPORT_HEIGHT = 500;
   const VIEWPORT_WIDTH = 500;

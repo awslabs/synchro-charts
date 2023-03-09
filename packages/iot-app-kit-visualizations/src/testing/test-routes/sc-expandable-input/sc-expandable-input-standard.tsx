@@ -1,7 +1,7 @@
 import { Component, h, Host, State } from '@stencil/core';
 
 @Component({
-  tag: 'sc-expandable-input-standard',
+  tag: 'iot-app-kit-vis-expandable-input-standard',
 })
 export class ScExpandableInputStandard {
   @State() value: string = '';
@@ -9,7 +9,7 @@ export class ScExpandableInputStandard {
   render() {
     return (
       <Host>
-        <sc-expandable-input
+        <iot-app-kit-vis-expandable-input
           onValueChange={(value: string) => {
             this.value = value;
           }}

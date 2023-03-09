@@ -14,7 +14,7 @@ export const ErrorStatus = ({ hasError, size: { marginLeft, width } }: { hasErro
           flexDirection: 'row-reverse',
         }}
       >
-        <sc-error-badge>Stopped</sc-error-badge>
+        <iot-app-kit-vis-error-badge>Stopped</iot-app-kit-vis-error-badge>
       </div>
     </div>
   ) : (

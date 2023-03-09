@@ -4,7 +4,7 @@ import { Value } from '../../../value/Value';
 import { StatusIcon } from '../../common/constants';
 
 @Component({
-  tag: 'sc-status-timeline-overlay-row',
+  tag: 'iot-app-kit-vis-status-timeline-overlay-row',
   styleUrl: 'sc-status-timeline-overlay-row.css',
   shadow: false,
 })
@@ -21,7 +21,7 @@ export class ScStatusTimelineOverlayRow {
   render() {
     return [
       <div class="stream-info">
-        <sc-data-stream-name
+        <iot-app-kit-vis-data-stream-name
           label={this.label}
           detailedLabel={this.detailedLabel}
           onNameChange={this.onNameChange}
@@ -29,7 +29,7 @@ export class ScStatusTimelineOverlayRow {
         />
         <div class="expando" />
         <span class="value" style={{ color: this.valueColor || 'unset', display: 'flex', alignItems: 'center' }}>
-          {this.icon && <sc-chart-icon name={this.icon} />}
+          {this.icon && <iot-app-kit-vis-chart-icon name={this.icon} />}
           <Value value={this.value} unit={this.unit} />
         </span>
       </div>,

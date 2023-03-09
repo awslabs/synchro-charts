@@ -18,7 +18,7 @@ const MS_PER_RECT_POLL = 650;
  * Widget Sizer
  */
 @Component({
-  tag: 'sc-size-provider',
+  tag: 'iot-app-kit-vis-size-provider',
   styleUrl: 'sc-size-provider.css',
   shadow: false,
 })

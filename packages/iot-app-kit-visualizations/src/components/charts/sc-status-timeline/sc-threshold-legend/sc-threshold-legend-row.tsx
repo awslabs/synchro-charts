@@ -1,7 +1,7 @@
 import { Component, h, Prop } from '@stencil/core';
 
 @Component({
-  tag: 'sc-threshold-legend-row',
+  tag: 'iot-app-kit-vis-threshold-legend-row',
   shadow: false,
 })
 export class ScThresholdLegendRow {

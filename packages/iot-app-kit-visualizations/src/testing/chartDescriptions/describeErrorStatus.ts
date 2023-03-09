@@ -66,7 +66,9 @@ export const describeErrorStatus = (newChartSpecPage: ChartSpecPage) => {
           dataStreams: [{ ...DATA_STREAM, error: undefined }],
         });
 
-        const baseChart = chart.querySelector('sc-webgl-base-chart') as HTMLScWebglBaseChartElement;
+        const baseChart = chart.querySelector(
+          'iot-app-kit-vis-webgl-base-chart'
+        ) as HTMLIotAppKitVisWebglBaseChartElement;
         if (baseChart.displaysError) {
           const placeholder = chart.querySelector('[data-test-tag="error-badge-place-holder"]');
           expect(placeholder).not.toBeNull();

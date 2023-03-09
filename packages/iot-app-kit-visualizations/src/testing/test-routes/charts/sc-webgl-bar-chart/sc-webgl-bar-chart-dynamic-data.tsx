@@ -18,7 +18,7 @@ const X_MAX = new Date(2001, 12);
  */
 
 @Component({
-  tag: 'sc-webgl-bar-chart-dynamic-data',
+  tag: 'iot-app-kit-vis-webgl-bar-chart-dynamic-data',
 })
 export class ScWebglBarChartDynamicData {
   @State() data: DataPoint<number>[] = [];
@@ -51,7 +51,7 @@ export class ScWebglBarChartDynamicData {
         <br />
         <br />
         <div id="chart-container" style={{ height: '500px', width: '500px' }}>
-          <sc-bar-chart
+          <iot-app-kit-vis-bar-chart
             dataStreams={[
               {
                 id: 'test',
@@ -78,7 +78,7 @@ export class ScWebglBarChartDynamicData {
               end: X_MAX,
             }}
           />
-          <sc-webgl-context />
+          <iot-app-kit-vis-webgl-context />
         </div>
       </div>
     );

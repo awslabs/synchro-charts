@@ -20,7 +20,7 @@ const RIGHT_X = new Date(2000, 9).getTime();
  */
 
 @Component({
-  tag: 'sc-webgl-bar-chart-dynamic-data-streams',
+  tag: 'iot-app-kit-vis-webgl-bar-chart-dynamic-data-streams',
 })
 export class ScWebglBarChartDynamicDataStreams {
   @State() dataStreams: DataStream<number>[] = [];
@@ -87,7 +87,7 @@ export class ScWebglBarChartDynamicDataStreams {
         <br />
         <br />
         <div id="chart-container" style={{ marginTop: '20px', width: '500px', height: '500px' }}>
-          <sc-bar-chart
+          <iot-app-kit-vis-bar-chart
             dataStreams={this.dataStreams}
             size={{
               width: 500,
@@ -102,7 +102,7 @@ export class ScWebglBarChartDynamicDataStreams {
             }}
           />
         </div>
-        <sc-webgl-context />
+        <iot-app-kit-vis-webgl-context />
       </div>
     );
   }

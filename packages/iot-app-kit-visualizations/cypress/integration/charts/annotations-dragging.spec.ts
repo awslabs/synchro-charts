@@ -1,7 +1,7 @@
 import { DRAGGABLE_HANDLE_SELECTOR } from '../../../src/components/charts/common/annotations/YAnnotations/YAnnotations';
 
 it('correctly handles dragging annotations when multiple charts share a reference to the same annotation', () => {
-  cy.visit('http://localhost:3333/tests/sc-webgl-chart/annotations/draggable-multi');
+  cy.visit('http://localhost:3333/tests/webgl-chart/annotations/draggable-multi');
   cy.viewport(1000, 1000);
   cy.waitForChart();
 
@@ -27,7 +27,7 @@ it('correctly handles dragging annotations when multiple charts share a referenc
         .parent()
         .find('.y-value-text')
         .get(0).textContent as string;
-      cy.get('sc-line-chart')
+      cy.get('iot-app-kit-vis-line-chart')
         .last()
         .contains(firstAnnotationsValue)
         .should('not.exist');

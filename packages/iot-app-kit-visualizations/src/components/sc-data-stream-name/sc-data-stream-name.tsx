@@ -5,7 +5,7 @@ import { POINT_TYPE } from '../charts/sc-webgl-base-chart/activePoints';
 import { TIPPY_SETTINGS } from '../common/toolTipSettings';
 
 @Component({
-  tag: 'sc-data-stream-name',
+  tag: 'iot-app-kit-vis-data-stream-name',
   styleUrl: 'sc-data-stream-name.css',
   shadow: false,
 })
@@ -30,7 +30,7 @@ export class ScDataStreamName {
 
   renderTooltip = () => {
     if (this.displayTooltip) {
-      const container = this.el.querySelector('sc-expandable-input');
+      const container = this.el.querySelector('iot-app-kit-vis-expandable-input');
       const tooltip = this.el.querySelector('.data-stream-name-tooltip') as HTMLElement | undefined;
 
       if (tooltip != null && container != null) {
@@ -46,7 +46,7 @@ export class ScDataStreamName {
   render() {
     return (
       <div class="awsui">
-        <sc-expandable-input
+        <iot-app-kit-vis-expandable-input
           isDisabled={!this.isEditing}
           onValueChange={(value: string) => {
             this.onNameChange(value);

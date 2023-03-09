@@ -18,7 +18,7 @@ const WIDTH = X_MAX.getTime() - X_MIN.getTime();
  * Used to test the behavior of a scatter chart when adding/removing data points
  */
 @Component({
-  tag: 'sc-scatter-chart-dynamic-data',
+  tag: 'iot-app-kit-vis-scatter-chart-dynamic-data',
 })
 export class ScScatterChartDynamicData {
   @State() data: DataPoint<number>[] = [];
@@ -48,7 +48,7 @@ export class ScScatterChartDynamicData {
           Remove Data Point
         </button>
         <div id="chart-container" style={{ marginTop: '20px', width: '500px', height: '500px' }}>
-          <sc-scatter-chart
+          <iot-app-kit-vis-scatter-chart
             widgetId="widget-id"
             dataStreams={[
               {
@@ -71,7 +71,7 @@ export class ScScatterChartDynamicData {
             viewport={{ start: X_MIN, end: X_MAX, yMin: Y_MIN, yMax: Y_MAX }}
           />
 
-          <sc-webgl-context />
+          <iot-app-kit-vis-webgl-context />
         </div>
       </div>
     );

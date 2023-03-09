@@ -2,7 +2,7 @@ import { Component, h, State } from '@stencil/core';
 import { DEFAULT_SIZE, SHIFT_X_DIFF } from './constants';
 
 @Component({
-  tag: 'sc-size-provider-standard',
+  tag: 'iot-app-kit-vis-size-provider-standard',
 })
 export class ScSizeProviderStandard {
   @State() marginLeft: number = 0;
@@ -27,7 +27,7 @@ export class ScSizeProviderStandard {
             width: `${DEFAULT_SIZE.width}px`,
           }}
         >
-          <sc-size-provider renderFunc={size => <sc-box someObject={size} size={size} />} />
+          <iot-app-kit-vis-size-provider renderFunc={size => <iot-app-kit-vis-box someObject={size} size={size} />} />
         </div>
       </div>
     );

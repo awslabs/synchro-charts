@@ -45,7 +45,7 @@ const xAnnotation: XAnnotation = {
 };
 
 const timelineParams: Partial<SearchQueryParams> = {
-  componentTag: 'sc-scatter-chart',
+  componentTag: 'iot-app-kit-vis-scatter-chart',
   viewportStart: X_MIN,
   viewportEnd: X_MAX,
   dataStreams: [

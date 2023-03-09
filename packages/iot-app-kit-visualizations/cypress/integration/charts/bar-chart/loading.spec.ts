@@ -3,7 +3,7 @@ import { DATA_STREAM } from '../../../../src/testing/__mocks__/mockWidgetPropert
 
 it('renders spinner', () => {
   visitDynamicWidget(cy, {
-    componentTag: 'sc-bar-chart',
+    componentTag: 'iot-app-kit-vis-bar-chart',
     dataStreams: [{ ...DATA_STREAM, isLoading: true }],
   });
 

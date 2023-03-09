@@ -6,7 +6,7 @@ import { Component, h, Prop } from '@stencil/core';
  * An stylized input which grows as you type into it.
  */
 @Component({
-  tag: 'sc-expandable-input',
+  tag: 'iot-app-kit-vis-expandable-input',
   styleUrl: 'sc-expandable-input.css',
   shadow: false,
 })

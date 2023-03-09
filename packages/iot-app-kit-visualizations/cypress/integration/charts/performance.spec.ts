@@ -3,7 +3,7 @@ import { initFPSMetering } from '../../../src/utils/fps';
 import { DAY_IN_MS, SECOND_IN_MS } from '../../../src/utils/time';
 import { avg, standardDeviation } from '../../utils';
 
-const root = '/tests/sc-webgl-chart/performance';
+const root = '/tests/webgl-chart/performance';
 
 type PerfTestCase = {
   // The minimum frames per second which will be considered a passing test
@@ -91,9 +91,9 @@ describe.skip('line chart', () => {
       new Array(RUN_EACH_TEST_NUM_TIMES).fill(0).forEach((_, runNum) => {
         it(`RUN ${runNum + 1}: ${testName}`, () => {
           cy.visit(
-            `${root}/sc-line-chart-stream-data?viewportSpeed=${viewportSpeed || 0}&roundFrequency=${roundFrequency}&dataPerRound=${dataPerRound}`
+            `${root}/line-chart-stream-data?viewportSpeed=${viewportSpeed || 0}&roundFrequency=${roundFrequency}&dataPerRound=${dataPerRound}`
           );
-          cy.get('sc-line-chart').should('exist');
+          cy.get('iot-app-kit-vis-line-chart').should('exist');
 
           const { fps, stop } = initFPSMetering();
 
@@ -118,10 +118,10 @@ describe.skip('line chart', () => {
         average: Math.floor(avg(testResults.average)),
         median: Math.floor(avg(testResults.median)),
         stdDevMedian: Math.floor(standardDeviation(testResults.median)),
-        stdDevAverage: Math.floor( standardDeviation(testResults.average) ),
+        stdDevAverage: Math.floor(standardDeviation(testResults.average)),
       }
     });
-    cy.writeFile(`performance_reports/perf.sc-chart-perf-${new Date().toISOString()}.json`, translatedResults);
+    cy.writeFile(`performance_reports/perf.chart-perf-${new Date().toISOString()}.json`, translatedResults);
   });
 })
 

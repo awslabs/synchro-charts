@@ -3,7 +3,7 @@ import { DATA_STREAM } from '../../../../src/testing/__mocks__/mockWidgetPropert
 
 it('renders spinner', () => {
   visitDynamicWidget(cy, {
-    componentTag: 'sc-status-timeline',
+    componentTag: 'iot-app-kit-vis-status-timeline',
     dataStreams: [{ ...DATA_STREAM, isLoading: true }],
   });
 

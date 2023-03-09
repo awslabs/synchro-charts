@@ -12,7 +12,7 @@ import { getDataStreamForEventing } from '../../common';
 const SMUDGE_WIDTH_PX = 1; // We slice off a tiny bit of width to prevent some pixels showing under antialiasing
 
 @Component({
-  tag: 'sc-status-timeline-overlay',
+  tag: 'iot-app-kit-vis-status-timeline-overlay',
   styleUrl: 'sc-status-timeline-overlay.css',
   shadow: false,
 })
@@ -101,7 +101,7 @@ export class ScStatusTimelineOverlay {
           const displayedUnit = error == null ? dataStream.unit : undefined;
           const valueColor = error == null && threshold != null ? threshold.color : undefined;
           return (
-            <sc-status-timeline-overlay-row
+            <iot-app-kit-vis-status-timeline-overlay-row
               key={dataStream.id}
               label={dataStream.name}
               detailedLabel={dataStream.detailedName}

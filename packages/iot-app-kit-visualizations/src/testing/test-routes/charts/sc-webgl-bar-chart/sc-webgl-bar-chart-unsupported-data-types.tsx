@@ -20,14 +20,14 @@ const RIGHT_X = new Date(2000, 9).getTime();
  */
 
 @Component({
-  tag: 'sc-webgl-bar-chart-unsupported-data-types',
+  tag: 'iot-app-kit-vis-webgl-bar-chart-unsupported-data-types',
 })
 export class ScWebglBarChartUnsupportedDataTypes {
   render() {
     return (
       <div class="synchro-chart-tests">
         <div id="chart-container" style={{ marginTop: '20px', width: '500px', height: '500px' }}>
-          <sc-bar-chart
+          <iot-app-kit-vis-bar-chart
             dataStreams={[
               {
                 id: 'test',
@@ -66,7 +66,7 @@ export class ScWebglBarChartUnsupportedDataTypes {
             }}
           />
         </div>
-        <sc-webgl-context />
+        <iot-app-kit-vis-webgl-context />
       </div>
     );
   }

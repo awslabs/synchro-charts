@@ -36,7 +36,7 @@ const TEST_2DATA_POINT_2: DataPoint<number> = {
  */
 
 @Component({
-  tag: 'sc-webgl-context-root',
+  tag: 'iot-app-kit-vis-webgl-context-root',
 })
 export class ScWebglContextRoot {
   render() {
@@ -44,7 +44,7 @@ export class ScWebglContextRoot {
       <div>
         <div style={{ width: '10000px', height: '10000px' }}>
           <div style={{ height: '500px', width: '500px' }}>
-            <sc-line-chart
+            <iot-app-kit-vis-line-chart
               widgetId="widget-id"
               dataStreams={[
                 {
@@ -64,7 +64,7 @@ export class ScWebglContextRoot {
             />
           </div>
           <div style={{ height: '500px', width: '500px' }}>
-            <sc-line-chart
+            <iot-app-kit-vis-line-chart
               widgetId="widget-id"
               dataStreams={[
                 {
@@ -84,7 +84,7 @@ export class ScWebglContextRoot {
             />
           </div>
           <div style={{ height: '500px', width: '500px' }}>
-            <sc-line-chart
+            <iot-app-kit-vis-line-chart
               widgetId="widget-id"
               dataStreams={[
                 {
@@ -103,7 +103,7 @@ export class ScWebglContextRoot {
               viewport={{ start: X_MIN, end: X_MAX, yMin: Y_MIN, yMax: Y_MAX }}
             />
           </div>
-          <sc-webgl-context />
+          <iot-app-kit-vis-webgl-context />
         </div>
       </div>
     );

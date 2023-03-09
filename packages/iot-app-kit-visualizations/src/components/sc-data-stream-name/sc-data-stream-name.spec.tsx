@@ -7,16 +7,16 @@ import { Components } from '../../components';
 
 const noop = () => {};
 
-const newDataStreamNameSpecPage = async (props: Partial<Components.ScDataStreamName>) => {
+const newDataStreamNameSpecPage = async (props: Partial<Components.IotAppKitVisDataStreamName>) => {
   const page = await newSpecPage({
     components: [ScDataStreamName],
     html: '<div></div>',
     supportsShadowDom: false,
   });
-  const dataStreamName = page.doc.createElement('sc-data-stream-name') as CustomHTMLElement<
-    Components.ScDataStreamName
+  const dataStreamName = page.doc.createElement('iot-app-kit-vis-data-stream-name') as CustomHTMLElement<
+    Components.IotAppKitVisDataStreamName
   >;
-  const defaultProps: Components.ScDataStreamName = {
+  const defaultProps: Components.IotAppKitVisDataStreamName = {
     onNameChange: noop,
     isEditing: false,
     label: 'some-label',

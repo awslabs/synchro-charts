@@ -3,7 +3,7 @@ import { getIcons } from '../common/annotations/iconUtils';
 import { StatusIcon } from '../common/constants';
 
 @Component({
-  tag: 'sc-chart-icon',
+  tag: 'iot-app-kit-vis-chart-icon',
   styleUrl: 'sc-chart-icon.css',
   shadow: false,
 })

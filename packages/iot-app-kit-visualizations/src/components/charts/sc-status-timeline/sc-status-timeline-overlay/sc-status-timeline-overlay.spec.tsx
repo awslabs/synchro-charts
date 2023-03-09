@@ -85,16 +85,16 @@ const DATA_STREAMS_WITH_ALARMS_ASSOCIATED: DataStream = {
   ],
 };
 
-const timelineOverlaySpecPage = async (propOverrides: Partial<Components.ScStatusTimelineOverlay> = {}) => {
+const timelineOverlaySpecPage = async (propOverrides: Partial<Components.IotAppKitVisStatusTimelineOverlay> = {}) => {
   const page = await newSpecPage({
     components: [ScStatusTimelineOverlay, ScStatusTimelineOverlayRow],
     html: '<div></div>',
     supportsShadowDom: false,
   });
-  const timelineOverlay = page.doc.createElement('sc-status-timeline-overlay') as CustomHTMLElement<
-    Components.ScStatusTimelineOverlay
+  const timelineOverlay = page.doc.createElement('iot-app-kit-vis-status-timeline-overlay') as CustomHTMLElement<
+    Components.IotAppKitVisStatusTimelineOverlay
   >;
-  const props: Components.ScStatusTimelineOverlay = {
+  const props: Components.IotAppKitVisStatusTimelineOverlay = {
     thresholds: [],
     dataStreams: [],
     date: VIEWPORT.end,
@@ -122,13 +122,13 @@ const timelineOverlaySpecPage = async (propOverrides: Partial<Components.ScStatu
 it('renders no rows when give no data streams', async () => {
   const { timelineOverlay } = await timelineOverlaySpecPage({ dataStreams: [] });
 
-  expect(timelineOverlay.querySelectorAll('sc-status-timeline-overlay-row')).toBeEmpty();
+  expect(timelineOverlay.querySelectorAll('iot-app-kit-vis-status-timeline-overlay-row')).toBeEmpty();
 });
 
 it('renders multiple rows when given multiple infos', async () => {
   const { timelineOverlay } = await timelineOverlaySpecPage({ dataStreams: [DATA_STREAM, DATA_STREAM_2] });
 
-  expect(timelineOverlay.querySelectorAll('sc-status-timeline-overlay-row')).toHaveLength(2);
+  expect(timelineOverlay.querySelectorAll('iot-app-kit-vis-status-timeline-overlay-row')).toHaveLength(2);
 });
 
 it('displays data point on the timeline-overlay when it falls before the viewport', async () => {
@@ -148,7 +148,9 @@ it('displays data point on the timeline-overlay when it falls before the viewpor
     ],
   });
 
-  const row = timelineOverlay.querySelector('sc-status-timeline-overlay-row') as HTMLScStatusTimelineOverlayRowElement;
+  const row = timelineOverlay.querySelector(
+    'iot-app-kit-vis-status-timeline-overlay-row'
+  ) as HTMLIotAppKitVisStatusTimelineOverlayRowElement;
   expect(row).not.toBeNull();
   expect(row.value).toEqual(POINT.y);
 });
@@ -161,7 +163,7 @@ describe('indicates breaching of thresholds', () => {
         thresholds: [ALARM_THRESHOLD],
       });
 
-      const rows = timelineOverlay.querySelectorAll('sc-status-timeline-overlay-row');
+      const rows = timelineOverlay.querySelectorAll('iot-app-kit-vis-status-timeline-overlay-row');
       expect(rows).toHaveLength(2);
 
       expect(rows[0].label).toBe(DATA_STREAM.name);
@@ -179,7 +181,7 @@ describe('indicates breaching of thresholds', () => {
         thresholds: [ALARM_THRESHOLD],
       });
 
-      const rows = timelineOverlay.querySelectorAll('sc-status-timeline-overlay-row');
+      const rows = timelineOverlay.querySelectorAll('iot-app-kit-vis-status-timeline-overlay-row');
       expect(rows).toHaveLength(2);
 
       expect(rows[0].valueColor).not.toBe(ALARM_THRESHOLD.color);
@@ -197,7 +199,7 @@ describe('indicates breaching of thresholds', () => {
         thresholds: [ALARM_THRESHOLD],
       });
 
-      const rows = timelineOverlay.querySelectorAll('sc-status-timeline-overlay-row');
+      const rows = timelineOverlay.querySelectorAll('iot-app-kit-vis-status-timeline-overlay-row');
       expect(rows).toHaveLength(3);
 
       expect(rows[0].label).toBe(DATA_STREAMS_WITH_ALARMS_ASSOCIATED.name);
@@ -222,8 +224,8 @@ describe('indicates breaching of thresholds', () => {
       });
 
       const row = timelineOverlay.querySelector(
-        'sc-status-timeline-overlay-row'
-      ) as HTMLScStatusTimelineOverlayRowElement;
+        'iot-app-kit-vis-status-timeline-overlay-row'
+      ) as HTMLIotAppKitVisStatusTimelineOverlayRowElement;
       expect(row.valueColor).not.toBe(THRESHOLD.color);
     });
     it('does color the row to match a breached threshold', async () => {
@@ -242,8 +244,8 @@ describe('indicates breaching of thresholds', () => {
         thresholds: [{ ...THRESHOLD, dataStreamIds: ['some-fake-id-that-is-not-our-data-stream-id'] }],
       });
       const row = timelineOverlay.querySelector(
-        'sc-status-timeline-overlay-row'
-      ) as HTMLScStatusTimelineOverlayRowElement;
+        'iot-app-kit-vis-status-timeline-overlay-row'
+      ) as HTMLIotAppKitVisStatusTimelineOverlayRowElement;
 
       expect(row.valueColor).not.toBe(THRESHOLD.color);
     });
@@ -265,8 +267,8 @@ describe('indicates breaching of thresholds', () => {
         thresholds: [THRESHOLD],
       });
       const row = timelineOverlay.querySelector(
-        'sc-status-timeline-overlay-row'
-      ) as HTMLScStatusTimelineOverlayRowElement;
+        'iot-app-kit-vis-status-timeline-overlay-row'
+      ) as HTMLIotAppKitVisStatusTimelineOverlayRowElement;
 
       expect(row.valueColor).not.toBe(THRESHOLD.color);
     });
@@ -289,8 +291,8 @@ describe('indicates breaching of thresholds', () => {
       });
 
       const row = timelineOverlay.querySelector(
-        'sc-status-timeline-overlay-row'
-      ) as HTMLScStatusTimelineOverlayRowElement;
+        'iot-app-kit-vis-status-timeline-overlay-row'
+      ) as HTMLIotAppKitVisStatusTimelineOverlayRowElement;
       expect(row.valueColor).toBe(THRESHOLD.color);
     });
 
@@ -310,8 +312,8 @@ describe('indicates breaching of thresholds', () => {
         thresholds: [],
       });
       const row = timelineOverlay.querySelector(
-        'sc-status-timeline-overlay-row'
-      ) as HTMLScStatusTimelineOverlayRowElement;
+        'iot-app-kit-vis-status-timeline-overlay-row'
+      ) as HTMLIotAppKitVisStatusTimelineOverlayRowElement;
 
       expect(row.valueColor).toBeUndefined();
     });
@@ -331,8 +333,8 @@ describe('indicates breaching of thresholds', () => {
         thresholds: [THRESHOLD],
       });
       const row = timelineOverlay.querySelector(
-        'sc-status-timeline-overlay-row'
-      ) as HTMLScStatusTimelineOverlayRowElement;
+        'iot-app-kit-vis-status-timeline-overlay-row'
+      ) as HTMLIotAppKitVisStatusTimelineOverlayRowElement;
 
       expect(row.valueColor).toBeUndefined();
     });
@@ -365,8 +367,8 @@ describe('indicates breaching of thresholds', () => {
         thresholds: upperLowerThresholds,
       });
       const row = timelineOverlay.querySelector(
-        'sc-status-timeline-overlay-row'
-      ) as HTMLScStatusTimelineOverlayRowElement;
+        'iot-app-kit-vis-status-timeline-overlay-row'
+      ) as HTMLIotAppKitVisStatusTimelineOverlayRowElement;
 
       expect(row.valueColor).toBe(LOWER_THRESHOLD.color);
     });
@@ -401,8 +403,8 @@ describe('indicates breaching of thresholds', () => {
       });
 
       const row = timelineOverlay.querySelector(
-        'sc-status-timeline-overlay-row'
-      ) as HTMLScStatusTimelineOverlayRowElement;
+        'iot-app-kit-vis-status-timeline-overlay-row'
+      ) as HTMLIotAppKitVisStatusTimelineOverlayRowElement;
       expect(row.valueColor).toBe(UPPER_THRESHOLD.color);
     });
   });
@@ -424,7 +426,9 @@ describe('is editing', () => {
       isEditing: true,
     });
 
-    const streamName = timelineOverlay.querySelector('sc-data-stream-name') as HTMLScDataStreamNameElement;
+    const streamName = timelineOverlay.querySelector(
+      'iot-app-kit-vis-data-stream-name'
+    ) as HTMLIotAppKitVisDataStreamNameElement;
     expect(streamName).toHaveAttribute('isEditing');
   });
 
@@ -443,7 +447,9 @@ describe('is editing', () => {
       isEditing: false,
     });
 
-    const streamName = timelineOverlay.querySelector('sc-data-stream-name') as HTMLScDataStreamNameElement;
+    const streamName = timelineOverlay.querySelector(
+      'iot-app-kit-vis-data-stream-name'
+    ) as HTMLIotAppKitVisDataStreamNameElement;
     expect(streamName).not.toHaveAttribute('isEditing');
   });
 
@@ -461,7 +467,9 @@ describe('is editing', () => {
       isEditing: undefined,
     });
 
-    const streamName = timelineOverlay.querySelector('sc-data-stream-name') as HTMLScDataStreamNameElement;
+    const streamName = timelineOverlay.querySelector(
+      'iot-app-kit-vis-data-stream-name'
+    ) as HTMLIotAppKitVisDataStreamNameElement;
     expect(streamName).not.toHaveAttribute('isEditing');
   });
 });
@@ -498,8 +506,8 @@ describe('active point passed into rows', () => {
     });
 
     const row = timelineOverlay.querySelector(
-      'sc-status-timeline-overlay-row'
-    ) as HTMLScStatusTimelineOverlayRowElement;
+      'iot-app-kit-vis-status-timeline-overlay-row'
+    ) as HTMLIotAppKitVisStatusTimelineOverlayRowElement;
     expect(row.value).toEqual(POINT_2.y);
   });
 });

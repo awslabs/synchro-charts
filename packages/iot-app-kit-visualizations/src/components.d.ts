@@ -14,19 +14,13 @@ import { RectScrollFixed } from "./utils/types";
 import { ChartSceneCreator, ChartSceneUpdater } from "./components/charts/sc-webgl-base-chart/types";
 import { DataType } from "./utils/dataConstants";
 export namespace Components {
-    interface LineChartUnsupportedDataTypes {
+    interface IotAppKitVisAngledLineSegment {
     }
-    interface LineChartViewportChange {
+    interface IotAppKitVisAnnotationsDraggableMulti {
     }
-    interface MultipleStatuses {
+    interface IotAppKitVisApp {
     }
-    interface ScAngledLineSegment {
-    }
-    interface ScAnnotationsDraggableMulti {
-    }
-    interface ScApp {
-    }
-    interface ScBarChart {
+    interface IotAppKitVisBarChart {
         "alarms"?: AlarmsConfig;
         "annotations": Annotations;
         "axis"?: Axis.Options;
@@ -54,21 +48,21 @@ export namespace Components {
         "viewport": MinimalViewPortConfig;
         "widgetId": string;
     }
-    interface ScBox {
+    interface IotAppKitVisBox {
         "size": MinimalSizeConfig;
         "someObject"?: Object;
     }
-    interface ScChartIcon {
+    interface IotAppKitVisChartIcon {
         "color"?: string;
         "name": StatusIcon;
         "size"?: number;
     }
-    interface ScChartYRange {
+    interface IotAppKitVisChartYRange {
         "component": string;
     }
-    interface ScCirclePointShaders {
+    interface IotAppKitVisCirclePointShaders {
     }
-    interface ScDataStreamName {
+    interface IotAppKitVisDataStreamName {
         "date"?: Date;
         "detailedLabel"?: string;
         "displayTooltip"?: boolean;
@@ -77,21 +71,21 @@ export namespace Components {
         "onNameChange": (name: string) => void;
         "pointType"?: POINT_TYPE;
     }
-    interface ScErrorBadge {
+    interface IotAppKitVisErrorBadge {
     }
-    interface ScExpandableInput {
+    interface IotAppKitVisExpandableInput {
         "isDisabled"?: boolean;
         "onValueChange": (value: string) => void;
         "value": string;
     }
-    interface ScExpandableInputStandard {
+    interface IotAppKitVisExpandableInputStandard {
     }
-    interface ScGestureHandler {
+    interface IotAppKitVisGestureHandler {
         "onDateRangeChange": ({ end, start }: { start: Date; end: Date }) => void;
         "size": SizeConfig;
         "viewport": ViewPort;
     }
-    interface ScLegend {
+    interface IotAppKitVisLegend {
         "config": LegendConfig;
         "dataStreams": DataStream[];
         "isEditing": boolean;
@@ -104,7 +98,7 @@ export namespace Components {
         "viewport": ViewPort;
         "visualizesAlarms": boolean;
     }
-    interface ScLegendRow {
+    interface IotAppKitVisLegendRow {
         "color": string;
         "detailedLabel"?: string;
         "icon"?: StatusIcon;
@@ -119,7 +113,7 @@ export namespace Components {
         "updateDataStreamName": ({ streamId, name }: { streamId: string; name: string }) => void;
         "valueColor"?: string;
     }
-    interface ScLineChart {
+    interface IotAppKitVisLineChart {
         "alarms"?: AlarmsConfig;
         "annotations": Annotations;
         "axis"?: Axis.Options;
@@ -147,21 +141,21 @@ export namespace Components {
         "viewport": MinimalViewPortConfig;
         "widgetId": string;
     }
-    interface ScLineChartColoredPoint {
+    interface IotAppKitVisLineChartColoredPoint {
     }
-    interface ScLineChartStreamData {
+    interface IotAppKitVisLineChartStreamData {
     }
-    interface ScLoadingSpinner {
+    interface IotAppKitVisLoadingSpinner {
         "dark"?: boolean;
         "size"?: number;
     }
-    interface ScMultipleBars {
+    interface IotAppKitVisMultipleBars {
     }
-    interface ScMultipleLines {
+    interface IotAppKitVisMultipleLines {
     }
-    interface ScMultipleLinesOverlapping {
+    interface IotAppKitVisMultipleLinesOverlapping {
     }
-    interface ScScatterChart {
+    interface IotAppKitVisScatterChart {
         "alarms"?: AlarmsConfig;
         "annotations": Annotations;
         "axis"?: Axis.Options;
@@ -189,42 +183,42 @@ export namespace Components {
         "viewport": MinimalViewPortConfig;
         "widgetId": string;
     }
-    interface ScScatterChartDynamicData {
+    interface IotAppKitVisScatterChartDynamicData {
     }
-    interface ScScatterChartThreshold {
+    interface IotAppKitVisScatterChartThreshold {
     }
-    interface ScScatterChartThresholdColorationBand {
+    interface IotAppKitVisScatterChartThresholdColorationBand {
     }
-    interface ScScatterChartThresholdColorationExactPoint {
+    interface IotAppKitVisScatterChartThresholdColorationExactPoint {
     }
-    interface ScScatterChartThresholdColorationMultipleDataStream {
+    interface IotAppKitVisScatterChartThresholdColorationMultipleDataStream {
     }
-    interface ScScatterChartThresholdColorationMultipleThresholds {
+    interface IotAppKitVisScatterChartThresholdColorationMultipleThresholds {
     }
-    interface ScScatterChartThresholdNoColoration {
+    interface IotAppKitVisScatterChartThresholdNoColoration {
     }
-    interface ScScatterChartTooltipWithMultipleDataStreamsAndTrends {
+    interface IotAppKitVisScatterChartTooltipWithMultipleDataStreamsAndTrends {
     }
-    interface ScScatterChartTrendLineColorConfiguration {
+    interface IotAppKitVisScatterChartTrendLineColorConfiguration {
     }
-    interface ScScatterChartTrendLineWithLegend {
+    interface IotAppKitVisScatterChartTrendLineWithLegend {
     }
-    interface ScScatterChartUnsupportedDataTypes {
+    interface IotAppKitVisScatterChartUnsupportedDataTypes {
     }
-    interface ScSingleBar {
+    interface IotAppKitVisSingleBar {
     }
-    interface ScSingleColoredBar {
+    interface IotAppKitVisSingleColoredBar {
     }
-    interface ScSizeProvider {
+    interface IotAppKitVisSizeProvider {
         "renderFunc": (rect: RectScrollFixed) => void;
         /**
           * Size overrides. these will take precident over any auto-calculated sizing
          */
         "size"?: MinimalSizeConfig;
     }
-    interface ScSizeProviderStandard {
+    interface IotAppKitVisSizeProviderStandard {
     }
-    interface ScStatusTimeline {
+    interface IotAppKitVisStatusTimeline {
         "alarms"?: AlarmsConfig;
         "annotations"?: Annotations;
         "axis"?: Axis.Options;
@@ -250,7 +244,7 @@ export namespace Components {
         "viewport": MinimalViewPortConfig;
         "widgetId": string;
     }
-    interface ScStatusTimelineOverlay {
+    interface IotAppKitVisStatusTimelineOverlay {
         "dataStreams": DataStream[];
         "date": Date;
         "isEditing": boolean;
@@ -258,7 +252,7 @@ export namespace Components {
         "thresholds": Threshold[];
         "widgetId": string;
     }
-    interface ScStatusTimelineOverlayRow {
+    interface IotAppKitVisStatusTimelineOverlayRow {
         "detailedLabel"?: string;
         "icon"?: StatusIcon;
         "isEditing": boolean;
@@ -268,18 +262,18 @@ export namespace Components {
         "value"?: Primitive;
         "valueColor"?: string;
     }
-    interface ScStraightLineSegment {
+    interface IotAppKitVisStraightLineSegment {
     }
-    interface ScStraightLineSegmentColored {
+    interface IotAppKitVisStraightLineSegmentColored {
     }
-    interface ScThresholdLegend {
+    interface IotAppKitVisThresholdLegend {
         "thresholds": Threshold[];
     }
-    interface ScThresholdLegendRow {
+    interface IotAppKitVisThresholdLegendRow {
         "color": string;
         "label": string;
     }
-    interface ScTooltip {
+    interface IotAppKitVisTooltip {
         /**
           * If we are drawing data from the data timestamp to timestamp + resolution we want the tooltip to align on the left side  Otherwise we are drawing the data from timestamp - resolution to timestamp then we want the tooltip to align on the right side
          */
@@ -301,7 +295,7 @@ export namespace Components {
         "viewport": ViewPort;
         "visualizesAlarms": boolean;
     }
-    interface ScTooltipRow {
+    interface IotAppKitVisTooltipRow {
         "aggregationType"?: string;
         "color": string;
         "icon"?: StatusIcon;
@@ -312,7 +306,7 @@ export namespace Components {
         "showDataStreamColor": boolean;
         "valueColor"?: string;
     }
-    interface ScTooltipRows {
+    interface IotAppKitVisTooltipRows {
         /**
           * If we are drawing data from the data timestamp to timestamp + resolution we want the tooltip to align on the left side  Otherwise we are drawing the data from timestamp - resolution to timestamp then we want the tooltip to align on the right side
          */
@@ -334,42 +328,42 @@ export namespace Components {
         "viewport": ViewPort;
         "visualizesAlarms": boolean;
     }
-    interface ScWebglAxis {
+    interface IotAppKitVisWebglAxis {
         "size": SizeConfig;
     }
-    interface ScWebglBarChartDynamicBuffer {
+    interface IotAppKitVisWebglBarChartDynamicBuffer {
     }
-    interface ScWebglBarChartDynamicData {
+    interface IotAppKitVisWebglBarChartDynamicData {
     }
-    interface ScWebglBarChartDynamicDataStreams {
+    interface IotAppKitVisWebglBarChartDynamicDataStreams {
     }
-    interface ScWebglBarChartFastViewport {
+    interface IotAppKitVisWebglBarChartFastViewport {
     }
-    interface ScWebglBarChartMargin {
+    interface IotAppKitVisWebglBarChartMargin {
     }
-    interface ScWebglBarChartNegative {
+    interface IotAppKitVisWebglBarChartNegative {
     }
-    interface ScWebglBarChartPositiveNegative {
+    interface IotAppKitVisWebglBarChartPositiveNegative {
     }
-    interface ScWebglBarChartStandard {
+    interface IotAppKitVisWebglBarChartStandard {
     }
-    interface ScWebglBarChartStartFromZero {
+    interface IotAppKitVisWebglBarChartStartFromZero {
     }
-    interface ScWebglBarChartThresholdColoration {
+    interface IotAppKitVisWebglBarChartThresholdColoration {
     }
-    interface ScWebglBarChartThresholdColorationBand {
+    interface IotAppKitVisWebglBarChartThresholdColorationBand {
     }
-    interface ScWebglBarChartThresholdColorationExactPoint {
+    interface IotAppKitVisWebglBarChartThresholdColorationExactPoint {
     }
-    interface ScWebglBarChartThresholdColorationMultipleDataStream {
+    interface IotAppKitVisWebglBarChartThresholdColorationMultipleDataStream {
     }
-    interface ScWebglBarChartThresholdColorationMultipleThresholds {
+    interface IotAppKitVisWebglBarChartThresholdColorationMultipleThresholds {
     }
-    interface ScWebglBarChartThresholdNoColoration {
+    interface IotAppKitVisWebglBarChartThresholdNoColoration {
     }
-    interface ScWebglBarChartUnsupportedDataTypes {
+    interface IotAppKitVisWebglBarChartUnsupportedDataTypes {
     }
-    interface ScWebglBaseChart {
+    interface IotAppKitVisWebglBaseChart {
         "alarms"?: AlarmsConfig;
         "annotations": Annotations;
         "axis"?: Axis.Options;
@@ -409,53 +403,59 @@ export namespace Components {
         "visualizesAlarms": boolean;
         "yRangeStartFromZero": boolean;
     }
-    interface ScWebglChartAnnotationEditable {
+    interface IotAppKitVisWebglChartAnnotationEditable {
     }
-    interface ScWebglChartAnnotations {
+    interface IotAppKitVisWebglChartAnnotations {
     }
-    interface ScWebglChartAnnotationsAlwaysInViewport {
+    interface IotAppKitVisWebglChartAnnotationsAlwaysInViewport {
     }
-    interface ScWebglChartAxis {
+    interface IotAppKitVisWebglChartAxis {
     }
-    interface ScWebglChartDynamicCharts {
+    interface IotAppKitVisWebglChartDynamicCharts {
     }
-    interface ScWebglChartLargeViewport {
+    interface IotAppKitVisWebglChartLargeViewport {
     }
-    interface ScWebglChartMulti {
+    interface IotAppKitVisWebglChartMulti {
     }
-    interface ScWebglChartNoAnnotations {
+    interface IotAppKitVisWebglChartNoAnnotations {
     }
-    interface ScWebglChartStandard {
+    interface IotAppKitVisWebglChartStandard {
     }
-    interface ScWebglChartStandardWithLegend {
+    interface IotAppKitVisWebglChartStandardWithLegend {
     }
-    interface ScWebglChartStandardWithLegendOnRight {
+    interface IotAppKitVisWebglChartStandardWithLegendOnRight {
     }
-    interface ScWebglChartThresholdColorationBand {
+    interface IotAppKitVisWebglChartThresholdColorationBand {
     }
-    interface ScWebglChartThresholdColorationExactPoint {
+    interface IotAppKitVisWebglChartThresholdColorationExactPoint {
     }
-    interface ScWebglChartThresholdColorationMultipleDataStream {
+    interface IotAppKitVisWebglChartThresholdColorationMultipleDataStream {
     }
-    interface ScWebglChartThresholdColorationMultipleThresholds {
+    interface IotAppKitVisWebglChartThresholdColorationMultipleThresholds {
     }
-    interface ScWebglChartThresholdColorationSplitHalf {
+    interface IotAppKitVisWebglChartThresholdColorationSplitHalf {
     }
-    interface ScWebglChartTooltipWithMultipleDataStreams {
+    interface IotAppKitVisWebglChartTooltipWithMultipleDataStreams {
     }
-    interface ScWebglContext {
+    interface IotAppKitVisWebglContext {
         "onContextInitialization": (context: WebGLRenderingContext) => void;
         "viewFrame": HTMLElement | Window | undefined;
     }
-    interface ScWebglContextNested {
+    interface IotAppKitVisWebglContextNested {
     }
-    interface ScWebglContextRoot {
+    interface IotAppKitVisWebglContextRoot {
     }
-    interface ScWebglLineChartDynamicBuffer {
+    interface IotAppKitVisWebglLineChartDynamicBuffer {
     }
-    interface ScWebglLineChartDynamicData {
+    interface IotAppKitVisWebglLineChartDynamicData {
     }
-    interface ScWebglLineChartDynamicDataStreams {
+    interface IotAppKitVisWebglLineChartDynamicDataStreams {
+    }
+    interface LineChartUnsupportedDataTypes {
+    }
+    interface LineChartViewportChange {
+    }
+    interface MultipleStatuses {
     }
     interface SingleColoredStatus {
     }
@@ -497,6 +497,540 @@ export namespace Components {
     }
 }
 declare global {
+    interface HTMLIotAppKitVisAngledLineSegmentElement extends Components.IotAppKitVisAngledLineSegment, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisAngledLineSegmentElement: {
+        prototype: HTMLIotAppKitVisAngledLineSegmentElement;
+        new (): HTMLIotAppKitVisAngledLineSegmentElement;
+    };
+    interface HTMLIotAppKitVisAnnotationsDraggableMultiElement extends Components.IotAppKitVisAnnotationsDraggableMulti, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisAnnotationsDraggableMultiElement: {
+        prototype: HTMLIotAppKitVisAnnotationsDraggableMultiElement;
+        new (): HTMLIotAppKitVisAnnotationsDraggableMultiElement;
+    };
+    interface HTMLIotAppKitVisAppElement extends Components.IotAppKitVisApp, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisAppElement: {
+        prototype: HTMLIotAppKitVisAppElement;
+        new (): HTMLIotAppKitVisAppElement;
+    };
+    interface HTMLIotAppKitVisBarChartElement extends Components.IotAppKitVisBarChart, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisBarChartElement: {
+        prototype: HTMLIotAppKitVisBarChartElement;
+        new (): HTMLIotAppKitVisBarChartElement;
+    };
+    interface HTMLIotAppKitVisBoxElement extends Components.IotAppKitVisBox, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisBoxElement: {
+        prototype: HTMLIotAppKitVisBoxElement;
+        new (): HTMLIotAppKitVisBoxElement;
+    };
+    interface HTMLIotAppKitVisChartIconElement extends Components.IotAppKitVisChartIcon, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisChartIconElement: {
+        prototype: HTMLIotAppKitVisChartIconElement;
+        new (): HTMLIotAppKitVisChartIconElement;
+    };
+    interface HTMLIotAppKitVisChartYRangeElement extends Components.IotAppKitVisChartYRange, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisChartYRangeElement: {
+        prototype: HTMLIotAppKitVisChartYRangeElement;
+        new (): HTMLIotAppKitVisChartYRangeElement;
+    };
+    interface HTMLIotAppKitVisCirclePointShadersElement extends Components.IotAppKitVisCirclePointShaders, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisCirclePointShadersElement: {
+        prototype: HTMLIotAppKitVisCirclePointShadersElement;
+        new (): HTMLIotAppKitVisCirclePointShadersElement;
+    };
+    interface HTMLIotAppKitVisDataStreamNameElement extends Components.IotAppKitVisDataStreamName, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisDataStreamNameElement: {
+        prototype: HTMLIotAppKitVisDataStreamNameElement;
+        new (): HTMLIotAppKitVisDataStreamNameElement;
+    };
+    interface HTMLIotAppKitVisErrorBadgeElement extends Components.IotAppKitVisErrorBadge, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisErrorBadgeElement: {
+        prototype: HTMLIotAppKitVisErrorBadgeElement;
+        new (): HTMLIotAppKitVisErrorBadgeElement;
+    };
+    interface HTMLIotAppKitVisExpandableInputElement extends Components.IotAppKitVisExpandableInput, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisExpandableInputElement: {
+        prototype: HTMLIotAppKitVisExpandableInputElement;
+        new (): HTMLIotAppKitVisExpandableInputElement;
+    };
+    interface HTMLIotAppKitVisExpandableInputStandardElement extends Components.IotAppKitVisExpandableInputStandard, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisExpandableInputStandardElement: {
+        prototype: HTMLIotAppKitVisExpandableInputStandardElement;
+        new (): HTMLIotAppKitVisExpandableInputStandardElement;
+    };
+    interface HTMLIotAppKitVisGestureHandlerElement extends Components.IotAppKitVisGestureHandler, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisGestureHandlerElement: {
+        prototype: HTMLIotAppKitVisGestureHandlerElement;
+        new (): HTMLIotAppKitVisGestureHandlerElement;
+    };
+    interface HTMLIotAppKitVisLegendElement extends Components.IotAppKitVisLegend, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisLegendElement: {
+        prototype: HTMLIotAppKitVisLegendElement;
+        new (): HTMLIotAppKitVisLegendElement;
+    };
+    interface HTMLIotAppKitVisLegendRowElement extends Components.IotAppKitVisLegendRow, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisLegendRowElement: {
+        prototype: HTMLIotAppKitVisLegendRowElement;
+        new (): HTMLIotAppKitVisLegendRowElement;
+    };
+    interface HTMLIotAppKitVisLineChartElement extends Components.IotAppKitVisLineChart, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisLineChartElement: {
+        prototype: HTMLIotAppKitVisLineChartElement;
+        new (): HTMLIotAppKitVisLineChartElement;
+    };
+    interface HTMLIotAppKitVisLineChartColoredPointElement extends Components.IotAppKitVisLineChartColoredPoint, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisLineChartColoredPointElement: {
+        prototype: HTMLIotAppKitVisLineChartColoredPointElement;
+        new (): HTMLIotAppKitVisLineChartColoredPointElement;
+    };
+    interface HTMLIotAppKitVisLineChartStreamDataElement extends Components.IotAppKitVisLineChartStreamData, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisLineChartStreamDataElement: {
+        prototype: HTMLIotAppKitVisLineChartStreamDataElement;
+        new (): HTMLIotAppKitVisLineChartStreamDataElement;
+    };
+    interface HTMLIotAppKitVisLoadingSpinnerElement extends Components.IotAppKitVisLoadingSpinner, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisLoadingSpinnerElement: {
+        prototype: HTMLIotAppKitVisLoadingSpinnerElement;
+        new (): HTMLIotAppKitVisLoadingSpinnerElement;
+    };
+    interface HTMLIotAppKitVisMultipleBarsElement extends Components.IotAppKitVisMultipleBars, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisMultipleBarsElement: {
+        prototype: HTMLIotAppKitVisMultipleBarsElement;
+        new (): HTMLIotAppKitVisMultipleBarsElement;
+    };
+    interface HTMLIotAppKitVisMultipleLinesElement extends Components.IotAppKitVisMultipleLines, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisMultipleLinesElement: {
+        prototype: HTMLIotAppKitVisMultipleLinesElement;
+        new (): HTMLIotAppKitVisMultipleLinesElement;
+    };
+    interface HTMLIotAppKitVisMultipleLinesOverlappingElement extends Components.IotAppKitVisMultipleLinesOverlapping, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisMultipleLinesOverlappingElement: {
+        prototype: HTMLIotAppKitVisMultipleLinesOverlappingElement;
+        new (): HTMLIotAppKitVisMultipleLinesOverlappingElement;
+    };
+    interface HTMLIotAppKitVisScatterChartElement extends Components.IotAppKitVisScatterChart, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisScatterChartElement: {
+        prototype: HTMLIotAppKitVisScatterChartElement;
+        new (): HTMLIotAppKitVisScatterChartElement;
+    };
+    interface HTMLIotAppKitVisScatterChartDynamicDataElement extends Components.IotAppKitVisScatterChartDynamicData, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisScatterChartDynamicDataElement: {
+        prototype: HTMLIotAppKitVisScatterChartDynamicDataElement;
+        new (): HTMLIotAppKitVisScatterChartDynamicDataElement;
+    };
+    interface HTMLIotAppKitVisScatterChartThresholdElement extends Components.IotAppKitVisScatterChartThreshold, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisScatterChartThresholdElement: {
+        prototype: HTMLIotAppKitVisScatterChartThresholdElement;
+        new (): HTMLIotAppKitVisScatterChartThresholdElement;
+    };
+    interface HTMLIotAppKitVisScatterChartThresholdColorationBandElement extends Components.IotAppKitVisScatterChartThresholdColorationBand, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisScatterChartThresholdColorationBandElement: {
+        prototype: HTMLIotAppKitVisScatterChartThresholdColorationBandElement;
+        new (): HTMLIotAppKitVisScatterChartThresholdColorationBandElement;
+    };
+    interface HTMLIotAppKitVisScatterChartThresholdColorationExactPointElement extends Components.IotAppKitVisScatterChartThresholdColorationExactPoint, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisScatterChartThresholdColorationExactPointElement: {
+        prototype: HTMLIotAppKitVisScatterChartThresholdColorationExactPointElement;
+        new (): HTMLIotAppKitVisScatterChartThresholdColorationExactPointElement;
+    };
+    interface HTMLIotAppKitVisScatterChartThresholdColorationMultipleDataStreamElement extends Components.IotAppKitVisScatterChartThresholdColorationMultipleDataStream, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisScatterChartThresholdColorationMultipleDataStreamElement: {
+        prototype: HTMLIotAppKitVisScatterChartThresholdColorationMultipleDataStreamElement;
+        new (): HTMLIotAppKitVisScatterChartThresholdColorationMultipleDataStreamElement;
+    };
+    interface HTMLIotAppKitVisScatterChartThresholdColorationMultipleThresholdsElement extends Components.IotAppKitVisScatterChartThresholdColorationMultipleThresholds, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisScatterChartThresholdColorationMultipleThresholdsElement: {
+        prototype: HTMLIotAppKitVisScatterChartThresholdColorationMultipleThresholdsElement;
+        new (): HTMLIotAppKitVisScatterChartThresholdColorationMultipleThresholdsElement;
+    };
+    interface HTMLIotAppKitVisScatterChartThresholdNoColorationElement extends Components.IotAppKitVisScatterChartThresholdNoColoration, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisScatterChartThresholdNoColorationElement: {
+        prototype: HTMLIotAppKitVisScatterChartThresholdNoColorationElement;
+        new (): HTMLIotAppKitVisScatterChartThresholdNoColorationElement;
+    };
+    interface HTMLIotAppKitVisScatterChartTooltipWithMultipleDataStreamsAndTrendsElement extends Components.IotAppKitVisScatterChartTooltipWithMultipleDataStreamsAndTrends, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisScatterChartTooltipWithMultipleDataStreamsAndTrendsElement: {
+        prototype: HTMLIotAppKitVisScatterChartTooltipWithMultipleDataStreamsAndTrendsElement;
+        new (): HTMLIotAppKitVisScatterChartTooltipWithMultipleDataStreamsAndTrendsElement;
+    };
+    interface HTMLIotAppKitVisScatterChartTrendLineColorConfigurationElement extends Components.IotAppKitVisScatterChartTrendLineColorConfiguration, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisScatterChartTrendLineColorConfigurationElement: {
+        prototype: HTMLIotAppKitVisScatterChartTrendLineColorConfigurationElement;
+        new (): HTMLIotAppKitVisScatterChartTrendLineColorConfigurationElement;
+    };
+    interface HTMLIotAppKitVisScatterChartTrendLineWithLegendElement extends Components.IotAppKitVisScatterChartTrendLineWithLegend, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisScatterChartTrendLineWithLegendElement: {
+        prototype: HTMLIotAppKitVisScatterChartTrendLineWithLegendElement;
+        new (): HTMLIotAppKitVisScatterChartTrendLineWithLegendElement;
+    };
+    interface HTMLIotAppKitVisScatterChartUnsupportedDataTypesElement extends Components.IotAppKitVisScatterChartUnsupportedDataTypes, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisScatterChartUnsupportedDataTypesElement: {
+        prototype: HTMLIotAppKitVisScatterChartUnsupportedDataTypesElement;
+        new (): HTMLIotAppKitVisScatterChartUnsupportedDataTypesElement;
+    };
+    interface HTMLIotAppKitVisSingleBarElement extends Components.IotAppKitVisSingleBar, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisSingleBarElement: {
+        prototype: HTMLIotAppKitVisSingleBarElement;
+        new (): HTMLIotAppKitVisSingleBarElement;
+    };
+    interface HTMLIotAppKitVisSingleColoredBarElement extends Components.IotAppKitVisSingleColoredBar, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisSingleColoredBarElement: {
+        prototype: HTMLIotAppKitVisSingleColoredBarElement;
+        new (): HTMLIotAppKitVisSingleColoredBarElement;
+    };
+    interface HTMLIotAppKitVisSizeProviderElement extends Components.IotAppKitVisSizeProvider, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisSizeProviderElement: {
+        prototype: HTMLIotAppKitVisSizeProviderElement;
+        new (): HTMLIotAppKitVisSizeProviderElement;
+    };
+    interface HTMLIotAppKitVisSizeProviderStandardElement extends Components.IotAppKitVisSizeProviderStandard, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisSizeProviderStandardElement: {
+        prototype: HTMLIotAppKitVisSizeProviderStandardElement;
+        new (): HTMLIotAppKitVisSizeProviderStandardElement;
+    };
+    interface HTMLIotAppKitVisStatusTimelineElement extends Components.IotAppKitVisStatusTimeline, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisStatusTimelineElement: {
+        prototype: HTMLIotAppKitVisStatusTimelineElement;
+        new (): HTMLIotAppKitVisStatusTimelineElement;
+    };
+    interface HTMLIotAppKitVisStatusTimelineOverlayElement extends Components.IotAppKitVisStatusTimelineOverlay, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisStatusTimelineOverlayElement: {
+        prototype: HTMLIotAppKitVisStatusTimelineOverlayElement;
+        new (): HTMLIotAppKitVisStatusTimelineOverlayElement;
+    };
+    interface HTMLIotAppKitVisStatusTimelineOverlayRowElement extends Components.IotAppKitVisStatusTimelineOverlayRow, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisStatusTimelineOverlayRowElement: {
+        prototype: HTMLIotAppKitVisStatusTimelineOverlayRowElement;
+        new (): HTMLIotAppKitVisStatusTimelineOverlayRowElement;
+    };
+    interface HTMLIotAppKitVisStraightLineSegmentElement extends Components.IotAppKitVisStraightLineSegment, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisStraightLineSegmentElement: {
+        prototype: HTMLIotAppKitVisStraightLineSegmentElement;
+        new (): HTMLIotAppKitVisStraightLineSegmentElement;
+    };
+    interface HTMLIotAppKitVisStraightLineSegmentColoredElement extends Components.IotAppKitVisStraightLineSegmentColored, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisStraightLineSegmentColoredElement: {
+        prototype: HTMLIotAppKitVisStraightLineSegmentColoredElement;
+        new (): HTMLIotAppKitVisStraightLineSegmentColoredElement;
+    };
+    interface HTMLIotAppKitVisThresholdLegendElement extends Components.IotAppKitVisThresholdLegend, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisThresholdLegendElement: {
+        prototype: HTMLIotAppKitVisThresholdLegendElement;
+        new (): HTMLIotAppKitVisThresholdLegendElement;
+    };
+    interface HTMLIotAppKitVisThresholdLegendRowElement extends Components.IotAppKitVisThresholdLegendRow, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisThresholdLegendRowElement: {
+        prototype: HTMLIotAppKitVisThresholdLegendRowElement;
+        new (): HTMLIotAppKitVisThresholdLegendRowElement;
+    };
+    interface HTMLIotAppKitVisTooltipElement extends Components.IotAppKitVisTooltip, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisTooltipElement: {
+        prototype: HTMLIotAppKitVisTooltipElement;
+        new (): HTMLIotAppKitVisTooltipElement;
+    };
+    interface HTMLIotAppKitVisTooltipRowElement extends Components.IotAppKitVisTooltipRow, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisTooltipRowElement: {
+        prototype: HTMLIotAppKitVisTooltipRowElement;
+        new (): HTMLIotAppKitVisTooltipRowElement;
+    };
+    interface HTMLIotAppKitVisTooltipRowsElement extends Components.IotAppKitVisTooltipRows, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisTooltipRowsElement: {
+        prototype: HTMLIotAppKitVisTooltipRowsElement;
+        new (): HTMLIotAppKitVisTooltipRowsElement;
+    };
+    interface HTMLIotAppKitVisWebglAxisElement extends Components.IotAppKitVisWebglAxis, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisWebglAxisElement: {
+        prototype: HTMLIotAppKitVisWebglAxisElement;
+        new (): HTMLIotAppKitVisWebglAxisElement;
+    };
+    interface HTMLIotAppKitVisWebglBarChartDynamicBufferElement extends Components.IotAppKitVisWebglBarChartDynamicBuffer, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisWebglBarChartDynamicBufferElement: {
+        prototype: HTMLIotAppKitVisWebglBarChartDynamicBufferElement;
+        new (): HTMLIotAppKitVisWebglBarChartDynamicBufferElement;
+    };
+    interface HTMLIotAppKitVisWebglBarChartDynamicDataElement extends Components.IotAppKitVisWebglBarChartDynamicData, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisWebglBarChartDynamicDataElement: {
+        prototype: HTMLIotAppKitVisWebglBarChartDynamicDataElement;
+        new (): HTMLIotAppKitVisWebglBarChartDynamicDataElement;
+    };
+    interface HTMLIotAppKitVisWebglBarChartDynamicDataStreamsElement extends Components.IotAppKitVisWebglBarChartDynamicDataStreams, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisWebglBarChartDynamicDataStreamsElement: {
+        prototype: HTMLIotAppKitVisWebglBarChartDynamicDataStreamsElement;
+        new (): HTMLIotAppKitVisWebglBarChartDynamicDataStreamsElement;
+    };
+    interface HTMLIotAppKitVisWebglBarChartFastViewportElement extends Components.IotAppKitVisWebglBarChartFastViewport, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisWebglBarChartFastViewportElement: {
+        prototype: HTMLIotAppKitVisWebglBarChartFastViewportElement;
+        new (): HTMLIotAppKitVisWebglBarChartFastViewportElement;
+    };
+    interface HTMLIotAppKitVisWebglBarChartMarginElement extends Components.IotAppKitVisWebglBarChartMargin, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisWebglBarChartMarginElement: {
+        prototype: HTMLIotAppKitVisWebglBarChartMarginElement;
+        new (): HTMLIotAppKitVisWebglBarChartMarginElement;
+    };
+    interface HTMLIotAppKitVisWebglBarChartNegativeElement extends Components.IotAppKitVisWebglBarChartNegative, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisWebglBarChartNegativeElement: {
+        prototype: HTMLIotAppKitVisWebglBarChartNegativeElement;
+        new (): HTMLIotAppKitVisWebglBarChartNegativeElement;
+    };
+    interface HTMLIotAppKitVisWebglBarChartPositiveNegativeElement extends Components.IotAppKitVisWebglBarChartPositiveNegative, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisWebglBarChartPositiveNegativeElement: {
+        prototype: HTMLIotAppKitVisWebglBarChartPositiveNegativeElement;
+        new (): HTMLIotAppKitVisWebglBarChartPositiveNegativeElement;
+    };
+    interface HTMLIotAppKitVisWebglBarChartStandardElement extends Components.IotAppKitVisWebglBarChartStandard, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisWebglBarChartStandardElement: {
+        prototype: HTMLIotAppKitVisWebglBarChartStandardElement;
+        new (): HTMLIotAppKitVisWebglBarChartStandardElement;
+    };
+    interface HTMLIotAppKitVisWebglBarChartStartFromZeroElement extends Components.IotAppKitVisWebglBarChartStartFromZero, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisWebglBarChartStartFromZeroElement: {
+        prototype: HTMLIotAppKitVisWebglBarChartStartFromZeroElement;
+        new (): HTMLIotAppKitVisWebglBarChartStartFromZeroElement;
+    };
+    interface HTMLIotAppKitVisWebglBarChartThresholdColorationElement extends Components.IotAppKitVisWebglBarChartThresholdColoration, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisWebglBarChartThresholdColorationElement: {
+        prototype: HTMLIotAppKitVisWebglBarChartThresholdColorationElement;
+        new (): HTMLIotAppKitVisWebglBarChartThresholdColorationElement;
+    };
+    interface HTMLIotAppKitVisWebglBarChartThresholdColorationBandElement extends Components.IotAppKitVisWebglBarChartThresholdColorationBand, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisWebglBarChartThresholdColorationBandElement: {
+        prototype: HTMLIotAppKitVisWebglBarChartThresholdColorationBandElement;
+        new (): HTMLIotAppKitVisWebglBarChartThresholdColorationBandElement;
+    };
+    interface HTMLIotAppKitVisWebglBarChartThresholdColorationExactPointElement extends Components.IotAppKitVisWebglBarChartThresholdColorationExactPoint, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisWebglBarChartThresholdColorationExactPointElement: {
+        prototype: HTMLIotAppKitVisWebglBarChartThresholdColorationExactPointElement;
+        new (): HTMLIotAppKitVisWebglBarChartThresholdColorationExactPointElement;
+    };
+    interface HTMLIotAppKitVisWebglBarChartThresholdColorationMultipleDataStreamElement extends Components.IotAppKitVisWebglBarChartThresholdColorationMultipleDataStream, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisWebglBarChartThresholdColorationMultipleDataStreamElement: {
+        prototype: HTMLIotAppKitVisWebglBarChartThresholdColorationMultipleDataStreamElement;
+        new (): HTMLIotAppKitVisWebglBarChartThresholdColorationMultipleDataStreamElement;
+    };
+    interface HTMLIotAppKitVisWebglBarChartThresholdColorationMultipleThresholdsElement extends Components.IotAppKitVisWebglBarChartThresholdColorationMultipleThresholds, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisWebglBarChartThresholdColorationMultipleThresholdsElement: {
+        prototype: HTMLIotAppKitVisWebglBarChartThresholdColorationMultipleThresholdsElement;
+        new (): HTMLIotAppKitVisWebglBarChartThresholdColorationMultipleThresholdsElement;
+    };
+    interface HTMLIotAppKitVisWebglBarChartThresholdNoColorationElement extends Components.IotAppKitVisWebglBarChartThresholdNoColoration, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisWebglBarChartThresholdNoColorationElement: {
+        prototype: HTMLIotAppKitVisWebglBarChartThresholdNoColorationElement;
+        new (): HTMLIotAppKitVisWebglBarChartThresholdNoColorationElement;
+    };
+    interface HTMLIotAppKitVisWebglBarChartUnsupportedDataTypesElement extends Components.IotAppKitVisWebglBarChartUnsupportedDataTypes, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisWebglBarChartUnsupportedDataTypesElement: {
+        prototype: HTMLIotAppKitVisWebglBarChartUnsupportedDataTypesElement;
+        new (): HTMLIotAppKitVisWebglBarChartUnsupportedDataTypesElement;
+    };
+    interface HTMLIotAppKitVisWebglBaseChartElement extends Components.IotAppKitVisWebglBaseChart, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisWebglBaseChartElement: {
+        prototype: HTMLIotAppKitVisWebglBaseChartElement;
+        new (): HTMLIotAppKitVisWebglBaseChartElement;
+    };
+    interface HTMLIotAppKitVisWebglChartAnnotationEditableElement extends Components.IotAppKitVisWebglChartAnnotationEditable, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisWebglChartAnnotationEditableElement: {
+        prototype: HTMLIotAppKitVisWebglChartAnnotationEditableElement;
+        new (): HTMLIotAppKitVisWebglChartAnnotationEditableElement;
+    };
+    interface HTMLIotAppKitVisWebglChartAnnotationsElement extends Components.IotAppKitVisWebglChartAnnotations, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisWebglChartAnnotationsElement: {
+        prototype: HTMLIotAppKitVisWebglChartAnnotationsElement;
+        new (): HTMLIotAppKitVisWebglChartAnnotationsElement;
+    };
+    interface HTMLIotAppKitVisWebglChartAnnotationsAlwaysInViewportElement extends Components.IotAppKitVisWebglChartAnnotationsAlwaysInViewport, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisWebglChartAnnotationsAlwaysInViewportElement: {
+        prototype: HTMLIotAppKitVisWebglChartAnnotationsAlwaysInViewportElement;
+        new (): HTMLIotAppKitVisWebglChartAnnotationsAlwaysInViewportElement;
+    };
+    interface HTMLIotAppKitVisWebglChartAxisElement extends Components.IotAppKitVisWebglChartAxis, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisWebglChartAxisElement: {
+        prototype: HTMLIotAppKitVisWebglChartAxisElement;
+        new (): HTMLIotAppKitVisWebglChartAxisElement;
+    };
+    interface HTMLIotAppKitVisWebglChartDynamicChartsElement extends Components.IotAppKitVisWebglChartDynamicCharts, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisWebglChartDynamicChartsElement: {
+        prototype: HTMLIotAppKitVisWebglChartDynamicChartsElement;
+        new (): HTMLIotAppKitVisWebglChartDynamicChartsElement;
+    };
+    interface HTMLIotAppKitVisWebglChartLargeViewportElement extends Components.IotAppKitVisWebglChartLargeViewport, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisWebglChartLargeViewportElement: {
+        prototype: HTMLIotAppKitVisWebglChartLargeViewportElement;
+        new (): HTMLIotAppKitVisWebglChartLargeViewportElement;
+    };
+    interface HTMLIotAppKitVisWebglChartMultiElement extends Components.IotAppKitVisWebglChartMulti, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisWebglChartMultiElement: {
+        prototype: HTMLIotAppKitVisWebglChartMultiElement;
+        new (): HTMLIotAppKitVisWebglChartMultiElement;
+    };
+    interface HTMLIotAppKitVisWebglChartNoAnnotationsElement extends Components.IotAppKitVisWebglChartNoAnnotations, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisWebglChartNoAnnotationsElement: {
+        prototype: HTMLIotAppKitVisWebglChartNoAnnotationsElement;
+        new (): HTMLIotAppKitVisWebglChartNoAnnotationsElement;
+    };
+    interface HTMLIotAppKitVisWebglChartStandardElement extends Components.IotAppKitVisWebglChartStandard, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisWebglChartStandardElement: {
+        prototype: HTMLIotAppKitVisWebglChartStandardElement;
+        new (): HTMLIotAppKitVisWebglChartStandardElement;
+    };
+    interface HTMLIotAppKitVisWebglChartStandardWithLegendElement extends Components.IotAppKitVisWebglChartStandardWithLegend, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisWebglChartStandardWithLegendElement: {
+        prototype: HTMLIotAppKitVisWebglChartStandardWithLegendElement;
+        new (): HTMLIotAppKitVisWebglChartStandardWithLegendElement;
+    };
+    interface HTMLIotAppKitVisWebglChartStandardWithLegendOnRightElement extends Components.IotAppKitVisWebglChartStandardWithLegendOnRight, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisWebglChartStandardWithLegendOnRightElement: {
+        prototype: HTMLIotAppKitVisWebglChartStandardWithLegendOnRightElement;
+        new (): HTMLIotAppKitVisWebglChartStandardWithLegendOnRightElement;
+    };
+    interface HTMLIotAppKitVisWebglChartThresholdColorationBandElement extends Components.IotAppKitVisWebglChartThresholdColorationBand, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisWebglChartThresholdColorationBandElement: {
+        prototype: HTMLIotAppKitVisWebglChartThresholdColorationBandElement;
+        new (): HTMLIotAppKitVisWebglChartThresholdColorationBandElement;
+    };
+    interface HTMLIotAppKitVisWebglChartThresholdColorationExactPointElement extends Components.IotAppKitVisWebglChartThresholdColorationExactPoint, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisWebglChartThresholdColorationExactPointElement: {
+        prototype: HTMLIotAppKitVisWebglChartThresholdColorationExactPointElement;
+        new (): HTMLIotAppKitVisWebglChartThresholdColorationExactPointElement;
+    };
+    interface HTMLIotAppKitVisWebglChartThresholdColorationMultipleDataStreamElement extends Components.IotAppKitVisWebglChartThresholdColorationMultipleDataStream, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisWebglChartThresholdColorationMultipleDataStreamElement: {
+        prototype: HTMLIotAppKitVisWebglChartThresholdColorationMultipleDataStreamElement;
+        new (): HTMLIotAppKitVisWebglChartThresholdColorationMultipleDataStreamElement;
+    };
+    interface HTMLIotAppKitVisWebglChartThresholdColorationMultipleThresholdsElement extends Components.IotAppKitVisWebglChartThresholdColorationMultipleThresholds, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisWebglChartThresholdColorationMultipleThresholdsElement: {
+        prototype: HTMLIotAppKitVisWebglChartThresholdColorationMultipleThresholdsElement;
+        new (): HTMLIotAppKitVisWebglChartThresholdColorationMultipleThresholdsElement;
+    };
+    interface HTMLIotAppKitVisWebglChartThresholdColorationSplitHalfElement extends Components.IotAppKitVisWebglChartThresholdColorationSplitHalf, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisWebglChartThresholdColorationSplitHalfElement: {
+        prototype: HTMLIotAppKitVisWebglChartThresholdColorationSplitHalfElement;
+        new (): HTMLIotAppKitVisWebglChartThresholdColorationSplitHalfElement;
+    };
+    interface HTMLIotAppKitVisWebglChartTooltipWithMultipleDataStreamsElement extends Components.IotAppKitVisWebglChartTooltipWithMultipleDataStreams, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisWebglChartTooltipWithMultipleDataStreamsElement: {
+        prototype: HTMLIotAppKitVisWebglChartTooltipWithMultipleDataStreamsElement;
+        new (): HTMLIotAppKitVisWebglChartTooltipWithMultipleDataStreamsElement;
+    };
+    interface HTMLIotAppKitVisWebglContextElement extends Components.IotAppKitVisWebglContext, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisWebglContextElement: {
+        prototype: HTMLIotAppKitVisWebglContextElement;
+        new (): HTMLIotAppKitVisWebglContextElement;
+    };
+    interface HTMLIotAppKitVisWebglContextNestedElement extends Components.IotAppKitVisWebglContextNested, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisWebglContextNestedElement: {
+        prototype: HTMLIotAppKitVisWebglContextNestedElement;
+        new (): HTMLIotAppKitVisWebglContextNestedElement;
+    };
+    interface HTMLIotAppKitVisWebglContextRootElement extends Components.IotAppKitVisWebglContextRoot, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisWebglContextRootElement: {
+        prototype: HTMLIotAppKitVisWebglContextRootElement;
+        new (): HTMLIotAppKitVisWebglContextRootElement;
+    };
+    interface HTMLIotAppKitVisWebglLineChartDynamicBufferElement extends Components.IotAppKitVisWebglLineChartDynamicBuffer, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisWebglLineChartDynamicBufferElement: {
+        prototype: HTMLIotAppKitVisWebglLineChartDynamicBufferElement;
+        new (): HTMLIotAppKitVisWebglLineChartDynamicBufferElement;
+    };
+    interface HTMLIotAppKitVisWebglLineChartDynamicDataElement extends Components.IotAppKitVisWebglLineChartDynamicData, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisWebglLineChartDynamicDataElement: {
+        prototype: HTMLIotAppKitVisWebglLineChartDynamicDataElement;
+        new (): HTMLIotAppKitVisWebglLineChartDynamicDataElement;
+    };
+    interface HTMLIotAppKitVisWebglLineChartDynamicDataStreamsElement extends Components.IotAppKitVisWebglLineChartDynamicDataStreams, HTMLStencilElement {
+    }
+    var HTMLIotAppKitVisWebglLineChartDynamicDataStreamsElement: {
+        prototype: HTMLIotAppKitVisWebglLineChartDynamicDataStreamsElement;
+        new (): HTMLIotAppKitVisWebglLineChartDynamicDataStreamsElement;
+    };
     interface HTMLLineChartUnsupportedDataTypesElement extends Components.LineChartUnsupportedDataTypes, HTMLStencilElement {
     }
     var HTMLLineChartUnsupportedDataTypesElement: {
@@ -514,540 +1048,6 @@ declare global {
     var HTMLMultipleStatusesElement: {
         prototype: HTMLMultipleStatusesElement;
         new (): HTMLMultipleStatusesElement;
-    };
-    interface HTMLScAngledLineSegmentElement extends Components.ScAngledLineSegment, HTMLStencilElement {
-    }
-    var HTMLScAngledLineSegmentElement: {
-        prototype: HTMLScAngledLineSegmentElement;
-        new (): HTMLScAngledLineSegmentElement;
-    };
-    interface HTMLScAnnotationsDraggableMultiElement extends Components.ScAnnotationsDraggableMulti, HTMLStencilElement {
-    }
-    var HTMLScAnnotationsDraggableMultiElement: {
-        prototype: HTMLScAnnotationsDraggableMultiElement;
-        new (): HTMLScAnnotationsDraggableMultiElement;
-    };
-    interface HTMLScAppElement extends Components.ScApp, HTMLStencilElement {
-    }
-    var HTMLScAppElement: {
-        prototype: HTMLScAppElement;
-        new (): HTMLScAppElement;
-    };
-    interface HTMLScBarChartElement extends Components.ScBarChart, HTMLStencilElement {
-    }
-    var HTMLScBarChartElement: {
-        prototype: HTMLScBarChartElement;
-        new (): HTMLScBarChartElement;
-    };
-    interface HTMLScBoxElement extends Components.ScBox, HTMLStencilElement {
-    }
-    var HTMLScBoxElement: {
-        prototype: HTMLScBoxElement;
-        new (): HTMLScBoxElement;
-    };
-    interface HTMLScChartIconElement extends Components.ScChartIcon, HTMLStencilElement {
-    }
-    var HTMLScChartIconElement: {
-        prototype: HTMLScChartIconElement;
-        new (): HTMLScChartIconElement;
-    };
-    interface HTMLScChartYRangeElement extends Components.ScChartYRange, HTMLStencilElement {
-    }
-    var HTMLScChartYRangeElement: {
-        prototype: HTMLScChartYRangeElement;
-        new (): HTMLScChartYRangeElement;
-    };
-    interface HTMLScCirclePointShadersElement extends Components.ScCirclePointShaders, HTMLStencilElement {
-    }
-    var HTMLScCirclePointShadersElement: {
-        prototype: HTMLScCirclePointShadersElement;
-        new (): HTMLScCirclePointShadersElement;
-    };
-    interface HTMLScDataStreamNameElement extends Components.ScDataStreamName, HTMLStencilElement {
-    }
-    var HTMLScDataStreamNameElement: {
-        prototype: HTMLScDataStreamNameElement;
-        new (): HTMLScDataStreamNameElement;
-    };
-    interface HTMLScErrorBadgeElement extends Components.ScErrorBadge, HTMLStencilElement {
-    }
-    var HTMLScErrorBadgeElement: {
-        prototype: HTMLScErrorBadgeElement;
-        new (): HTMLScErrorBadgeElement;
-    };
-    interface HTMLScExpandableInputElement extends Components.ScExpandableInput, HTMLStencilElement {
-    }
-    var HTMLScExpandableInputElement: {
-        prototype: HTMLScExpandableInputElement;
-        new (): HTMLScExpandableInputElement;
-    };
-    interface HTMLScExpandableInputStandardElement extends Components.ScExpandableInputStandard, HTMLStencilElement {
-    }
-    var HTMLScExpandableInputStandardElement: {
-        prototype: HTMLScExpandableInputStandardElement;
-        new (): HTMLScExpandableInputStandardElement;
-    };
-    interface HTMLScGestureHandlerElement extends Components.ScGestureHandler, HTMLStencilElement {
-    }
-    var HTMLScGestureHandlerElement: {
-        prototype: HTMLScGestureHandlerElement;
-        new (): HTMLScGestureHandlerElement;
-    };
-    interface HTMLScLegendElement extends Components.ScLegend, HTMLStencilElement {
-    }
-    var HTMLScLegendElement: {
-        prototype: HTMLScLegendElement;
-        new (): HTMLScLegendElement;
-    };
-    interface HTMLScLegendRowElement extends Components.ScLegendRow, HTMLStencilElement {
-    }
-    var HTMLScLegendRowElement: {
-        prototype: HTMLScLegendRowElement;
-        new (): HTMLScLegendRowElement;
-    };
-    interface HTMLScLineChartElement extends Components.ScLineChart, HTMLStencilElement {
-    }
-    var HTMLScLineChartElement: {
-        prototype: HTMLScLineChartElement;
-        new (): HTMLScLineChartElement;
-    };
-    interface HTMLScLineChartColoredPointElement extends Components.ScLineChartColoredPoint, HTMLStencilElement {
-    }
-    var HTMLScLineChartColoredPointElement: {
-        prototype: HTMLScLineChartColoredPointElement;
-        new (): HTMLScLineChartColoredPointElement;
-    };
-    interface HTMLScLineChartStreamDataElement extends Components.ScLineChartStreamData, HTMLStencilElement {
-    }
-    var HTMLScLineChartStreamDataElement: {
-        prototype: HTMLScLineChartStreamDataElement;
-        new (): HTMLScLineChartStreamDataElement;
-    };
-    interface HTMLScLoadingSpinnerElement extends Components.ScLoadingSpinner, HTMLStencilElement {
-    }
-    var HTMLScLoadingSpinnerElement: {
-        prototype: HTMLScLoadingSpinnerElement;
-        new (): HTMLScLoadingSpinnerElement;
-    };
-    interface HTMLScMultipleBarsElement extends Components.ScMultipleBars, HTMLStencilElement {
-    }
-    var HTMLScMultipleBarsElement: {
-        prototype: HTMLScMultipleBarsElement;
-        new (): HTMLScMultipleBarsElement;
-    };
-    interface HTMLScMultipleLinesElement extends Components.ScMultipleLines, HTMLStencilElement {
-    }
-    var HTMLScMultipleLinesElement: {
-        prototype: HTMLScMultipleLinesElement;
-        new (): HTMLScMultipleLinesElement;
-    };
-    interface HTMLScMultipleLinesOverlappingElement extends Components.ScMultipleLinesOverlapping, HTMLStencilElement {
-    }
-    var HTMLScMultipleLinesOverlappingElement: {
-        prototype: HTMLScMultipleLinesOverlappingElement;
-        new (): HTMLScMultipleLinesOverlappingElement;
-    };
-    interface HTMLScScatterChartElement extends Components.ScScatterChart, HTMLStencilElement {
-    }
-    var HTMLScScatterChartElement: {
-        prototype: HTMLScScatterChartElement;
-        new (): HTMLScScatterChartElement;
-    };
-    interface HTMLScScatterChartDynamicDataElement extends Components.ScScatterChartDynamicData, HTMLStencilElement {
-    }
-    var HTMLScScatterChartDynamicDataElement: {
-        prototype: HTMLScScatterChartDynamicDataElement;
-        new (): HTMLScScatterChartDynamicDataElement;
-    };
-    interface HTMLScScatterChartThresholdElement extends Components.ScScatterChartThreshold, HTMLStencilElement {
-    }
-    var HTMLScScatterChartThresholdElement: {
-        prototype: HTMLScScatterChartThresholdElement;
-        new (): HTMLScScatterChartThresholdElement;
-    };
-    interface HTMLScScatterChartThresholdColorationBandElement extends Components.ScScatterChartThresholdColorationBand, HTMLStencilElement {
-    }
-    var HTMLScScatterChartThresholdColorationBandElement: {
-        prototype: HTMLScScatterChartThresholdColorationBandElement;
-        new (): HTMLScScatterChartThresholdColorationBandElement;
-    };
-    interface HTMLScScatterChartThresholdColorationExactPointElement extends Components.ScScatterChartThresholdColorationExactPoint, HTMLStencilElement {
-    }
-    var HTMLScScatterChartThresholdColorationExactPointElement: {
-        prototype: HTMLScScatterChartThresholdColorationExactPointElement;
-        new (): HTMLScScatterChartThresholdColorationExactPointElement;
-    };
-    interface HTMLScScatterChartThresholdColorationMultipleDataStreamElement extends Components.ScScatterChartThresholdColorationMultipleDataStream, HTMLStencilElement {
-    }
-    var HTMLScScatterChartThresholdColorationMultipleDataStreamElement: {
-        prototype: HTMLScScatterChartThresholdColorationMultipleDataStreamElement;
-        new (): HTMLScScatterChartThresholdColorationMultipleDataStreamElement;
-    };
-    interface HTMLScScatterChartThresholdColorationMultipleThresholdsElement extends Components.ScScatterChartThresholdColorationMultipleThresholds, HTMLStencilElement {
-    }
-    var HTMLScScatterChartThresholdColorationMultipleThresholdsElement: {
-        prototype: HTMLScScatterChartThresholdColorationMultipleThresholdsElement;
-        new (): HTMLScScatterChartThresholdColorationMultipleThresholdsElement;
-    };
-    interface HTMLScScatterChartThresholdNoColorationElement extends Components.ScScatterChartThresholdNoColoration, HTMLStencilElement {
-    }
-    var HTMLScScatterChartThresholdNoColorationElement: {
-        prototype: HTMLScScatterChartThresholdNoColorationElement;
-        new (): HTMLScScatterChartThresholdNoColorationElement;
-    };
-    interface HTMLScScatterChartTooltipWithMultipleDataStreamsAndTrendsElement extends Components.ScScatterChartTooltipWithMultipleDataStreamsAndTrends, HTMLStencilElement {
-    }
-    var HTMLScScatterChartTooltipWithMultipleDataStreamsAndTrendsElement: {
-        prototype: HTMLScScatterChartTooltipWithMultipleDataStreamsAndTrendsElement;
-        new (): HTMLScScatterChartTooltipWithMultipleDataStreamsAndTrendsElement;
-    };
-    interface HTMLScScatterChartTrendLineColorConfigurationElement extends Components.ScScatterChartTrendLineColorConfiguration, HTMLStencilElement {
-    }
-    var HTMLScScatterChartTrendLineColorConfigurationElement: {
-        prototype: HTMLScScatterChartTrendLineColorConfigurationElement;
-        new (): HTMLScScatterChartTrendLineColorConfigurationElement;
-    };
-    interface HTMLScScatterChartTrendLineWithLegendElement extends Components.ScScatterChartTrendLineWithLegend, HTMLStencilElement {
-    }
-    var HTMLScScatterChartTrendLineWithLegendElement: {
-        prototype: HTMLScScatterChartTrendLineWithLegendElement;
-        new (): HTMLScScatterChartTrendLineWithLegendElement;
-    };
-    interface HTMLScScatterChartUnsupportedDataTypesElement extends Components.ScScatterChartUnsupportedDataTypes, HTMLStencilElement {
-    }
-    var HTMLScScatterChartUnsupportedDataTypesElement: {
-        prototype: HTMLScScatterChartUnsupportedDataTypesElement;
-        new (): HTMLScScatterChartUnsupportedDataTypesElement;
-    };
-    interface HTMLScSingleBarElement extends Components.ScSingleBar, HTMLStencilElement {
-    }
-    var HTMLScSingleBarElement: {
-        prototype: HTMLScSingleBarElement;
-        new (): HTMLScSingleBarElement;
-    };
-    interface HTMLScSingleColoredBarElement extends Components.ScSingleColoredBar, HTMLStencilElement {
-    }
-    var HTMLScSingleColoredBarElement: {
-        prototype: HTMLScSingleColoredBarElement;
-        new (): HTMLScSingleColoredBarElement;
-    };
-    interface HTMLScSizeProviderElement extends Components.ScSizeProvider, HTMLStencilElement {
-    }
-    var HTMLScSizeProviderElement: {
-        prototype: HTMLScSizeProviderElement;
-        new (): HTMLScSizeProviderElement;
-    };
-    interface HTMLScSizeProviderStandardElement extends Components.ScSizeProviderStandard, HTMLStencilElement {
-    }
-    var HTMLScSizeProviderStandardElement: {
-        prototype: HTMLScSizeProviderStandardElement;
-        new (): HTMLScSizeProviderStandardElement;
-    };
-    interface HTMLScStatusTimelineElement extends Components.ScStatusTimeline, HTMLStencilElement {
-    }
-    var HTMLScStatusTimelineElement: {
-        prototype: HTMLScStatusTimelineElement;
-        new (): HTMLScStatusTimelineElement;
-    };
-    interface HTMLScStatusTimelineOverlayElement extends Components.ScStatusTimelineOverlay, HTMLStencilElement {
-    }
-    var HTMLScStatusTimelineOverlayElement: {
-        prototype: HTMLScStatusTimelineOverlayElement;
-        new (): HTMLScStatusTimelineOverlayElement;
-    };
-    interface HTMLScStatusTimelineOverlayRowElement extends Components.ScStatusTimelineOverlayRow, HTMLStencilElement {
-    }
-    var HTMLScStatusTimelineOverlayRowElement: {
-        prototype: HTMLScStatusTimelineOverlayRowElement;
-        new (): HTMLScStatusTimelineOverlayRowElement;
-    };
-    interface HTMLScStraightLineSegmentElement extends Components.ScStraightLineSegment, HTMLStencilElement {
-    }
-    var HTMLScStraightLineSegmentElement: {
-        prototype: HTMLScStraightLineSegmentElement;
-        new (): HTMLScStraightLineSegmentElement;
-    };
-    interface HTMLScStraightLineSegmentColoredElement extends Components.ScStraightLineSegmentColored, HTMLStencilElement {
-    }
-    var HTMLScStraightLineSegmentColoredElement: {
-        prototype: HTMLScStraightLineSegmentColoredElement;
-        new (): HTMLScStraightLineSegmentColoredElement;
-    };
-    interface HTMLScThresholdLegendElement extends Components.ScThresholdLegend, HTMLStencilElement {
-    }
-    var HTMLScThresholdLegendElement: {
-        prototype: HTMLScThresholdLegendElement;
-        new (): HTMLScThresholdLegendElement;
-    };
-    interface HTMLScThresholdLegendRowElement extends Components.ScThresholdLegendRow, HTMLStencilElement {
-    }
-    var HTMLScThresholdLegendRowElement: {
-        prototype: HTMLScThresholdLegendRowElement;
-        new (): HTMLScThresholdLegendRowElement;
-    };
-    interface HTMLScTooltipElement extends Components.ScTooltip, HTMLStencilElement {
-    }
-    var HTMLScTooltipElement: {
-        prototype: HTMLScTooltipElement;
-        new (): HTMLScTooltipElement;
-    };
-    interface HTMLScTooltipRowElement extends Components.ScTooltipRow, HTMLStencilElement {
-    }
-    var HTMLScTooltipRowElement: {
-        prototype: HTMLScTooltipRowElement;
-        new (): HTMLScTooltipRowElement;
-    };
-    interface HTMLScTooltipRowsElement extends Components.ScTooltipRows, HTMLStencilElement {
-    }
-    var HTMLScTooltipRowsElement: {
-        prototype: HTMLScTooltipRowsElement;
-        new (): HTMLScTooltipRowsElement;
-    };
-    interface HTMLScWebglAxisElement extends Components.ScWebglAxis, HTMLStencilElement {
-    }
-    var HTMLScWebglAxisElement: {
-        prototype: HTMLScWebglAxisElement;
-        new (): HTMLScWebglAxisElement;
-    };
-    interface HTMLScWebglBarChartDynamicBufferElement extends Components.ScWebglBarChartDynamicBuffer, HTMLStencilElement {
-    }
-    var HTMLScWebglBarChartDynamicBufferElement: {
-        prototype: HTMLScWebglBarChartDynamicBufferElement;
-        new (): HTMLScWebglBarChartDynamicBufferElement;
-    };
-    interface HTMLScWebglBarChartDynamicDataElement extends Components.ScWebglBarChartDynamicData, HTMLStencilElement {
-    }
-    var HTMLScWebglBarChartDynamicDataElement: {
-        prototype: HTMLScWebglBarChartDynamicDataElement;
-        new (): HTMLScWebglBarChartDynamicDataElement;
-    };
-    interface HTMLScWebglBarChartDynamicDataStreamsElement extends Components.ScWebglBarChartDynamicDataStreams, HTMLStencilElement {
-    }
-    var HTMLScWebglBarChartDynamicDataStreamsElement: {
-        prototype: HTMLScWebglBarChartDynamicDataStreamsElement;
-        new (): HTMLScWebglBarChartDynamicDataStreamsElement;
-    };
-    interface HTMLScWebglBarChartFastViewportElement extends Components.ScWebglBarChartFastViewport, HTMLStencilElement {
-    }
-    var HTMLScWebglBarChartFastViewportElement: {
-        prototype: HTMLScWebglBarChartFastViewportElement;
-        new (): HTMLScWebglBarChartFastViewportElement;
-    };
-    interface HTMLScWebglBarChartMarginElement extends Components.ScWebglBarChartMargin, HTMLStencilElement {
-    }
-    var HTMLScWebglBarChartMarginElement: {
-        prototype: HTMLScWebglBarChartMarginElement;
-        new (): HTMLScWebglBarChartMarginElement;
-    };
-    interface HTMLScWebglBarChartNegativeElement extends Components.ScWebglBarChartNegative, HTMLStencilElement {
-    }
-    var HTMLScWebglBarChartNegativeElement: {
-        prototype: HTMLScWebglBarChartNegativeElement;
-        new (): HTMLScWebglBarChartNegativeElement;
-    };
-    interface HTMLScWebglBarChartPositiveNegativeElement extends Components.ScWebglBarChartPositiveNegative, HTMLStencilElement {
-    }
-    var HTMLScWebglBarChartPositiveNegativeElement: {
-        prototype: HTMLScWebglBarChartPositiveNegativeElement;
-        new (): HTMLScWebglBarChartPositiveNegativeElement;
-    };
-    interface HTMLScWebglBarChartStandardElement extends Components.ScWebglBarChartStandard, HTMLStencilElement {
-    }
-    var HTMLScWebglBarChartStandardElement: {
-        prototype: HTMLScWebglBarChartStandardElement;
-        new (): HTMLScWebglBarChartStandardElement;
-    };
-    interface HTMLScWebglBarChartStartFromZeroElement extends Components.ScWebglBarChartStartFromZero, HTMLStencilElement {
-    }
-    var HTMLScWebglBarChartStartFromZeroElement: {
-        prototype: HTMLScWebglBarChartStartFromZeroElement;
-        new (): HTMLScWebglBarChartStartFromZeroElement;
-    };
-    interface HTMLScWebglBarChartThresholdColorationElement extends Components.ScWebglBarChartThresholdColoration, HTMLStencilElement {
-    }
-    var HTMLScWebglBarChartThresholdColorationElement: {
-        prototype: HTMLScWebglBarChartThresholdColorationElement;
-        new (): HTMLScWebglBarChartThresholdColorationElement;
-    };
-    interface HTMLScWebglBarChartThresholdColorationBandElement extends Components.ScWebglBarChartThresholdColorationBand, HTMLStencilElement {
-    }
-    var HTMLScWebglBarChartThresholdColorationBandElement: {
-        prototype: HTMLScWebglBarChartThresholdColorationBandElement;
-        new (): HTMLScWebglBarChartThresholdColorationBandElement;
-    };
-    interface HTMLScWebglBarChartThresholdColorationExactPointElement extends Components.ScWebglBarChartThresholdColorationExactPoint, HTMLStencilElement {
-    }
-    var HTMLScWebglBarChartThresholdColorationExactPointElement: {
-        prototype: HTMLScWebglBarChartThresholdColorationExactPointElement;
-        new (): HTMLScWebglBarChartThresholdColorationExactPointElement;
-    };
-    interface HTMLScWebglBarChartThresholdColorationMultipleDataStreamElement extends Components.ScWebglBarChartThresholdColorationMultipleDataStream, HTMLStencilElement {
-    }
-    var HTMLScWebglBarChartThresholdColorationMultipleDataStreamElement: {
-        prototype: HTMLScWebglBarChartThresholdColorationMultipleDataStreamElement;
-        new (): HTMLScWebglBarChartThresholdColorationMultipleDataStreamElement;
-    };
-    interface HTMLScWebglBarChartThresholdColorationMultipleThresholdsElement extends Components.ScWebglBarChartThresholdColorationMultipleThresholds, HTMLStencilElement {
-    }
-    var HTMLScWebglBarChartThresholdColorationMultipleThresholdsElement: {
-        prototype: HTMLScWebglBarChartThresholdColorationMultipleThresholdsElement;
-        new (): HTMLScWebglBarChartThresholdColorationMultipleThresholdsElement;
-    };
-    interface HTMLScWebglBarChartThresholdNoColorationElement extends Components.ScWebglBarChartThresholdNoColoration, HTMLStencilElement {
-    }
-    var HTMLScWebglBarChartThresholdNoColorationElement: {
-        prototype: HTMLScWebglBarChartThresholdNoColorationElement;
-        new (): HTMLScWebglBarChartThresholdNoColorationElement;
-    };
-    interface HTMLScWebglBarChartUnsupportedDataTypesElement extends Components.ScWebglBarChartUnsupportedDataTypes, HTMLStencilElement {
-    }
-    var HTMLScWebglBarChartUnsupportedDataTypesElement: {
-        prototype: HTMLScWebglBarChartUnsupportedDataTypesElement;
-        new (): HTMLScWebglBarChartUnsupportedDataTypesElement;
-    };
-    interface HTMLScWebglBaseChartElement extends Components.ScWebglBaseChart, HTMLStencilElement {
-    }
-    var HTMLScWebglBaseChartElement: {
-        prototype: HTMLScWebglBaseChartElement;
-        new (): HTMLScWebglBaseChartElement;
-    };
-    interface HTMLScWebglChartAnnotationEditableElement extends Components.ScWebglChartAnnotationEditable, HTMLStencilElement {
-    }
-    var HTMLScWebglChartAnnotationEditableElement: {
-        prototype: HTMLScWebglChartAnnotationEditableElement;
-        new (): HTMLScWebglChartAnnotationEditableElement;
-    };
-    interface HTMLScWebglChartAnnotationsElement extends Components.ScWebglChartAnnotations, HTMLStencilElement {
-    }
-    var HTMLScWebglChartAnnotationsElement: {
-        prototype: HTMLScWebglChartAnnotationsElement;
-        new (): HTMLScWebglChartAnnotationsElement;
-    };
-    interface HTMLScWebglChartAnnotationsAlwaysInViewportElement extends Components.ScWebglChartAnnotationsAlwaysInViewport, HTMLStencilElement {
-    }
-    var HTMLScWebglChartAnnotationsAlwaysInViewportElement: {
-        prototype: HTMLScWebglChartAnnotationsAlwaysInViewportElement;
-        new (): HTMLScWebglChartAnnotationsAlwaysInViewportElement;
-    };
-    interface HTMLScWebglChartAxisElement extends Components.ScWebglChartAxis, HTMLStencilElement {
-    }
-    var HTMLScWebglChartAxisElement: {
-        prototype: HTMLScWebglChartAxisElement;
-        new (): HTMLScWebglChartAxisElement;
-    };
-    interface HTMLScWebglChartDynamicChartsElement extends Components.ScWebglChartDynamicCharts, HTMLStencilElement {
-    }
-    var HTMLScWebglChartDynamicChartsElement: {
-        prototype: HTMLScWebglChartDynamicChartsElement;
-        new (): HTMLScWebglChartDynamicChartsElement;
-    };
-    interface HTMLScWebglChartLargeViewportElement extends Components.ScWebglChartLargeViewport, HTMLStencilElement {
-    }
-    var HTMLScWebglChartLargeViewportElement: {
-        prototype: HTMLScWebglChartLargeViewportElement;
-        new (): HTMLScWebglChartLargeViewportElement;
-    };
-    interface HTMLScWebglChartMultiElement extends Components.ScWebglChartMulti, HTMLStencilElement {
-    }
-    var HTMLScWebglChartMultiElement: {
-        prototype: HTMLScWebglChartMultiElement;
-        new (): HTMLScWebglChartMultiElement;
-    };
-    interface HTMLScWebglChartNoAnnotationsElement extends Components.ScWebglChartNoAnnotations, HTMLStencilElement {
-    }
-    var HTMLScWebglChartNoAnnotationsElement: {
-        prototype: HTMLScWebglChartNoAnnotationsElement;
-        new (): HTMLScWebglChartNoAnnotationsElement;
-    };
-    interface HTMLScWebglChartStandardElement extends Components.ScWebglChartStandard, HTMLStencilElement {
-    }
-    var HTMLScWebglChartStandardElement: {
-        prototype: HTMLScWebglChartStandardElement;
-        new (): HTMLScWebglChartStandardElement;
-    };
-    interface HTMLScWebglChartStandardWithLegendElement extends Components.ScWebglChartStandardWithLegend, HTMLStencilElement {
-    }
-    var HTMLScWebglChartStandardWithLegendElement: {
-        prototype: HTMLScWebglChartStandardWithLegendElement;
-        new (): HTMLScWebglChartStandardWithLegendElement;
-    };
-    interface HTMLScWebglChartStandardWithLegendOnRightElement extends Components.ScWebglChartStandardWithLegendOnRight, HTMLStencilElement {
-    }
-    var HTMLScWebglChartStandardWithLegendOnRightElement: {
-        prototype: HTMLScWebglChartStandardWithLegendOnRightElement;
-        new (): HTMLScWebglChartStandardWithLegendOnRightElement;
-    };
-    interface HTMLScWebglChartThresholdColorationBandElement extends Components.ScWebglChartThresholdColorationBand, HTMLStencilElement {
-    }
-    var HTMLScWebglChartThresholdColorationBandElement: {
-        prototype: HTMLScWebglChartThresholdColorationBandElement;
-        new (): HTMLScWebglChartThresholdColorationBandElement;
-    };
-    interface HTMLScWebglChartThresholdColorationExactPointElement extends Components.ScWebglChartThresholdColorationExactPoint, HTMLStencilElement {
-    }
-    var HTMLScWebglChartThresholdColorationExactPointElement: {
-        prototype: HTMLScWebglChartThresholdColorationExactPointElement;
-        new (): HTMLScWebglChartThresholdColorationExactPointElement;
-    };
-    interface HTMLScWebglChartThresholdColorationMultipleDataStreamElement extends Components.ScWebglChartThresholdColorationMultipleDataStream, HTMLStencilElement {
-    }
-    var HTMLScWebglChartThresholdColorationMultipleDataStreamElement: {
-        prototype: HTMLScWebglChartThresholdColorationMultipleDataStreamElement;
-        new (): HTMLScWebglChartThresholdColorationMultipleDataStreamElement;
-    };
-    interface HTMLScWebglChartThresholdColorationMultipleThresholdsElement extends Components.ScWebglChartThresholdColorationMultipleThresholds, HTMLStencilElement {
-    }
-    var HTMLScWebglChartThresholdColorationMultipleThresholdsElement: {
-        prototype: HTMLScWebglChartThresholdColorationMultipleThresholdsElement;
-        new (): HTMLScWebglChartThresholdColorationMultipleThresholdsElement;
-    };
-    interface HTMLScWebglChartThresholdColorationSplitHalfElement extends Components.ScWebglChartThresholdColorationSplitHalf, HTMLStencilElement {
-    }
-    var HTMLScWebglChartThresholdColorationSplitHalfElement: {
-        prototype: HTMLScWebglChartThresholdColorationSplitHalfElement;
-        new (): HTMLScWebglChartThresholdColorationSplitHalfElement;
-    };
-    interface HTMLScWebglChartTooltipWithMultipleDataStreamsElement extends Components.ScWebglChartTooltipWithMultipleDataStreams, HTMLStencilElement {
-    }
-    var HTMLScWebglChartTooltipWithMultipleDataStreamsElement: {
-        prototype: HTMLScWebglChartTooltipWithMultipleDataStreamsElement;
-        new (): HTMLScWebglChartTooltipWithMultipleDataStreamsElement;
-    };
-    interface HTMLScWebglContextElement extends Components.ScWebglContext, HTMLStencilElement {
-    }
-    var HTMLScWebglContextElement: {
-        prototype: HTMLScWebglContextElement;
-        new (): HTMLScWebglContextElement;
-    };
-    interface HTMLScWebglContextNestedElement extends Components.ScWebglContextNested, HTMLStencilElement {
-    }
-    var HTMLScWebglContextNestedElement: {
-        prototype: HTMLScWebglContextNestedElement;
-        new (): HTMLScWebglContextNestedElement;
-    };
-    interface HTMLScWebglContextRootElement extends Components.ScWebglContextRoot, HTMLStencilElement {
-    }
-    var HTMLScWebglContextRootElement: {
-        prototype: HTMLScWebglContextRootElement;
-        new (): HTMLScWebglContextRootElement;
-    };
-    interface HTMLScWebglLineChartDynamicBufferElement extends Components.ScWebglLineChartDynamicBuffer, HTMLStencilElement {
-    }
-    var HTMLScWebglLineChartDynamicBufferElement: {
-        prototype: HTMLScWebglLineChartDynamicBufferElement;
-        new (): HTMLScWebglLineChartDynamicBufferElement;
-    };
-    interface HTMLScWebglLineChartDynamicDataElement extends Components.ScWebglLineChartDynamicData, HTMLStencilElement {
-    }
-    var HTMLScWebglLineChartDynamicDataElement: {
-        prototype: HTMLScWebglLineChartDynamicDataElement;
-        new (): HTMLScWebglLineChartDynamicDataElement;
-    };
-    interface HTMLScWebglLineChartDynamicDataStreamsElement extends Components.ScWebglLineChartDynamicDataStreams, HTMLStencilElement {
-    }
-    var HTMLScWebglLineChartDynamicDataStreamsElement: {
-        prototype: HTMLScWebglLineChartDynamicDataStreamsElement;
-        new (): HTMLScWebglLineChartDynamicDataStreamsElement;
     };
     interface HTMLSingleColoredStatusElement extends Components.SingleColoredStatus, HTMLStencilElement {
     }
@@ -1158,98 +1158,98 @@ declare global {
         new (): HTMLWidgetTestRouteElement;
     };
     interface HTMLElementTagNameMap {
+        "iot-app-kit-vis-angled-line-segment": HTMLIotAppKitVisAngledLineSegmentElement;
+        "iot-app-kit-vis-annotations-draggable-multi": HTMLIotAppKitVisAnnotationsDraggableMultiElement;
+        "iot-app-kit-vis-app": HTMLIotAppKitVisAppElement;
+        "iot-app-kit-vis-bar-chart": HTMLIotAppKitVisBarChartElement;
+        "iot-app-kit-vis-box": HTMLIotAppKitVisBoxElement;
+        "iot-app-kit-vis-chart-icon": HTMLIotAppKitVisChartIconElement;
+        "iot-app-kit-vis-chart-y-range": HTMLIotAppKitVisChartYRangeElement;
+        "iot-app-kit-vis-circle-point-shaders": HTMLIotAppKitVisCirclePointShadersElement;
+        "iot-app-kit-vis-data-stream-name": HTMLIotAppKitVisDataStreamNameElement;
+        "iot-app-kit-vis-error-badge": HTMLIotAppKitVisErrorBadgeElement;
+        "iot-app-kit-vis-expandable-input": HTMLIotAppKitVisExpandableInputElement;
+        "iot-app-kit-vis-expandable-input-standard": HTMLIotAppKitVisExpandableInputStandardElement;
+        "iot-app-kit-vis-gesture-handler": HTMLIotAppKitVisGestureHandlerElement;
+        "iot-app-kit-vis-legend": HTMLIotAppKitVisLegendElement;
+        "iot-app-kit-vis-legend-row": HTMLIotAppKitVisLegendRowElement;
+        "iot-app-kit-vis-line-chart": HTMLIotAppKitVisLineChartElement;
+        "iot-app-kit-vis-line-chart-colored-point": HTMLIotAppKitVisLineChartColoredPointElement;
+        "iot-app-kit-vis-line-chart-stream-data": HTMLIotAppKitVisLineChartStreamDataElement;
+        "iot-app-kit-vis-loading-spinner": HTMLIotAppKitVisLoadingSpinnerElement;
+        "iot-app-kit-vis-multiple-bars": HTMLIotAppKitVisMultipleBarsElement;
+        "iot-app-kit-vis-multiple-lines": HTMLIotAppKitVisMultipleLinesElement;
+        "iot-app-kit-vis-multiple-lines-overlapping": HTMLIotAppKitVisMultipleLinesOverlappingElement;
+        "iot-app-kit-vis-scatter-chart": HTMLIotAppKitVisScatterChartElement;
+        "iot-app-kit-vis-scatter-chart-dynamic-data": HTMLIotAppKitVisScatterChartDynamicDataElement;
+        "iot-app-kit-vis-scatter-chart-threshold": HTMLIotAppKitVisScatterChartThresholdElement;
+        "iot-app-kit-vis-scatter-chart-threshold-coloration-band": HTMLIotAppKitVisScatterChartThresholdColorationBandElement;
+        "iot-app-kit-vis-scatter-chart-threshold-coloration-exact-point": HTMLIotAppKitVisScatterChartThresholdColorationExactPointElement;
+        "iot-app-kit-vis-scatter-chart-threshold-coloration-multiple-data-stream": HTMLIotAppKitVisScatterChartThresholdColorationMultipleDataStreamElement;
+        "iot-app-kit-vis-scatter-chart-threshold-coloration-multiple-thresholds": HTMLIotAppKitVisScatterChartThresholdColorationMultipleThresholdsElement;
+        "iot-app-kit-vis-scatter-chart-threshold-no-coloration": HTMLIotAppKitVisScatterChartThresholdNoColorationElement;
+        "iot-app-kit-vis-scatter-chart-tooltip-with-multiple-data-streams-and-trends": HTMLIotAppKitVisScatterChartTooltipWithMultipleDataStreamsAndTrendsElement;
+        "iot-app-kit-vis-scatter-chart-trend-line-color-configuration": HTMLIotAppKitVisScatterChartTrendLineColorConfigurationElement;
+        "iot-app-kit-vis-scatter-chart-trend-line-with-legend": HTMLIotAppKitVisScatterChartTrendLineWithLegendElement;
+        "iot-app-kit-vis-scatter-chart-unsupported-data-types": HTMLIotAppKitVisScatterChartUnsupportedDataTypesElement;
+        "iot-app-kit-vis-single-bar": HTMLIotAppKitVisSingleBarElement;
+        "iot-app-kit-vis-single-colored-bar": HTMLIotAppKitVisSingleColoredBarElement;
+        "iot-app-kit-vis-size-provider": HTMLIotAppKitVisSizeProviderElement;
+        "iot-app-kit-vis-size-provider-standard": HTMLIotAppKitVisSizeProviderStandardElement;
+        "iot-app-kit-vis-status-timeline": HTMLIotAppKitVisStatusTimelineElement;
+        "iot-app-kit-vis-status-timeline-overlay": HTMLIotAppKitVisStatusTimelineOverlayElement;
+        "iot-app-kit-vis-status-timeline-overlay-row": HTMLIotAppKitVisStatusTimelineOverlayRowElement;
+        "iot-app-kit-vis-straight-line-segment": HTMLIotAppKitVisStraightLineSegmentElement;
+        "iot-app-kit-vis-straight-line-segment-colored": HTMLIotAppKitVisStraightLineSegmentColoredElement;
+        "iot-app-kit-vis-threshold-legend": HTMLIotAppKitVisThresholdLegendElement;
+        "iot-app-kit-vis-threshold-legend-row": HTMLIotAppKitVisThresholdLegendRowElement;
+        "iot-app-kit-vis-tooltip": HTMLIotAppKitVisTooltipElement;
+        "iot-app-kit-vis-tooltip-row": HTMLIotAppKitVisTooltipRowElement;
+        "iot-app-kit-vis-tooltip-rows": HTMLIotAppKitVisTooltipRowsElement;
+        "iot-app-kit-vis-webgl-axis": HTMLIotAppKitVisWebglAxisElement;
+        "iot-app-kit-vis-webgl-bar-chart-dynamic-buffer": HTMLIotAppKitVisWebglBarChartDynamicBufferElement;
+        "iot-app-kit-vis-webgl-bar-chart-dynamic-data": HTMLIotAppKitVisWebglBarChartDynamicDataElement;
+        "iot-app-kit-vis-webgl-bar-chart-dynamic-data-streams": HTMLIotAppKitVisWebglBarChartDynamicDataStreamsElement;
+        "iot-app-kit-vis-webgl-bar-chart-fast-viewport": HTMLIotAppKitVisWebglBarChartFastViewportElement;
+        "iot-app-kit-vis-webgl-bar-chart-margin": HTMLIotAppKitVisWebglBarChartMarginElement;
+        "iot-app-kit-vis-webgl-bar-chart-negative": HTMLIotAppKitVisWebglBarChartNegativeElement;
+        "iot-app-kit-vis-webgl-bar-chart-positive-negative": HTMLIotAppKitVisWebglBarChartPositiveNegativeElement;
+        "iot-app-kit-vis-webgl-bar-chart-standard": HTMLIotAppKitVisWebglBarChartStandardElement;
+        "iot-app-kit-vis-webgl-bar-chart-start-from-zero": HTMLIotAppKitVisWebglBarChartStartFromZeroElement;
+        "iot-app-kit-vis-webgl-bar-chart-threshold-coloration": HTMLIotAppKitVisWebglBarChartThresholdColorationElement;
+        "iot-app-kit-vis-webgl-bar-chart-threshold-coloration-band": HTMLIotAppKitVisWebglBarChartThresholdColorationBandElement;
+        "iot-app-kit-vis-webgl-bar-chart-threshold-coloration-exact-point": HTMLIotAppKitVisWebglBarChartThresholdColorationExactPointElement;
+        "iot-app-kit-vis-webgl-bar-chart-threshold-coloration-multiple-data-stream": HTMLIotAppKitVisWebglBarChartThresholdColorationMultipleDataStreamElement;
+        "iot-app-kit-vis-webgl-bar-chart-threshold-coloration-multiple-thresholds": HTMLIotAppKitVisWebglBarChartThresholdColorationMultipleThresholdsElement;
+        "iot-app-kit-vis-webgl-bar-chart-threshold-no-coloration": HTMLIotAppKitVisWebglBarChartThresholdNoColorationElement;
+        "iot-app-kit-vis-webgl-bar-chart-unsupported-data-types": HTMLIotAppKitVisWebglBarChartUnsupportedDataTypesElement;
+        "iot-app-kit-vis-webgl-base-chart": HTMLIotAppKitVisWebglBaseChartElement;
+        "iot-app-kit-vis-webgl-chart-annotation-editable": HTMLIotAppKitVisWebglChartAnnotationEditableElement;
+        "iot-app-kit-vis-webgl-chart-annotations": HTMLIotAppKitVisWebglChartAnnotationsElement;
+        "iot-app-kit-vis-webgl-chart-annotations-always-in-viewport": HTMLIotAppKitVisWebglChartAnnotationsAlwaysInViewportElement;
+        "iot-app-kit-vis-webgl-chart-axis": HTMLIotAppKitVisWebglChartAxisElement;
+        "iot-app-kit-vis-webgl-chart-dynamic-charts": HTMLIotAppKitVisWebglChartDynamicChartsElement;
+        "iot-app-kit-vis-webgl-chart-large-viewport": HTMLIotAppKitVisWebglChartLargeViewportElement;
+        "iot-app-kit-vis-webgl-chart-multi": HTMLIotAppKitVisWebglChartMultiElement;
+        "iot-app-kit-vis-webgl-chart-no-annotations": HTMLIotAppKitVisWebglChartNoAnnotationsElement;
+        "iot-app-kit-vis-webgl-chart-standard": HTMLIotAppKitVisWebglChartStandardElement;
+        "iot-app-kit-vis-webgl-chart-standard-with-legend": HTMLIotAppKitVisWebglChartStandardWithLegendElement;
+        "iot-app-kit-vis-webgl-chart-standard-with-legend-on-right": HTMLIotAppKitVisWebglChartStandardWithLegendOnRightElement;
+        "iot-app-kit-vis-webgl-chart-threshold-coloration-band": HTMLIotAppKitVisWebglChartThresholdColorationBandElement;
+        "iot-app-kit-vis-webgl-chart-threshold-coloration-exact-point": HTMLIotAppKitVisWebglChartThresholdColorationExactPointElement;
+        "iot-app-kit-vis-webgl-chart-threshold-coloration-multiple-data-stream": HTMLIotAppKitVisWebglChartThresholdColorationMultipleDataStreamElement;
+        "iot-app-kit-vis-webgl-chart-threshold-coloration-multiple-thresholds": HTMLIotAppKitVisWebglChartThresholdColorationMultipleThresholdsElement;
+        "iot-app-kit-vis-webgl-chart-threshold-coloration-split-half": HTMLIotAppKitVisWebglChartThresholdColorationSplitHalfElement;
+        "iot-app-kit-vis-webgl-chart-tooltip-with-multiple-data-streams": HTMLIotAppKitVisWebglChartTooltipWithMultipleDataStreamsElement;
+        "iot-app-kit-vis-webgl-context": HTMLIotAppKitVisWebglContextElement;
+        "iot-app-kit-vis-webgl-context-nested": HTMLIotAppKitVisWebglContextNestedElement;
+        "iot-app-kit-vis-webgl-context-root": HTMLIotAppKitVisWebglContextRootElement;
+        "iot-app-kit-vis-webgl-line-chart-dynamic-buffer": HTMLIotAppKitVisWebglLineChartDynamicBufferElement;
+        "iot-app-kit-vis-webgl-line-chart-dynamic-data": HTMLIotAppKitVisWebglLineChartDynamicDataElement;
+        "iot-app-kit-vis-webgl-line-chart-dynamic-data-streams": HTMLIotAppKitVisWebglLineChartDynamicDataStreamsElement;
         "line-chart-unsupported-data-types": HTMLLineChartUnsupportedDataTypesElement;
         "line-chart-viewport-change": HTMLLineChartViewportChangeElement;
         "multiple-statuses": HTMLMultipleStatusesElement;
-        "sc-angled-line-segment": HTMLScAngledLineSegmentElement;
-        "sc-annotations-draggable-multi": HTMLScAnnotationsDraggableMultiElement;
-        "sc-app": HTMLScAppElement;
-        "sc-bar-chart": HTMLScBarChartElement;
-        "sc-box": HTMLScBoxElement;
-        "sc-chart-icon": HTMLScChartIconElement;
-        "sc-chart-y-range": HTMLScChartYRangeElement;
-        "sc-circle-point-shaders": HTMLScCirclePointShadersElement;
-        "sc-data-stream-name": HTMLScDataStreamNameElement;
-        "sc-error-badge": HTMLScErrorBadgeElement;
-        "sc-expandable-input": HTMLScExpandableInputElement;
-        "sc-expandable-input-standard": HTMLScExpandableInputStandardElement;
-        "sc-gesture-handler": HTMLScGestureHandlerElement;
-        "sc-legend": HTMLScLegendElement;
-        "sc-legend-row": HTMLScLegendRowElement;
-        "sc-line-chart": HTMLScLineChartElement;
-        "sc-line-chart-colored-point": HTMLScLineChartColoredPointElement;
-        "sc-line-chart-stream-data": HTMLScLineChartStreamDataElement;
-        "sc-loading-spinner": HTMLScLoadingSpinnerElement;
-        "sc-multiple-bars": HTMLScMultipleBarsElement;
-        "sc-multiple-lines": HTMLScMultipleLinesElement;
-        "sc-multiple-lines-overlapping": HTMLScMultipleLinesOverlappingElement;
-        "sc-scatter-chart": HTMLScScatterChartElement;
-        "sc-scatter-chart-dynamic-data": HTMLScScatterChartDynamicDataElement;
-        "sc-scatter-chart-threshold": HTMLScScatterChartThresholdElement;
-        "sc-scatter-chart-threshold-coloration-band": HTMLScScatterChartThresholdColorationBandElement;
-        "sc-scatter-chart-threshold-coloration-exact-point": HTMLScScatterChartThresholdColorationExactPointElement;
-        "sc-scatter-chart-threshold-coloration-multiple-data-stream": HTMLScScatterChartThresholdColorationMultipleDataStreamElement;
-        "sc-scatter-chart-threshold-coloration-multiple-thresholds": HTMLScScatterChartThresholdColorationMultipleThresholdsElement;
-        "sc-scatter-chart-threshold-no-coloration": HTMLScScatterChartThresholdNoColorationElement;
-        "sc-scatter-chart-tooltip-with-multiple-data-streams-and-trends": HTMLScScatterChartTooltipWithMultipleDataStreamsAndTrendsElement;
-        "sc-scatter-chart-trend-line-color-configuration": HTMLScScatterChartTrendLineColorConfigurationElement;
-        "sc-scatter-chart-trend-line-with-legend": HTMLScScatterChartTrendLineWithLegendElement;
-        "sc-scatter-chart-unsupported-data-types": HTMLScScatterChartUnsupportedDataTypesElement;
-        "sc-single-bar": HTMLScSingleBarElement;
-        "sc-single-colored-bar": HTMLScSingleColoredBarElement;
-        "sc-size-provider": HTMLScSizeProviderElement;
-        "sc-size-provider-standard": HTMLScSizeProviderStandardElement;
-        "sc-status-timeline": HTMLScStatusTimelineElement;
-        "sc-status-timeline-overlay": HTMLScStatusTimelineOverlayElement;
-        "sc-status-timeline-overlay-row": HTMLScStatusTimelineOverlayRowElement;
-        "sc-straight-line-segment": HTMLScStraightLineSegmentElement;
-        "sc-straight-line-segment-colored": HTMLScStraightLineSegmentColoredElement;
-        "sc-threshold-legend": HTMLScThresholdLegendElement;
-        "sc-threshold-legend-row": HTMLScThresholdLegendRowElement;
-        "sc-tooltip": HTMLScTooltipElement;
-        "sc-tooltip-row": HTMLScTooltipRowElement;
-        "sc-tooltip-rows": HTMLScTooltipRowsElement;
-        "sc-webgl-axis": HTMLScWebglAxisElement;
-        "sc-webgl-bar-chart-dynamic-buffer": HTMLScWebglBarChartDynamicBufferElement;
-        "sc-webgl-bar-chart-dynamic-data": HTMLScWebglBarChartDynamicDataElement;
-        "sc-webgl-bar-chart-dynamic-data-streams": HTMLScWebglBarChartDynamicDataStreamsElement;
-        "sc-webgl-bar-chart-fast-viewport": HTMLScWebglBarChartFastViewportElement;
-        "sc-webgl-bar-chart-margin": HTMLScWebglBarChartMarginElement;
-        "sc-webgl-bar-chart-negative": HTMLScWebglBarChartNegativeElement;
-        "sc-webgl-bar-chart-positive-negative": HTMLScWebglBarChartPositiveNegativeElement;
-        "sc-webgl-bar-chart-standard": HTMLScWebglBarChartStandardElement;
-        "sc-webgl-bar-chart-start-from-zero": HTMLScWebglBarChartStartFromZeroElement;
-        "sc-webgl-bar-chart-threshold-coloration": HTMLScWebglBarChartThresholdColorationElement;
-        "sc-webgl-bar-chart-threshold-coloration-band": HTMLScWebglBarChartThresholdColorationBandElement;
-        "sc-webgl-bar-chart-threshold-coloration-exact-point": HTMLScWebglBarChartThresholdColorationExactPointElement;
-        "sc-webgl-bar-chart-threshold-coloration-multiple-data-stream": HTMLScWebglBarChartThresholdColorationMultipleDataStreamElement;
-        "sc-webgl-bar-chart-threshold-coloration-multiple-thresholds": HTMLScWebglBarChartThresholdColorationMultipleThresholdsElement;
-        "sc-webgl-bar-chart-threshold-no-coloration": HTMLScWebglBarChartThresholdNoColorationElement;
-        "sc-webgl-bar-chart-unsupported-data-types": HTMLScWebglBarChartUnsupportedDataTypesElement;
-        "sc-webgl-base-chart": HTMLScWebglBaseChartElement;
-        "sc-webgl-chart-annotation-editable": HTMLScWebglChartAnnotationEditableElement;
-        "sc-webgl-chart-annotations": HTMLScWebglChartAnnotationsElement;
-        "sc-webgl-chart-annotations-always-in-viewport": HTMLScWebglChartAnnotationsAlwaysInViewportElement;
-        "sc-webgl-chart-axis": HTMLScWebglChartAxisElement;
-        "sc-webgl-chart-dynamic-charts": HTMLScWebglChartDynamicChartsElement;
-        "sc-webgl-chart-large-viewport": HTMLScWebglChartLargeViewportElement;
-        "sc-webgl-chart-multi": HTMLScWebglChartMultiElement;
-        "sc-webgl-chart-no-annotations": HTMLScWebglChartNoAnnotationsElement;
-        "sc-webgl-chart-standard": HTMLScWebglChartStandardElement;
-        "sc-webgl-chart-standard-with-legend": HTMLScWebglChartStandardWithLegendElement;
-        "sc-webgl-chart-standard-with-legend-on-right": HTMLScWebglChartStandardWithLegendOnRightElement;
-        "sc-webgl-chart-threshold-coloration-band": HTMLScWebglChartThresholdColorationBandElement;
-        "sc-webgl-chart-threshold-coloration-exact-point": HTMLScWebglChartThresholdColorationExactPointElement;
-        "sc-webgl-chart-threshold-coloration-multiple-data-stream": HTMLScWebglChartThresholdColorationMultipleDataStreamElement;
-        "sc-webgl-chart-threshold-coloration-multiple-thresholds": HTMLScWebglChartThresholdColorationMultipleThresholdsElement;
-        "sc-webgl-chart-threshold-coloration-split-half": HTMLScWebglChartThresholdColorationSplitHalfElement;
-        "sc-webgl-chart-tooltip-with-multiple-data-streams": HTMLScWebglChartTooltipWithMultipleDataStreamsElement;
-        "sc-webgl-context": HTMLScWebglContextElement;
-        "sc-webgl-context-nested": HTMLScWebglContextNestedElement;
-        "sc-webgl-context-root": HTMLScWebglContextRootElement;
-        "sc-webgl-line-chart-dynamic-buffer": HTMLScWebglLineChartDynamicBufferElement;
-        "sc-webgl-line-chart-dynamic-data": HTMLScWebglLineChartDynamicDataElement;
-        "sc-webgl-line-chart-dynamic-data-streams": HTMLScWebglLineChartDynamicDataStreamsElement;
         "single-colored-status": HTMLSingleColoredStatusElement;
         "single-status": HTMLSingleStatusElement;
         "status-timeline-dynamic-buffer": HTMLStatusTimelineDynamicBufferElement;
@@ -1271,19 +1271,13 @@ declare global {
     }
 }
 declare namespace LocalJSX {
-    interface LineChartUnsupportedDataTypes {
+    interface IotAppKitVisAngledLineSegment {
     }
-    interface LineChartViewportChange {
+    interface IotAppKitVisAnnotationsDraggableMulti {
     }
-    interface MultipleStatuses {
+    interface IotAppKitVisApp {
     }
-    interface ScAngledLineSegment {
-    }
-    interface ScAnnotationsDraggableMulti {
-    }
-    interface ScApp {
-    }
-    interface ScBarChart {
+    interface IotAppKitVisBarChart {
         "alarms"?: AlarmsConfig;
         "annotations"?: Annotations;
         "axis"?: Axis.Options;
@@ -1311,21 +1305,21 @@ declare namespace LocalJSX {
         "viewport"?: MinimalViewPortConfig;
         "widgetId": string;
     }
-    interface ScBox {
+    interface IotAppKitVisBox {
         "size"?: MinimalSizeConfig;
         "someObject"?: Object;
     }
-    interface ScChartIcon {
+    interface IotAppKitVisChartIcon {
         "color"?: string;
         "name"?: StatusIcon;
         "size"?: number;
     }
-    interface ScChartYRange {
+    interface IotAppKitVisChartYRange {
         "component"?: string;
     }
-    interface ScCirclePointShaders {
+    interface IotAppKitVisCirclePointShaders {
     }
-    interface ScDataStreamName {
+    interface IotAppKitVisDataStreamName {
         "date"?: Date;
         "detailedLabel"?: string;
         "displayTooltip"?: boolean;
@@ -1334,21 +1328,21 @@ declare namespace LocalJSX {
         "onNameChange": (name: string) => void;
         "pointType"?: POINT_TYPE;
     }
-    interface ScErrorBadge {
+    interface IotAppKitVisErrorBadge {
     }
-    interface ScExpandableInput {
+    interface IotAppKitVisExpandableInput {
         "isDisabled"?: boolean;
         "onValueChange": (value: string) => void;
         "value": string;
     }
-    interface ScExpandableInputStandard {
+    interface IotAppKitVisExpandableInputStandard {
     }
-    interface ScGestureHandler {
+    interface IotAppKitVisGestureHandler {
         "onDateRangeChange": ({ end, start }: { start: Date; end: Date }) => void;
         "size": SizeConfig;
         "viewport": ViewPort;
     }
-    interface ScLegend {
+    interface IotAppKitVisLegend {
         "config": LegendConfig;
         "dataStreams": DataStream[];
         "isEditing"?: boolean;
@@ -1361,7 +1355,7 @@ declare namespace LocalJSX {
         "viewport": ViewPort;
         "visualizesAlarms": boolean;
     }
-    interface ScLegendRow {
+    interface IotAppKitVisLegendRow {
         "color": string;
         "detailedLabel"?: string;
         "icon"?: StatusIcon;
@@ -1376,7 +1370,7 @@ declare namespace LocalJSX {
         "updateDataStreamName": ({ streamId, name }: { streamId: string; name: string }) => void;
         "valueColor"?: string;
     }
-    interface ScLineChart {
+    interface IotAppKitVisLineChart {
         "alarms"?: AlarmsConfig;
         "annotations"?: Annotations;
         "axis"?: Axis.Options;
@@ -1404,21 +1398,21 @@ declare namespace LocalJSX {
         "viewport": MinimalViewPortConfig;
         "widgetId": string;
     }
-    interface ScLineChartColoredPoint {
+    interface IotAppKitVisLineChartColoredPoint {
     }
-    interface ScLineChartStreamData {
+    interface IotAppKitVisLineChartStreamData {
     }
-    interface ScLoadingSpinner {
+    interface IotAppKitVisLoadingSpinner {
         "dark"?: boolean;
         "size"?: number;
     }
-    interface ScMultipleBars {
+    interface IotAppKitVisMultipleBars {
     }
-    interface ScMultipleLines {
+    interface IotAppKitVisMultipleLines {
     }
-    interface ScMultipleLinesOverlapping {
+    interface IotAppKitVisMultipleLinesOverlapping {
     }
-    interface ScScatterChart {
+    interface IotAppKitVisScatterChart {
         "alarms"?: AlarmsConfig;
         "annotations"?: Annotations;
         "axis"?: Axis.Options;
@@ -1446,42 +1440,42 @@ declare namespace LocalJSX {
         "viewport"?: MinimalViewPortConfig;
         "widgetId": string;
     }
-    interface ScScatterChartDynamicData {
+    interface IotAppKitVisScatterChartDynamicData {
     }
-    interface ScScatterChartThreshold {
+    interface IotAppKitVisScatterChartThreshold {
     }
-    interface ScScatterChartThresholdColorationBand {
+    interface IotAppKitVisScatterChartThresholdColorationBand {
     }
-    interface ScScatterChartThresholdColorationExactPoint {
+    interface IotAppKitVisScatterChartThresholdColorationExactPoint {
     }
-    interface ScScatterChartThresholdColorationMultipleDataStream {
+    interface IotAppKitVisScatterChartThresholdColorationMultipleDataStream {
     }
-    interface ScScatterChartThresholdColorationMultipleThresholds {
+    interface IotAppKitVisScatterChartThresholdColorationMultipleThresholds {
     }
-    interface ScScatterChartThresholdNoColoration {
+    interface IotAppKitVisScatterChartThresholdNoColoration {
     }
-    interface ScScatterChartTooltipWithMultipleDataStreamsAndTrends {
+    interface IotAppKitVisScatterChartTooltipWithMultipleDataStreamsAndTrends {
     }
-    interface ScScatterChartTrendLineColorConfiguration {
+    interface IotAppKitVisScatterChartTrendLineColorConfiguration {
     }
-    interface ScScatterChartTrendLineWithLegend {
+    interface IotAppKitVisScatterChartTrendLineWithLegend {
     }
-    interface ScScatterChartUnsupportedDataTypes {
+    interface IotAppKitVisScatterChartUnsupportedDataTypes {
     }
-    interface ScSingleBar {
+    interface IotAppKitVisSingleBar {
     }
-    interface ScSingleColoredBar {
+    interface IotAppKitVisSingleColoredBar {
     }
-    interface ScSizeProvider {
+    interface IotAppKitVisSizeProvider {
         "renderFunc": (rect: RectScrollFixed) => void;
         /**
           * Size overrides. these will take precident over any auto-calculated sizing
          */
         "size"?: MinimalSizeConfig;
     }
-    interface ScSizeProviderStandard {
+    interface IotAppKitVisSizeProviderStandard {
     }
-    interface ScStatusTimeline {
+    interface IotAppKitVisStatusTimeline {
         "alarms"?: AlarmsConfig;
         "annotations"?: Annotations;
         "axis"?: Axis.Options;
@@ -1507,7 +1501,7 @@ declare namespace LocalJSX {
         "viewport"?: MinimalViewPortConfig;
         "widgetId": string;
     }
-    interface ScStatusTimelineOverlay {
+    interface IotAppKitVisStatusTimelineOverlay {
         "dataStreams": DataStream[];
         "date": Date;
         "isEditing": boolean;
@@ -1516,7 +1510,7 @@ declare namespace LocalJSX {
         "thresholds": Threshold[];
         "widgetId": string;
     }
-    interface ScStatusTimelineOverlayRow {
+    interface IotAppKitVisStatusTimelineOverlayRow {
         "detailedLabel"?: string;
         "icon"?: StatusIcon;
         "isEditing": boolean;
@@ -1526,18 +1520,18 @@ declare namespace LocalJSX {
         "value"?: Primitive;
         "valueColor"?: string;
     }
-    interface ScStraightLineSegment {
+    interface IotAppKitVisStraightLineSegment {
     }
-    interface ScStraightLineSegmentColored {
+    interface IotAppKitVisStraightLineSegmentColored {
     }
-    interface ScThresholdLegend {
+    interface IotAppKitVisThresholdLegend {
         "thresholds": Threshold[];
     }
-    interface ScThresholdLegendRow {
+    interface IotAppKitVisThresholdLegendRow {
         "color": string;
         "label": string;
     }
-    interface ScTooltip {
+    interface IotAppKitVisTooltip {
         /**
           * If we are drawing data from the data timestamp to timestamp + resolution we want the tooltip to align on the left side  Otherwise we are drawing the data from timestamp - resolution to timestamp then we want the tooltip to align on the right side
          */
@@ -1559,7 +1553,7 @@ declare namespace LocalJSX {
         "viewport": ViewPort;
         "visualizesAlarms": boolean;
     }
-    interface ScTooltipRow {
+    interface IotAppKitVisTooltipRow {
         "aggregationType"?: string;
         "color": string;
         "icon"?: StatusIcon;
@@ -1570,7 +1564,7 @@ declare namespace LocalJSX {
         "showDataStreamColor": boolean;
         "valueColor"?: string;
     }
-    interface ScTooltipRows {
+    interface IotAppKitVisTooltipRows {
         /**
           * If we are drawing data from the data timestamp to timestamp + resolution we want the tooltip to align on the left side  Otherwise we are drawing the data from timestamp - resolution to timestamp then we want the tooltip to align on the right side
          */
@@ -1592,42 +1586,42 @@ declare namespace LocalJSX {
         "viewport": ViewPort;
         "visualizesAlarms": boolean;
     }
-    interface ScWebglAxis {
+    interface IotAppKitVisWebglAxis {
         "size": SizeConfig;
     }
-    interface ScWebglBarChartDynamicBuffer {
+    interface IotAppKitVisWebglBarChartDynamicBuffer {
     }
-    interface ScWebglBarChartDynamicData {
+    interface IotAppKitVisWebglBarChartDynamicData {
     }
-    interface ScWebglBarChartDynamicDataStreams {
+    interface IotAppKitVisWebglBarChartDynamicDataStreams {
     }
-    interface ScWebglBarChartFastViewport {
+    interface IotAppKitVisWebglBarChartFastViewport {
     }
-    interface ScWebglBarChartMargin {
+    interface IotAppKitVisWebglBarChartMargin {
     }
-    interface ScWebglBarChartNegative {
+    interface IotAppKitVisWebglBarChartNegative {
     }
-    interface ScWebglBarChartPositiveNegative {
+    interface IotAppKitVisWebglBarChartPositiveNegative {
     }
-    interface ScWebglBarChartStandard {
+    interface IotAppKitVisWebglBarChartStandard {
     }
-    interface ScWebglBarChartStartFromZero {
+    interface IotAppKitVisWebglBarChartStartFromZero {
     }
-    interface ScWebglBarChartThresholdColoration {
+    interface IotAppKitVisWebglBarChartThresholdColoration {
     }
-    interface ScWebglBarChartThresholdColorationBand {
+    interface IotAppKitVisWebglBarChartThresholdColorationBand {
     }
-    interface ScWebglBarChartThresholdColorationExactPoint {
+    interface IotAppKitVisWebglBarChartThresholdColorationExactPoint {
     }
-    interface ScWebglBarChartThresholdColorationMultipleDataStream {
+    interface IotAppKitVisWebglBarChartThresholdColorationMultipleDataStream {
     }
-    interface ScWebglBarChartThresholdColorationMultipleThresholds {
+    interface IotAppKitVisWebglBarChartThresholdColorationMultipleThresholds {
     }
-    interface ScWebglBarChartThresholdNoColoration {
+    interface IotAppKitVisWebglBarChartThresholdNoColoration {
     }
-    interface ScWebglBarChartUnsupportedDataTypes {
+    interface IotAppKitVisWebglBarChartUnsupportedDataTypes {
     }
-    interface ScWebglBaseChart {
+    interface IotAppKitVisWebglBaseChart {
         "alarms"?: AlarmsConfig;
         "annotations"?: Annotations;
         "axis"?: Axis.Options;
@@ -1672,53 +1666,59 @@ declare namespace LocalJSX {
         "visualizesAlarms"?: boolean;
         "yRangeStartFromZero"?: boolean;
     }
-    interface ScWebglChartAnnotationEditable {
+    interface IotAppKitVisWebglChartAnnotationEditable {
     }
-    interface ScWebglChartAnnotations {
+    interface IotAppKitVisWebglChartAnnotations {
     }
-    interface ScWebglChartAnnotationsAlwaysInViewport {
+    interface IotAppKitVisWebglChartAnnotationsAlwaysInViewport {
     }
-    interface ScWebglChartAxis {
+    interface IotAppKitVisWebglChartAxis {
     }
-    interface ScWebglChartDynamicCharts {
+    interface IotAppKitVisWebglChartDynamicCharts {
     }
-    interface ScWebglChartLargeViewport {
+    interface IotAppKitVisWebglChartLargeViewport {
     }
-    interface ScWebglChartMulti {
+    interface IotAppKitVisWebglChartMulti {
     }
-    interface ScWebglChartNoAnnotations {
+    interface IotAppKitVisWebglChartNoAnnotations {
     }
-    interface ScWebglChartStandard {
+    interface IotAppKitVisWebglChartStandard {
     }
-    interface ScWebglChartStandardWithLegend {
+    interface IotAppKitVisWebglChartStandardWithLegend {
     }
-    interface ScWebglChartStandardWithLegendOnRight {
+    interface IotAppKitVisWebglChartStandardWithLegendOnRight {
     }
-    interface ScWebglChartThresholdColorationBand {
+    interface IotAppKitVisWebglChartThresholdColorationBand {
     }
-    interface ScWebglChartThresholdColorationExactPoint {
+    interface IotAppKitVisWebglChartThresholdColorationExactPoint {
     }
-    interface ScWebglChartThresholdColorationMultipleDataStream {
+    interface IotAppKitVisWebglChartThresholdColorationMultipleDataStream {
     }
-    interface ScWebglChartThresholdColorationMultipleThresholds {
+    interface IotAppKitVisWebglChartThresholdColorationMultipleThresholds {
     }
-    interface ScWebglChartThresholdColorationSplitHalf {
+    interface IotAppKitVisWebglChartThresholdColorationSplitHalf {
     }
-    interface ScWebglChartTooltipWithMultipleDataStreams {
+    interface IotAppKitVisWebglChartTooltipWithMultipleDataStreams {
     }
-    interface ScWebglContext {
+    interface IotAppKitVisWebglContext {
         "onContextInitialization"?: (context: WebGLRenderingContext) => void;
         "viewFrame"?: HTMLElement | Window | undefined;
     }
-    interface ScWebglContextNested {
+    interface IotAppKitVisWebglContextNested {
     }
-    interface ScWebglContextRoot {
+    interface IotAppKitVisWebglContextRoot {
     }
-    interface ScWebglLineChartDynamicBuffer {
+    interface IotAppKitVisWebglLineChartDynamicBuffer {
     }
-    interface ScWebglLineChartDynamicData {
+    interface IotAppKitVisWebglLineChartDynamicData {
     }
-    interface ScWebglLineChartDynamicDataStreams {
+    interface IotAppKitVisWebglLineChartDynamicDataStreams {
+    }
+    interface LineChartUnsupportedDataTypes {
+    }
+    interface LineChartViewportChange {
+    }
+    interface MultipleStatuses {
     }
     interface SingleColoredStatus {
     }
@@ -1759,98 +1759,98 @@ declare namespace LocalJSX {
         "dataStreamInfos"?: DataStreamInfo[];
     }
     interface IntrinsicElements {
+        "iot-app-kit-vis-angled-line-segment": IotAppKitVisAngledLineSegment;
+        "iot-app-kit-vis-annotations-draggable-multi": IotAppKitVisAnnotationsDraggableMulti;
+        "iot-app-kit-vis-app": IotAppKitVisApp;
+        "iot-app-kit-vis-bar-chart": IotAppKitVisBarChart;
+        "iot-app-kit-vis-box": IotAppKitVisBox;
+        "iot-app-kit-vis-chart-icon": IotAppKitVisChartIcon;
+        "iot-app-kit-vis-chart-y-range": IotAppKitVisChartYRange;
+        "iot-app-kit-vis-circle-point-shaders": IotAppKitVisCirclePointShaders;
+        "iot-app-kit-vis-data-stream-name": IotAppKitVisDataStreamName;
+        "iot-app-kit-vis-error-badge": IotAppKitVisErrorBadge;
+        "iot-app-kit-vis-expandable-input": IotAppKitVisExpandableInput;
+        "iot-app-kit-vis-expandable-input-standard": IotAppKitVisExpandableInputStandard;
+        "iot-app-kit-vis-gesture-handler": IotAppKitVisGestureHandler;
+        "iot-app-kit-vis-legend": IotAppKitVisLegend;
+        "iot-app-kit-vis-legend-row": IotAppKitVisLegendRow;
+        "iot-app-kit-vis-line-chart": IotAppKitVisLineChart;
+        "iot-app-kit-vis-line-chart-colored-point": IotAppKitVisLineChartColoredPoint;
+        "iot-app-kit-vis-line-chart-stream-data": IotAppKitVisLineChartStreamData;
+        "iot-app-kit-vis-loading-spinner": IotAppKitVisLoadingSpinner;
+        "iot-app-kit-vis-multiple-bars": IotAppKitVisMultipleBars;
+        "iot-app-kit-vis-multiple-lines": IotAppKitVisMultipleLines;
+        "iot-app-kit-vis-multiple-lines-overlapping": IotAppKitVisMultipleLinesOverlapping;
+        "iot-app-kit-vis-scatter-chart": IotAppKitVisScatterChart;
+        "iot-app-kit-vis-scatter-chart-dynamic-data": IotAppKitVisScatterChartDynamicData;
+        "iot-app-kit-vis-scatter-chart-threshold": IotAppKitVisScatterChartThreshold;
+        "iot-app-kit-vis-scatter-chart-threshold-coloration-band": IotAppKitVisScatterChartThresholdColorationBand;
+        "iot-app-kit-vis-scatter-chart-threshold-coloration-exact-point": IotAppKitVisScatterChartThresholdColorationExactPoint;
+        "iot-app-kit-vis-scatter-chart-threshold-coloration-multiple-data-stream": IotAppKitVisScatterChartThresholdColorationMultipleDataStream;
+        "iot-app-kit-vis-scatter-chart-threshold-coloration-multiple-thresholds": IotAppKitVisScatterChartThresholdColorationMultipleThresholds;
+        "iot-app-kit-vis-scatter-chart-threshold-no-coloration": IotAppKitVisScatterChartThresholdNoColoration;
+        "iot-app-kit-vis-scatter-chart-tooltip-with-multiple-data-streams-and-trends": IotAppKitVisScatterChartTooltipWithMultipleDataStreamsAndTrends;
+        "iot-app-kit-vis-scatter-chart-trend-line-color-configuration": IotAppKitVisScatterChartTrendLineColorConfiguration;
+        "iot-app-kit-vis-scatter-chart-trend-line-with-legend": IotAppKitVisScatterChartTrendLineWithLegend;
+        "iot-app-kit-vis-scatter-chart-unsupported-data-types": IotAppKitVisScatterChartUnsupportedDataTypes;
+        "iot-app-kit-vis-single-bar": IotAppKitVisSingleBar;
+        "iot-app-kit-vis-single-colored-bar": IotAppKitVisSingleColoredBar;
+        "iot-app-kit-vis-size-provider": IotAppKitVisSizeProvider;
+        "iot-app-kit-vis-size-provider-standard": IotAppKitVisSizeProviderStandard;
+        "iot-app-kit-vis-status-timeline": IotAppKitVisStatusTimeline;
+        "iot-app-kit-vis-status-timeline-overlay": IotAppKitVisStatusTimelineOverlay;
+        "iot-app-kit-vis-status-timeline-overlay-row": IotAppKitVisStatusTimelineOverlayRow;
+        "iot-app-kit-vis-straight-line-segment": IotAppKitVisStraightLineSegment;
+        "iot-app-kit-vis-straight-line-segment-colored": IotAppKitVisStraightLineSegmentColored;
+        "iot-app-kit-vis-threshold-legend": IotAppKitVisThresholdLegend;
+        "iot-app-kit-vis-threshold-legend-row": IotAppKitVisThresholdLegendRow;
+        "iot-app-kit-vis-tooltip": IotAppKitVisTooltip;
+        "iot-app-kit-vis-tooltip-row": IotAppKitVisTooltipRow;
+        "iot-app-kit-vis-tooltip-rows": IotAppKitVisTooltipRows;
+        "iot-app-kit-vis-webgl-axis": IotAppKitVisWebglAxis;
+        "iot-app-kit-vis-webgl-bar-chart-dynamic-buffer": IotAppKitVisWebglBarChartDynamicBuffer;
+        "iot-app-kit-vis-webgl-bar-chart-dynamic-data": IotAppKitVisWebglBarChartDynamicData;
+        "iot-app-kit-vis-webgl-bar-chart-dynamic-data-streams": IotAppKitVisWebglBarChartDynamicDataStreams;
+        "iot-app-kit-vis-webgl-bar-chart-fast-viewport": IotAppKitVisWebglBarChartFastViewport;
+        "iot-app-kit-vis-webgl-bar-chart-margin": IotAppKitVisWebglBarChartMargin;
+        "iot-app-kit-vis-webgl-bar-chart-negative": IotAppKitVisWebglBarChartNegative;
+        "iot-app-kit-vis-webgl-bar-chart-positive-negative": IotAppKitVisWebglBarChartPositiveNegative;
+        "iot-app-kit-vis-webgl-bar-chart-standard": IotAppKitVisWebglBarChartStandard;
+        "iot-app-kit-vis-webgl-bar-chart-start-from-zero": IotAppKitVisWebglBarChartStartFromZero;
+        "iot-app-kit-vis-webgl-bar-chart-threshold-coloration": IotAppKitVisWebglBarChartThresholdColoration;
+        "iot-app-kit-vis-webgl-bar-chart-threshold-coloration-band": IotAppKitVisWebglBarChartThresholdColorationBand;
+        "iot-app-kit-vis-webgl-bar-chart-threshold-coloration-exact-point": IotAppKitVisWebglBarChartThresholdColorationExactPoint;
+        "iot-app-kit-vis-webgl-bar-chart-threshold-coloration-multiple-data-stream": IotAppKitVisWebglBarChartThresholdColorationMultipleDataStream;
+        "iot-app-kit-vis-webgl-bar-chart-threshold-coloration-multiple-thresholds": IotAppKitVisWebglBarChartThresholdColorationMultipleThresholds;
+        "iot-app-kit-vis-webgl-bar-chart-threshold-no-coloration": IotAppKitVisWebglBarChartThresholdNoColoration;
+        "iot-app-kit-vis-webgl-bar-chart-unsupported-data-types": IotAppKitVisWebglBarChartUnsupportedDataTypes;
+        "iot-app-kit-vis-webgl-base-chart": IotAppKitVisWebglBaseChart;
+        "iot-app-kit-vis-webgl-chart-annotation-editable": IotAppKitVisWebglChartAnnotationEditable;
+        "iot-app-kit-vis-webgl-chart-annotations": IotAppKitVisWebglChartAnnotations;
+        "iot-app-kit-vis-webgl-chart-annotations-always-in-viewport": IotAppKitVisWebglChartAnnotationsAlwaysInViewport;
+        "iot-app-kit-vis-webgl-chart-axis": IotAppKitVisWebglChartAxis;
+        "iot-app-kit-vis-webgl-chart-dynamic-charts": IotAppKitVisWebglChartDynamicCharts;
+        "iot-app-kit-vis-webgl-chart-large-viewport": IotAppKitVisWebglChartLargeViewport;
+        "iot-app-kit-vis-webgl-chart-multi": IotAppKitVisWebglChartMulti;
+        "iot-app-kit-vis-webgl-chart-no-annotations": IotAppKitVisWebglChartNoAnnotations;
+        "iot-app-kit-vis-webgl-chart-standard": IotAppKitVisWebglChartStandard;
+        "iot-app-kit-vis-webgl-chart-standard-with-legend": IotAppKitVisWebglChartStandardWithLegend;
+        "iot-app-kit-vis-webgl-chart-standard-with-legend-on-right": IotAppKitVisWebglChartStandardWithLegendOnRight;
+        "iot-app-kit-vis-webgl-chart-threshold-coloration-band": IotAppKitVisWebglChartThresholdColorationBand;
+        "iot-app-kit-vis-webgl-chart-threshold-coloration-exact-point": IotAppKitVisWebglChartThresholdColorationExactPoint;
+        "iot-app-kit-vis-webgl-chart-threshold-coloration-multiple-data-stream": IotAppKitVisWebglChartThresholdColorationMultipleDataStream;
+        "iot-app-kit-vis-webgl-chart-threshold-coloration-multiple-thresholds": IotAppKitVisWebglChartThresholdColorationMultipleThresholds;
+        "iot-app-kit-vis-webgl-chart-threshold-coloration-split-half": IotAppKitVisWebglChartThresholdColorationSplitHalf;
+        "iot-app-kit-vis-webgl-chart-tooltip-with-multiple-data-streams": IotAppKitVisWebglChartTooltipWithMultipleDataStreams;
+        "iot-app-kit-vis-webgl-context": IotAppKitVisWebglContext;
+        "iot-app-kit-vis-webgl-context-nested": IotAppKitVisWebglContextNested;
+        "iot-app-kit-vis-webgl-context-root": IotAppKitVisWebglContextRoot;
+        "iot-app-kit-vis-webgl-line-chart-dynamic-buffer": IotAppKitVisWebglLineChartDynamicBuffer;
+        "iot-app-kit-vis-webgl-line-chart-dynamic-data": IotAppKitVisWebglLineChartDynamicData;
+        "iot-app-kit-vis-webgl-line-chart-dynamic-data-streams": IotAppKitVisWebglLineChartDynamicDataStreams;
         "line-chart-unsupported-data-types": LineChartUnsupportedDataTypes;
         "line-chart-viewport-change": LineChartViewportChange;
         "multiple-statuses": MultipleStatuses;
-        "sc-angled-line-segment": ScAngledLineSegment;
-        "sc-annotations-draggable-multi": ScAnnotationsDraggableMulti;
-        "sc-app": ScApp;
-        "sc-bar-chart": ScBarChart;
-        "sc-box": ScBox;
-        "sc-chart-icon": ScChartIcon;
-        "sc-chart-y-range": ScChartYRange;
-        "sc-circle-point-shaders": ScCirclePointShaders;
-        "sc-data-stream-name": ScDataStreamName;
-        "sc-error-badge": ScErrorBadge;
-        "sc-expandable-input": ScExpandableInput;
-        "sc-expandable-input-standard": ScExpandableInputStandard;
-        "sc-gesture-handler": ScGestureHandler;
-        "sc-legend": ScLegend;
-        "sc-legend-row": ScLegendRow;
-        "sc-line-chart": ScLineChart;
-        "sc-line-chart-colored-point": ScLineChartColoredPoint;
-        "sc-line-chart-stream-data": ScLineChartStreamData;
-        "sc-loading-spinner": ScLoadingSpinner;
-        "sc-multiple-bars": ScMultipleBars;
-        "sc-multiple-lines": ScMultipleLines;
-        "sc-multiple-lines-overlapping": ScMultipleLinesOverlapping;
-        "sc-scatter-chart": ScScatterChart;
-        "sc-scatter-chart-dynamic-data": ScScatterChartDynamicData;
-        "sc-scatter-chart-threshold": ScScatterChartThreshold;
-        "sc-scatter-chart-threshold-coloration-band": ScScatterChartThresholdColorationBand;
-        "sc-scatter-chart-threshold-coloration-exact-point": ScScatterChartThresholdColorationExactPoint;
-        "sc-scatter-chart-threshold-coloration-multiple-data-stream": ScScatterChartThresholdColorationMultipleDataStream;
-        "sc-scatter-chart-threshold-coloration-multiple-thresholds": ScScatterChartThresholdColorationMultipleThresholds;
-        "sc-scatter-chart-threshold-no-coloration": ScScatterChartThresholdNoColoration;
-        "sc-scatter-chart-tooltip-with-multiple-data-streams-and-trends": ScScatterChartTooltipWithMultipleDataStreamsAndTrends;
-        "sc-scatter-chart-trend-line-color-configuration": ScScatterChartTrendLineColorConfiguration;
-        "sc-scatter-chart-trend-line-with-legend": ScScatterChartTrendLineWithLegend;
-        "sc-scatter-chart-unsupported-data-types": ScScatterChartUnsupportedDataTypes;
-        "sc-single-bar": ScSingleBar;
-        "sc-single-colored-bar": ScSingleColoredBar;
-        "sc-size-provider": ScSizeProvider;
-        "sc-size-provider-standard": ScSizeProviderStandard;
-        "sc-status-timeline": ScStatusTimeline;
-        "sc-status-timeline-overlay": ScStatusTimelineOverlay;
-        "sc-status-timeline-overlay-row": ScStatusTimelineOverlayRow;
-        "sc-straight-line-segment": ScStraightLineSegment;
-        "sc-straight-line-segment-colored": ScStraightLineSegmentColored;
-        "sc-threshold-legend": ScThresholdLegend;
-        "sc-threshold-legend-row": ScThresholdLegendRow;
-        "sc-tooltip": ScTooltip;
-        "sc-tooltip-row": ScTooltipRow;
-        "sc-tooltip-rows": ScTooltipRows;
-        "sc-webgl-axis": ScWebglAxis;
-        "sc-webgl-bar-chart-dynamic-buffer": ScWebglBarChartDynamicBuffer;
-        "sc-webgl-bar-chart-dynamic-data": ScWebglBarChartDynamicData;
-        "sc-webgl-bar-chart-dynamic-data-streams": ScWebglBarChartDynamicDataStreams;
-        "sc-webgl-bar-chart-fast-viewport": ScWebglBarChartFastViewport;
-        "sc-webgl-bar-chart-margin": ScWebglBarChartMargin;
-        "sc-webgl-bar-chart-negative": ScWebglBarChartNegative;
-        "sc-webgl-bar-chart-positive-negative": ScWebglBarChartPositiveNegative;
-        "sc-webgl-bar-chart-standard": ScWebglBarChartStandard;
-        "sc-webgl-bar-chart-start-from-zero": ScWebglBarChartStartFromZero;
-        "sc-webgl-bar-chart-threshold-coloration": ScWebglBarChartThresholdColoration;
-        "sc-webgl-bar-chart-threshold-coloration-band": ScWebglBarChartThresholdColorationBand;
-        "sc-webgl-bar-chart-threshold-coloration-exact-point": ScWebglBarChartThresholdColorationExactPoint;
-        "sc-webgl-bar-chart-threshold-coloration-multiple-data-stream": ScWebglBarChartThresholdColorationMultipleDataStream;
-        "sc-webgl-bar-chart-threshold-coloration-multiple-thresholds": ScWebglBarChartThresholdColorationMultipleThresholds;
-        "sc-webgl-bar-chart-threshold-no-coloration": ScWebglBarChartThresholdNoColoration;
-        "sc-webgl-bar-chart-unsupported-data-types": ScWebglBarChartUnsupportedDataTypes;
-        "sc-webgl-base-chart": ScWebglBaseChart;
-        "sc-webgl-chart-annotation-editable": ScWebglChartAnnotationEditable;
-        "sc-webgl-chart-annotations": ScWebglChartAnnotations;
-        "sc-webgl-chart-annotations-always-in-viewport": ScWebglChartAnnotationsAlwaysInViewport;
-        "sc-webgl-chart-axis": ScWebglChartAxis;
-        "sc-webgl-chart-dynamic-charts": ScWebglChartDynamicCharts;
-        "sc-webgl-chart-large-viewport": ScWebglChartLargeViewport;
-        "sc-webgl-chart-multi": ScWebglChartMulti;
-        "sc-webgl-chart-no-annotations": ScWebglChartNoAnnotations;
-        "sc-webgl-chart-standard": ScWebglChartStandard;
-        "sc-webgl-chart-standard-with-legend": ScWebglChartStandardWithLegend;
-        "sc-webgl-chart-standard-with-legend-on-right": ScWebglChartStandardWithLegendOnRight;
-        "sc-webgl-chart-threshold-coloration-band": ScWebglChartThresholdColorationBand;
-        "sc-webgl-chart-threshold-coloration-exact-point": ScWebglChartThresholdColorationExactPoint;
-        "sc-webgl-chart-threshold-coloration-multiple-data-stream": ScWebglChartThresholdColorationMultipleDataStream;
-        "sc-webgl-chart-threshold-coloration-multiple-thresholds": ScWebglChartThresholdColorationMultipleThresholds;
-        "sc-webgl-chart-threshold-coloration-split-half": ScWebglChartThresholdColorationSplitHalf;
-        "sc-webgl-chart-tooltip-with-multiple-data-streams": ScWebglChartTooltipWithMultipleDataStreams;
-        "sc-webgl-context": ScWebglContext;
-        "sc-webgl-context-nested": ScWebglContextNested;
-        "sc-webgl-context-root": ScWebglContextRoot;
-        "sc-webgl-line-chart-dynamic-buffer": ScWebglLineChartDynamicBuffer;
-        "sc-webgl-line-chart-dynamic-data": ScWebglLineChartDynamicData;
-        "sc-webgl-line-chart-dynamic-data-streams": ScWebglLineChartDynamicDataStreams;
         "single-colored-status": SingleColoredStatus;
         "single-status": SingleStatus;
         "status-timeline-dynamic-buffer": StatusTimelineDynamicBuffer;
@@ -1875,98 +1875,98 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "iot-app-kit-vis-angled-line-segment": LocalJSX.IotAppKitVisAngledLineSegment & JSXBase.HTMLAttributes<HTMLIotAppKitVisAngledLineSegmentElement>;
+            "iot-app-kit-vis-annotations-draggable-multi": LocalJSX.IotAppKitVisAnnotationsDraggableMulti & JSXBase.HTMLAttributes<HTMLIotAppKitVisAnnotationsDraggableMultiElement>;
+            "iot-app-kit-vis-app": LocalJSX.IotAppKitVisApp & JSXBase.HTMLAttributes<HTMLIotAppKitVisAppElement>;
+            "iot-app-kit-vis-bar-chart": LocalJSX.IotAppKitVisBarChart & JSXBase.HTMLAttributes<HTMLIotAppKitVisBarChartElement>;
+            "iot-app-kit-vis-box": LocalJSX.IotAppKitVisBox & JSXBase.HTMLAttributes<HTMLIotAppKitVisBoxElement>;
+            "iot-app-kit-vis-chart-icon": LocalJSX.IotAppKitVisChartIcon & JSXBase.HTMLAttributes<HTMLIotAppKitVisChartIconElement>;
+            "iot-app-kit-vis-chart-y-range": LocalJSX.IotAppKitVisChartYRange & JSXBase.HTMLAttributes<HTMLIotAppKitVisChartYRangeElement>;
+            "iot-app-kit-vis-circle-point-shaders": LocalJSX.IotAppKitVisCirclePointShaders & JSXBase.HTMLAttributes<HTMLIotAppKitVisCirclePointShadersElement>;
+            "iot-app-kit-vis-data-stream-name": LocalJSX.IotAppKitVisDataStreamName & JSXBase.HTMLAttributes<HTMLIotAppKitVisDataStreamNameElement>;
+            "iot-app-kit-vis-error-badge": LocalJSX.IotAppKitVisErrorBadge & JSXBase.HTMLAttributes<HTMLIotAppKitVisErrorBadgeElement>;
+            "iot-app-kit-vis-expandable-input": LocalJSX.IotAppKitVisExpandableInput & JSXBase.HTMLAttributes<HTMLIotAppKitVisExpandableInputElement>;
+            "iot-app-kit-vis-expandable-input-standard": LocalJSX.IotAppKitVisExpandableInputStandard & JSXBase.HTMLAttributes<HTMLIotAppKitVisExpandableInputStandardElement>;
+            "iot-app-kit-vis-gesture-handler": LocalJSX.IotAppKitVisGestureHandler & JSXBase.HTMLAttributes<HTMLIotAppKitVisGestureHandlerElement>;
+            "iot-app-kit-vis-legend": LocalJSX.IotAppKitVisLegend & JSXBase.HTMLAttributes<HTMLIotAppKitVisLegendElement>;
+            "iot-app-kit-vis-legend-row": LocalJSX.IotAppKitVisLegendRow & JSXBase.HTMLAttributes<HTMLIotAppKitVisLegendRowElement>;
+            "iot-app-kit-vis-line-chart": LocalJSX.IotAppKitVisLineChart & JSXBase.HTMLAttributes<HTMLIotAppKitVisLineChartElement>;
+            "iot-app-kit-vis-line-chart-colored-point": LocalJSX.IotAppKitVisLineChartColoredPoint & JSXBase.HTMLAttributes<HTMLIotAppKitVisLineChartColoredPointElement>;
+            "iot-app-kit-vis-line-chart-stream-data": LocalJSX.IotAppKitVisLineChartStreamData & JSXBase.HTMLAttributes<HTMLIotAppKitVisLineChartStreamDataElement>;
+            "iot-app-kit-vis-loading-spinner": LocalJSX.IotAppKitVisLoadingSpinner & JSXBase.HTMLAttributes<HTMLIotAppKitVisLoadingSpinnerElement>;
+            "iot-app-kit-vis-multiple-bars": LocalJSX.IotAppKitVisMultipleBars & JSXBase.HTMLAttributes<HTMLIotAppKitVisMultipleBarsElement>;
+            "iot-app-kit-vis-multiple-lines": LocalJSX.IotAppKitVisMultipleLines & JSXBase.HTMLAttributes<HTMLIotAppKitVisMultipleLinesElement>;
+            "iot-app-kit-vis-multiple-lines-overlapping": LocalJSX.IotAppKitVisMultipleLinesOverlapping & JSXBase.HTMLAttributes<HTMLIotAppKitVisMultipleLinesOverlappingElement>;
+            "iot-app-kit-vis-scatter-chart": LocalJSX.IotAppKitVisScatterChart & JSXBase.HTMLAttributes<HTMLIotAppKitVisScatterChartElement>;
+            "iot-app-kit-vis-scatter-chart-dynamic-data": LocalJSX.IotAppKitVisScatterChartDynamicData & JSXBase.HTMLAttributes<HTMLIotAppKitVisScatterChartDynamicDataElement>;
+            "iot-app-kit-vis-scatter-chart-threshold": LocalJSX.IotAppKitVisScatterChartThreshold & JSXBase.HTMLAttributes<HTMLIotAppKitVisScatterChartThresholdElement>;
+            "iot-app-kit-vis-scatter-chart-threshold-coloration-band": LocalJSX.IotAppKitVisScatterChartThresholdColorationBand & JSXBase.HTMLAttributes<HTMLIotAppKitVisScatterChartThresholdColorationBandElement>;
+            "iot-app-kit-vis-scatter-chart-threshold-coloration-exact-point": LocalJSX.IotAppKitVisScatterChartThresholdColorationExactPoint & JSXBase.HTMLAttributes<HTMLIotAppKitVisScatterChartThresholdColorationExactPointElement>;
+            "iot-app-kit-vis-scatter-chart-threshold-coloration-multiple-data-stream": LocalJSX.IotAppKitVisScatterChartThresholdColorationMultipleDataStream & JSXBase.HTMLAttributes<HTMLIotAppKitVisScatterChartThresholdColorationMultipleDataStreamElement>;
+            "iot-app-kit-vis-scatter-chart-threshold-coloration-multiple-thresholds": LocalJSX.IotAppKitVisScatterChartThresholdColorationMultipleThresholds & JSXBase.HTMLAttributes<HTMLIotAppKitVisScatterChartThresholdColorationMultipleThresholdsElement>;
+            "iot-app-kit-vis-scatter-chart-threshold-no-coloration": LocalJSX.IotAppKitVisScatterChartThresholdNoColoration & JSXBase.HTMLAttributes<HTMLIotAppKitVisScatterChartThresholdNoColorationElement>;
+            "iot-app-kit-vis-scatter-chart-tooltip-with-multiple-data-streams-and-trends": LocalJSX.IotAppKitVisScatterChartTooltipWithMultipleDataStreamsAndTrends & JSXBase.HTMLAttributes<HTMLIotAppKitVisScatterChartTooltipWithMultipleDataStreamsAndTrendsElement>;
+            "iot-app-kit-vis-scatter-chart-trend-line-color-configuration": LocalJSX.IotAppKitVisScatterChartTrendLineColorConfiguration & JSXBase.HTMLAttributes<HTMLIotAppKitVisScatterChartTrendLineColorConfigurationElement>;
+            "iot-app-kit-vis-scatter-chart-trend-line-with-legend": LocalJSX.IotAppKitVisScatterChartTrendLineWithLegend & JSXBase.HTMLAttributes<HTMLIotAppKitVisScatterChartTrendLineWithLegendElement>;
+            "iot-app-kit-vis-scatter-chart-unsupported-data-types": LocalJSX.IotAppKitVisScatterChartUnsupportedDataTypes & JSXBase.HTMLAttributes<HTMLIotAppKitVisScatterChartUnsupportedDataTypesElement>;
+            "iot-app-kit-vis-single-bar": LocalJSX.IotAppKitVisSingleBar & JSXBase.HTMLAttributes<HTMLIotAppKitVisSingleBarElement>;
+            "iot-app-kit-vis-single-colored-bar": LocalJSX.IotAppKitVisSingleColoredBar & JSXBase.HTMLAttributes<HTMLIotAppKitVisSingleColoredBarElement>;
+            "iot-app-kit-vis-size-provider": LocalJSX.IotAppKitVisSizeProvider & JSXBase.HTMLAttributes<HTMLIotAppKitVisSizeProviderElement>;
+            "iot-app-kit-vis-size-provider-standard": LocalJSX.IotAppKitVisSizeProviderStandard & JSXBase.HTMLAttributes<HTMLIotAppKitVisSizeProviderStandardElement>;
+            "iot-app-kit-vis-status-timeline": LocalJSX.IotAppKitVisStatusTimeline & JSXBase.HTMLAttributes<HTMLIotAppKitVisStatusTimelineElement>;
+            "iot-app-kit-vis-status-timeline-overlay": LocalJSX.IotAppKitVisStatusTimelineOverlay & JSXBase.HTMLAttributes<HTMLIotAppKitVisStatusTimelineOverlayElement>;
+            "iot-app-kit-vis-status-timeline-overlay-row": LocalJSX.IotAppKitVisStatusTimelineOverlayRow & JSXBase.HTMLAttributes<HTMLIotAppKitVisStatusTimelineOverlayRowElement>;
+            "iot-app-kit-vis-straight-line-segment": LocalJSX.IotAppKitVisStraightLineSegment & JSXBase.HTMLAttributes<HTMLIotAppKitVisStraightLineSegmentElement>;
+            "iot-app-kit-vis-straight-line-segment-colored": LocalJSX.IotAppKitVisStraightLineSegmentColored & JSXBase.HTMLAttributes<HTMLIotAppKitVisStraightLineSegmentColoredElement>;
+            "iot-app-kit-vis-threshold-legend": LocalJSX.IotAppKitVisThresholdLegend & JSXBase.HTMLAttributes<HTMLIotAppKitVisThresholdLegendElement>;
+            "iot-app-kit-vis-threshold-legend-row": LocalJSX.IotAppKitVisThresholdLegendRow & JSXBase.HTMLAttributes<HTMLIotAppKitVisThresholdLegendRowElement>;
+            "iot-app-kit-vis-tooltip": LocalJSX.IotAppKitVisTooltip & JSXBase.HTMLAttributes<HTMLIotAppKitVisTooltipElement>;
+            "iot-app-kit-vis-tooltip-row": LocalJSX.IotAppKitVisTooltipRow & JSXBase.HTMLAttributes<HTMLIotAppKitVisTooltipRowElement>;
+            "iot-app-kit-vis-tooltip-rows": LocalJSX.IotAppKitVisTooltipRows & JSXBase.HTMLAttributes<HTMLIotAppKitVisTooltipRowsElement>;
+            "iot-app-kit-vis-webgl-axis": LocalJSX.IotAppKitVisWebglAxis & JSXBase.HTMLAttributes<HTMLIotAppKitVisWebglAxisElement>;
+            "iot-app-kit-vis-webgl-bar-chart-dynamic-buffer": LocalJSX.IotAppKitVisWebglBarChartDynamicBuffer & JSXBase.HTMLAttributes<HTMLIotAppKitVisWebglBarChartDynamicBufferElement>;
+            "iot-app-kit-vis-webgl-bar-chart-dynamic-data": LocalJSX.IotAppKitVisWebglBarChartDynamicData & JSXBase.HTMLAttributes<HTMLIotAppKitVisWebglBarChartDynamicDataElement>;
+            "iot-app-kit-vis-webgl-bar-chart-dynamic-data-streams": LocalJSX.IotAppKitVisWebglBarChartDynamicDataStreams & JSXBase.HTMLAttributes<HTMLIotAppKitVisWebglBarChartDynamicDataStreamsElement>;
+            "iot-app-kit-vis-webgl-bar-chart-fast-viewport": LocalJSX.IotAppKitVisWebglBarChartFastViewport & JSXBase.HTMLAttributes<HTMLIotAppKitVisWebglBarChartFastViewportElement>;
+            "iot-app-kit-vis-webgl-bar-chart-margin": LocalJSX.IotAppKitVisWebglBarChartMargin & JSXBase.HTMLAttributes<HTMLIotAppKitVisWebglBarChartMarginElement>;
+            "iot-app-kit-vis-webgl-bar-chart-negative": LocalJSX.IotAppKitVisWebglBarChartNegative & JSXBase.HTMLAttributes<HTMLIotAppKitVisWebglBarChartNegativeElement>;
+            "iot-app-kit-vis-webgl-bar-chart-positive-negative": LocalJSX.IotAppKitVisWebglBarChartPositiveNegative & JSXBase.HTMLAttributes<HTMLIotAppKitVisWebglBarChartPositiveNegativeElement>;
+            "iot-app-kit-vis-webgl-bar-chart-standard": LocalJSX.IotAppKitVisWebglBarChartStandard & JSXBase.HTMLAttributes<HTMLIotAppKitVisWebglBarChartStandardElement>;
+            "iot-app-kit-vis-webgl-bar-chart-start-from-zero": LocalJSX.IotAppKitVisWebglBarChartStartFromZero & JSXBase.HTMLAttributes<HTMLIotAppKitVisWebglBarChartStartFromZeroElement>;
+            "iot-app-kit-vis-webgl-bar-chart-threshold-coloration": LocalJSX.IotAppKitVisWebglBarChartThresholdColoration & JSXBase.HTMLAttributes<HTMLIotAppKitVisWebglBarChartThresholdColorationElement>;
+            "iot-app-kit-vis-webgl-bar-chart-threshold-coloration-band": LocalJSX.IotAppKitVisWebglBarChartThresholdColorationBand & JSXBase.HTMLAttributes<HTMLIotAppKitVisWebglBarChartThresholdColorationBandElement>;
+            "iot-app-kit-vis-webgl-bar-chart-threshold-coloration-exact-point": LocalJSX.IotAppKitVisWebglBarChartThresholdColorationExactPoint & JSXBase.HTMLAttributes<HTMLIotAppKitVisWebglBarChartThresholdColorationExactPointElement>;
+            "iot-app-kit-vis-webgl-bar-chart-threshold-coloration-multiple-data-stream": LocalJSX.IotAppKitVisWebglBarChartThresholdColorationMultipleDataStream & JSXBase.HTMLAttributes<HTMLIotAppKitVisWebglBarChartThresholdColorationMultipleDataStreamElement>;
+            "iot-app-kit-vis-webgl-bar-chart-threshold-coloration-multiple-thresholds": LocalJSX.IotAppKitVisWebglBarChartThresholdColorationMultipleThresholds & JSXBase.HTMLAttributes<HTMLIotAppKitVisWebglBarChartThresholdColorationMultipleThresholdsElement>;
+            "iot-app-kit-vis-webgl-bar-chart-threshold-no-coloration": LocalJSX.IotAppKitVisWebglBarChartThresholdNoColoration & JSXBase.HTMLAttributes<HTMLIotAppKitVisWebglBarChartThresholdNoColorationElement>;
+            "iot-app-kit-vis-webgl-bar-chart-unsupported-data-types": LocalJSX.IotAppKitVisWebglBarChartUnsupportedDataTypes & JSXBase.HTMLAttributes<HTMLIotAppKitVisWebglBarChartUnsupportedDataTypesElement>;
+            "iot-app-kit-vis-webgl-base-chart": LocalJSX.IotAppKitVisWebglBaseChart & JSXBase.HTMLAttributes<HTMLIotAppKitVisWebglBaseChartElement>;
+            "iot-app-kit-vis-webgl-chart-annotation-editable": LocalJSX.IotAppKitVisWebglChartAnnotationEditable & JSXBase.HTMLAttributes<HTMLIotAppKitVisWebglChartAnnotationEditableElement>;
+            "iot-app-kit-vis-webgl-chart-annotations": LocalJSX.IotAppKitVisWebglChartAnnotations & JSXBase.HTMLAttributes<HTMLIotAppKitVisWebglChartAnnotationsElement>;
+            "iot-app-kit-vis-webgl-chart-annotations-always-in-viewport": LocalJSX.IotAppKitVisWebglChartAnnotationsAlwaysInViewport & JSXBase.HTMLAttributes<HTMLIotAppKitVisWebglChartAnnotationsAlwaysInViewportElement>;
+            "iot-app-kit-vis-webgl-chart-axis": LocalJSX.IotAppKitVisWebglChartAxis & JSXBase.HTMLAttributes<HTMLIotAppKitVisWebglChartAxisElement>;
+            "iot-app-kit-vis-webgl-chart-dynamic-charts": LocalJSX.IotAppKitVisWebglChartDynamicCharts & JSXBase.HTMLAttributes<HTMLIotAppKitVisWebglChartDynamicChartsElement>;
+            "iot-app-kit-vis-webgl-chart-large-viewport": LocalJSX.IotAppKitVisWebglChartLargeViewport & JSXBase.HTMLAttributes<HTMLIotAppKitVisWebglChartLargeViewportElement>;
+            "iot-app-kit-vis-webgl-chart-multi": LocalJSX.IotAppKitVisWebglChartMulti & JSXBase.HTMLAttributes<HTMLIotAppKitVisWebglChartMultiElement>;
+            "iot-app-kit-vis-webgl-chart-no-annotations": LocalJSX.IotAppKitVisWebglChartNoAnnotations & JSXBase.HTMLAttributes<HTMLIotAppKitVisWebglChartNoAnnotationsElement>;
+            "iot-app-kit-vis-webgl-chart-standard": LocalJSX.IotAppKitVisWebglChartStandard & JSXBase.HTMLAttributes<HTMLIotAppKitVisWebglChartStandardElement>;
+            "iot-app-kit-vis-webgl-chart-standard-with-legend": LocalJSX.IotAppKitVisWebglChartStandardWithLegend & JSXBase.HTMLAttributes<HTMLIotAppKitVisWebglChartStandardWithLegendElement>;
+            "iot-app-kit-vis-webgl-chart-standard-with-legend-on-right": LocalJSX.IotAppKitVisWebglChartStandardWithLegendOnRight & JSXBase.HTMLAttributes<HTMLIotAppKitVisWebglChartStandardWithLegendOnRightElement>;
+            "iot-app-kit-vis-webgl-chart-threshold-coloration-band": LocalJSX.IotAppKitVisWebglChartThresholdColorationBand & JSXBase.HTMLAttributes<HTMLIotAppKitVisWebglChartThresholdColorationBandElement>;
+            "iot-app-kit-vis-webgl-chart-threshold-coloration-exact-point": LocalJSX.IotAppKitVisWebglChartThresholdColorationExactPoint & JSXBase.HTMLAttributes<HTMLIotAppKitVisWebglChartThresholdColorationExactPointElement>;
+            "iot-app-kit-vis-webgl-chart-threshold-coloration-multiple-data-stream": LocalJSX.IotAppKitVisWebglChartThresholdColorationMultipleDataStream & JSXBase.HTMLAttributes<HTMLIotAppKitVisWebglChartThresholdColorationMultipleDataStreamElement>;
+            "iot-app-kit-vis-webgl-chart-threshold-coloration-multiple-thresholds": LocalJSX.IotAppKitVisWebglChartThresholdColorationMultipleThresholds & JSXBase.HTMLAttributes<HTMLIotAppKitVisWebglChartThresholdColorationMultipleThresholdsElement>;
+            "iot-app-kit-vis-webgl-chart-threshold-coloration-split-half": LocalJSX.IotAppKitVisWebglChartThresholdColorationSplitHalf & JSXBase.HTMLAttributes<HTMLIotAppKitVisWebglChartThresholdColorationSplitHalfElement>;
+            "iot-app-kit-vis-webgl-chart-tooltip-with-multiple-data-streams": LocalJSX.IotAppKitVisWebglChartTooltipWithMultipleDataStreams & JSXBase.HTMLAttributes<HTMLIotAppKitVisWebglChartTooltipWithMultipleDataStreamsElement>;
+            "iot-app-kit-vis-webgl-context": LocalJSX.IotAppKitVisWebglContext & JSXBase.HTMLAttributes<HTMLIotAppKitVisWebglContextElement>;
+            "iot-app-kit-vis-webgl-context-nested": LocalJSX.IotAppKitVisWebglContextNested & JSXBase.HTMLAttributes<HTMLIotAppKitVisWebglContextNestedElement>;
+            "iot-app-kit-vis-webgl-context-root": LocalJSX.IotAppKitVisWebglContextRoot & JSXBase.HTMLAttributes<HTMLIotAppKitVisWebglContextRootElement>;
+            "iot-app-kit-vis-webgl-line-chart-dynamic-buffer": LocalJSX.IotAppKitVisWebglLineChartDynamicBuffer & JSXBase.HTMLAttributes<HTMLIotAppKitVisWebglLineChartDynamicBufferElement>;
+            "iot-app-kit-vis-webgl-line-chart-dynamic-data": LocalJSX.IotAppKitVisWebglLineChartDynamicData & JSXBase.HTMLAttributes<HTMLIotAppKitVisWebglLineChartDynamicDataElement>;
+            "iot-app-kit-vis-webgl-line-chart-dynamic-data-streams": LocalJSX.IotAppKitVisWebglLineChartDynamicDataStreams & JSXBase.HTMLAttributes<HTMLIotAppKitVisWebglLineChartDynamicDataStreamsElement>;
             "line-chart-unsupported-data-types": LocalJSX.LineChartUnsupportedDataTypes & JSXBase.HTMLAttributes<HTMLLineChartUnsupportedDataTypesElement>;
             "line-chart-viewport-change": LocalJSX.LineChartViewportChange & JSXBase.HTMLAttributes<HTMLLineChartViewportChangeElement>;
             "multiple-statuses": LocalJSX.MultipleStatuses & JSXBase.HTMLAttributes<HTMLMultipleStatusesElement>;
-            "sc-angled-line-segment": LocalJSX.ScAngledLineSegment & JSXBase.HTMLAttributes<HTMLScAngledLineSegmentElement>;
-            "sc-annotations-draggable-multi": LocalJSX.ScAnnotationsDraggableMulti & JSXBase.HTMLAttributes<HTMLScAnnotationsDraggableMultiElement>;
-            "sc-app": LocalJSX.ScApp & JSXBase.HTMLAttributes<HTMLScAppElement>;
-            "sc-bar-chart": LocalJSX.ScBarChart & JSXBase.HTMLAttributes<HTMLScBarChartElement>;
-            "sc-box": LocalJSX.ScBox & JSXBase.HTMLAttributes<HTMLScBoxElement>;
-            "sc-chart-icon": LocalJSX.ScChartIcon & JSXBase.HTMLAttributes<HTMLScChartIconElement>;
-            "sc-chart-y-range": LocalJSX.ScChartYRange & JSXBase.HTMLAttributes<HTMLScChartYRangeElement>;
-            "sc-circle-point-shaders": LocalJSX.ScCirclePointShaders & JSXBase.HTMLAttributes<HTMLScCirclePointShadersElement>;
-            "sc-data-stream-name": LocalJSX.ScDataStreamName & JSXBase.HTMLAttributes<HTMLScDataStreamNameElement>;
-            "sc-error-badge": LocalJSX.ScErrorBadge & JSXBase.HTMLAttributes<HTMLScErrorBadgeElement>;
-            "sc-expandable-input": LocalJSX.ScExpandableInput & JSXBase.HTMLAttributes<HTMLScExpandableInputElement>;
-            "sc-expandable-input-standard": LocalJSX.ScExpandableInputStandard & JSXBase.HTMLAttributes<HTMLScExpandableInputStandardElement>;
-            "sc-gesture-handler": LocalJSX.ScGestureHandler & JSXBase.HTMLAttributes<HTMLScGestureHandlerElement>;
-            "sc-legend": LocalJSX.ScLegend & JSXBase.HTMLAttributes<HTMLScLegendElement>;
-            "sc-legend-row": LocalJSX.ScLegendRow & JSXBase.HTMLAttributes<HTMLScLegendRowElement>;
-            "sc-line-chart": LocalJSX.ScLineChart & JSXBase.HTMLAttributes<HTMLScLineChartElement>;
-            "sc-line-chart-colored-point": LocalJSX.ScLineChartColoredPoint & JSXBase.HTMLAttributes<HTMLScLineChartColoredPointElement>;
-            "sc-line-chart-stream-data": LocalJSX.ScLineChartStreamData & JSXBase.HTMLAttributes<HTMLScLineChartStreamDataElement>;
-            "sc-loading-spinner": LocalJSX.ScLoadingSpinner & JSXBase.HTMLAttributes<HTMLScLoadingSpinnerElement>;
-            "sc-multiple-bars": LocalJSX.ScMultipleBars & JSXBase.HTMLAttributes<HTMLScMultipleBarsElement>;
-            "sc-multiple-lines": LocalJSX.ScMultipleLines & JSXBase.HTMLAttributes<HTMLScMultipleLinesElement>;
-            "sc-multiple-lines-overlapping": LocalJSX.ScMultipleLinesOverlapping & JSXBase.HTMLAttributes<HTMLScMultipleLinesOverlappingElement>;
-            "sc-scatter-chart": LocalJSX.ScScatterChart & JSXBase.HTMLAttributes<HTMLScScatterChartElement>;
-            "sc-scatter-chart-dynamic-data": LocalJSX.ScScatterChartDynamicData & JSXBase.HTMLAttributes<HTMLScScatterChartDynamicDataElement>;
-            "sc-scatter-chart-threshold": LocalJSX.ScScatterChartThreshold & JSXBase.HTMLAttributes<HTMLScScatterChartThresholdElement>;
-            "sc-scatter-chart-threshold-coloration-band": LocalJSX.ScScatterChartThresholdColorationBand & JSXBase.HTMLAttributes<HTMLScScatterChartThresholdColorationBandElement>;
-            "sc-scatter-chart-threshold-coloration-exact-point": LocalJSX.ScScatterChartThresholdColorationExactPoint & JSXBase.HTMLAttributes<HTMLScScatterChartThresholdColorationExactPointElement>;
-            "sc-scatter-chart-threshold-coloration-multiple-data-stream": LocalJSX.ScScatterChartThresholdColorationMultipleDataStream & JSXBase.HTMLAttributes<HTMLScScatterChartThresholdColorationMultipleDataStreamElement>;
-            "sc-scatter-chart-threshold-coloration-multiple-thresholds": LocalJSX.ScScatterChartThresholdColorationMultipleThresholds & JSXBase.HTMLAttributes<HTMLScScatterChartThresholdColorationMultipleThresholdsElement>;
-            "sc-scatter-chart-threshold-no-coloration": LocalJSX.ScScatterChartThresholdNoColoration & JSXBase.HTMLAttributes<HTMLScScatterChartThresholdNoColorationElement>;
-            "sc-scatter-chart-tooltip-with-multiple-data-streams-and-trends": LocalJSX.ScScatterChartTooltipWithMultipleDataStreamsAndTrends & JSXBase.HTMLAttributes<HTMLScScatterChartTooltipWithMultipleDataStreamsAndTrendsElement>;
-            "sc-scatter-chart-trend-line-color-configuration": LocalJSX.ScScatterChartTrendLineColorConfiguration & JSXBase.HTMLAttributes<HTMLScScatterChartTrendLineColorConfigurationElement>;
-            "sc-scatter-chart-trend-line-with-legend": LocalJSX.ScScatterChartTrendLineWithLegend & JSXBase.HTMLAttributes<HTMLScScatterChartTrendLineWithLegendElement>;
-            "sc-scatter-chart-unsupported-data-types": LocalJSX.ScScatterChartUnsupportedDataTypes & JSXBase.HTMLAttributes<HTMLScScatterChartUnsupportedDataTypesElement>;
-            "sc-single-bar": LocalJSX.ScSingleBar & JSXBase.HTMLAttributes<HTMLScSingleBarElement>;
-            "sc-single-colored-bar": LocalJSX.ScSingleColoredBar & JSXBase.HTMLAttributes<HTMLScSingleColoredBarElement>;
-            "sc-size-provider": LocalJSX.ScSizeProvider & JSXBase.HTMLAttributes<HTMLScSizeProviderElement>;
-            "sc-size-provider-standard": LocalJSX.ScSizeProviderStandard & JSXBase.HTMLAttributes<HTMLScSizeProviderStandardElement>;
-            "sc-status-timeline": LocalJSX.ScStatusTimeline & JSXBase.HTMLAttributes<HTMLScStatusTimelineElement>;
-            "sc-status-timeline-overlay": LocalJSX.ScStatusTimelineOverlay & JSXBase.HTMLAttributes<HTMLScStatusTimelineOverlayElement>;
-            "sc-status-timeline-overlay-row": LocalJSX.ScStatusTimelineOverlayRow & JSXBase.HTMLAttributes<HTMLScStatusTimelineOverlayRowElement>;
-            "sc-straight-line-segment": LocalJSX.ScStraightLineSegment & JSXBase.HTMLAttributes<HTMLScStraightLineSegmentElement>;
-            "sc-straight-line-segment-colored": LocalJSX.ScStraightLineSegmentColored & JSXBase.HTMLAttributes<HTMLScStraightLineSegmentColoredElement>;
-            "sc-threshold-legend": LocalJSX.ScThresholdLegend & JSXBase.HTMLAttributes<HTMLScThresholdLegendElement>;
-            "sc-threshold-legend-row": LocalJSX.ScThresholdLegendRow & JSXBase.HTMLAttributes<HTMLScThresholdLegendRowElement>;
-            "sc-tooltip": LocalJSX.ScTooltip & JSXBase.HTMLAttributes<HTMLScTooltipElement>;
-            "sc-tooltip-row": LocalJSX.ScTooltipRow & JSXBase.HTMLAttributes<HTMLScTooltipRowElement>;
-            "sc-tooltip-rows": LocalJSX.ScTooltipRows & JSXBase.HTMLAttributes<HTMLScTooltipRowsElement>;
-            "sc-webgl-axis": LocalJSX.ScWebglAxis & JSXBase.HTMLAttributes<HTMLScWebglAxisElement>;
-            "sc-webgl-bar-chart-dynamic-buffer": LocalJSX.ScWebglBarChartDynamicBuffer & JSXBase.HTMLAttributes<HTMLScWebglBarChartDynamicBufferElement>;
-            "sc-webgl-bar-chart-dynamic-data": LocalJSX.ScWebglBarChartDynamicData & JSXBase.HTMLAttributes<HTMLScWebglBarChartDynamicDataElement>;
-            "sc-webgl-bar-chart-dynamic-data-streams": LocalJSX.ScWebglBarChartDynamicDataStreams & JSXBase.HTMLAttributes<HTMLScWebglBarChartDynamicDataStreamsElement>;
-            "sc-webgl-bar-chart-fast-viewport": LocalJSX.ScWebglBarChartFastViewport & JSXBase.HTMLAttributes<HTMLScWebglBarChartFastViewportElement>;
-            "sc-webgl-bar-chart-margin": LocalJSX.ScWebglBarChartMargin & JSXBase.HTMLAttributes<HTMLScWebglBarChartMarginElement>;
-            "sc-webgl-bar-chart-negative": LocalJSX.ScWebglBarChartNegative & JSXBase.HTMLAttributes<HTMLScWebglBarChartNegativeElement>;
-            "sc-webgl-bar-chart-positive-negative": LocalJSX.ScWebglBarChartPositiveNegative & JSXBase.HTMLAttributes<HTMLScWebglBarChartPositiveNegativeElement>;
-            "sc-webgl-bar-chart-standard": LocalJSX.ScWebglBarChartStandard & JSXBase.HTMLAttributes<HTMLScWebglBarChartStandardElement>;
-            "sc-webgl-bar-chart-start-from-zero": LocalJSX.ScWebglBarChartStartFromZero & JSXBase.HTMLAttributes<HTMLScWebglBarChartStartFromZeroElement>;
-            "sc-webgl-bar-chart-threshold-coloration": LocalJSX.ScWebglBarChartThresholdColoration & JSXBase.HTMLAttributes<HTMLScWebglBarChartThresholdColorationElement>;
-            "sc-webgl-bar-chart-threshold-coloration-band": LocalJSX.ScWebglBarChartThresholdColorationBand & JSXBase.HTMLAttributes<HTMLScWebglBarChartThresholdColorationBandElement>;
-            "sc-webgl-bar-chart-threshold-coloration-exact-point": LocalJSX.ScWebglBarChartThresholdColorationExactPoint & JSXBase.HTMLAttributes<HTMLScWebglBarChartThresholdColorationExactPointElement>;
-            "sc-webgl-bar-chart-threshold-coloration-multiple-data-stream": LocalJSX.ScWebglBarChartThresholdColorationMultipleDataStream & JSXBase.HTMLAttributes<HTMLScWebglBarChartThresholdColorationMultipleDataStreamElement>;
-            "sc-webgl-bar-chart-threshold-coloration-multiple-thresholds": LocalJSX.ScWebglBarChartThresholdColorationMultipleThresholds & JSXBase.HTMLAttributes<HTMLScWebglBarChartThresholdColorationMultipleThresholdsElement>;
-            "sc-webgl-bar-chart-threshold-no-coloration": LocalJSX.ScWebglBarChartThresholdNoColoration & JSXBase.HTMLAttributes<HTMLScWebglBarChartThresholdNoColorationElement>;
-            "sc-webgl-bar-chart-unsupported-data-types": LocalJSX.ScWebglBarChartUnsupportedDataTypes & JSXBase.HTMLAttributes<HTMLScWebglBarChartUnsupportedDataTypesElement>;
-            "sc-webgl-base-chart": LocalJSX.ScWebglBaseChart & JSXBase.HTMLAttributes<HTMLScWebglBaseChartElement>;
-            "sc-webgl-chart-annotation-editable": LocalJSX.ScWebglChartAnnotationEditable & JSXBase.HTMLAttributes<HTMLScWebglChartAnnotationEditableElement>;
-            "sc-webgl-chart-annotations": LocalJSX.ScWebglChartAnnotations & JSXBase.HTMLAttributes<HTMLScWebglChartAnnotationsElement>;
-            "sc-webgl-chart-annotations-always-in-viewport": LocalJSX.ScWebglChartAnnotationsAlwaysInViewport & JSXBase.HTMLAttributes<HTMLScWebglChartAnnotationsAlwaysInViewportElement>;
-            "sc-webgl-chart-axis": LocalJSX.ScWebglChartAxis & JSXBase.HTMLAttributes<HTMLScWebglChartAxisElement>;
-            "sc-webgl-chart-dynamic-charts": LocalJSX.ScWebglChartDynamicCharts & JSXBase.HTMLAttributes<HTMLScWebglChartDynamicChartsElement>;
-            "sc-webgl-chart-large-viewport": LocalJSX.ScWebglChartLargeViewport & JSXBase.HTMLAttributes<HTMLScWebglChartLargeViewportElement>;
-            "sc-webgl-chart-multi": LocalJSX.ScWebglChartMulti & JSXBase.HTMLAttributes<HTMLScWebglChartMultiElement>;
-            "sc-webgl-chart-no-annotations": LocalJSX.ScWebglChartNoAnnotations & JSXBase.HTMLAttributes<HTMLScWebglChartNoAnnotationsElement>;
-            "sc-webgl-chart-standard": LocalJSX.ScWebglChartStandard & JSXBase.HTMLAttributes<HTMLScWebglChartStandardElement>;
-            "sc-webgl-chart-standard-with-legend": LocalJSX.ScWebglChartStandardWithLegend & JSXBase.HTMLAttributes<HTMLScWebglChartStandardWithLegendElement>;
-            "sc-webgl-chart-standard-with-legend-on-right": LocalJSX.ScWebglChartStandardWithLegendOnRight & JSXBase.HTMLAttributes<HTMLScWebglChartStandardWithLegendOnRightElement>;
-            "sc-webgl-chart-threshold-coloration-band": LocalJSX.ScWebglChartThresholdColorationBand & JSXBase.HTMLAttributes<HTMLScWebglChartThresholdColorationBandElement>;
-            "sc-webgl-chart-threshold-coloration-exact-point": LocalJSX.ScWebglChartThresholdColorationExactPoint & JSXBase.HTMLAttributes<HTMLScWebglChartThresholdColorationExactPointElement>;
-            "sc-webgl-chart-threshold-coloration-multiple-data-stream": LocalJSX.ScWebglChartThresholdColorationMultipleDataStream & JSXBase.HTMLAttributes<HTMLScWebglChartThresholdColorationMultipleDataStreamElement>;
-            "sc-webgl-chart-threshold-coloration-multiple-thresholds": LocalJSX.ScWebglChartThresholdColorationMultipleThresholds & JSXBase.HTMLAttributes<HTMLScWebglChartThresholdColorationMultipleThresholdsElement>;
-            "sc-webgl-chart-threshold-coloration-split-half": LocalJSX.ScWebglChartThresholdColorationSplitHalf & JSXBase.HTMLAttributes<HTMLScWebglChartThresholdColorationSplitHalfElement>;
-            "sc-webgl-chart-tooltip-with-multiple-data-streams": LocalJSX.ScWebglChartTooltipWithMultipleDataStreams & JSXBase.HTMLAttributes<HTMLScWebglChartTooltipWithMultipleDataStreamsElement>;
-            "sc-webgl-context": LocalJSX.ScWebglContext & JSXBase.HTMLAttributes<HTMLScWebglContextElement>;
-            "sc-webgl-context-nested": LocalJSX.ScWebglContextNested & JSXBase.HTMLAttributes<HTMLScWebglContextNestedElement>;
-            "sc-webgl-context-root": LocalJSX.ScWebglContextRoot & JSXBase.HTMLAttributes<HTMLScWebglContextRootElement>;
-            "sc-webgl-line-chart-dynamic-buffer": LocalJSX.ScWebglLineChartDynamicBuffer & JSXBase.HTMLAttributes<HTMLScWebglLineChartDynamicBufferElement>;
-            "sc-webgl-line-chart-dynamic-data": LocalJSX.ScWebglLineChartDynamicData & JSXBase.HTMLAttributes<HTMLScWebglLineChartDynamicDataElement>;
-            "sc-webgl-line-chart-dynamic-data-streams": LocalJSX.ScWebglLineChartDynamicDataStreams & JSXBase.HTMLAttributes<HTMLScWebglLineChartDynamicDataStreamsElement>;
             "single-colored-status": LocalJSX.SingleColoredStatus & JSXBase.HTMLAttributes<HTMLSingleColoredStatusElement>;
             "single-status": LocalJSX.SingleStatus & JSXBase.HTMLAttributes<HTMLSingleStatusElement>;
             "status-timeline-dynamic-buffer": LocalJSX.StatusTimelineDynamicBuffer & JSXBase.HTMLAttributes<HTMLStatusTimelineDynamicBufferElement>;

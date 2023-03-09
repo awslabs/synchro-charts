@@ -1,6 +1,6 @@
 import { SECOND_IN_MS } from '../../src/utils/time';
 
-const root = '/tests/sc-webgl-chart';
+const root = '/tests/webgl-chart';
 
 const addChartToFront = (cy: Cypress.cy) => {
   cy.get('#add-chart-to-front').click();
@@ -30,7 +30,7 @@ const removeChartFromFront = (cy: Cypress.cy) => {
 };
 
 it('renders data on canvas', () => {
-  cy.visit(`${root}/sc-webgl-chart-dynamic-charts`);
+  cy.visit(`${root}/webgl-chart-dynamic-charts`);
   addChartToFront(cy);
   cy.get('.data-container').should('be.visible');
 
@@ -38,7 +38,7 @@ it('renders data on canvas', () => {
 });
 
 it('shifts visualized data to the right', () => {
-  cy.visit(`${root}/sc-webgl-chart-dynamic-charts`);
+  cy.visit(`${root}/webgl-chart-dynamic-charts`);
   addChartToFront(cy);
   cy.get('.data-container').should('be.visible');
   shiftRight(cy);
@@ -49,7 +49,7 @@ it('shifts visualized data to the right', () => {
 });
 
 it('shifts visualized data to the left', () => {
-  cy.visit(`${root}/sc-webgl-chart-dynamic-charts`);
+  cy.visit(`${root}/webgl-chart-dynamic-charts`);
   addChartToFront(cy);
   cy.get('.data-container').should('be.visible');
   shiftRight(cy);
@@ -61,7 +61,7 @@ it('shifts visualized data to the left', () => {
 });
 
 it('clears canvas when a single chart is unmounted', () => {
-  cy.visit(`${root}/sc-webgl-chart-dynamic-charts`);
+  cy.visit(`${root}/webgl-chart-dynamic-charts`);
   addChartToFront(cy);
   cy.get('.data-container').should('be.visible');
   removeChartFromFront(cy);
@@ -73,7 +73,7 @@ it('clears canvas when a single chart is unmounted', () => {
 });
 
 it('with two charts, removing the back chart should clean up the canvas', () => {
-  cy.visit(`${root}/sc-webgl-chart-dynamic-charts`);
+  cy.visit(`${root}/webgl-chart-dynamic-charts`);
   addChartToFront(cy);
   addChartToFront(cy);
   cy.get('.data-container').should('be.visible');
@@ -85,7 +85,7 @@ it('with two charts, removing the back chart should clean up the canvas', () => 
 });
 
 it('with two charts, removing the front chart should clean up the canvas', () => {
-  cy.visit(`${root}/sc-webgl-chart-dynamic-charts`);
+  cy.visit(`${root}/webgl-chart-dynamic-charts`);
   addChartToFront(cy);
   addChartToFront(cy);
   cy.get('.data-container').should('be.visible');

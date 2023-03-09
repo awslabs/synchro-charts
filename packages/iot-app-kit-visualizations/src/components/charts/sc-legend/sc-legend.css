@@ -1,4 +1,4 @@
-sc-legend .legend-container {
+iot-app-kit-vis-legend .legend-container {
   display: flex;
   flex-wrap: wrap;
   font-size: var(--font-size-1);
@@ -13,6 +13,6 @@ sc-legend .legend-container {
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
-sc-legend .legend-container::-webkit-scrollbar {
+iot-app-kit-vis-legend .legend-container::-webkit-scrollbar {
   display: none;
 }

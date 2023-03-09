@@ -1,7 +1,7 @@
-sc-data-stream-name {
+iot-app-kit-vis-data-stream-name {
   color: var(--polaris-gray-900);
 }
 
-sc-data-stream-name .awsui {
+iot-app-kit-vis-data-stream-name .awsui {
   color: inherit;
 }

@@ -22,7 +22,7 @@ const VIEW_MODE_STYLE: StencilCSSProperty = {
 };
 
 @Component({
-  tag: 'sc-legend-row',
+  tag: 'iot-app-kit-vis-legend-row',
   styleUrl: 'sc-legend-row.css',
   shadow: false,
 })
@@ -58,7 +58,7 @@ export class ScLegendRow {
             <div class="color-container">
               {this.isLoading ? (
                 <div class="spinner-container">
-                  <sc-loading-spinner dark size={12} />
+                  <iot-app-kit-vis-loading-spinner dark size={12} />
                 </div>
               ) : (
                 <svg class="bar" data-testid={`legend-icon-${this.pointType}`}>
@@ -75,7 +75,7 @@ export class ScLegendRow {
           )}
 
           <div class="info">
-            <sc-data-stream-name
+            <iot-app-kit-vis-data-stream-name
               onNameChange={this.updateName}
               isEditing={this.isEditing}
               label={this.label}
@@ -84,7 +84,7 @@ export class ScLegendRow {
               date={this.point && new Date(this.point.x)}
             />
             <div class="legend-value" style={this.isEditing ? EDIT_MODE_STYLE : VIEW_MODE_STYLE}>
-              {this.icon && <sc-chart-icon name={this.icon} />}
+              {this.icon && <iot-app-kit-vis-chart-icon name={this.icon} />}
               <h4 class="awsui-util-d-i" data-testid="current-value" style={{ color: this.valueColor }}>
                 <Value value={this.point ? this.point.y : undefined} />
               </h4>

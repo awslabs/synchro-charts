@@ -2,7 +2,7 @@ import { CHART_VIZ_CONTAINER_SELECTOR, visitDynamicWidget } from '../../../../sr
 import { DATA_STREAM } from '../../../../src/testing/__mocks__/mockWidgetProperties';
 import { messageOverrides } from '../../../../src/testing/__mocks__/mockMessgeOverrides';
 
-const componentTag = 'sc-bar-chart';
+const componentTag = 'iot-app-kit-vis-bar-chart';
 
 it('renders the "no streams present" messaging when no streams preset', () => {
   visitDynamicWidget(cy, {

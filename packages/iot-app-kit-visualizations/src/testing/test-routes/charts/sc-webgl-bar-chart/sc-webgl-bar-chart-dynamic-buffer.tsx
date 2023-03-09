@@ -18,7 +18,7 @@ const X_MAX = new Date(2000, 0, 1);
 const WIDTH = X_MAX.getTime() - X_MIN.getTime();
 
 @Component({
-  tag: 'sc-webgl-bar-chart-dynamic-buffer',
+  tag: 'iot-app-kit-vis-webgl-bar-chart-dynamic-buffer',
 })
 export class ScWebglBarChartDynamicBuffer {
   @State() data: DataPoint<number>[] = [];
@@ -39,7 +39,7 @@ export class ScWebglBarChartDynamicBuffer {
           Add Data Point
         </button>
         <div id="chart-container" style={{ height: '500px', width: '500px', marginTop: '20px' }}>
-          <sc-bar-chart
+          <iot-app-kit-vis-bar-chart
             widgetId="widget-id"
             dataStreams={[
               {
@@ -64,7 +64,7 @@ export class ScWebglBarChartDynamicBuffer {
             bufferFactor={1}
             minBufferSize={1}
           />
-          <sc-webgl-context />
+          <iot-app-kit-vis-webgl-context />
         </div>
       </div>
     );

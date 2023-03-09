@@ -34,7 +34,7 @@ const STREAM_2_POINT_2: DataPoint<number> = {
 };
 
 @Component({
-  tag: 'sc-multiple-lines-overlapping',
+  tag: 'iot-app-kit-vis-multiple-lines-overlapping',
 })
 export class ScMultipleLinesOverlapping {
   @Element() el!: HTMLElement;
@@ -84,9 +84,9 @@ export class ScMultipleLinesOverlapping {
 
   render() {
     return (
-      <sc-webgl-context>
+      <iot-app-kit-vis-webgl-context>
         <div id="test-container" style={{ width: `${CHART_SIZE.width}px`, height: `${CHART_SIZE.height}px` }} />
-      </sc-webgl-context>
+      </iot-app-kit-vis-webgl-context>
     );
   }
 }

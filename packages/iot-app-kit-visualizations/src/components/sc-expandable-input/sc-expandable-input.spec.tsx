@@ -7,13 +7,15 @@ import { Components } from '../../components.d';
 
 const noop = () => {};
 
-const newInputSpecPage = async (props: Components.ScExpandableInput) => {
+const newInputSpecPage = async (props: Components.IotAppKitVisExpandableInput) => {
   const page = await newSpecPage({
     components: [ScExpandableInput],
     html: '<div></div>',
     supportsShadowDom: false,
   });
-  const input = page.doc.createElement('sc-expandable-input') as CustomHTMLElement<Components.ScExpandableInput>;
+  const input = page.doc.createElement('iot-app-kit-vis-expandable-input') as CustomHTMLElement<
+    Components.IotAppKitVisExpandableInput
+  >;
   update(input, props);
   page.body.appendChild(input);
   await page.waitForChanges();
