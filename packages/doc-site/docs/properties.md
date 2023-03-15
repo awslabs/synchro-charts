@@ -26,13 +26,6 @@
 
         (Optional) The maximum y-value viewable within the widget if present. Defaults to a value large enough to ensure
         all data within the viewport falls at or below the provided `yMax`.
-        
-    - `lastUpdatedBy`: string
-    
-      (Optional) A mechanism to allow the internals of the widget framework to know the source of the last viewport update.
-      Leave this field undefined to communicate that this is an externally provided date which should force the utilization of this updated viewport.
-      
-      Note: To be deprecated
       
     - `duration`: number
     

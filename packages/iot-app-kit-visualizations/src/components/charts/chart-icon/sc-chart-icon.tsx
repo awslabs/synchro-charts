@@ -13,6 +13,6 @@ export class ScChartIcon {
   @Prop() size?: number; // pixels
 
   render() {
-    return <div class="sc-chart-icon">{getIcons(this.name, this.color, this.size)}</div>;
+    return <div class="iot-app-kit-vis-chart-icon">{getIcons(this.name, this.color, this.size)}</div>;
   }
 }

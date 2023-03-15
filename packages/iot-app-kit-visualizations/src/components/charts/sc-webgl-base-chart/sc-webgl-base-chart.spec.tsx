@@ -476,7 +476,6 @@ describe('chart scene management', () => {
     chart.viewport = {
       yMax: chart.viewport.yMax,
       yMin: chart.viewport.yMin,
-      lastUpdatedBy: undefined,
       start: UPDATED_START,
       end: UPDATED_END,
     };

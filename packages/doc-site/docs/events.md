@@ -19,7 +19,6 @@ The structure is the following:
 
 ```js static
 {
-  // [startDate, endDate, lastUpdatedBy]
   detail: [Date, Date, string | undefined];
 }
 ```

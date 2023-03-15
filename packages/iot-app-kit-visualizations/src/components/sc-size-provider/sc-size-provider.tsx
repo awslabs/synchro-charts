@@ -91,6 +91,6 @@ export class ScSizeProvider {
             ...this.size,
           }
         : undefined;
-    return <div class="sc-size-provider-container">{renderChild(this.renderFunc, rect)}</div>;
+    return <div class="iot-app-kit-vis-size-provider-container">{renderChild(this.renderFunc, rect)}</div>;
   }
 }

@@ -59,8 +59,6 @@ const MIN_HEIGHT = 50;
 
 const LEGEND_HEIGHT = 100;
 
-const DEFAULT_SHOW_DATA_STREAM_COLOR = true;
-
 @Component({
   tag: 'iot-app-kit-vis-webgl-base-chart',
   styleUrl: './sc-webgl-base-chart.css',
@@ -91,20 +89,13 @@ export class ScWebglBaseChart {
   @Prop() renderLegend: (props: Legend.Props) => HTMLElement = props => <iot-app-kit-vis-legend {...props} />;
   @Prop() annotations: Annotations = {};
   @Prop() trends: Trend[] = [];
-  @Prop() supportString: boolean;
+  @Prop() supportString: boolean = false;
   @Prop() axis?: Axis.Options;
   @Prop() renderTooltip: (props: Tooltip.Props) => HTMLElement;
   @Prop() visualizesAlarms: boolean;
   @Prop() displaysError: boolean = true;
   @Prop() alarms?: AlarmsConfig;
   @Prop() supportedDataTypes: DataType[] = Object.values(DataType);
-  @Prop() shouldRerenderOnViewportChange?: ({
-    oldViewport,
-    newViewport,
-  }: {
-    oldViewport: MinimalViewPortConfig;
-    newViewport: MinimalViewPortConfig;
-  }) => boolean;
 
   /** if false, base chart will not display an empty state message when there is no data present. */
   @Prop() displaysNoDataPresentMsg?: boolean;
@@ -285,13 +276,6 @@ export class ScWebglBaseChart {
         hasAnnotationChanged: false,
         shouldRerender: false,
       });
-
-      if (
-        this.shouldRerenderOnViewportChange &&
-        this.shouldRerenderOnViewportChange({ oldViewport: oldViewPort, newViewport: newViewPort })
-      ) {
-        this.onUpdate({ start: this.start, end: this.end }, false, false, false, true);
-      }
     }
 
     const { duration } = this.activeViewPort();
@@ -401,13 +385,6 @@ export class ScWebglBaseChart {
 
   handleCameraEvent = ({ start, end }: { start: Date; end: Date }) => {
     if (this.scene) {
-      const oldViewport: ViewPort = { yMin: this.yMin, yMax: this.yMax, start, end };
-      if (
-        this.shouldRerenderOnViewportChange &&
-        this.shouldRerenderOnViewportChange({ oldViewport, newViewport: this.activeViewPort() })
-      ) {
-        this.onUpdate({ start, end }, false, false, false, true);
-      }
       // Update Camera
       webGLRenderer.updateViewPorts({ start, end, manager: this.scene });
     }
@@ -434,20 +411,9 @@ export class ScWebglBaseChart {
       startFromZero: this.yRangeStartFromZero,
     });
 
-    const prevYMin = this.yMin;
-    const prevYMax = this.yMax;
-
     /** Update active viewport. */
     this.yMin = this.viewport.yMin != null ? this.viewport.yMin : yMin;
     this.yMax = this.viewport.yMax != null ? this.viewport.yMax : yMax;
-
-    const oldViewport: ViewPort = { yMin: prevYMin, yMax: prevYMax, start: this.start, end: this.end };
-    if (
-      this.shouldRerenderOnViewportChange &&
-      this.shouldRerenderOnViewportChange({ oldViewport, newViewport: this.activeViewPort() })
-    ) {
-      this.onUpdate(this.activeViewPort(), false, false, false, true);
-    }
 
     this.applyYRangeChanges();
   };
@@ -873,13 +839,11 @@ export class ScWebglBaseChart {
     const thresholds = this.thresholds();
 
     const showDataStreamColor =
-      this.legend != null && this.legend.showDataStreamColor != null
-        ? this.legend.showDataStreamColor
-        : DEFAULT_SHOW_DATA_STREAM_COLOR;
+      this.legend != null && this.legend.showDataStreamColor != null ? this.legend.showDataStreamColor : true;
 
     if (!this.getHasSupportedData()) {
       return (
-        <div class="awsui sc-webgl-base-chart">
+        <div class="awsui iot-app-kit-vis-webgl-base-chart">
           <UnsupportedDataTypeStatus
             size={chartSizeConfig}
             messageOverrides={this.messageOverrides || {}}
@@ -890,7 +854,7 @@ export class ScWebglBaseChart {
     }
 
     return [
-      <div class="awsui sc-webgl-base-chart">
+      <div class="awsui iot-app-kit-vis-webgl-base-chart">
         {this.displaysError && <ErrorStatus hasError={hasError} size={chartSizeConfig} />}
         <iot-app-kit-vis-webgl-axis size={chartSizeConfig} />
         <DataContainer size={chartSizeConfig}>

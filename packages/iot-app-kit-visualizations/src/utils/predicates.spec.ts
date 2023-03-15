@@ -1,12 +1,5 @@
-import {
-  isNumber,
-  isDefined,
-  isNumberDataStream,
-  isSupportedDataType,
-  isValid,
-  isMinimalStaticViewport,
-} from './predicates';
-import { DataStream, DataStreamInfo, MinimalLiveViewport, MinimalStaticViewport } from './dataTypes';
+import { isNumber, isDefined, isNumberDataStream, isValid, isMinimalStaticViewport } from './predicates';
+import { DataStream, MinimalLiveViewport, MinimalStaticViewport } from './dataTypes';
 import { DataType } from './dataConstants';
 
 describe('isDefined', () => {
@@ -34,50 +27,6 @@ describe('isDefined', () => {
 describe('isValid', () => {
   it('returns true when pass in a predicate that always returns true.', () => {
     expect(isValid(() => true)(true)).toBe(true);
-  });
-});
-
-describe('isSupportedDataType', () => {
-  it('returns false when data stream is a type of string but support string is false ', () => {
-    const dataStreamInfo: DataStreamInfo = {
-      id: 'asdf',
-      resolution: 0,
-      name: 'new name',
-      dataType: DataType.STRING,
-      color: 'red',
-    };
-    expect(isSupportedDataType(false)(dataStreamInfo)).toBeFalse();
-  });
-
-  it('returns true when data stream is a type of string and support string is true ', () => {
-    const dataStreamInfo: DataStreamInfo = {
-      id: 'asdf',
-      resolution: 0,
-      name: 'new name',
-      dataType: DataType.STRING,
-      color: 'red',
-    };
-    expect(isSupportedDataType(true)(dataStreamInfo)).toBeTrue();
-  });
-
-  it('returns true when the data stream is not a type of string. Disregards the support string boolean', () => {
-    const dataStreamInfo: DataStreamInfo = {
-      id: 'asdf',
-      resolution: 0,
-      name: 'new name',
-      dataType: DataType.NUMBER,
-      color: 'red',
-    };
-    expect(isSupportedDataType(true)(dataStreamInfo)).toBeTrue();
-
-    const dataStreamInfo2: DataStreamInfo = {
-      id: 'asdf',
-      resolution: 0,
-      name: 'new name',
-      dataType: DataType.NUMBER,
-      color: 'red',
-    };
-    expect(isSupportedDataType(false)(dataStreamInfo2)).toBeTrue();
   });
 });
 
