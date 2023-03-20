@@ -96,7 +96,6 @@ export class ScLineChart implements ChartConfig {
             bufferFactor={this.bufferFactor}
             isEditing={this.isEditing}
             renderTooltip={tooltip}
-            supportString={false}
             visualizesAlarms={false}
             messageOverrides={this.messageOverrides}
           />

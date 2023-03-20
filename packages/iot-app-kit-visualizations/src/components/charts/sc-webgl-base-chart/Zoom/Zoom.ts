@@ -13,7 +13,7 @@ type ZoomContainer = SVGGElement & { __zoom: ZoomTransform };
  * Zoom
  *
  * A facade over `d3-zoom` which allows us to utilize the gesture support and concept of transforms, but
- * translated into terms of date range which are more useful for our usecase within sc-webgl-base-chart since
+ * translated into terms of date range which are more useful for our usecase within iot-app-kit-vis-webgl-base-chart since
  * we communicate with the dashboards in terms of start and end dates, rather than view port pixel specific transforms.
  */
 export default class Zoom {

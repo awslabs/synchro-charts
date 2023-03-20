@@ -11,7 +11,7 @@ iot-app-kit-vis-status-timeline-overlay-row {
   justify-content: space-between;
 }
 
-iot-app-kit-vis-status-timeline-overlay-row sc-data-stream-name {
+iot-app-kit-vis-status-timeline-overlay-row iot-app-kit-vis-data-stream-name {
   max-height: var(--timeline-row-margin-top);
   overflow: hidden;
 }

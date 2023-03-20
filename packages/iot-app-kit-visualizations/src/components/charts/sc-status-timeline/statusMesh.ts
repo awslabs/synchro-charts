@@ -39,7 +39,7 @@ export type StatusChartStatusMesh = InstancedMesh & {
 
 // Used to set the default buffer size for a given chart - the larger this is set to, the more memory will be allocated
 // up front per `ChartScene`.
-export const NUM_POSITION_COMPONENTS = 2; // (x, y)
+const NUM_POSITION_COMPONENTS = 2; // (x, y)
 export const NUM_STATUS_COMPONENTS = 4; // (x, y, width, height)
 
 const NUM_COLOR_COMPONENTS = 3; // (r, g, b)

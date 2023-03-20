@@ -26,7 +26,7 @@ export class ScExpandableInput {
       <span
         data-test-tag="expandable-input"
         contentEditable={!isDisabled}
-        class={`sc-expandable-input aws-util-font-size-1 ${isDisabled ? 'disabled' : ''}`}
+        class={`iot-app-kit-vis-expandable-input aws-util-font-size-1 ${isDisabled ? 'disabled' : ''}`}
         // spellCheck={('false' as unknown) as boolean}
         onBlur={this.onChange}
       >

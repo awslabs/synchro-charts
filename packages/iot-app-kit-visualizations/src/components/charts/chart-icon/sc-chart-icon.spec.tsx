@@ -31,7 +31,7 @@ const newChartIconSpecPage = async (props: Partial<Components.IotAppKitVisChartI
 
 it('creates empty icon if no name is provided', async () => {
   const { chartIcon } = await newChartIconSpecPage({});
-  expect(chartIcon.querySelectorAll('.sc-chart-icon')).not.toBeEmpty();
+  expect(chartIcon.querySelectorAll('.iot-app-kit-vis-chart-icon')).not.toBeEmpty();
   const icon = chartIcon.querySelector('svg');
   expect(icon).not.toBeEmpty();
 });

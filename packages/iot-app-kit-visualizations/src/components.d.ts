@@ -387,13 +387,6 @@ export namespace Components {
         "onUpdateLifeCycle"?: (viewport: ViewPortConfig) => void;
         "renderLegend": (props: Legend.Props) => HTMLElement;
         "renderTooltip": (props: Tooltip.Props) => HTMLElement;
-        "shouldRerenderOnViewportChange"?: ({
-    oldViewport,
-    newViewport,
-  }: {
-    oldViewport: MinimalViewPortConfig;
-    newViewport: MinimalViewPortConfig;
-  }) => boolean;
         "size": SizePositionConfig;
         "supportString": boolean;
         "supportedDataTypes": DataType[];
@@ -1650,13 +1643,6 @@ declare namespace LocalJSX {
         "onWidgetUpdated"?: (event: CustomEvent<WidgetConfigurationUpdate>) => void;
         "renderLegend"?: (props: Legend.Props) => HTMLElement;
         "renderTooltip"?: (props: Tooltip.Props) => HTMLElement;
-        "shouldRerenderOnViewportChange"?: ({
-    oldViewport,
-    newViewport,
-  }: {
-    oldViewport: MinimalViewPortConfig;
-    newViewport: MinimalViewPortConfig;
-  }) => boolean;
         "size": SizePositionConfig;
         "supportString"?: boolean;
         "supportedDataTypes"?: DataType[];

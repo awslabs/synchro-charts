@@ -101,10 +101,6 @@ interface MinimalViewportConfigBase {
 
   yMin?: number;
   yMax?: number;
-
-  // NOTE: Deprecated
-  // A unique identifier of the updater of the viewport. Utilized to prevent widgets from re-applying updates they've already applied.
-  lastUpdatedBy?: string;
 }
 
 export interface MinimalStaticViewport extends MinimalViewportConfigBase {
