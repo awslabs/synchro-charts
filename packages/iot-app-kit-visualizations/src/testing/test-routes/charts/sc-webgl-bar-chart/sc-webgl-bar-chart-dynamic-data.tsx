@@ -77,6 +77,7 @@ export class ScWebglBarChartDynamicData {
               start: X_MIN,
               end: X_MAX,
             }}
+            setViewport={() => {}}
           />
           <iot-app-kit-vis-webgl-context />
         </div>

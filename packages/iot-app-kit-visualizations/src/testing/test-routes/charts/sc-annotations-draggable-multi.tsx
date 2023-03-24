@@ -50,6 +50,7 @@ export class ScAnnotationsDraggableMulti {
             annotations={ANNOTATIONS}
             size={SIZE}
             viewport={{ start: X_MIN, end: X_MAX }}
+            setViewport={() => {}}
           />
         </div>
         <div style={{ width: '500px', height: '500px' }}>
@@ -59,6 +60,7 @@ export class ScAnnotationsDraggableMulti {
             annotations={ANNOTATIONS}
             size={SIZE}
             viewport={{ start: X_MIN, end: X_MAX }}
+            setViewport={() => {}}
           />
         </div>
         <iot-app-kit-vis-webgl-context />

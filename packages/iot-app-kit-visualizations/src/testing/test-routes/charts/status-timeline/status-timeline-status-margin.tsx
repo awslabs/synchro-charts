@@ -52,6 +52,7 @@ export class StatusTimelineStatusMargin {
           widgetId="widget-id"
           dataStreams={[DATA_STREAM_1, DATA_STREAM_2]}
           viewport={{ yMin: Y_MIN, yMax: Y_MAX, start: X_MIN, end: X_MAX }}
+          setViewport={() => {}}
         />
         <iot-app-kit-vis-webgl-context />
       </div>

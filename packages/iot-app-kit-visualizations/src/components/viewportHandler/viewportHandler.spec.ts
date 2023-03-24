@@ -204,7 +204,7 @@ describe('syncing managers', () => {
     expect(manager2.updateViewPort).not.toBeCalled();
   });
 
-  it('blocks dateRangeChanged event emission when a duration is passed in', () => {
+  it('blocks setViewport event emission when a duration is passed in', () => {
     const groups = new ViewportHandler();
 
     const VIEWPORT_GROUP = 'view-port-group-1';
@@ -219,7 +219,7 @@ describe('syncing managers', () => {
 
     expect(manager.updateViewPort).toBeCalledWith(
       expect.objectContaining({
-        shouldBlockDateRangeChangedEvent: true,
+        shouldBlockSetViewport: true,
       })
     );
   });
@@ -392,7 +392,7 @@ describe('internal clock', () => {
     expect(manager1.updateViewPort.mock.calls.length).toBeGreaterThan(manager2.updateViewPort.mock.calls.length);
   });
 
-  it('blocks dateRangeChanged event emission when a duration is passed in', () => {
+  it('blocks setViewport event emission when a duration is passed in', () => {
     jest.useFakeTimers();
     const groups = new ViewportHandler();
     const VIEWPORT_GROUP_1 = 'view-port-group-1';
@@ -405,12 +405,12 @@ describe('internal clock', () => {
     jest.advanceTimersByTime(secondsElapsed * SECOND_IN_MS);
     expect(manager.updateViewPort).toBeCalledWith(
       expect.objectContaining({
-        shouldBlockDateRangeChangedEvent: true,
+        shouldBlockSetViewport: true,
       })
     );
   });
 
-  it('blocks dateRangeChanged event emission when viewport group with duration updated', () => {
+  it('blocks setViewport event emission when viewport group with duration updated', () => {
     const groups = new ViewportHandler();
     const VIEWPORT_GROUP_1 = 'view-port-group-1';
     const manager = viewportManager(VIEWPORT_GROUP_1);
@@ -423,7 +423,7 @@ describe('internal clock', () => {
     expect(manager.updateViewPort).toBeCalledWith(
       expect.objectContaining({
         duration,
-        shouldBlockDateRangeChangedEvent: true,
+        shouldBlockSetViewport: true,
       })
     );
   });

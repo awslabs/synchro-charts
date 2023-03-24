@@ -96,6 +96,7 @@ export class StatusTimelineDynamicDataStreams {
               start: X_MIN,
               end: X_MAX,
             }}
+            setViewport={() => {}}
           />
         </div>
         <iot-app-kit-vis-webgl-context />

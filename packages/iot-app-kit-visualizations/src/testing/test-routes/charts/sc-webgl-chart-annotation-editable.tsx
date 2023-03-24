@@ -182,6 +182,7 @@ export class ScWebglChartAnnotationRescaling {
               height: 1000,
               width: 1000,
             }}
+            setViewport={() => {}}
           />
           <iot-app-kit-vis-webgl-context />
         </div>

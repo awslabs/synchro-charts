@@ -1,7 +1,7 @@
-import { Component, h, Listen, Prop } from '@stencil/core';
+import { Component, h, Listen, Prop, State } from '@stencil/core';
 import { SIZE, VIEWPORT as DEFAULT_VIEWPORT } from '../dynamicWidgetUtils/constants';
 import { testCaseParameters } from '../dynamicWidgetUtils/testCaseParameters';
-import { DataStreamInfo } from '../../utils/dataTypes';
+import { DataStreamInfo, MinimalViewPortConfig } from '../../utils/dataTypes';
 
 const DEFAULT_WIDTH = 700;
 const DEFAULT_HEIGHT = 400;
@@ -47,6 +47,7 @@ const styleSize = (value: number | string): string => {
   tag: 'widget-test-route',
 })
 export class WidgetTestRoute {
+  @State() viewport: MinimalViewPortConfig = DEFAULT_VIEWPORT;
   @Prop() dataStreamInfos: DataStreamInfo[] = [];
   @Prop() component: string = componentTag;
 
@@ -56,6 +57,10 @@ export class WidgetTestRoute {
       this.dataStreamInfos = configUpdate.dataStreamInfo;
     }
   }
+
+  setViewPort = viewport => {
+    this.viewport = viewport;
+  };
 
   render() {
     const viewport = {
@@ -80,6 +85,7 @@ export class WidgetTestRoute {
           isEditing={isEditing}
           alarms={alarms}
           viewport={viewport}
+          setViewport={this.setViewPort}
           legend={legend}
           size={getSize(width)}
           axis={axis}

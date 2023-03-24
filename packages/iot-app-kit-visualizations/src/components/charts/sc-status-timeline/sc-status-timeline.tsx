@@ -2,6 +2,7 @@ import { Component, h, Prop, State, Watch } from '@stencil/core';
 
 import {
   AlarmsConfig,
+  AppKitViewport,
   DataStream,
   MessageOverrides,
   MinimalSizeConfig,
@@ -88,6 +89,7 @@ export class ScStatusTimeline implements ChartConfig {
   @Prop() axis?: Axis.Options;
   @Prop() messageOverrides?: MessageOverrides;
   @Prop() alarms?: AlarmsConfig;
+  @Prop() setViewport: (viewport: AppKitViewport, lastUpdatedBy?: string) => void;
 
   @State() componentViewport: MinimalViewPortConfig;
 
@@ -159,6 +161,7 @@ export class ScStatusTimeline implements ChartConfig {
                 dataStreams={this.dataStreams}
                 alarms={this.alarms}
                 viewport={this.componentViewport}
+                setViewport={this.setViewport}
                 minBufferSize={this.minBufferSize}
                 bufferFactor={this.bufferFactor}
                 isEditing={this.isEditing}

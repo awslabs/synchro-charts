@@ -54,6 +54,7 @@ export class StatusTimelineDynamicBuffer {
               start: X_MIN,
               end: X_MAX,
             }}
+            setViewport={() => {}}
             bufferFactor={1}
             minBufferSize={1}
           />

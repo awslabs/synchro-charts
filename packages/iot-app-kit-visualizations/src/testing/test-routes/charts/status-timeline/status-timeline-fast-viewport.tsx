@@ -77,6 +77,7 @@ export class StatusTimelineFastViewport {
               start: this.start,
               end: this.end,
             }}
+            setViewport={() => {}}
           />
           <iot-app-kit-vis-webgl-context />
         </div>

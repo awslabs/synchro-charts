@@ -92,6 +92,7 @@ export class ScLineChartStreamData {
             width: 500,
           }}
           viewport={this.viewport}
+          setViewport={() => {}}
         />
         <iot-app-kit-vis-webgl-context />
       </div>

@@ -76,6 +76,7 @@ export class ScWebglChartThresholdColorationMultipleDataStream {
             width: 500,
           }}
           viewport={{ start: X_MIN, end: X_MAX, yMin: Y_MIN, yMax: Y_MAX }}
+          setViewport={() => {}}
         />
         <iot-app-kit-vis-webgl-context />
       </div>
