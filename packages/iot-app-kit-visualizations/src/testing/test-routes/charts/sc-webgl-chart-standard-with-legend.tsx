@@ -39,6 +39,7 @@ export class ScWebglChartStandardWithLegend {
             width: 500,
           }}
           viewport={{ start: X_MIN, end: X_MAX, yMin: Y_MIN, yMax: Y_MAX }}
+          setViewport={() => {}}
           legend={{
             position: LEGEND_POSITION.BOTTOM,
             width: 300,

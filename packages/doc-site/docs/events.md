@@ -11,15 +11,3 @@ Currently, this event is only fired when
 
   2. A y-annotation is dragged to a new value 
 
-### `dateRangeChange`
-
-An event which is fired upon manually enacted changes to the view port, such as panning or zooming into a chart.
-
-The structure is the following:
-
-```js static
-{
-  detail: [Date, Date, string | undefined];
-}
-```
-

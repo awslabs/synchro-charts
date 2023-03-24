@@ -43,6 +43,7 @@ export class ScWebglChartStandardWithLegendOnRight {
             position: LEGEND_POSITION.RIGHT,
           }}
           viewport={{ start: X_MIN, end: X_MAX, yMin: Y_MIN, yMax: Y_MAX }}
+          setViewport={() => {}}
         />
         <iot-app-kit-vis-webgl-context />
       </div>

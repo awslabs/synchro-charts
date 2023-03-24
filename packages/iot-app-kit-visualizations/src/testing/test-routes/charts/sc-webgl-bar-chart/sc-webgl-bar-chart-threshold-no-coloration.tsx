@@ -57,6 +57,7 @@ export class ScWebglBarChartThresholdNoColoration {
             height: 500,
           }}
           viewport={{ yMin: Y_MIN, yMax: Y_MAX, start: X_MIN, end: X_MAX }}
+          setViewport={() => {}}
         />
         <iot-app-kit-vis-webgl-context />
       </div>

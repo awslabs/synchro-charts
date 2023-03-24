@@ -44,6 +44,7 @@ export class ScWebglChartLargeViewport {
             width: 500,
           }}
           viewport={VIEWPORT}
+          setViewport={() => {}}
         />
         <iot-app-kit-vis-webgl-context />
       </div>

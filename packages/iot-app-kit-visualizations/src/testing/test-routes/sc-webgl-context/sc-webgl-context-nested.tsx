@@ -79,6 +79,7 @@ export class ScWebglContextNested {
             },
           ]}
           viewport={{ start: X_MIN, end: X_MAX, yMin: Y_MIN, yMax: Y_MAX }}
+          setViewport={() => {}}
         />
       </div>
     );

@@ -108,7 +108,7 @@ export const constructChartScene = ({
       start: Date;
       end: Date;
       duration?: number | undefined;
-      shouldBlockDateRangeChangedEvent?: boolean;
+      shouldBlockSetViewport?: boolean;
     }) => {
       /**
        * Update threejs cameras position.

@@ -2,6 +2,7 @@ import { Component, h, Prop } from '@stencil/core';
 
 import {
   AlarmsConfig,
+  AppKitViewport,
   DataStream,
   MessageOverrides,
   MinimalSizeConfig,
@@ -56,6 +57,7 @@ export class ScBarChart implements ChartConfig {
   @Prop() alarms?: AlarmsConfig;
   @Prop() gestures: boolean = true;
   @Prop() annotations: Annotations;
+  @Prop() setViewport: (viewport: AppKitViewport, lastUpdatedBy?: string) => void;
   @Prop() trends: Trend[];
   @Prop() axis?: Axis.Options;
   @Prop() messageOverrides?: MessageOverrides;
@@ -93,6 +95,7 @@ export class ScBarChart implements ChartConfig {
             dataStreams={this.dataStreams}
             alarms={this.alarms}
             viewport={this.viewport}
+            setViewport={this.setViewport}
             minBufferSize={this.minBufferSize}
             bufferFactor={this.bufferFactor}
             isEditing={this.isEditing}

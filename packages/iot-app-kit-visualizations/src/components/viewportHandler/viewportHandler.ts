@@ -55,13 +55,13 @@ export class ViewportHandler<T extends ViewPortManager> {
       // Sets the new start and end in the viewport live id for the current manager
       this.viewportMap[viewPortMapKey] = { start: newStart, end: newEnd };
 
-      // Have manager update its own viewport, preventing 'dateRangeChange' events when in live mode
+      // Have manager update its own viewport, preventing 'setViewport' when in live mode
       const isInLiveMode = Boolean(duration);
       manager.updateViewPort({
         start: newStart,
         end: newEnd,
         duration,
-        shouldBlockDateRangeChangedEvent: isInLiveMode,
+        shouldBlockSetViewport: isInLiveMode,
       });
     }, tickRate) as unknown) as number;
 
@@ -116,11 +116,11 @@ export class ViewportHandler<T extends ViewPortManager> {
      * the current viewport groups time span.
      */
     if (manager.viewportGroup && this.viewportMap[manager.viewportGroup] && shouldSync) {
-      const shouldBlockDateRangeChangedEvent = Boolean(duration);
+      const shouldBlockSetViewport = Boolean(duration);
       manager.updateViewPort({
         ...this.viewportMap[manager.viewportGroup],
         duration,
-        shouldBlockDateRangeChangedEvent,
+        shouldBlockSetViewport,
       });
     }
     // If duration is not null, this means that we want to have live mode
@@ -169,7 +169,7 @@ export class ViewportHandler<T extends ViewPortManager> {
 
     const updateViewPort = (v: T) => {
       const isInLiveMode = Boolean(duration);
-      v.updateViewPort({ start, end, duration, shouldBlockDateRangeChangedEvent: isInLiveMode });
+      v.updateViewPort({ start, end, duration, shouldBlockSetViewport: isInLiveMode });
     };
 
     if (manager.viewportGroup) {

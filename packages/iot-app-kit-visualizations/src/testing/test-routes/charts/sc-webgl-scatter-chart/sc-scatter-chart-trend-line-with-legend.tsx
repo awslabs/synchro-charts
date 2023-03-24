@@ -57,6 +57,7 @@ export class ScScatterChartTrendLineWithLegend {
             yMin: Y_MIN,
             yMax: Y_MAX,
           }}
+          setViewport={() => {}}
           legend={{
             position: LEGEND_POSITION.BOTTOM,
             width: 300,

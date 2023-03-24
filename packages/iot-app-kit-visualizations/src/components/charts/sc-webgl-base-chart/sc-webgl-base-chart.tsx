@@ -1,7 +1,6 @@
 import { Component, Element, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
 
 import isEqual from 'lodash.isequal';
-import throttle from 'lodash.throttle';
 import clone from 'lodash.clonedeep';
 
 import {
@@ -14,6 +13,7 @@ import {
   ViewPort,
   ViewPortConfig,
   MessageOverrides,
+  AppKitViewport,
 } from '../../../utils/dataTypes';
 import { DataType, StreamType } from '../../../utils/dataConstants';
 import {
@@ -52,7 +52,6 @@ import { getDataPoints } from '../../../utils/getDataPoints';
 import { LEGEND_POSITION } from '../common/constants';
 import { getDataStreamForEventing } from '../common';
 import { attachDraggable } from '../common/annotations/draggableAnnotations';
-import { DATE_RANGE_EMIT_EVENT_MS } from '../../common/constants';
 
 const MIN_WIDTH = 50;
 const MIN_HEIGHT = 50;
@@ -69,12 +68,6 @@ export class ScWebglBaseChart {
   @Event()
   widgetUpdated: EventEmitter<WidgetConfigurationUpdate>;
 
-  /**
-   * On view port date range change, this component emits a `dateRangeChange` event.
-   * This allows other data visualization components to sync to the same date range.
-   */
-  @Event() dateRangeChange: EventEmitter<[Date, Date, string | undefined]>;
-
   @Prop() dataStreams!: DataStream[];
   @Prop() updateChartScene!: ChartSceneUpdater;
   @Prop() createChartScene!: ChartSceneCreator;
@@ -88,6 +81,7 @@ export class ScWebglBaseChart {
   @Prop() legend: LegendConfig;
   @Prop() renderLegend: (props: Legend.Props) => HTMLElement = props => <iot-app-kit-vis-legend {...props} />;
   @Prop() annotations: Annotations = {};
+  @Prop() setViewport: (viewport: AppKitViewport, lastUpdatedBy?: string) => void;
   @Prop() trends: Trend[] = [];
   @Prop() supportString: boolean = false;
   @Prop() axis?: Axis.Options;
@@ -209,17 +203,6 @@ export class ScWebglBaseChart {
     this.emitUpdatedWidgetConfiguration(updatedDataStreams);
   };
 
-  onDateRangeChange = throttle(
-    ([start, end, from]: [Date, Date, string | undefined]) => {
-      this.dateRangeChange.emit([start, end, from]);
-    },
-    DATE_RANGE_EMIT_EVENT_MS,
-    {
-      leading: true,
-      trailing: true,
-    }
-  );
-
   /**
    * Visualized Data Streams
    *
@@ -264,18 +247,20 @@ export class ScWebglBaseChart {
       // This is a necessary call to ensure that the view port group is correctly set.
       // If `updateViewPorts` is **not** called, `updateAndRegisterChartScene` in an edge case may
       // re-create the chart resources, and set the new viewport equal to the view port groups stale viewport.
-      webGLRenderer.updateViewPorts({
-        start: this.start,
-        end: this.end,
-        manager: this.scene,
-        duration: this.activeViewPort().duration,
-      });
-      this.updateAndRegisterChartScene({
-        hasDataChanged: false,
-        hasSizeChanged: false,
-        hasAnnotationChanged: false,
-        shouldRerender: false,
-      });
+      if (this.viewport.lastUpdatedBy !== 'chart-gesture') {
+        webGLRenderer.updateViewPorts({
+          start: this.start,
+          end: this.end,
+          manager: this.scene,
+          duration: this.activeViewPort().duration,
+        });
+        this.updateAndRegisterChartScene({
+          hasDataChanged: false,
+          hasSizeChanged: false,
+          hasAnnotationChanged: false,
+          shouldRerender: false,
+        });
+      }
     }
 
     const { duration } = this.activeViewPort();
@@ -523,11 +508,7 @@ export class ScWebglBaseChart {
    * Provide no `hasDataChanged` to prevent a re-processing of the chart scenes.
    */
   onUpdate = (
-    {
-      start,
-      end,
-      shouldBlockDateRangeChangedEvent,
-    }: { start: Date; end: Date; shouldBlockDateRangeChangedEvent?: boolean },
+    { start, end, shouldBlockSetViewport }: { start: Date; end: Date; shouldBlockSetViewport?: boolean },
     hasDataChanged: boolean = false,
     hasSizeChanged: boolean = false,
     hasAnnotationChanged: boolean = false,
@@ -572,8 +553,8 @@ export class ScWebglBaseChart {
      */
 
     const hasViewPortChanged = this.start.getTime() !== start.getTime() || this.end.getTime() !== end.getTime();
-    if (hasViewPortChanged && !shouldBlockDateRangeChangedEvent) {
-      this.onDateRangeChange([start, end, this.viewport.group]);
+    if (hasViewPortChanged && !shouldBlockSetViewport) {
+      this.setViewport({ start, end, group: this.viewport.group }, 'chart-gesture');
     }
 
     // Update Active Viewport

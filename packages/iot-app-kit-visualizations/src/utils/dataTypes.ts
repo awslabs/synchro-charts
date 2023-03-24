@@ -101,6 +101,7 @@ interface MinimalViewportConfigBase {
 
   yMin?: number;
   yMax?: number;
+  lastUpdatedBy?: string;
 }
 
 export interface MinimalStaticViewport extends MinimalViewportConfigBase {
@@ -266,3 +267,7 @@ export interface DataStream<T extends Primitive = Primitive> extends DataStreamI
  * a single point in time (which is an interval of time with a duration of zero).
  */
 export type Resolution = number;
+
+export type DurationViewport = { duration: string | number; group?: string };
+export type HistoricalViewport = { start: Date; end: Date; group?: string };
+export type AppKitViewport = DurationViewport | HistoricalViewport;

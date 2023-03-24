@@ -53,6 +53,7 @@ export class ScWebglLineChartDynamicBuffer {
               width: 500,
             }}
             viewport={{ start: X_MIN, end: X_MAX, yMin: Y_MIN, yMax: Y_MAX }}
+            setViewport={() => {}}
             bufferFactor={1}
             minBufferSize={1}
           />

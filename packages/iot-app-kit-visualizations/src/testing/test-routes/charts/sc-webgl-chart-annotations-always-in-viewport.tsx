@@ -64,6 +64,7 @@ export class ScWebglChartAnnotationsAlwaysInViewport {
             width: 500,
           }}
           viewport={{ start: X_MIN, end: X_MAX }}
+          setViewport={() => {}}
           widgetId="widget-id"
         />
         <iot-app-kit-vis-webgl-context />

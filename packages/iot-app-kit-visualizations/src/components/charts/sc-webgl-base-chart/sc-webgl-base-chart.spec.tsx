@@ -70,6 +70,7 @@ const newChartSpecPage = async (chartProps: Partial<Components.IotAppKitVisWebgl
     displaysError: true,
     createChartScene: chartScene,
     viewport: VIEWPORT,
+    setViewport: () => {},
     gestures: true,
     size: {
       ...CHART_CONFIG.size,
@@ -490,15 +491,16 @@ describe('chart scene management', () => {
     );
   });
 
-  it('calls onUpdate without emitting dateRangeChanged event when chart is in live mode', async () => {
+  it('calls onUpdate without setting viewport event when chart is in live mode', async () => {
     jest.useFakeTimers();
 
     const mockEventListener = jest.fn();
-    document.addEventListener = mockEventListener;
+    const mockSetViewport = jest.fn();
     await newChartSpecPage({
       createChartScene: chartScene,
       updateChartScene,
       viewport: { duration: 500 },
+      setViewport: mockSetViewport,
       minBufferSize: MIN_BUFFER_SIZE,
       bufferFactor: BUFFER_FACTOR,
       dataStreams: DATA_STREAMS,
@@ -509,7 +511,7 @@ describe('chart scene management', () => {
     const secondsElapsed = 1;
     jest.advanceTimersByTime(secondsElapsed * SECOND_IN_MS);
 
-    expect(mockEventListener).not.toHaveBeenCalledWith('dateRangeChanged');
+    expect(mockSetViewport).not.toHaveBeenCalled();
   });
 });
 
