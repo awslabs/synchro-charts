@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.0](https://github.com/awslabs/synchro-charts/compare/iot-app-kit-visualizations-react-v1.2.0...iot-app-kit-visualizations-react-v1.3.0) (2023-03-27)
+
+
+### Miscellaneous Chores
+
+* **iot-app-kit-visualizations-react:** Synchronize undefined versions
+
 ## [1.2.0](https://github.com/awslabs/synchro-charts/compare/iot-app-kit-visualizations-react-v1.1.0...iot-app-kit-visualizations-react-v1.2.0) (2023-03-09)
 
 
