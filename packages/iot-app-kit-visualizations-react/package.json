@@ -18,7 +18,7 @@
     "build": "tsc --outDir dist",
     "clean": "rm -rf dist *.tsbuildinfo",
     "release": "yarn build",
-    "copy:styles": "cp ../../node_modules/@iot-app-kit-visualizations/core/dist/iot-app-kit-visualizations/iot-app-kit-visualizations.css dist/styles.css",
+    "copy:styles": "cp ../../node_modules/@iot-app-kit/charts-core/dist/iot-app-kit-visualizations/iot-app-kit-visualizations.css dist/styles.css",
     "copy:license": "cp ../../LICENSE LICENSE",
     "copy:notice": "cp ../../NOTICE NOTICE",
     "copy:code-of-conduct": "cp ../../CODE_OF_CONDUCT.md CODE_OF_CONDUCT.md",
