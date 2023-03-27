@@ -4,10 +4,10 @@
 
    To utilize as webcomponents
     ```bash
-    yarn add @iot-app-kit-visualizations/core
+    yarn add @iot-app-kit/charts-core
    
     # or with npm..
-    npm install --save @iot-app-kit-visualizations/core
+    npm install --save @iot-app-kit/charts-core
     ```
    
    For use within react,
@@ -21,7 +21,7 @@
 2. Initialize components if you are not using the react wrapper
 
     ```js static
-    import { defineComponents, applyPolyfill } from '@iot-app-kit-visualizations/core/dist/loader';
+    import { defineComponents, applyPolyfill } from '@iot-app-kit/charts-core/dist/loader';
 
     applyPolyfill().then(() => defineComponents());
     ```
