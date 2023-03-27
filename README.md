@@ -5,10 +5,10 @@
 
 # IoT App Kit Visualizations
 [![Build Status](https://github.com/awslabs/synchro-charts/actions/workflows/github-actions.yml/badge.svg?event=push)](https://github.com/awslabs/synchro-charts/blob/main/.github/workflows/github-actions.yml)
-[![NPM Version](https://img.shields.io/npm/v/@iot-app-kit-visualizations/core)](https://npmjs.org/package/@iot-app-kit-visualizations/core)
-[![License](https://img.shields.io/npm/l/@iot-app-kit-visualizations/core)](https://github.com/awslabs/synchro-charts/blob/main/LICENSE)
-[![Bundle Size](https://img.shields.io/bundlephobia/minzip/@iot-app-kit-visualizations/core)](https://bundlephobia.com/package/@iot-app-kit-visualizations/core)
-[![Downloads](https://img.shields.io/npm/dw/@iot-app-kit-visualizations/core)](https://npmjs.org/package/@iot-app-kit-visualizations/core)
+[![NPM Version](https://img.shields.io/npm/v/@iot-app-kit/charts-core)](https://npmjs.org/package/@iot-app-kit-visualizations/core)
+[![License](https://img.shields.io/npm/l/@iot-app-kit/charts-core)](https://github.com/awslabs/synchro-charts/blob/main/LICENSE)
+[![Bundle Size](https://img.shields.io/bundlephobia/minzip/@iot-app-kit/charts-core)](https://bundlephobia.com/package/@iot-app-kit/charts-core)
+[![Downloads](https://img.shields.io/npm/dw/@iot-app-kit/charts-core)](https://npmjs.org/package/@iot-app-kit/charts-core)
 
 IoT App Kit Visualizations is a front-end component library that provides a collection of components to visualize time-series data.
 
