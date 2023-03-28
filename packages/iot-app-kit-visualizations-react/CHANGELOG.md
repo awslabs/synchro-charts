@@ -8,6 +8,22 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Miscellaneous Chores
 
 * **iot-app-kit/charts:** Synchronize undefined versions
+## [1.7.0](https://github.com/awslabs/synchro-charts/compare/iot-app-kit-visualizations-react-v1.6.0...iot-app-kit-visualizations-react-v1.7.0) (2023-03-28)
+
+
+### Features
+
+* rename core pckg to iot-app-kit/charts-core ([773775a](https://github.com/awslabs/synchro-charts/commit/773775a21a6ce5977b73ae2c32d4671c5055b126))
+* replace SC components with iot-app-kit/charts in react package ([b3f3428](https://github.com/awslabs/synchro-charts/commit/b3f342869761a7036491273e6151b63d558eaf92))
+* replace synchro-charts in react package with charts-core ([e8ca248](https://github.com/awslabs/synchro-charts/commit/e8ca2488440ca2b68285ce5a085d5758fa4d809a))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/charts-core bumped from ^1.5.0 to ^1.7.0
+
 ## [1.5.0](https://github.com/awslabs/synchro-charts/compare/iot-app-kit-visualizations-react-v1.2.0...iot-app-kit-visualizations-react-v1.5.0) (2023-03-27)
 
 
