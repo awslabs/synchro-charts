@@ -1,6 +1,7 @@
 import { Component, Element, Event, EventEmitter, h, Prop, State, Watch } from '@stencil/core';
 
 import isEqual from 'lodash.isequal';
+import throttle from 'lodash.throttle';
 import clone from 'lodash.clonedeep';
 
 import {
@@ -52,6 +53,7 @@ import { getDataPoints } from '../../../utils/getDataPoints';
 import { LEGEND_POSITION } from '../common/constants';
 import { getDataStreamForEventing } from '../common';
 import { attachDraggable } from '../common/annotations/draggableAnnotations';
+import { SET_VIEWPORT_EVENT_MS } from '../../common/constants';
 
 const MIN_WIDTH = 50;
 const MIN_HEIGHT = 50;
@@ -170,6 +172,10 @@ export class ScWebglBaseChart {
     return this.axisContainer;
   };
 
+  throttledSetViewport = throttle(([start, end, group]: [Date, Date, string | undefined]) => {
+    this.setViewport({ start, end, group }, 'chart-gesture');
+  }, SET_VIEWPORT_EVENT_MS);
+
   /**
    * Emit the current widget configuration
    */
@@ -261,12 +267,12 @@ export class ScWebglBaseChart {
           shouldRerender: false,
         });
       }
-    }
 
-    const { duration } = this.activeViewPort();
-    if (this.scene != null && duration != null) {
-      webGLRenderer.stopTick({ manager: this.scene });
-      webGLRenderer.startTick({ manager: this.scene, duration, chartSize: this.chartSizeConfig() });
+      const { duration } = this.activeViewPort();
+      if (this.scene != null && duration != null) {
+        webGLRenderer.stopTick({ manager: this.scene });
+        webGLRenderer.startTick({ manager: this.scene, duration, chartSize: this.chartSizeConfig() });
+      }
     }
   }
 
@@ -554,7 +560,7 @@ export class ScWebglBaseChart {
 
     const hasViewPortChanged = this.start.getTime() !== start.getTime() || this.end.getTime() !== end.getTime();
     if (hasViewPortChanged && !shouldBlockSetViewport) {
-      this.setViewport({ start, end, group: this.viewport.group }, 'chart-gesture');
+      this.throttledSetViewport([start, end, this.viewport.group]);
     }
 
     // Update Active Viewport
