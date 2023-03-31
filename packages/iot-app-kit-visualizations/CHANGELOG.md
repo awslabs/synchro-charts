@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.7.1](https://github.com/awslabs/synchro-charts/compare/iot-app-kit-visualizations-v1.7.0...iot-app-kit-visualizations-v1.7.1) (2023-03-31)
+
+
+### Bug Fixes
+
+* **legend:** fix name and unit gap in legend ([25fd79c](https://github.com/awslabs/synchro-charts/commit/25fd79c35c5e3cf3e296c81cdd6ca2e94fd5d950))
+
 ## [1.7.0](https://github.com/awslabs/synchro-charts/compare/iot-app-kit-visualizations-v1.6.0...iot-app-kit-visualizations-v1.7.0) (2023-03-29)
 
 
