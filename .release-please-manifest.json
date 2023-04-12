@@ -1,5 +1,5 @@
 {
-  "packages/iot-app-kit-visualizations": "1.7.1",
-  "packages/iot-app-kit-visualizations-react": "1.7.1",
-  ".": "1.7.1"
+  "packages/iot-app-kit-visualizations": "1.8.0",
+  "packages/iot-app-kit-visualizations-react": "1.8.0",
+  ".": "1.8.0"
 }
