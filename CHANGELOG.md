@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.8.1](https://github.com/awslabs/synchro-charts/compare/root-v1.8.0...root-v1.8.1) (2023-04-12)
+
+
+### Bug Fixes
+
+* add left position to tooltip ([5a40e42](https://github.com/awslabs/synchro-charts/commit/5a40e4271bce80cf82c9e3d4f896a8558a96275e))
+
 ## [1.8.0](https://github.com/awslabs/synchro-charts/compare/root-v1.7.1...root-v1.8.0) (2023-04-12)
 
 
