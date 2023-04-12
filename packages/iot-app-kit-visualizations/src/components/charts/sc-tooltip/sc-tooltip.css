@@ -1,4 +1,4 @@
-iot-app-kit-vis-tooltip {
+.tooltip-portal {
   --tooltip-size: 8px;
   --tooltip-line-width: 2px;
 
@@ -6,17 +6,17 @@ iot-app-kit-vis-tooltip {
   position: absolute;
 }
 
-iot-app-kit-vis-tooltip small {
+.tooltip-portal small {
   white-space: nowrap;
 }
 
-iot-app-kit-vis-tooltip .awsui {
-  position: absolute;
+.tooltip-portal .awsui {
+  position: relative;
   z-index: 20;
   min-width: 90px;
 }
 
-iot-app-kit-vis-tooltip .tooltip-container {
+.tooltip-portal .tooltip-container {
   background: var(--awsui-color-white);
   position: relative;
   display: inline-block;
@@ -26,7 +26,7 @@ iot-app-kit-vis-tooltip .tooltip-container {
   transition-duration: 120ms;
 }
 
-iot-app-kit-vis-tooltip .tooltip-line {
+.tooltip-portal .tooltip-line {
   position: relative;
 
   /* This is to offset the tooltip line base on its width. We have a negative here because we want to center the line but DOM renders element from the left to right instead of starting from center. */

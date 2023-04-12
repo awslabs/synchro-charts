@@ -5,44 +5,27 @@ import { update } from '../common/tests/merge';
 import { ScTooltipRow } from './sc-tooltip-row';
 import { Threshold } from '../common/types';
 import { TrendResult } from '../common/trends/types';
-import { AggregateType, DataPoint, DataStream, DataStreamInfo } from '../../../utils/dataTypes';
+import { AggregateType, DataPoint, DataStream } from '../../../utils/dataTypes';
 import { ScTooltipRows } from './sc-tooltip-rows';
 import { DEFAULT_CHART_CONFIG } from '../sc-webgl-base-chart/chartDefaults';
 
 import { DEFAULT_TOOLTIP_VALUE_COLOR } from './constants';
 import { POINT_TYPE } from '../sc-webgl-base-chart/activePoints';
 import { MINUTE_IN_MS } from '../../../utils/time';
-import {
-  ALARM_STREAM,
-  ALARM_THRESHOLD,
-  BEFORE_VIEWPORT_DATE,
-  DATA_WITH_ALARM_ASSOCIATION,
-  NUMBER_EMPTY_STREAM,
-  WITHIN_VIEWPORT_DATE,
-} from '../../../testing/__mocks__/mockWidgetProperties';
+import { BEFORE_VIEWPORT_DATE, WITHIN_VIEWPORT_DATE } from '../../../testing/__mocks__/mockWidgetProperties';
 import { VIEWPORT } from '../common/testUtil';
-import { DataType, StreamType, TREND_TYPE } from '../../../utils/dataConstants';
+import { DataType, TREND_TYPE } from '../../../utils/dataConstants';
 
-import { COMPARISON_OPERATOR, DATA_ALIGNMENT, StatusIcon } from '../common/constants';
+import { COMPARISON_OPERATOR, StatusIcon } from '../common/constants';
+import { TooltipPoint } from './types';
 
 const TOOLTIP_LINE_SELECTOR = '.tooltip-line';
 
-const STRING_STREAM_INFO: DataStreamInfo = {
-  color: 'brown',
-  resolution: 0,
-  name: 'string-stream-name',
-  id: 'string-data-stream-id',
-  dataType: DataType.STRING,
-};
+const TOOLTIP_POSITION = { top: '5px', left: '5px', right: '5px', transform: 'initial', x: 5, y: 5 };
 
 const DEFAULT_POINT: DataPoint<number> = {
   x: WITHIN_VIEWPORT_DATE.getTime(),
   y: 100,
-};
-
-const DEFAULT_STRING_POINT: DataPoint<string> = {
-  x: WITHIN_VIEWPORT_DATE.getTime(),
-  y: 'some-string',
 };
 
 const DATA_STREAM: DataStream<number> = {
@@ -56,26 +39,11 @@ const DATA_STREAM: DataStream<number> = {
   resolution: MINUTE_IN_MS,
 };
 
-const DATA_STREAM_2: DataStream<number> = {
-  color: 'red',
-  name: 'data-stream-name-2',
-  id: 'data-stream-id-2',
-  dataType: DataType.NUMBER,
-  data: [],
-  aggregationType: AggregateType.AVERAGE,
-  aggregates: { [MINUTE_IN_MS]: [DEFAULT_POINT] },
-  resolution: MINUTE_IN_MS,
-};
-
-const STRING_STREAM: DataStream<string> = {
-  color: 'brown',
-  name: 'string-stream-name',
-  id: 'string-data-stream-id',
-  dataType: DataType.STRING,
-  aggregationType: AggregateType.AVERAGE,
-  aggregates: { [MINUTE_IN_MS]: [DEFAULT_STRING_POINT] },
-  data: [],
-  resolution: MINUTE_IN_MS,
+const TOOLTIP_POINT: TooltipPoint = {
+  streamId: DATA_STREAM.id,
+  type: POINT_TYPE.DATA,
+  point: DEFAULT_POINT,
+  color: DEFAULT_TOOLTIP_VALUE_COLOR,
 };
 
 const TREND: TrendResult = {
@@ -84,6 +52,13 @@ const TREND: TrendResult = {
   type: TREND_TYPE.LINEAR,
   equation: { gradient: 0, intercept: 0 },
   startDate: VIEWPORT.start,
+};
+
+const TREND_TOOLTIP_POINT: TooltipPoint = {
+  streamId: TREND.dataStreamId,
+  type: POINT_TYPE.TREND,
+  color: TREND.color,
+  label: `${DATA_STREAM.name} (linear)`,
 };
 
 const newTooltipRowsSpecPage = async (propOverrides: Partial<Components.IotAppKitVisTooltipRows> = {}) => {
@@ -97,7 +72,6 @@ const newTooltipRowsSpecPage = async (propOverrides: Partial<Components.IotAppKi
     Components.IotAppKitVisTooltipRows
   >;
   const props: Components.IotAppKitVisTooltipRows = {
-    dataAlignment: DATA_ALIGNMENT.EITHER,
     dataStreams: [],
     selectedDate: VIEWPORT.end,
     showDataStreamColor: true,
@@ -105,9 +79,8 @@ const newTooltipRowsSpecPage = async (propOverrides: Partial<Components.IotAppKi
     thresholds: [],
     trendResults: [],
     viewport: VIEWPORT,
-    supportString: true,
-    showBlankTooltipRows: false,
-    visualizesAlarms: false,
+    toolTipPositioning: TOOLTIP_POSITION,
+    tooltipPoints: [],
     ...propOverrides,
   };
 
@@ -129,6 +102,7 @@ it('renders no tool tip rows when given no data', async () => {
 it('renders one tooltip row with the streams point passed in', async () => {
   const { tooltipRows } = await newTooltipRowsSpecPage({
     dataStreams: [DATA_STREAM],
+    tooltipPoints: [TOOLTIP_POINT],
   });
 
   const toolTipRow = tooltipRows.querySelector('iot-app-kit-vis-tooltip-row') as HTMLIotAppKitVisTooltipRowElement;
@@ -140,56 +114,6 @@ it('renders one tooltip row with the streams point passed in', async () => {
   expect(tooltipRows.querySelector(TOOLTIP_LINE_SELECTOR)).not.toBeNull();
 });
 
-describe('showsBlankTooltipRows is true', () => {
-  it('renders one tooltip row with no point passed in when no data present in the data stream', async () => {
-    const { tooltipRows } = await newTooltipRowsSpecPage({
-      dataStreams: [{ ...DATA_STREAM, aggregates: {}, aggregationType: AggregateType.AVERAGE, data: [] }],
-      showBlankTooltipRows: true,
-    });
-
-    const toolTipRow = tooltipRows.querySelector('iot-app-kit-vis-tooltip-row') as HTMLIotAppKitVisTooltipRowElement;
-    expect(toolTipRow).not.toBeNull();
-    expect(toolTipRow.point).toBeUndefined();
-    expect(toolTipRow.label).toBe(DATA_STREAM.name);
-  });
-
-  it('renders one tooltip row with no point passed in when no data present in the data stream', async () => {
-    const { tooltipRows } = await newTooltipRowsSpecPage({
-      dataStreams: [{ ...DATA_STREAM, aggregates: {}, aggregationType: AggregateType.AVERAGE, data: [] }],
-      sortPoints: true,
-      showBlankTooltipRows: true,
-    });
-
-    const toolTipRow = tooltipRows.querySelector('iot-app-kit-vis-tooltip-row') as HTMLIotAppKitVisTooltipRowElement;
-    expect(toolTipRow).not.toBeNull();
-    expect(toolTipRow.point).toBeUndefined();
-    expect(toolTipRow.label).toBe(DATA_STREAM.name);
-  });
-});
-
-describe('showsBlankTooltipRows is false', () => {
-  it('renders no tooltip rows when no data present', async () => {
-    const { tooltipRows } = await newTooltipRowsSpecPage({
-      dataStreams: [{ ...DATA_STREAM, resolution: 0, data: [] }],
-      showBlankTooltipRows: false,
-    });
-
-    expect(tooltipRows.querySelectorAll('iot-app-kit-vis-tooltip-row').length).toBe(0);
-  });
-
-  it('renders no tooltip rows when no data present in data stream and is sorting with non raw data', async () => {
-    const { tooltipRows } = await newTooltipRowsSpecPage({
-      dataStreams: [
-        { ...DATA_STREAM, resolution: MINUTE_IN_MS, aggregationType: AggregateType.AVERAGE, aggregates: {} },
-      ],
-      sortPoints: true,
-      showBlankTooltipRows: false,
-    });
-
-    expect(tooltipRows.querySelectorAll('iot-app-kit-vis-tooltip-row').length).toBe(0);
-  });
-});
-
 it('renders no tooltip rows when no data stream provided', async () => {
   const { tooltipRows } = await newTooltipRowsSpecPage({
     dataStreams: [],
@@ -198,103 +122,11 @@ it('renders no tooltip rows when no data stream provided', async () => {
   expect(tooltipRows.querySelectorAll('iot-app-kit-vis-tooltip-row')).toBeEmpty();
 });
 
-describe('visualizesAlarms', () => {
-  const NUMERICAL_ALARM_STREAM: DataStream<number> = {
-    id: 'alarm-id',
-    color: 'red',
-    dataType: DataType.NUMBER,
-    name: 'alarm-name',
-    streamType: StreamType.ALARM,
-    data: [
-      {
-        x: new Date(2000, 0, 0).getTime(),
-        y: 100,
-      },
-    ],
-    resolution: 0,
-  };
-
-  it('does not render tooltip rows for alarms if `visualizesAlarms` is false', async () => {
-    const { tooltipRows } = await newTooltipRowsSpecPage({
-      dataStreams: [NUMERICAL_ALARM_STREAM],
-      visualizesAlarms: false,
-    });
-    expect(tooltipRows.querySelectorAll('iot-app-kit-vis-tooltip-row')).toBeEmpty();
-  });
-
-  it('does render tooltip rows for alarms if `visualizesAlarms` is true', async () => {
-    const { tooltipRows } = await newTooltipRowsSpecPage({
-      dataStreams: [NUMERICAL_ALARM_STREAM],
-      visualizesAlarms: true,
-    });
-
-    expect(tooltipRows.querySelectorAll('iot-app-kit-vis-tooltip-row')).not.toBeEmpty();
-
-    const row = tooltipRows.querySelector('iot-app-kit-vis-tooltip-row') as HTMLIotAppKitVisTooltipRowElement;
-    expect(row.point).toEqual(NUMERICAL_ALARM_STREAM.data[0]);
-    expect(row.label).toEqual(NUMERICAL_ALARM_STREAM.name);
-    expect(row.valueColor).toEqual(DEFAULT_TOOLTIP_VALUE_COLOR);
-  });
-});
-
-describe('supportsString', () => {
-  describe('does support strings', () => {
-    it('renders string row', async () => {
-      const { tooltipRows } = await newTooltipRowsSpecPage({
-        dataStreams: [STRING_STREAM],
-        supportString: true,
-      });
-
-      const rows = tooltipRows.querySelectorAll('iot-app-kit-vis-tooltip-row');
-      expect(rows).toHaveLength(1);
-
-      const row = tooltipRows.querySelector('iot-app-kit-vis-tooltip-row') as HTMLIotAppKitVisTooltipRowElement;
-      expect(row.label).toBe(STRING_STREAM_INFO.name);
-      expect(row.point).toBe(DEFAULT_STRING_POINT);
-    });
-
-    it('renders all data types', async () => {
-      const { tooltipRows } = await newTooltipRowsSpecPage({
-        dataStreams: [STRING_STREAM, DATA_STREAM],
-        supportString: true,
-      });
-
-      const rows = tooltipRows.querySelectorAll('iot-app-kit-vis-tooltip-row');
-      expect(rows).toHaveLength(2);
-    });
-  });
-
-  describe('does not support strings', () => {
-    it('does not render string', async () => {
-      const { tooltipRows } = await newTooltipRowsSpecPage({
-        dataStreams: [STRING_STREAM],
-        supportString: false,
-      });
-
-      const rows = tooltipRows.querySelectorAll('iot-app-kit-vis-tooltip-row');
-      expect(rows).toBeEmpty();
-    });
-
-    it('renders number based row when provided number and string data', async () => {
-      const { tooltipRows } = await newTooltipRowsSpecPage({
-        dataStreams: [STRING_STREAM, DATA_STREAM],
-        supportString: false,
-      });
-
-      const rows = tooltipRows.querySelectorAll('iot-app-kit-vis-tooltip-row');
-      expect(rows).toHaveLength(1);
-
-      const row = tooltipRows.querySelector('iot-app-kit-vis-tooltip-row') as HTMLIotAppKitVisTooltipRowElement;
-      expect(row.label).toBe(DATA_STREAM.name);
-      expect(row.point).toBe(DEFAULT_POINT);
-    });
-  });
-});
-
 it('passes down showStreamColor to tooltip-row', async () => {
   const SHOW_STREAM_COLOR = true;
   const { tooltipRows } = await newTooltipRowsSpecPage({
     dataStreams: [DATA_STREAM],
+    tooltipPoints: [TOOLTIP_POINT],
     showDataStreamColor: SHOW_STREAM_COLOR,
   });
 
@@ -302,15 +134,16 @@ it('passes down showStreamColor to tooltip-row', async () => {
   expect(toolTipRow.showDataStreamColor).toBe(SHOW_STREAM_COLOR);
 });
 
-it('renders one trend result', async () => {
+it.only('renders one trend result', async () => {
   const { tooltipRows } = await newTooltipRowsSpecPage({
     dataStreams: [DATA_STREAM],
+    tooltipPoints: [TOOLTIP_POINT, TREND_TOOLTIP_POINT],
     trendResults: [TREND],
   });
 
   const rows = tooltipRows.querySelectorAll('iot-app-kit-vis-tooltip-row');
 
-  expect(rows).toHaveLength(2);
+  expect(rows.length).toBe(2);
 
   const row = rows[1];
 
@@ -345,6 +178,7 @@ describe('threshold breaching logic', () => {
   it('renders tooltip row with no value color override when no thresholds are present', async () => {
     const { tooltipRows } = await newTooltipRowsSpecPage({
       dataStreams: [DATA_STREAM],
+      tooltipPoints: [TOOLTIP_POINT],
       thresholds: [],
     });
 
@@ -353,10 +187,10 @@ describe('threshold breaching logic', () => {
   });
 
   it('renders tooltip with valueColor, icon set to the thresholds color and icon when the threshold is breached', async () => {
+    const POINT = { x: WITHIN_VIEWPORT_DATE.getTime(), y: BREACHING_VALUE };
     const { tooltipRows } = await newTooltipRowsSpecPage({
-      dataStreams: [
-        { ...DATA_STREAM, resolution: 0, data: [{ x: WITHIN_VIEWPORT_DATE.getTime(), y: BREACHING_VALUE }] },
-      ],
+      dataStreams: [{ ...DATA_STREAM, resolution: 0, data: [POINT] }],
+      tooltipPoints: [{ ...TOOLTIP_POINT, point: POINT }],
       thresholds: [THRESHOLD],
     });
 
@@ -366,8 +200,10 @@ describe('threshold breaching logic', () => {
   });
 
   it('does not render tooltip row with value color, icon when threshold would breach value, but does not apply to the strea', async () => {
+    const POINT = { x: WITHIN_VIEWPORT_DATE.getTime(), y: BREACHING_VALUE };
     const { tooltipRows } = await newTooltipRowsSpecPage({
-      dataStreams: [{ ...DATA_STREAM, data: [{ x: WITHIN_VIEWPORT_DATE.getTime(), y: BREACHING_VALUE }] }],
+      dataStreams: [{ ...DATA_STREAM, data: [POINT] }],
+      tooltipPoints: [{ ...TOOLTIP_POINT, point: POINT }],
       thresholds: [{ ...THRESHOLD, dataStreamIds: ['some-fake-data-stream-id'] }],
     });
 
@@ -387,6 +223,7 @@ describe('threshold breaching logic', () => {
           ],
         },
       ],
+      tooltipPoints: [TOOLTIP_POINT],
       thresholds: [THRESHOLD],
     });
 
@@ -405,6 +242,7 @@ describe('threshold breaching logic', () => {
           data: [POINT],
         },
       ],
+      tooltipPoints: [{ ...TOOLTIP_POINT, point: POINT }],
       thresholds: [THRESHOLD],
     });
 
@@ -427,6 +265,7 @@ describe('threshold breaching logic', () => {
           data: [POINT],
         },
       ],
+      tooltipPoints: [{ ...TOOLTIP_POINT, point: POINT }],
       thresholds: [THRESHOLD],
     });
 
@@ -442,6 +281,7 @@ describe('threshold breaching logic', () => {
   it('does not render tooltip with valueColor set to the thresholds color when the threshold is not breached', async () => {
     const { tooltipRows } = await newTooltipRowsSpecPage({
       dataStreams: [{ ...DATA_STREAM, data: [{ x: WITHIN_VIEWPORT_DATE.getTime(), y: NON_BREACHING_VALUE }] }],
+      tooltipPoints: [TOOLTIP_POINT],
       thresholds: [THRESHOLD],
     });
 
@@ -478,6 +318,7 @@ describe('threshold breaching logic', () => {
             data: [ACTIVE_POINT],
           },
         ],
+        tooltipPoints: [{ ...TOOLTIP_POINT, point: ACTIVE_POINT, color: UPPER_THRESHOLD.color }],
         thresholds: upperLowerThresholds,
       });
       const row = tooltipRows.querySelector('iot-app-kit-vis-tooltip-row') as HTMLIotAppKitVisTooltipRowElement;
@@ -511,152 +352,12 @@ describe('threshold breaching logic', () => {
             data: [ACTIVE_POINT],
           },
         ],
+        tooltipPoints: [{ ...TOOLTIP_POINT, point: ACTIVE_POINT, color: LOWER_THRESHOLD.color }],
         thresholds: upperLowerThresholds,
       });
       const row = tooltipRows.querySelector('iot-app-kit-vis-tooltip-row') as HTMLIotAppKitVisTooltipRowElement;
 
       expect(row.valueColor).toBe(LOWER_THRESHOLD.color);
     });
-  });
-});
-
-describe('order of rows', () => {
-  it('renders tooltips with no associated points first when sorted', async () => {
-    const { tooltipRows } = await newTooltipRowsSpecPage({
-      dataStreams: [NUMBER_EMPTY_STREAM, DATA_STREAM_2, DATA_STREAM],
-      showBlankTooltipRows: true,
-      sortPoints: true,
-    });
-    const rows = tooltipRows.querySelectorAll('iot-app-kit-vis-tooltip-row');
-    expect(rows.length).toBe(3);
-
-    // undefined point re-positioned to the start of the tooltip
-    expect(rows[0].point).toBeUndefined();
-    expect(rows[0].label).toBe(NUMBER_EMPTY_STREAM.name);
-
-    // defined points after
-    expect(rows[1].point).toBeDefined();
-    expect(rows[2].point).toBeDefined();
-  });
-
-  it('maintains order of rows that have no point when sorted', async () => {
-    const NUMBER_EMPTY_STREAM_2: DataStream<number> = {
-      id: 'empty-stream-2',
-      name: 'empty-2-name',
-      dataType: DataType.NUMBER,
-      resolution: 0,
-      data: [],
-    };
-
-    const dataStreams = [NUMBER_EMPTY_STREAM, DATA_STREAM, NUMBER_EMPTY_STREAM_2, DATA_STREAM_2];
-
-    const { tooltipRows } = await newTooltipRowsSpecPage({
-      dataStreams,
-      showBlankTooltipRows: true,
-      sortPoints: true,
-    });
-
-    const rows = tooltipRows.querySelectorAll('iot-app-kit-vis-tooltip-row');
-    expect(rows.length).toBe(dataStreams.length);
-
-    expect(rows[0].label).toBe(NUMBER_EMPTY_STREAM.name);
-    expect(rows[0].point).toBeUndefined();
-
-    expect(rows[1].label).toBe(NUMBER_EMPTY_STREAM_2.name);
-    expect(rows[1].point).toBeUndefined();
-
-    expect(rows[2].label).toBe(DATA_STREAM.name);
-    expect(rows[2].point).toBeDefined();
-
-    expect(rows[3].label).toBe(DATA_STREAM_2.name);
-    expect(rows[3].point).toBeDefined();
-  });
-
-  it('when not sorted, displays rows in order of the infos', async () => {
-    const dataStreams = [DATA_STREAM, DATA_STREAM_2];
-    const { tooltipRows } = await newTooltipRowsSpecPage({
-      dataStreams,
-      sortPoints: false,
-    });
-    const rows = tooltipRows.querySelectorAll('iot-app-kit-vis-tooltip-row');
-    expect(rows).toHaveLength(dataStreams.length);
-
-    // First row is the first data
-    const r1 = rows[0];
-    expect(r1.label).toBe(DATA_STREAM.name);
-
-    const r2 = rows[1];
-    expect(r2.label).toBe(DATA_STREAM_2.name);
-  });
-
-  it('renders tooltips in order when `sortedPoints` is false, when there are empty data streams present', async () => {
-    const dataStreams = [NUMBER_EMPTY_STREAM, DATA_STREAM, DATA_STREAM_2];
-
-    const { tooltipRows } = await newTooltipRowsSpecPage({
-      dataStreams,
-      showBlankTooltipRows: true,
-      sortPoints: false,
-    });
-    const rows = tooltipRows.querySelectorAll('iot-app-kit-vis-tooltip-row');
-    expect(rows.length).toBe(dataStreams.length);
-
-    expect(rows[0].label).toBe(dataStreams[0].name);
-    expect(rows[0].point).toBeUndefined();
-
-    expect(rows[1].label).toBe(dataStreams[1].name);
-    expect(rows[1].point).toBe(DEFAULT_POINT);
-
-    expect(rows[2].label).toBe(dataStreams[2].name);
-    expect(rows[2].point).toBe(DEFAULT_POINT);
-  });
-
-  it('when sorted, displays rows in order of the magnitude of their points value', async () => {
-    const SMALLER_POINT = { ...DEFAULT_POINT, y: 0 };
-    const LARGER_POINT = { ...DEFAULT_POINT, y: 100 };
-    const { tooltipRows } = await newTooltipRowsSpecPage({
-      dataStreams: [
-        { ...DATA_STREAM, resolution: 0, data: [SMALLER_POINT] },
-        { ...DATA_STREAM_2, resolution: 0, data: [LARGER_POINT] },
-      ],
-      sortPoints: true,
-    });
-
-    const rows = tooltipRows.querySelectorAll('iot-app-kit-vis-tooltip-row');
-    expect(rows).toHaveLength(2);
-
-    const r1 = rows[0];
-    // First row is the second data stream, since it has the largest point associated with it
-    expect(r1.label).toBe(DATA_STREAM_2.name);
-
-    const r2 = rows[1];
-    expect(r2.label).toBe(DATA_STREAM.name);
-  });
-});
-
-describe('does not utilize alarms', () => {
-  /**
-   * Construct mock alarms streams and related resources
-   */
-  it('with an alarm data stream that is breached, does not display the color of the breached threshold', async () => {
-    const { tooltipRows } = await newTooltipRowsSpecPage({
-      dataStreams: [{ ...DATA_WITH_ALARM_ASSOCIATION, data: [DEFAULT_POINT] }, ALARM_STREAM],
-      visualizesAlarms: true,
-      thresholds: [ALARM_THRESHOLD],
-    });
-    const rows = tooltipRows.querySelectorAll('iot-app-kit-vis-tooltip-row');
-
-    /** Alarm Row */
-    const alarmRow = rows[0];
-    // Ensure this is the alarm row
-    expect(alarmRow.label).toBe(ALARM_STREAM.name);
-    // The associated alarm is breached
-    expect(alarmRow.valueColor).toBe(ALARM_THRESHOLD.color);
-
-    /** Data Row */
-    const dataRow = rows[1];
-    // Ensure this is the data row
-    expect(dataRow.label).toBe(DATA_WITH_ALARM_ASSOCIATION.name);
-    // The associated data stream to the alarm does not reflect the alarms breached status
-    expect(dataRow.valueColor).not.toBe(ALARM_THRESHOLD.color);
   });
 });

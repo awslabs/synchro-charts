@@ -186,6 +186,8 @@ export namespace Tooltip {
   export interface Props {
     size: SizeConfig;
     style: StencilCSSProperty;
+    widgetId: string;
+    baseChartRef: HTMLElement;
     dataStreams: DataStream[];
     viewport: ViewPort;
     dataContainer: HTMLElement;
