@@ -62,13 +62,14 @@ export class ScTooltip {
   private portal: HTMLElement;
 
   componentWillLoad() {
-    this.portal = document.createElement('div');
-    this.portal.setAttribute('id', `tooltip-portal-${this.widgetId}`);
-    this.portal.classList.add('tooltip-portal');
-    this.portal.style.zIndex = '100';
-    this.portal.style.position = 'fixed';
-    this.portal.style.height = '0';
-    document.body.append(this.portal);
+    if (!this.portal) {
+      this.portal = document.createElement('div');
+      this.portal.classList.add('tooltip-portal');
+      this.portal.style.zIndex = '100';
+      this.portal.style.position = 'fixed';
+      this.portal.style.height = '0';
+      document.body.append(this.portal);
+    }
   }
 
   componentDidLoad() {
@@ -81,6 +82,7 @@ export class ScTooltip {
     this.dataContainer.removeEventListener('mousemove', this.setSelectedDate);
     this.dataContainer.removeEventListener('mouseleave', this.hideTooltip);
     this.dataContainer.removeEventListener('mousedown', this.hideTooltip);
+    this.portal.remove();
   }
 
   tooltipHeight = (numRows: number) => numRows * TOOLTIP_ROW_HEIGHT + TOOLTIP_EMPTY_HEIGHT;
@@ -170,27 +172,18 @@ export class ScTooltip {
 
     const tooltipContainerTop = this.top != null ? `${this.top}px` : `${position.y - this.size.height}px`;
 
-    const { y } = this.baseChartRef.getBoundingClientRect();
+    const { x, y } = this.baseChartRef.getBoundingClientRect();
 
     this.portal.style.top = `${y + this.size.marginTop}px`;
+    this.portal.style.left = `${x + this.size.marginLeft}px`;
 
-    if (displayToolTipOnLeftSize) {
-      this.toolTipPositioning = {
-        top: tooltipContainerTop,
-        right: `${-position.x + X_OFFSET - this.size.marginRight}px`,
-        left: 'initial',
-        transform: 'translateX(-100%)',
-        ...position,
-      };
-    } else {
-      this.toolTipPositioning = {
-        top: tooltipContainerTop,
-        right: 'initial',
-        left: `${position.x + X_OFFSET + this.size.marginLeft}px`,
-        transform: 'initial',
-        ...position,
-      };
-    }
+    this.toolTipPositioning = {
+      top: tooltipContainerTop,
+      right: displayToolTipOnLeftSize ? `${-position.x + X_OFFSET}px` : 'initial',
+      left: displayToolTipOnLeftSize ? 'initial' : `${position.x + X_OFFSET}px`,
+      transform: displayToolTipOnLeftSize ? 'translateX(-100%)' : 'initial',
+      ...position,
+    };
   };
 
   setSelectedDate = ({ offsetX, buttons }: MouseEvent) => {

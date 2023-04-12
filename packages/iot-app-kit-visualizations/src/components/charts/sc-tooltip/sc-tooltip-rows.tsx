@@ -87,7 +87,7 @@ export class ScTooltipRows {
         <div
           class="tooltip-line"
           style={{
-            left: `${this.toolTipPositioning.x + this.size.marginLeft}px`,
+            left: `${this.toolTipPositioning.x}px`,
             height: `${this.size.height}px`,
           }}
         />
