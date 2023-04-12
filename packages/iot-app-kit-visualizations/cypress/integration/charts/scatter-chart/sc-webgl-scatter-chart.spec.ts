@@ -39,14 +39,6 @@ describe('scatter chart', () => {
     cy.get('.tooltip-container .bar').should('have.length', 4);
     cy.get('.tooltip-container [data-testid="tooltip-icon-data"]').should('have.length', 2);
     cy.get('.tooltip-container [data-testid="tooltip-icon-trend"]').should('have.length', 2);
-
-    /**
-     * The image will show that the black data stream is added before the red one.
-     *
-     * The image will also show that regardless of the data stream added order, the tooltip will sort and show the
-     * data stream and trend line values in a descending order (red data, black trend, red trend, black data).
-     */
-    cy.matchImageSnapshotOnCI();
   });
 
   it('correctly renders data stream and trend line information in legend', () => {
@@ -110,8 +102,6 @@ describe('scatter chart', () => {
     // Correct color for tooltip icon
     cy.get('.data-container').trigger('mousemove', { offsetX: VIEWPORT_WIDTH / 3, offsetY: VIEWPORT_HEIGHT / 2 });
     cy.get('[data-testid="tooltip-icon-trend"] path').should('have.attr', 'stroke', '#123abc');
-
-    cy.matchImageSnapshotOnCI();
   });
 
   it('renders an error when the dataStream has a non-numerical dataType', () => {

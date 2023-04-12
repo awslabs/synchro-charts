@@ -775,6 +775,8 @@ export class ScWebglBaseChart {
       style: { marginLeft: `${marginLeft}px`, marginTop: `${marginTop}px` },
       dataStreams: this.dataStreams,
       viewport: this.activeViewPort(),
+      widgetId: this.configId,
+      baseChartRef: this.el,
       dataContainer: this.getDataContainer(),
       thresholds,
       trendResults: this.trendResults,
@@ -872,13 +874,13 @@ export class ScWebglBaseChart {
         class="threshold-container"
         width={chartSizeConfig.width + marginRight}
         height={chartSizeConfig.height + marginBottom}
-        style={{ marginLeft: `${marginLeft}px`, marginTop: `${marginTop}px` }}
+        style={{ marginLeft: '0', marginTop: `${marginTop}px` }}
       />,
       <svg
         class="trend-container"
         width={chartSizeConfig.width}
         height={chartSizeConfig.height}
-        style={{ marginLeft: `${marginLeft}px`, marginTop: `${marginTop}px` }}
+        style={{ marginLeft: '0', marginTop: `${marginTop}px` }}
       />,
     ];
   }

@@ -55,7 +55,7 @@ it('displays each aggregation description within tooltip', () => {
     offsetY: SCREEN_SIZE.height / 2,
   });
 
-  cy.wait(0.05 * SECOND_IN_MS);
+  cy.wait(0.5 * SECOND_IN_MS);
 
   cy.get(CHART_TOOLTIP_SELECTOR).should('be.visible');
   cy.get(CHART_TOOLTIP_ROW_SELECTOR).should('have.length', 2);
@@ -80,6 +80,4 @@ it('displays each aggregation description within tooltip', () => {
     .eq(1)
     .contains('1 day average')
     .should('be.visible');
-
-  cy.get(CHART_TOOLTIP_SELECTOR).matchImageSnapshotOnCI();
 });

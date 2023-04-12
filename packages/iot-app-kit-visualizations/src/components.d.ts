@@ -11,6 +11,7 @@ import { Trend, TrendResult } from "./components/charts/common/trends/types";
 import { DATA_ALIGNMENT, StatusIcon } from "./components/charts/common/constants";
 import { POINT_TYPE } from "./components/charts/sc-webgl-base-chart/activePoints";
 import { RectScrollFixed } from "./utils/types";
+import { TooltipPoint, TooltipPositioning } from "./components/charts/sc-tooltip/types";
 import { ChartSceneCreator, ChartSceneUpdater } from "./components/charts/sc-webgl-base-chart/types";
 import { DataType } from "./utils/dataConstants";
 export namespace Components {
@@ -278,6 +279,7 @@ export namespace Components {
         "label": string;
     }
     interface IotAppKitVisTooltip {
+        "baseChartRef": HTMLElement;
         /**
           * If we are drawing data from the data timestamp to timestamp + resolution we want the tooltip to align on the left side  Otherwise we are drawing the data from timestamp - resolution to timestamp then we want the tooltip to align on the right side
          */
@@ -298,6 +300,7 @@ export namespace Components {
         "trendResults": TrendResult[];
         "viewport": ViewPort;
         "visualizesAlarms": boolean;
+        "widgetId": string;
     }
     interface IotAppKitVisTooltipRow {
         "aggregationType"?: string;
@@ -311,26 +314,15 @@ export namespace Components {
         "valueColor"?: string;
     }
     interface IotAppKitVisTooltipRows {
-        /**
-          * If we are drawing data from the data timestamp to timestamp + resolution we want the tooltip to align on the left side  Otherwise we are drawing the data from timestamp - resolution to timestamp then we want the tooltip to align on the right side
-         */
-        "dataAlignment": DATA_ALIGNMENT;
         "dataStreams": DataStream[];
-        "maxDurationFromDate"?: number;
         "selectedDate": Date;
-        "showBlankTooltipRows": boolean;
         "showDataStreamColor": boolean;
         "size": SizeConfig;
-        "sortPoints"?: boolean;
-        "supportString": boolean;
         "thresholds": Threshold[];
-        /**
-          * CSS Top property for the tooltip container
-         */
-        "top"?: number;
+        "toolTipPositioning": TooltipPositioning;
+        "tooltipPoints": TooltipPoint[];
         "trendResults": TrendResult[];
         "viewport": ViewPort;
-        "visualizesAlarms": boolean;
     }
     interface IotAppKitVisWebglAxis {
         "size": SizeConfig;
@@ -1534,6 +1526,7 @@ declare namespace LocalJSX {
         "label": string;
     }
     interface IotAppKitVisTooltip {
+        "baseChartRef"?: HTMLElement;
         /**
           * If we are drawing data from the data timestamp to timestamp + resolution we want the tooltip to align on the left side  Otherwise we are drawing the data from timestamp - resolution to timestamp then we want the tooltip to align on the right side
          */
@@ -1554,6 +1547,7 @@ declare namespace LocalJSX {
         "trendResults"?: TrendResult[];
         "viewport": ViewPort;
         "visualizesAlarms": boolean;
+        "widgetId"?: string;
     }
     interface IotAppKitVisTooltipRow {
         "aggregationType"?: string;
@@ -1567,26 +1561,15 @@ declare namespace LocalJSX {
         "valueColor"?: string;
     }
     interface IotAppKitVisTooltipRows {
-        /**
-          * If we are drawing data from the data timestamp to timestamp + resolution we want the tooltip to align on the left side  Otherwise we are drawing the data from timestamp - resolution to timestamp then we want the tooltip to align on the right side
-         */
-        "dataAlignment": DATA_ALIGNMENT;
         "dataStreams": DataStream[];
-        "maxDurationFromDate"?: number;
         "selectedDate": Date;
-        "showBlankTooltipRows": boolean;
         "showDataStreamColor"?: boolean;
         "size": SizeConfig;
-        "sortPoints"?: boolean;
-        "supportString": boolean;
         "thresholds": Threshold[];
-        /**
-          * CSS Top property for the tooltip container
-         */
-        "top"?: number;
+        "toolTipPositioning": TooltipPositioning;
+        "tooltipPoints"?: TooltipPoint[];
         "trendResults"?: TrendResult[];
         "viewport": ViewPort;
-        "visualizesAlarms": boolean;
     }
     interface IotAppKitVisWebglAxis {
         "size": SizeConfig;
