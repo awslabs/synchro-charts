@@ -1,4 +1,4 @@
-import { Component, h, Prop, State, Element } from '@stencil/core';
+import { Component, h, Prop, State, Element, Watch } from '@stencil/core';
 
 import { DataStream, SizeConfig, ViewPort } from '../../../utils/dataTypes';
 import { tooltipPosition } from './tooltipPosition';
@@ -29,7 +29,7 @@ export class ScTooltip {
   @Prop() baseChartRef: HTMLElement;
 
   @Prop() size!: SizeConfig;
-  @Prop() dataContainer!: HTMLElement;
+  @Prop() dataContainer: HTMLElement | null;
   @Prop() dataStreams!: DataStream[];
   @Prop() viewport!: ViewPort;
   @Prop() thresholds!: Threshold[];
@@ -59,6 +59,8 @@ export class ScTooltip {
   @State() selectedDate?: Date;
   @State() toolTipPositioning?: TooltipPositioning;
 
+  @State() dataContainerListenersAttached: boolean = false;
+
   private portal: HTMLElement;
 
   componentWillLoad() {
@@ -73,17 +75,30 @@ export class ScTooltip {
   }
 
   componentDidLoad() {
-    this.dataContainer.addEventListener('mousemove', this.setSelectedDate);
-    this.dataContainer.addEventListener('mouseleave', this.hideTooltip);
-    this.dataContainer.addEventListener('mousedown', this.hideTooltip, { capture: true });
+    this.setupDataContainerListeners(this.dataContainer);
   }
 
   disconnectedCallback() {
-    this.dataContainer.removeEventListener('mousemove', this.setSelectedDate);
-    this.dataContainer.removeEventListener('mouseleave', this.hideTooltip);
-    this.dataContainer.removeEventListener('mousedown', this.hideTooltip);
+    if (this.dataContainer) {
+      this.dataContainer.removeEventListener('mousemove', this.setSelectedDate);
+      this.dataContainer.removeEventListener('mouseleave', this.hideTooltip);
+      this.dataContainer.removeEventListener('mousedown', this.hideTooltip);
+    }
     this.portal.remove();
   }
+
+  @Watch('dataContainer')
+  watchDataContainer(newValue: HTMLElement | null) {
+    this.setupDataContainerListeners(newValue);
+  }
+
+  setupDataContainerListeners = (dataContainer: HTMLElement | null) => {
+    if (!dataContainer || this.dataContainerListenersAttached) return;
+    dataContainer.addEventListener('mousemove', this.setSelectedDate);
+    dataContainer.addEventListener('mouseleave', this.hideTooltip);
+    dataContainer.addEventListener('mousedown', this.hideTooltip, { capture: true });
+    this.dataContainerListenersAttached = true;
+  };
 
   tooltipHeight = (numRows: number) => numRows * TOOLTIP_ROW_HEIGHT + TOOLTIP_EMPTY_HEIGHT;
 

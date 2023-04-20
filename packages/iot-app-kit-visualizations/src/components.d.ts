@@ -284,7 +284,7 @@ export namespace Components {
           * If we are drawing data from the data timestamp to timestamp + resolution we want the tooltip to align on the left side  Otherwise we are drawing the data from timestamp - resolution to timestamp then we want the tooltip to align on the right side
          */
         "dataAlignment": DATA_ALIGNMENT;
-        "dataContainer": HTMLElement;
+        "dataContainer": HTMLElement | null;
         "dataStreams": DataStream[];
         "maxDurationFromDate"?: number;
         "showBlankTooltipRows": boolean;
@@ -1531,7 +1531,7 @@ declare namespace LocalJSX {
           * If we are drawing data from the data timestamp to timestamp + resolution we want the tooltip to align on the left side  Otherwise we are drawing the data from timestamp - resolution to timestamp then we want the tooltip to align on the right side
          */
         "dataAlignment": DATA_ALIGNMENT;
-        "dataContainer": HTMLElement;
+        "dataContainer"?: HTMLElement | null;
         "dataStreams": DataStream[];
         "maxDurationFromDate"?: number;
         "showBlankTooltipRows"?: boolean;
