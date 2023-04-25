@@ -9,7 +9,7 @@ import { webGLRenderer } from './webglContext';
 export class ScWebglContext {
   @Element() el!: HTMLElement;
   @Prop() onContextInitialization: (context: WebGLRenderingContext) => void;
-  @Prop() viewFrame: HTMLElement | Window | undefined;
+  @Prop() viewFrame: HTMLElement | Window | undefined | null;
 
   componentDidLoad() {
     const canvas = this.el.querySelector('canvas') as HTMLCanvasElement;

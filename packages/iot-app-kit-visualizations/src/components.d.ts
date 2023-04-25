@@ -429,7 +429,7 @@ export namespace Components {
     }
     interface IotAppKitVisWebglContext {
         "onContextInitialization": (context: WebGLRenderingContext) => void;
-        "viewFrame": HTMLElement | Window | undefined;
+        "viewFrame": HTMLElement | Window | undefined | null;
     }
     interface IotAppKitVisWebglContextNested {
     }
@@ -1677,7 +1677,7 @@ declare namespace LocalJSX {
     }
     interface IotAppKitVisWebglContext {
         "onContextInitialization"?: (context: WebGLRenderingContext) => void;
-        "viewFrame"?: HTMLElement | Window | undefined;
+        "viewFrame"?: HTMLElement | Window | undefined | null;
     }
     interface IotAppKitVisWebglContextNested {
     }
