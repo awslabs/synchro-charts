@@ -1,3 +1,4 @@
+import { scrollPosition } from '../sc-webgl-context/viewFrame';
 import { ClipSpaceRectMap, rectScrollFixed } from './webGLPositioning';
 
 const INITIAL_CANVAS_HEIGHT = 500;
@@ -45,8 +46,17 @@ const createDiv = ({ width, height, x, y }: { width: number; height: number; x: 
     bottom: y + height,
     toJSON: () => '',
   });
+  el.scrollLeft = x;
+  el.scrollTop = y;
   return el;
 };
+
+const viewFrame = createDiv({
+  width: 1000,
+  height: 1000,
+  x: 0,
+  y: 0,
+});
 
 describe('clip space mapping', () => {
   it('returns clip rect when properly set', () => {
@@ -56,7 +66,7 @@ describe('clip space mapping', () => {
     const X = 0;
     const Y = 0;
 
-    const clipSpaceRectMap = new ClipSpaceRectMap(createCanvas());
+    const clipSpaceRectMap = new ClipSpaceRectMap(createCanvas(), viewFrame);
     const el = createDiv({
       width: WIDTH,
       height: HEIGHT,
@@ -64,7 +74,7 @@ describe('clip space mapping', () => {
       y: Y,
     });
 
-    clipSpaceRectMap.updateChartScene(CHART_SCENE_ID, rectScrollFixed(el));
+    clipSpaceRectMap.updateChartScene(CHART_SCENE_ID, rectScrollFixed(el, scrollPosition(viewFrame)));
 
     expect(clipSpaceRectMap.clipRect(CHART_SCENE_ID)).toEqual({
       width: WIDTH,
@@ -99,10 +109,10 @@ describe('clip space mapping', () => {
 
     const CHART_SCENE_ID = '1';
 
-    const clipSpaceRectMap = new ClipSpaceRectMap(createCanvas(canvasDimensions));
+    const clipSpaceRectMap = new ClipSpaceRectMap(createCanvas(canvasDimensions), viewFrame);
     const el = createDiv(chartDimensions);
 
-    clipSpaceRectMap.updateChartScene(CHART_SCENE_ID, rectScrollFixed(el));
+    clipSpaceRectMap.updateChartScene(CHART_SCENE_ID, rectScrollFixed(el, scrollPosition(viewFrame)));
 
     expect(clipSpaceRectMap.clipRect(CHART_SCENE_ID)).toEqual({
       width: chartDimensions.width,
@@ -121,7 +131,7 @@ describe('clip space mapping', () => {
 
     const canvas = createCanvas();
 
-    const clipSpaceRectMap = new ClipSpaceRectMap(canvas);
+    const clipSpaceRectMap = new ClipSpaceRectMap(canvas, viewFrame);
     const el = createDiv({
       width: WIDTH,
       height: HEIGHT,
@@ -129,7 +139,7 @@ describe('clip space mapping', () => {
       y: Y,
     });
 
-    clipSpaceRectMap.updateChartScene(CHART_SCENE_ID, rectScrollFixed(el));
+    clipSpaceRectMap.updateChartScene(CHART_SCENE_ID, rectScrollFixed(el, scrollPosition(viewFrame)));
 
     const UPDATED_CANVAS_WIDTH = INITIAL_CANVAS_WIDTH + 100;
     const UPDATED_CANVAS_HEIGHT = INITIAL_CANVAS_HEIGHT + 55;
@@ -162,7 +172,7 @@ describe('clip space mapping', () => {
 
     const canvas = createCanvas();
 
-    const clipSpaceRectMap = new ClipSpaceRectMap(canvas);
+    const clipSpaceRectMap = new ClipSpaceRectMap(canvas, viewFrame);
     const el = createDiv({
       width: WIDTH,
       height: HEIGHT,
@@ -170,7 +180,7 @@ describe('clip space mapping', () => {
       y: Y,
     });
 
-    clipSpaceRectMap.updateChartScene(CHART_SCENE_ID, rectScrollFixed(el));
+    clipSpaceRectMap.updateChartScene(CHART_SCENE_ID, rectScrollFixed(el, scrollPosition(viewFrame)));
 
     const UPDATED_CANVAS_WIDTH = INITIAL_CANVAS_WIDTH + 100;
     const UPDATED_CANVAS_HEIGHT = INITIAL_CANVAS_HEIGHT + 55;
@@ -197,7 +207,7 @@ describe('clip space mapping', () => {
 
   it('returns undefined when chart scene is not set', () => {
     const UNREGISTERED_CHART_SCENE_ID = '1';
-    const clipSpaceRectMap = new ClipSpaceRectMap(createCanvas());
+    const clipSpaceRectMap = new ClipSpaceRectMap(createCanvas(), viewFrame);
 
     expect(clipSpaceRectMap.clipRect(UNREGISTERED_CHART_SCENE_ID)).toBeUndefined();
   });

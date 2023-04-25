@@ -2,12 +2,13 @@
 import { WebGLRenderer } from 'three';
 import ResizeObserver from 'resize-observer-polyfill';
 import { ChartScene } from './types';
-import { ClipSpaceRect, ClipSpaceRectMap } from '../common/webGLPositioning';
+import { ClipSpaceRect, ClipSpaceRectMap, rectScrollFixed } from '../common/webGLPositioning';
 import { RectScrollFixed } from '../../utils/types';
 import { ViewportHandler } from '../viewportHandler/viewportHandler';
 import { isValid } from '../../utils/predicates';
 import { ViewPortManager } from '../viewportHandler/types';
 import { SizeConfig } from '../../utils/dataTypes';
+import { ViewFrame, scrollPosition } from './viewFrame';
 
 const isChartScene = isValid((v: Partial<ChartScene>) => v.camera != null);
 
@@ -101,7 +102,7 @@ export const createWebGLRenderer = (viewportHandler: ViewportHandler<ViewPortMan
    */
   let renderer: WebGLRenderer | undefined;
   let canvas: HTMLCanvasElement | undefined;
-  let viewFrame: Element | Window | undefined;
+  let viewFrame: ViewFrame;
   let viewFrameSizeObserver: ResizeObserver | undefined;
 
   const fullClearAndRerender = () => {
@@ -123,16 +124,8 @@ export const createWebGLRenderer = (viewportHandler: ViewportHandler<ViewPortMan
 
   const onScroll = () => {
     if (renderer && canvas) {
-      let x = 0;
-      let y = 0;
       if (!viewFrame) return;
-      if ('scrollX' in viewFrame) {
-        x = viewFrame.scrollX;
-        y = viewFrame.scrollY;
-      } else {
-        x = viewFrame.scrollLeft;
-        y = viewFrame.scrollTop;
-      }
+      const { x, y } = scrollPosition(viewFrame);
       const transform = `translate(${x}px, ${y}px)`;
 
       // eslint-disable-next-line no-param-reassign
@@ -156,12 +149,12 @@ export const createWebGLRenderer = (viewportHandler: ViewportHandler<ViewPortMan
   const initRendering = (
     renderCanvas: HTMLCanvasElement,
     onContextInitialization: (context: WebGLRenderingContext) => void = () => {},
-    viewFrameRef?: Element | Window
+    viewFrameRef?: ViewFrame | null
   ) => {
-    rectMap = new ClipSpaceRectMap(renderCanvas);
     canvas = renderCanvas;
     renderer = new WebGLRenderer({ canvas, alpha: true, antialias: true, preserveDrawingBuffer: true });
     viewFrame = viewFrameRef || window;
+    rectMap = new ClipSpaceRectMap(renderCanvas, viewFrame);
 
     onContextInitialization(renderer.getContext());
 
@@ -234,6 +227,9 @@ export const createWebGLRenderer = (viewportHandler: ViewportHandler<ViewPortMan
     fullClearAndRerender();
   };
 
+  const getRectScrollFixed = (el: HTMLElement) =>
+    rectScrollFixed(el, viewFrame ? scrollPosition(viewFrame) : { x: 0, y: 0 });
+
   /**
    * This must be called every time resolution has changed.
    */
@@ -248,6 +244,7 @@ export const createWebGLRenderer = (viewportHandler: ViewportHandler<ViewPortMan
     addChartScene,
     removeChartScene,
     setChartRect,
+    getRectScrollFixed,
     updateViewPorts: viewportHandler.syncViewPortGroup,
     startTick: viewportHandler.startTick,
     stopTick: viewportHandler.stopTick,

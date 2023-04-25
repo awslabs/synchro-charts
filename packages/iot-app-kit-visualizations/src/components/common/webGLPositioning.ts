@@ -1,4 +1,5 @@
 import { RectScrollFixed } from '../../utils/types';
+import { ViewFrame, scrollPosition } from '../sc-webgl-context/viewFrame';
 
 export interface ClipSpaceRect {
   readonly bottom: number;
@@ -13,7 +14,11 @@ export interface ClipSpaceRect {
  * This will return us the coordinates of a rectangle within clip space coordinates (i.e. coordinate space for webGL)
  * https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/WebGL_model_view_projection to learn more about clip space
  */
-const clipSpaceRect = (containerRect: RectScrollFixed, canvasRect: DOMRectReadOnly): ClipSpaceRect => {
+const clipSpaceRect = (
+  containerRect: RectScrollFixed,
+  canvasRect: DOMRectReadOnly,
+  { x: viewFrameX, y: viewFrameY }: ReturnType<typeof scrollPosition>
+): ClipSpaceRect => {
   const density = window.devicePixelRatio;
   const { left, bottom, width, height } = containerRect;
 
@@ -21,10 +26,10 @@ const clipSpaceRect = (containerRect: RectScrollFixed, canvasRect: DOMRectReadOn
   // Bounding client rect measures the bottom as the distance from the top, i.e.:
   // For DOM, (0, 0) is the top left.
   // In WebGL, (0, 0) is the bottom left.
-  const positiveYUpBottom = canvasRect.bottom - (bottom - window.scrollY);
+  const positiveYUpBottom = canvasRect.bottom - (bottom - viewFrameY);
 
   // Need to account for pixel density - i.e. retina display
-  const pixelLeft = (left - canvasRect.left - window.scrollX) * density;
+  const pixelLeft = (left - canvasRect.left - viewFrameX) * density;
   const pixelBottom = positiveYUpBottom * density;
   const pixelWidth = width * density;
   const pixelHeight = height * density;
@@ -43,17 +48,20 @@ const clipSpaceRect = (containerRect: RectScrollFixed, canvasRect: DOMRectReadOn
  * The reason this is desirable is because it allows us to not have to re-calculate all our
  * rect's every time a scroll event occurs. This allows for a smooth scroll to occur.
  */
-export const rectScrollFixed = (el: HTMLElement): RectScrollFixed => {
+export const rectScrollFixed = (
+  el: HTMLElement,
+  { x: viewFrameX, y: viewFrameY }: ReturnType<typeof scrollPosition>
+): RectScrollFixed => {
   const domRect = el.getBoundingClientRect() as DOMRect;
   return {
     width: domRect.width,
     height: domRect.height,
-    left: domRect.left + window.scrollX,
-    right: domRect.right + window.scrollX,
-    bottom: domRect.bottom + window.scrollY,
-    top: domRect.top + window.scrollY,
-    x: domRect.x + window.scrollX,
-    y: domRect.y + window.scrollY,
+    left: domRect.left + viewFrameX,
+    right: domRect.right + viewFrameX,
+    bottom: domRect.bottom + viewFrameY,
+    top: domRect.top + viewFrameY,
+    x: domRect.x + viewFrameX,
+    y: domRect.y + viewFrameY,
     density: window.devicePixelRatio,
   };
 };
@@ -69,9 +77,11 @@ export class ClipSpaceRectMap {
   private canvas: HTMLCanvasElement;
   private rectMap: { [sceneId: string]: RectScrollFixed } = {};
   private canvasRect: DOMRectReadOnly;
+  private viewFrame: ViewFrame;
 
-  constructor(canvas: HTMLCanvasElement) {
+  constructor(canvas: HTMLCanvasElement, viewFrame: ViewFrame) {
     this.canvas = canvas;
+    this.viewFrame = viewFrame;
     this.updateCanvas();
   }
 
@@ -93,7 +103,9 @@ export class ClipSpaceRectMap {
    * Return clip rect for the requested chart scene
    */
   clipRect(chartSceneId: string): ClipSpaceRect | undefined {
-    return this.rectMap[chartSceneId] ? clipSpaceRect(this.rectMap[chartSceneId], this.canvasRect) : undefined;
+    return this.rectMap[chartSceneId]
+      ? clipSpaceRect(this.rectMap[chartSceneId], this.canvasRect, scrollPosition(this.viewFrame))
+      : undefined;
   }
 
   /**

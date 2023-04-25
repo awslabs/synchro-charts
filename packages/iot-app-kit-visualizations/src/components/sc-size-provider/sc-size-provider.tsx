@@ -1,7 +1,6 @@
 import { Component, Element, h, Prop, State } from '@stencil/core';
 import ResizeObserver from 'resize-observer-polyfill';
 import isEqual from 'lodash.isequal';
-import { rectScrollFixed } from '../common/webGLPositioning';
 import { RectScrollFixed } from '../../utils/types';
 import { renderChild } from './renderChild';
 import { webGLRenderer } from '../sc-webgl-context/webglContext';
@@ -66,7 +65,7 @@ export class ScSizeProvider {
 
   setRect = () => {
     if (this.el && this.el.isConnected) {
-      const newRect = rectScrollFixed(this.el);
+      const newRect = webGLRenderer.getRectScrollFixed(this.el);
       const rectHasUpdated = !isEqual(newRect, this.rect);
       if (rectHasUpdated) {
         if (this.rect && this.rect.density !== newRect.density) {
