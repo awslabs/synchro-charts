@@ -121,12 +121,13 @@ const newChartSpecPage = async (chartProps: Partial<Components.IotAppKitVisWebgl
 };
 
 describe('legend', () => {
-  it('renders a legend with provided with a legend config', async () => {
+  it('renders a legend with provided with a legend config and data streams', async () => {
     const { chart } = await newChartSpecPage({
       legend: {
         position: LEGEND_POSITION.BOTTOM,
         width: 200,
       },
+      dataStreams: [STREAM],
     });
 
     const legend = chart.querySelector('iot-app-kit-vis-legend');
@@ -139,6 +140,7 @@ describe('legend', () => {
         position: LEGEND_POSITION.BOTTOM,
         width: 200,
       },
+      dataStreams: [STREAM],
       isEditing: true,
     });
 
@@ -152,6 +154,7 @@ describe('legend', () => {
         position: LEGEND_POSITION.BOTTOM,
         width: 200,
       },
+      dataStreams: [STREAM],
       viewport: VIEWPORT,
     });
 
@@ -163,6 +166,7 @@ describe('legend', () => {
   it('should render with custom legend', async () => {
     const { chart, page } = await newChartSpecPage({
       renderLegend: props => <div class="custom-test-legend" {...props} />,
+      dataStreams: [STREAM],
     });
 
     await page.waitForChanges();
@@ -542,7 +546,7 @@ describe('loading status', () => {
       const loadingSpinner = chart.querySelector(LOADING_SPINNER_SELECTOR);
       const legend = chart.querySelector('iot-app-kit-vis-legend');
 
-      expect(legend).toHaveAttribute('isLoading');
+      expect(legend).toBeNull();
       expect(loadingSpinner).not.toBeNull();
     });
 

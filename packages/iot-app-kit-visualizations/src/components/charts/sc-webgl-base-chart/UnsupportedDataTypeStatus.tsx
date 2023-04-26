@@ -8,20 +8,25 @@ import { MessageOverrides, SizeConfig } from '../../../utils/dataTypes';
 export const UnsupportedDataTypeStatus = ({
   supportedDataTypes,
   messageOverrides,
+  hasUnsupportedData,
   size,
 }: {
   supportedDataTypes: DataType[];
   messageOverrides: MessageOverrides;
+  hasUnsupportedData: boolean;
   size: SizeConfig;
 }) => {
-  const { width, height, marginLeft, marginRight, marginTop, marginBottom } = size;
+  const { width, height } = size;
+
+  if (!hasUnsupportedData) return <div />;
+
   return (
     <div
       id="unsupported-data-type-error"
       class="unsupported-data-type-status"
       style={{
-        width: `${width + marginLeft + marginRight}px`,
-        height: `${height + marginBottom + marginTop}px`,
+        width: `${width}px`,
+        height: `${height}px`,
         padding: '24px',
         background: 'white',
         border: 'solid 4px black',
