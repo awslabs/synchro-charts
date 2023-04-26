@@ -1,17 +1,32 @@
 import { ChartSpecPage } from './newChartSpecPage';
 import { Threshold } from '../../components/charts/common/types';
 import { COMPARISON_OPERATOR, LEGEND_POSITION } from '../../components/charts/common/constants';
+import { DATA_STREAM } from '../__mocks__/mockWidgetProperties';
 
 const VIEWPORT = { start: new Date(2000), end: new Date(2001, 0, 0), yMin: 0, yMax: 100 };
 
 export const describeLegend = (newChartSpecPage: ChartSpecPage) => {
   describe('legend', () => {
-    it('renders a legend when provided with a legend config', async () => {
+    it('renders a legend when provided with a legend config and dataStreams', async () => {
       const { chart } = await newChartSpecPage({
         legend: {
           position: LEGEND_POSITION.BOTTOM,
           width: 200,
         },
+        dataStreams: [DATA_STREAM],
+      });
+
+      const legend = chart.querySelector('iot-app-kit-vis-legend');
+      expect(legend).toBeDefined();
+    });
+
+    it('does not render a legend when provided with a legend config and empty dataStreams', async () => {
+      const { chart } = await newChartSpecPage({
+        legend: {
+          position: LEGEND_POSITION.BOTTOM,
+          width: 200,
+        },
+        dataStreams: [],
       });
 
       const legend = chart.querySelector('iot-app-kit-vis-legend');
@@ -24,6 +39,7 @@ export const describeLegend = (newChartSpecPage: ChartSpecPage) => {
           position: LEGEND_POSITION.BOTTOM,
           width: 200,
         },
+        dataStreams: [DATA_STREAM],
         isEditing: true,
       });
 
@@ -37,6 +53,7 @@ export const describeLegend = (newChartSpecPage: ChartSpecPage) => {
           position: LEGEND_POSITION.BOTTOM,
           width: 200,
         },
+        dataStreams: [DATA_STREAM],
         viewport: VIEWPORT,
       });
 
@@ -68,6 +85,7 @@ export const describeLegend = (newChartSpecPage: ChartSpecPage) => {
           position: LEGEND_POSITION.BOTTOM,
           width: 200,
         },
+        dataStreams: [DATA_STREAM],
       });
 
       const legend = chart.querySelector('iot-app-kit-vis-legend') as HTMLIotAppKitVisLegendElement;

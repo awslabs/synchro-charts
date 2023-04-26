@@ -58,7 +58,7 @@ import { SET_VIEWPORT_EVENT_MS } from '../../common/constants';
 const MIN_WIDTH = 50;
 const MIN_HEIGHT = 50;
 
-const LEGEND_HEIGHT = 100;
+const LEGEND_HEIGHT = 50;
 
 @Component({
   tag: 'iot-app-kit-vis-webgl-base-chart',
@@ -337,13 +337,15 @@ export class ScWebglBaseChart {
     const isRightLegend = this.legend && this.legend.position === LEGEND_POSITION.RIGHT;
     const isBottomLegend = this.legend && this.legend.position === LEGEND_POSITION.BOTTOM;
 
+    const hasNoDataStreamsPresent = this.visualizedDataStreams().length === 0;
+
     return {
       ...size,
       width: Math.max(
         width - marginLeft - marginRight - (isRightLegend ? (this.legend as LegendConfig).width : 0),
         MIN_WIDTH
       ),
-      height: chartHeight - (isBottomLegend ? LEGEND_HEIGHT : 0),
+      height: chartHeight - (!hasNoDataStreamsPresent && isBottomLegend ? LEGEND_HEIGHT : 0),
     };
   };
 
@@ -455,8 +457,10 @@ export class ScWebglBaseChart {
     return this.trendContainer;
   };
 
-  getHasSupportedData = (): boolean => {
-    return this.dataStreams.every(
+  getHasUnsupportedData = (): boolean => {
+    if (this.dataStreams.length === 0) return false;
+
+    return !this.dataStreams.every(
       ({ streamType, dataType }) => streamType === StreamType.ALARM || this.supportedDataTypes.includes(dataType)
     );
   };
@@ -525,7 +529,7 @@ export class ScWebglBaseChart {
      */
 
     // avoid updating if dataStream has unsupported data
-    if (!this.getHasSupportedData()) return;
+    if (this.getHasUnsupportedData()) return;
 
     // why do we have this condition?
     // - if one of the watched props e.g. dataStreams changes this will call onUpdate
@@ -830,18 +834,6 @@ export class ScWebglBaseChart {
     const showDataStreamColor =
       this.legend != null && this.legend.showDataStreamColor != null ? this.legend.showDataStreamColor : true;
 
-    if (!this.getHasSupportedData()) {
-      return (
-        <div class="awsui iot-app-kit-vis-webgl-base-chart">
-          <UnsupportedDataTypeStatus
-            size={chartSizeConfig}
-            messageOverrides={this.messageOverrides || {}}
-            supportedDataTypes={this.supportedDataTypes}
-          />
-        </div>
-      );
-    }
-
     return [
       <div class="awsui iot-app-kit-vis-webgl-base-chart">
         {this.displaysError && <ErrorStatus hasError={hasError} size={chartSizeConfig} />}
@@ -855,6 +847,12 @@ export class ScWebglBaseChart {
             hasNoDataStreamsPresent={hasNoDataStreamsPresent}
           />
           <LoadingStatus isLoading={shouldDisplayAsLoading} />
+          <UnsupportedDataTypeStatus
+            size={chartSizeConfig}
+            messageOverrides={this.messageOverrides || {}}
+            supportedDataTypes={this.supportedDataTypes}
+            hasUnsupportedData={this.getHasUnsupportedData()}
+          />
           {this.gestures && (
             <iot-app-kit-vis-gesture-handler
               onDateRangeChange={this.handleCameraEvent}
@@ -863,7 +861,7 @@ export class ScWebglBaseChart {
             />
           )}
         </DataContainer>
-        {this.legend && (
+        {this.legend && !shouldDisplayAsLoading && !hasNoDataStreamsPresent && (
           <ChartLegendContainer config={this.legend} legendHeight={LEGEND_HEIGHT} size={chartSizeConfig}>
             {this.renderLegendComponent({ isLoading: shouldDisplayAsLoading, thresholds, showDataStreamColor })}
           </ChartLegendContainer>
