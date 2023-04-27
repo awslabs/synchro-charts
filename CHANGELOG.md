@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.8.3](https://github.com/awslabs/synchro-charts/compare/root-v1.8.2...root-v1.8.3) (2023-04-27)
+
+
+### Bug Fixes
+
+* check if data is loading for unsupported types ([b9d3f64](https://github.com/awslabs/synchro-charts/commit/b9d3f643f7ce6559233a69ebb81a3ed01e91f83c))
+
 ## [1.8.2](https://github.com/awslabs/synchro-charts/compare/root-v1.8.1...root-v1.8.2) (2023-04-27)
 
 
