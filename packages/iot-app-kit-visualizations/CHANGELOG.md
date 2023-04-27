@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.8.2](https://github.com/awslabs/synchro-charts/compare/iot-app-kit-visualizations-v1.8.1...iot-app-kit-visualizations-v1.8.2) (2023-04-27)
+
+
+### Bug Fixes
+
+* **core:** refactor listener registration for tooltip ([b37b0f2](https://github.com/awslabs/synchro-charts/commit/b37b0f20328c102d627c50506e041622501dc2b7))
+* **core:** refactor webgl positioning to account for webglcontext viewframe ([01e161e](https://github.com/awslabs/synchro-charts/commit/01e161e12bab09f5e0ef2d9a90b7a136b63bb065))
+* hide legend and error state on loading or empty state ([6f2ae53](https://github.com/awslabs/synchro-charts/commit/6f2ae534e252118356efb2584b48cbe37fe265bb))
+
 ## [1.8.1](https://github.com/awslabs/synchro-charts/compare/iot-app-kit-visualizations-v1.8.0...iot-app-kit-visualizations-v1.8.1) (2023-04-12)
 
 

@@ -1,7 +1,7 @@
 {
   "name": "@iot-app-kit/charts",
   "description": "IoT App Kit React Charts",
-  "version": "1.8.1",
+  "version": "1.8.2",
   "publishConfig": {
     "access": "public"
   },
@@ -35,7 +35,7 @@
     "react-dom": "16.x.x || 17.x.x"
   },
   "dependencies": {
-    "@iot-app-kit/charts-core": "^1.8.1"
+    "@iot-app-kit/charts-core": "^1.8.2"
   },
   "license": "Apache-2.0",
   "style": "dist/styles.css",
