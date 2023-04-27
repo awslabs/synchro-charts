@@ -463,8 +463,7 @@ export class ScWebglBaseChart {
     if (visualizedDataStreams.length === 0) return false;
 
     return !visualizedDataStreams.every(
-      ({ streamType, dataType, isLoading }) =>
-        !isLoading && (streamType === StreamType.ALARM || this.supportedDataTypes.includes(dataType))
+      ({ streamType, dataType }) => streamType === StreamType.ALARM || this.supportedDataTypes.includes(dataType)
     );
   };
 
@@ -853,6 +852,7 @@ export class ScWebglBaseChart {
           <UnsupportedDataTypeStatus
             size={chartSizeConfig}
             messageOverrides={this.messageOverrides || {}}
+            isLoading={shouldDisplayAsLoading}
             supportedDataTypes={this.supportedDataTypes}
             hasUnsupportedData={this.getHasUnsupportedData()}
           />
