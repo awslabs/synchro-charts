@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.8.4](https://github.com/awslabs/synchro-charts/compare/iot-app-kit-visualizations-v1.8.3...iot-app-kit-visualizations-v1.8.4) (2023-04-27)
+
+
+### Bug Fixes
+
+* unsupported data check if loading ([f5ea4a9](https://github.com/awslabs/synchro-charts/commit/f5ea4a93f9079c6a91a4ca5d87407272cbbf6374))
+
 ## [1.8.3](https://github.com/awslabs/synchro-charts/compare/iot-app-kit-visualizations-v1.8.2...iot-app-kit-visualizations-v1.8.3) (2023-04-27)
 
 
