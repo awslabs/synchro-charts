@@ -9,16 +9,18 @@ export const UnsupportedDataTypeStatus = ({
   supportedDataTypes,
   messageOverrides,
   hasUnsupportedData,
+  isLoading,
   size,
 }: {
   supportedDataTypes: DataType[];
   messageOverrides: MessageOverrides;
   hasUnsupportedData: boolean;
+  isLoading: boolean;
   size: SizeConfig;
 }) => {
   const { width, height } = size;
 
-  if (!hasUnsupportedData) return <div />;
+  if (!hasUnsupportedData || isLoading) return <div />;
 
   return (
     <div
