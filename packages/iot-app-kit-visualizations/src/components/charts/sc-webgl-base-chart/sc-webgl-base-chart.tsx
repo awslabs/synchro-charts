@@ -458,10 +458,13 @@ export class ScWebglBaseChart {
   };
 
   getHasUnsupportedData = (): boolean => {
-    if (this.dataStreams.length === 0) return false;
+    const visualizedDataStreams = this.visualizedDataStreams();
 
-    return !this.dataStreams.every(
-      ({ streamType, dataType }) => streamType === StreamType.ALARM || this.supportedDataTypes.includes(dataType)
+    if (visualizedDataStreams.length === 0) return false;
+
+    return !visualizedDataStreams.every(
+      ({ streamType, dataType, isLoading }) =>
+        !isLoading && (streamType === StreamType.ALARM || this.supportedDataTypes.includes(dataType))
     );
   };
 
