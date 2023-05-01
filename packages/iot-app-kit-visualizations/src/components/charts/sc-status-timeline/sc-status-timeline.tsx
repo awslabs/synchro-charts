@@ -90,6 +90,7 @@ export class ScStatusTimeline implements ChartConfig {
   @Prop() messageOverrides?: MessageOverrides;
   @Prop() alarms?: AlarmsConfig;
   @Prop() setViewport: (viewport: AppKitViewport, lastUpdatedBy?: string) => void;
+  @Prop() aggregationType?: string;
 
   @State() componentViewport: MinimalViewPortConfig;
 
@@ -166,6 +167,7 @@ export class ScStatusTimeline implements ChartConfig {
                 bufferFactor={this.bufferFactor}
                 isEditing={this.isEditing}
                 renderTooltip={tooltip(this.alarms)}
+                aggregationType={this.aggregationType}
                 displaysError={false}
                 supportString
                 visualizesAlarms

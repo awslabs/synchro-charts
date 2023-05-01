@@ -41,6 +41,7 @@ export class ScTooltip {
   // If false, do not display a tooltip row if there is no associated point.
   @Prop() showBlankTooltipRows: boolean = false;
   @Prop() widgetId: string;
+  @Prop() aggregationType?: string;
 
   /**
    * If we are drawing data from the data timestamp to timestamp + resolution
@@ -245,6 +246,7 @@ export class ScTooltip {
         showDataStreamColor={this.showDataStreamColor}
         tooltipPoints={this.getTooltipPoints(this.selectedDate)}
         toolTipPositioning={this.toolTipPositioning}
+        aggregationType={this.aggregationType}
       />
     );
   }

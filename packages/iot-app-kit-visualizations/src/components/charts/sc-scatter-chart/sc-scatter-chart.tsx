@@ -60,6 +60,7 @@ export class ScScatterChart implements ChartConfig {
   @Prop() axis?: Axis.Options;
   @Prop() messageOverrides?: MessageOverrides;
   @Prop() setViewport: (viewport: AppKitViewport, lastUpdatedBy?: string) => void;
+  @Prop() aggregationType?: string;
 
   /** Status */
   @Prop() isEditing: boolean = false;
@@ -99,6 +100,7 @@ export class ScScatterChart implements ChartConfig {
             bufferFactor={this.bufferFactor}
             isEditing={this.isEditing}
             renderTooltip={tooltip}
+            aggregationType={this.aggregationType}
             visualizesAlarms={false}
             messageOverrides={this.messageOverrides}
           />

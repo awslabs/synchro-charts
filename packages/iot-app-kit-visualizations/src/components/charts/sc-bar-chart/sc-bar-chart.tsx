@@ -61,6 +61,7 @@ export class ScBarChart implements ChartConfig {
   @Prop() trends: Trend[];
   @Prop() axis?: Axis.Options;
   @Prop() messageOverrides?: MessageOverrides;
+  @Prop() aggregationType?: string;
 
   /** Status */
   @Prop() isEditing: boolean = false;
@@ -101,6 +102,7 @@ export class ScBarChart implements ChartConfig {
             isEditing={this.isEditing}
             yRangeStartFromZero
             renderTooltip={tooltip}
+            aggregationType={this.aggregationType}
             visualizesAlarms={false}
             messageOverrides={this.messageOverrides}
           />
