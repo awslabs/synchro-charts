@@ -1,7 +1,7 @@
 {
   "name": "@iot-app-kit/charts-core",
   "description": "IoT App Kit Visualizations",
-  "version": "1.8.4",
+  "version": "1.9.0",
   "publishConfig": {
     "access": "public"
   },
