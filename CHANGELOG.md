@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.9.0](https://github.com/awslabs/synchro-charts/compare/root-v1.8.4...root-v1.9.0) (2023-05-01)
+
+
+### Features
+
+* charts accept aggregationType ([1be63e2](https://github.com/awslabs/synchro-charts/commit/1be63e2151b86e055471f56dbe50508045d93eeb))
+
 ## [1.8.4](https://github.com/awslabs/synchro-charts/compare/root-v1.8.3...root-v1.8.4) (2023-04-27)
 
 

@@ -1,6 +1,6 @@
 {
   "name": "iot-app-kit-visualizations",
-  "version": "1.8.4",
+  "version": "1.9.0",
   "description": "Time series visualization library",
   "homepage": "https://synchrocharts.com",
   "main": "index.js",
