@@ -22,6 +22,7 @@ export namespace Components {
     interface IotAppKitVisApp {
     }
     interface IotAppKitVisBarChart {
+        "aggregationType"?: string;
         "alarms"?: AlarmsConfig;
         "annotations": Annotations;
         "axis"?: Axis.Options;
@@ -116,6 +117,7 @@ export namespace Components {
         "valueColor"?: string;
     }
     interface IotAppKitVisLineChart {
+        "aggregationType"?: string;
         "alarms"?: AlarmsConfig;
         "annotations": Annotations;
         "axis"?: Axis.Options;
@@ -159,6 +161,7 @@ export namespace Components {
     interface IotAppKitVisMultipleLinesOverlapping {
     }
     interface IotAppKitVisScatterChart {
+        "aggregationType"?: string;
         "alarms"?: AlarmsConfig;
         "annotations": Annotations;
         "axis"?: Axis.Options;
@@ -223,6 +226,7 @@ export namespace Components {
     interface IotAppKitVisSizeProviderStandard {
     }
     interface IotAppKitVisStatusTimeline {
+        "aggregationType"?: string;
         "alarms"?: AlarmsConfig;
         "annotations"?: Annotations;
         "axis"?: Axis.Options;
@@ -279,6 +283,7 @@ export namespace Components {
         "label": string;
     }
     interface IotAppKitVisTooltip {
+        "aggregationType"?: string;
         "baseChartRef": HTMLElement;
         /**
           * If we are drawing data from the data timestamp to timestamp + resolution we want the tooltip to align on the left side  Otherwise we are drawing the data from timestamp - resolution to timestamp then we want the tooltip to align on the right side
@@ -314,6 +319,7 @@ export namespace Components {
         "valueColor"?: string;
     }
     interface IotAppKitVisTooltipRows {
+        "aggregationType"?: string;
         "dataStreams": DataStream[];
         "selectedDate": Date;
         "showDataStreamColor": boolean;
@@ -360,6 +366,7 @@ export namespace Components {
     interface IotAppKitVisWebglBarChartUnsupportedDataTypes {
     }
     interface IotAppKitVisWebglBaseChart {
+        "aggregationType"?: string;
         "alarms"?: AlarmsConfig;
         "annotations": Annotations;
         "axis"?: Axis.Options;
@@ -1268,6 +1275,7 @@ declare namespace LocalJSX {
     interface IotAppKitVisApp {
     }
     interface IotAppKitVisBarChart {
+        "aggregationType"?: string;
         "alarms"?: AlarmsConfig;
         "annotations"?: Annotations;
         "axis"?: Axis.Options;
@@ -1362,6 +1370,7 @@ declare namespace LocalJSX {
         "valueColor"?: string;
     }
     interface IotAppKitVisLineChart {
+        "aggregationType"?: string;
         "alarms"?: AlarmsConfig;
         "annotations"?: Annotations;
         "axis"?: Axis.Options;
@@ -1405,6 +1414,7 @@ declare namespace LocalJSX {
     interface IotAppKitVisMultipleLinesOverlapping {
     }
     interface IotAppKitVisScatterChart {
+        "aggregationType"?: string;
         "alarms"?: AlarmsConfig;
         "annotations"?: Annotations;
         "axis"?: Axis.Options;
@@ -1469,6 +1479,7 @@ declare namespace LocalJSX {
     interface IotAppKitVisSizeProviderStandard {
     }
     interface IotAppKitVisStatusTimeline {
+        "aggregationType"?: string;
         "alarms"?: AlarmsConfig;
         "annotations"?: Annotations;
         "axis"?: Axis.Options;
@@ -1526,6 +1537,7 @@ declare namespace LocalJSX {
         "label": string;
     }
     interface IotAppKitVisTooltip {
+        "aggregationType"?: string;
         "baseChartRef"?: HTMLElement;
         /**
           * If we are drawing data from the data timestamp to timestamp + resolution we want the tooltip to align on the left side  Otherwise we are drawing the data from timestamp - resolution to timestamp then we want the tooltip to align on the right side
@@ -1561,6 +1573,7 @@ declare namespace LocalJSX {
         "valueColor"?: string;
     }
     interface IotAppKitVisTooltipRows {
+        "aggregationType"?: string;
         "dataStreams": DataStream[];
         "selectedDate": Date;
         "showDataStreamColor"?: boolean;
@@ -1607,6 +1620,7 @@ declare namespace LocalJSX {
     interface IotAppKitVisWebglBarChartUnsupportedDataTypes {
     }
     interface IotAppKitVisWebglBaseChart {
+        "aggregationType"?: string;
         "alarms"?: AlarmsConfig;
         "annotations"?: Annotations;
         "axis"?: Axis.Options;

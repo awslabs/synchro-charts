@@ -194,6 +194,7 @@ export namespace Tooltip {
     thresholds: Threshold[];
     trendResults: TrendResult[];
     visualizesAlarms: boolean;
+    aggregationType?: string;
   }
 }
 

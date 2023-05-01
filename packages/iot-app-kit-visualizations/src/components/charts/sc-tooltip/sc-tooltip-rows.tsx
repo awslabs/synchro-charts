@@ -1,7 +1,7 @@
 import { Component, h, Prop } from '@stencil/core';
 
 import uniq from 'lodash.uniq';
-import { AggregateType, DataPoint, DataStream, DataStreamId, SizeConfig, ViewPort } from '../../../utils/dataTypes';
+import { DataPoint, DataStream, DataStreamId, SizeConfig, ViewPort } from '../../../utils/dataTypes';
 import { getAggregationFrequency } from '../../sc-data-stream-name/helper';
 import { displayDate } from '../../../utils/time';
 import { TooltipPoint, TooltipPositioning } from './types';
@@ -28,6 +28,7 @@ export class ScTooltipRows {
   @Prop() showDataStreamColor: boolean = true;
   @Prop() tooltipPoints: TooltipPoint[];
   @Prop() toolTipPositioning!: TooltipPositioning;
+  @Prop() aggregationType?: string;
 
   /**
    * Returns the color to display the value within a legend row.
@@ -100,7 +101,7 @@ export class ScTooltipRows {
               <small
                 class={{ 'awsui-util-d-b': true, 'awsui-util-mb-s': true, 'left-offset': !this.showDataStreamColor }}
               >
-                {getAggregationFrequency(minResolution, AggregateType.AVERAGE)}
+                {getAggregationFrequency(minResolution, this.aggregationType)}
               </small>
             )}
             {this.tooltipPoints.map(tooltipPoint => {
