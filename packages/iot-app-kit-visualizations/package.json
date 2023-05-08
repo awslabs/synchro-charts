@@ -54,7 +54,7 @@
   "devDependencies": {
     "@babel/core": "^7.6.4",
     "@cypress/webpack-preprocessor": "^4.1.1",
-    "@stencil/core": "^1.12.2",
+    "@stencil/core": "^3.2.2",
     "@stencil/router": "^1.0.1",
     "@testing-library/dom": "^7.22.2",
     "@testing-library/user-event": "^12.1.1",

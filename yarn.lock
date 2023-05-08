@@ -2538,12 +2538,10 @@
   resolved "https://registry.yarnpkg.com/@sinclair/typebox/-/typebox-0.25.24.tgz#8c7688559979f7079aacaf31aa881c3aa410b718"
   integrity sha512-XJfwUVUKDHF5ugKwIcxEgc9k8b7HbznCp6eUfWgu710hMPNIO4aw4/zB5RogDQz8nd6gyCDpU9O/m6qYEWY6yQ==
 
-"@stencil/core@^1.12.2":
-  version "1.17.4"
-  resolved "https://registry.npmjs.org/@stencil/core/-/core-1.17.4.tgz"
-  integrity sha512-dmuNYM6fnHPvE2ptHoUBQtjcpXqrHnkDtdyUD6/JrZWcJt6jBtrykewObOxzpDCMLs+NT7668ussRagdVL03gQ==
-  dependencies:
-    typescript "3.9.7"
+"@stencil/core@^3.2.2":
+  version "3.2.2"
+  resolved "https://registry.yarnpkg.com/@stencil/core/-/core-3.2.2.tgz#cf3b4ffb7992d0197aa1987dbc5236c4eb98cb6b"
+  integrity sha512-wXb9cVWL0T3cTwYLveekdTFCRGx6+9hpVDEXna+N8K8OPoW6xtFAHRLv+LjOM7k59PkA8MG3IinAfV7Y+xa0Hw==
 
 "@stencil/redux@^0.1.1":
   version "0.1.2"
@@ -16880,11 +16878,6 @@ typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.npmjs.org/typedarray/-/typedarray-0.0.6.tgz"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
-
-typescript@3.9.7:
-  version "3.9.7"
-  resolved "https://registry.npmjs.org/typescript/-/typescript-3.9.7.tgz"
-  integrity sha512-BLbiRkiBzAwsjut4x/dsibSTB6yWpwT5qWmC2OfuCg3GgVQCSgMs4vEctYPhsaGtd0AeuuHMkjZ2h2WG8MSzRw==
 
 uglify-js@^3.1.4:
   version "3.14.1"
