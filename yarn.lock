@@ -2669,6 +2669,11 @@
   resolved "https://registry.npmjs.org/@stencil/redux/-/redux-0.1.2.tgz"
   integrity sha512-HLASGyE7BJX/hJUatXBKjeHxH8EGh9M5U6FpCUiIkxWuBXdEVL2oQOwOgm7QPe3yRgN6i8dEKVXD5Vv4ZnNZ1Q==
 
+"@stencil/redux@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@stencil/redux/-/redux-0.2.0.tgz#5f9ae08b6a70fe52b990e5d597b511a7ef1bb7f7"
+  integrity sha512-isikSfMNFBMYVPFzhvlwDkEdjKJQrcbZgPGN84UXIoCYwQee5OQ2k22hF40GCLkjP5oG/lR36jdQIf9JU3mG/g==
+
 "@stencil/router@^1.0.1":
   version "1.0.1"
   resolved "https://registry.npmjs.org/@stencil/router/-/router-1.0.1.tgz"
