@@ -123,7 +123,7 @@
     "three": "^0.125.0",
     "tippy.js": "^5.2.0",
     "uuid": "^3.3.2",
-    "validator": "^13.6.0"
+    "validator": "^13.9.0"
   },
   "resolutions": {
     "d3-color": "npm:d3-color-1-fix",
