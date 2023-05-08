@@ -45,17 +45,17 @@ jobs:
           working-directory: packages/iot-app-kit-visualizations
       # after the test run completes
       # store videos and any screenshots
-      - uses: actions/upload-artifact@v1
+      - uses: actions/upload-artifact@v3
         if: failure()
         with:
           name: cypress-screenshots
           path: packages/iot-app-kit-visualizations/cypress/screenshots
-      - uses: actions/upload-artifact@v1
+      - uses: actions/upload-artifact@v3
         if: failure()
         with:
           name: cypress-videos
           path: packages/iot-app-kit-visualizations/cypress/videos
-      - uses: actions/upload-artifact@v1
+      - uses: actions/upload-artifact@v3
         if: failure()
         with:
           name: cypress-snapshots
