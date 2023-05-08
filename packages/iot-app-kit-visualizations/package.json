@@ -96,7 +96,7 @@
     "write-file-webpack-plugin": "^4.5.0"
   },
   "dependencies": {
-    "@stencil/redux": "^0.1.1",
+    "@stencil/redux": "^0.2.0",
     "@types/d3": "^5.16.4",
     "d3-array": "^2.3.2",
     "d3-axis": "^1.0.12",
