@@ -52,7 +52,7 @@
     "pack": "yarn pack"
   },
   "devDependencies": {
-    "@babel/core": "^7.6.4",
+    "@babel/core": "^7.21.8",
     "@cypress/webpack-preprocessor": "^4.1.1",
     "@stencil/core": "^1.12.2",
     "@stencil/router": "^1.0.1",
