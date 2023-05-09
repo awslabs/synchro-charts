@@ -3257,10 +3257,10 @@
   dependencies:
     "@types/lodash" "*"
 
-"@types/lodash.round@^4.0.6":
-  version "4.0.6"
-  resolved "https://registry.npmjs.org/@types/lodash.round/-/lodash.round-4.0.6.tgz"
-  integrity sha512-4/fs+g0BRnsJZMg0Nl5zHbx4rvo2J6KeDBPsgNvDZ1WKl4/wPOn3yiA7VURP+W0ZgUUQHEpEuLCFRfdW/h5ONg==
+"@types/lodash.round@^4.0.7":
+  version "4.0.7"
+  resolved "https://registry.yarnpkg.com/@types/lodash.round/-/lodash.round-4.0.7.tgz#a296263a8778b8edf2314166bae88a7b300e21d5"
+  integrity sha512-lgRgfO+XY9FPR52+f2d8LTdTXxEgfcCRr8sii6jS506LjcBh1xaA/Waf1gvGLgp8P4CnmMZIoXtvBc5PUraHBg==
   dependencies:
     "@types/lodash" "*"
 
