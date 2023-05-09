@@ -16324,17 +16324,17 @@ stylehacks@^4.0.0:
     postcss "^7.0.0"
     postcss-selector-parser "^3.0.0"
 
-stylelint-config-recommended@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.npmjs.org/stylelint-config-recommended/-/stylelint-config-recommended-3.0.0.tgz"
-  integrity sha512-F6yTRuc06xr1h5Qw/ykb2LuFynJ2IxkKfCMf+1xqPffkxh0S09Zc902XCffcsw/XMFq/OzQ1w54fLIDtmRNHnQ==
+stylelint-config-recommended@^12.0.0:
+  version "12.0.0"
+  resolved "https://registry.yarnpkg.com/stylelint-config-recommended/-/stylelint-config-recommended-12.0.0.tgz#d0993232fca017065fd5acfcb52dd8a188784ef4"
+  integrity sha512-x6x8QNARrGO2sG6iURkzqL+Dp+4bJorPMMRNPScdvaUK8PsynriOcMW7AFDKqkWAS5wbue/u8fUT/4ynzcmqdQ==
 
-stylelint-config-standard@^19.0.0:
-  version "19.0.0"
-  resolved "https://registry.npmjs.org/stylelint-config-standard/-/stylelint-config-standard-19.0.0.tgz"
-  integrity sha512-VvcODsL1PryzpYteWZo2YaA5vU/pWfjqBpOvmeA8iB2MteZ/ZhI1O4hnrWMidsS4vmEJpKtjdhLdfGJmmZm6Cg==
+stylelint-config-standard@^33.0.0:
+  version "33.0.0"
+  resolved "https://registry.yarnpkg.com/stylelint-config-standard/-/stylelint-config-standard-33.0.0.tgz#1f7bb299153a53874073e93829e37a475842f0f9"
+  integrity sha512-eyxnLWoXImUn77+ODIuW9qXBDNM+ALN68L3wT1lN2oNspZ7D9NVGlNHb2QCUn4xDug6VZLsh0tF8NyoYzkgTzg==
   dependencies:
-    stylelint-config-recommended "^3.0.0"
+    stylelint-config-recommended "^12.0.0"
 
 stylelint@^11.1.1:
   version "11.1.1"
