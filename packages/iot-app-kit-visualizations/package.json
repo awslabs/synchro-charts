@@ -63,7 +63,7 @@
     "@types/cypress-image-snapshot": "^3.1.5",
     "@types/d3-axis": "^1.0.12",
     "@types/jest": "24.9.1",
-    "@types/lodash.isequal": "^4.5.5",
+    "@types/lodash.isequal": "^4.5.6",
     "@types/lodash.isnumber": "^3.0.7",
     "@types/lodash.round": "^4.0.7",
     "@types/lodash.throttle": "^4.1.7",
