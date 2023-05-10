@@ -29,9 +29,9 @@
   },
   "devDependencies": {
     "@stencil/core": "^1.12.2",
-    "@types/react": "^17.0.11",
+    "@types/react": "^18.2.6",
     "@types/react-dom": "^18.2.4",
-    "react": "16.x.x || 17.x.x",
+    "react": "18.x.x",
     "react-dom": "18.x.x"
   },
   "dependencies": {
