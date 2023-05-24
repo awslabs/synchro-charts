@@ -16,7 +16,9 @@ const label = (threshold: Threshold): string => {
     return String(threshold.value);
   }
 
-  return `y ${COMPARISON_SYMBOL[threshold.comparisonOperator]} ${threshold.value}`;
+  return threshold.label && threshold.label.show
+    ? threshold.label.text
+    : `y ${COMPARISON_SYMBOL[threshold.comparisonOperator]} ${threshold.value}`;
 };
 
 // a key constructed to serialize all of the fields which a row depends on.
