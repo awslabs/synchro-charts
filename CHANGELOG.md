@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.9.1](https://github.com/awslabs/synchro-charts/compare/root-v1.9.0...root-v1.9.1) (2023-05-24)
+
+
+### Bug Fixes
+
+* **visualizations:** use passed in label in status-timeline component ([86d3172](https://github.com/awslabs/synchro-charts/commit/86d3172c46a6392b0d4a015ba59b67c9c69c071c))
+
 ## [1.9.0](https://github.com/awslabs/synchro-charts/compare/root-v1.8.4...root-v1.9.0) (2023-05-01)
 
 
