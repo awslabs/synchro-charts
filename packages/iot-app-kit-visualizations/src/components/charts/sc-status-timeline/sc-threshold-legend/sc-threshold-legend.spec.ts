@@ -35,6 +35,16 @@ const THRESHOLD: Threshold = {
   color: 'red',
 };
 
+const LABELED_THRESHOLD: Threshold = {
+  value: 100,
+  comparisonOperator: COMPARISON_OPERATOR.GREATER_THAN,
+  color: 'red',
+  label: {
+    text: 'label text',
+    show: true,
+  },
+};
+
 const NUMBER_THRESHOLD: Threshold<number> = {
   value: 123,
   comparisonOperator: COMPARISON_OPERATOR.LESS_THAN,
@@ -56,6 +66,17 @@ it('renders the threshold legend row correctly', async () => {
   expect(row.label).toEqual(THRESHOLD.value);
   expect(row.color).toBe(THRESHOLD.color);
   expect(row.innerText).toContain(THRESHOLD.value);
+});
+
+it('renders the label correctly', async () => {
+  const { thresholdLegend } = await thresholdLegendSpecPage({ thresholds: [LABELED_THRESHOLD] });
+
+  const row = thresholdLegend.querySelector(
+    'iot-app-kit-vis-threshold-legend-row'
+  ) as HTMLIotAppKitVisThresholdLegendRowElement;
+  expect(row.label).toEqual(LABELED_THRESHOLD.label?.text);
+  expect(row.color).toBe(LABELED_THRESHOLD.color);
+  expect(row.innerText).not.toContain(LABELED_THRESHOLD.value);
 });
 
 describe('order', () => {
