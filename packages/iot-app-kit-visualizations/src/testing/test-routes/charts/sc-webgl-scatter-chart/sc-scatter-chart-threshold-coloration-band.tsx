@@ -49,11 +49,8 @@ export class ScScatterChartThresholdColorationBand {
           dataStreams={[
             {
               id: 'test',
-              data: [],
+              data: [TEST_DATA_POINT, TEST_DATA_POINT_2, TEST_DATA_POINT_3],
               aggregationType: AggregateType.AVERAGE,
-              aggregates: {
-                [MONTH_IN_MS]: [TEST_DATA_POINT, TEST_DATA_POINT_2, TEST_DATA_POINT_3],
-              },
               resolution: MONTH_IN_MS,
               color: 'black',
               name: 'test stream',
@@ -63,11 +60,8 @@ export class ScScatterChartThresholdColorationBand {
               id: 'test2',
               color: 'red',
               name: 'test stream2',
-              data: [],
+              data: [TEST_2_DATA_POINT, TEST_2_DATA_POINT_2],
               aggregationType: AggregateType.AVERAGE,
-              aggregates: {
-                [MONTH_IN_MS]: [TEST_2_DATA_POINT, TEST_2_DATA_POINT_2],
-              },
               resolution: MONTH_IN_MS,
               dataType: DataType.NUMBER,
             },

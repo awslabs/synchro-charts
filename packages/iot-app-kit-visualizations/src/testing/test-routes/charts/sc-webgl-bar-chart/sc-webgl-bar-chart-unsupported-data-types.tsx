@@ -34,7 +34,6 @@ export class ScWebglBarChartUnsupportedDataTypes {
                 color: 'black',
                 name: 'test-name',
                 aggregationType: AggregateType.AVERAGE,
-                aggregates: {},
                 data: [
                   {
                     x: LEFT_X,

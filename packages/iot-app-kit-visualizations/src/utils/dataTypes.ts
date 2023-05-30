@@ -235,25 +235,25 @@ export interface DataStream<T extends Primitive = Primitive> extends DataStreamI
   // The unit associated with the values contained within the data stream
   unit?: string;
 
-  // Raw data (non-aggregated) for the stream
+  // Data for the stream
   data: DataPoint<T>[];
 
-  // Collection of various aggregates available for the data stream
-  aggregates?: {
-    [resolution: number]: DataPoint<T>[] | undefined;
-  };
+  // Length of aggregation period in milliseconds. 0 implies no aggregations.
+  resolution: number;
+
+  dataType: DataType;
 
   // Mechanism to associate some information about the data stream
   meta?: Record<string, string | number | boolean>;
 
-  dataType: DataType;
+  // one of "AVERAGE", "COUNT", "MAXIMUM", "MINIMUM", "STANDARD_DEVIATION", "SUM", or raw if not present
+  aggregationType?: string;
+
   streamType?: StreamType;
   associatedStreams?: StreamAssociation[];
   isLoading?: boolean;
   isRefreshing?: boolean;
   error?: string;
-  aggregationType?: string;
-  resolution: number; // length of aggregation period in milliseconds. 0 implies no aggregations.
 }
 
 /**

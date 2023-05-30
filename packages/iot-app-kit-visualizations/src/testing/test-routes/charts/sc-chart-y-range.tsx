@@ -45,8 +45,7 @@ const data: DataStream<number>[] = [
     color: 'black',
     name: 'test stream',
     aggregationType: AggregateType.AVERAGE,
-    aggregates: { [MONTH_IN_MS]: [POINT_1, POINT_2, POINT_3, POINT_4, POINT_5] },
-    data: [],
+    data: [POINT_1, POINT_2, POINT_3, POINT_4, POINT_5],
     resolution: MONTH_IN_MS,
   },
 ];

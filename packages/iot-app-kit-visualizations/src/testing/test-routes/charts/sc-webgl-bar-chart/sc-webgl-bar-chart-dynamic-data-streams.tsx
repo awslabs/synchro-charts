@@ -58,10 +58,7 @@ export class ScWebglBarChartDynamicDataStreams {
         color: this.getColor(),
         name: `${streamId}-name`,
         aggregationType: AggregateType.AVERAGE,
-        aggregates: {
-          [MONTH_IN_MS]: [leftPoint, middlePoint, rightPoint],
-        },
-        data: [],
+        data: [leftPoint, middlePoint, rightPoint],
         resolution: MONTH_IN_MS,
         dataType: DataType.NUMBER,
       },

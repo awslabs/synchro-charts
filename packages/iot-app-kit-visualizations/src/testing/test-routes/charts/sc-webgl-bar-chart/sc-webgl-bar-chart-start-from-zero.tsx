@@ -48,11 +48,8 @@ export class ScWebglBarChartStartFromZero {
                 id: 'test',
                 color: 'purple',
                 name: 'test stream',
-                data: [],
+                data: this.testData,
                 aggregationType: AggregateType.AVERAGE,
-                aggregates: {
-                  [MINUTE_IN_MS]: this.testData,
-                },
                 resolution: MINUTE_IN_MS,
                 dataType: DataType.NUMBER,
               },

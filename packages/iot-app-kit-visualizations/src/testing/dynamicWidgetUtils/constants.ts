@@ -122,10 +122,7 @@ const mphStream: DataStream<number> = {
   color: 'black',
   name: 'mph',
   aggregationType: AggregateType.AVERAGE,
-  aggregates: {
-    [MINUTE_IN_MS]: getMPHData(),
-  },
-  data: [],
+  data: getMPHData(),
   resolution: MINUTE_IN_MS,
   associatedStreams: [
     {

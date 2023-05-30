@@ -62,12 +62,9 @@ export class ScWebglBarChartFastViewport {
                 id: 'test',
                 color: '#264653',
                 name: 'test stream',
-                data: [],
+                data: TEST_DATA_POINTS,
                 resolution: HOUR_IN_MS,
                 aggregationType: AggregateType.AVERAGE,
-                aggregates: {
-                  [HOUR_IN_MS]: TEST_DATA_POINTS,
-                },
                 dataType: DataType.NUMBER,
               },
             ]}

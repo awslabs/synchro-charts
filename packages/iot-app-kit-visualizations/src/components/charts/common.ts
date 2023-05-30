@@ -6,7 +6,7 @@ import { DataStream } from '../../utils/dataTypes';
 
 export const STROKE_WIDTH = 1.5;
 
-export const getDataStreamForEventing = (dataStreams: DataStream[]): Omit<DataStream, 'data' | 'aggregates'>[] =>
+export const getDataStreamForEventing = (dataStreams: DataStream[]): Omit<DataStream, 'data'>[] =>
   dataStreams.map(dataStream => ({
     id: dataStream.id,
     name: dataStream.name,

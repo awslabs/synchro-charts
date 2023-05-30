@@ -39,8 +39,7 @@ export class ScWebglBarChartPositiveNegative {
             {
               id: 'test',
               aggregationType: AggregateType.AVERAGE,
-              aggregates: { [MINUTE_IN_MS]: [TEST_DATA_POINT, TEST_DATA_POINT_2] },
-              data: [],
+              data: [TEST_DATA_POINT, TEST_DATA_POINT_2],
               resolution: MINUTE_IN_MS,
               color: 'black',
               name: 'test stream',

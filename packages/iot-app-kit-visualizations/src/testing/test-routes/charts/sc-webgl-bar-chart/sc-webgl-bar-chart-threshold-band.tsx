@@ -25,10 +25,7 @@ export class ScWebglBarChartThresholdBand {
               color: 'black',
               name: 'test stream',
               aggregationType: AggregateType.AVERAGE,
-              aggregates: {
-                [MINUTE_IN_MS]: [TEST_DATA_POINT_STANDARD],
-              },
-              data: [],
+              data: [TEST_DATA_POINT_STANDARD],
               resolution: MINUTE_IN_MS,
               dataType: DataType.NUMBER,
             },

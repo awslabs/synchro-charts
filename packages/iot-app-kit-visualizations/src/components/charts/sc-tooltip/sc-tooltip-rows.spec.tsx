@@ -33,9 +33,8 @@ const DATA_STREAM: DataStream<number> = {
   name: 'data-stream-name',
   id: 'data-stream-id',
   dataType: DataType.NUMBER,
-  data: [],
+  data: [DEFAULT_POINT],
   aggregationType: AggregateType.AVERAGE,
-  aggregates: { [MINUTE_IN_MS]: [DEFAULT_POINT] },
   resolution: MINUTE_IN_MS,
 };
 

@@ -31,14 +31,12 @@ const AGGREGATED_DATA_STREAM = {
   ...DATA_STREAM_2,
   resolution: DAY_IN_MS,
   aggregationType: AggregateType.AVERAGE,
-  aggregates: {
-    [DAY_IN_MS]: [
-      {
-        x: (START.getTime() + END.getTime()) / 2,
-        y: 100,
-      },
-    ],
-  },
+  data: [
+    {
+      x: (START.getTime() + END.getTime()) / 2,
+      y: 100,
+    },
+  ],
 };
 
 it('displays each aggregation description within tooltip', () => {

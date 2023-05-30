@@ -55,11 +55,8 @@ export class ScScatterChartDynamicData {
                 id: 'test',
                 color: 'red',
                 name: 'test stream',
-                data: [],
+                data: this.data,
                 aggregationType: AggregateType.AVERAGE,
-                aggregates: {
-                  [MONTH_IN_MS]: this.data,
-                },
                 resolution: MONTH_IN_MS,
                 dataType: DataType.NUMBER,
               },

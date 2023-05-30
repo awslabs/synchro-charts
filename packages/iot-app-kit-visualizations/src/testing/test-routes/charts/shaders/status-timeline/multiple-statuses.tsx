@@ -43,10 +43,7 @@ export class MultipleStatuses {
         {
           id: 'test-stream',
           aggregationType: AggregateType.AVERAGE,
-          aggregates: {
-            [HOUR_IN_MS * 5]: [TEST_DATA_POINT_1],
-          },
-          data: [],
+          data: [TEST_DATA_POINT_1],
           resolution: HOUR_IN_MS * 5,
           name: 'test-stream-name',
           color: 'black',
@@ -55,10 +52,7 @@ export class MultipleStatuses {
         {
           id: 'test-stream-2',
           aggregationType: AggregateType.AVERAGE,
-          aggregates: {
-            [HOUR_IN_MS * 5]: [TEST_DATA_POINT_2],
-          },
-          data: [],
+          data: [TEST_DATA_POINT_2],
           name: 'test-stream-name-2',
           color: 'red',
           resolution: HOUR_IN_MS * 5,

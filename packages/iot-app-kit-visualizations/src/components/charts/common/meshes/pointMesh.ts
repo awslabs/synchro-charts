@@ -56,7 +56,7 @@ const updateGeometry = (
   dataStreams: DataStream<Primitive>[],
   toClipSpace: (time: number) => number
 ) => {
-  const streamVertexSets = dataStreams.filter(isNumberDataStream).map(stream => vertices(stream, stream.resolution));
+  const streamVertexSets = dataStreams.filter(isNumberDataStream).map(stream => vertices(stream));
   const allVertices = streamVertexSets.flat();
   const { position, pointColor } = geometry.attributes;
 

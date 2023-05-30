@@ -4,7 +4,6 @@ import { WidgetConfigurationUpdate, Threshold } from '../../common/types';
 import { breachedThreshold } from '../../common/annotations/breachedThreshold';
 import { closestPoint } from '../../sc-webgl-base-chart/activePoints';
 import { NameValue, updateName } from '../../../sc-data-stream-name/helper';
-import { getDataPoints } from '../../../../utils/getDataPoints';
 
 import { DATA_ALIGNMENT, StatusIcon } from '../../common/constants';
 import { getDataStreamForEventing } from '../../common';
@@ -85,7 +84,7 @@ export class ScStatusTimelineOverlay {
         }}
       >
         {this.dataStreams.map(dataStream => {
-          const point = closestPoint(getDataPoints(dataStream, dataStream.resolution), this.date, DATA_ALIGNMENT.LEFT);
+          const point = closestPoint(dataStream.data, this.date, DATA_ALIGNMENT.LEFT);
           const value = point ? point.y : undefined;
 
           const threshold = breachedThreshold({

@@ -1,8 +1,7 @@
 import { Mesh, OrthographicCamera, Scene } from 'three';
 import uuid from 'uuid/v4';
 import { ChartScene } from '../../sc-webgl-context/types';
-import { getDataPoints } from '../../../utils/getDataPoints';
-import { DataStream, Primitive, Resolution, ViewPort } from '../../../utils/dataTypes';
+import { DataStream, Primitive, ViewPort } from '../../../utils/dataTypes';
 import { getCSSColorByString } from '../common/getCSSColorByString';
 
 /**
@@ -12,12 +11,9 @@ import { getCSSColorByString } from '../common/getCSSColorByString';
  * Format is as follows,
  * `[[point_1_x, point_1_y, point_1_color_red, point_1_color_blue, point_1_color_green], ...]`
  */
-export const vertices = <T extends Primitive>(
-  stream: DataStream<T>,
-  resolution: Resolution
-): [number, T, number, number, number][] => {
+export const vertices = <T extends Primitive>(stream: DataStream<T>): [number, T, number, number, number][] => {
   const [r, g, b] = getCSSColorByString(stream.color || 'black');
-  return getDataPoints(stream, resolution).map(p => [p.x, p.y, r, g, b]);
+  return stream.data.map(p => [p.x, p.y, r, g, b]);
 };
 
 // The max and minimum z value an entity may have and still be present.
@@ -138,4 +134,4 @@ export const constructChartScene = ({
  * Total data points across all data streams
  */
 export const numDataPoints = <T extends Primitive>(dataStreams: DataStream<T>[]): number =>
-  dataStreams.map(stream => getDataPoints(stream, stream.resolution).length).reduce((total, num) => total + num, 0);
+  dataStreams.map(stream => stream.data.length).reduce((total, num) => total + num, 0);

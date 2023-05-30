@@ -1,6 +1,6 @@
 import { AggregateType, DataPoint, ViewPort } from '../../../utils/dataTypes';
 import { activePoints } from './activePoints';
-import { HOUR_IN_MS, MINUTE_IN_MS, SECOND_IN_MS, YEAR_IN_MS } from '../../../utils/time';
+import { MINUTE_IN_MS, SECOND_IN_MS, YEAR_IN_MS } from '../../../utils/time';
 import { DATA_STREAM } from '../../../testing/__mocks__/mockWidgetProperties';
 import { DataType } from '../../../utils/dataConstants';
 import { DATA_ALIGNMENT } from '../common/constants';
@@ -670,46 +670,6 @@ describe('data alignment set to either side', () => {
 });
 
 describe('aggregated data', () => {
-  it('does not return any active points when requesting raw data but there is only aggregated data', () => {
-    expect(
-      activePoints({
-        viewport: VIEWPORT,
-        dataAlignment: DATA_ALIGNMENT.EITHER,
-        dataStreams: [
-          {
-            ...DATA_STREAM,
-            data: [],
-            aggregationType: AggregateType.AVERAGE,
-            aggregates: { [MINUTE_IN_MS]: [DATA_POINT_IN_VIEWPORT_1, DATA_POINT_AFTER_VIEWPORT] },
-            resolution: 0,
-          },
-        ],
-        selectedDate: new Date(2000, 6, 0),
-        allowMultipleDates: false,
-      })
-    ).toEqual([{ point: undefined, streamId: DATA_STREAM.id }]);
-  });
-
-  it('does not return any active points when requesting aggregated data but there is only raw data', () => {
-    expect(
-      activePoints({
-        viewport: VIEWPORT,
-        dataAlignment: DATA_ALIGNMENT.EITHER,
-        dataStreams: [
-          {
-            ...DATA_STREAM,
-            data: [DATA_POINT_IN_VIEWPORT_1, DATA_POINT_AFTER_VIEWPORT],
-            aggregationType: AggregateType.AVERAGE,
-            aggregates: { [MINUTE_IN_MS]: [] },
-            resolution: MINUTE_IN_MS,
-          },
-        ],
-        selectedDate: new Date(2000, 6, 0),
-        allowMultipleDates: false,
-      })
-    ).toEqual([{ point: undefined, streamId: DATA_STREAM.id }]);
-  });
-
   it('does return the aggregate data when requested', () => {
     expect(
       activePoints({
@@ -718,9 +678,8 @@ describe('aggregated data', () => {
         dataStreams: [
           {
             ...DATA_STREAM,
-            data: [],
+            data: [DATA_POINT_IN_VIEWPORT_1],
             aggregationType: AggregateType.AVERAGE,
-            aggregates: { [MINUTE_IN_MS]: [DATA_POINT_IN_VIEWPORT_1] },
             resolution: MINUTE_IN_MS,
           },
         ],
@@ -738,9 +697,8 @@ describe('aggregated data', () => {
         dataStreams: [
           {
             ...DATA_STREAM,
-            data: [],
+            data: [DATA_POINT_IN_VIEWPORT_1],
             aggregationType: AggregateType.AVERAGE,
-            aggregates: { [MINUTE_IN_MS]: [DATA_POINT_IN_VIEWPORT_1], [HOUR_IN_MS]: [DATA_POINT_IN_VIEWPORT_2] },
             resolution: MINUTE_IN_MS,
           },
         ],

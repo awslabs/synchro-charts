@@ -74,7 +74,7 @@ const updateMesh = ({
   thresholdOptions: ThresholdOptions;
   thresholds: Threshold[];
 }) => {
-  const streamVertexSets = dataStreams.filter(isNumberDataStream).map(stream => vertices(stream, stream.resolution));
+  const streamVertexSets = dataStreams.filter(isNumberDataStream).map(stream => vertices(stream));
 
   // Set the number of instances of the bar are to be rendered.
   // eslint-disable-next-line no-param-reassign
