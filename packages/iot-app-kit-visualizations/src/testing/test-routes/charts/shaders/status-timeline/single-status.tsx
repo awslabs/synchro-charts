@@ -41,10 +41,7 @@ export class ScSingleStatus {
           color: 'black',
           resolution: DAY_IN_MS,
           aggregationType: AggregateType.AVERAGE,
-          aggregates: {
-            [DAY_IN_MS]: [TEST_DATA_POINT_1],
-          },
-          data: [],
+          data: [TEST_DATA_POINT_1],
           dataType: DataType.NUMBER,
         },
       ],

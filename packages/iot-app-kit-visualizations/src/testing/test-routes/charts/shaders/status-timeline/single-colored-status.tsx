@@ -40,10 +40,7 @@ export class SingleColoredStatus {
           name: 'test-stream-name',
           color: 'red',
           aggregationType: AggregateType.AVERAGE,
-          aggregates: {
-            [DAY_IN_MS]: [TEST_DATA_POINT_1],
-          },
-          data: [],
+          data: [TEST_DATA_POINT_1],
           resolution: DAY_IN_MS,
           dataType: DataType.NUMBER,
         },

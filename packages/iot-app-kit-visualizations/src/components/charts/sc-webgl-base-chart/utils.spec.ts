@@ -129,16 +129,13 @@ describe('construct chart scene', () => {
 describe('create vertices from data streams', () => {
   it('returns empty array when passed data stream with no data points', () => {
     expect(
-      vertices(
-        {
-          id: 'stream-id',
-          name: 'some stream',
-          resolution: 0,
-          dataType: DataType.NUMBER,
-          data: [],
-        },
-        0
-      )
+      vertices({
+        id: 'stream-id',
+        name: 'some stream',
+        resolution: 0,
+        dataType: DataType.NUMBER,
+        data: [],
+      })
     ).toStrictEqual([]);
   });
 
@@ -146,16 +143,13 @@ describe('create vertices from data streams', () => {
     const x = Date.now();
     const y = 100;
     expect(
-      vertices(
-        {
-          id: 'stream',
-          name: 'some-stream-1',
-          resolution: 0,
-          dataType: DataType.NUMBER,
-          data: [{ x, y }],
-        },
-        0
-      )
+      vertices({
+        id: 'stream',
+        name: 'some-stream-1',
+        resolution: 0,
+        dataType: DataType.NUMBER,
+        data: [{ x, y }],
+      })
     ).toStrictEqual([[x, y, 0, 0, 0]]);
   });
 
@@ -170,21 +164,18 @@ describe('create vertices from data streams', () => {
     const y3 = 300;
 
     expect(
-      vertices(
-        {
-          id: 'stream-1',
-          name: 'stream 1',
-          resolution: 0,
-          dataType: DataType.NUMBER,
-          color: 'red',
-          data: [
-            { x: x1, y: y1 },
-            { x: x2, y: y2 },
-            { x: x3, y: y3 },
-          ],
-        },
-        0
-      )
+      vertices({
+        id: 'stream-1',
+        name: 'stream 1',
+        resolution: 0,
+        dataType: DataType.NUMBER,
+        color: 'red',
+        data: [
+          { x: x1, y: y1 },
+          { x: x2, y: y2 },
+          { x: x3, y: y3 },
+        ],
+      })
     ).toStrictEqual([
       [x1, y1, 255, 0, 0],
       [x2, y2, 255, 0, 0],
@@ -196,17 +187,14 @@ describe('create vertices from data streams', () => {
     const x = Date.now();
     const y = 100;
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [_x, _y, r, g, b] = vertices(
-      {
-        id: 'stream',
-        name: 'stream 1',
-        color: '#00ff00',
-        resolution: 0,
-        dataType: DataType.NUMBER,
-        data: [{ x, y }],
-      },
-      0
-    )[0];
+    const [_x, _y, r, g, b] = vertices({
+      id: 'stream',
+      name: 'stream 1',
+      color: '#00ff00',
+      resolution: 0,
+      dataType: DataType.NUMBER,
+      data: [{ x, y }],
+    })[0];
 
     // (r, g, b) = (0, 255, 0)
     expect(r).toBe(0);

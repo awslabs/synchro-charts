@@ -1,7 +1,6 @@
 import { pointBisector, getDataBeforeDate } from '../common/dataFilters';
 import { DataPoint, DataStream, Primitive } from '../../../utils/dataTypes';
 import { sortTooltipPoints } from '../sc-tooltip/sort';
-import { getDataPoints } from '../../../utils/getDataPoints';
 import { DATA_ALIGNMENT } from '../common/constants';
 
 type ActivePoint<T extends Primitive> = {
@@ -113,7 +112,7 @@ export const activePoints = <T extends Primitive>({
 }): ActivePoint<T>[] => {
   const dataStreamUtilizedData = dataStreams.map(stream => ({
     streamId: stream.id,
-    dataPoints: getDataBeforeDate(getDataPoints(stream, stream.resolution), viewport.end),
+    dataPoints: getDataBeforeDate(stream.data, viewport.end),
   }));
   const selectedTimestamp = selectedDate.getTime();
 

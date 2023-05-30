@@ -104,7 +104,7 @@ const updateMesh = ({
   chartSize: { width: number; height: number };
   alarms?: AlarmsConfig;
 }) => {
-  const streamVertexSets = dataStreams.map(stream => vertices(stream, stream.resolution));
+  const streamVertexSets = dataStreams.map(stream => vertices(stream));
 
   // Set the number of instances of the status are to be rendered.
   // eslint-disable-next-line no-param-reassign

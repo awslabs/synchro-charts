@@ -71,7 +71,7 @@ const numLineSegments = (streamVertexSets: number[][][]): number => {
 };
 
 const updateMesh = (dataStreams: DataStream[], mesh: LineChartLineMesh, toClipSpace: (time: number) => number) => {
-  const streamVertexSets = dataStreams.filter(isNumberDataStream).map(stream => vertices(stream, stream.resolution));
+  const streamVertexSets = dataStreams.filter(isNumberDataStream).map(stream => vertices(stream));
   // Set the number of instances of the line segment that are to be rendered.
   mesh.count = numLineSegments(streamVertexSets);
   const { geometry } = mesh;

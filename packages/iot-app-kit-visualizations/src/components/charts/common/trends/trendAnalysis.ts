@@ -1,6 +1,5 @@
 import { LinearRegressionResult, Trend, TrendResult } from './types';
 import { getVisibleData } from '../dataFilters';
-import { getDataPoints } from '../../../../utils/getDataPoints';
 import { DataStream, Timestamp, ViewPortConfig } from '../../../../utils/dataTypes';
 import { TREND_TYPE } from '../../../../utils/dataConstants';
 
@@ -71,7 +70,7 @@ export const getAllTrendResults = (
   const trendResults: TrendResult[] = [];
   dataStreams.forEach(stream => {
     const { id } = stream;
-    const dataPoints = getDataPoints(stream, stream.resolution);
+    const dataPoints = stream.data;
 
     // only compute a trend line if there are at least two visible and/or boundary data points, the reason being that
     // a trend line based on a single point of data has no informational value and may actually be misleading

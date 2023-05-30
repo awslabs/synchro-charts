@@ -42,11 +42,8 @@ describe('bars', () => {
           id: 'data-stream',
           name: 'some name',
           resolution: MONTH_IN_MS,
-          data: [],
+          data: TEST_DATA_POINT,
           aggregationType: AggregateType.AVERAGE,
-          aggregates: {
-            [MONTH_IN_MS]: TEST_DATA_POINT,
-          },
           dataType: DataType.NUMBER,
         },
       ],

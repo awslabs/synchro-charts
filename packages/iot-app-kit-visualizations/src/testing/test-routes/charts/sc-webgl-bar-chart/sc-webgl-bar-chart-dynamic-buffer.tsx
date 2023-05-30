@@ -47,10 +47,7 @@ export class ScWebglBarChartDynamicBuffer {
                 color: 'red',
                 name: 'test stream',
                 aggregationType: AggregateType.AVERAGE,
-                aggregates: {
-                  [MONTH_IN_MS]: this.data,
-                },
-                data: [],
+                data: this.data,
                 resolution: MONTH_IN_MS,
                 dataType: DataType.NUMBER,
               },

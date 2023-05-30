@@ -47,11 +47,8 @@ export class ScSingleColoredBar {
           name: 'test-stream-name',
           color: 'red',
           resolution: DAY_IN_MS,
-          data: [],
+          data: [TEST_DATA_POINT_1],
           aggregationType: AggregateType.AVERAGE,
-          aggregates: {
-            [DAY_IN_MS]: [TEST_DATA_POINT_1],
-          },
           dataType: DataType.NUMBER,
         },
       ],

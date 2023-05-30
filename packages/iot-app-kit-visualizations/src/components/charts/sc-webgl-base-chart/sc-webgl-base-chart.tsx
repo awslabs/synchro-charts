@@ -49,7 +49,6 @@ import { isNumeric } from '../../../utils/number';
 import { isMinimalStaticViewport, isNumberDataStream } from '../../../utils/predicates';
 import { EmptyStatus } from './EmptyStatus';
 import { UnsupportedDataTypeStatus } from './UnsupportedDataTypeStatus';
-import { getDataPoints } from '../../../utils/getDataPoints';
 import { LEGEND_POSITION } from '../common/constants';
 import { getDataStreamForEventing } from '../common';
 import { attachDraggable } from '../common/annotations/draggableAnnotations';
@@ -391,9 +390,7 @@ export class ScWebglBaseChart {
     // Filter down the data streams to only contain data within the viewport
     const inViewPoints: DataPoint<number>[] = this.dataStreams
       .filter(isNumberDataStream)
-      .map(stream =>
-        getVisibleData(getDataPoints(stream, stream.resolution), { start: this.start, end: this.end }, false)
-      )
+      .map(stream => getVisibleData(stream.data, { start: this.start, end: this.end }, false))
       .flat();
 
     const yAnnotations =
@@ -824,7 +821,7 @@ export class ScWebglBaseChart {
     const hasNoDataStreamsPresent = this.visualizedDataStreams().length === 0;
 
     const hasNoDataPresent = this.visualizedDataStreams().every(stream => {
-      const points = getDataPoints(stream, stream.resolution);
+      const points = stream.data;
       if (points.length === 0) {
         return true;
       }

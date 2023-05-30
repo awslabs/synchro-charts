@@ -59,10 +59,7 @@ export class ScWebglBarChartDynamicData {
                 name: 'test stream',
                 resolution: MONTH_IN_MS,
                 aggregationType: AggregateType.AVERAGE,
-                aggregates: {
-                  [MONTH_IN_MS]: this.data,
-                },
-                data: [],
+                data: this.data,
                 dataType: DataType.NUMBER,
               },
             ]}

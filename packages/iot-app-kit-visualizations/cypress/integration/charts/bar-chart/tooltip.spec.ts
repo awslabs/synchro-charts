@@ -14,6 +14,7 @@ import {
   NUMBER_INFO_2,
   START_DATE,
 } from '../../../../src/testing/__mocks__/mockWidgetProperties';
+import { AggregateType } from '../../../../src/utils/dataTypes';
 
 it('renders no tooltip when only info is empty', () => {
   visitDynamicWidget(cy, {
@@ -57,13 +58,14 @@ it('renders no tooltip when there is no data for the requested resolution', () =
 
 it('renders tooltip rows in order of values magnitude', () => {
   const resolution = MINUTE_IN_MS;
+  const aggregationType = AggregateType.AVERAGE;
   visitDynamicWidget(cy, {
     componentTag: 'iot-app-kit-vis-bar-chart',
     viewportStart: new Date(START_DATE.getTime() - MINUTE_IN_MS),
     viewportEnd: new Date(START_DATE.getTime() + 10 * MINUTE_IN_MS),
     dataStreams: [
-      { ...NUMBER_STREAM_1, data: [], aggregates: { [resolution]: NUMBER_STREAM_1.data }, resolution },
-      { ...NUMBER_STREAM_2, data: [], aggregates: { [resolution]: NUMBER_STREAM_2.data }, resolution },
+      { ...NUMBER_STREAM_1, data: NUMBER_STREAM_1.data, resolution, aggregationType },
+      { ...NUMBER_STREAM_2, data: NUMBER_STREAM_2.data, resolution, aggregationType },
     ],
   });
 

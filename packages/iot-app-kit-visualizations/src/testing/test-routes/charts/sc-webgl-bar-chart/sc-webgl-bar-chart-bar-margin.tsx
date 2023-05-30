@@ -23,13 +23,10 @@ const DATA_STREAM_1: DataStream = {
   name: 'test stream',
   resolution: MONTH_IN_MS,
   aggregationType: AggregateType.AVERAGE,
-  aggregates: {
-    [MONTH_IN_MS]: [
-      { x: new Date(1998, 3, 0, 0).getTime(), y: 1000 },
-      { x: new Date(1998, 4, 0, 0).getTime(), y: 3000 },
-    ],
-  },
-  data: [],
+  data: [
+    { x: new Date(1998, 3, 0, 0).getTime(), y: 1000 },
+    { x: new Date(1998, 4, 0, 0).getTime(), y: 3000 },
+  ],
   dataType: DataType.NUMBER,
 };
 
@@ -39,13 +36,10 @@ const DATA_STREAM_2: DataStream = {
   name: 'test stream2',
   resolution: MONTH_IN_MS,
   aggregationType: AggregateType.AVERAGE,
-  aggregates: {
-    [MONTH_IN_MS]: [
-      { x: new Date(1998, 3, 0, 0).getTime(), y: 2000 },
-      { x: new Date(1998, 4, 0, 0).getTime(), y: 4000 },
-    ],
-  },
-  data: [],
+  data: [
+    { x: new Date(1998, 3, 0, 0).getTime(), y: 2000 },
+    { x: new Date(1998, 4, 0, 0).getTime(), y: 4000 },
+  ],
   dataType: DataType.NUMBER,
 };
 

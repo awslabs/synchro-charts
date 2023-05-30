@@ -63,7 +63,7 @@ export interface ChartConfig extends BaseConfig {
 }
 
 export type WidgetConfigurationUpdate = Omit<ChartConfig, 'viewport' | 'messageOverrides'> & {
-  dataStreams: Omit<DataStream, 'data' | 'aggregates'>[];
+  dataStreams: Omit<DataStream, 'data'>[];
   widgetId: string;
 };
 
