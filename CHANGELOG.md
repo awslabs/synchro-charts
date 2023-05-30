@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.0](https://github.com/awslabs/synchro-charts/compare/root-v1.9.1...root-v2.0.0) (2023-05-30)
+
+
+### ⚠ BREAKING CHANGES
+
+* remove aggregates from dataStreams
+
+### Features
+
+* remove aggregates from dataStreams ([76563af](https://github.com/awslabs/synchro-charts/commit/76563af17f13671566ae12a164c137e2080a8796))
+
 ## [1.9.1](https://github.com/awslabs/synchro-charts/compare/root-v1.9.0...root-v1.9.1) (2023-05-24)
 
 
