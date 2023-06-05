@@ -117,8 +117,7 @@
   
   - `data`: Object[]
 
-    Raw data (non-aggregated) for the stream. Note that once `resolution` is greater than 0, then it will switch from
-    reading the data from this `data` property to reading the data from the `aggregates` property.
+    Raw or aggregate data for the stream.
   
     - `x`: number
     
@@ -155,19 +154,8 @@
   
     (Optional) The type of aggregate data contained within the aggregates object:
 
-    **`AVERAGE`**
-    <!-- upcoming support **`COUNT`**, **`MAXIMUM`**, **`MINIMUM`**, **`STANDARD_DEVIATION`**, **`SUM`** -->
+    **`AVERAGE`, **`COUNT`**, **`MAXIMUM`**, **`MINIMUM`**, **`STANDARD_DEVIATION`**, **`SUM`****
 
-  - `aggregates`: Object
-    
-    (Optional) A map of resolution (in milliseconds) to its associated data points. The `resolution` in the `datastream`
-    is a key in the `aggregates` object and must match to one of them in order to visualize the data stream on the visualizations.
-
-    - `resolution` (key): number
-      The resolution (in milliseconds) of the data.
-
-    - data point (value): DataPoint[]
-      The data points that are associated to this resolution.
         
   - `detailedName`: string
 
