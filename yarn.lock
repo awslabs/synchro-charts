@@ -12202,7 +12202,7 @@ minimatch@3.0.4:
   dependencies:
     brace-expansion "^1.1.7"
 
-minimatch@3.0.5, minimatch@^3.0.2, minimatch@^3.0.4:
+minimatch@3.0.5:
   version "3.0.5"
   resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-3.0.5.tgz#4da8f1290ee0f0f8e83d60ca69f8f134068604a3"
   integrity sha512-tUpxzX0VAzJHjLu0xUfFv1gwVp9ba3IOuRAVH2EGuRW8a5emA2FlACLqiT/lDVtS1W+TGNwqz3sWaNyLgDJWuw==
@@ -12216,7 +12216,7 @@ minimatch@9.0.1, minimatch@^9.0.0:
   dependencies:
     brace-expansion "^2.0.1"
 
-minimatch@^3.1.2:
+minimatch@^3.0.2, minimatch@^3.0.4, minimatch@^3.1.2:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-3.1.2.tgz#19cd194bfd3e428f049a70817c038d89ab4be35b"
   integrity sha512-J7p63hRiAjw1NDEww1W7i37+ByIrOWO5XQQAzZ3VOcL0PNybwpfmV/N05zFAzwQ9USyEcX6t3UO+K5aqBQOIHw==
@@ -13356,10 +13356,10 @@ parse-asn1@^5.0.0, parse-asn1@^5.1.5:
     pbkdf2 "^3.0.3"
     safe-buffer "^5.1.1"
 
-parse-duration@^1.0.0, parse-duration@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/parse-duration/-/parse-duration-1.0.3.tgz#b6681f5edcc2689643b34c09ea63f86f58a35814"
-  integrity sha512-o6NAh12na5VvR6nFejkU0gpQ8jmOY9Y9sTU2ke3L3G/d/3z8jqmbBbeyBGHU73P4JLXfc7tJARygIK3WGIkloA==
+parse-duration@^1.0.0, parse-duration@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/parse-duration/-/parse-duration-1.1.0.tgz#5192084c5d8f2a3fd676d04a451dbd2e05a1819c"
+  integrity sha512-z6t9dvSJYaPoQq7quMzdEagSFtpGu+utzHqqxmpVWNNZRIXnvqyCvn9XsTdh7c/w0Bqmdz3RB3YnRaKtpRtEXQ==
 
 parse-entities@^1.0.2, parse-entities@^1.1.0:
   version "1.2.2"
