@@ -117,7 +117,7 @@
     "lodash.uniq": "^4.5.0",
     "lodash.uniqby": "^4.7.0",
     "minimatch": "9.0.1",
-    "parse-duration": "^1.0.3",
+    "parse-duration": "^1.1.0",
     "redux": "^4.2.1",
     "resize-observer-polyfill": "^1.5.1",
     "three": "^0.125.0",
