@@ -195,6 +195,7 @@ export namespace Tooltip {
     trendResults: TrendResult[];
     visualizesAlarms: boolean;
     aggregationType?: string;
+    precision?: number;
   }
 }
 

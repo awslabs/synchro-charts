@@ -28,6 +28,7 @@ export class ScTooltipRow {
   @Prop() valueColor?: string = baseColor;
   @Prop() aggregationType?: string;
   @Prop() icon?: StatusIcon;
+  @Prop() precision?: number;
 
   render() {
     const isTrendPoint = this.pointType === POINT_TYPE.TREND;
@@ -52,7 +53,7 @@ export class ScTooltipRow {
         </span>
         <span class="value awsui-util-d-i" data-testid="current-value" style={{ color: this.valueColor }}>
           {this.icon && <iot-app-kit-vis-chart-icon name={this.icon} />}
-          <Value value={this.point && this.point.y} />
+          <Value value={this.point && this.point.y} precision={this.precision} />
         </span>
         {this.resolution != null && (
           <div class="awsui-util-pb-s">

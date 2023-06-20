@@ -62,6 +62,7 @@ export class ScBarChart implements ChartConfig {
   @Prop() axis?: Axis.Options;
   @Prop() messageOverrides?: MessageOverrides;
   @Prop() aggregationType?: string;
+  @Prop() significantDigits?: number;
 
   /** Status */
   @Prop() isEditing: boolean = false;
@@ -105,6 +106,7 @@ export class ScBarChart implements ChartConfig {
             aggregationType={this.aggregationType}
             visualizesAlarms={false}
             messageOverrides={this.messageOverrides}
+            precision={this.significantDigits}
           />
         )}
       />
