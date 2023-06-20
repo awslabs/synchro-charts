@@ -42,6 +42,7 @@ export class ScTooltip {
   @Prop() showBlankTooltipRows: boolean = false;
   @Prop() widgetId: string;
   @Prop() aggregationType?: string;
+  @Prop() precision?: number;
 
   /**
    * If we are drawing data from the data timestamp to timestamp + resolution
@@ -247,6 +248,7 @@ export class ScTooltip {
         tooltipPoints={this.getTooltipPoints(this.selectedDate)}
         toolTipPositioning={this.toolTipPositioning}
         aggregationType={this.aggregationType}
+        precision={this.precision}
       />
     );
   }

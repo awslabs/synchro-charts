@@ -92,6 +92,7 @@ export class ScWebglBaseChart {
   @Prop() alarms?: AlarmsConfig;
   @Prop() supportedDataTypes: DataType[] = Object.values(DataType);
   @Prop() aggregationType?: string;
+  @Prop() precision?: number;
 
   /** if false, base chart will not display an empty state message when there is no data present. */
   @Prop() displaysNoDataPresentMsg?: boolean;
@@ -786,6 +787,7 @@ export class ScWebglBaseChart {
       trendResults: this.trendResults,
       visualizesAlarms: this.visualizesAlarms,
       aggregationType: this.aggregationType,
+      precision: this.precision,
     });
 
   renderLegendComponent = ({

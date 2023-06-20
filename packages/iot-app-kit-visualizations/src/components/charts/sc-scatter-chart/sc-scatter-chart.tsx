@@ -61,6 +61,7 @@ export class ScScatterChart implements ChartConfig {
   @Prop() messageOverrides?: MessageOverrides;
   @Prop() setViewport: (viewport: AppKitViewport, lastUpdatedBy?: string) => void;
   @Prop() aggregationType?: string;
+  @Prop() significantDigits?: number;
 
   /** Status */
   @Prop() isEditing: boolean = false;
@@ -103,6 +104,7 @@ export class ScScatterChart implements ChartConfig {
             aggregationType={this.aggregationType}
             visualizesAlarms={false}
             messageOverrides={this.messageOverrides}
+            precision={this.significantDigits}
           />
         )}
       />

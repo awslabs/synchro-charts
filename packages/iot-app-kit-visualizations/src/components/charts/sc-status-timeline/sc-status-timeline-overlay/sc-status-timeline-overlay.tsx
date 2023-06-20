@@ -22,6 +22,7 @@ export class ScStatusTimelineOverlay {
   @Prop() date!: Date;
   @Prop() widgetId!: string;
   @Prop() isEditing!: boolean;
+  @Prop() precision?: number;
 
   /** Widget data stream names */
   @State() names: NameValue[] = [];
@@ -110,6 +111,7 @@ export class ScStatusTimelineOverlay {
               valueColor={valueColor}
               icon={error == null ? threshold && threshold.icon : StatusIcon.ERROR}
               onNameChange={(name: string) => this.onChangeLabel({ streamId: dataStream.id, name })}
+              precision={this.precision}
             />
           );
         })}

@@ -91,6 +91,7 @@ export class ScStatusTimeline implements ChartConfig {
   @Prop() alarms?: AlarmsConfig;
   @Prop() setViewport: (viewport: AppKitViewport, lastUpdatedBy?: string) => void;
   @Prop() aggregationType?: string;
+  @Prop() significantDigits?: number;
 
   @State() componentViewport: MinimalViewPortConfig;
 
@@ -173,6 +174,7 @@ export class ScStatusTimeline implements ChartConfig {
                 visualizesAlarms
                 displaysNoDataPresentMsg={false}
                 messageOverrides={this.messageOverrides}
+                precision={this.significantDigits}
               />
               <iot-app-kit-vis-status-timeline-overlay
                 isEditing={this.isEditing}
@@ -181,6 +183,7 @@ export class ScStatusTimeline implements ChartConfig {
                 dataStreams={this.dataStreams}
                 size={chartSize}
                 widgetId={this.widgetId}
+                precision={this.significantDigits}
               />
             </div>,
             <div class="threshold-legend-container" style={{ maxHeight: `${THRESHOLD_LEGEND_HEIGHT_PX}px` }}>

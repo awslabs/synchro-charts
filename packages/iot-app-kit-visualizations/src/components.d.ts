@@ -43,6 +43,7 @@ export namespace Components {
         "movement"?: MovementConfig;
         "scale"?: ScaleConfig;
         "setViewport": (viewport: AppKitViewport, lastUpdatedBy?: string) => void;
+        "significantDigits"?: number;
         "size"?: MinimalSizeConfig;
         "trends": Trend[];
         /**
@@ -138,6 +139,7 @@ export namespace Components {
         "movement"?: MovementConfig;
         "scale"?: ScaleConfig;
         "setViewport": (viewport: AppKitViewport, lastUpdatedBy?: string) => void;
+        "significantDigits"?: number;
         "size"?: MinimalSizeConfig;
         "trends": Trend[];
         /**
@@ -182,6 +184,7 @@ export namespace Components {
         "movement"?: MovementConfig;
         "scale"?: ScaleConfig;
         "setViewport": (viewport: AppKitViewport, lastUpdatedBy?: string) => void;
+        "significantDigits"?: number;
         "size"?: MinimalSizeConfig;
         "trends": Trend[];
         /**
@@ -246,6 +249,7 @@ export namespace Components {
         "movement"?: MovementConfig;
         "scale"?: ScaleConfig;
         "setViewport": (viewport: AppKitViewport, lastUpdatedBy?: string) => void;
+        "significantDigits"?: number;
         "size"?: MinimalSizeConfig;
         /**
           * Chart API
@@ -257,6 +261,7 @@ export namespace Components {
         "dataStreams": DataStream[];
         "date": Date;
         "isEditing": boolean;
+        "precision"?: number;
         "size": SizeConfig;
         "thresholds": Threshold[];
         "widgetId": string;
@@ -267,6 +272,7 @@ export namespace Components {
         "isEditing": boolean;
         "label": string;
         "onNameChange": (name: string) => void;
+        "precision"?: number;
         "unit"?: string;
         "value"?: Primitive;
         "valueColor"?: string;
@@ -292,6 +298,7 @@ export namespace Components {
         "dataContainer": HTMLElement | null;
         "dataStreams": DataStream[];
         "maxDurationFromDate"?: number;
+        "precision"?: number;
         "showBlankTooltipRows": boolean;
         "showDataStreamColor": boolean;
         "size": SizeConfig;
@@ -314,6 +321,7 @@ export namespace Components {
         "label": string;
         "point": DataPoint | undefined;
         "pointType": POINT_TYPE;
+        "precision"?: number;
         "resolution": number | undefined;
         "showDataStreamColor": boolean;
         "valueColor"?: string;
@@ -321,6 +329,7 @@ export namespace Components {
     interface IotAppKitVisTooltipRows {
         "aggregationType"?: string;
         "dataStreams": DataStream[];
+        "precision"?: number;
         "selectedDate": Date;
         "showDataStreamColor": boolean;
         "size": SizeConfig;
@@ -388,6 +397,7 @@ export namespace Components {
           * Optionally hooks to integrate custom logic into the base chart
          */
         "onUpdateLifeCycle"?: (viewport: ViewPortConfig) => void;
+        "precision"?: number;
         "renderLegend": (props: Legend.Props) => HTMLElement;
         "renderTooltip": (props: Tooltip.Props) => HTMLElement;
         "setViewport": (viewport: AppKitViewport, lastUpdatedBy?: string) => void;
@@ -1296,6 +1306,7 @@ declare namespace LocalJSX {
         "movement"?: MovementConfig;
         "scale"?: ScaleConfig;
         "setViewport"?: (viewport: AppKitViewport, lastUpdatedBy?: string) => void;
+        "significantDigits"?: number;
         "size"?: MinimalSizeConfig;
         "trends"?: Trend[];
         /**
@@ -1391,6 +1402,7 @@ declare namespace LocalJSX {
         "movement"?: MovementConfig;
         "scale"?: ScaleConfig;
         "setViewport"?: (viewport: AppKitViewport, lastUpdatedBy?: string) => void;
+        "significantDigits"?: number;
         "size"?: MinimalSizeConfig;
         "trends"?: Trend[];
         /**
@@ -1435,6 +1447,7 @@ declare namespace LocalJSX {
         "movement"?: MovementConfig;
         "scale"?: ScaleConfig;
         "setViewport"?: (viewport: AppKitViewport, lastUpdatedBy?: string) => void;
+        "significantDigits"?: number;
         "size"?: MinimalSizeConfig;
         "trends"?: Trend[];
         /**
@@ -1499,6 +1512,7 @@ declare namespace LocalJSX {
         "movement"?: MovementConfig;
         "scale"?: ScaleConfig;
         "setViewport"?: (viewport: AppKitViewport, lastUpdatedBy?: string) => void;
+        "significantDigits"?: number;
         "size"?: MinimalSizeConfig;
         /**
           * Chart API
@@ -1511,6 +1525,7 @@ declare namespace LocalJSX {
         "date": Date;
         "isEditing": boolean;
         "onWidgetUpdated"?: (event: CustomEvent<WidgetConfigurationUpdate>) => void;
+        "precision"?: number;
         "size": SizeConfig;
         "thresholds": Threshold[];
         "widgetId": string;
@@ -1521,6 +1536,7 @@ declare namespace LocalJSX {
         "isEditing": boolean;
         "label": string;
         "onNameChange": (name: string) => void;
+        "precision"?: number;
         "unit"?: string;
         "value"?: Primitive;
         "valueColor"?: string;
@@ -1546,6 +1562,7 @@ declare namespace LocalJSX {
         "dataContainer"?: HTMLElement | null;
         "dataStreams": DataStream[];
         "maxDurationFromDate"?: number;
+        "precision"?: number;
         "showBlankTooltipRows"?: boolean;
         "showDataStreamColor"?: boolean;
         "size": SizeConfig;
@@ -1568,6 +1585,7 @@ declare namespace LocalJSX {
         "label": string;
         "point": DataPoint | undefined;
         "pointType": POINT_TYPE;
+        "precision"?: number;
         "resolution": number | undefined;
         "showDataStreamColor": boolean;
         "valueColor"?: string;
@@ -1575,6 +1593,7 @@ declare namespace LocalJSX {
     interface IotAppKitVisTooltipRows {
         "aggregationType"?: string;
         "dataStreams": DataStream[];
+        "precision"?: number;
         "selectedDate": Date;
         "showDataStreamColor"?: boolean;
         "size": SizeConfig;
@@ -1643,6 +1662,7 @@ declare namespace LocalJSX {
          */
         "onUpdateLifeCycle"?: (viewport: ViewPortConfig) => void;
         "onWidgetUpdated"?: (event: CustomEvent<WidgetConfigurationUpdate>) => void;
+        "precision"?: number;
         "renderLegend"?: (props: Legend.Props) => HTMLElement;
         "renderTooltip"?: (props: Tooltip.Props) => HTMLElement;
         "setViewport"?: (viewport: AppKitViewport, lastUpdatedBy?: string) => void;

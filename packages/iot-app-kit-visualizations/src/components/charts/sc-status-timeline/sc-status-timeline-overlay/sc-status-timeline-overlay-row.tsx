@@ -17,6 +17,7 @@ export class ScStatusTimelineOverlayRow {
   @Prop() value?: Primitive;
   @Prop() icon?: StatusIcon;
   @Prop() unit?: string;
+  @Prop() precision?: number;
 
   render() {
     return [
@@ -30,7 +31,7 @@ export class ScStatusTimelineOverlayRow {
         <div class="expando" />
         <span class="value" style={{ color: this.valueColor || 'unset', display: 'flex', alignItems: 'center' }}>
           {this.icon && <iot-app-kit-vis-chart-icon name={this.icon} />}
-          <Value value={this.value} unit={this.unit} />
+          <Value value={this.value} unit={this.unit} precision={this.precision} />
         </span>
       </div>,
       <div class="no-data-visualization" />,

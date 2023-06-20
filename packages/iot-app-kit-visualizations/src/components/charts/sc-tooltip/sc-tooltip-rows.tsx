@@ -29,6 +29,7 @@ export class ScTooltipRows {
   @Prop() tooltipPoints: TooltipPoint[];
   @Prop() toolTipPositioning!: TooltipPositioning;
   @Prop() aggregationType?: string;
+  @Prop() precision?: number;
 
   /**
    * Returns the color to display the value within a legend row.
@@ -129,6 +130,7 @@ export class ScTooltipRows {
                   pointType={tooltipPoint.type}
                   valueColor={valueColor}
                   icon={icon}
+                  precision={this.precision}
                 />
               );
             })}
