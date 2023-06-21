@@ -811,6 +811,7 @@ export class ScWebglBaseChart {
       supportString: this.supportString,
       trendResults: this.trendResults,
       showDataStreamColor,
+      precision: this.precision,
     });
 
   render() {

@@ -94,6 +94,7 @@ export namespace Components {
         "dataStreams": DataStream[];
         "isEditing": boolean;
         "isLoading": boolean;
+        "precision"?: number;
         "showDataStreamColor": boolean;
         "supportString": boolean;
         "thresholds": Threshold[];
@@ -111,6 +112,7 @@ export namespace Components {
         "label": string;
         "point"?: DataPoint<Primitive>;
         "pointType"?: POINT_TYPE;
+        "precision"?: number;
         "showDataStreamColor": boolean;
         "streamId": string;
         "unit"?: string;
@@ -1357,6 +1359,7 @@ declare namespace LocalJSX {
         "dataStreams": DataStream[];
         "isEditing"?: boolean;
         "isLoading": boolean;
+        "precision"?: number;
         "showDataStreamColor": boolean;
         "supportString"?: boolean;
         "thresholds": Threshold[];
@@ -1374,6 +1377,7 @@ declare namespace LocalJSX {
         "label": string;
         "point"?: DataPoint<Primitive>;
         "pointType"?: POINT_TYPE;
+        "precision"?: number;
         "showDataStreamColor": boolean;
         "streamId": string;
         "unit"?: string;

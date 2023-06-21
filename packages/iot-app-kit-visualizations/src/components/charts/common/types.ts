@@ -216,5 +216,6 @@ export namespace Legend {
     supportString: boolean;
     trendResults: TrendResult[];
     showDataStreamColor: boolean;
+    precision?: number;
   }
 }
