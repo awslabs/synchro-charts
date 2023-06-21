@@ -32,6 +32,7 @@ export class ScLegend {
   @Prop() supportString: boolean;
   @Prop() showDataStreamColor!: boolean;
   @Prop() trendResults: TrendResult[] = [];
+  @Prop() precision?: number;
 
   visualizedDataStreams = (): DataStream[] => {
     const streams = this.dataStreams.filter(isSupportedDataType(this.supportString));
@@ -99,6 +100,7 @@ export class ScLegend {
               isLoading={this.isLoading}
               showDataStreamColor={this.showDataStreamColor}
               icon={icon}
+              precision={this.precision}
             />,
             ...this.trendResults.reduce((rows: ScLegendRow[], trendResult: TrendResult) => {
               if (trendResult.dataStreamId === dataStream.id) {
@@ -119,6 +121,7 @@ export class ScLegend {
                     isEditing={false}
                     isLoading={this.isLoading}
                     showDataStreamColor={this.showDataStreamColor}
+                    precision={this.precision}
                   />
                 );
               }

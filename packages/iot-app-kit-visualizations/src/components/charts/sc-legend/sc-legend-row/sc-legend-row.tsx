@@ -41,6 +41,7 @@ export class ScLegendRow {
   @Prop() pointType?: POINT_TYPE;
   @Prop() valueColor?: string = DEFAULT_LEGEND_TEXT_COLOR;
   @Prop() icon?: StatusIcon;
+  @Prop() precision?: number;
 
   updateName = (name: string) => {
     this.updateDataStreamName({
@@ -86,7 +87,7 @@ export class ScLegendRow {
             <div class="legend-value" style={this.isEditing ? EDIT_MODE_STYLE : VIEW_MODE_STYLE}>
               {this.icon && <iot-app-kit-vis-chart-icon name={this.icon} />}
               <h4 class="awsui-util-d-i" data-testid="current-value" style={{ color: this.valueColor }}>
-                <Value value={this.point ? this.point.y : undefined} />
+                <Value value={this.point ? this.point.y : undefined} precision={this.precision} />
               </h4>
               {this.unit && <small>&nbsp;{this.unit}</small>}
             </div>
