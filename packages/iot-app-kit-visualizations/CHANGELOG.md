@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.0](https://github.com/awslabs/synchro-charts/compare/iot-app-kit-visualizations-v2.0.0...iot-app-kit-visualizations-v2.1.0) (2023-06-21)
+
+
+### Features
+
+* **visualizations:** add significant digit configuration ([ae813e9](https://github.com/awslabs/synchro-charts/commit/ae813e96bb20ee878aacb79be4fff63f8865ff2f))
+
 ## [2.0.0](https://github.com/awslabs/synchro-charts/compare/iot-app-kit-visualizations-v1.9.1...iot-app-kit-visualizations-v2.0.0) (2023-05-30)
 
 
