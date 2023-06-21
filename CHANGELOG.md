@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.0](https://github.com/awslabs/synchro-charts/compare/root-v2.0.0...root-v2.1.0) (2023-06-21)
+
+
+### Features
+
+* **visualizations:** add significant digit configuration ([ae813e9](https://github.com/awslabs/synchro-charts/commit/ae813e96bb20ee878aacb79be4fff63f8865ff2f))
+
+
+### Bug Fixes
+
+* **docs:** update dataStream in docs ([50c0e75](https://github.com/awslabs/synchro-charts/commit/50c0e755f652570afa4fb4130d03253322e75ba9))
+
 ## [2.0.0](https://github.com/awslabs/synchro-charts/compare/root-v1.9.1...root-v2.0.0) (2023-05-30)
 
 
