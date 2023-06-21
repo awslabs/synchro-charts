@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.1](https://github.com/awslabs/synchro-charts/compare/root-v2.1.0...root-v2.1.1) (2023-06-21)
+
+
+### Bug Fixes
+
+* **visualizations:** pass through significant digits to legend component ([a49f9df](https://github.com/awslabs/synchro-charts/commit/a49f9dfc2adad31bd8963ae710363397204a5b77))
+
 ## [2.1.0](https://github.com/awslabs/synchro-charts/compare/root-v2.0.0...root-v2.1.0) (2023-06-21)
 
 

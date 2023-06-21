@@ -8,6 +8,20 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Miscellaneous Chores
 
 * **iot-app-kit/charts:** Synchronize undefined versions
+## [2.1.1](https://github.com/awslabs/synchro-charts/compare/iot-app-kit-visualizations-react-v2.1.0...iot-app-kit-visualizations-react-v2.1.1) (2023-06-21)
+
+
+### Miscellaneous Chores
+
+* **iot-app-kit-visualizations-react:** Synchronize undefined versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @iot-app-kit/charts-core bumped from ^2.1.0 to ^2.1.1
+
 ## [2.1.0](https://github.com/awslabs/synchro-charts/compare/iot-app-kit-visualizations-react-v2.0.0...iot-app-kit-visualizations-react-v2.1.0) (2023-06-21)
 
 
