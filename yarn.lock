@@ -1341,15 +1341,15 @@
   dependencies:
     conventional-changelog-conventionalcommits "^5.0.0"
 
-"@commitlint/config-lerna-scopes@^17.6.3":
-  version "17.6.3"
-  resolved "https://registry.yarnpkg.com/@commitlint/config-lerna-scopes/-/config-lerna-scopes-17.6.3.tgz#36d4f7b19f913a02b833e7c5d0dfde28d6946a31"
-  integrity sha512-mjT+cvc/aOOV2hH9UDOD4uT25MUqjFg1dFV+ol1w2ESv/VwLZEMUpQ+DPMkOlaH/et8c7BIaEZYyKByoNO9Ukw==
+"@commitlint/config-lerna-scopes@^17.6.6":
+  version "17.6.6"
+  resolved "https://registry.yarnpkg.com/@commitlint/config-lerna-scopes/-/config-lerna-scopes-17.6.6.tgz#27b0ce810a2d03273bd65796910fd976368e99a6"
+  integrity sha512-txGAmX2v6QKyoocTy7opM0UaR0ByVJ6YF+AxfRF5IyBL/qvBMyaFCJEM1OgXflmVD8NxzgETp3iM/npT3uxoCg==
   dependencies:
     "@lerna/project" "^6.0.0"
     glob "^8.0.3"
     import-from "4.0.0"
-    semver "7.5.0"
+    semver "7.5.2"
 
 "@commitlint/ensure@^12.1.4":
   version "12.1.4"
@@ -16008,10 +16008,10 @@ semver@7.3.5:
   dependencies:
     lru-cache "^6.0.0"
 
-semver@7.5.0, semver@^7.0.0, semver@^7.1.1, semver@^7.1.3, semver@^7.3.2, semver@^7.3.4, semver@^7.3.5:
-  version "7.5.0"
-  resolved "https://registry.yarnpkg.com/semver/-/semver-7.5.0.tgz#ed8c5dc8efb6c629c88b23d41dc9bf40c1d96cd0"
-  integrity sha512-+XC0AD/R7Q2mPSRuy2Id0+CGTZ98+8f+KvwirxOKIEyid+XSx6HbC63p+O4IndTHuX5Z+JxQ0TghCkO5Cg/2HA==
+semver@7.5.2, semver@^7.0.0, semver@^7.1.1, semver@^7.1.3, semver@^7.3.2, semver@^7.3.4, semver@^7.3.5:
+  version "7.5.2"
+  resolved "https://registry.yarnpkg.com/semver/-/semver-7.5.2.tgz#5b851e66d1be07c1cdaf37dfc856f543325a2beb"
+  integrity sha512-SoftuTROv/cRjCze/scjGyiDtcUyxw1rgYQSZY7XTmtR5hX+dm76iDbTH8TkLPHCQmlbQVSSbNZCPM2hb0knnQ==
   dependencies:
     lru-cache "^6.0.0"
 
