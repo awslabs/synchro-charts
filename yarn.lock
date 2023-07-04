@@ -22,10 +22,10 @@
   dependencies:
     "@juggle/resize-observer" "^3.3.1"
 
-"@awsui/components-react@^3.0.871":
-  version "3.0.871"
-  resolved "https://registry.yarnpkg.com/@awsui/components-react/-/components-react-3.0.871.tgz#c2ba2641e1b4f369d1bd9fff8aaea5e5776538a1"
-  integrity sha512-mdPafoVyM+MKuIxjMqS830WLaVkp8/4h0C1t/UKfqugmENixYeV5dz/5JIxubq/CDP1gJToPdgwJ3Dt4zwazcA==
+"@awsui/components-react@^3.0.873":
+  version "3.0.873"
+  resolved "https://registry.yarnpkg.com/@awsui/components-react/-/components-react-3.0.873.tgz#64c22a0d17eae4e91faecb5be3c203fde830d478"
+  integrity sha512-qldcbR61JrsL8nvzd4Dn4y/hAn+ZUjGatIuvcUyL/WVdocCqOEyO+/Xym1zF1dA/yZiSvs0Se4vUdXkzZ94HjQ==
   dependencies:
     "@awsui/collection-hooks" "^1.0.0"
     "@awsui/component-toolkit" "^1.0.0-beta"
