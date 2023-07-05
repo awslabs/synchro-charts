@@ -22,10 +22,10 @@
   dependencies:
     "@juggle/resize-observer" "^3.3.1"
 
-"@awsui/components-react@^3.0.873":
-  version "3.0.873"
-  resolved "https://registry.yarnpkg.com/@awsui/components-react/-/components-react-3.0.873.tgz#64c22a0d17eae4e91faecb5be3c203fde830d478"
-  integrity sha512-qldcbR61JrsL8nvzd4Dn4y/hAn+ZUjGatIuvcUyL/WVdocCqOEyO+/Xym1zF1dA/yZiSvs0Se4vUdXkzZ94HjQ==
+"@awsui/components-react@^3.0.874":
+  version "3.0.874"
+  resolved "https://registry.yarnpkg.com/@awsui/components-react/-/components-react-3.0.874.tgz#e6f36111bde2ce5bcf0ba65647a056851d251dae"
+  integrity sha512-Gzxt8ROKt3sUAawBBewTVlVEZdUrG4SIgNzKH/l6M/Rt3IO/qoeHKgQWzDm+XAr7zxtpyB5iSbh2oTOf9pgVFg==
   dependencies:
     "@awsui/collection-hooks" "^1.0.0"
     "@awsui/component-toolkit" "^1.0.0-beta"
@@ -35,7 +35,7 @@
     "@dnd-kit/sortable" "^7.0.2"
     "@dnd-kit/utilities" "^3.2.1"
     "@juggle/resize-observer" "^3.3.1"
-    ace-builds "^1.4.13"
+    ace-builds "^1.23.0"
     balanced-match "^1.0.2"
     clsx "^1.1.0"
     d3-shape "^1.3.7"
@@ -3909,10 +3909,10 @@ accepts@~1.3.4, accepts@~1.3.5, accepts@~1.3.8:
     mime-types "~2.1.34"
     negotiator "0.6.3"
 
-ace-builds@^1.4.13:
-  version "1.4.14"
-  resolved "https://registry.npmjs.org/ace-builds/-/ace-builds-1.4.14.tgz"
-  integrity sha512-NBOQlm9+7RBqRqZwimpgquaLeTJFayqb9UEPtTkpC3TkkwDnlsT/TwsCC0svjt9kEZ6G9mH5AEOHSz6Q/HrzQQ==
+ace-builds@^1.23.0:
+  version "1.23.1"
+  resolved "https://registry.yarnpkg.com/ace-builds/-/ace-builds-1.23.1.tgz#2a1a2c2717c21cfd102f641552cf371ab6bce6e4"
+  integrity sha512-vmLfsfOOvEiQPri2Vz+76FvUalz/nHB7+X2GqonG7rc2V+WrHvqc4xYowt1+fxHH3aWw/pDF2jqKQrd8JNMmiQ==
 
 acorn-dynamic-import@^4.0.0:
   version "4.0.0"
