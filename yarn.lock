@@ -22,10 +22,10 @@
   dependencies:
     "@juggle/resize-observer" "^3.3.1"
 
-"@awsui/components-react@^3.0.876":
-  version "3.0.876"
-  resolved "https://registry.yarnpkg.com/@awsui/components-react/-/components-react-3.0.876.tgz#406a80660235f36d2ad7d3d06b9d9fb61da7e88f"
-  integrity sha512-BqDjgItv0rEBzLbuwRYST3aLHi0OOYBPyO0VPcRXMDVUKPYjYVpoa59KQfU7ZI70+a7tcfRqAjS5mtJsMYiSOw==
+"@awsui/components-react@^3.0.880":
+  version "3.0.880"
+  resolved "https://registry.yarnpkg.com/@awsui/components-react/-/components-react-3.0.880.tgz#9452558802495c79dc747974a4ac1e91b6e158a3"
+  integrity sha512-j4RLUQfnwsH9/BrRRFT2AHL+ba68v+HrkV7BRBegoVYG51S+7KSwF8NmOILZVclJxqvGm7930qwfwxTDXoU4ag==
   dependencies:
     "@awsui/collection-hooks" "^1.0.0"
     "@awsui/component-toolkit" "^1.0.0-beta"
@@ -12201,7 +12201,7 @@ minimatch@3.0.4:
   dependencies:
     brace-expansion "^1.1.7"
 
-minimatch@3.0.5:
+minimatch@3.0.5, minimatch@^3.0.2, minimatch@^3.0.4:
   version "3.0.5"
   resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-3.0.5.tgz#4da8f1290ee0f0f8e83d60ca69f8f134068604a3"
   integrity sha512-tUpxzX0VAzJHjLu0xUfFv1gwVp9ba3IOuRAVH2EGuRW8a5emA2FlACLqiT/lDVtS1W+TGNwqz3sWaNyLgDJWuw==
@@ -12215,7 +12215,7 @@ minimatch@9.0.3, minimatch@^9.0.0:
   dependencies:
     brace-expansion "^2.0.1"
 
-minimatch@^3.0.2, minimatch@^3.0.4, minimatch@^3.1.2:
+minimatch@^3.1.2:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-3.1.2.tgz#19cd194bfd3e428f049a70817c038d89ab4be35b"
   integrity sha512-J7p63hRiAjw1NDEww1W7i37+ByIrOWO5XQQAzZ3VOcL0PNybwpfmV/N05zFAzwQ9USyEcX6t3UO+K5aqBQOIHw==
