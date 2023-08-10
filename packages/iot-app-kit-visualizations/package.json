@@ -121,7 +121,7 @@
     "redux": "^4.2.1",
     "resize-observer-polyfill": "^1.5.1",
     "three": "^0.125.0",
-    "tippy.js": "^5.2.0",
+    "tippy.js": "^6.3.7",
     "uuid": "^9.0.0",
     "validator": "^13.11.0"
   },
