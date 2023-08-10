@@ -1339,15 +1339,15 @@
   dependencies:
     conventional-changelog-conventionalcommits "^5.0.0"
 
-"@commitlint/config-lerna-scopes@^17.6.6":
-  version "17.6.6"
-  resolved "https://registry.yarnpkg.com/@commitlint/config-lerna-scopes/-/config-lerna-scopes-17.6.6.tgz#27b0ce810a2d03273bd65796910fd976368e99a6"
-  integrity sha512-txGAmX2v6QKyoocTy7opM0UaR0ByVJ6YF+AxfRF5IyBL/qvBMyaFCJEM1OgXflmVD8NxzgETp3iM/npT3uxoCg==
+"@commitlint/config-lerna-scopes@^17.7.0":
+  version "17.7.0"
+  resolved "https://registry.yarnpkg.com/@commitlint/config-lerna-scopes/-/config-lerna-scopes-17.7.0.tgz#aaffd59705c4de3bdd02aa489ae00d1a186a3346"
+  integrity sha512-fMIDgStYnCTYjGLqPM7UO1YQk1gdskforUUeOSqYrx58810K8xHnZoJu7T8WEkw5mx3yUJ2FuEPAfmk/7w6pvQ==
   dependencies:
     "@lerna/project" "^6.0.0"
     glob "^8.0.3"
     import-from "4.0.0"
-    semver "7.5.2"
+    semver "7.5.4"
 
 "@commitlint/ensure@^12.1.4":
   version "12.1.4"
@@ -16060,10 +16060,10 @@ semver@7.3.5:
   dependencies:
     lru-cache "^6.0.0"
 
-semver@7.5.2:
-  version "7.5.2"
-  resolved "https://registry.yarnpkg.com/semver/-/semver-7.5.2.tgz#5b851e66d1be07c1cdaf37dfc856f543325a2beb"
-  integrity sha512-SoftuTROv/cRjCze/scjGyiDtcUyxw1rgYQSZY7XTmtR5hX+dm76iDbTH8TkLPHCQmlbQVSSbNZCPM2hb0knnQ==
+semver@7.5.4, semver@^7.0.0, semver@^7.1.1, semver@^7.1.3, semver@^7.3.2, semver@^7.3.4, semver@^7.3.5:
+  version "7.5.4"
+  resolved "https://registry.yarnpkg.com/semver/-/semver-7.5.4.tgz#483986ec4ed38e1c6c48c34894a9182dbff68a6e"
+  integrity sha512-1bCSESV6Pv+i21Hvpxp3Dx+pSD8lIPt8uVjRrxAUt/nbswYc+tK6Y2btiULjd4+fnq15PX+nqQDC7Oft7WkwcA==
   dependencies:
     lru-cache "^6.0.0"
 
@@ -16071,13 +16071,6 @@ semver@^6.0.0, semver@^6.1.1, semver@^6.1.2, semver@^6.2.0, semver@^6.3.0, semve
   version "6.3.1"
   resolved "https://registry.yarnpkg.com/semver/-/semver-6.3.1.tgz#556d2ef8689146e46dcea4bfdd095f3434dffcb4"
   integrity sha512-BR7VvDCVHO+q2xBEWskxS6DJE1qRnb7DxzUrogb71CWoSficBxYsiAGd+Kl0mmq/MprG9yArRkyrQxTO6XjMzA==
-
-semver@^7.0.0, semver@^7.1.1, semver@^7.1.3, semver@^7.3.2, semver@^7.3.4, semver@^7.3.5:
-  version "7.5.4"
-  resolved "https://registry.yarnpkg.com/semver/-/semver-7.5.4.tgz#483986ec4ed38e1c6c48c34894a9182dbff68a6e"
-  integrity sha512-1bCSESV6Pv+i21Hvpxp3Dx+pSD8lIPt8uVjRrxAUt/nbswYc+tK6Y2btiULjd4+fnq15PX+nqQDC7Oft7WkwcA==
-  dependencies:
-    lru-cache "^6.0.0"
 
 send@0.18.0:
   version "0.18.0"
