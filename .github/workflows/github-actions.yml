@@ -37,7 +37,7 @@ jobs:
       - name: Install dependencies
         run: yarn
       - name: cypress run
-        uses: cypress-io/github-action@v5
+        uses: cypress-io/github-action@v6
         with:
           start: yarn start
           wait-on: 'http://localhost:3333'
