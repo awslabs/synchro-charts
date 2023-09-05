@@ -59,7 +59,7 @@
     "@testing-library/dom": "^9.3.1",
     "@testing-library/user-event": "^14.4.3",
     "@types/color": "^3.0.3",
-    "@types/color-string": "^1.5.2",
+    "@types/color-string": "^1.5.3",
     "@types/cypress-image-snapshot": "^3.1.5",
     "@types/d3-axis": "^1.0.12",
     "@types/jest": "24.9.1",
