@@ -3048,10 +3048,10 @@
   dependencies:
     "@types/color-convert" "*"
 
-"@types/cypress-image-snapshot@^3.1.5":
-  version "3.1.6"
-  resolved "https://registry.npmjs.org/@types/cypress-image-snapshot/-/cypress-image-snapshot-3.1.6.tgz"
-  integrity sha512-N3aUkw/yWPtdV5Ilze3UskxHjkM4mHjvQ8w9o0RK7Y6IvRkdwNyZhzGacYceCx9RTQsyw6sa1DXBHx4toDR8tQ==
+"@types/cypress-image-snapshot@^3.1.7":
+  version "3.1.7"
+  resolved "https://registry.yarnpkg.com/@types/cypress-image-snapshot/-/cypress-image-snapshot-3.1.7.tgz#069ec0eb57b3a7a84e6b58321dc5e5557dc72591"
+  integrity sha512-pTcbVQQKpTBHfDAGYAVtRDjRHz2ngTGfGYIhV/5fqf51qhtxMctICtC5iBh2EqK6HLB5jyMlFakqRVZAdxtSDA==
 
 "@types/d3-array@^1":
   version "1.2.9"
