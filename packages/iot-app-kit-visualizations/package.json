@@ -60,7 +60,7 @@
     "@testing-library/user-event": "^14.4.3",
     "@types/color": "^3.0.4",
     "@types/color-string": "^1.5.3",
-    "@types/cypress-image-snapshot": "^3.1.5",
+    "@types/cypress-image-snapshot": "^3.1.7",
     "@types/d3-axis": "^1.0.12",
     "@types/jest": "24.9.1",
     "@types/lodash.isequal": "^4.5.6",
