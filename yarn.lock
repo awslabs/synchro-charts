@@ -3041,10 +3041,10 @@
   resolved "https://registry.npmjs.org/@types/color-name/-/color-name-1.1.1.tgz"
   integrity sha512-rr+OQyAjxze7GgWrSaJwydHStIhHq2lvY3BOC2Mj7KnzI7XK0Uw1TOOdI9lDoajEbSWLiYgoo4f1R51erQfhPQ==
 
-"@types/color-string@^1.5.3":
-  version "1.5.3"
-  resolved "https://registry.yarnpkg.com/@types/color-string/-/color-string-1.5.3.tgz#430dd887b4ea2341f258962b76c763ca42ba4afc"
-  integrity sha512-1zi6lMFL2+wHzpcLfODTFN5eQr3wQ4Mzq8dqMwPzPRkh9wKydkr4Bu7772hEBQ+wMhLpgPLwThNMJ2Yq+9BpbA==
+"@types/color-string@^1.5.4":
+  version "1.5.4"
+  resolved "https://registry.yarnpkg.com/@types/color-string/-/color-string-1.5.4.tgz#cf5af7bad22c0db64e43b49078a1db0a68e8854b"
+  integrity sha512-FfRPJbKtmmfczTbMgU1pO3dSHUhfmH8HJb/AffvU4WgzmM3RnHp4uT95BS+9PJNpZNJQcDyLnxusFPjzQ0sl7w==
 
 "@types/color@^3.0.4":
   version "3.0.4"
