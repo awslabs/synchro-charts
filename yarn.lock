@@ -3336,10 +3336,10 @@
   dependencies:
     "@types/lodash" "*"
 
-"@types/lodash.isnumber@^3.0.7":
-  version "3.0.7"
-  resolved "https://registry.yarnpkg.com/@types/lodash.isnumber/-/lodash.isnumber-3.0.7.tgz#0726161b5f6049759d20415fef8c6776a6a48ebf"
-  integrity sha512-+XX8YsZ6AzWg6ukTB2g6TdL4gK6wUxIeakYV849gHoTYsb2IH0SyAywfF1xutE/EBbT3CospyfABcl9gZKD23g==
+"@types/lodash.isnumber@^3.0.8":
+  version "3.0.8"
+  resolved "https://registry.yarnpkg.com/@types/lodash.isnumber/-/lodash.isnumber-3.0.8.tgz#4a64ed00e32572ee1c386ec67c27bdbe003502f4"
+  integrity sha512-uaRSIm3mChZe36utk/jUb3xPqMdB5hi2N/6vS/c6/Y+fQdXGSqUSnOdvAWmaIj3PdFoty503KxB4MGXuHzLvNg==
   dependencies:
     "@types/lodash" "*"
 
