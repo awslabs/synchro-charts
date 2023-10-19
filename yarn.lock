@@ -3364,10 +3364,10 @@
   dependencies:
     "@types/lodash" "*"
 
-"@types/lodash.uniqby@^4.7.7":
-  version "4.7.7"
-  resolved "https://registry.yarnpkg.com/@types/lodash.uniqby/-/lodash.uniqby-4.7.7.tgz#48dbb652c41cc8fb30aa61a44174368081835ab5"
-  integrity sha512-sv2g6vkCIvEUsK5/Vq17haoZaisfj2EWW8mP7QWlnKi6dByoNmeuHDDXHR7sabuDqwO4gvU7ModIL22MmnOocg==
+"@types/lodash.uniqby@^4.7.8":
+  version "4.7.8"
+  resolved "https://registry.yarnpkg.com/@types/lodash.uniqby/-/lodash.uniqby-4.7.8.tgz#a4a986f117f298f0d5ff01ab5d67c22e9a6b84a2"
+  integrity sha512-tj9oT87G6wlUifTZ41Dp0nF1zeUoF7jYyAerB++NZwudOumYg+/bJnkqkApptg6rODJJgNuY6q4CeasYHVo+Jg==
   dependencies:
     "@types/lodash" "*"
 
