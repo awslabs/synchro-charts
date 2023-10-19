@@ -65,7 +65,7 @@
     "@types/jest": "24.9.1",
     "@types/lodash.isequal": "^4.5.7",
     "@types/lodash.isnumber": "^3.0.8",
-    "@types/lodash.round": "^4.0.7",
+    "@types/lodash.round": "^4.0.8",
     "@types/lodash.throttle": "^4.1.8",
     "@types/lodash.uniq": "^4.5.8",
     "@types/lodash.uniqby": "^4.7.8",

@@ -3343,10 +3343,10 @@
   dependencies:
     "@types/lodash" "*"
 
-"@types/lodash.round@^4.0.7":
-  version "4.0.7"
-  resolved "https://registry.yarnpkg.com/@types/lodash.round/-/lodash.round-4.0.7.tgz#a296263a8778b8edf2314166bae88a7b300e21d5"
-  integrity sha512-lgRgfO+XY9FPR52+f2d8LTdTXxEgfcCRr8sii6jS506LjcBh1xaA/Waf1gvGLgp8P4CnmMZIoXtvBc5PUraHBg==
+"@types/lodash.round@^4.0.8":
+  version "4.0.8"
+  resolved "https://registry.yarnpkg.com/@types/lodash.round/-/lodash.round-4.0.8.tgz#8f731147ca58076f8d61c87ba19019ae190263cc"
+  integrity sha512-ow8slUoBDvDZ1K/YjuDR7oMOl4dECH81O3nBtqD9hDJR0OVkGCbgyD8GHzZQhcKykUFmuwWbrRfQFBIA9OFUNQ==
   dependencies:
     "@types/lodash" "*"
 
