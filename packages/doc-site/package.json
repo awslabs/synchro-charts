@@ -5,7 +5,7 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
-    "@awsui/components-react": "^3.0.889",
+    "@awsui/components-react": "^3.0.964",
     "@synchro-charts/core": "^7.2.0",
     "@synchro-charts/react": "^7.2.0",
     "react": "^18.2.0",
