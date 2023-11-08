@@ -97,7 +97,7 @@
   },
   "dependencies": {
     "@stencil/redux": "^0.2.0",
-    "@types/d3": "^5.16.4",
+    "@types/d3": "^7.4.3",
     "d3-array": "^2.3.2",
     "d3-axis": "^1.0.12",
     "d3-brush": "^3.0.0",
