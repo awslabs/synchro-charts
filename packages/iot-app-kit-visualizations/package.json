@@ -64,7 +64,7 @@
     "@types/d3-axis": "^1.0.12",
     "@types/jest": "24.9.1",
     "@types/lodash.isequal": "^4.5.8",
-    "@types/lodash.isnumber": "^3.0.8",
+    "@types/lodash.isnumber": "^3.0.9",
     "@types/lodash.round": "^4.0.9",
     "@types/lodash.throttle": "^4.1.9",
     "@types/lodash.uniq": "^4.5.9",
