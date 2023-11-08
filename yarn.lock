@@ -3046,10 +3046,10 @@
   resolved "https://registry.yarnpkg.com/@types/color-string/-/color-string-1.5.5.tgz#db38c62473c76eda9696ffb3c093b9dc8e9dceea"
   integrity sha512-p9+C1ssJsjnHV8nn96rkimm2h90LclLIwgBfiMCHW0oUr6jLmB+wzZUEGJPduB/D2RzI2Ahoe69xKNOawX6jgw==
 
-"@types/color@^3.0.5":
-  version "3.0.5"
-  resolved "https://registry.yarnpkg.com/@types/color/-/color-3.0.5.tgz#658fd9286a44c21dabaa56c2e2f63da3ac15f063"
-  integrity sha512-T9yHCNtd8ap9L/r8KEESu5RDMLkoWXHo7dTureNoI1dbp25NsCN054vOu09iniIjR21MXUL+LU9bkIWrbyg8gg==
+"@types/color@^3.0.6":
+  version "3.0.6"
+  resolved "https://registry.yarnpkg.com/@types/color/-/color-3.0.6.tgz#29c27a99d4de2975e1676712679a0bd7f646a3fb"
+  integrity sha512-NMiNcZFRUAiUUCCf7zkAelY8eV3aKqfbzyFQlXpPIEeoNDbsEHGpb854V3gzTsGKYj830I5zPuOwU/TP5/cW6A==
   dependencies:
     "@types/color-convert" "*"
 
