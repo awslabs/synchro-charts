@@ -3053,10 +3053,10 @@
   dependencies:
     "@types/color-convert" "*"
 
-"@types/cypress-image-snapshot@^3.1.8":
-  version "3.1.8"
-  resolved "https://registry.yarnpkg.com/@types/cypress-image-snapshot/-/cypress-image-snapshot-3.1.8.tgz#0c6b10d41861eb945edab5d40965c80597fea613"
-  integrity sha512-bZIVxSWb7/QkSN7pgvMtmY0EUeuO1KvtmEMVl3RZdw6avzI+Uaco2mJ4Wl+M008VMW2p+BRvXzDOkhw9xVl7mA==
+"@types/cypress-image-snapshot@^3.1.9":
+  version "3.1.9"
+  resolved "https://registry.yarnpkg.com/@types/cypress-image-snapshot/-/cypress-image-snapshot-3.1.9.tgz#adf020b06451838228a217f82f9be1675d66dbc3"
+  integrity sha512-vcFgB8AfuM0dtupCHAGgapUbjRNWmMDtpzzpXz5gexWOHW4y/n10XRi5/y5Xpi0Ztku+X4dnRVMqQa5IDcy3Ig==
 
 "@types/d3-array@^1":
   version "1.2.9"
