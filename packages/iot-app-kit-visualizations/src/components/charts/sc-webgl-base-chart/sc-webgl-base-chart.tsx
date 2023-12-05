@@ -461,7 +461,9 @@ export class ScWebglBaseChart {
 
     if (visualizedDataStreams.length === 0) return false;
 
-    return !visualizedDataStreams.every(
+    const dataStreamsWithDataType = visualizedDataStreams.filter(({ dataType }) => dataType != null);
+
+    return !dataStreamsWithDataType.every(
       ({ streamType, dataType }) => streamType === StreamType.ALARM || this.supportedDataTypes.includes(dataType)
     );
   };
