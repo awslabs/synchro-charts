@@ -3,7 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+### Miscellaneous Chores
 
+* **iot-app-kit/charts:** Synchronize undefined versions
+## [2.1.2](https://github.com/awslabs/synchro-charts/compare/iot-app-kit-visualizations-react-v2.1.1...iot-app-kit-visualizations-react-v2.1.2) (2023-12-06)
 
 ### Miscellaneous Chores
 
