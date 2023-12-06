@@ -6,6 +6,11 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Miscellaneous Chores
 
 * **iot-app-kit/charts:** Synchronize undefined versions
+## [2.1.3](https://github.com/awslabs/synchro-charts/compare/iot-app-kit-visualizations-react-v2.1.2...iot-app-kit-visualizations-react-v2.1.3) (2024-01-30)
+
+### Miscellaneous Chores
+
+* **iot-app-kit/charts:** Synchronize undefined versions
 ## [2.1.2](https://github.com/awslabs/synchro-charts/compare/iot-app-kit-visualizations-react-v2.1.1...iot-app-kit-visualizations-react-v2.1.2) (2023-12-06)
 
 ### Miscellaneous Chores

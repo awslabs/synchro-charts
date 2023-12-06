@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.3](https://github.com/awslabs/synchro-charts/compare/root-v2.1.2...root-v2.1.3) (2024-01-30)
+
+### Bug Fixes
+
+* **visualizations:** add more significant digits to y axis ([2db2cb](https://github.com/awslabs/synchro-charts/commit/2db2cb1dba28f1f946e6430a3f0cb6a6e2cdc6dd))
+
 ## [2.1.2](https://github.com/awslabs/synchro-charts/compare/root-v2.1.1...root-v2.1.2) (2023-12-06)
 
 
