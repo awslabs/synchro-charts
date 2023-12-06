@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.2](https://github.com/awslabs/synchro-charts/compare/root-v2.1.1...root-v2.1.2) (2023-12-06)
+
+
+### Bug Fixes
+
+* **visualizations:** only check datastreams with data types in unsupported check ([3ef533f](https://github.com/awslabs/synchro-charts/commit/3ef533f622eddca5f386c25504294ce1d0a9ebbc))
+
 ## [2.1.1](https://github.com/awslabs/synchro-charts/compare/iot-app-kit-visualizations-v2.1.0...iot-app-kit-visualizations-v2.1.1) (2023-06-21)
 
 
