@@ -70,9 +70,10 @@ const yAxisConstructor = (size: SizeConfig, viewport: ViewPort) => {
   const { yTickCount } = tickCount(size);
   const { yScale } = scales(size, viewport);
 
+  // format: https://d3js.org/d3-format#locale_format
   return axisLeft(yScale)
     .ticks(yTickCount)
-    .tickFormat(format('.2s'))
+    .tickFormat(format('.4~s'))
     .tickSize(-size.width)
     .tickPadding(TICK_PADDING);
 };

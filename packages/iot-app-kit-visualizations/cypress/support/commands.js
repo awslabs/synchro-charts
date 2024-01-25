@@ -30,7 +30,7 @@ import { addChartCommands } from './chartCommands';
 addChartCommands();
 
 addMatchImageSnapshotCommand({
-  failureThresholdType: 'pixel',
-  failureThreshold: 2,
+  failureThresholdType: 'percent',
+  failureThreshold: 0.01,
   customDiffConfig: { threshold: 0.2 },
 });
