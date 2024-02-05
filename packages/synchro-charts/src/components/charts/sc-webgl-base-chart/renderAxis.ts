@@ -72,7 +72,7 @@ const yAxisConstructor = (size: SizeConfig, viewport: ViewPort) => {
 
   return axisLeft(yScale)
     .ticks(yTickCount)
-    .tickFormat(format('.2s'))
+    .tickFormat(format('.4~s'))
     .tickSize(-size.width)
     .tickPadding(TICK_PADDING);
 };
