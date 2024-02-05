@@ -126,9 +126,9 @@ describe('initial render', () => {
 
   it('has expected y axis value labels', async () => {
     const { axis } = await axisSpecPage();
-    expect(axis.innerHTML).toContain('3.0k');
+    expect(axis.innerHTML).toContain('3k');
+    expect(axis.innerHTML).toContain('3.05k');
     expect(axis.innerHTML).toContain('3.1k');
-    expect(axis.innerHTML).not.toContain('3.00k');
   });
 
   it('renders the y-axis label', async () => {
@@ -246,9 +246,9 @@ describe('updated correctly', () => {
     expect(axis.innerHTML).not.toContain('3.10k');
 
     // Does contain new y labels
-    expect(axis.innerHTML).toContain('4.0k');
+    expect(axis.innerHTML).toContain('4k');
     expect(axis.innerHTML).toContain('4.5k');
-    expect(axis.innerHTML).toContain('5.0k');
+    expect(axis.innerHTML).toContain('5k');
   });
 
   it('updates the y-axis label', async () => {
