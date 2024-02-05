@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main
+      - main-fork-of-7.1.6
 jobs:
   publish-to-npm:
     runs-on: ubuntu-20.04
