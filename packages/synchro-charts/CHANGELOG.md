@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [7.1.7](https://github.com/awslabs/synchro-charts/compare/root-v7.1.6...root-v7.1.7) (2024-02-06)
+
+### Bug Fixes
+
+* add more significant digits to y-axis [#845](https://github.com/awslabs/synchro-charts/pull/845)
+
 ## [7.1.6](https://github.com/awslabs/synchro-charts/compare/synchro-charts-v7.1.5...synchro-charts-v7.1.6) (2023-01-30)
 
 
