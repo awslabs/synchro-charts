@@ -2815,12 +2815,10 @@
   resolved "https://registry.yarnpkg.com/@sinclair/typebox/-/typebox-0.27.8.tgz#6667fac16c436b5434a387a34dedb013198f6e6e"
   integrity sha512-+Fj43pSMwJs4KRrH/938Uf+uAELIgVBmQzg/q1YG10djyfA3TnrU8N8XzqCh/okZdszqBQTZf96idMfE5lnwTA==
 
-"@stencil/core@^1.12.2":
-  version "1.17.4"
-  resolved "https://registry.npmjs.org/@stencil/core/-/core-1.17.4.tgz"
-  integrity sha512-dmuNYM6fnHPvE2ptHoUBQtjcpXqrHnkDtdyUD6/JrZWcJt6jBtrykewObOxzpDCMLs+NT7668ussRagdVL03gQ==
-  dependencies:
-    typescript "3.9.7"
+"@stencil/core@^4.17.1":
+  version "4.17.1"
+  resolved "https://registry.yarnpkg.com/@stencil/core/-/core-4.17.1.tgz#2dc634a5fe4ccccaaaa4630cd5ffe4a6262e08d9"
+  integrity sha512-nlARe1QtK5abnCG8kPQKJMWiELg39vKabvf3ebm6YEhQA35CgrxC1pVYTsYq3yktJKoY+k+VzGRnATLKyaLbvA==
 
 "@stencil/redux@^0.1.1":
   version "0.1.2"
@@ -12494,7 +12492,7 @@ minimatch@3.0.4:
   dependencies:
     brace-expansion "^1.1.7"
 
-minimatch@3.0.5, minimatch@^3.0.2, minimatch@^3.0.4:
+minimatch@3.0.5:
   version "3.0.5"
   resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-3.0.5.tgz#4da8f1290ee0f0f8e83d60ca69f8f134068604a3"
   integrity sha512-tUpxzX0VAzJHjLu0xUfFv1gwVp9ba3IOuRAVH2EGuRW8a5emA2FlACLqiT/lDVtS1W+TGNwqz3sWaNyLgDJWuw==
@@ -12508,7 +12506,7 @@ minimatch@9.0.4, minimatch@^9.0.1:
   dependencies:
     brace-expansion "^2.0.1"
 
-minimatch@^3.1.2:
+minimatch@^3.0.2, minimatch@^3.0.4, minimatch@^3.1.2:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-3.1.2.tgz#19cd194bfd3e428f049a70817c038d89ab4be35b"
   integrity sha512-J7p63hRiAjw1NDEww1W7i37+ByIrOWO5XQQAzZ3VOcL0PNybwpfmV/N05zFAzwQ9USyEcX6t3UO+K5aqBQOIHw==
@@ -18128,11 +18126,6 @@ typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.npmjs.org/typedarray/-/typedarray-0.0.6.tgz"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
-
-typescript@3.9.7:
-  version "3.9.7"
-  resolved "https://registry.npmjs.org/typescript/-/typescript-3.9.7.tgz"
-  integrity sha512-BLbiRkiBzAwsjut4x/dsibSTB6yWpwT5qWmC2OfuCg3GgVQCSgMs4vEctYPhsaGtd0AeuuHMkjZ2h2WG8MSzRw==
 
 uglify-js@^3.1.4:
   version "3.14.1"
