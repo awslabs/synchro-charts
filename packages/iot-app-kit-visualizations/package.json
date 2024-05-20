@@ -120,7 +120,7 @@
     "parse-duration": "^1.1.0",
     "redux": "^5.0.1",
     "resize-observer-polyfill": "^1.5.1",
-    "three": "^0.125.0",
+    "three": "^0.164.1",
     "tippy.js": "^5.2.0",
     "uuid": "^9.0.1",
     "validator": "^13.12.0"
