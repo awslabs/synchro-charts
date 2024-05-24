@@ -7851,10 +7851,10 @@ eslint-module-utils@^2.4.1, eslint-module-utils@^2.6.2:
     debug "^3.2.7"
     pkg-dir "^2.0.0"
 
-eslint-plugin-chai-friendly@^0.7.4:
-  version "0.7.4"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-chai-friendly/-/eslint-plugin-chai-friendly-0.7.4.tgz#eaf222b848673ef8a00b8e507f7c6fd83d036bf2"
-  integrity sha512-PGPjJ8diYgX1mjLxGJqRop2rrGwZRKImoEOwUOgoIhg0p80MkTaqvmFLe5TF7/iagZHggasvIfQlUyHIhK/PYg==
+eslint-plugin-chai-friendly@^0.8.0:
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-chai-friendly/-/eslint-plugin-chai-friendly-0.8.0.tgz#3c4be4e773eb074757ac18e8417a7df26944bf50"
+  integrity sha512-d9W92QHA606QRhxEvPTzGFeZU+CHL5bsyfk7DvaXcxgpfEOny5Pem1G3X2274J1dxStlX/DotuanrQofULhl4g==
 
 eslint-plugin-cypress@^2.10.3:
   version "2.11.3"
