@@ -56,7 +56,7 @@
     "@cypress/webpack-preprocessor": "^6.0.2",
     "@stencil/core": "^1.12.2",
     "@stencil/router": "^1.0.1",
-    "@testing-library/dom": "^9.3.4",
+    "@testing-library/dom": "^10.2.0",
     "@testing-library/user-event": "^14.5.2",
     "@types/color": "^3.0.6",
     "@types/color-string": "^1.5.5",
