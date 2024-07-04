@@ -22,10 +22,10 @@
   dependencies:
     "@juggle/resize-observer" "^3.3.1"
 
-"@awsui/components-react@^3.0.889":
-  version "3.0.889"
-  resolved "https://registry.yarnpkg.com/@awsui/components-react/-/components-react-3.0.889.tgz#8785729a7bd54a41c3d5be939f101a00634aed1e"
-  integrity sha512-1ZtDv4XnLSiD2F+e3liK3Qvvlij3veJseZxYnAdLWl1s6e9uFLlMwKORUuYIPW2lQUi/Cvwh+UtuGgX8wgkzlw==
+"@awsui/components-react@^3.0.1230":
+  version "3.0.1230"
+  resolved "https://registry.yarnpkg.com/@awsui/components-react/-/components-react-3.0.1230.tgz#7bf2f55100ed169e8a3c5cd39386027f633dba24"
+  integrity sha512-PfMvGvI1C3eRIWFOa3B+8JGQmuIschvD2nUQXb71GVnjdPY6WWdew/GxShtpLuY0eWe4r9cyBvy5Xs5tTBEzLA==
   dependencies:
     "@awsui/collection-hooks" "^1.0.0"
     "@awsui/component-toolkit" "^1.0.0-beta"
@@ -35,7 +35,7 @@
     "@dnd-kit/sortable" "^7.0.2"
     "@dnd-kit/utilities" "^3.2.1"
     "@juggle/resize-observer" "^3.3.1"
-    ace-builds "^1.23.0"
+    ace-builds "^1.34.0"
     balanced-match "^1.0.2"
     clsx "^1.1.0"
     d3-shape "^1.3.7"
@@ -44,7 +44,6 @@
     mnth "^2.0.0"
     react-keyed-flatten-children "^1.3.0"
     react-transition-group "^4.4.2"
-    react-virtual "^2.8.2"
     tslib "^2.4.0"
     weekstart "^1.1.0"
 
@@ -2801,11 +2800,6 @@
   resolved "https://registry.npmjs.org/@popperjs/core/-/core-2.9.3.tgz"
   integrity sha512-xDu17cEfh7Kid/d95kB6tZsLOmSWKCZKtprnhVepjsSaCij+lM3mItSJDuuHDMbCWTh8Ejmebwb+KONcCJ0eXQ==
 
-"@reach/observe-rect@^1.1.0":
-  version "1.2.0"
-  resolved "https://registry.npmjs.org/@reach/observe-rect/-/observe-rect-1.2.0.tgz"
-  integrity sha512-Ba7HmkFgfQxZqqaeIWWkNK0rEhpxVQHIoVyW1YDSkGsGIXzcaW4deC8B0pZrNSSyLTdIk7y+5olKt5+g0GmFIQ==
-
 "@samverschueren/stream-to-observable@^0.3.0":
   version "0.3.1"
   resolved "https://registry.npmjs.org/@samverschueren/stream-to-observable/-/stream-to-observable-0.3.1.tgz"
@@ -3945,10 +3939,10 @@ accepts@~1.3.4, accepts@~1.3.5, accepts@~1.3.8:
     mime-types "~2.1.34"
     negotiator "0.6.3"
 
-ace-builds@^1.23.0:
-  version "1.23.1"
-  resolved "https://registry.yarnpkg.com/ace-builds/-/ace-builds-1.23.1.tgz#2a1a2c2717c21cfd102f641552cf371ab6bce6e4"
-  integrity sha512-vmLfsfOOvEiQPri2Vz+76FvUalz/nHB7+X2GqonG7rc2V+WrHvqc4xYowt1+fxHH3aWw/pDF2jqKQrd8JNMmiQ==
+ace-builds@^1.34.0:
+  version "1.35.2"
+  resolved "https://registry.yarnpkg.com/ace-builds/-/ace-builds-1.35.2.tgz#2c26d2317ed8e378927e90e5c0d4fa17be92db79"
+  integrity sha512-06d00u4jDZx+ieI0jLlgy/uefx8kcgz7lhI0mCIFEu8NVWirH00U5IEP7tePHy4sjPsRcJUH4VbJZacoit2Hng==
 
 acorn-dynamic-import@^4.0.0:
   version "4.0.0"
@@ -12717,7 +12711,7 @@ minimatch@3.0.4:
   dependencies:
     brace-expansion "^1.1.7"
 
-minimatch@3.0.5:
+minimatch@3.0.5, minimatch@^3.0.2, minimatch@^3.0.4:
   version "3.0.5"
   resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-3.0.5.tgz#4da8f1290ee0f0f8e83d60ca69f8f134068604a3"
   integrity sha512-tUpxzX0VAzJHjLu0xUfFv1gwVp9ba3IOuRAVH2EGuRW8a5emA2FlACLqiT/lDVtS1W+TGNwqz3sWaNyLgDJWuw==
@@ -12731,7 +12725,7 @@ minimatch@9.0.5, minimatch@^9.0.1:
   dependencies:
     brace-expansion "^2.0.1"
 
-minimatch@^3.0.2, minimatch@^3.0.4, minimatch@^3.1.2:
+minimatch@^3.1.2:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-3.1.2.tgz#19cd194bfd3e428f049a70817c038d89ab4be35b"
   integrity sha512-J7p63hRiAjw1NDEww1W7i37+ByIrOWO5XQQAzZ3VOcL0PNybwpfmV/N05zFAzwQ9USyEcX6t3UO+K5aqBQOIHw==
@@ -15678,13 +15672,6 @@ react-transition-group@^4.4.2:
     dom-helpers "^5.0.1"
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
-
-react-virtual@^2.8.2:
-  version "2.10.4"
-  resolved "https://registry.npmjs.org/react-virtual/-/react-virtual-2.10.4.tgz"
-  integrity sha512-Ir6+oPQZTVHfa6+JL9M7cvMILstFZH/H3jqeYeKI4MSUX+rIruVwFC6nGVXw9wqAw8L0Kg2KvfXxI85OvYQdpQ==
-  dependencies:
-    "@reach/observe-rect" "^1.1.0"
 
 react@18.x.x, react@^18.2.0:
   version "18.2.0"
