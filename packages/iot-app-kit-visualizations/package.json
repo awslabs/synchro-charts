@@ -58,7 +58,7 @@
     "@stencil/router": "^1.0.1",
     "@testing-library/dom": "^9.3.4",
     "@testing-library/user-event": "^14.5.2",
-    "@types/color": "^3.0.6",
+    "@types/color": "^4.2.0",
     "@types/color-string": "^1.5.5",
     "@types/cypress-image-snapshot": "^3.1.9",
     "@types/d3-axis": "^1.0.12",
