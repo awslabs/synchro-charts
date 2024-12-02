@@ -13756,10 +13756,10 @@ parse-asn1@^5.0.0, parse-asn1@^5.1.6:
     pbkdf2 "^3.0.3"
     safe-buffer "^5.1.1"
 
-parse-duration@^1.0.0, parse-duration@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/parse-duration/-/parse-duration-1.1.0.tgz#5192084c5d8f2a3fd676d04a451dbd2e05a1819c"
-  integrity sha512-z6t9dvSJYaPoQq7quMzdEagSFtpGu+utzHqqxmpVWNNZRIXnvqyCvn9XsTdh7c/w0Bqmdz3RB3YnRaKtpRtEXQ==
+parse-duration@^1.0.0, parse-duration@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/parse-duration/-/parse-duration-1.1.1.tgz#b6b4378e26c352b4e2e8e79c1b7abb3d687e5bd2"
+  integrity sha512-27m0hKqcGzYFGtrZ1FPSNuAUi1mvqYIUjHHIgYYAc+4wcj7t2o7Qj3X4s7THMOYyeTcFjmKUZu0yJG2oE947bw==
 
 parse-entities@^1.0.2, parse-entities@^1.1.0:
   version "1.2.2"
