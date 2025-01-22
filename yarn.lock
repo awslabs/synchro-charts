@@ -1287,12 +1287,13 @@
     resolve-global "1.0.0"
     yargs "^16.2.0"
 
-"@commitlint/config-conventional@^17.8.0":
-  version "17.8.0"
-  resolved "https://registry.yarnpkg.com/@commitlint/config-conventional/-/config-conventional-17.8.0.tgz#3bb030ea4133d3ea57fe1042318e669b929205cb"
-  integrity sha512-MgiFXujmqAvi7M33C7OSMTznwrVkckrbXe/aZWQ/+KFGLLF6IE50XIcjGrW0/uiDGb/im5qbqF2dh1dCFNa+sQ==
+"@commitlint/config-conventional@^19.6.0":
+  version "19.6.0"
+  resolved "https://registry.yarnpkg.com/@commitlint/config-conventional/-/config-conventional-19.6.0.tgz#badba72c8639ea79291e2941001bd7ea7fad3a2c"
+  integrity sha512-DJT40iMnTYtBtUfw9ApbsLZFke1zKh6llITVJ+x9mtpHD08gsNXaIRqHTmwTZL3dNX5+WoyK7pCN/5zswvkBCQ==
   dependencies:
-    conventional-changelog-conventionalcommits "^6.1.0"
+    "@commitlint/types" "^19.5.0"
+    conventional-changelog-conventionalcommits "^7.0.2"
 
 "@commitlint/config-lerna-scopes@^17.7.0":
   version "17.7.0"
@@ -1418,6 +1419,14 @@
   integrity sha512-KRIjdnWNUx6ywz+SJvjmNCbQKcKP6KArhjZhY2l+CWKxak0d77SOjggkMwFTiSgLODOwmuLTbarR2ZfWPiPMlw==
   dependencies:
     chalk "^4.0.0"
+
+"@commitlint/types@^19.5.0":
+  version "19.5.0"
+  resolved "https://registry.yarnpkg.com/@commitlint/types/-/types-19.5.0.tgz#c5084d1231d4dd50e40bdb656ee7601f691400b3"
+  integrity sha512-DSHae2obMSMkAtTBSOulg5X7/z+rGLxcXQIkg3OmWvY6wifojge5uVMydfhUvs7yQj+V7jNmRZ2Xzl8GJyqRgg==
+  dependencies:
+    "@types/conventional-commits-parser" "^5.0.0"
+    chalk "^5.3.0"
 
 "@csstools/convert-colors@^1.4.0":
   version "1.4.0"
@@ -3034,6 +3043,13 @@
   integrity sha512-6+xrIRImMtGAL2X3qYkd02Mgs+gFGs+WsK0b7VVMaO4mYRISwyTjcqNrO0mNSmYEoq++rSLDB2F5HDNmqfOe+A==
   dependencies:
     "@types/color-convert" "*"
+
+"@types/conventional-commits-parser@^5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@types/conventional-commits-parser/-/conventional-commits-parser-5.0.0.tgz#8c9d23e0b415b24b91626d07017303755d542dc8"
+  integrity sha512-loB369iXNmAZglwWATL+WRe+CRMmmBPtpolYzIebFaX4YA3x+BEfLqhUAV9WanycKI3TG1IMr5bMJDajDKLlUQ==
+  dependencies:
+    "@types/node" "*"
 
 "@types/cypress-image-snapshot@^3.1.9":
   version "3.1.9"
@@ -5456,6 +5472,11 @@ chalk@^4.0.0, chalk@^4.1.0:
     ansi-styles "^4.1.0"
     supports-color "^7.1.0"
 
+chalk@^5.3.0:
+  version "5.3.0"
+  resolved "https://registry.yarnpkg.com/chalk/-/chalk-5.3.0.tgz#67c20a7ebef70e7f3970a01f90fa210cb6860385"
+  integrity sha512-dLitG79d+GV1Nb/VYcCDFivJeK1hiukt9QjRNVOsUtTy1rR1YJsmpGGTZ3qJos+uw7WmWF4wUwBd9jxjocFC2w==
+
 character-entities-html4@^1.0.0:
   version "1.1.4"
   resolved "https://registry.npmjs.org/character-entities-html4/-/character-entities-html4-1.1.4.tgz"
@@ -6018,10 +6039,10 @@ conventional-changelog-angular@^5.0.11, conventional-changelog-angular@^5.0.12:
     compare-func "^2.0.0"
     q "^1.5.1"
 
-conventional-changelog-conventionalcommits@^6.1.0:
-  version "6.1.0"
-  resolved "https://registry.yarnpkg.com/conventional-changelog-conventionalcommits/-/conventional-changelog-conventionalcommits-6.1.0.tgz#3bad05f4eea64e423d3d90fc50c17d2c8cf17652"
-  integrity sha512-3cS3GEtR78zTfMzk0AizXKKIdN4OvSh7ibNz6/DPbhWWQu7LqE/8+/GqSodV+sywUR2gpJAdP/1JFf4XtN7Zpw==
+conventional-changelog-conventionalcommits@^7.0.2:
+  version "7.0.2"
+  resolved "https://registry.yarnpkg.com/conventional-changelog-conventionalcommits/-/conventional-changelog-conventionalcommits-7.0.2.tgz#aa5da0f1b2543094889e8cf7616ebe1a8f5c70d5"
+  integrity sha512-NKXYmMR/Hr1DevQegFB4MwfM5Vv0m4UIxKZTTYuD98lpTknaZlSRrDOG4X7wIXpGkfsYxZTghUN+Qq+T0YQI7w==
   dependencies:
     compare-func "^2.0.0"
 
