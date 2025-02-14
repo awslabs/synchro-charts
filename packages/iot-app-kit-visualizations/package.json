@@ -73,7 +73,7 @@
     "babel-core": "^6.26.3",
     "babel-loader": "^9.2.1",
     "color": "^4.2.3",
-    "color-string": "^1.9.1",
+    "color-string": "^2.0.0",
     "copy-webpack-plugin": "^11.0.0",
     "cypress": "^6.3.0",
     "cypress-image-snapshot": "^4.0.1",
