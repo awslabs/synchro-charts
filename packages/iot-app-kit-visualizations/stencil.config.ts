@@ -15,6 +15,7 @@ export const config: Config = {
   plugins: [nodePolyfills()],
   copy: [{ src: 'globals' }],
   globalStyle: 'src/globals/globals.css',
+  tsconfig: './tsconfig.build.json',
   testing: {
     setupFilesAfterEnv: ['<rootDir>/configuration/jest/setupTests.ts', 'jest-extended'],
     collectCoverageFrom: ['src/**/*.{ts,tsx}'],
