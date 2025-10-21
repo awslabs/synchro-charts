@@ -3,6 +3,9 @@ on:
   push:
     branches:
       - main
+permissions:
+  contents: write
+
 jobs:
   deploy-documentation-site:
     runs-on: ubuntu-20.04
